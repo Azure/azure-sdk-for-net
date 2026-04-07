@@ -17,6 +17,12 @@ namespace Azure.ResourceManager.Compute.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MigrateToVirtualMachineScaleSetInput"/>. </summary>
+        public MigrateToVirtualMachineScaleSetInput()
+        {
+
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MigrateToVirtualMachineScaleSetInput"/>. </summary>
         /// <param name="virtualMachineScaleSetFlexible"> Specifies information about the Virtual Machine Scale Set that the Availability Set should be migrated to. Minimum api‐version: 2024‐11‐01. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal MigrateToVirtualMachineScaleSetInput(SubResource virtualMachineScaleSetFlexible, IDictionary<string, BinaryData> additionalBinaryDataProperties)

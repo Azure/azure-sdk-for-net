@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Compute
 {
     /// <summary>
     /// A class representing a collection of <see cref="RestorePointResource"/> and their operations.
-    /// Each <see cref="RestorePointResource"/> in the collection will belong to the same instance of <see cref="RestorePointCollectionResource"/>.
-    /// To get a <see cref="RestorePointCollection"/> instance call the GetRestorePoints method from an instance of <see cref="RestorePointCollectionResource"/>.
+    /// Each <see cref="RestorePointResource"/> in the collection will belong to the same instance of <see cref="RestorePointGroupResource"/>.
+    /// To get a <see cref="RestorePointCollection"/> instance call the GetRestorePoints method from an instance of <see cref="RestorePointGroupResource"/>.
     /// </summary>
     public partial class RestorePointCollection : ArmCollection
     {
@@ -47,9 +47,9 @@ namespace Azure.ResourceManager.Compute
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != RestorePointCollectionResource.ResourceType)
+            if (id.ResourceType != RestorePointGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, RestorePointCollectionResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, RestorePointGroupResource.ResourceType), nameof(id));
             }
         }
 

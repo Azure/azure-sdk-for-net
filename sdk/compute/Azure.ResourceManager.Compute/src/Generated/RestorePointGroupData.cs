@@ -7,24 +7,36 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Compute;
+using Azure.Core;
+using Azure.ResourceManager.Compute.Models;
+using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Azure.ResourceManager.Compute
 {
-    /// <summary> Update Restore Point collection parameters. </summary>
-    public partial class RestorePointCollectionPatch : ComputeResourcePatch
+    /// <summary> Create or update Restore Point collection parameters. </summary>
+    public partial class RestorePointGroupData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of <see cref="RestorePointCollectionPatch"/>. </summary>
-        public RestorePointCollectionPatch()
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
+        /// <summary> Initializes a new instance of <see cref="RestorePointGroupData"/>. </summary>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        public RestorePointGroupData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="RestorePointCollectionPatch"/>. </summary>
-        /// <param name="tags"> Resource tags. </param>
+        /// <summary> Initializes a new instance of <see cref="RestorePointGroupData"/>. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The restore point collection properties. </param>
-        internal RestorePointCollectionPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, RestorePointCollectionProperties properties) : base(tags, additionalBinaryDataProperties)
+        internal RestorePointGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, RestorePointCollectionProperties properties) : base(id, name, resourceType, systemData, tags, location)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
         }
 
@@ -32,7 +44,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal RestorePointCollectionProperties Properties { get; set; }
 
         /// <summary> The properties of the source resource that this restore point collection is created from. </summary>
-        public RestorePointCollectionSourceProperties Source
+        public RestorePointGroupSource Source
         {
             get
             {

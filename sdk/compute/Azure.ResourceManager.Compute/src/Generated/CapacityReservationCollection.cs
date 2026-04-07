@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Compute
         {
             if (id.ResourceType != CapacityReservationGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, CapacityReservationGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, CapacityReservationGroupResource.ResourceType), nameof(id));
             }
         }
 

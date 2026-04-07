@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="restorePoints"> A list containing all restore points created under this restore point collection. </param>
         /// <param name="instantAccess"> This property determines whether instant access snapshot is enabled for restore points created under this restore point collection for Premium SSD v2 or Ultra disk. Instant access snapshot for Premium SSD v2 or Ultra disk is instantaneously available for restoring disk with fast restore performance. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RestorePointCollectionProperties(RestorePointCollectionSourceProperties source, string provisioningState, string restorePointCollectionId, IReadOnlyList<RestorePointData> restorePoints, bool? instantAccess, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RestorePointCollectionProperties(RestorePointGroupSource source, string provisioningState, string restorePointCollectionId, IReadOnlyList<RestorePointData> restorePoints, bool? instantAccess, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Source = source;
             ProvisioningState = provisioningState;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The properties of the source resource that this restore point collection is created from. </summary>
-        public RestorePointCollectionSourceProperties Source { get; set; }
+        public RestorePointGroupSource Source { get; set; }
 
         /// <summary> The provisioning state of the restore point collection. </summary>
         public string ProvisioningState { get; }

@@ -14,7 +14,7 @@ using Azure.ResourceManager.Compute.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    internal partial class RestorePointCollectionsGetAllCollectionResultOfT : Pageable<RestorePointCollectionData>
+    internal partial class RestorePointCollectionsGetAllCollectionResultOfT : Pageable<RestorePointGroupData>
     {
         private readonly RestorePointCollections _client;
         private readonly string _subscriptionId;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of RestorePointCollectionsGetAllCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<RestorePointCollectionData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<RestorePointGroupData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Compute
                     yield break;
                 }
                 RestorePointCollectionListResult result = RestorePointCollectionListResult.FromResponse(response);
-                yield return Page<RestorePointCollectionData>.FromValues((IReadOnlyList<RestorePointCollectionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<RestorePointGroupData>.FromValues((IReadOnlyList<RestorePointGroupData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Compute
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("RestorePointCollectionCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("RestorePointGroupCollection.GetAll");
             scope.Start();
             try
             {

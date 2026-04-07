@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary></summary>
-    internal partial class ImageOperationSource : IOperationSource<ImageResource>
+    internal partial class ManagedDiskOperationSource : IOperationSource<ManagedDiskResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal ImageOperationSource(ArmClient client)
+        internal ManagedDiskOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.Compute
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        ImageResource IOperationSource<ImageResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ManagedDiskResource IOperationSource<ManagedDiskResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            ImageData data = ImageData.DeserializeImageData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new ImageResource(_client, data);
+            ManagedDiskData data = ManagedDiskData.DeserializeManagedDiskData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ManagedDiskResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<ImageResource> IOperationSource<ImageResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ManagedDiskResource> IOperationSource<ManagedDiskResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            ImageData data = ImageData.DeserializeImageData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new ImageResource(_client, data);
+            ManagedDiskData data = ManagedDiskData.DeserializeManagedDiskData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ManagedDiskResource(_client, data);
         }
     }
 }

@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            RestorePointCollectionSourceProperties source = default;
+            RestorePointGroupSource source = default;
             string provisioningState = default;
             string restorePointCollectionId = default;
             IReadOnlyList<RestorePointData> restorePoints = default;
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    source = RestorePointCollectionSourceProperties.DeserializeRestorePointCollectionSourceProperties(prop.Value, options);
+                    source = RestorePointGroupSource.DeserializeRestorePointGroupSource(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))

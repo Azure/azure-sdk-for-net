@@ -11,21 +11,21 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The properties of the source resource that this restore point collection is created from. </summary>
-    public partial class RestorePointCollectionSourceProperties
+    public partial class RestorePointGroupSource
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RestorePointCollectionSourceProperties"/>. </summary>
-        public RestorePointCollectionSourceProperties()
+        /// <summary> Initializes a new instance of <see cref="RestorePointGroupSource"/>. </summary>
+        public RestorePointGroupSource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="RestorePointCollectionSourceProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorePointGroupSource"/>. </summary>
         /// <param name="location"> Location of the source resource used to create this restore point collection. </param>
         /// <param name="id"> Resource Id of the source resource used to create this restore point collection. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RestorePointCollectionSourceProperties(string location, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RestorePointGroupSource(string location, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Location = location;
             Id = id;

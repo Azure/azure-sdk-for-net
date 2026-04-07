@@ -20,28 +20,28 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ImageResource"/> and their operations.
-    /// Each <see cref="ImageResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="ImageCollection"/> instance call the GetImages method from an instance of <see cref="ResourceGroupResource"/>.
+    /// A class representing a collection of <see cref="DiskImageResource"/> and their operations.
+    /// Each <see cref="DiskImageResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="DiskImageCollection"/> instance call the GetDiskImages method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
-    public partial class ImageCollection : ArmCollection, IEnumerable<ImageResource>, IAsyncEnumerable<ImageResource>
+    public partial class DiskImageCollection : ArmCollection, IEnumerable<DiskImageResource>, IAsyncEnumerable<DiskImageResource>
     {
         private readonly ClientDiagnostics _imagesClientDiagnostics;
         private readonly Images _imagesRestClient;
 
-        /// <summary> Initializes a new instance of ImageCollection for mocking. </summary>
-        protected ImageCollection()
+        /// <summary> Initializes a new instance of DiskImageCollection for mocking. </summary>
+        protected DiskImageCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ImageCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskImageCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ImageCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal DiskImageCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ImageResource.ResourceType, out string imageApiVersion);
-            _imagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ImageResource.ResourceType.Namespace, Diagnostics);
-            _imagesRestClient = new Images(_imagesClientDiagnostics, Pipeline, Endpoint, imageApiVersion ?? "2025-04-01");
+            TryGetApiVersion(DiskImageResource.ResourceType, out string diskImageApiVersion);
+            _imagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", DiskImageResource.ResourceType.Namespace, Diagnostics);
+            _imagesRestClient = new Images(_imagesClientDiagnostics, Pipeline, Endpoint, diskImageApiVersion ?? "2025-04-01");
             ValidateResourceId(id);
         }
 
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Compute
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -78,12 +78,12 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<ImageResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string imageName, ImageData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DiskImageResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string imageName, DiskImageData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _imagesClientDiagnostics.CreateScope("ImageCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _imagesClientDiagnostics.CreateScope("DiskImageCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _imagesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, imageName, ImageData.ToRequestContent(data), context);
+                HttpMessage message = _imagesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, imageName, DiskImageData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ComputeArmOperation<ImageResource> operation = new ComputeArmOperation<ImageResource>(
-                    new ImageOperationSource(Client),
+                ComputeArmOperation<DiskImageResource> operation = new ComputeArmOperation<DiskImageResource>(
+                    new DiskImageOperationSource(Client),
                     _imagesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -136,12 +136,12 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<ImageResource> CreateOrUpdate(WaitUntil waitUntil, string imageName, ImageData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DiskImageResource> CreateOrUpdate(WaitUntil waitUntil, string imageName, DiskImageData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _imagesClientDiagnostics.CreateScope("ImageCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _imagesClientDiagnostics.CreateScope("DiskImageCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -149,10 +149,10 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _imagesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, imageName, ImageData.ToRequestContent(data), context);
+                HttpMessage message = _imagesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, imageName, DiskImageData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ComputeArmOperation<ImageResource> operation = new ComputeArmOperation<ImageResource>(
-                    new ImageOperationSource(Client),
+                ComputeArmOperation<DiskImageResource> operation = new ComputeArmOperation<DiskImageResource>(
+                    new DiskImageOperationSource(Client),
                     _imagesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -193,11 +193,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ImageResource>> GetAsync(string imageName, string expand = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DiskImageResource>> GetAsync(string imageName, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
 
-            using DiagnosticScope scope = _imagesClientDiagnostics.CreateScope("ImageCollection.Get");
+            using DiagnosticScope scope = _imagesClientDiagnostics.CreateScope("DiskImageCollection.Get");
             scope.Start();
             try
             {
@@ -207,12 +207,12 @@ namespace Azure.ResourceManager.Compute
                 };
                 HttpMessage message = _imagesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, imageName, expand, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ImageData> response = Response.FromValue(ImageData.FromResponse(result), result);
+                Response<DiskImageData> response = Response.FromValue(DiskImageData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ImageResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DiskImageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -243,11 +243,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ImageResource> Get(string imageName, string expand = default, CancellationToken cancellationToken = default)
+        public virtual Response<DiskImageResource> Get(string imageName, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
 
-            using DiagnosticScope scope = _imagesClientDiagnostics.CreateScope("ImageCollection.Get");
+            using DiagnosticScope scope = _imagesClientDiagnostics.CreateScope("DiskImageCollection.Get");
             scope.Start();
             try
             {
@@ -257,12 +257,12 @@ namespace Azure.ResourceManager.Compute
                 };
                 HttpMessage message = _imagesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, imageName, expand, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ImageData> response = Response.FromValue(ImageData.FromResponse(result), result);
+                Response<DiskImageData> response = Response.FromValue(DiskImageData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ImageResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DiskImageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -289,14 +289,14 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ImageResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ImageResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DiskImageResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DiskImageResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ImageData, ImageResource>(new ImagesGetByResourceGroupAsyncCollectionResultOfT(_imagesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new ImageResource(Client, data));
+            return new AsyncPageableWrapper<DiskImageData, DiskImageResource>(new ImagesGetByResourceGroupAsyncCollectionResultOfT(_imagesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new DiskImageResource(Client, data));
         }
 
         /// <summary>
@@ -317,14 +317,14 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ImageResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ImageResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DiskImageResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DiskImageResource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ImageData, ImageResource>(new ImagesGetByResourceGroupCollectionResultOfT(_imagesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new ImageResource(Client, data));
+            return new PageableWrapper<DiskImageData, DiskImageResource>(new ImagesGetByResourceGroupCollectionResultOfT(_imagesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new DiskImageResource(Client, data));
         }
 
         /// <summary>
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
 
-            using DiagnosticScope scope = _imagesClientDiagnostics.CreateScope("ImageCollection.Exists");
+            using DiagnosticScope scope = _imagesClientDiagnostics.CreateScope("DiskImageCollection.Exists");
             scope.Start();
             try
             {
@@ -364,14 +364,14 @@ namespace Azure.ResourceManager.Compute
                 HttpMessage message = _imagesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, imageName, expand, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<ImageData> response = default;
+                Response<DiskImageData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ImageData.FromResponse(result), result);
+                        response = Response.FromValue(DiskImageData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ImageData)null, result);
+                        response = Response.FromValue((DiskImageData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -411,7 +411,7 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
 
-            using DiagnosticScope scope = _imagesClientDiagnostics.CreateScope("ImageCollection.Exists");
+            using DiagnosticScope scope = _imagesClientDiagnostics.CreateScope("DiskImageCollection.Exists");
             scope.Start();
             try
             {
@@ -422,14 +422,14 @@ namespace Azure.ResourceManager.Compute
                 HttpMessage message = _imagesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, imageName, expand, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<ImageData> response = default;
+                Response<DiskImageData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ImageData.FromResponse(result), result);
+                        response = Response.FromValue(DiskImageData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ImageData)null, result);
+                        response = Response.FromValue((DiskImageData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -465,11 +465,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<ImageResource>> GetIfExistsAsync(string imageName, string expand = default, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<DiskImageResource>> GetIfExistsAsync(string imageName, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
 
-            using DiagnosticScope scope = _imagesClientDiagnostics.CreateScope("ImageCollection.GetIfExists");
+            using DiagnosticScope scope = _imagesClientDiagnostics.CreateScope("DiskImageCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -480,23 +480,23 @@ namespace Azure.ResourceManager.Compute
                 HttpMessage message = _imagesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, imageName, expand, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<ImageData> response = default;
+                Response<DiskImageData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ImageData.FromResponse(result), result);
+                        response = Response.FromValue(DiskImageData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ImageData)null, result);
+                        response = Response.FromValue((DiskImageData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<ImageResource>(response.GetRawResponse());
+                    return new NoValueResponse<DiskImageResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new ImageResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DiskImageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -527,11 +527,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<ImageResource> GetIfExists(string imageName, string expand = default, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<DiskImageResource> GetIfExists(string imageName, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
 
-            using DiagnosticScope scope = _imagesClientDiagnostics.CreateScope("ImageCollection.GetIfExists");
+            using DiagnosticScope scope = _imagesClientDiagnostics.CreateScope("DiskImageCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -542,23 +542,23 @@ namespace Azure.ResourceManager.Compute
                 HttpMessage message = _imagesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, imageName, expand, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<ImageData> response = default;
+                Response<DiskImageData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ImageData.FromResponse(result), result);
+                        response = Response.FromValue(DiskImageData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ImageData)null, result);
+                        response = Response.FromValue((DiskImageData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<ImageResource>(response.GetRawResponse());
+                    return new NoValueResponse<DiskImageResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new ImageResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DiskImageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -567,7 +567,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        IEnumerator<ImageResource> IEnumerable<ImageResource>.GetEnumerator()
+        IEnumerator<DiskImageResource> IEnumerable<DiskImageResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -578,7 +578,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<ImageResource> IAsyncEnumerable<ImageResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<DiskImageResource> IAsyncEnumerable<DiskImageResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

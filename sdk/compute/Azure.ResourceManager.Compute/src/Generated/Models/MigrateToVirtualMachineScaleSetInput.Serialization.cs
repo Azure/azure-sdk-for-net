@@ -17,11 +17,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes the Virtual Machine Scale Set to migrate from Availability Set. </summary>
     public partial class MigrateToVirtualMachineScaleSetInput : IJsonModel<MigrateToVirtualMachineScaleSetInput>
     {
-        /// <summary> Initializes a new instance of <see cref="MigrateToVirtualMachineScaleSetInput"/> for deserialization. </summary>
-        internal MigrateToVirtualMachineScaleSetInput()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual MigrateToVirtualMachineScaleSetInput PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

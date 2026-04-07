@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Compute
         {
             if (id.ResourceType != VirtualMachineResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, VirtualMachineResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, VirtualMachineResource.ResourceType), nameof(id));
             }
         }
 

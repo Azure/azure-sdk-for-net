@@ -430,11 +430,11 @@ namespace Azure.ResourceManager.Compute.Mocking
             return GetSshPublicKeyResources().Get(sshPublicKeyName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of Images in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of Images and their operations over a ImageResource. </returns>
-        public virtual ImageCollection GetImages()
+        /// <summary> Gets a collection of DiskImages in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of DiskImages and their operations over a DiskImageResource. </returns>
+        public virtual DiskImageCollection GetDiskImages()
         {
-            return GetCachedClient(client => new ImageCollection(client, Id));
+            return GetCachedClient(client => new DiskImageCollection(client, Id));
         }
 
         /// <summary>
@@ -460,11 +460,11 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ImageResource>> GetImageAsync(string imageName, string expand = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DiskImageResource>> GetDiskImageAsync(string imageName, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
 
-            return await GetImages().GetAsync(imageName, expand, cancellationToken).ConfigureAwait(false);
+            return await GetDiskImages().GetAsync(imageName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -490,48 +490,18 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ImageResource> GetImage(string imageName, string expand = default, CancellationToken cancellationToken = default)
+        public virtual Response<DiskImageResource> GetDiskImage(string imageName, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
 
-            return GetImages().Get(imageName, expand, cancellationToken);
+            return GetDiskImages().Get(imageName, expand, cancellationToken);
         }
 
-        /// <summary> Gets a collection of RestorePointCollections in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of RestorePointCollections and their operations over a RestorePointCollectionResource. </returns>
-        public virtual RestorePointCollectionCollection GetRestorePointCollections()
+        /// <summary> Gets a collection of RestorePointGroups in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of RestorePointGroups and their operations over a RestorePointGroupResource. </returns>
+        public virtual RestorePointGroupCollection GetRestorePointGroups()
         {
-            return GetCachedClient(client => new RestorePointCollectionCollection(client, Id));
-        }
-
-        /// <summary>
-        /// The operation to get the restore point collection.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> RestorePointCollections_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-04-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="restorePointCollectionName"> The name of the restore point collection. </param>
-        /// <param name="expand"> The expand expression to apply on the operation. If expand=restorePoints, server will return all contained restore points in the restorePointCollection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="restorePointCollectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="restorePointCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<RestorePointCollectionResource>> GetRestorePointCollectionAsync(string restorePointCollectionName, RestorePointCollectionExpandOptions? expand = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(restorePointCollectionName, nameof(restorePointCollectionName));
-
-            return await GetRestorePointCollections().GetAsync(restorePointCollectionName, expand, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(client => new RestorePointGroupCollection(client, Id));
         }
 
         /// <summary>
@@ -557,11 +527,41 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointCollectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="restorePointCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<RestorePointCollectionResource> GetRestorePointCollection(string restorePointCollectionName, RestorePointCollectionExpandOptions? expand = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RestorePointGroupResource>> GetRestorePointGroupAsync(string restorePointCollectionName, RestorePointCollectionExpandOptions? expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(restorePointCollectionName, nameof(restorePointCollectionName));
 
-            return GetRestorePointCollections().Get(restorePointCollectionName, expand, cancellationToken);
+            return await GetRestorePointGroups().GetAsync(restorePointCollectionName, expand, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// The operation to get the restore point collection.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> RestorePointCollections_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-04-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="restorePointCollectionName"> The name of the restore point collection. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. If expand=restorePoints, server will return all contained restore points in the restorePointCollection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="restorePointCollectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="restorePointCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<RestorePointGroupResource> GetRestorePointGroup(string restorePointCollectionName, RestorePointCollectionExpandOptions? expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(restorePointCollectionName, nameof(restorePointCollectionName));
+
+            return GetRestorePointGroups().Get(restorePointCollectionName, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of CapacityReservationGroups in the <see cref="ResourceGroupResource"/>. </summary>
@@ -631,11 +631,11 @@ namespace Azure.ResourceManager.Compute.Mocking
             return GetCapacityReservationGroups().Get(capacityReservationGroupName, expand, cancellationToken);
         }
 
-        /// <summary> Gets a collection of Disks in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of Disks and their operations over a DiskResource. </returns>
-        public virtual DiskCollection GetDisks()
+        /// <summary> Gets a collection of ManagedDisks in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of ManagedDisks and their operations over a ManagedDiskResource. </returns>
+        public virtual ManagedDiskCollection GetManagedDisks()
         {
-            return GetCachedClient(client => new DiskCollection(client, Id));
+            return GetCachedClient(client => new ManagedDiskCollection(client, Id));
         }
 
         /// <summary>
@@ -660,11 +660,11 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="diskName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="diskName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DiskResource>> GetDiskAsync(string diskName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManagedDiskResource>> GetManagedDiskAsync(string diskName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(diskName, nameof(diskName));
 
-            return await GetDisks().GetAsync(diskName, cancellationToken).ConfigureAwait(false);
+            return await GetManagedDisks().GetAsync(diskName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -689,11 +689,11 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="diskName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="diskName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DiskResource> GetDisk(string diskName, CancellationToken cancellationToken = default)
+        public virtual Response<ManagedDiskResource> GetManagedDisk(string diskName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(diskName, nameof(diskName));
 
-            return GetDisks().Get(diskName, cancellationToken);
+            return GetManagedDisks().Get(diskName, cancellationToken);
         }
 
         /// <summary> Gets a collection of DiskAccesses in the <see cref="ResourceGroupResource"/>. </summary>

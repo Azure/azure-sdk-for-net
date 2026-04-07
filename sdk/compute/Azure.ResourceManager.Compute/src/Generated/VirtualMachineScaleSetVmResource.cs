@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Compute
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -2101,11 +2101,11 @@ namespace Azure.ResourceManager.Compute
             return GetVirtualMachineScaleSetVmExtensions().Get(vmExtensionName, expand, cancellationToken);
         }
 
-        /// <summary> Gets a collection of VirtualMachineScaleSetVMRunCommands in the <see cref="VirtualMachineScaleSetVmResource"/>. </summary>
-        /// <returns> An object representing collection of VirtualMachineScaleSetVMRunCommands and their operations over a VirtualMachineScaleSetVMRunCommandResource. </returns>
-        public virtual VirtualMachineScaleSetVMRunCommandCollection GetVirtualMachineScaleSetVMRunCommands()
+        /// <summary> Gets a collection of VirtualMachineScaleSetVmRunCommands in the <see cref="VirtualMachineScaleSetVmResource"/>. </summary>
+        /// <returns> An object representing collection of VirtualMachineScaleSetVmRunCommands and their operations over a VirtualMachineScaleSetVmRunCommandResource. </returns>
+        public virtual VirtualMachineScaleSetVmRunCommandCollection GetVirtualMachineScaleSetVmRunCommands()
         {
-            return GetCachedClient(client => new VirtualMachineScaleSetVMRunCommandCollection(client, Id));
+            return GetCachedClient(client => new VirtualMachineScaleSetVmRunCommandCollection(client, Id));
         }
 
         /// <summary> The operation to get the VMSS VM run command. </summary>
@@ -2115,11 +2115,11 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="runCommandName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="runCommandName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<VirtualMachineScaleSetVMRunCommandResource>> GetVirtualMachineScaleSetVMRunCommandAsync(string runCommandName, string expand = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VirtualMachineScaleSetVmRunCommandResource>> GetVirtualMachineScaleSetVmRunCommandAsync(string runCommandName, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(runCommandName, nameof(runCommandName));
 
-            return await GetVirtualMachineScaleSetVMRunCommands().GetAsync(runCommandName, expand, cancellationToken).ConfigureAwait(false);
+            return await GetVirtualMachineScaleSetVmRunCommands().GetAsync(runCommandName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> The operation to get the VMSS VM run command. </summary>
@@ -2129,11 +2129,11 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="runCommandName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="runCommandName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<VirtualMachineScaleSetVMRunCommandResource> GetVirtualMachineScaleSetVMRunCommand(string runCommandName, string expand = default, CancellationToken cancellationToken = default)
+        public virtual Response<VirtualMachineScaleSetVmRunCommandResource> GetVirtualMachineScaleSetVmRunCommand(string runCommandName, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(runCommandName, nameof(runCommandName));
 
-            return GetVirtualMachineScaleSetVMRunCommands().Get(runCommandName, expand, cancellationToken);
+            return GetVirtualMachineScaleSetVmRunCommands().Get(runCommandName, expand, cancellationToken);
         }
     }
 }

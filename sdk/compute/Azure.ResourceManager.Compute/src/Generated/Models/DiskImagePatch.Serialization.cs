@@ -14,62 +14,62 @@ using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> Update Restore Point collection parameters. </summary>
-    public partial class RestorePointCollectionPatch : ComputeResourcePatch, IJsonModel<RestorePointCollectionPatch>
+    /// <summary> The source user image virtual hard disk. Only tags may be updated. </summary>
+    public partial class DiskImagePatch : ComputeResourcePatch, IJsonModel<DiskImagePatch>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ComputeResourcePatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RestorePointCollectionPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DiskImagePatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeRestorePointCollectionPatch(document.RootElement, options);
+                        return DeserializeDiskImagePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RestorePointCollectionPatch)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiskImagePatch)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RestorePointCollectionPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DiskImagePatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(RestorePointCollectionPatch)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiskImagePatch)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RestorePointCollectionPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<DiskImagePatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RestorePointCollectionPatch IPersistableModel<RestorePointCollectionPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => (RestorePointCollectionPatch)PersistableModelCreateCore(data, options);
+        DiskImagePatch IPersistableModel<DiskImagePatch>.Create(BinaryData data, ModelReaderWriterOptions options) => (DiskImagePatch)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RestorePointCollectionPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DiskImagePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="restorePointCollectionPatch"> The <see cref="RestorePointCollectionPatch"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(RestorePointCollectionPatch restorePointCollectionPatch)
+        /// <param name="diskImagePatch"> The <see cref="DiskImagePatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(DiskImagePatch diskImagePatch)
         {
-            if (restorePointCollectionPatch == null)
+            if (diskImagePatch == null)
             {
                 return null;
             }
-            return RequestContent.Create(restorePointCollectionPatch, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(diskImagePatch, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<RestorePointCollectionPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DiskImagePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RestorePointCollectionPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DiskImagePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RestorePointCollectionPatch)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DiskImagePatch)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -95,24 +95,24 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RestorePointCollectionPatch IJsonModel<RestorePointCollectionPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (RestorePointCollectionPatch)JsonModelCreateCore(ref reader, options);
+        DiskImagePatch IJsonModel<DiskImagePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DiskImagePatch)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ComputeResourcePatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RestorePointCollectionPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DiskImagePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RestorePointCollectionPatch)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DiskImagePatch)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRestorePointCollectionPatch(document.RootElement, options);
+            return DeserializeDiskImagePatch(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static RestorePointCollectionPatch DeserializeRestorePointCollectionPatch(JsonElement element, ModelReaderWriterOptions options)
+        internal static DiskImagePatch DeserializeDiskImagePatch(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            RestorePointCollectionProperties properties = default;
+            ImageProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("tags"u8))
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    properties = RestorePointCollectionProperties.DeserializeRestorePointCollectionProperties(prop.Value, options);
+                    properties = ImageProperties.DeserializeImageProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RestorePointCollectionPatch(tags ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties, properties);
+            return new DiskImagePatch(tags ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties, properties);
         }
     }
 }

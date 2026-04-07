@@ -2406,12 +2406,12 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="hyperVGeneration"> Specifies the HyperVGenerationType of the VirtualMachine created from the image. From API Version 2019-03-01 if the image source is a blob, then we need the user to specify the value, if the source is managed resource like disk or snapshot, we may require the user to specify the property if we cannot deduce it from the source managed resource. </param>
         /// <param name="sourceVirtualMachineId"> Resource Id. </param>
         /// <param name="extendedLocation"> The extended location of the Image. </param>
-        /// <returns> A new <see cref="Compute.ImageData"/> instance for mocking. </returns>
-        public static ImageData ImageData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ImageStorageProfile storageProfile = default, string provisioningState = default, HyperVGenerationTypes? hyperVGeneration = default, string sourceVirtualMachineId = default, ExtendedLocation extendedLocation = default)
+        /// <returns> A new <see cref="Compute.DiskImageData"/> instance for mocking. </returns>
+        public static DiskImageData DiskImageData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ImageStorageProfile storageProfile = default, string provisioningState = default, HyperVGenerationTypes? hyperVGeneration = default, string sourceVirtualMachineId = default, ExtendedLocation extendedLocation = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ImageData(
+            return new DiskImageData(
                 id,
                 name,
                 resourceType,
@@ -2440,12 +2440,12 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="hyperVGeneration"> Specifies the HyperVGenerationType of the VirtualMachine created from the image. From API Version 2019-03-01 if the image source is a blob, then we need the user to specify the value, if the source is managed resource like disk or snapshot, we may require the user to specify the property if we cannot deduce it from the source managed resource. </param>
         /// <param name="sourceVirtualMachineId"> Resource Id. </param>
-        /// <returns> A new <see cref="Models.ImagePatch"/> instance for mocking. </returns>
-        public static ImagePatch ImagePatch(IDictionary<string, string> tags = default, ImageStorageProfile storageProfile = default, string provisioningState = default, HyperVGenerationTypes? hyperVGeneration = default, string sourceVirtualMachineId = default)
+        /// <returns> A new <see cref="Models.DiskImagePatch"/> instance for mocking. </returns>
+        public static DiskImagePatch DiskImagePatch(IDictionary<string, string> tags = default, ImageStorageProfile storageProfile = default, string provisioningState = default, HyperVGenerationTypes? hyperVGeneration = default, string sourceVirtualMachineId = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ImagePatch(tags, additionalBinaryDataProperties: null, storageProfile is null && provisioningState is null && hyperVGeneration is null && sourceVirtualMachineId is null ? default : new ImageProperties(new SubResource(sourceVirtualMachineId, null), storageProfile, provisioningState, hyperVGeneration, null));
+            return new DiskImagePatch(tags, additionalBinaryDataProperties: null, storageProfile is null && provisioningState is null && hyperVGeneration is null && sourceVirtualMachineId is null ? default : new ImageProperties(new SubResource(sourceVirtualMachineId, null), storageProfile, provisioningState, hyperVGeneration, null));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -2459,12 +2459,12 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="restorePointCollectionId"> The unique id of the restore point collection. </param>
         /// <param name="restorePoints"> A list containing all restore points created under this restore point collection. </param>
         /// <param name="instantAccess"> This property determines whether instant access snapshot is enabled for restore points created under this restore point collection for Premium SSD v2 or Ultra disk. Instant access snapshot for Premium SSD v2 or Ultra disk is instantaneously available for restoring disk with fast restore performance. </param>
-        /// <returns> A new <see cref="Compute.RestorePointCollectionData"/> instance for mocking. </returns>
-        public static RestorePointCollectionData RestorePointCollectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, RestorePointCollectionSourceProperties source = default, string provisioningState = default, string restorePointCollectionId = default, IEnumerable<RestorePointData> restorePoints = default, bool? instantAccess = default)
+        /// <returns> A new <see cref="Compute.RestorePointGroupData"/> instance for mocking. </returns>
+        public static RestorePointGroupData RestorePointGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, RestorePointGroupSource source = default, string provisioningState = default, string restorePointCollectionId = default, IEnumerable<RestorePointData> restorePoints = default, bool? instantAccess = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new RestorePointCollectionData(
+            return new RestorePointGroupData(
                 id,
                 name,
                 resourceType,
@@ -2484,10 +2484,10 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The properties of the source resource that this restore point collection is created from. </summary>
         /// <param name="location"> Location of the source resource used to create this restore point collection. </param>
         /// <param name="id"> Resource Id of the source resource used to create this restore point collection. </param>
-        /// <returns> A new <see cref="Models.RestorePointCollectionSourceProperties"/> instance for mocking. </returns>
-        public static RestorePointCollectionSourceProperties RestorePointCollectionSourceProperties(string location = default, string id = default)
+        /// <returns> A new <see cref="Models.RestorePointGroupSource"/> instance for mocking. </returns>
+        public static RestorePointGroupSource RestorePointGroupSource(string location = default, string id = default)
         {
-            return new RestorePointCollectionSourceProperties(location, id, additionalBinaryDataProperties: null);
+            return new RestorePointGroupSource(location, id, additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -2654,12 +2654,12 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="restorePointCollectionId"> The unique id of the restore point collection. </param>
         /// <param name="restorePoints"> A list containing all restore points created under this restore point collection. </param>
         /// <param name="instantAccess"> This property determines whether instant access snapshot is enabled for restore points created under this restore point collection for Premium SSD v2 or Ultra disk. Instant access snapshot for Premium SSD v2 or Ultra disk is instantaneously available for restoring disk with fast restore performance. </param>
-        /// <returns> A new <see cref="Models.RestorePointCollectionPatch"/> instance for mocking. </returns>
-        public static RestorePointCollectionPatch RestorePointCollectionPatch(IDictionary<string, string> tags = default, RestorePointCollectionSourceProperties source = default, string provisioningState = default, string restorePointCollectionId = default, IEnumerable<RestorePointData> restorePoints = default, bool? instantAccess = default)
+        /// <returns> A new <see cref="Models.RestorePointGroupPatch"/> instance for mocking. </returns>
+        public static RestorePointGroupPatch RestorePointGroupPatch(IDictionary<string, string> tags = default, RestorePointGroupSource source = default, string provisioningState = default, string restorePointCollectionId = default, IEnumerable<RestorePointData> restorePoints = default, bool? instantAccess = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new RestorePointCollectionPatch(tags, additionalBinaryDataProperties: null, source is null && provisioningState is null && restorePointCollectionId is null && restorePoints is null && instantAccess is null ? default : new RestorePointCollectionProperties(
+            return new RestorePointGroupPatch(tags, additionalBinaryDataProperties: null, source is null && provisioningState is null && restorePointCollectionId is null && restorePoints is null && instantAccess is null ? default : new RestorePointCollectionProperties(
                 source,
                 provisioningState,
                 restorePointCollectionId,
@@ -3270,14 +3270,14 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="sku"> The disks sku name. Can be Standard_LRS, Premium_LRS, StandardSSD_LRS, UltraSSD_LRS, Premium_ZRS, StandardSSD_ZRS, or PremiumV2_LRS. </param>
         /// <param name="zones"> The Logical zone list for Disk. </param>
         /// <param name="extendedLocation"> The extended location where the disk will be created. Extended location cannot be changed. </param>
-        /// <returns> A new <see cref="Compute.DiskData"/> instance for mocking. </returns>
-        public static DiskData DiskData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DateTimeOffset? timeCreated = default, OperatingSystemTypes? osType = default, HyperVGeneration? hyperVGeneration = default, DiskPurchasePlan purchasePlan = default, SupportedCapabilities supportedCapabilities = default, DiskCreationData creationData = default, int? diskSizeGB = default, long? diskSizeBytes = default, string uniqueId = default, EncryptionSettingsGroup encryptionSettingsCollection = default, string provisioningState = default, long? diskIOPSReadWrite = default, long? diskMBpsReadWrite = default, long? diskIOPSReadOnly = default, long? diskMBpsReadOnly = default, DiskState? diskState = default, DiskEncryption encryption = default, int? maxShares = default, IEnumerable<ShareInfoElement> shareInfo = default, NetworkAccessPolicy? networkAccessPolicy = default, string diskAccessId = default, DateTimeOffset? burstingEnabledOn = default, string tier = default, bool? burstingEnabled = default, bool? supportsHibernation = default, DiskSecurityProfile securityProfile = default, float? completionPercent = default, DiskPublicNetworkAccess? publicNetworkAccess = default, DataAccessAuthMode? dataAccessAuthMode = default, bool? optimizedForFrequentAttach = default, DateTimeOffset? lastOwnershipUpdateOn = default, string propertyUpdatesInProgressTargetTier = default, AvailabilityPolicyDiskDelay? availabilityActionOnDiskDelay = default, string managedBy = default, IEnumerable<string> managedByExtended = default, DiskSku sku = default, IEnumerable<string> zones = default, ExtendedLocation extendedLocation = default)
+        /// <returns> A new <see cref="Compute.ManagedDiskData"/> instance for mocking. </returns>
+        public static ManagedDiskData ManagedDiskData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DateTimeOffset? timeCreated = default, OperatingSystemTypes? osType = default, HyperVGeneration? hyperVGeneration = default, DiskPurchasePlan purchasePlan = default, SupportedCapabilities supportedCapabilities = default, DiskCreationData creationData = default, int? diskSizeGB = default, long? diskSizeBytes = default, string uniqueId = default, EncryptionSettingsGroup encryptionSettingsCollection = default, string provisioningState = default, long? diskIOPSReadWrite = default, long? diskMBpsReadWrite = default, long? diskIOPSReadOnly = default, long? diskMBpsReadOnly = default, DiskState? diskState = default, DiskEncryption encryption = default, int? maxShares = default, IEnumerable<ShareInfoElement> shareInfo = default, NetworkAccessPolicy? networkAccessPolicy = default, string diskAccessId = default, DateTimeOffset? burstingEnabledOn = default, string tier = default, bool? burstingEnabled = default, bool? supportsHibernation = default, DiskSecurityProfile securityProfile = default, float? completionPercent = default, DiskPublicNetworkAccess? publicNetworkAccess = default, DataAccessAuthMode? dataAccessAuthMode = default, bool? optimizedForFrequentAttach = default, DateTimeOffset? lastOwnershipUpdateOn = default, string propertyUpdatesInProgressTargetTier = default, AvailabilityPolicyDiskDelay? availabilityActionOnDiskDelay = default, string managedBy = default, IEnumerable<string> managedByExtended = default, DiskSku sku = default, IEnumerable<string> zones = default, ExtendedLocation extendedLocation = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             managedByExtended ??= new ChangeTrackingList<string>();
             zones ??= new ChangeTrackingList<string>();
 
-            return new DiskData(
+            return new ManagedDiskData(
                 id,
                 name,
                 resourceType,
@@ -3417,12 +3417,12 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="availabilityActionOnDiskDelay"> Determines on how to handle disks with slow I/O. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="sku"> The disks sku name. Can be Standard_LRS, Premium_LRS, StandardSSD_LRS, UltraSSD_LRS, Premium_ZRS, StandardSSD_ZRS, or PremiumV2_LRS. </param>
-        /// <returns> A new <see cref="Models.DiskPatch"/> instance for mocking. </returns>
-        public static DiskPatch DiskPatch(OperatingSystemTypes? osType = default, int? diskSizeGB = default, EncryptionSettingsGroup encryptionSettingsCollection = default, long? diskIOPSReadWrite = default, long? diskMBpsReadWrite = default, long? diskIOPSReadOnly = default, long? diskMBpsReadOnly = default, int? maxShares = default, DiskEncryption encryption = default, NetworkAccessPolicy? networkAccessPolicy = default, string diskAccessId = default, string tier = default, bool? burstingEnabled = default, DiskPurchasePlan purchasePlan = default, SupportedCapabilities supportedCapabilities = default, bool? supportsHibernation = default, DiskPublicNetworkAccess? publicNetworkAccess = default, DataAccessAuthMode? dataAccessAuthMode = default, bool? optimizedForFrequentAttach = default, string propertyUpdatesInProgressTargetTier = default, AvailabilityPolicyDiskDelay? availabilityActionOnDiskDelay = default, IDictionary<string, string> tags = default, DiskSku sku = default)
+        /// <returns> A new <see cref="Models.ManagedDiskPatch"/> instance for mocking. </returns>
+        public static ManagedDiskPatch ManagedDiskPatch(OperatingSystemTypes? osType = default, int? diskSizeGB = default, EncryptionSettingsGroup encryptionSettingsCollection = default, long? diskIOPSReadWrite = default, long? diskMBpsReadWrite = default, long? diskIOPSReadOnly = default, long? diskMBpsReadOnly = default, int? maxShares = default, DiskEncryption encryption = default, NetworkAccessPolicy? networkAccessPolicy = default, string diskAccessId = default, string tier = default, bool? burstingEnabled = default, DiskPurchasePlan purchasePlan = default, SupportedCapabilities supportedCapabilities = default, bool? supportsHibernation = default, DiskPublicNetworkAccess? publicNetworkAccess = default, DataAccessAuthMode? dataAccessAuthMode = default, bool? optimizedForFrequentAttach = default, string propertyUpdatesInProgressTargetTier = default, AvailabilityPolicyDiskDelay? availabilityActionOnDiskDelay = default, IDictionary<string, string> tags = default, DiskSku sku = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new DiskPatch(osType is null && diskSizeGB is null && encryptionSettingsCollection is null && diskIOPSReadWrite is null && diskMBpsReadWrite is null && diskIOPSReadOnly is null && diskMBpsReadOnly is null && maxShares is null && encryption is null && networkAccessPolicy is null && diskAccessId is null && tier is null && burstingEnabled is null && purchasePlan is null && supportedCapabilities is null && supportsHibernation is null && publicNetworkAccess is null && dataAccessAuthMode is null && optimizedForFrequentAttach is null && propertyUpdatesInProgressTargetTier is null && availabilityActionOnDiskDelay is null ? default : new DiskUpdateProperties(
+            return new ManagedDiskPatch(osType is null && diskSizeGB is null && encryptionSettingsCollection is null && diskIOPSReadWrite is null && diskMBpsReadWrite is null && diskIOPSReadOnly is null && diskMBpsReadOnly is null && maxShares is null && encryption is null && networkAccessPolicy is null && diskAccessId is null && tier is null && burstingEnabled is null && purchasePlan is null && supportedCapabilities is null && supportsHibernation is null && publicNetworkAccess is null && dataAccessAuthMode is null && optimizedForFrequentAttach is null && propertyUpdatesInProgressTargetTier is null && availabilityActionOnDiskDelay is null ? default : new DiskUpdateProperties(
                 osType,
                 diskSizeGB,
                 encryptionSettingsCollection,
@@ -6019,6 +6019,36 @@ namespace Azure.ResourceManager.Compute.Models
                 zones.ToList());
         }
 
+        /// <summary> Initializes a new instance of <see cref="Compute.DiskImageData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="extendedLocation"> The extended location of the Image. </param>
+        /// <param name="sourceVirtualMachineId"> The source virtual machine from which Image is created. </param>
+        /// <param name="storageProfile"> Specifies the storage settings for the virtual machine disks. </param>
+        /// <param name="provisioningState"> The provisioning state. </param>
+        /// <param name="hyperVGeneration"> Specifies the HyperVGenerationType of the VirtualMachine created from the image. From API Version 2019-03-01 if the image source is a blob, then we need the user to specify the value, if the source is managed resource like disk or snapshot, we may require the user to specify the property if we cannot deduce it from the source managed resource. </param>
+        /// <returns> A new <see cref="Compute.DiskImageData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DiskImageData DiskImageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Resources.Models.ExtendedLocation extendedLocation, ResourceIdentifier sourceVirtualMachineId, ImageStorageProfile storageProfile, string provisioningState, HyperVGeneration? hyperVGeneration)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new DiskImageData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                default,
+                extendedLocation);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.ComputeUsage"/>. </summary>
         /// <param name="unit"> An enum describing the unit of usage measurement. </param>
         /// <param name="currentValue"> The current usage of the resource. </param>
@@ -6487,6 +6517,21 @@ namespace Azure.ResourceManager.Compute.Models
             return new DedicatedHostPatch(tags, additionalBinaryDataProperties: null, default, sku);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.DiskImagePatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="sourceVirtualMachineId"> The source virtual machine from which Image is created. </param>
+        /// <param name="storageProfile"> Specifies the storage settings for the virtual machine disks. </param>
+        /// <param name="provisioningState"> The provisioning state. </param>
+        /// <param name="hyperVGeneration"> Specifies the HyperVGenerationType of the VirtualMachine created from the image. From API Version 2019-03-01 if the image source is a blob, then we need the user to specify the value, if the source is managed resource like disk or snapshot, we may require the user to specify the property if we cannot deduce it from the source managed resource. </param>
+        /// <returns> A new <see cref="Models.DiskImagePatch"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DiskImagePatch DiskImagePatch(IDictionary<string, string> tags, ResourceIdentifier sourceVirtualMachineId, ImageStorageProfile storageProfile, string provisioningState, HyperVGeneration? hyperVGeneration)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new DiskImagePatch(tags, additionalBinaryDataProperties: null, default);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.VirtualMachineScaleSetExtensionPatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -6758,6 +6803,76 @@ namespace Azure.ResourceManager.Compute.Models
                 identity);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Compute.ManagedDiskData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="managedBy"> A relative URI containing the ID of the VM that has the disk attached. </param>
+        /// <param name="managedByExtended"> List of relative URIs containing the IDs of the VMs that have the disk attached. maxShares should be set to a value greater than one for disks to allow attaching them to multiple VMs. </param>
+        /// <param name="sku"> The disks sku name. Can be Standard_LRS, Premium_LRS, StandardSSD_LRS, UltraSSD_LRS, Premium_ZRS, StandardSSD_ZRS, or PremiumV2_LRS. </param>
+        /// <param name="zones"> The Logical zone list for Disk. </param>
+        /// <param name="extendedLocation"> The extended location where the disk will be created. Extended location cannot be changed. </param>
+        /// <param name="timeCreated"> The time when the disk was created. </param>
+        /// <param name="osType"> The Operating System type. </param>
+        /// <param name="hyperVGeneration"> The hypervisor generation of the Virtual Machine. Applicable to OS disks only. </param>
+        /// <param name="purchasePlan"> Purchase plan information for the the image from which the OS disk was created. E.g. - {name: 2019-Datacenter, publisher: MicrosoftWindowsServer, product: WindowsServer}. </param>
+        /// <param name="supportedCapabilities"> List of supported capabilities for the image from which the OS disk was created. </param>
+        /// <param name="creationData"> Disk source information. CreationData information cannot be changed after the disk has been created. </param>
+        /// <param name="diskSizeGB"> If creationData.createOption is Empty, this field is mandatory and it indicates the size of the disk to create. If this field is present for updates or creation with other options, it indicates a resize. Resizes are only allowed if the disk is not attached to a running VM, and can only increase the disk's size. </param>
+        /// <param name="diskSizeBytes"> The size of the disk in bytes. This field is read only. </param>
+        /// <param name="uniqueId"> Unique Guid identifying the resource. </param>
+        /// <param name="encryptionSettingsGroup"> Encryption settings collection used for Azure Disk Encryption, can contain multiple encryption settings per disk or snapshot. </param>
+        /// <param name="provisioningState"> The disk provisioning state. </param>
+        /// <param name="diskIopsReadWrite"> The number of IOPS allowed for this disk; only settable for UltraSSD disks. One operation can transfer between 4k and 256k bytes. </param>
+        /// <param name="diskMBpsReadWrite"> The bandwidth allowed for this disk; only settable for UltraSSD disks. MBps means millions of bytes per second - MB here uses the ISO notation, of powers of 10. </param>
+        /// <param name="diskIopsReadOnly"> The total number of IOPS that will be allowed across all VMs mounting the shared disk as ReadOnly. One operation can transfer between 4k and 256k bytes. </param>
+        /// <param name="diskMBpsReadOnly"> The total throughput (MBps) that will be allowed across all VMs mounting the shared disk as ReadOnly. MBps means millions of bytes per second - MB here uses the ISO notation, of powers of 10. </param>
+        /// <param name="diskState"> The state of the disk. </param>
+        /// <param name="encryption"> Encryption property can be used to encrypt data at rest with customer managed keys or platform managed keys. </param>
+        /// <param name="maxShares"> The maximum number of VMs that can attach to the disk at the same time. Value greater than one indicates a disk that can be mounted on multiple VMs at the same time. </param>
+        /// <param name="shareInfo"> Details of the list of all VMs that have the disk attached. maxShares should be set to a value greater than one for disks to allow attaching them to multiple VMs. </param>
+        /// <param name="networkAccessPolicy"> Policy for accessing the disk via network. </param>
+        /// <param name="diskAccessId"> ARM id of the DiskAccess resource for using private endpoints on disks. </param>
+        /// <param name="burstingEnabledOn"> Latest time when bursting was last enabled on a disk. </param>
+        /// <param name="tier"> Performance tier of the disk (e.g, P4, S10) as described here: https://azure.microsoft.com/en-us/pricing/details/managed-disks/. Does not apply to Ultra disks. </param>
+        /// <param name="burstingEnabled"> Set to true to enable bursting beyond the provisioned performance target of the disk. Bursting is disabled by default. Does not apply to Ultra disks. </param>
+        /// <param name="propertyUpdatesInProgressTargetTier"> Properties of the disk for which update is pending. </param>
+        /// <param name="supportsHibernation"> Indicates the OS on a disk supports hibernation. </param>
+        /// <param name="securityProfile"> Contains the security related information for the resource. </param>
+        /// <param name="completionPercent"> Percentage complete for the background copy when a resource is created via the CopyStart operation. </param>
+        /// <param name="publicNetworkAccess"> Policy for controlling export on the disk. </param>
+        /// <param name="dataAccessAuthMode"> Additional authentication requirements when exporting or uploading to a disk or snapshot. </param>
+        /// <param name="isOptimizedForFrequentAttach"> Setting this property to true improves reliability and performance of data disks that are frequently (more than 5 times a day) by detached from one virtual machine and attached to another. This property should not be set for disks that are not detached and attached frequently as it causes the disks to not align with the fault domain of the virtual machine. </param>
+        /// <param name="lastOwnershipUpdateOn"> The UTC time when the ownership state of the disk was last changed i.e., the time the disk was last attached or detached from a VM or the time when the VM to which the disk was attached was deallocated or started. </param>
+        /// <param name="availabilityActionOnDiskDelay"> Determines how platform treats disk failures. </param>
+        /// <returns> A new <see cref="Compute.ManagedDiskData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ManagedDiskData ManagedDiskData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceIdentifier managedBy, IEnumerable<ResourceIdentifier> managedByExtended, DiskSku sku, IEnumerable<string> zones, Resources.Models.ExtendedLocation extendedLocation, DateTimeOffset? timeCreated, SupportedOperatingSystemType? osType, HyperVGeneration? hyperVGeneration, DiskPurchasePlan purchasePlan, SupportedCapabilities supportedCapabilities, DiskCreationData creationData, int? diskSizeGB, long? diskSizeBytes, string uniqueId, EncryptionSettingsGroup encryptionSettingsGroup, string provisioningState, long? diskIopsReadWrite, long? diskMBpsReadWrite, long? diskIopsReadOnly, long? diskMBpsReadOnly, DiskState? diskState, DiskEncryption encryption, int? maxShares, IEnumerable<ShareInfoElement> shareInfo, NetworkAccessPolicy? networkAccessPolicy, ResourceIdentifier diskAccessId, DateTimeOffset? burstingEnabledOn, string tier, bool? burstingEnabled, string propertyUpdatesInProgressTargetTier, bool? supportsHibernation, DiskSecurityProfile securityProfile, float? completionPercent, DiskPublicNetworkAccess? publicNetworkAccess, DataAccessAuthMode? dataAccessAuthMode, bool? isOptimizedForFrequentAttach, DateTimeOffset? lastOwnershipUpdateOn, AvailabilityPolicyDiskDelay? availabilityActionOnDiskDelay)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            managedByExtended ??= new ChangeTrackingList<ResourceIdentifier>();
+            zones ??= new ChangeTrackingList<string>();
+            shareInfo ??= new ChangeTrackingList<ShareInfoElement>();
+
+            return new ManagedDiskData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                default,
+                managedBy,
+                managedByExtended.ToList(),
+                sku,
+                zones.ToList(),
+                extendedLocation);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.DiskCreationData"/>. </summary>
         /// <param name="createOption"> This enumerates the possible sources of a disk's creation. </param>
         /// <param name="storageAccountId"> Required if createOption is Import. The Azure Resource Manager identifier of the storage account containing the blob to import as a disk. </param>
@@ -6849,6 +6964,39 @@ namespace Azure.ResourceManager.Compute.Models
                 managedBy,
                 sku,
                 extendedLocation);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ManagedDiskPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="sku"> The disks sku name. Can be Standard_LRS, Premium_LRS, StandardSSD_LRS, UltraSSD_LRS, Premium_ZRS, StandardSSD_ZRS, or PremiumV2_LRS. </param>
+        /// <param name="osType"> the Operating System type. </param>
+        /// <param name="diskSizeGB"> If creationData.createOption is Empty, this field is mandatory and it indicates the size of the disk to create. If this field is present for updates or creation with other options, it indicates a resize. Resizes are only allowed if the disk is not attached to a running VM, and can only increase the disk's size. </param>
+        /// <param name="encryptionSettingsGroup"> Encryption settings collection used be Azure Disk Encryption, can contain multiple encryption settings per disk or snapshot. </param>
+        /// <param name="diskIopsReadWrite"> The number of IOPS allowed for this disk; only settable for UltraSSD disks. One operation can transfer between 4k and 256k bytes. </param>
+        /// <param name="diskMBpsReadWrite"> The bandwidth allowed for this disk; only settable for UltraSSD disks. MBps means millions of bytes per second - MB here uses the ISO notation, of powers of 10. </param>
+        /// <param name="diskIopsReadOnly"> The total number of IOPS that will be allowed across all VMs mounting the shared disk as ReadOnly. One operation can transfer between 4k and 256k bytes. </param>
+        /// <param name="diskMBpsReadOnly"> The total throughput (MBps) that will be allowed across all VMs mounting the shared disk as ReadOnly. MBps means millions of bytes per second - MB here uses the ISO notation, of powers of 10. </param>
+        /// <param name="maxShares"> The maximum number of VMs that can attach to the disk at the same time. Value greater than one indicates a disk that can be mounted on multiple VMs at the same time. </param>
+        /// <param name="encryption"> Encryption property can be used to encrypt data at rest with customer managed keys or platform managed keys. </param>
+        /// <param name="networkAccessPolicy"> Policy for accessing the disk via network. </param>
+        /// <param name="diskAccessId"> ARM id of the DiskAccess resource for using private endpoints on disks. </param>
+        /// <param name="tier"> Performance tier of the disk (e.g, P4, S10) as described here: https://azure.microsoft.com/en-us/pricing/details/managed-disks/. Does not apply to Ultra disks. </param>
+        /// <param name="burstingEnabled"> Set to true to enable bursting beyond the provisioned performance target of the disk. Bursting is disabled by default. Does not apply to Ultra disks. </param>
+        /// <param name="purchasePlan"> Purchase plan information to be added on the OS disk. </param>
+        /// <param name="supportedCapabilities"> List of supported capabilities to be added on the OS disk. </param>
+        /// <param name="propertyUpdatesInProgressTargetTier"> Properties of the disk for which update is pending. </param>
+        /// <param name="supportsHibernation"> Indicates the OS on a disk supports hibernation. </param>
+        /// <param name="publicNetworkAccess"> Policy for controlling export on the disk. </param>
+        /// <param name="dataAccessAuthMode"> Additional authentication requirements when exporting or uploading to a disk or snapshot. </param>
+        /// <param name="isOptimizedForFrequentAttach"> Setting this property to true improves reliability and performance of data disks that are frequently (more than 5 times a day) by detached from one virtual machine and attached to another. This property should not be set for disks that are not detached and attached frequently as it causes the disks to not align with the fault domain of the virtual machine. </param>
+        /// <param name="availabilityActionOnDiskDelay"> Determines how platform treats disk failures. </param>
+        /// <returns> A new <see cref="Models.ManagedDiskPatch"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ManagedDiskPatch ManagedDiskPatch(IDictionary<string, string> tags, DiskSku sku, SupportedOperatingSystemType? osType, int? diskSizeGB, EncryptionSettingsGroup encryptionSettingsGroup, long? diskIopsReadWrite, long? diskMBpsReadWrite, long? diskIopsReadOnly, long? diskMBpsReadOnly, int? maxShares, DiskEncryption encryption, NetworkAccessPolicy? networkAccessPolicy, ResourceIdentifier diskAccessId, string tier, bool? burstingEnabled, DiskPurchasePlan purchasePlan, SupportedCapabilities supportedCapabilities, string propertyUpdatesInProgressTargetTier, bool? supportsHibernation, DiskPublicNetworkAccess? publicNetworkAccess, DataAccessAuthMode? dataAccessAuthMode, bool? isOptimizedForFrequentAttach, AvailabilityPolicyDiskDelay? availabilityActionOnDiskDelay)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ManagedDiskPatch(default, tags, sku, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SnapshotPatch"/>. </summary>
@@ -7530,6 +7678,35 @@ namespace Azure.ResourceManager.Compute.Models
                 additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Compute.RestorePointGroupData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="source"> The properties of the source resource that this restore point collection is created from. </param>
+        /// <param name="provisioningState"> The provisioning state of the restore point collection. </param>
+        /// <param name="restorePointGroupId"> The unique id of the restore point collection. </param>
+        /// <param name="restorePoints"> A list containing all restore points created under this restore point collection. </param>
+        /// <returns> A new <see cref="Compute.RestorePointGroupData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static RestorePointGroupData RestorePointGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, RestorePointGroupSource source, string provisioningState, string restorePointGroupId, IEnumerable<RestorePointData> restorePoints)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            restorePoints ??= new ChangeTrackingList<RestorePointData>();
+
+            return new RestorePointGroupData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                default);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Compute.RestorePointData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -7565,6 +7742,22 @@ namespace Azure.ResourceManager.Compute.Models
         public static DiskRestorePointInstanceView DiskRestorePointInstanceView(string id, DiskRestorePointReplicationStatus replicationStatus)
         {
             return DiskRestorePointInstanceView(id, snapshotAccessState: default, replicationStatus);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.RestorePointGroupPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="source"> The properties of the source resource that this restore point collection is created from. </param>
+        /// <param name="provisioningState"> The provisioning state of the restore point collection. </param>
+        /// <param name="restorePointGroupId"> The unique id of the restore point collection. </param>
+        /// <param name="restorePoints"> A list containing all restore points created under this restore point collection. </param>
+        /// <returns> A new <see cref="Models.RestorePointGroupPatch"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static RestorePointGroupPatch RestorePointGroupPatch(IDictionary<string, string> tags, RestorePointGroupSource source, string provisioningState, string restorePointGroupId, IEnumerable<RestorePointData> restorePoints)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            restorePoints ??= new ChangeTrackingList<RestorePointData>();
+
+            return new RestorePointGroupPatch(tags, additionalBinaryDataProperties: null, default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Compute.CapacityReservationGroupData"/>. </summary>
@@ -7725,6 +7918,75 @@ namespace Azure.ResourceManager.Compute.Models
             return OrchestrationServiceSummary(serviceName, serviceState, latestOperationStatus: default, lastStatusChangeOn: default);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Compute.ManagedDiskData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="managedBy"> A relative URI containing the ID of the VM that has the disk attached. </param>
+        /// <param name="managedByExtended"> List of relative URIs containing the IDs of the VMs that have the disk attached. maxShares should be set to a value greater than one for disks to allow attaching them to multiple VMs. </param>
+        /// <param name="sku"> The disks sku name. Can be Standard_LRS, Premium_LRS, StandardSSD_LRS, UltraSSD_LRS, Premium_ZRS, StandardSSD_ZRS, or PremiumV2_LRS. </param>
+        /// <param name="zones"> The Logical zone list for Disk. </param>
+        /// <param name="extendedLocation"> The extended location where the disk will be created. Extended location cannot be changed. </param>
+        /// <param name="timeCreated"> The time when the disk was created. </param>
+        /// <param name="osType"> The Operating System type. </param>
+        /// <param name="hyperVGeneration"> The hypervisor generation of the Virtual Machine. Applicable to OS disks only. </param>
+        /// <param name="purchasePlan"> Purchase plan information for the the image from which the OS disk was created. E.g. - {name: 2019-Datacenter, publisher: MicrosoftWindowsServer, product: WindowsServer}. </param>
+        /// <param name="supportedCapabilities"> List of supported capabilities for the image from which the OS disk was created. </param>
+        /// <param name="creationData"> Disk source information. CreationData information cannot be changed after the disk has been created. </param>
+        /// <param name="diskSizeGB"> If creationData.createOption is Empty, this field is mandatory and it indicates the size of the disk to create. If this field is present for updates or creation with other options, it indicates a resize. Resizes are only allowed if the disk is not attached to a running VM, and can only increase the disk's size. </param>
+        /// <param name="diskSizeBytes"> The size of the disk in bytes. This field is read only. </param>
+        /// <param name="uniqueId"> Unique Guid identifying the resource. </param>
+        /// <param name="encryptionSettingsGroup"> Encryption settings collection used for Azure Disk Encryption, can contain multiple encryption settings per disk or snapshot. </param>
+        /// <param name="provisioningState"> The disk provisioning state. </param>
+        /// <param name="diskIopsReadWrite"> The number of IOPS allowed for this disk; only settable for UltraSSD disks. One operation can transfer between 4k and 256k bytes. </param>
+        /// <param name="diskMBpsReadWrite"> The bandwidth allowed for this disk; only settable for UltraSSD disks. MBps means millions of bytes per second - MB here uses the ISO notation, of powers of 10. </param>
+        /// <param name="diskIopsReadOnly"> The total number of IOPS that will be allowed across all VMs mounting the shared disk as ReadOnly. One operation can transfer between 4k and 256k bytes. </param>
+        /// <param name="diskMBpsReadOnly"> The total throughput (MBps) that will be allowed across all VMs mounting the shared disk as ReadOnly. MBps means millions of bytes per second - MB here uses the ISO notation, of powers of 10. </param>
+        /// <param name="diskState"> The state of the disk. </param>
+        /// <param name="encryption"> Encryption property can be used to encrypt data at rest with customer managed keys or platform managed keys. </param>
+        /// <param name="maxShares"> The maximum number of VMs that can attach to the disk at the same time. Value greater than one indicates a disk that can be mounted on multiple VMs at the same time. </param>
+        /// <param name="shareInfo"> Details of the list of all VMs that have the disk attached. maxShares should be set to a value greater than one for disks to allow attaching them to multiple VMs. </param>
+        /// <param name="networkAccessPolicy"> Policy for accessing the disk via network. </param>
+        /// <param name="diskAccessId"> ARM id of the DiskAccess resource for using private endpoints on disks. </param>
+        /// <param name="burstingEnabledOn"> Latest time when bursting was last enabled on a disk. </param>
+        /// <param name="tier"> Performance tier of the disk (e.g, P4, S10) as described here: https://azure.microsoft.com/en-us/pricing/details/managed-disks/. Does not apply to Ultra disks. </param>
+        /// <param name="burstingEnabled"> Set to true to enable bursting beyond the provisioned performance target of the disk. Bursting is disabled by default. Does not apply to Ultra disks. </param>
+        /// <param name="propertyUpdatesInProgressTargetTier"> Properties of the disk for which update is pending. </param>
+        /// <param name="supportsHibernation"> Indicates the OS on a disk supports hibernation. </param>
+        /// <param name="securityProfile"> Contains the security related information for the resource. </param>
+        /// <param name="completionPercent"> Percentage complete for the background copy when a resource is created via the CopyStart operation. </param>
+        /// <param name="publicNetworkAccess"> Policy for controlling export on the disk. </param>
+        /// <param name="dataAccessAuthMode"> Additional authentication requirements when exporting or uploading to a disk or snapshot. </param>
+        /// <param name="isOptimizedForFrequentAttach"> Setting this property to true improves reliability and performance of data disks that are frequently (more than 5 times a day) by detached from one virtual machine and attached to another. This property should not be set for disks that are not detached and attached frequently as it causes the disks to not align with the fault domain of the virtual machine. </param>
+        /// <param name="lastOwnershipUpdateOn"> The UTC time when the ownership state of the disk was last changed i.e., the time the disk was last attached or detached from a VM or the time when the VM to which the disk was attached was deallocated or started. </param>
+        /// <returns> A new <see cref="Compute.ManagedDiskData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ManagedDiskData ManagedDiskData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceIdentifier managedBy, IEnumerable<ResourceIdentifier> managedByExtended, DiskSku sku, IEnumerable<string> zones, Resources.Models.ExtendedLocation extendedLocation, DateTimeOffset? timeCreated, SupportedOperatingSystemType? osType, HyperVGeneration? hyperVGeneration, DiskPurchasePlan purchasePlan, SupportedCapabilities supportedCapabilities, DiskCreationData creationData, int? diskSizeGB, long? diskSizeBytes, string uniqueId, EncryptionSettingsGroup encryptionSettingsGroup, string provisioningState, long? diskIopsReadWrite, long? diskMBpsReadWrite, long? diskIopsReadOnly, long? diskMBpsReadOnly, DiskState? diskState, DiskEncryption encryption, int? maxShares, IEnumerable<ShareInfoElement> shareInfo, NetworkAccessPolicy? networkAccessPolicy, ResourceIdentifier diskAccessId, DateTimeOffset? burstingEnabledOn, string tier, bool? burstingEnabled, string propertyUpdatesInProgressTargetTier, bool? supportsHibernation, DiskSecurityProfile securityProfile, float? completionPercent, DiskPublicNetworkAccess? publicNetworkAccess, DataAccessAuthMode? dataAccessAuthMode, bool? isOptimizedForFrequentAttach, DateTimeOffset? lastOwnershipUpdateOn)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            managedByExtended ??= new ChangeTrackingList<ResourceIdentifier>();
+            zones ??= new ChangeTrackingList<string>();
+            shareInfo ??= new ChangeTrackingList<ShareInfoElement>();
+
+            return new ManagedDiskData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                default,
+                managedBy,
+                managedByExtended.ToList(),
+                sku,
+                zones.ToList(),
+                extendedLocation);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.DiskCreationData"/>. </summary>
         /// <param name="createOption"> This enumerates the possible sources of a disk's creation. </param>
         /// <param name="storageAccountId"> Required if createOption is Import. The Azure Resource Manager identifier of the storage account containing the blob to import as a disk. </param>
@@ -7760,6 +8022,38 @@ namespace Azure.ResourceManager.Compute.Models
                 provisionedBandwidthCopySpeed,
                 default,
                 additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ManagedDiskPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="sku"> The disks sku name. Can be Standard_LRS, Premium_LRS, StandardSSD_LRS, UltraSSD_LRS, Premium_ZRS, StandardSSD_ZRS, or PremiumV2_LRS. </param>
+        /// <param name="osType"> the Operating System type. </param>
+        /// <param name="diskSizeGB"> If creationData.createOption is Empty, this field is mandatory and it indicates the size of the disk to create. If this field is present for updates or creation with other options, it indicates a resize. Resizes are only allowed if the disk is not attached to a running VM, and can only increase the disk's size. </param>
+        /// <param name="encryptionSettingsGroup"> Encryption settings collection used be Azure Disk Encryption, can contain multiple encryption settings per disk or snapshot. </param>
+        /// <param name="diskIopsReadWrite"> The number of IOPS allowed for this disk; only settable for UltraSSD disks. One operation can transfer between 4k and 256k bytes. </param>
+        /// <param name="diskMBpsReadWrite"> The bandwidth allowed for this disk; only settable for UltraSSD disks. MBps means millions of bytes per second - MB here uses the ISO notation, of powers of 10. </param>
+        /// <param name="diskIopsReadOnly"> The total number of IOPS that will be allowed across all VMs mounting the shared disk as ReadOnly. One operation can transfer between 4k and 256k bytes. </param>
+        /// <param name="diskMBpsReadOnly"> The total throughput (MBps) that will be allowed across all VMs mounting the shared disk as ReadOnly. MBps means millions of bytes per second - MB here uses the ISO notation, of powers of 10. </param>
+        /// <param name="maxShares"> The maximum number of VMs that can attach to the disk at the same time. Value greater than one indicates a disk that can be mounted on multiple VMs at the same time. </param>
+        /// <param name="encryption"> Encryption property can be used to encrypt data at rest with customer managed keys or platform managed keys. </param>
+        /// <param name="networkAccessPolicy"> Policy for accessing the disk via network. </param>
+        /// <param name="diskAccessId"> ARM id of the DiskAccess resource for using private endpoints on disks. </param>
+        /// <param name="tier"> Performance tier of the disk (e.g, P4, S10) as described here: https://azure.microsoft.com/en-us/pricing/details/managed-disks/. Does not apply to Ultra disks. </param>
+        /// <param name="burstingEnabled"> Set to true to enable bursting beyond the provisioned performance target of the disk. Bursting is disabled by default. Does not apply to Ultra disks. </param>
+        /// <param name="purchasePlan"> Purchase plan information to be added on the OS disk. </param>
+        /// <param name="supportedCapabilities"> List of supported capabilities to be added on the OS disk. </param>
+        /// <param name="propertyUpdatesInProgressTargetTier"> Properties of the disk for which update is pending. </param>
+        /// <param name="supportsHibernation"> Indicates the OS on a disk supports hibernation. </param>
+        /// <param name="publicNetworkAccess"> Policy for controlling export on the disk. </param>
+        /// <param name="dataAccessAuthMode"> Additional authentication requirements when exporting or uploading to a disk or snapshot. </param>
+        /// <param name="isOptimizedForFrequentAttach"> Setting this property to true improves reliability and performance of data disks that are frequently (more than 5 times a day) by detached from one virtual machine and attached to another. This property should not be set for disks that are not detached and attached frequently as it causes the disks to not align with the fault domain of the virtual machine. </param>
+        /// <returns> A new <see cref="Models.ManagedDiskPatch"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ManagedDiskPatch ManagedDiskPatch(IDictionary<string, string> tags, DiskSku sku, SupportedOperatingSystemType? osType, int? diskSizeGB, EncryptionSettingsGroup encryptionSettingsGroup, long? diskIopsReadWrite, long? diskMBpsReadWrite, long? diskIopsReadOnly, long? diskMBpsReadOnly, int? maxShares, DiskEncryption encryption, NetworkAccessPolicy? networkAccessPolicy, ResourceIdentifier diskAccessId, string tier, bool? burstingEnabled, DiskPurchasePlan purchasePlan, SupportedCapabilities supportedCapabilities, string propertyUpdatesInProgressTargetTier, bool? supportsHibernation, DiskPublicNetworkAccess? publicNetworkAccess, DataAccessAuthMode? dataAccessAuthMode, bool? isOptimizedForFrequentAttach)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ManagedDiskPatch(default, tags, sku, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AccessUri"/>. </summary>

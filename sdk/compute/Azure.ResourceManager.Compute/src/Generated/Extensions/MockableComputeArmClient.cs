@@ -143,22 +143,22 @@ namespace Azure.ResourceManager.Compute.Mocking
             return new SshPublicKeyResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="ImageResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="DiskImageResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ImageResource"/> object. </returns>
-        public virtual ImageResource GetImageResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DiskImageResource"/> object. </returns>
+        public virtual DiskImageResource GetDiskImageResource(ResourceIdentifier id)
         {
-            ImageResource.ValidateResourceId(id);
-            return new ImageResource(Client, id);
+            DiskImageResource.ValidateResourceId(id);
+            return new DiskImageResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="RestorePointCollectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="RestorePointGroupResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RestorePointCollectionResource"/> object. </returns>
-        public virtual RestorePointCollectionResource GetRestorePointCollectionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="RestorePointGroupResource"/> object. </returns>
+        public virtual RestorePointGroupResource GetRestorePointGroupResource(ResourceIdentifier id)
         {
-            RestorePointCollectionResource.ValidateResourceId(id);
-            return new RestorePointCollectionResource(Client, id);
+            RestorePointGroupResource.ValidateResourceId(id);
+            return new RestorePointGroupResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="RestorePointResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -197,22 +197,22 @@ namespace Azure.ResourceManager.Compute.Mocking
             return new VirtualMachineRunCommandResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="VirtualMachineScaleSetVMRunCommandResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="VirtualMachineScaleSetVmRunCommandResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VirtualMachineScaleSetVMRunCommandResource"/> object. </returns>
-        public virtual VirtualMachineScaleSetVMRunCommandResource GetVirtualMachineScaleSetVMRunCommandResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="VirtualMachineScaleSetVmRunCommandResource"/> object. </returns>
+        public virtual VirtualMachineScaleSetVmRunCommandResource GetVirtualMachineScaleSetVmRunCommandResource(ResourceIdentifier id)
         {
-            VirtualMachineScaleSetVMRunCommandResource.ValidateResourceId(id);
-            return new VirtualMachineScaleSetVMRunCommandResource(Client, id);
+            VirtualMachineScaleSetVmRunCommandResource.ValidateResourceId(id);
+            return new VirtualMachineScaleSetVmRunCommandResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="DiskResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="ManagedDiskResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DiskResource"/> object. </returns>
-        public virtual DiskResource GetDiskResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ManagedDiskResource"/> object. </returns>
+        public virtual ManagedDiskResource GetManagedDiskResource(ResourceIdentifier id)
         {
-            DiskResource.ValidateResourceId(id);
-            return new DiskResource(Client, id);
+            ManagedDiskResource.ValidateResourceId(id);
+            return new ManagedDiskResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="DiskAccessResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -224,13 +224,13 @@ namespace Azure.ResourceManager.Compute.Mocking
             return new DiskAccessResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="PrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="ComputePrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PrivateEndpointConnectionResource"/> object. </returns>
-        public virtual PrivateEndpointConnectionResource GetPrivateEndpointConnectionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ComputePrivateEndpointConnectionResource"/> object. </returns>
+        public virtual ComputePrivateEndpointConnectionResource GetComputePrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            PrivateEndpointConnectionResource.ValidateResourceId(id);
-            return new PrivateEndpointConnectionResource(Client, id);
+            ComputePrivateEndpointConnectionResource.ValidateResourceId(id);
+            return new ComputePrivateEndpointConnectionResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="DiskEncryptionSetResource"/> along with the instance operations that can be performed on it but with no data. </summary>

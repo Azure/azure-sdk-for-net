@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Compute
         {
             if (id.ResourceType != GalleryResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, GalleryResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, GalleryResource.ResourceType), nameof(id));
             }
         }
 

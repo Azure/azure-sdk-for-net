@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of <see cref="ImageListResult"/>. </summary>
         /// <param name="value"> The list of Images. </param>
-        internal ImageListResult(IEnumerable<ImageData> value)
+        internal ImageListResult(IEnumerable<DiskImageData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="value"> The list of Images. </param>
         /// <param name="nextLink"> The uri to fetch the next page of Images. Call ListNext() with this to fetch the next page of Images. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ImageListResult(IList<ImageData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ImageListResult(IList<DiskImageData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The list of Images. </summary>
-        public IList<ImageData> Value { get; }
+        public IList<DiskImageData> Value { get; }
 
         /// <summary> The uri to fetch the next page of Images. Call ListNext() with this to fetch the next page of Images. </summary>
         public Uri NextLink { get; }

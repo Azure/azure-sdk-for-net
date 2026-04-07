@@ -19,28 +19,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary>
-    /// A class representing a collection of <see cref="VirtualMachineScaleSetVMRunCommandResource"/> and their operations.
-    /// Each <see cref="VirtualMachineScaleSetVMRunCommandResource"/> in the collection will belong to the same instance of <see cref="VirtualMachineScaleSetVmResource"/>.
-    /// To get a <see cref="VirtualMachineScaleSetVMRunCommandCollection"/> instance call the GetVirtualMachineScaleSetVMRunCommands method from an instance of <see cref="VirtualMachineScaleSetVmResource"/>.
+    /// A class representing a collection of <see cref="VirtualMachineScaleSetVmRunCommandResource"/> and their operations.
+    /// Each <see cref="VirtualMachineScaleSetVmRunCommandResource"/> in the collection will belong to the same instance of <see cref="VirtualMachineScaleSetVmResource"/>.
+    /// To get a <see cref="VirtualMachineScaleSetVmRunCommandCollection"/> instance call the GetVirtualMachineScaleSetVmRunCommands method from an instance of <see cref="VirtualMachineScaleSetVmResource"/>.
     /// </summary>
-    public partial class VirtualMachineScaleSetVMRunCommandCollection : ArmCollection, IEnumerable<VirtualMachineScaleSetVMRunCommandResource>, IAsyncEnumerable<VirtualMachineScaleSetVMRunCommandResource>
+    public partial class VirtualMachineScaleSetVmRunCommandCollection : ArmCollection, IEnumerable<VirtualMachineScaleSetVmRunCommandResource>, IAsyncEnumerable<VirtualMachineScaleSetVmRunCommandResource>
     {
-        private readonly ClientDiagnostics _virtualMachineScaleSetVMRunCommandsClientDiagnostics;
-        private readonly VirtualMachineScaleSetVMRunCommands _virtualMachineScaleSetVMRunCommandsRestClient;
+        private readonly ClientDiagnostics _virtualMachineScaleSetVmRunCommandsClientDiagnostics;
+        private readonly VirtualMachineScaleSetVmRunCommands _virtualMachineScaleSetVmRunCommandsRestClient;
 
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetVMRunCommandCollection for mocking. </summary>
-        protected VirtualMachineScaleSetVMRunCommandCollection()
+        /// <summary> Initializes a new instance of VirtualMachineScaleSetVmRunCommandCollection for mocking. </summary>
+        protected VirtualMachineScaleSetVmRunCommandCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetVMRunCommandCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetVmRunCommandCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal VirtualMachineScaleSetVMRunCommandCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal VirtualMachineScaleSetVmRunCommandCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(VirtualMachineScaleSetVMRunCommandResource.ResourceType, out string virtualMachineScaleSetVMRunCommandApiVersion);
-            _virtualMachineScaleSetVMRunCommandsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", VirtualMachineScaleSetVMRunCommandResource.ResourceType.Namespace, Diagnostics);
-            _virtualMachineScaleSetVMRunCommandsRestClient = new VirtualMachineScaleSetVMRunCommands(_virtualMachineScaleSetVMRunCommandsClientDiagnostics, Pipeline, Endpoint, virtualMachineScaleSetVMRunCommandApiVersion ?? "2025-04-01");
+            TryGetApiVersion(VirtualMachineScaleSetVmRunCommandResource.ResourceType, out string virtualMachineScaleSetVmRunCommandApiVersion);
+            _virtualMachineScaleSetVmRunCommandsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", VirtualMachineScaleSetVmRunCommandResource.ResourceType.Namespace, Diagnostics);
+            _virtualMachineScaleSetVmRunCommandsRestClient = new VirtualMachineScaleSetVmRunCommands(_virtualMachineScaleSetVmRunCommandsClientDiagnostics, Pipeline, Endpoint, virtualMachineScaleSetVmRunCommandApiVersion ?? "2025-04-01");
             ValidateResourceId(id);
         }
 
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Compute
         {
             if (id.ResourceType != VirtualMachineScaleSetVmResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, VirtualMachineScaleSetVmResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, VirtualMachineScaleSetVmResource.ResourceType), nameof(id));
             }
         }
 
@@ -77,12 +77,12 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="runCommandName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="runCommandName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<VirtualMachineScaleSetVMRunCommandResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string runCommandName, VirtualMachineRunCommandData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<VirtualMachineScaleSetVmRunCommandResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string runCommandName, VirtualMachineRunCommandData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(runCommandName, nameof(runCommandName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _virtualMachineScaleSetVMRunCommandsClientDiagnostics.CreateScope("VirtualMachineScaleSetVMRunCommandCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _virtualMachineScaleSetVmRunCommandsClientDiagnostics.CreateScope("VirtualMachineScaleSetVmRunCommandCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -90,11 +90,11 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetVMRunCommandsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, runCommandName, VirtualMachineRunCommandData.ToRequestContent(data), context);
+                HttpMessage message = _virtualMachineScaleSetVmRunCommandsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, runCommandName, VirtualMachineRunCommandData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ComputeArmOperation<VirtualMachineScaleSetVMRunCommandResource> operation = new ComputeArmOperation<VirtualMachineScaleSetVMRunCommandResource>(
-                    new VirtualMachineScaleSetVMRunCommandOperationSource(Client),
-                    _virtualMachineScaleSetVMRunCommandsClientDiagnostics,
+                ComputeArmOperation<VirtualMachineScaleSetVmRunCommandResource> operation = new ComputeArmOperation<VirtualMachineScaleSetVmRunCommandResource>(
+                    new VirtualMachineScaleSetVmRunCommandOperationSource(Client),
+                    _virtualMachineScaleSetVmRunCommandsClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -135,12 +135,12 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="runCommandName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="runCommandName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<VirtualMachineScaleSetVMRunCommandResource> CreateOrUpdate(WaitUntil waitUntil, string runCommandName, VirtualMachineRunCommandData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<VirtualMachineScaleSetVmRunCommandResource> CreateOrUpdate(WaitUntil waitUntil, string runCommandName, VirtualMachineRunCommandData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(runCommandName, nameof(runCommandName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _virtualMachineScaleSetVMRunCommandsClientDiagnostics.CreateScope("VirtualMachineScaleSetVMRunCommandCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _virtualMachineScaleSetVmRunCommandsClientDiagnostics.CreateScope("VirtualMachineScaleSetVmRunCommandCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -148,11 +148,11 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetVMRunCommandsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, runCommandName, VirtualMachineRunCommandData.ToRequestContent(data), context);
+                HttpMessage message = _virtualMachineScaleSetVmRunCommandsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, runCommandName, VirtualMachineRunCommandData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ComputeArmOperation<VirtualMachineScaleSetVMRunCommandResource> operation = new ComputeArmOperation<VirtualMachineScaleSetVMRunCommandResource>(
-                    new VirtualMachineScaleSetVMRunCommandOperationSource(Client),
-                    _virtualMachineScaleSetVMRunCommandsClientDiagnostics,
+                ComputeArmOperation<VirtualMachineScaleSetVmRunCommandResource> operation = new ComputeArmOperation<VirtualMachineScaleSetVmRunCommandResource>(
+                    new VirtualMachineScaleSetVmRunCommandOperationSource(Client),
+                    _virtualMachineScaleSetVmRunCommandsClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -192,11 +192,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="runCommandName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="runCommandName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<VirtualMachineScaleSetVMRunCommandResource>> GetAsync(string runCommandName, string expand = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VirtualMachineScaleSetVmRunCommandResource>> GetAsync(string runCommandName, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(runCommandName, nameof(runCommandName));
 
-            using DiagnosticScope scope = _virtualMachineScaleSetVMRunCommandsClientDiagnostics.CreateScope("VirtualMachineScaleSetVMRunCommandCollection.Get");
+            using DiagnosticScope scope = _virtualMachineScaleSetVmRunCommandsClientDiagnostics.CreateScope("VirtualMachineScaleSetVmRunCommandCollection.Get");
             scope.Start();
             try
             {
@@ -204,14 +204,14 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetVMRunCommandsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, runCommandName, expand, context);
+                HttpMessage message = _virtualMachineScaleSetVmRunCommandsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, runCommandName, expand, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<VirtualMachineRunCommandData> response = Response.FromValue(VirtualMachineRunCommandData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new VirtualMachineScaleSetVMRunCommandResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VirtualMachineScaleSetVmRunCommandResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -242,11 +242,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="runCommandName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="runCommandName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<VirtualMachineScaleSetVMRunCommandResource> Get(string runCommandName, string expand = default, CancellationToken cancellationToken = default)
+        public virtual Response<VirtualMachineScaleSetVmRunCommandResource> Get(string runCommandName, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(runCommandName, nameof(runCommandName));
 
-            using DiagnosticScope scope = _virtualMachineScaleSetVMRunCommandsClientDiagnostics.CreateScope("VirtualMachineScaleSetVMRunCommandCollection.Get");
+            using DiagnosticScope scope = _virtualMachineScaleSetVmRunCommandsClientDiagnostics.CreateScope("VirtualMachineScaleSetVmRunCommandCollection.Get");
             scope.Start();
             try
             {
@@ -254,14 +254,14 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetVMRunCommandsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, runCommandName, expand, context);
+                HttpMessage message = _virtualMachineScaleSetVmRunCommandsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, runCommandName, expand, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<VirtualMachineRunCommandData> response = Response.FromValue(VirtualMachineRunCommandData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new VirtualMachineScaleSetVMRunCommandResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VirtualMachineScaleSetVmRunCommandResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -289,21 +289,21 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VirtualMachineScaleSetVMRunCommandResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VirtualMachineScaleSetVMRunCommandResource> GetAllAsync(string expand = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualMachineScaleSetVmRunCommandResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualMachineScaleSetVmRunCommandResource> GetAllAsync(string expand = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VirtualMachineRunCommandData, VirtualMachineScaleSetVMRunCommandResource>(new VirtualMachineScaleSetVMRunCommandsGetAllAsyncCollectionResultOfT(
-                _virtualMachineScaleSetVMRunCommandsRestClient,
+            return new AsyncPageableWrapper<VirtualMachineRunCommandData, VirtualMachineScaleSetVmRunCommandResource>(new VirtualMachineScaleSetVmRunCommandsGetAllAsyncCollectionResultOfT(
+                _virtualMachineScaleSetVmRunCommandsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
                 expand,
-                context), data => new VirtualMachineScaleSetVMRunCommandResource(Client, data));
+                context), data => new VirtualMachineScaleSetVmRunCommandResource(Client, data));
         }
 
         /// <summary>
@@ -325,21 +325,21 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VirtualMachineScaleSetVMRunCommandResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VirtualMachineScaleSetVMRunCommandResource> GetAll(string expand = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualMachineScaleSetVmRunCommandResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualMachineScaleSetVmRunCommandResource> GetAll(string expand = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VirtualMachineRunCommandData, VirtualMachineScaleSetVMRunCommandResource>(new VirtualMachineScaleSetVMRunCommandsGetAllCollectionResultOfT(
-                _virtualMachineScaleSetVMRunCommandsRestClient,
+            return new PageableWrapper<VirtualMachineRunCommandData, VirtualMachineScaleSetVmRunCommandResource>(new VirtualMachineScaleSetVmRunCommandsGetAllCollectionResultOfT(
+                _virtualMachineScaleSetVmRunCommandsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
                 expand,
-                context), data => new VirtualMachineScaleSetVMRunCommandResource(Client, data));
+                context), data => new VirtualMachineScaleSetVmRunCommandResource(Client, data));
         }
 
         /// <summary>
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNullOrEmpty(runCommandName, nameof(runCommandName));
 
-            using DiagnosticScope scope = _virtualMachineScaleSetVMRunCommandsClientDiagnostics.CreateScope("VirtualMachineScaleSetVMRunCommandCollection.Exists");
+            using DiagnosticScope scope = _virtualMachineScaleSetVmRunCommandsClientDiagnostics.CreateScope("VirtualMachineScaleSetVmRunCommandCollection.Exists");
             scope.Start();
             try
             {
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetVMRunCommandsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, runCommandName, expand, context);
+                HttpMessage message = _virtualMachineScaleSetVmRunCommandsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, runCommandName, expand, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<VirtualMachineRunCommandData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNullOrEmpty(runCommandName, nameof(runCommandName));
 
-            using DiagnosticScope scope = _virtualMachineScaleSetVMRunCommandsClientDiagnostics.CreateScope("VirtualMachineScaleSetVMRunCommandCollection.Exists");
+            using DiagnosticScope scope = _virtualMachineScaleSetVmRunCommandsClientDiagnostics.CreateScope("VirtualMachineScaleSetVmRunCommandCollection.Exists");
             scope.Start();
             try
             {
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetVMRunCommandsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, runCommandName, expand, context);
+                HttpMessage message = _virtualMachineScaleSetVmRunCommandsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, runCommandName, expand, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<VirtualMachineRunCommandData> response = default;
@@ -480,11 +480,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="runCommandName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="runCommandName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<VirtualMachineScaleSetVMRunCommandResource>> GetIfExistsAsync(string runCommandName, string expand = default, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<VirtualMachineScaleSetVmRunCommandResource>> GetIfExistsAsync(string runCommandName, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(runCommandName, nameof(runCommandName));
 
-            using DiagnosticScope scope = _virtualMachineScaleSetVMRunCommandsClientDiagnostics.CreateScope("VirtualMachineScaleSetVMRunCommandCollection.GetIfExists");
+            using DiagnosticScope scope = _virtualMachineScaleSetVmRunCommandsClientDiagnostics.CreateScope("VirtualMachineScaleSetVmRunCommandCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -492,7 +492,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetVMRunCommandsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, runCommandName, expand, context);
+                HttpMessage message = _virtualMachineScaleSetVmRunCommandsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, runCommandName, expand, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<VirtualMachineRunCommandData> response = default;
@@ -509,9 +509,9 @@ namespace Azure.ResourceManager.Compute
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<VirtualMachineScaleSetVMRunCommandResource>(response.GetRawResponse());
+                    return new NoValueResponse<VirtualMachineScaleSetVmRunCommandResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new VirtualMachineScaleSetVMRunCommandResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VirtualMachineScaleSetVmRunCommandResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -542,11 +542,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="runCommandName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="runCommandName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<VirtualMachineScaleSetVMRunCommandResource> GetIfExists(string runCommandName, string expand = default, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<VirtualMachineScaleSetVmRunCommandResource> GetIfExists(string runCommandName, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(runCommandName, nameof(runCommandName));
 
-            using DiagnosticScope scope = _virtualMachineScaleSetVMRunCommandsClientDiagnostics.CreateScope("VirtualMachineScaleSetVMRunCommandCollection.GetIfExists");
+            using DiagnosticScope scope = _virtualMachineScaleSetVmRunCommandsClientDiagnostics.CreateScope("VirtualMachineScaleSetVmRunCommandCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -554,7 +554,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetVMRunCommandsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, runCommandName, expand, context);
+                HttpMessage message = _virtualMachineScaleSetVmRunCommandsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, runCommandName, expand, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<VirtualMachineRunCommandData> response = default;
@@ -571,9 +571,9 @@ namespace Azure.ResourceManager.Compute
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<VirtualMachineScaleSetVMRunCommandResource>(response.GetRawResponse());
+                    return new NoValueResponse<VirtualMachineScaleSetVmRunCommandResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new VirtualMachineScaleSetVMRunCommandResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VirtualMachineScaleSetVmRunCommandResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -582,7 +582,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        IEnumerator<VirtualMachineScaleSetVMRunCommandResource> IEnumerable<VirtualMachineScaleSetVMRunCommandResource>.GetEnumerator()
+        IEnumerator<VirtualMachineScaleSetVmRunCommandResource> IEnumerable<VirtualMachineScaleSetVmRunCommandResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -593,7 +593,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<VirtualMachineScaleSetVMRunCommandResource> IAsyncEnumerable<VirtualMachineScaleSetVMRunCommandResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<VirtualMachineScaleSetVmRunCommandResource> IAsyncEnumerable<VirtualMachineScaleSetVmRunCommandResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

@@ -755,14 +755,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ImageResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ImageResource> GetImagesAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DiskImageResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DiskImageResource> GetDiskImagesAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ImageData, ImageResource>(new ImagesGetAllAsyncCollectionResultOfT(ImagesRestClient, Id.SubscriptionId, context), data => new ImageResource(Client, data));
+            return new AsyncPageableWrapper<DiskImageData, DiskImageResource>(new ImagesGetAllAsyncCollectionResultOfT(ImagesRestClient, Id.SubscriptionId, context), data => new DiskImageResource(Client, data));
         }
 
         /// <summary>
@@ -783,14 +783,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ImageResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ImageResource> GetImages(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DiskImageResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DiskImageResource> GetDiskImages(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ImageData, ImageResource>(new ImagesGetAllCollectionResultOfT(ImagesRestClient, Id.SubscriptionId, context), data => new ImageResource(Client, data));
+            return new PageableWrapper<DiskImageData, DiskImageResource>(new ImagesGetAllCollectionResultOfT(ImagesRestClient, Id.SubscriptionId, context), data => new DiskImageResource(Client, data));
         }
 
         /// <summary>
@@ -811,14 +811,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RestorePointCollectionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RestorePointCollectionResource> GetRestorePointCollectionsAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="RestorePointGroupResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<RestorePointGroupResource> GetRestorePointGroupsAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RestorePointCollectionData, RestorePointCollectionResource>(new RestorePointCollectionsSubscriptionGetAllAsyncCollectionResultOfT(RestorePointCollectionsSubscriptionRestClient, Id.SubscriptionId, context), data => new RestorePointCollectionResource(Client, data));
+            return new AsyncPageableWrapper<RestorePointGroupData, RestorePointGroupResource>(new RestorePointCollectionsSubscriptionGetAllAsyncCollectionResultOfT(RestorePointCollectionsSubscriptionRestClient, Id.SubscriptionId, context), data => new RestorePointGroupResource(Client, data));
         }
 
         /// <summary>
@@ -839,14 +839,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RestorePointCollectionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RestorePointCollectionResource> GetRestorePointCollections(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="RestorePointGroupResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<RestorePointGroupResource> GetRestorePointGroups(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RestorePointCollectionData, RestorePointCollectionResource>(new RestorePointCollectionsSubscriptionGetAllCollectionResultOfT(RestorePointCollectionsSubscriptionRestClient, Id.SubscriptionId, context), data => new RestorePointCollectionResource(Client, data));
+            return new PageableWrapper<RestorePointGroupData, RestorePointGroupResource>(new RestorePointCollectionsSubscriptionGetAllCollectionResultOfT(RestorePointCollectionsSubscriptionRestClient, Id.SubscriptionId, context), data => new RestorePointGroupResource(Client, data));
         }
 
         /// <summary>
@@ -927,14 +927,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DiskResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DiskResource> GetDisksAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ManagedDiskResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ManagedDiskResource> GetManagedDisksAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DiskData, DiskResource>(new DisksGetAllAsyncCollectionResultOfT(DisksRestClient, Id.SubscriptionId, context), data => new DiskResource(Client, data));
+            return new AsyncPageableWrapper<ManagedDiskData, ManagedDiskResource>(new DisksGetAllAsyncCollectionResultOfT(DisksRestClient, Id.SubscriptionId, context), data => new ManagedDiskResource(Client, data));
         }
 
         /// <summary>
@@ -955,14 +955,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DiskResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DiskResource> GetDisks(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ManagedDiskResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ManagedDiskResource> GetManagedDisks(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DiskData, DiskResource>(new DisksGetAllCollectionResultOfT(DisksRestClient, Id.SubscriptionId, context), data => new DiskResource(Client, data));
+            return new PageableWrapper<ManagedDiskData, ManagedDiskResource>(new DisksGetAllCollectionResultOfT(DisksRestClient, Id.SubscriptionId, context), data => new ManagedDiskResource(Client, data));
         }
 
         /// <summary>

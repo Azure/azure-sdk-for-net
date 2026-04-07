@@ -15,9 +15,9 @@ using Azure.ResourceManager.Compute.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    internal partial class VirtualMachineScaleSetVMRunCommandsGetAllAsyncCollectionResultOfT : AsyncPageable<VirtualMachineRunCommandData>
+    internal partial class VirtualMachineScaleSetVmRunCommandsGetAllAsyncCollectionResultOfT : AsyncPageable<VirtualMachineRunCommandData>
     {
-        private readonly VirtualMachineScaleSetVMRunCommands _client;
+        private readonly VirtualMachineScaleSetVmRunCommands _client;
         private readonly string _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _vmScaleSetName;
@@ -25,15 +25,15 @@ namespace Azure.ResourceManager.Compute
         private readonly string _expand;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetVMRunCommandsGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The VirtualMachineScaleSetVMRunCommands client used to send requests. </param>
+        /// <summary> Initializes a new instance of VirtualMachineScaleSetVmRunCommandsGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The VirtualMachineScaleSetVmRunCommands client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="vmScaleSetName"> The name of the VirtualMachineScaleSet. </param>
         /// <param name="instanceId"> The name of the VirtualMachineScaleSetVM. </param>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public VirtualMachineScaleSetVMRunCommandsGetAllAsyncCollectionResultOfT(VirtualMachineScaleSetVMRunCommands client, string subscriptionId, string resourceGroupName, string vmScaleSetName, string instanceId, string expand, RequestContext context) : base(context?.CancellationToken ?? default)
+        public VirtualMachineScaleSetVmRunCommandsGetAllAsyncCollectionResultOfT(VirtualMachineScaleSetVmRunCommands client, string subscriptionId, string resourceGroupName, string vmScaleSetName, string instanceId, string expand, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.Compute
             _context = context;
         }
 
-        /// <summary> Gets the pages of VirtualMachineScaleSetVMRunCommandsGetAllAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of VirtualMachineScaleSetVmRunCommandsGetAllAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of VirtualMachineScaleSetVMRunCommandsGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of VirtualMachineScaleSetVmRunCommandsGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<VirtualMachineRunCommandData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Compute
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _vmScaleSetName, _instanceId, _expand, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _vmScaleSetName, _instanceId, _expand, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("VirtualMachineScaleSetVMRunCommandCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("VirtualMachineScaleSetVmRunCommandCollection.GetAll");
             scope.Start();
             try
             {

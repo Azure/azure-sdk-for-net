@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (DiskData item in Value)
+            foreach (ManagedDiskData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            IList<DiskData> value = default;
+            IList<ManagedDiskData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<DiskData> array = new List<DiskData>();
+                    List<ManagedDiskData> array = new List<ManagedDiskData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DiskData.DeserializeDiskData(item, options));
+                        array.Add(ManagedDiskData.DeserializeManagedDiskData(item, options));
                     }
                     value = array;
                     continue;

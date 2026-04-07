@@ -18,10 +18,10 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> Create or update Restore Point collection parameters. </summary>
-    public partial class RestorePointCollectionData : TrackedResourceData, IJsonModel<RestorePointCollectionData>
+    public partial class RestorePointGroupData : TrackedResourceData, IJsonModel<RestorePointGroupData>
     {
-        /// <summary> Initializes a new instance of <see cref="RestorePointCollectionData"/> for deserialization. </summary>
-        internal RestorePointCollectionData()
+        /// <summary> Initializes a new instance of <see cref="RestorePointGroupData"/> for deserialization. </summary>
+        internal RestorePointGroupData()
         {
         }
 
@@ -29,62 +29,62 @@ namespace Azure.ResourceManager.Compute
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RestorePointCollectionData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RestorePointGroupData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeRestorePointCollectionData(document.RootElement, options);
+                        return DeserializeRestorePointGroupData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RestorePointCollectionData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RestorePointGroupData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RestorePointCollectionData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RestorePointGroupData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(RestorePointCollectionData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RestorePointGroupData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RestorePointCollectionData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<RestorePointGroupData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RestorePointCollectionData IPersistableModel<RestorePointCollectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => (RestorePointCollectionData)PersistableModelCreateCore(data, options);
+        RestorePointGroupData IPersistableModel<RestorePointGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => (RestorePointGroupData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RestorePointCollectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<RestorePointGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="restorePointCollectionData"> The <see cref="RestorePointCollectionData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(RestorePointCollectionData restorePointCollectionData)
+        /// <param name="restorePointGroupData"> The <see cref="RestorePointGroupData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(RestorePointGroupData restorePointGroupData)
         {
-            if (restorePointCollectionData == null)
+            if (restorePointGroupData == null)
             {
                 return null;
             }
-            return RequestContent.Create(restorePointCollectionData, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(restorePointGroupData, ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="RestorePointCollectionData"/> from. </param>
-        internal static RestorePointCollectionData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="RestorePointGroupData"/> from. </param>
+        internal static RestorePointGroupData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeRestorePointCollectionData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeRestorePointGroupData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<RestorePointCollectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<RestorePointGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -95,10 +95,10 @@ namespace Azure.ResourceManager.Compute
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RestorePointCollectionData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RestorePointGroupData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RestorePointCollectionData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(RestorePointGroupData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -110,24 +110,24 @@ namespace Azure.ResourceManager.Compute
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RestorePointCollectionData IJsonModel<RestorePointCollectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (RestorePointCollectionData)JsonModelCreateCore(ref reader, options);
+        RestorePointGroupData IJsonModel<RestorePointGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (RestorePointGroupData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RestorePointCollectionData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RestorePointGroupData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RestorePointCollectionData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(RestorePointGroupData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRestorePointCollectionData(document.RootElement, options);
+            return DeserializeRestorePointGroupData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static RestorePointCollectionData DeserializeRestorePointCollectionData(JsonElement element, ModelReaderWriterOptions options)
+        internal static RestorePointGroupData DeserializeRestorePointGroupData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Compute
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RestorePointCollectionData(
+            return new RestorePointGroupData(
                 id,
                 name,
                 resourceType,

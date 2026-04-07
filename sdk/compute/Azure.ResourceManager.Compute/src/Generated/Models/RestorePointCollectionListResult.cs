@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of <see cref="RestorePointCollectionListResult"/>. </summary>
         /// <param name="value"> Gets the list of restore point collections. </param>
-        internal RestorePointCollectionListResult(IEnumerable<RestorePointCollectionData> value)
+        internal RestorePointCollectionListResult(IEnumerable<RestorePointGroupData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="value"> Gets the list of restore point collections. </param>
         /// <param name="nextLink"> The uri to fetch the next page of RestorePointCollections. Call ListNext() with this to fetch the next page of RestorePointCollections. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RestorePointCollectionListResult(IList<RestorePointCollectionData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RestorePointCollectionListResult(IList<RestorePointGroupData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Gets the list of restore point collections. </summary>
-        public IList<RestorePointCollectionData> Value { get; }
+        public IList<RestorePointGroupData> Value { get; }
 
         /// <summary> The uri to fetch the next page of RestorePointCollections. Call ListNext() with this to fetch the next page of RestorePointCollections. </summary>
         public Uri NextLink { get; }

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Compute
         {
             if (id.ResourceType != RestorePointResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, RestorePointResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, RestorePointResource.ResourceType), nameof(id));
             }
         }
 

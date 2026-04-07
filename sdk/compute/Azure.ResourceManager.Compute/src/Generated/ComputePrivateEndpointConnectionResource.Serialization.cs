@@ -12,7 +12,7 @@ using System.Text.Json;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary></summary>
-    public partial class PrivateEndpointConnectionResource : IJsonModel<ComputePrivateEndpointConnectionData>
+    public partial class ComputePrivateEndpointConnectionResource : IJsonModel<ComputePrivateEndpointConnectionData>
     {
         private static IJsonModel<ComputePrivateEndpointConnectionData> s_dataDeserializationInstance;
 

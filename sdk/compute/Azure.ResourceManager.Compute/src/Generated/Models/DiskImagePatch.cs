@@ -11,18 +11,18 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The source user image virtual hard disk. Only tags may be updated. </summary>
-    public partial class ImagePatch : ComputeResourcePatch
+    public partial class DiskImagePatch : ComputeResourcePatch
     {
-        /// <summary> Initializes a new instance of <see cref="ImagePatch"/>. </summary>
-        public ImagePatch()
+        /// <summary> Initializes a new instance of <see cref="DiskImagePatch"/>. </summary>
+        public DiskImagePatch()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ImagePatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskImagePatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Describes the properties of an Image. </param>
-        internal ImagePatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, ImageProperties properties) : base(tags, additionalBinaryDataProperties)
+        internal DiskImagePatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, ImageProperties properties) : base(tags, additionalBinaryDataProperties)
         {
             Properties = properties;
         }

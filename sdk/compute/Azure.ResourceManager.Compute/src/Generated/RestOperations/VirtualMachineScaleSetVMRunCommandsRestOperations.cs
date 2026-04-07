@@ -12,22 +12,22 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.Compute
 {
-    internal partial class VirtualMachineScaleSetVMRunCommands
+    internal partial class VirtualMachineScaleSetVmRunCommands
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetVMRunCommands for mocking. </summary>
-        protected VirtualMachineScaleSetVMRunCommands()
+        /// <summary> Initializes a new instance of VirtualMachineScaleSetVmRunCommands for mocking. </summary>
+        protected VirtualMachineScaleSetVmRunCommands()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetVMRunCommands. </summary>
+        /// <summary> Initializes a new instance of VirtualMachineScaleSetVmRunCommands. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal VirtualMachineScaleSetVMRunCommands(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal VirtualMachineScaleSetVmRunCommands(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;

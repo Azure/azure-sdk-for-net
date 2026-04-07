@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Compute
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetPrivateEndpointConnectionsRequest(nextLink, _subscriptionId, _resourceGroupName, _diskAccessName, _context) : _client.CreateGetPrivateEndpointConnectionsRequest(_subscriptionId, _resourceGroupName, _diskAccessName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("PrivateEndpointConnectionCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ComputePrivateEndpointConnectionCollection.GetAll");
             scope.Start();
             try
             {

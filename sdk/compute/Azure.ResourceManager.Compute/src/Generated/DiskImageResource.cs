@@ -20,44 +20,40 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary>
-    /// A class representing a RestorePointCollection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="RestorePointCollectionResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetRestorePointCollections method.
+    /// A class representing a DiskImage along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DiskImageResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetDiskImages method.
     /// </summary>
-    public partial class RestorePointCollectionResource : ArmResource
+    public partial class DiskImageResource : ArmResource
     {
-        private readonly ClientDiagnostics _restorePointCollectionsClientDiagnostics;
-        private readonly RestorePointCollections _restorePointCollectionsRestClient;
-        private readonly ClientDiagnostics _restorePointCollectionsSubscriptionClientDiagnostics;
-        private readonly RestorePointCollectionsSubscription _restorePointCollectionsSubscriptionRestClient;
-        private readonly RestorePointCollectionData _data;
+        private readonly ClientDiagnostics _imagesClientDiagnostics;
+        private readonly Images _imagesRestClient;
+        private readonly DiskImageData _data;
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Compute/restorePointCollections";
+        public static readonly ResourceType ResourceType = "Microsoft.Compute/images";
 
-        /// <summary> Initializes a new instance of RestorePointCollectionResource for mocking. </summary>
-        protected RestorePointCollectionResource()
+        /// <summary> Initializes a new instance of DiskImageResource for mocking. </summary>
+        protected DiskImageResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="RestorePointCollectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskImageResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal RestorePointCollectionResource(ArmClient client, RestorePointCollectionData data) : this(client, data.Id)
+        internal DiskImageResource(ArmClient client, DiskImageData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RestorePointCollectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskImageResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal RestorePointCollectionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal DiskImageResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string restorePointCollectionApiVersion);
-            _restorePointCollectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, Diagnostics);
-            _restorePointCollectionsRestClient = new RestorePointCollections(_restorePointCollectionsClientDiagnostics, Pipeline, Endpoint, restorePointCollectionApiVersion ?? "2025-04-01");
-            _restorePointCollectionsSubscriptionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, Diagnostics);
-            _restorePointCollectionsSubscriptionRestClient = new RestorePointCollectionsSubscription(_restorePointCollectionsSubscriptionClientDiagnostics, Pipeline, Endpoint, restorePointCollectionApiVersion ?? "2025-04-01");
+            TryGetApiVersion(ResourceType, out string diskImageApiVersion);
+            _imagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, Diagnostics);
+            _imagesRestClient = new Images(_imagesClientDiagnostics, Pipeline, Endpoint, diskImageApiVersion ?? "2025-04-01");
             ValidateResourceId(id);
         }
 
@@ -65,7 +61,7 @@ namespace Azure.ResourceManager.Compute
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual RestorePointCollectionData Data
+        public virtual DiskImageData Data
         {
             get
             {
@@ -80,10 +76,10 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Generate the resource identifier for this resource. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="restorePointCollectionName"> The restorePointCollectionName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string restorePointCollectionName)
+        /// <param name="imageName"> The imageName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string imageName)
         {
-            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}";
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/images/{imageName}";
             return new ResourceIdentifier(resourceId);
         }
 
@@ -93,20 +89,20 @@ namespace Azure.ResourceManager.Compute
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
         /// <summary>
-        /// The operation to get the restore point collection.
+        /// Gets an image.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/images/{imageName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> RestorePointCollections_Get. </description>
+        /// <description> Images_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -114,15 +110,15 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="RestorePointCollectionResource"/>. </description>
+        /// <description> <see cref="DiskImageResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="expand"> The expand expression to apply on the operation. If expand=restorePoints, server will return all contained restore points in the restorePointCollection. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<RestorePointCollectionResource>> GetAsync(RestorePointCollectionExpandOptions? expand = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DiskImageResource>> GetAsync(string expand = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _restorePointCollectionsClientDiagnostics.CreateScope("RestorePointCollectionResource.Get");
+            using DiagnosticScope scope = _imagesClientDiagnostics.CreateScope("DiskImageResource.Get");
             scope.Start();
             try
             {
@@ -130,14 +126,14 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _restorePointCollectionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand?.ToString(), context);
+                HttpMessage message = _imagesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<RestorePointCollectionData> response = Response.FromValue(RestorePointCollectionData.FromResponse(result), result);
+                Response<DiskImageData> response = Response.FromValue(DiskImageData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new RestorePointCollectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DiskImageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -147,15 +143,15 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary>
-        /// The operation to get the restore point collection.
+        /// Gets an image.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/images/{imageName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> RestorePointCollections_Get. </description>
+        /// <description> Images_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -163,15 +159,15 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="RestorePointCollectionResource"/>. </description>
+        /// <description> <see cref="DiskImageResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="expand"> The expand expression to apply on the operation. If expand=restorePoints, server will return all contained restore points in the restorePointCollection. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<RestorePointCollectionResource> Get(RestorePointCollectionExpandOptions? expand = default, CancellationToken cancellationToken = default)
+        public virtual Response<DiskImageResource> Get(string expand = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _restorePointCollectionsClientDiagnostics.CreateScope("RestorePointCollectionResource.Get");
+            using DiagnosticScope scope = _imagesClientDiagnostics.CreateScope("DiskImageResource.Get");
             scope.Start();
             try
             {
@@ -179,14 +175,14 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _restorePointCollectionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand?.ToString(), context);
+                HttpMessage message = _imagesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<RestorePointCollectionData> response = Response.FromValue(RestorePointCollectionData.FromResponse(result), result);
+                Response<DiskImageData> response = Response.FromValue(DiskImageData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new RestorePointCollectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DiskImageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -196,15 +192,15 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary>
-        /// The operation to update the restore point collection.
+        /// Update an image.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/images/{imageName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> RestorePointCollections_Update. </description>
+        /// <description> Images_Update. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -212,18 +208,19 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="RestorePointCollectionResource"/>. </description>
+        /// <description> <see cref="DiskImageResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="patch"> Parameters supplied to the Update restore point collection operation. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="patch"> Parameters supplied to the Update Image operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<RestorePointCollectionResource>> UpdateAsync(RestorePointCollectionPatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DiskImageResource>> UpdateAsync(WaitUntil waitUntil, DiskImagePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _restorePointCollectionsClientDiagnostics.CreateScope("RestorePointCollectionResource.Update");
+            using DiagnosticScope scope = _imagesClientDiagnostics.CreateScope("DiskImageResource.Update");
             scope.Start();
             try
             {
@@ -231,14 +228,20 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _restorePointCollectionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, RestorePointCollectionPatch.ToRequestContent(patch), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<RestorePointCollectionData> response = Response.FromValue(RestorePointCollectionData.FromResponse(result), result);
-                if (response.Value == null)
+                HttpMessage message = _imagesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, DiskImagePatch.ToRequestContent(patch), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ComputeArmOperation<DiskImageResource> operation = new ComputeArmOperation<DiskImageResource>(
+                    new DiskImageOperationSource(Client),
+                    _imagesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
                 {
-                    throw new RequestFailedException(response.GetRawResponse());
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 }
-                return Response.FromValue(new RestorePointCollectionResource(Client, response.Value), response.GetRawResponse());
+                return operation;
             }
             catch (Exception e)
             {
@@ -248,15 +251,15 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary>
-        /// The operation to update the restore point collection.
+        /// Update an image.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/images/{imageName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> RestorePointCollections_Update. </description>
+        /// <description> Images_Update. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -264,18 +267,19 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="RestorePointCollectionResource"/>. </description>
+        /// <description> <see cref="DiskImageResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="patch"> Parameters supplied to the Update restore point collection operation. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="patch"> Parameters supplied to the Update Image operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<RestorePointCollectionResource> Update(RestorePointCollectionPatch patch, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DiskImageResource> Update(WaitUntil waitUntil, DiskImagePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _restorePointCollectionsClientDiagnostics.CreateScope("RestorePointCollectionResource.Update");
+            using DiagnosticScope scope = _imagesClientDiagnostics.CreateScope("DiskImageResource.Update");
             scope.Start();
             try
             {
@@ -283,14 +287,20 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _restorePointCollectionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, RestorePointCollectionPatch.ToRequestContent(patch), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<RestorePointCollectionData> response = Response.FromValue(RestorePointCollectionData.FromResponse(result), result);
-                if (response.Value == null)
+                HttpMessage message = _imagesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, DiskImagePatch.ToRequestContent(patch), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ComputeArmOperation<DiskImageResource> operation = new ComputeArmOperation<DiskImageResource>(
+                    new DiskImageOperationSource(Client),
+                    _imagesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
                 {
-                    throw new RequestFailedException(response.GetRawResponse());
+                    operation.WaitForCompletion(cancellationToken);
                 }
-                return Response.FromValue(new RestorePointCollectionResource(Client, response.Value), response.GetRawResponse());
+                return operation;
             }
             catch (Exception e)
             {
@@ -300,15 +310,15 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary>
-        /// The operation to delete the restore point collection. This operation will also delete all the contained restore points.
+        /// Deletes an Image.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/images/{imageName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> RestorePointCollections_Delete. </description>
+        /// <description> Images_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -316,7 +326,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="RestorePointCollectionResource"/>. </description>
+        /// <description> <see cref="DiskImageResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -324,7 +334,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _restorePointCollectionsClientDiagnostics.CreateScope("RestorePointCollectionResource.Delete");
+            using DiagnosticScope scope = _imagesClientDiagnostics.CreateScope("DiskImageResource.Delete");
             scope.Start();
             try
             {
@@ -332,9 +342,9 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _restorePointCollectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _imagesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ComputeArmOperation operation = new ComputeArmOperation(_restorePointCollectionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                ComputeArmOperation operation = new ComputeArmOperation(_imagesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -349,15 +359,15 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary>
-        /// The operation to delete the restore point collection. This operation will also delete all the contained restore points.
+        /// Deletes an Image.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/images/{imageName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> RestorePointCollections_Delete. </description>
+        /// <description> Images_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -365,7 +375,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="RestorePointCollectionResource"/>. </description>
+        /// <description> <see cref="DiskImageResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -373,7 +383,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _restorePointCollectionsClientDiagnostics.CreateScope("RestorePointCollectionResource.Delete");
+            using DiagnosticScope scope = _imagesClientDiagnostics.CreateScope("DiskImageResource.Delete");
             scope.Start();
             try
             {
@@ -381,9 +391,9 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _restorePointCollectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _imagesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ComputeArmOperation operation = new ComputeArmOperation(_restorePointCollectionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                ComputeArmOperation operation = new ComputeArmOperation(_imagesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -402,12 +412,12 @@ namespace Azure.ResourceManager.Compute
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual async Task<Response<RestorePointCollectionResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DiskImageResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _restorePointCollectionsClientDiagnostics.CreateScope("RestorePointCollectionResource.AddTag");
+            using DiagnosticScope scope = _imagesClientDiagnostics.CreateScope("DiskImageResource.AddTag");
             scope.Start();
             try
             {
@@ -420,21 +430,21 @@ namespace Azure.ResourceManager.Compute
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _restorePointCollectionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, default, context);
+                    HttpMessage message = _imagesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<RestorePointCollectionData> response = Response.FromValue(RestorePointCollectionData.FromResponse(result), result);
-                    return Response.FromValue(new RestorePointCollectionResource(Client, response.Value), response.GetRawResponse());
+                    Response<DiskImageData> response = Response.FromValue(DiskImageData.FromResponse(result), result);
+                    return Response.FromValue(new DiskImageResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    RestorePointCollectionData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    RestorePointCollectionPatch patch = new RestorePointCollectionPatch();
+                    DiskImageData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    DiskImagePatch patch = new DiskImagePatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    Response<RestorePointCollectionResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<DiskImageResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -450,12 +460,12 @@ namespace Azure.ResourceManager.Compute
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Response<RestorePointCollectionResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public virtual Response<DiskImageResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _restorePointCollectionsClientDiagnostics.CreateScope("RestorePointCollectionResource.AddTag");
+            using DiagnosticScope scope = _imagesClientDiagnostics.CreateScope("DiskImageResource.AddTag");
             scope.Start();
             try
             {
@@ -468,21 +478,21 @@ namespace Azure.ResourceManager.Compute
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _restorePointCollectionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, default, context);
+                    HttpMessage message = _imagesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<RestorePointCollectionData> response = Response.FromValue(RestorePointCollectionData.FromResponse(result), result);
-                    return Response.FromValue(new RestorePointCollectionResource(Client, response.Value), response.GetRawResponse());
+                    Response<DiskImageData> response = Response.FromValue(DiskImageData.FromResponse(result), result);
+                    return Response.FromValue(new DiskImageResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    RestorePointCollectionData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    RestorePointCollectionPatch patch = new RestorePointCollectionPatch();
+                    DiskImageData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    DiskImagePatch patch = new DiskImagePatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    Response<RestorePointCollectionResource> result = Update(patch, cancellationToken: cancellationToken);
+                    ArmOperation<DiskImageResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -497,11 +507,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<RestorePointCollectionResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DiskImageResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _restorePointCollectionsClientDiagnostics.CreateScope("RestorePointCollectionResource.SetTags");
+            using DiagnosticScope scope = _imagesClientDiagnostics.CreateScope("DiskImageResource.SetTags");
             scope.Start();
             try
             {
@@ -515,17 +525,17 @@ namespace Azure.ResourceManager.Compute
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _restorePointCollectionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, default, context);
+                    HttpMessage message = _imagesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<RestorePointCollectionData> response = Response.FromValue(RestorePointCollectionData.FromResponse(result), result);
-                    return Response.FromValue(new RestorePointCollectionResource(Client, response.Value), response.GetRawResponse());
+                    Response<DiskImageData> response = Response.FromValue(DiskImageData.FromResponse(result), result);
+                    return Response.FromValue(new DiskImageResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    RestorePointCollectionData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    RestorePointCollectionPatch patch = new RestorePointCollectionPatch();
+                    DiskImageData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    DiskImagePatch patch = new DiskImagePatch();
                     patch.Tags.ReplaceWith(tags);
-                    Response<RestorePointCollectionResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<DiskImageResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -540,11 +550,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<RestorePointCollectionResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual Response<DiskImageResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _restorePointCollectionsClientDiagnostics.CreateScope("RestorePointCollectionResource.SetTags");
+            using DiagnosticScope scope = _imagesClientDiagnostics.CreateScope("DiskImageResource.SetTags");
             scope.Start();
             try
             {
@@ -558,17 +568,17 @@ namespace Azure.ResourceManager.Compute
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _restorePointCollectionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, default, context);
+                    HttpMessage message = _imagesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<RestorePointCollectionData> response = Response.FromValue(RestorePointCollectionData.FromResponse(result), result);
-                    return Response.FromValue(new RestorePointCollectionResource(Client, response.Value), response.GetRawResponse());
+                    Response<DiskImageData> response = Response.FromValue(DiskImageData.FromResponse(result), result);
+                    return Response.FromValue(new DiskImageResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    RestorePointCollectionData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    RestorePointCollectionPatch patch = new RestorePointCollectionPatch();
+                    DiskImageData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    DiskImagePatch patch = new DiskImagePatch();
                     patch.Tags.ReplaceWith(tags);
-                    Response<RestorePointCollectionResource> result = Update(patch, cancellationToken: cancellationToken);
+                    ArmOperation<DiskImageResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -583,11 +593,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<RestorePointCollectionResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DiskImageResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _restorePointCollectionsClientDiagnostics.CreateScope("RestorePointCollectionResource.RemoveTag");
+            using DiagnosticScope scope = _imagesClientDiagnostics.CreateScope("DiskImageResource.RemoveTag");
             scope.Start();
             try
             {
@@ -600,21 +610,21 @@ namespace Azure.ResourceManager.Compute
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _restorePointCollectionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, default, context);
+                    HttpMessage message = _imagesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<RestorePointCollectionData> response = Response.FromValue(RestorePointCollectionData.FromResponse(result), result);
-                    return Response.FromValue(new RestorePointCollectionResource(Client, response.Value), response.GetRawResponse());
+                    Response<DiskImageData> response = Response.FromValue(DiskImageData.FromResponse(result), result);
+                    return Response.FromValue(new DiskImageResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    RestorePointCollectionData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    RestorePointCollectionPatch patch = new RestorePointCollectionPatch();
+                    DiskImageData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    DiskImagePatch patch = new DiskImagePatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    Response<RestorePointCollectionResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<DiskImageResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -629,11 +639,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Response<RestorePointCollectionResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public virtual Response<DiskImageResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _restorePointCollectionsClientDiagnostics.CreateScope("RestorePointCollectionResource.RemoveTag");
+            using DiagnosticScope scope = _imagesClientDiagnostics.CreateScope("DiskImageResource.RemoveTag");
             scope.Start();
             try
             {
@@ -646,21 +656,21 @@ namespace Azure.ResourceManager.Compute
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _restorePointCollectionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, default, context);
+                    HttpMessage message = _imagesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<RestorePointCollectionData> response = Response.FromValue(RestorePointCollectionData.FromResponse(result), result);
-                    return Response.FromValue(new RestorePointCollectionResource(Client, response.Value), response.GetRawResponse());
+                    Response<DiskImageData> response = Response.FromValue(DiskImageData.FromResponse(result), result);
+                    return Response.FromValue(new DiskImageResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    RestorePointCollectionData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    RestorePointCollectionPatch patch = new RestorePointCollectionPatch();
+                    DiskImageData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    DiskImagePatch patch = new DiskImagePatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    Response<RestorePointCollectionResource> result = Update(patch, cancellationToken: cancellationToken);
+                    ArmOperation<DiskImageResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -669,41 +679,6 @@ namespace Azure.ResourceManager.Compute
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary> Gets a collection of RestorePoints in the <see cref="RestorePointCollectionResource"/>. </summary>
-        /// <returns> An object representing collection of RestorePoints and their operations over a RestorePointResource. </returns>
-        public virtual RestorePointCollection GetRestorePoints()
-        {
-            return GetCachedClient(client => new RestorePointCollection(client, Id));
-        }
-
-        /// <summary> The operation to get the restore point. </summary>
-        /// <param name="restorePointName"> The name of the restore point. </param>
-        /// <param name="expand"> The expand expression to apply on the operation. 'InstanceView' retrieves information about the run-time state of a restore point. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="restorePointName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="restorePointName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<RestorePointResource>> GetRestorePointAsync(string restorePointName, RestorePointExpandOptions? expand = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(restorePointName, nameof(restorePointName));
-
-            return await GetRestorePoints().GetAsync(restorePointName, expand, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> The operation to get the restore point. </summary>
-        /// <param name="restorePointName"> The name of the restore point. </param>
-        /// <param name="expand"> The expand expression to apply on the operation. 'InstanceView' retrieves information about the run-time state of a restore point. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="restorePointName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="restorePointName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<RestorePointResource> GetRestorePoint(string restorePointName, RestorePointExpandOptions? expand = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(restorePointName, nameof(restorePointName));
-
-            return GetRestorePoints().Get(restorePointName, expand, cancellationToken);
         }
     }
 }

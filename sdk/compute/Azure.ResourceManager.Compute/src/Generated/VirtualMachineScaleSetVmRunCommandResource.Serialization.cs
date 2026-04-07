@@ -12,7 +12,7 @@ using System.Text.Json;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary></summary>
-    public partial class VirtualMachineScaleSetVMRunCommandResource : IJsonModel<VirtualMachineRunCommandData>
+    public partial class VirtualMachineScaleSetVmRunCommandResource : IJsonModel<VirtualMachineRunCommandData>
     {
         private static IJsonModel<VirtualMachineRunCommandData> s_dataDeserializationInstance;
 

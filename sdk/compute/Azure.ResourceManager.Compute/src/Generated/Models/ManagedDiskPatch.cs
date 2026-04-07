@@ -12,23 +12,23 @@ using Azure.ResourceManager.Compute;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Disk update resource. </summary>
-    public partial class DiskPatch
+    public partial class ManagedDiskPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DiskPatch"/>. </summary>
-        public DiskPatch()
+        /// <summary> Initializes a new instance of <see cref="ManagedDiskPatch"/>. </summary>
+        public ManagedDiskPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DiskPatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedDiskPatch"/>. </summary>
         /// <param name="properties"> Disk resource update properties. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="sku"> The disks sku name. Can be Standard_LRS, Premium_LRS, StandardSSD_LRS, UltraSSD_LRS, Premium_ZRS, StandardSSD_ZRS, or PremiumV2_LRS. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DiskPatch(DiskUpdateProperties properties, IDictionary<string, string> tags, DiskSku sku, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedDiskPatch(DiskUpdateProperties properties, IDictionary<string, string> tags, DiskSku sku, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
             Tags = tags;

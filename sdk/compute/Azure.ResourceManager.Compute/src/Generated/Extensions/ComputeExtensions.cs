@@ -273,39 +273,39 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ImageResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="DiskImageResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeArmClient.GetImageResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableComputeArmClient.GetDiskImageResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ImageResource"/> object. </returns>
-        public static ImageResource GetImageResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DiskImageResource"/> object. </returns>
+        public static DiskImageResource GetDiskImageResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableComputeArmClient(client).GetImageResource(id);
+            return GetMockableComputeArmClient(client).GetDiskImageResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="RestorePointCollectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="RestorePointGroupResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeArmClient.GetRestorePointCollectionResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableComputeArmClient.GetRestorePointGroupResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="RestorePointCollectionResource"/> object. </returns>
-        public static RestorePointCollectionResource GetRestorePointCollectionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="RestorePointGroupResource"/> object. </returns>
+        public static RestorePointGroupResource GetRestorePointGroupResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableComputeArmClient(client).GetRestorePointCollectionResource(id);
+            return GetMockableComputeArmClient(client).GetRestorePointGroupResource(id);
         }
 
         /// <summary>
@@ -381,39 +381,39 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="VirtualMachineScaleSetVMRunCommandResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="VirtualMachineScaleSetVmRunCommandResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeArmClient.GetVirtualMachineScaleSetVMRunCommandResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableComputeArmClient.GetVirtualMachineScaleSetVmRunCommandResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="VirtualMachineScaleSetVMRunCommandResource"/> object. </returns>
-        public static VirtualMachineScaleSetVMRunCommandResource GetVirtualMachineScaleSetVMRunCommandResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="VirtualMachineScaleSetVmRunCommandResource"/> object. </returns>
+        public static VirtualMachineScaleSetVmRunCommandResource GetVirtualMachineScaleSetVmRunCommandResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableComputeArmClient(client).GetVirtualMachineScaleSetVMRunCommandResource(id);
+            return GetMockableComputeArmClient(client).GetVirtualMachineScaleSetVmRunCommandResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DiskResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="ManagedDiskResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeArmClient.GetDiskResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableComputeArmClient.GetManagedDiskResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DiskResource"/> object. </returns>
-        public static DiskResource GetDiskResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ManagedDiskResource"/> object. </returns>
+        public static ManagedDiskResource GetManagedDiskResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableComputeArmClient(client).GetDiskResource(id);
+            return GetMockableComputeArmClient(client).GetManagedDiskResource(id);
         }
 
         /// <summary>
@@ -435,21 +435,21 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="PrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="ComputePrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeArmClient.GetPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableComputeArmClient.GetComputePrivateEndpointConnectionResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="PrivateEndpointConnectionResource"/> object. </returns>
-        public static PrivateEndpointConnectionResource GetPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ComputePrivateEndpointConnectionResource"/> object. </returns>
+        public static ComputePrivateEndpointConnectionResource GetComputePrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableComputeArmClient(client).GetPrivateEndpointConnectionResource(id);
+            return GetMockableComputeArmClient(client).GetComputePrivateEndpointConnectionResource(id);
         }
 
         /// <summary>
@@ -1115,27 +1115,27 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary>
-        /// Gets a collection of Images in the <see cref="ResourceGroupResource"/>
+        /// Gets a collection of DiskImages in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeResourceGroupResource.GetImages()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableComputeResourceGroupResource.GetDiskImages()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of Images and their operations over a ImageResource. </returns>
-        public static ImageCollection GetImages(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of DiskImages and their operations over a DiskImageResource. </returns>
+        public static DiskImageCollection GetDiskImages(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableComputeResourceGroupResource(resourceGroupResource).GetImages();
+            return GetMockableComputeResourceGroupResource(resourceGroupResource).GetDiskImages();
         }
 
         /// <summary>
         /// Gets an image.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeResourceGroupResource.GetImageAsync(string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableComputeResourceGroupResource.GetDiskImageAsync(string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -1144,18 +1144,18 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ImageResource>> GetImageAsync(this ResourceGroupResource resourceGroupResource, string imageName, string expand = default, CancellationToken cancellationToken = default)
+        public static async Task<Response<DiskImageResource>> GetDiskImageAsync(this ResourceGroupResource resourceGroupResource, string imageName, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableComputeResourceGroupResource(resourceGroupResource).GetImageAsync(imageName, expand, cancellationToken).ConfigureAwait(false);
+            return await GetMockableComputeResourceGroupResource(resourceGroupResource).GetDiskImageAsync(imageName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets an image.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeResourceGroupResource.GetImage(string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableComputeResourceGroupResource.GetDiskImage(string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -1164,35 +1164,35 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<ImageResource> GetImage(this ResourceGroupResource resourceGroupResource, string imageName, string expand = default, CancellationToken cancellationToken = default)
+        public static Response<DiskImageResource> GetDiskImage(this ResourceGroupResource resourceGroupResource, string imageName, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableComputeResourceGroupResource(resourceGroupResource).GetImage(imageName, expand, cancellationToken);
+            return GetMockableComputeResourceGroupResource(resourceGroupResource).GetDiskImage(imageName, expand, cancellationToken);
         }
 
         /// <summary>
-        /// Gets a collection of RestorePointCollections in the <see cref="ResourceGroupResource"/>
+        /// Gets a collection of RestorePointGroups in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeResourceGroupResource.GetRestorePointCollections()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableComputeResourceGroupResource.GetRestorePointGroups()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of RestorePointCollections and their operations over a RestorePointCollectionResource. </returns>
-        public static RestorePointCollectionCollection GetRestorePointCollections(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of RestorePointGroups and their operations over a RestorePointGroupResource. </returns>
+        public static RestorePointGroupCollection GetRestorePointGroups(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableComputeResourceGroupResource(resourceGroupResource).GetRestorePointCollections();
+            return GetMockableComputeResourceGroupResource(resourceGroupResource).GetRestorePointGroups();
         }
 
         /// <summary>
         /// The operation to get the restore point collection.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeResourceGroupResource.GetRestorePointCollectionAsync(string, RestorePointCollectionExpandOptions?, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableComputeResourceGroupResource.GetRestorePointGroupAsync(string, RestorePointCollectionExpandOptions?, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -1201,18 +1201,18 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<RestorePointCollectionResource>> GetRestorePointCollectionAsync(this ResourceGroupResource resourceGroupResource, string restorePointCollectionName, RestorePointCollectionExpandOptions? expand = default, CancellationToken cancellationToken = default)
+        public static async Task<Response<RestorePointGroupResource>> GetRestorePointGroupAsync(this ResourceGroupResource resourceGroupResource, string restorePointCollectionName, RestorePointCollectionExpandOptions? expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableComputeResourceGroupResource(resourceGroupResource).GetRestorePointCollectionAsync(restorePointCollectionName, expand, cancellationToken).ConfigureAwait(false);
+            return await GetMockableComputeResourceGroupResource(resourceGroupResource).GetRestorePointGroupAsync(restorePointCollectionName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// The operation to get the restore point collection.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeResourceGroupResource.GetRestorePointCollection(string, RestorePointCollectionExpandOptions?, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableComputeResourceGroupResource.GetRestorePointGroup(string, RestorePointCollectionExpandOptions?, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -1221,11 +1221,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<RestorePointCollectionResource> GetRestorePointCollection(this ResourceGroupResource resourceGroupResource, string restorePointCollectionName, RestorePointCollectionExpandOptions? expand = default, CancellationToken cancellationToken = default)
+        public static Response<RestorePointGroupResource> GetRestorePointGroup(this ResourceGroupResource resourceGroupResource, string restorePointCollectionName, RestorePointCollectionExpandOptions? expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableComputeResourceGroupResource(resourceGroupResource).GetRestorePointCollection(restorePointCollectionName, expand, cancellationToken);
+            return GetMockableComputeResourceGroupResource(resourceGroupResource).GetRestorePointGroup(restorePointCollectionName, expand, cancellationToken);
         }
 
         /// <summary>
@@ -1286,27 +1286,27 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary>
-        /// Gets a collection of Disks in the <see cref="ResourceGroupResource"/>
+        /// Gets a collection of ManagedDisks in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeResourceGroupResource.GetDisks()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableComputeResourceGroupResource.GetManagedDisks()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of Disks and their operations over a DiskResource. </returns>
-        public static DiskCollection GetDisks(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of ManagedDisks and their operations over a ManagedDiskResource. </returns>
+        public static ManagedDiskCollection GetManagedDisks(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableComputeResourceGroupResource(resourceGroupResource).GetDisks();
+            return GetMockableComputeResourceGroupResource(resourceGroupResource).GetManagedDisks();
         }
 
         /// <summary>
         /// Gets information about a disk.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeResourceGroupResource.GetDiskAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableComputeResourceGroupResource.GetManagedDiskAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -1314,18 +1314,18 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<DiskResource>> GetDiskAsync(this ResourceGroupResource resourceGroupResource, string diskName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ManagedDiskResource>> GetManagedDiskAsync(this ResourceGroupResource resourceGroupResource, string diskName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableComputeResourceGroupResource(resourceGroupResource).GetDiskAsync(diskName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableComputeResourceGroupResource(resourceGroupResource).GetManagedDiskAsync(diskName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets information about a disk.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeResourceGroupResource.GetDisk(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableComputeResourceGroupResource.GetManagedDisk(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -1333,11 +1333,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<DiskResource> GetDisk(this ResourceGroupResource resourceGroupResource, string diskName, CancellationToken cancellationToken = default)
+        public static Response<ManagedDiskResource> GetManagedDisk(this ResourceGroupResource resourceGroupResource, string diskName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableComputeResourceGroupResource(resourceGroupResource).GetDisk(diskName, cancellationToken);
+            return GetMockableComputeResourceGroupResource(resourceGroupResource).GetManagedDisk(diskName, cancellationToken);
         }
 
         /// <summary>
@@ -1971,72 +1971,72 @@ namespace Azure.ResourceManager.Compute
         /// Gets the list of Images in the subscription. Use nextLink property in the response to get the next page of Images. Do this till nextLink is null to fetch all the Images.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetImagesAsync(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetDiskImagesAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ImageResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ImageResource> GetImagesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DiskImageResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<DiskImageResource> GetDiskImagesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableComputeSubscriptionResource(subscriptionResource).GetImagesAsync(cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetDiskImagesAsync(cancellationToken);
         }
 
         /// <summary>
         /// Gets the list of Images in the subscription. Use nextLink property in the response to get the next page of Images. Do this till nextLink is null to fetch all the Images.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetImages(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetDiskImages(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ImageResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ImageResource> GetImages(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DiskImageResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<DiskImageResource> GetDiskImages(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableComputeSubscriptionResource(subscriptionResource).GetImages(cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetDiskImages(cancellationToken);
         }
 
         /// <summary>
         /// Gets the list of restore point collections in the subscription. Use nextLink property in the response to get the next page of restore point collections. Do this till nextLink is not null to fetch all the restore point collections.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetRestorePointCollectionsAsync(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetRestorePointGroupsAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="RestorePointCollectionResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<RestorePointCollectionResource> GetRestorePointCollectionsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="RestorePointGroupResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<RestorePointGroupResource> GetRestorePointGroupsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableComputeSubscriptionResource(subscriptionResource).GetRestorePointCollectionsAsync(cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetRestorePointGroupsAsync(cancellationToken);
         }
 
         /// <summary>
         /// Gets the list of restore point collections in the subscription. Use nextLink property in the response to get the next page of restore point collections. Do this till nextLink is not null to fetch all the restore point collections.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetRestorePointCollections(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetRestorePointGroups(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="RestorePointCollectionResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<RestorePointCollectionResource> GetRestorePointCollections(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="RestorePointGroupResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<RestorePointGroupResource> GetRestorePointGroups(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableComputeSubscriptionResource(subscriptionResource).GetRestorePointCollections(cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetRestorePointGroups(cancellationToken);
         }
 
         /// <summary>
@@ -2083,36 +2083,36 @@ namespace Azure.ResourceManager.Compute
         /// Lists all the disks under a subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetDisksAsync(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetManagedDisksAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="DiskResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<DiskResource> GetDisksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ManagedDiskResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ManagedDiskResource> GetManagedDisksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableComputeSubscriptionResource(subscriptionResource).GetDisksAsync(cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetManagedDisksAsync(cancellationToken);
         }
 
         /// <summary>
         /// Lists all the disks under a subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetDisks(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetManagedDisks(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="DiskResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<DiskResource> GetDisks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ManagedDiskResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ManagedDiskResource> GetManagedDisks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableComputeSubscriptionResource(subscriptionResource).GetDisks(cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetManagedDisks(cancellationToken);
         }
 
         /// <summary>

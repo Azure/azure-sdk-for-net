@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (RestorePointCollectionData item in Value)
+            foreach (RestorePointGroupData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            IList<RestorePointCollectionData> value = default;
+            IList<RestorePointGroupData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<RestorePointCollectionData> array = new List<RestorePointCollectionData>();
+                    List<RestorePointGroupData> array = new List<RestorePointGroupData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(RestorePointCollectionData.DeserializeRestorePointCollectionData(item, options));
+                        array.Add(RestorePointGroupData.DeserializeRestorePointGroupData(item, options));
                     }
                     value = array;
                     continue;
