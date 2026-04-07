@@ -176,20 +176,61 @@ namespace Azure.Generator.Management.Visitors
 
         private bool TryGetFlattenPropertyInfo(CSharpType returnType, [NotNullWhen(true)] out Dictionary<string, List<FlattenPropertyInfo>>? propertyNameMap)
         {
-            propertyNameMap = null;
-            if (_flattenedModelTypes.TryGetValue(returnType, out var value))
+            Dictionary<string, List<FlattenPropertyInfo>>? mergedPropertyNameMap = null;
+            var currentType = returnType;
+            var foundFlattenedProperties = false;
+            var visited = new HashSet<CSharpType>(new CSharpTypeNameComparer());
+
+            void MergeFlattenedProperties(Dictionary<string, List<FlattenPropertyInfo>> source)
             {
-                propertyNameMap = value;
-                return true;
+                mergedPropertyNameMap ??= new Dictionary<string, List<FlattenPropertyInfo>>();
+                foreach (var (parameterName, flattenInfoList) in source)
+                {
+                    if (mergedPropertyNameMap.TryGetValue(parameterName, out var existing))
+                    {
+                        existing.AddRange(flattenInfoList);
+                    }
+                    else
+                    {
+                        mergedPropertyNameMap[parameterName] = [.. flattenInfoList];
+                    }
+                }
+
+                foundFlattenedProperties = true;
             }
-            // handle the case where the return type is a derived type of a flattened model type
-            // we only deal with single level inheritance here to avoid complexity
-            else if (TryGetModelProvider(returnType, out var model) && model.BaseType is not null && _flattenedModelTypes.TryGetValue(model.BaseType, out value))
+            // Walk up the inheritance chain because flattened properties can come from
+            // both the current leaf model and any ancestor model in the hierarchy.
+            ModelProvider? currentModel;
+            do
             {
-                propertyNameMap = value;
-                return true;
+                // Guard against cycles in the BaseType chain (e.g., ResourceData → ResourceData
+                // when a Custom/ partial class forces a plain model to inherit from ResourceData
+                // and KnownManagementTypes maps multiple TypeSpec types to the same CSharpType).
+                if (!visited.Add(currentType))
+                {
+                    break;
+                }
+
+                if (_flattenedModelTypes.TryGetValue(currentType, out var value))
+                {
+                    MergeFlattenedProperties(value);
+                }
+
+                currentModel = ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap.TryGetValue(currentType, out var typeProvider)
+                    && typeProvider is ModelProvider model
+                    && model.BaseType is not null
+                    ? model
+                    : null;
+
+                if (currentModel is not null)
+                {
+                    currentType = currentModel.BaseType!;
+                }
             }
-            return false;
+            while (currentModel is not null);
+
+            propertyNameMap = mergedPropertyNameMap;
+            return foundFlattenedProperties;
         }
 
         private void UpdateModelFactoryMethod(MethodProvider method, Dictionary<string, List<FlattenPropertyInfo>> propertyNameMap)

@@ -1633,6 +1633,125 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 typeAPolyDeviceDescription is null ? default : new TypeAPolyDeviceProperties(typeAPolyDeviceDescription, null));
         }
 
+        /// <summary> Paged collection of GrandparentFlattenLeaf items. </summary>
+        /// <param name="value"> The GrandparentFlattenLeaf items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <returns> A new <see cref="Models.GrandparentFlattenLeafListResult"/> instance for mocking. </returns>
+        public static GrandparentFlattenLeafListResult GrandparentFlattenLeafListResult(IEnumerable<GrandparentFlattenLeaf> value = default, Uri nextLink = default)
+        {
+            value ??= new ChangeTrackingList<GrandparentFlattenLeaf>();
+
+            return new GrandparentFlattenLeafListResult(value.ToList(), nextLink, additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="identifierUniqueId"> Gets the UniqueId. </param>
+        /// <param name="grandparentFlattenLeafDisclaimer"> Gets the Disclaimer. </param>
+        /// <returns> A new <see cref="Models.GrandparentFlattenLeaf"/> instance for mocking. </returns>
+        public static GrandparentFlattenLeaf GrandparentFlattenLeaf(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string identifierUniqueId = default, string grandparentFlattenLeafDisclaimer = default)
+        {
+            return new GrandparentFlattenLeaf(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                identifierUniqueId is null ? default : new GrandparentFlattenIdentifier(identifierUniqueId, null),
+                grandparentFlattenLeafDisclaimer is null ? default : new GrandparentFlattenLeafProperties(grandparentFlattenLeafDisclaimer, null));
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="identifierUniqueId"> Gets the UniqueId. </param>
+        /// <param name="grandparentFlattenLeafDisclaimer"> Gets the Disclaimer. </param>
+        /// <returns> A new <see cref="Models.GrandparentFlattenProxyGrandparentFlattenLeafProperties"/> instance for mocking. </returns>
+        public static GrandparentFlattenProxyGrandparentFlattenLeafProperties GrandparentFlattenProxyGrandparentFlattenLeafProperties(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string identifierUniqueId = default, string grandparentFlattenLeafDisclaimer = default)
+        {
+            return new GrandparentFlattenProxyGrandparentFlattenLeafProperties(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                identifierUniqueId is null ? default : new GrandparentFlattenIdentifier(identifierUniqueId, null),
+                grandparentFlattenLeafDisclaimer is null ? default : new GrandparentFlattenLeafProperties(grandparentFlattenLeafDisclaimer, null));
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="identifierUniqueId"> Gets the UniqueId. </param>
+        /// <returns> A new <see cref="Models.GrandparentFlattenBase"/> instance for mocking. </returns>
+        public static GrandparentFlattenBase GrandparentFlattenBase(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string identifierUniqueId = default)
+        {
+            return new GrandparentFlattenBase(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                identifierUniqueId is null ? default : new GrandparentFlattenIdentifier(identifierUniqueId, null));
+        }
+
+        /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Tests.CycleTestStoreData"/> instance for mocking. </returns>
+        public static CycleTestStoreData CycleTestStoreData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, CycleTestStoreProperties properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new CycleTestStoreData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                properties);
+        }
+
+        /// <summary> The CycleTestStoreProperties. </summary>
+        /// <param name="endpoint"> The endpoint for the store. </param>
+        /// <param name="connections"> Related connections. </param>
+        /// <returns> A new <see cref="Models.CycleTestStoreProperties"/> instance for mocking. </returns>
+        public static CycleTestStoreProperties CycleTestStoreProperties(string endpoint = default, IEnumerable<CycleTestConnectionReference> connections = default)
+        {
+            connections ??= new ChangeTrackingList<CycleTestConnectionReference>();
+
+            return new CycleTestStoreProperties(endpoint, connections.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="provisioningState"> The provisioning status. </param>
+        /// <param name="description"> Description of the connection. </param>
+        /// <returns> A new <see cref="Models.CycleTestConnectionReference"/> instance for mocking. </returns>
+        public static CycleTestConnectionReference CycleTestConnectionReference(ResourceIdentifier id = default, ResourceType resourceType = default, SystemData systemData = default, string name = default, string provisioningState = default, string description = default)
+        {
+            return new CycleTestConnectionReference(
+                id,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                name,
+                provisioningState is null && description is null ? default : new CycleTestConnectionProperties(provisioningState, description, null));
+        }
+
         /// <summary> The ZooRecommendation. </summary>
         /// <param name="recommendedValue"> The recommended value. </param>
         /// <param name="reason"> The reason for the recommendation. </param>
