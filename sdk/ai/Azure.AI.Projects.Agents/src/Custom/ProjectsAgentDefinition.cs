@@ -17,5 +17,12 @@ public abstract partial class ProjectsAgentDefinition
     public static WorkflowAgentDefinition CreateWorkflowAgentDefinitionFromYaml(string workflowYamlDocument)
         => WorkflowAgentDefinition.FromYaml(workflowYamlDocument);
     public static HostedAgentDefinition CreateHostedAgentDefinition(IEnumerable<ProtocolVersionRecord> containerProtocolVersions, string cpuConfiguration, string memoryConfiguration)
-        => new HostedAgentDefinition(containerProtocolVersions, cpuConfiguration, memoryConfiguration);
+    {
+        HostedAgentDefinition hostedAgent = new(cpuConfiguration, memoryConfiguration);
+        foreach (ProtocolVersionRecord version in containerProtocolVersions)
+        {
+            hostedAgent.Versions.Add(version);
+        }
+        return hostedAgent;
+    }
 }
