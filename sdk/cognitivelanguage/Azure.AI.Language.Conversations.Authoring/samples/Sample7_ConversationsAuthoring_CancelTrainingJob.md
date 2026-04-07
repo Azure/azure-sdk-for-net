@@ -10,7 +10,7 @@ To create a `ConversationAnalysisAuthoringClient`, you will need the service end
 Uri endpoint = new Uri("{endpoint}");
 AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
 ConversationAnalysisAuthoringClientOptions options = new ConversationAnalysisAuthoringClientOptions(ConversationAnalysisAuthoringClientOptions.ServiceVersion.V2025_11_15_Preview);
-ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential, options);
+ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential, options);
 ```
 
 The values of the endpoint and apiKey variables can be retrieved from environment variables, configuration settings, or any other secure approach that works for your application.
@@ -25,10 +25,9 @@ To cancel a training job, call CancelTrainingJob on the `ConversationAuthoringPr
 ```C# Snippet:Sample7_ConversationsAuthoring_CancelTrainingJob
 string projectName = "{projectName}";
 string jobId = "{jobId}";
-ConversationAuthoringProject projectClient = client.GetProject(projectName);
-
-Operation<ConversationAuthoringTrainingJobResult> cancelOperation = projectClient.CancelTrainingJob(
+Operation<ConversationAuthoringTrainingJobResult> cancelOperation = client.CancelTrainingJob(
     waitUntil: WaitUntil.Completed,
+    projectName: projectName,
     jobId: jobId
 );
 
@@ -46,10 +45,9 @@ To cancel a training job asynchronously, call CancelTrainingJobAsync on the `Con
 ```C# Snippet:Sample7_ConversationsAuthoring_CancelTrainingJobAsync
 string projectName = "{projectName}";
 string jobId = "{jobId}";
-ConversationAuthoringProject projectClient = client.GetProject(projectName);
-
-Operation<ConversationAuthoringTrainingJobResult> cancelOperation = await projectClient.CancelTrainingJobAsync(
+Operation<ConversationAuthoringTrainingJobResult> cancelOperation = await client.CancelTrainingJobAsync(
     waitUntil: WaitUntil.Completed,
+    projectName: projectName,
     jobId: jobId
 );
 

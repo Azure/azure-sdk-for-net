@@ -11,3 +11,4 @@ extends:
       safeName: AzureResourceManagerContainerService
     - name: Azure.Provisioning.ContainerService
       safeName: AzureProvisioningContainerService
+    TestDependsOnDependency: Azure.ResourceManager.ContainerService

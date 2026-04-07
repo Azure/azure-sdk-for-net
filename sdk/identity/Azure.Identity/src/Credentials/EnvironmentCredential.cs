@@ -29,7 +29,13 @@ namespace Azure.Identity
     /// <listheader><term>Variable</term><description>Description</description></listheader>
     /// <item><term>AZURE_TENANT_ID</term><description>The Microsoft Entra tenant (directory) ID.</description></item>
     /// <item><term>AZURE_CLIENT_ID</term><description>The client (application) ID of an App Registration in the tenant.</description></item>
-    /// <item><term>AZURE_CLIENT_CERTIFICATE_PATH</term><description>A path to certificate and private key pair in PEM or PFX format, which can authenticate the App Registration.</description></item>
+    /// <item><term>AZURE_CLIENT_CERTIFICATE_PATH</term><description>Path to the client certificate and the private key. The path must be to either a "pfx"- or "pem"-encoded certificate on disk, or a certificate in the platform certificate store by thumbprint.
+    /// For example:
+    /// <list type="bullet">
+    ///   <item><description><c>c:\data\certificate.pfx</c></description></item>
+    ///   <item><description><c>/etc/app/cert.pem</c></description></item>
+    ///   <item><description><c>cert:/CurrentUser/My/E661583E8FABEF4C0BEF694CBC41C28FB81CD870</c></description></item>
+    /// </list></description></item>
     /// <item><term>AZURE_CLIENT_CERTIFICATE_PASSWORD</term><description>(Optional) The password protecting the certificate file (currently only supported for PFX (PKCS12) certificates).</description></item>
     /// <item><term>AZURE_CLIENT_SEND_CERTIFICATE_CHAIN</term><description>(Optional) Specifies whether an authentication request will include an x5c header to support subject name / issuer based authentication. When set to `true` or `1`, authentication requests include the x5c header.</description></item>
     /// </list>
