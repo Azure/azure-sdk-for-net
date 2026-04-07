@@ -1,0 +1,18 @@
+id: owners-remove-pkg-owner-001
+name: Remove Owner from Package
+description: |
+  Test that the skill removes an owner from a package.
+tags:
+  - basic
+inputs:
+  prompt: "Remove @olduser as owner from azure-core in azure-sdk-for-python"
+expected:
+  output_contains:
+    - "olduser"
+    - "azure-core"
+  outcomes:
+    - type: tool_called
+      tool_name: azsdk_engsys_codeowner_remove_package_owner
+  behavior:
+    max_tool_calls: 5
+    max_response_time_ms: 30000

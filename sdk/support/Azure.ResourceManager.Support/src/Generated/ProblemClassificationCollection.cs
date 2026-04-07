@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Support
         {
             if (id.ResourceType != SupportAzureServiceResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SupportAzureServiceResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SupportAzureServiceResource.ResourceType), nameof(id));
             }
         }
 

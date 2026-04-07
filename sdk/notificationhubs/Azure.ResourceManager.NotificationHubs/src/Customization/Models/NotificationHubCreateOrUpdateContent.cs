@@ -1,6 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+// This model has been deleted from the TypeSpec spec. It is kept here only for backward
+// API compatibility (ApiCompat). All public APIs throw NotSupportedException.
+
 #nullable disable
 
 using System;
@@ -12,105 +15,36 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
     /// <summary> Parameters supplied to the CreateOrUpdate NotificationHub operation. </summary>
+    [Obsolete("This type is obsolete and will be removed in a future version.")]
     [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class NotificationHubCreateOrUpdateContent : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="NotificationHubCreateOrUpdateContent"/>. </summary>
         /// <param name="location"> The location. </param>
         public NotificationHubCreateOrUpdateContent(AzureLocation location) : base(location)
         {
-            AuthorizationRules = new ChangeTrackingList<SharedAccessAuthorizationRuleProperties>();
-        }
-
-        /// <summary> Initializes a new instance of <see cref="NotificationHubCreateOrUpdateContent"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="notificationHubName"> The NotificationHub name. </param>
-        /// <param name="registrationTtl"> The RegistrationTtl of the created NotificationHub. </param>
-        /// <param name="authorizationRules"> The AuthorizationRules of the created NotificationHub. </param>
-        /// <param name="apnsCredential"> The ApnsCredential of the created NotificationHub. </param>
-        /// <param name="wnsCredential"> The WnsCredential of the created NotificationHub. </param>
-        /// <param name="gcmCredential"> The GcmCredential of the created NotificationHub. </param>
-        /// <param name="mpnsCredential"> The MpnsCredential of the created NotificationHub. </param>
-        /// <param name="admCredential"> The AdmCredential of the created NotificationHub. </param>
-        /// <param name="baiduCredential"> The BaiduCredential of the created NotificationHub. </param>
-        /// <param name="sku"> The sku of the created namespace. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NotificationHubCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string notificationHubName, TimeSpan? registrationTtl, IList<SharedAccessAuthorizationRuleProperties> authorizationRules, NotificationHubApnsCredential apnsCredential, NotificationHubWnsCredential wnsCredential, NotificationHubGcmCredential gcmCredential, NotificationHubMpnsCredential mpnsCredential, NotificationHubAdmCredential admCredential, NotificationHubBaiduCredential baiduCredential, NotificationHubSku sku, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
-        {
-            NotificationHubName = notificationHubName;
-            RegistrationTtl = registrationTtl;
-            AuthorizationRules = authorizationRules;
-            ApnsCredential = apnsCredential;
-            WnsCredential = wnsCredential;
-            GcmCredential = gcmCredential;
-            MpnsCredential = mpnsCredential;
-            AdmCredential = admCredential;
-            BaiduCredential = baiduCredential;
-            Sku = sku;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="NotificationHubCreateOrUpdateContent"/> for deserialization. </summary>
-        internal NotificationHubCreateOrUpdateContent()
-        {
+            throw new NotSupportedException($"{nameof(NotificationHubCreateOrUpdateContent)} is obsolete and not supported.");
         }
 
         /// <summary> The NotificationHub name. </summary>
-        public string NotificationHubName { get; set; }
+        public string NotificationHubName { get => throw new NotSupportedException(); set => throw new NotSupportedException(); }
         /// <summary> The RegistrationTtl of the created NotificationHub. </summary>
-        public TimeSpan? RegistrationTtl { get; set; }
+        public TimeSpan? RegistrationTtl { get => throw new NotSupportedException(); set => throw new NotSupportedException(); }
         /// <summary> The AuthorizationRules of the created NotificationHub. </summary>
-        public IList<SharedAccessAuthorizationRuleProperties> AuthorizationRules { get; }
+        public IList<SharedAccessAuthorizationRuleProperties> AuthorizationRules { get => throw new NotSupportedException(); }
         /// <summary> The ApnsCredential of the created NotificationHub. </summary>
-        public NotificationHubApnsCredential ApnsCredential { get; set; }
+        public NotificationHubApnsCredential ApnsCredential { get => throw new NotSupportedException(); set => throw new NotSupportedException(); }
         /// <summary> The WnsCredential of the created NotificationHub. </summary>
-        public NotificationHubWnsCredential WnsCredential { get; set; }
+        public NotificationHubWnsCredential WnsCredential { get => throw new NotSupportedException(); set => throw new NotSupportedException(); }
         /// <summary> The GcmCredential of the created NotificationHub. </summary>
-        public NotificationHubGcmCredential GcmCredential { get; set; }
+        public NotificationHubGcmCredential GcmCredential { get => throw new NotSupportedException(); set => throw new NotSupportedException(); }
         /// <summary> The MpnsCredential of the created NotificationHub. </summary>
-        public NotificationHubMpnsCredential MpnsCredential { get; set; }
+        public NotificationHubMpnsCredential MpnsCredential { get => throw new NotSupportedException(); set => throw new NotSupportedException(); }
         /// <summary> The AdmCredential of the created NotificationHub. </summary>
-        public NotificationHubAdmCredential AdmCredential { get; set; }
+        public NotificationHubAdmCredential AdmCredential { get => throw new NotSupportedException(); set => throw new NotSupportedException(); }
         /// <summary> The BaiduCredential of the created NotificationHub. </summary>
-        public NotificationHubBaiduCredential BaiduCredential { get; set; }
+        public NotificationHubBaiduCredential BaiduCredential { get => throw new NotSupportedException(); set => throw new NotSupportedException(); }
         /// <summary> The sku of the created namespace. </summary>
-        public NotificationHubSku Sku { get; set; }
+        public NotificationHubSku Sku { get => throw new NotSupportedException(); set => throw new NotSupportedException(); }
     }
 }

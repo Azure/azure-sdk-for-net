@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -14,44 +15,63 @@ namespace Azure.ResourceManager.Storage.Models
     public readonly partial struct StorageNetworkBypass : IEquatable<StorageNetworkBypass>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="StorageNetworkBypass"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public StorageNetworkBypass(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string NoneValue = "None";
         private const string LoggingValue = "Logging";
         private const string MetricsValue = "Metrics";
         private const string AzureServicesValue = "AzureServices";
 
-        /// <summary> None. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageNetworkBypass"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public StorageNetworkBypass(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the None. </summary>
         public static StorageNetworkBypass None { get; } = new StorageNetworkBypass(NoneValue);
-        /// <summary> Logging. </summary>
+
+        /// <summary> Gets the Logging. </summary>
         public static StorageNetworkBypass Logging { get; } = new StorageNetworkBypass(LoggingValue);
-        /// <summary> Metrics. </summary>
+
+        /// <summary> Gets the Metrics. </summary>
         public static StorageNetworkBypass Metrics { get; } = new StorageNetworkBypass(MetricsValue);
-        /// <summary> AzureServices. </summary>
+
+        /// <summary> Gets the AzureServices. </summary>
         public static StorageNetworkBypass AzureServices { get; } = new StorageNetworkBypass(AzureServicesValue);
+
         /// <summary> Determines if two <see cref="StorageNetworkBypass"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(StorageNetworkBypass left, StorageNetworkBypass right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="StorageNetworkBypass"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(StorageNetworkBypass left, StorageNetworkBypass right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="StorageNetworkBypass"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="StorageNetworkBypass"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator StorageNetworkBypass(string value) => new StorageNetworkBypass(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="StorageNetworkBypass"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator StorageNetworkBypass?(string value) => value == null ? null : new StorageNetworkBypass(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is StorageNetworkBypass other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(StorageNetworkBypass other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

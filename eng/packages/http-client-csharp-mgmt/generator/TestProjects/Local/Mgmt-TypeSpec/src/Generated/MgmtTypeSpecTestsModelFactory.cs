@@ -1593,6 +1593,46 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 siblingProp);
         }
 
+        /// <summary>
+        /// A polymorphic extension resource that uses DiscriminatedExtensionResource with 'kind' as the discriminator.
+        /// This tests that the generator correctly handles abstract resource data types in serialization.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.TypeAPolyDevice"/>.
+        /// </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
+        /// <returns> A new <see cref="Tests.PolyDeviceData"/> instance for mocking. </returns>
+        public static PolyDeviceData PolyDeviceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kind = default)
+        {
+            return new UnknownPolyDevice(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                kind);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="typeAPolyDeviceDescription"> Gets or sets the Description. </param>
+        /// <returns> A new <see cref="Models.TypeAPolyDevice"/> instance for mocking. </returns>
+        public static TypeAPolyDevice TypeAPolyDevice(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string typeAPolyDeviceDescription = default)
+        {
+            return new TypeAPolyDevice(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                "TypeA",
+                typeAPolyDeviceDescription is null ? default : new TypeAPolyDeviceProperties(typeAPolyDeviceDescription, null));
+        }
+
         /// <summary> The ZooRecommendation. </summary>
         /// <param name="recommendedValue"> The recommended value. </param>
         /// <param name="reason"> The reason for the recommendation. </param>

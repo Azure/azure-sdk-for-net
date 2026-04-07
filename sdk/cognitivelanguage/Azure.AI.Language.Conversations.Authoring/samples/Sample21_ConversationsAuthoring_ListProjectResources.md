@@ -10,7 +10,7 @@ To create a `ConversationAnalysisAuthoringClient`, you will need the service end
 Uri endpoint = new Uri("{endpoint}");
 AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
 ConversationAnalysisAuthoringClientOptions options = new ConversationAnalysisAuthoringClientOptions(ConversationAnalysisAuthoringClientOptions.ServiceVersion.V2025_11_15_Preview);
-ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential, options);
+ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential, options);
 ```
 
 Or you can also create a `ConversationAnalysisAuthoringClient` using Azure Active Directory (AAD) authentication. Your user or service principal must be assigned the "Cognitive Services Language Reader" role.
@@ -24,21 +24,13 @@ To list all Azure resources assigned to a specific project, call `GetProjectReso
 string projectName = "{projectName}";
 
 // Retrieve resources assigned to this project
-Pageable<ConversationAuthoringAssignedProjectResource> pageable =
-    client.GetProjectResources(projectName);
+Pageable<ConversationAuthoringAssignedDeploymentResource> pageable =
+    client.GetDeploymentResources(projectName);
 
-foreach (ConversationAuthoringAssignedProjectResource resource in pageable)
+foreach (ConversationAuthoringAssignedDeploymentResource resource in pageable)
 {
     Console.WriteLine($"Resource ID: {resource.ResourceId}");
     Console.WriteLine($"Region: {resource.Region}");
-
-    if (resource.AssignedAoaiResource != null)
-    {
-        Console.WriteLine($"AOAI Kind: {resource.AssignedAoaiResource.Kind}");
-        Console.WriteLine($"AOAI Resource ID: {resource.AssignedAoaiResource.ResourceId}");
-        Console.WriteLine($"AOAI Deployment Name: {resource.AssignedAoaiResource.DeploymentName}");
-    }
-
     Console.WriteLine();
 }
 ```
@@ -51,21 +43,13 @@ To list project resources asynchronously, call `GetProjectResourcesAsync`.
 string projectName = "{projectName}";
 
 // Retrieve resources assigned to this project (async)
-AsyncPageable<ConversationAuthoringAssignedProjectResource> pageable =
-    client.GetProjectResourcesAsync(projectName);
+AsyncPageable<ConversationAuthoringAssignedDeploymentResource> pageable =
+    client.GetDeploymentResourcesAsync(projectName);
 
-await foreach (ConversationAuthoringAssignedProjectResource resource in pageable)
+await foreach (ConversationAuthoringAssignedDeploymentResource resource in pageable)
 {
     Console.WriteLine($"Resource ID: {resource.ResourceId}");
     Console.WriteLine($"Region: {resource.Region}");
-
-    if (resource.AssignedAoaiResource != null)
-    {
-        Console.WriteLine($"AOAI Kind: {resource.AssignedAoaiResource.Kind}");
-        Console.WriteLine($"AOAI Resource ID: {resource.AssignedAoaiResource.ResourceId}");
-        Console.WriteLine($"AOAI Deployment Name: {resource.AssignedAoaiResource.DeploymentName}");
-    }
-
     Console.WriteLine();
 }
 ```

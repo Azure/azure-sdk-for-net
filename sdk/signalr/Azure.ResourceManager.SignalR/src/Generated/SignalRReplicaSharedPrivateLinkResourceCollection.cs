@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.SignalR
         {
             if (id.ResourceType != SignalRReplicaResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SignalRReplicaResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SignalRReplicaResource.ResourceType), nameof(id));
             }
         }
 

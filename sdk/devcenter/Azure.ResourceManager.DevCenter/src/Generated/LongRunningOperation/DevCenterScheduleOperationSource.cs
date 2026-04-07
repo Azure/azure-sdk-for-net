@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DevCenter
 {
-    internal class DevCenterScheduleOperationSource : IOperationSource<DevCenterScheduleResource>
+    /// <summary></summary>
+    internal partial class DevCenterScheduleOperationSource : IOperationSource<DevCenterScheduleResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal DevCenterScheduleOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         DevCenterScheduleResource IOperationSource<DevCenterScheduleResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DevCenterScheduleData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDevCenterContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            DevCenterScheduleData data = DevCenterScheduleData.DeserializeDevCenterScheduleData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new DevCenterScheduleResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<DevCenterScheduleResource> IOperationSource<DevCenterScheduleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DevCenterScheduleData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDevCenterContext.Default);
-            return await Task.FromResult(new DevCenterScheduleResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            DevCenterScheduleData data = DevCenterScheduleData.DeserializeDevCenterScheduleData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new DevCenterScheduleResource(_client, data);
         }
     }
 }

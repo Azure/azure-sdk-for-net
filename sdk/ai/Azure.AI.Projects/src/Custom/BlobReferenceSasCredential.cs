@@ -11,6 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects
 {
     /// <summary> SAS Credential definition. </summary>
+    [CodeGenType("BlobReferenceSasCredential")]
     public partial class BlobReferenceSasCredential
     {
         public Uri SasUri { get; }

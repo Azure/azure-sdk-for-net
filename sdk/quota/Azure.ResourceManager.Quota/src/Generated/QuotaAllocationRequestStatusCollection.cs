@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Quota
         {
             if (id.ResourceType != ManagementGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ManagementGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ManagementGroupResource.ResourceType), nameof(id));
             }
         }
 

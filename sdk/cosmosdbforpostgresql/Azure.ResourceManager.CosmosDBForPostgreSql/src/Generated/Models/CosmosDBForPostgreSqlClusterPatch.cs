@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CosmosDBForPostgreSql;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
 {
     /// <summary> Represents a cluster for update. </summary>
     public partial class CosmosDBForPostgreSqlClusterPatch
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlClusterPatch"/>. </summary>
         public CosmosDBForPostgreSqlClusterPatch()
@@ -52,79 +24,289 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlClusterPatch"/>. </summary>
+        /// <param name="properties"> Properties of the cluster. </param>
+        /// <param name="identity"> Describes the identity of the cluster. </param>
         /// <param name="tags"> Application-specific metadata in the form of key-value pairs. </param>
-        /// <param name="administratorLoginPassword"> The password of the administrator login. Each cluster is created with pre-defined administrative role called ‘citus’. . </param>
-        /// <param name="postgresqlVersion"> The major PostgreSQL version on all cluster servers. </param>
-        /// <param name="citusVersion"> The Citus extension version on all cluster servers. </param>
-        /// <param name="isShardsOnCoordinatorEnabled"> If distributed tables are placed on coordinator or not. Should be set to 'true' on single node clusters. Requires shard rebalancing after value is changed. </param>
-        /// <param name="isHAEnabled"> If high availability (HA) is enabled or not for the cluster. </param>
-        /// <param name="preferredPrimaryZone"> Preferred primary availability zone (AZ) for all cluster servers. </param>
-        /// <param name="coordinatorServerEdition"> The edition of the coordinator (default: GeneralPurpose). </param>
-        /// <param name="coordinatorStorageQuotaInMb"> The storage of the coordinator in MB. </param>
-        /// <param name="coordinatorVCores"> The vCores count of the coordinator (max: 96). </param>
-        /// <param name="isCoordinatorPublicIPAccessEnabled"> If public access is enabled on coordinator. </param>
-        /// <param name="nodeServerEdition"> The edition of a node (default: MemoryOptimized). </param>
-        /// <param name="nodeCount"> Worker node count of the cluster. When node count is 0, it represents a single node configuration with the ability to create distributed tables on that node. 2 or more worker nodes represent multi-node configuration. Node count value cannot be 1. </param>
-        /// <param name="nodeStorageQuotaInMb"> The storage in MB on each worker node. </param>
-        /// <param name="nodeVCores"> The compute in vCores on each worker node (max: 104). </param>
-        /// <param name="isNodePublicIPAccessEnabled"> If public access is enabled on worker nodes. </param>
-        /// <param name="maintenanceWindow"> Maintenance window of a cluster. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CosmosDBForPostgreSqlClusterPatch(IDictionary<string, string> tags, string administratorLoginPassword, string postgresqlVersion, string citusVersion, bool? isShardsOnCoordinatorEnabled, bool? isHAEnabled, string preferredPrimaryZone, string coordinatorServerEdition, int? coordinatorStorageQuotaInMb, int? coordinatorVCores, bool? isCoordinatorPublicIPAccessEnabled, string nodeServerEdition, int? nodeCount, int? nodeStorageQuotaInMb, int? nodeVCores, bool? isNodePublicIPAccessEnabled, CosmosDBForPostgreSqlMaintenanceWindow maintenanceWindow, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBForPostgreSqlClusterPatch(ClusterPropertiesForUpdate properties, IdentityProperties identity, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            Properties = properties;
+            Identity = identity;
             Tags = tags;
-            AdministratorLoginPassword = administratorLoginPassword;
-            PostgresqlVersion = postgresqlVersion;
-            CitusVersion = citusVersion;
-            IsShardsOnCoordinatorEnabled = isShardsOnCoordinatorEnabled;
-            IsHAEnabled = isHAEnabled;
-            PreferredPrimaryZone = preferredPrimaryZone;
-            CoordinatorServerEdition = coordinatorServerEdition;
-            CoordinatorStorageQuotaInMb = coordinatorStorageQuotaInMb;
-            CoordinatorVCores = coordinatorVCores;
-            IsCoordinatorPublicIPAccessEnabled = isCoordinatorPublicIPAccessEnabled;
-            NodeServerEdition = nodeServerEdition;
-            NodeCount = nodeCount;
-            NodeStorageQuotaInMb = nodeStorageQuotaInMb;
-            NodeVCores = nodeVCores;
-            IsNodePublicIPAccessEnabled = isNodePublicIPAccessEnabled;
-            MaintenanceWindow = maintenanceWindow;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Properties of the cluster. </summary>
+        internal ClusterPropertiesForUpdate Properties { get; set; }
+
+        /// <summary> Describes the identity of the cluster. </summary>
+        public IdentityProperties Identity { get; set; }
 
         /// <summary> Application-specific metadata in the form of key-value pairs. </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary> The password of the administrator login. Each cluster is created with pre-defined administrative role called ‘citus’. . </summary>
-        public string AdministratorLoginPassword { get; set; }
+
+        /// <summary> The password of the administrator login. Each cluster is created with pre-defined administrative role called ‘citus’. </summary>
+        public string AdministratorLoginPassword
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AdministratorLoginPassword;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterPropertiesForUpdate();
+                }
+                Properties.AdministratorLoginPassword = value;
+            }
+        }
+
         /// <summary> The major PostgreSQL version on all cluster servers. </summary>
-        public string PostgresqlVersion { get; set; }
+        public string PostgresqlVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PostgresqlVersion;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterPropertiesForUpdate();
+                }
+                Properties.PostgresqlVersion = value;
+            }
+        }
+
         /// <summary> The Citus extension version on all cluster servers. </summary>
-        public string CitusVersion { get; set; }
+        public string CitusVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CitusVersion;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterPropertiesForUpdate();
+                }
+                Properties.CitusVersion = value;
+            }
+        }
+
         /// <summary> If distributed tables are placed on coordinator or not. Should be set to 'true' on single node clusters. Requires shard rebalancing after value is changed. </summary>
-        public bool? IsShardsOnCoordinatorEnabled { get; set; }
+        public bool? IsShardsOnCoordinatorEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsShardsOnCoordinatorEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterPropertiesForUpdate();
+                }
+                Properties.IsShardsOnCoordinatorEnabled = value.Value;
+            }
+        }
+
         /// <summary> If high availability (HA) is enabled or not for the cluster. </summary>
-        public bool? IsHAEnabled { get; set; }
+        public bool? IsHAEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsHAEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterPropertiesForUpdate();
+                }
+                Properties.IsHAEnabled = value.Value;
+            }
+        }
+
         /// <summary> Preferred primary availability zone (AZ) for all cluster servers. </summary>
-        public string PreferredPrimaryZone { get; set; }
+        public string PreferredPrimaryZone
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PreferredPrimaryZone;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterPropertiesForUpdate();
+                }
+                Properties.PreferredPrimaryZone = value;
+            }
+        }
+
         /// <summary> The edition of the coordinator (default: GeneralPurpose). </summary>
-        public string CoordinatorServerEdition { get; set; }
+        public string CoordinatorServerEdition
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CoordinatorServerEdition;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterPropertiesForUpdate();
+                }
+                Properties.CoordinatorServerEdition = value;
+            }
+        }
+
         /// <summary> The storage of the coordinator in MB. </summary>
-        public int? CoordinatorStorageQuotaInMb { get; set; }
+        public int? CoordinatorStorageQuotaInMb
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CoordinatorStorageQuotaInMb;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterPropertiesForUpdate();
+                }
+                Properties.CoordinatorStorageQuotaInMb = value.Value;
+            }
+        }
+
         /// <summary> The vCores count of the coordinator (max: 96). </summary>
-        public int? CoordinatorVCores { get; set; }
+        public int? CoordinatorVCores
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CoordinatorVCores;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterPropertiesForUpdate();
+                }
+                Properties.CoordinatorVCores = value.Value;
+            }
+        }
+
         /// <summary> If public access is enabled on coordinator. </summary>
-        public bool? IsCoordinatorPublicIPAccessEnabled { get; set; }
+        public bool? IsCoordinatorPublicIPAccessEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsCoordinatorPublicIPAccessEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterPropertiesForUpdate();
+                }
+                Properties.IsCoordinatorPublicIPAccessEnabled = value.Value;
+            }
+        }
+
         /// <summary> The edition of a node (default: MemoryOptimized). </summary>
-        public string NodeServerEdition { get; set; }
+        public string NodeServerEdition
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NodeServerEdition;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterPropertiesForUpdate();
+                }
+                Properties.NodeServerEdition = value;
+            }
+        }
+
         /// <summary> Worker node count of the cluster. When node count is 0, it represents a single node configuration with the ability to create distributed tables on that node. 2 or more worker nodes represent multi-node configuration. Node count value cannot be 1. </summary>
-        public int? NodeCount { get; set; }
+        public int? NodeCount
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NodeCount;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterPropertiesForUpdate();
+                }
+                Properties.NodeCount = value.Value;
+            }
+        }
+
         /// <summary> The storage in MB on each worker node. </summary>
-        public int? NodeStorageQuotaInMb { get; set; }
+        public int? NodeStorageQuotaInMb
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NodeStorageQuotaInMb;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterPropertiesForUpdate();
+                }
+                Properties.NodeStorageQuotaInMb = value.Value;
+            }
+        }
+
         /// <summary> The compute in vCores on each worker node (max: 104). </summary>
-        public int? NodeVCores { get; set; }
+        public int? NodeVCores
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NodeVCores;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterPropertiesForUpdate();
+                }
+                Properties.NodeVCores = value.Value;
+            }
+        }
+
         /// <summary> If public access is enabled on worker nodes. </summary>
-        public bool? IsNodePublicIPAccessEnabled { get; }
+        public bool? IsNodePublicIPAccessEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsNodePublicIPAccessEnabled;
+            }
+        }
+
         /// <summary> Maintenance window of a cluster. </summary>
-        public CosmosDBForPostgreSqlMaintenanceWindow MaintenanceWindow { get; set; }
+        public CosmosDBForPostgreSqlMaintenanceWindow MaintenanceWindow
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MaintenanceWindow;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterPropertiesForUpdate();
+                }
+                Properties.MaintenanceWindow = value;
+            }
+        }
     }
 }

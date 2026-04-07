@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure;
 using Azure.Core;
@@ -27,8 +28,9 @@ namespace Azure.ResourceManager.Playwright.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="Playwright.PlaywrightWorkspaceData"/> instance for mocking. </returns>
-        public static PlaywrightWorkspaceData PlaywrightWorkspaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, PlaywrightWorkspaceProperties properties = default)
+        public static PlaywrightWorkspaceData PlaywrightWorkspaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, PlaywrightWorkspaceProperties properties = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -40,7 +42,8 @@ namespace Azure.ResourceManager.Playwright.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                properties);
+                properties,
+                identity);
         }
 
         /// <summary> Playwright workspace resource properties. </summary>
@@ -49,8 +52,10 @@ namespace Azure.ResourceManager.Playwright.Models
         /// <param name="regionalAffinity"> Controls the connection region for client workers to cloud-hosted browsers. When enabled, workers connect to browsers in the closest Azure region for lower latency. When disabled, workers connect to browsers in the Azure region where the workspace was created. </param>
         /// <param name="localAuth"> Enables the workspace to use local authentication through service access tokens for operations. </param>
         /// <param name="workspaceId"> The workspace ID in GUID format. </param>
+        /// <param name="reporting"> Indicates whether reporting is enabled for the workspace. When set to true, reports will be generated and available for the workspace. </param>
+        /// <param name="storageUri"> The URI of the Azure storage account used to store workspace artifacts, test results, and reports. </param>
         /// <returns> A new <see cref="Models.PlaywrightWorkspaceProperties"/> instance for mocking. </returns>
-        public static PlaywrightWorkspaceProperties PlaywrightWorkspaceProperties(PlaywrightProvisioningState? provisioningState = default, Uri dataplaneUri = default, PlaywrightEnablementStatus? regionalAffinity = default, PlaywrightEnablementStatus? localAuth = default, string workspaceId = default)
+        public static PlaywrightWorkspaceProperties PlaywrightWorkspaceProperties(PlaywrightProvisioningState? provisioningState = default, Uri dataplaneUri = default, PlaywrightEnablementStatus? regionalAffinity = default, PlaywrightEnablementStatus? localAuth = default, string workspaceId = default, PlaywrightEnablementStatus? reporting = default, Uri storageUri = default)
         {
             return new PlaywrightWorkspaceProperties(
                 provisioningState,
@@ -58,18 +63,21 @@ namespace Azure.ResourceManager.Playwright.Models
                 regionalAffinity,
                 localAuth,
                 workspaceId,
+                reporting,
+                storageUri,
                 additionalBinaryDataProperties: null);
         }
 
         /// <summary> The type used for update operations of the PlaywrightWorkspace. </summary>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Models.PlaywrightWorkspacePatch"/> instance for mocking. </returns>
-        public static PlaywrightWorkspacePatch PlaywrightWorkspacePatch(IDictionary<string, string> tags = default, PlaywrightWorkspaceUpdateProperties properties = default)
+        public static PlaywrightWorkspacePatch PlaywrightWorkspacePatch(ManagedServiceIdentity identity = default, IDictionary<string, string> tags = default, PlaywrightWorkspaceUpdateProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new PlaywrightWorkspacePatch(tags, properties, additionalBinaryDataProperties: null);
+            return new PlaywrightWorkspacePatch(identity, tags, properties, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The check availability result. </summary>
@@ -161,6 +169,34 @@ namespace Azure.ResourceManager.Playwright.Models
                 usedValue,
                 percentageUsed,
                 additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Playwright.PlaywrightWorkspaceData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Playwright.PlaywrightWorkspaceData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PlaywrightWorkspaceData PlaywrightWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, PlaywrightWorkspaceProperties properties)
+        {
+            return PlaywrightWorkspaceData(id, name, resourceType, systemData, tags, location, properties, identity: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.PlaywrightWorkspaceProperties"/>. </summary>
+        /// <param name="provisioningState"> The status of the last resource operation. </param>
+        /// <param name="dataplaneUri"> The workspace data plane service API URI. </param>
+        /// <param name="regionalAffinity"> Controls the connection region for client workers to cloud-hosted browsers. When enabled, workers connect to browsers in the closest Azure region for lower latency. When disabled, workers connect to browsers in the Azure region where the workspace was created. </param>
+        /// <param name="localAuth"> Enables the workspace to use local authentication through service access tokens for operations. </param>
+        /// <param name="workspaceId"> The workspace ID in GUID format. </param>
+        /// <returns> A new <see cref="Models.PlaywrightWorkspaceProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PlaywrightWorkspaceProperties PlaywrightWorkspaceProperties(PlaywrightProvisioningState? provisioningState, Uri dataplaneUri, PlaywrightEnablementStatus? regionalAffinity, PlaywrightEnablementStatus? localAuth, string workspaceId)
+        {
+            return PlaywrightWorkspaceProperties(provisioningState, dataplaneUri, regionalAffinity, localAuth, workspaceId, reporting: default, storageUri: default);
         }
     }
 }

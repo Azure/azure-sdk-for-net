@@ -13,117 +13,137 @@ using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
-    /// <summary>
-    /// A class representing the ObjectReplicationPolicy data model.
-    /// The replication policy between two storage accounts. Multiple rules can be defined in one policy.
-    /// </summary>
+    /// <summary> The replication policy between two storage accounts. Multiple rules can be defined in one policy. </summary>
     public partial class ObjectReplicationPolicyData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ObjectReplicationPolicyData"/>. </summary>
         public ObjectReplicationPolicyData()
         {
-            Rules = new ChangeTrackingList<ObjectReplicationPolicyRule>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ObjectReplicationPolicyData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="policyId"> A unique id for object replication policy. </param>
-        /// <param name="enabledOn"> Indicates when the policy is enabled on the source account. </param>
-        /// <param name="sourceAccount"> Required. Source account name. It should be full resource id if allowCrossTenantReplication set to false. </param>
-        /// <param name="destinationAccount"> Required. Destination account name. It should be full resource id if allowCrossTenantReplication set to false. </param>
-        /// <param name="rules"> The storage account object replication rules. </param>
-        /// <param name="metrics"> Optional. The object replication policy metrics feature options. </param>
-        /// <param name="priorityReplication"> Optional. The object replication policy priority replication feature options. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ObjectReplicationPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string policyId, DateTimeOffset? enabledOn, string sourceAccount, string destinationAccount, IList<ObjectReplicationPolicyRule> rules, ObjectReplicationPolicyPropertiesMetrics metrics, ObjectReplicationPolicyPropertiesPriorityReplication priorityReplication, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Returns the Storage Account Object Replication Policy. </param>
+        internal ObjectReplicationPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ObjectReplicationPolicyProperties properties) : base(id, name, resourceType, systemData)
         {
-            PolicyId = policyId;
-            EnabledOn = enabledOn;
-            SourceAccount = sourceAccount;
-            DestinationAccount = destinationAccount;
-            Rules = rules;
-            Metrics = metrics;
-            PriorityReplication = priorityReplication;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
+
+        /// <summary> Returns the Storage Account Object Replication Policy. </summary>
+        [WirePath("properties")]
+        internal ObjectReplicationPolicyProperties Properties { get; set; }
 
         /// <summary> A unique id for object replication policy. </summary>
         [WirePath("properties.policyId")]
-        public string PolicyId { get; }
+        public string PolicyId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PolicyId;
+            }
+        }
+
         /// <summary> Indicates when the policy is enabled on the source account. </summary>
         [WirePath("properties.enabledTime")]
-        public DateTimeOffset? EnabledOn { get; }
+        public DateTimeOffset? EnabledOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnabledOn;
+            }
+        }
+
         /// <summary> Required. Source account name. It should be full resource id if allowCrossTenantReplication set to false. </summary>
         [WirePath("properties.sourceAccount")]
-        public string SourceAccount { get; set; }
+        public string SourceAccount
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SourceAccount;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ObjectReplicationPolicyProperties();
+                }
+                Properties.SourceAccount = value;
+            }
+        }
+
         /// <summary> Required. Destination account name. It should be full resource id if allowCrossTenantReplication set to false. </summary>
         [WirePath("properties.destinationAccount")]
-        public string DestinationAccount { get; set; }
+        public string DestinationAccount
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DestinationAccount;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ObjectReplicationPolicyProperties();
+                }
+                Properties.DestinationAccount = value;
+            }
+        }
+
         /// <summary> The storage account object replication rules. </summary>
         [WirePath("properties.rules")]
-        public IList<ObjectReplicationPolicyRule> Rules { get; }
-        /// <summary> Optional. The object replication policy metrics feature options. </summary>
-        internal ObjectReplicationPolicyPropertiesMetrics Metrics { get; set; }
+        public IList<ObjectReplicationPolicyRule> Rules
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ObjectReplicationPolicyProperties();
+                }
+                return Properties.Rules;
+            }
+        }
+
         /// <summary> Indicates whether object replication metrics feature is enabled for the policy. </summary>
         [WirePath("properties.metrics.enabled")]
         public bool? IsMetricsEnabled
         {
-            get => Metrics is null ? default : Metrics.IsMetricsEnabled;
+            get
+            {
+                return Properties is null ? default : Properties.IsMetricsEnabled;
+            }
             set
             {
-                if (Metrics is null)
-                    Metrics = new ObjectReplicationPolicyPropertiesMetrics();
-                Metrics.IsMetricsEnabled = value;
+                if (Properties is null)
+                {
+                    Properties = new ObjectReplicationPolicyProperties();
+                }
+                Properties.IsMetricsEnabled = value.Value;
             }
         }
 
-        /// <summary> Optional. The object replication policy priority replication feature options. </summary>
-        internal ObjectReplicationPolicyPropertiesPriorityReplication PriorityReplication { get; set; }
         /// <summary> Indicates whether object replication priority replication feature is enabled for the policy. </summary>
         [WirePath("properties.priorityReplication.enabled")]
         public bool? IsPriorityReplicationEnabled
         {
-            get => PriorityReplication is null ? default : PriorityReplication.IsPriorityReplicationEnabled;
+            get
+            {
+                return Properties is null ? default : Properties.IsPriorityReplicationEnabled;
+            }
             set
             {
-                if (PriorityReplication is null)
-                    PriorityReplication = new ObjectReplicationPolicyPropertiesPriorityReplication();
-                PriorityReplication.IsPriorityReplicationEnabled = value;
+                if (Properties is null)
+                {
+                    Properties = new ObjectReplicationPolicyProperties();
+                }
+                Properties.IsPriorityReplicationEnabled = value.Value;
             }
         }
     }

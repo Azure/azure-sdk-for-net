@@ -54,12 +54,12 @@ public class Sample_AgentToAgent : ProjectsOpenAITestBase
             Instructions = "You are a helpful assistant.",
             Tools = { a2aTool }
         };
-        ProjectsAgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName: "myAgent",
             options: new(agentDefinition));
         #endregion
         #region Snippet:Sample_CreateResponse_AgentToAgent_Async
-        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
+        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentVersion.Name);
         CreateResponseOptions responseOptions = new()
         {
             ToolChoice = ResponseToolChoice.CreateRequiredChoice(),
@@ -77,7 +77,7 @@ public class Sample_AgentToAgent : ProjectsOpenAITestBase
         #endregion
 
         #region Snippet:Sample_Cleanup_AgentToAgent_Async
-        await projectClient.Agents.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         #endregion
     }
 
@@ -119,12 +119,12 @@ public class Sample_AgentToAgent : ProjectsOpenAITestBase
             Instructions = "You are a helpful assistant.",
             Tools = { a2aTool }
         };
-        ProjectsAgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
+        ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(
             agentName: "myAgent",
             options: new(agentDefinition));
         #endregion
         #region Snippet:Sample_CreateResponse_AgentToAgent_Sync
-        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
+        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentVersion.Name);
         CreateResponseOptions responseOptions = new()
         {
             ToolChoice = ResponseToolChoice.CreateRequiredChoice(),
@@ -137,7 +137,7 @@ public class Sample_AgentToAgent : ProjectsOpenAITestBase
         Console.WriteLine(response.GetOutputText());
 
         #region Snippet:Sample_Cleanup_AgentToAgent_Sync
-        projectClient.Agents.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         #endregion
     }
 

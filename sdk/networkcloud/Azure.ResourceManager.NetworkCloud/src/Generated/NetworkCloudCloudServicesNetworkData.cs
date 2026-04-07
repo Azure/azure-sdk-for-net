@@ -7,143 +7,195 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetworkCloud.Models;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
-    /// <summary>
-    /// A class representing the NetworkCloudCloudServicesNetwork data model.
-    /// Upon creation, the additional services that are provided by the platform will be allocated and represented in the status of this resource. All resources associated with this cloud services network will be part of the same layer 2 (L2) isolation domain. At least one service network must be created but may be reused across many virtual machines and/or Hybrid AKS clusters.
-    /// </summary>
+    /// <summary> Upon creation, the additional services that are provided by the platform will be allocated and represented in the status of this resource. All resources associated with this cloud services network will be part of the same layer 2 (L2) isolation domain. At least one service network must be created but may be reused across many virtual machines and/or Hybrid AKS clusters. </summary>
     public partial class NetworkCloudCloudServicesNetworkData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudCloudServicesNetworkData"/>. </summary>
-        /// <param name="location"> The location. </param>
-        /// <param name="extendedLocation"> The extended location of the cluster associated with the resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="extendedLocation"/> is null. </exception>
-        public NetworkCloudCloudServicesNetworkData(AzureLocation location, ExtendedLocation extendedLocation) : base(location)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The list of the resource properties. </param>
+        /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
+        /// <param name="extendedLocation"> The extended location of the resource. This property is required when creating the resource. </param>
+        internal NetworkCloudCloudServicesNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, CloudServicesNetworkProperties properties, ETag? eTag, ExtendedLocation extendedLocation) : base(id, name, resourceType, systemData, tags, location)
         {
-            Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
-
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
+            ETag = eTag;
             ExtendedLocation = extendedLocation;
-            AdditionalEgressEndpoints = new ChangeTrackingList<EgressEndpoint>();
-            AssociatedResourceIds = new ChangeTrackingList<ResourceIdentifier>();
-            EnabledEgressEndpoints = new ChangeTrackingList<EgressEndpoint>();
-            HybridAksClustersAssociatedIds = new ChangeTrackingList<ResourceIdentifier>();
-            VirtualMachinesAssociatedIds = new ChangeTrackingList<ResourceIdentifier>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkCloudCloudServicesNetworkData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="etag"> Resource ETag. </param>
-        /// <param name="extendedLocation"> The extended location of the cluster associated with the resource. </param>
-        /// <param name="additionalEgressEndpoints"> The list of egress endpoints. This allows for connection from a Hybrid AKS cluster to the specified endpoint. </param>
-        /// <param name="associatedResourceIds"> The list of resource IDs for the other Microsoft.NetworkCloud resources that have attached this network. </param>
-        /// <param name="clusterId"> The resource ID of the Network Cloud cluster this cloud services network is associated with. </param>
-        /// <param name="detailedStatus"> The more detailed status of the cloud services network. </param>
-        /// <param name="detailedStatusMessage"> The descriptive message about the current detailed status. </param>
-        /// <param name="enableDefaultEgressEndpoints"> The indicator of whether the platform default endpoints are allowed for the egress traffic. </param>
-        /// <param name="enabledEgressEndpoints"> The full list of additional and default egress endpoints that are currently enabled. </param>
-        /// <param name="hybridAksClustersAssociatedIds"> Field Deprecated. These fields will be empty/omitted. The list of Hybrid AKS cluster resource IDs that are associated with this cloud services network. </param>
-        /// <param name="interfaceName"> The name of the interface that will be present in the virtual machine to represent this network. </param>
-        /// <param name="provisioningState"> The provisioning state of the cloud services network. </param>
-        /// <param name="storageOptions"> The storage options for the cloud services network. </param>
-        /// <param name="storageStatus"> The storage status for the cloud services network. </param>
-        /// <param name="virtualMachinesAssociatedIds"> Field Deprecated. These fields will be empty/omitted. The list of virtual machine resource IDs, excluding any Hybrid AKS virtual machines, that are currently using this cloud services network. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkCloudCloudServicesNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ExtendedLocation extendedLocation, IList<EgressEndpoint> additionalEgressEndpoints, IReadOnlyList<ResourceIdentifier> associatedResourceIds, ResourceIdentifier clusterId, CloudServicesNetworkDetailedStatus? detailedStatus, string detailedStatusMessage, CloudServicesNetworkEnableDefaultEgressEndpoint? enableDefaultEgressEndpoints, IReadOnlyList<EgressEndpoint> enabledEgressEndpoints, IReadOnlyList<ResourceIdentifier> hybridAksClustersAssociatedIds, string interfaceName, CloudServicesNetworkProvisioningState? provisioningState, CloudServicesNetworkStorageOptions storageOptions, CloudServicesNetworkStorageStatus storageStatus, IReadOnlyList<ResourceIdentifier> virtualMachinesAssociatedIds, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
-        {
-            ETag = etag;
-            ExtendedLocation = extendedLocation;
-            AdditionalEgressEndpoints = additionalEgressEndpoints;
-            AssociatedResourceIds = associatedResourceIds;
-            ClusterId = clusterId;
-            DetailedStatus = detailedStatus;
-            DetailedStatusMessage = detailedStatusMessage;
-            EnableDefaultEgressEndpoints = enableDefaultEgressEndpoints;
-            EnabledEgressEndpoints = enabledEgressEndpoints;
-            HybridAksClustersAssociatedIds = hybridAksClustersAssociatedIds;
-            InterfaceName = interfaceName;
-            ProvisioningState = provisioningState;
-            StorageOptions = storageOptions;
-            StorageStatus = storageStatus;
-            VirtualMachinesAssociatedIds = virtualMachinesAssociatedIds;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
+        /// <summary> The list of the resource properties. </summary>
+        internal CloudServicesNetworkProperties Properties { get; set; }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkCloudCloudServicesNetworkData"/> for deserialization. </summary>
-        internal NetworkCloudCloudServicesNetworkData()
-        {
-        }
-
-        /// <summary> Resource ETag. </summary>
+        /// <summary> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </summary>
         public ETag? ETag { get; }
-        /// <summary> The extended location of the cluster associated with the resource. </summary>
-        public ExtendedLocation ExtendedLocation { get; set; }
+
         /// <summary> The list of egress endpoints. This allows for connection from a Hybrid AKS cluster to the specified endpoint. </summary>
-        public IList<EgressEndpoint> AdditionalEgressEndpoints { get; }
-        /// <summary> The list of resource IDs for the other Microsoft.NetworkCloud resources that have attached this network. </summary>
-        public IReadOnlyList<ResourceIdentifier> AssociatedResourceIds { get; }
-        /// <summary> The resource ID of the Network Cloud cluster this cloud services network is associated with. </summary>
-        public ResourceIdentifier ClusterId { get; }
-        /// <summary> The more detailed status of the cloud services network. </summary>
-        public CloudServicesNetworkDetailedStatus? DetailedStatus { get; }
-        /// <summary> The descriptive message about the current detailed status. </summary>
-        public string DetailedStatusMessage { get; }
+        public IList<EgressEndpoint> AdditionalEgressEndpoints
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new CloudServicesNetworkProperties();
+                }
+                return Properties.AdditionalEgressEndpoints;
+            }
+        }
+
         /// <summary> The indicator of whether the platform default endpoints are allowed for the egress traffic. </summary>
-        public CloudServicesNetworkEnableDefaultEgressEndpoint? EnableDefaultEgressEndpoints { get; set; }
-        /// <summary> The full list of additional and default egress endpoints that are currently enabled. </summary>
-        public IReadOnlyList<EgressEndpoint> EnabledEgressEndpoints { get; }
-        /// <summary> Field Deprecated. These fields will be empty/omitted. The list of Hybrid AKS cluster resource IDs that are associated with this cloud services network. </summary>
-        public IReadOnlyList<ResourceIdentifier> HybridAksClustersAssociatedIds { get; }
-        /// <summary> The name of the interface that will be present in the virtual machine to represent this network. </summary>
-        public string InterfaceName { get; }
-        /// <summary> The provisioning state of the cloud services network. </summary>
-        public CloudServicesNetworkProvisioningState? ProvisioningState { get; }
+        public CloudServicesNetworkEnableDefaultEgressEndpoint? EnableDefaultEgressEndpoints
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnableDefaultEgressEndpoints;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CloudServicesNetworkProperties();
+                }
+                Properties.EnableDefaultEgressEndpoints = value.Value;
+            }
+        }
+
         /// <summary> The storage options for the cloud services network. </summary>
-        public CloudServicesNetworkStorageOptions StorageOptions { get; set; }
+        public CloudServicesNetworkStorageOptions StorageOptions
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StorageOptions;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CloudServicesNetworkProperties();
+                }
+                Properties.StorageOptions = value;
+            }
+        }
+
+        /// <summary> The list of resource IDs for the other Microsoft.NetworkCloud resources that have attached this network. </summary>
+        public IReadOnlyList<ResourceIdentifier> AssociatedResourceIds
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new CloudServicesNetworkProperties();
+                }
+                return Properties.AssociatedResourceIds;
+            }
+        }
+
+        /// <summary> The resource ID of the Network Cloud cluster this cloud services network is associated with. </summary>
+        public ResourceIdentifier ClusterId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ClusterId;
+            }
+        }
+
+        /// <summary> The more detailed status of the cloud services network. </summary>
+        public CloudServicesNetworkDetailedStatus? DetailedStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DetailedStatus;
+            }
+        }
+
+        /// <summary> The descriptive message about the current detailed status. </summary>
+        public string DetailedStatusMessage
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DetailedStatusMessage;
+            }
+        }
+
+        /// <summary> The full list of additional and default egress endpoints that are currently enabled. </summary>
+        public IReadOnlyList<EgressEndpoint> EnabledEgressEndpoints
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new CloudServicesNetworkProperties();
+                }
+                return Properties.EnabledEgressEndpoints;
+            }
+        }
+
+        /// <summary> Field Deprecated. These fields will be empty/omitted. The list of Hybrid AKS cluster resource IDs that are associated with this cloud services network. </summary>
+        public IReadOnlyList<ResourceIdentifier> HybridAksClustersAssociatedIds
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new CloudServicesNetworkProperties();
+                }
+                return Properties.HybridAksClustersAssociatedIds;
+            }
+        }
+
+        /// <summary> The name of the interface that will be present in the virtual machine to represent this network. </summary>
+        public string InterfaceName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.InterfaceName;
+            }
+        }
+
         /// <summary> The storage status for the cloud services network. </summary>
-        public CloudServicesNetworkStorageStatus StorageStatus { get; }
+        public CloudServicesNetworkStorageStatus StorageStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StorageStatus;
+            }
+        }
+
         /// <summary> Field Deprecated. These fields will be empty/omitted. The list of virtual machine resource IDs, excluding any Hybrid AKS virtual machines, that are currently using this cloud services network. </summary>
-        public IReadOnlyList<ResourceIdentifier> VirtualMachinesAssociatedIds { get; }
+        public IReadOnlyList<ResourceIdentifier> VirtualMachinesAssociatedIds
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new CloudServicesNetworkProperties();
+                }
+                return Properties.VirtualMachinesAssociatedIds;
+            }
+        }
+
+        /// <summary> The provisioning state of the cloud services network. </summary>
+        public CloudServicesNetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }

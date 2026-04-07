@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         {
             if (id.ResourceType != PureStorageAvsVmResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, PureStorageAvsVmResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, PureStorageAvsVmResource.ResourceType), nameof(id));
             }
         }
 
