@@ -38,3 +38,5 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             => OperationalInsightsTableData(id, name, resourceType, systemData, retentionInDays, totalRetentionInDays, archiveRetentionInDays, searchResults, restoredLogs, resultStatistics, plan, lastPlanModifiedDate, schema, provisioningState, retentionInDaysAsDefault, totalRetentionInDaysAsDefault);
     }
 }
+
+// Test comment for batching validation - DO NOT MERGE

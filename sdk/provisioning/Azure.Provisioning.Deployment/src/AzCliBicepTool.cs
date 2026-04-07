@@ -110,3 +110,5 @@ internal abstract class ExternalBicepTool
         return null;
     }
 }
+
+// Test comment for batching validation - DO NOT MERGE

@@ -76,3 +76,5 @@ namespace Azure.ResourceManager.HDInsight.Models
         public IList<EntraUserInfo> RestAuthEntraUsers { get; }
     }
 }
+
+// Test comment for batching validation - DO NOT MERGE

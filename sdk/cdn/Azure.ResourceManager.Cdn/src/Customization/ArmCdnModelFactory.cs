@@ -133,3 +133,5 @@ namespace Azure.ResourceManager.Cdn.Models
         }
     }
 }
+
+// Test comment for batching validation - DO NOT MERGE
