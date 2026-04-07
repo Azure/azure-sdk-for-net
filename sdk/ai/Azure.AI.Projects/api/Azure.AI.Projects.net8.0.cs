@@ -1102,6 +1102,7 @@ namespace Azure.AI.Projects.Evaluation
     {
         public CodeBasedEvaluatorDefinition() { }
         public CodeBasedEvaluatorDefinition(System.BinaryData initParameters, System.BinaryData dataSchema, System.Collections.Generic.IDictionary<string, Azure.AI.Projects.Evaluation.EvaluatorMetric> metrics, string codeText) { }
+        public CodeBasedEvaluatorDefinition(string codeText) { }
         public System.Uri BlobUri { get { throw null; } set { } }
         public string CodeText { get { throw null; } set { } }
         public string EntryPoint { get { throw null; } set { } }

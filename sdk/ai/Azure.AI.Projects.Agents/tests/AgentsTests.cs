@@ -223,8 +223,62 @@ public class AgentsTests : AgentsTestBase
         Assert.That(versionNumbers, Does.Contain(string.Equals(deleteVersion, "2") ? "1" : "2"));
         await toolboxClient.DeleteToolboxAsync(toolboxName: record.Name);
         Assert.ThrowsAsync<ClientResultException>(async () => await toolboxClient.GetToolboxVersionsAsync(toolboxName: "mcp").ToListAsync());
-        //versionNumbers = [.. .Select(x => x.Version).ToListAsync()];
-        //Assert.That(versionNumbers, Does.Not.Contains("1"));
-        //Assert.That(versionNumbers, Does.Not.Contains("2"));
+    }
+
+    [RecordedTest]
+    [TestCase(ToolType.CodeInterpreter)]
+    [TestCase(ToolType.CodeInterpreterGen)]
+    [TestCase(ToolType.FileSearch)]
+    // [TestCase(ToolType.ImageGeneration)] Not supported in toolsets.
+    [TestCase(ToolType.WebSearch)]
+    // [TestCase(ToolType.WebSearchPreview)] Not supported in toolsets.
+    // [TestCase(ToolType.Memory)] Not supported in toolsets.
+    [TestCase(ToolType.AzureAISearch)]
+    // [TestCase(ToolType.BingGrounding)] Not supported in toolsets.
+    // [TestCase(ToolType.BingGroundingCustom)] Not supported in toolsets.
+    [TestCase(ToolType.OpenAPI)]
+    // [TestCase(ToolType.Sharepoint)] Not supported in toolsets.
+    // [TestCase(ToolType.BrowserAutomation)] Not supported in toolsets.
+    // [TestCase(ToolType.MicrosoftFabric)] Not supported in toolsets.
+    [TestCase(ToolType.A2A)]
+    // [TestCase(ToolType.AzureFunction)] Not supported in toolsets.
+    // [TestCase(ToolType.FunctionCall)] Not supported in toolsets.
+    [TestCase(ToolType.MCP)]
+    // [TestCase(ToolType.ComputerUse)] Not supported in toolsets.
+    public async Task TestToolsetVariety(ToolType toolType)
+    {
+        AgentAdministrationClient agentsClient = GetTestClient();
+        AgentToolboxes toolboxClient = agentsClient.GetAgentToolboxes();
+        ResponseTool oaiTool = GetAgentToolDefinition(toolType);
+        ProjectsAgentTool tool = ProjectsAgentTool.AsProjectTool(oaiTool);
+        ToolboxVersion toolBox = await toolboxClient.CreateToolboxVersionAsync(
+            toolboxName: TOOLBOX,
+            tools: [tool],
+            description: $"{toolType}"
+        );
+        Assert.That(toolBox.Name, Is.EqualTo(TOOLBOX));
+        Assert.That(toolBox.Description, Is.EqualTo($"{toolType}"));
+        Assert.That(toolBox.Tools.Count, Is.EqualTo(1));
+        Assert.That(toolBox.Tools[0].GetType(), Is.EqualTo(tool.GetType()));
+        toolBox = await toolboxClient.GetToolboxVersionAsync(toolboxName: TOOLBOX, version: toolBox.Version);
+        Assert.That(toolBox.Name, Is.EqualTo(TOOLBOX));
+        Assert.That(toolBox.Description, Is.EqualTo($"{toolType}"));
+        Assert.That(toolBox.Tools.Count, Is.EqualTo(1));
+        Assert.That(toolBox.Tools[0].GetType(), Is.EqualTo(tool.GetType()));
+        // Use trhe tool to create an Agent
+        DeclarativeAgentDefinition definition = new(TestEnvironment.FOUNDRY_MODEL_NAME)
+        {
+            Tools = { toolBox.Tools[0] }
+        };
+        ProjectsAgentVersion agentVersion = await agentsClient.CreateAgentVersionAsync(AGENT_NAME, new ProjectsAgentVersionCreationOptions(definition));
+        if (agentVersion.Definition is DeclarativeAgentDefinition declarativeDefinition)
+        {
+            Assert.That(declarativeDefinition.Tools.Count(), Is.EqualTo(1));
+            Assert.That(declarativeDefinition.Tools[0].GetType(), Is.EqualTo(oaiTool.GetType()));
+        }
+        else
+        {
+            Assert.Fail($"The agent definition is of wrong typoe: {agentVersion.Definition}");
+        }
     }
 }
