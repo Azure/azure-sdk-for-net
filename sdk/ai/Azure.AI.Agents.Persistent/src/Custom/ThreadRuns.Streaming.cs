@@ -425,12 +425,12 @@ namespace Azure.AI.Agents.Persistent
             SubmitToolOutputsToRunRequest submitToolOutputsToRunRequest = new(
                 toolOutputs: (IList<StructuredToolOutput>)(toolOutputs?.Cast<StructuredToolOutput>().ToList()) ?? new ChangeTrackingList<StructuredToolOutput>(),
                 toolApprovals: (IList<ToolApproval>)(toolApprovals?.ToList()) ?? new ChangeTrackingList<ToolApproval>(),
-                true,
-                null);
+                stream: true,
+                additionalBinaryDataProperties: null);
             RequestContext context = cancellationToken.ToRequestContext();
             Response sendRequest() => SubmitToolOutputsInternal(run.ThreadId, run.Id, true, submitToolOutputsToRunRequest, context);
             CollectionResult<StreamingUpdate> submitToolOutputsToStream(ThreadRun run, IEnumerable<ToolOutput> toolOutputs, IEnumerable<ToolApproval> toolApprovals, int currRetry) =>
-                this.SubmitToolOutputsToStreamWitAutoFunctionCall(run, toolOutputs, toolApprovals, currentRetry);
+                this.SubmitToolOutputsToStreamWitAutoFunctionCall(run, toolOutputs, toolApprovals, currRetry);
             Response<ThreadRun> cancelRun(string runId) => this.CancelRun(run.ThreadId, runId);
 
             return new StreamingUpdateCollection(

@@ -21,6 +21,8 @@ namespace Azure.AI.Agents.Persistent
     // Helper to convert IReadOnlyDictionary → IDictionary without copying when possible.
     internal static class BackwardCompatHelper
     {
+        // IReadOnlyDictionary doesn't implement IDictionary, so Dictionary(IDictionary)
+        // constructor can't be used. ToDictionary is the simplest correct conversion.
         internal static IDictionary<string, string> ToDict(IReadOnlyDictionary<string, string> source)
             => source is IDictionary<string, string> dict ? dict : source?.ToDictionary(e => e.Key, e => e.Value);
     }

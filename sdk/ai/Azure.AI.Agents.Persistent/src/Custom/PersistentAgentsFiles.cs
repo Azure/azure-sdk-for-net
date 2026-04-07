@@ -62,8 +62,9 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNull(data, nameof(data));
             Argument.AssertNotNullOrEmpty(filename, nameof(filename));
 
-            UploadFileRequest uploadFileRequest = new UploadFileRequest(BinaryData.FromStream(data), purpose, filename, null);
-            using MultiPartFormDataRequestContent content = uploadFileRequest.ToMultipartRequestContent();
+            using MultiPartFormDataRequestContent content = new MultiPartFormDataRequestContent();
+            content.Add(data, "file", filename);
+            content.Add(purpose.ToString(), "purpose");
             RequestContext context = cancellationToken.ToRequestContext();
             Response response = await UploadFileAsync(content, content.ContentType, context).ConfigureAwait(false);
             return Response.FromValue((PersistentAgentFileInfo)response, response);
@@ -80,8 +81,9 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNull(data, nameof(data));
             Argument.AssertNotNullOrEmpty(filename, nameof(filename));
 
-            UploadFileRequest uploadFileRequest = new UploadFileRequest(BinaryData.FromStream(data), purpose, filename, null);
-            using MultiPartFormDataRequestContent content = uploadFileRequest.ToMultipartRequestContent();
+            using MultiPartFormDataRequestContent content = new MultiPartFormDataRequestContent();
+            content.Add(data, "file", filename);
+            content.Add(purpose.ToString(), "purpose");
             RequestContext context = cancellationToken.ToRequestContext();
             Response response = UploadFile(content, content.ContentType, context);
             return Response.FromValue((PersistentAgentFileInfo)response, response);
