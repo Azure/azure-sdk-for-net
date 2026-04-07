@@ -22,10 +22,22 @@ namespace Azure.ResourceManager.Hci
             get => Identity?.ManagedServiceIdentityType == null ? null : new HciManagedServiceIdentityType(Identity.ManagedServiceIdentityType.ToString());
             set
             {
+                if (value == null) return;
+                var newType = new ManagedServiceIdentityType(value.ToString());
                 if (Identity == null)
-                { Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.None); }
-                if (value != null)
-                { Identity = new ManagedServiceIdentity(new ManagedServiceIdentityType(value.ToString())); }
+                {
+                    Identity = new ManagedServiceIdentity(newType);
+                }
+                else
+                {
+                    // Preserve existing user-assigned identities when changing the type
+                    var newIdentity = new ManagedServiceIdentity(newType);
+                    foreach (var kvp in Identity.UserAssignedIdentities)
+                    {
+                        newIdentity.UserAssignedIdentities.Add(kvp);
+                    }
+                    Identity = newIdentity;
+                }
             }
         }
 
