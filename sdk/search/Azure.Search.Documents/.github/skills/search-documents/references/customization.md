@@ -5,6 +5,9 @@ This document covers how to apply, update, and remove customizations on top of t
 **Related docs:**
 - [architecture.md](./architecture.md) — full source layout and code generation workflow  
 - [TypeSpec Customization Reference](https://github.com/microsoft/typespec/blob/main/packages/http-client-csharp/.tspd/docs/customization.md) — upstream attribute documentation
+- [Client Typespec Renaming](https://azure.github.io/typespec-azure/docs/howtos/generate-client-libraries/09renaming/)
+- [Client Typespec Basic Methods](https://azure.github.io/typespec-azure/docs/howtos/generate-client-libraries/04method/)
+- Other Typespec docs can be found under https://azure.github.io/typespec-azure/docs/howtos/generate-client-libraries/.
 
 ---
 
