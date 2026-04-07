@@ -166,10 +166,10 @@ namespace Azure.Core.Extensions.Tests
             Assert.IsInstanceOf<ClientCertificateCredential>(credential);
             var clientCertificateCredential = (ClientCertificateCredential)credential;
 
-            Assert.AreEqual("ConfigurationClientId", clientCertificateCredential.ClientId);
+            Assert.AreEqual("ConfigurationClientId", typeof(ClientCertificateCredential).GetProperty("ClientId", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(clientCertificateCredential));
             // TODO: Reenable when Azure.Identity version is updated
             // Assert.AreEqual(someLocalCert, clientCertificateCredential.ClientCertificate.Thumbprint);
-            Assert.AreEqual("ConfigurationTenantId", clientCertificateCredential.TenantId);
+            Assert.AreEqual("ConfigurationTenantId", typeof(ClientCertificateCredential).GetProperty("TenantId", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(clientCertificateCredential));
 
             var additionalTenants = (string[])typeof(ClientCertificateCredential)
                 .GetFields(BindingFlags.NonPublic | BindingFlags.Instance).First(f => f.Name.EndsWith("dditionallyAllowedTenantIds"))
@@ -206,10 +206,10 @@ namespace Azure.Core.Extensions.Tests
             Assert.IsInstanceOf<ClientCertificateCredential>(credential);
             var clientCertificateCredential = (ClientCertificateCredential)credential;
 
-            Assert.AreEqual("ConfigurationClientId", clientCertificateCredential.ClientId);
+            Assert.AreEqual("ConfigurationClientId", typeof(ClientCertificateCredential).GetProperty("ClientId", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(clientCertificateCredential));
             // TODO: Reenable when Azure.Identity version is updated
             // Assert.AreEqual(someLocalCert, clientCertificateCredential.ClientCertificate.Thumbprint);
-            Assert.AreEqual("ConfigurationTenantId", clientCertificateCredential.TenantId);
+            Assert.AreEqual("ConfigurationTenantId", typeof(ClientCertificateCredential).GetProperty("TenantId", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(clientCertificateCredential));
 
             var actualTenants = (string[])typeof(ClientCertificateCredential)
                 .GetFields(BindingFlags.NonPublic | BindingFlags.Instance).First(f => f.Name.EndsWith("dditionallyAllowedTenantIds"))
@@ -235,9 +235,9 @@ namespace Azure.Core.Extensions.Tests
             Assert.IsInstanceOf<ClientSecretCredential>(credential);
             var clientSecretCredential = (ClientSecretCredential)credential;
 
-            Assert.AreEqual("ConfigurationClientId", clientSecretCredential.ClientId);
-            Assert.AreEqual("ConfigurationClientSecret", clientSecretCredential.ClientSecret);
-            Assert.AreEqual("ConfigurationTenantId", clientSecretCredential.TenantId);
+            Assert.AreEqual("ConfigurationClientId", typeof(ClientSecretCredential).GetProperty("ClientId", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(clientSecretCredential));
+            Assert.AreEqual("ConfigurationClientSecret", typeof(ClientSecretCredential).GetProperty("ClientSecret", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(clientSecretCredential));
+            Assert.AreEqual("ConfigurationTenantId", typeof(ClientSecretCredential).GetProperty("TenantId", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(clientSecretCredential));
 
             var additionalTenants = (string[])typeof(ClientSecretCredential)
                 .GetFields(BindingFlags.NonPublic | BindingFlags.Instance).First(f => f.Name.EndsWith("dditionallyAllowedTenantIds"))
@@ -265,9 +265,9 @@ namespace Azure.Core.Extensions.Tests
             Assert.IsInstanceOf<ClientSecretCredential>(credential);
             var clientSecretCredential = (ClientSecretCredential)credential;
 
-            Assert.AreEqual("ConfigurationClientId", clientSecretCredential.ClientId);
-            Assert.AreEqual("ConfigurationClientSecret", clientSecretCredential.ClientSecret);
-            Assert.AreEqual("ConfigurationTenantId", clientSecretCredential.TenantId);
+            Assert.AreEqual("ConfigurationClientId", typeof(ClientSecretCredential).GetProperty("ClientId", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(clientSecretCredential));
+            Assert.AreEqual("ConfigurationClientSecret", typeof(ClientSecretCredential).GetProperty("ClientSecret", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(clientSecretCredential));
+            Assert.AreEqual("ConfigurationTenantId", typeof(ClientSecretCredential).GetProperty("TenantId", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(clientSecretCredential));
 
             var actualTenants = typeof(ClientSecretCredential)
                 .GetFields(BindingFlags.NonPublic | BindingFlags.Instance).First(f => f.Name.EndsWith("dditionallyAllowedTenantIds"))
@@ -295,10 +295,11 @@ namespace Azure.Core.Extensions.Tests
             Assert.IsInstanceOf<AzurePipelinesCredential>(credential);
             var pipelinesCredential = (AzurePipelinesCredential)credential;
 
-            Assert.AreEqual("ConfigurationClientId", pipelinesCredential.Client.ClientId);
-            Assert.AreEqual("ConfigurationTenantId", pipelinesCredential.TenantId);
-            Assert.AreEqual("SomeServiceConnectionId", pipelinesCredential.ServiceConnectionId);
-            Assert.AreEqual("SomeSystemAccessToken", pipelinesCredential.SystemAccessToken);
+            var pipelinesClient = typeof(AzurePipelinesCredential).GetProperty("Client", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(pipelinesCredential);
+            Assert.AreEqual("ConfigurationClientId", pipelinesClient.GetType().GetProperty("ClientId", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(pipelinesClient));
+            Assert.AreEqual("ConfigurationTenantId", typeof(AzurePipelinesCredential).GetProperty("TenantId", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(pipelinesCredential));
+            Assert.AreEqual("SomeServiceConnectionId", typeof(AzurePipelinesCredential).GetProperty("ServiceConnectionId", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(pipelinesCredential));
+            Assert.AreEqual("SomeSystemAccessToken", typeof(AzurePipelinesCredential).GetProperty("SystemAccessToken", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(pipelinesCredential));
 
             var additionalTenants = (string[])typeof(AzurePipelinesCredential)
                 .GetFields(BindingFlags.NonPublic | BindingFlags.Instance).First(f => f.Name.EndsWith("dditionallyAllowedTenantIds"))
@@ -329,17 +330,21 @@ namespace Azure.Core.Extensions.Tests
             Assert.IsInstanceOf<AzurePipelinesCredential>(credential);
             var pipelinesCredential = (AzurePipelinesCredential)credential;
 
-            Assert.AreEqual("ConfigurationClientId", pipelinesCredential.Client.ClientId);
-            Assert.AreEqual("ConfigurationTenantId", pipelinesCredential.TenantId);
-            Assert.AreEqual("SomeServiceConnectionId", pipelinesCredential.ServiceConnectionId);
-            Assert.AreEqual("SomeSystemAccessToken", pipelinesCredential.SystemAccessToken);
+            var pipelinesClient = typeof(AzurePipelinesCredential).GetProperty("Client", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(pipelinesCredential);
+            Assert.AreEqual("ConfigurationClientId", pipelinesClient.GetType().GetProperty("ClientId", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(pipelinesClient));
+            Assert.AreEqual("ConfigurationTenantId", typeof(AzurePipelinesCredential).GetProperty("TenantId", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(pipelinesCredential));
+            Assert.AreEqual("SomeServiceConnectionId", typeof(AzurePipelinesCredential).GetProperty("ServiceConnectionId", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(pipelinesCredential));
+            Assert.AreEqual("SomeSystemAccessToken", typeof(AzurePipelinesCredential).GetProperty("SystemAccessToken", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(pipelinesCredential));
 
             var expectedTenants = additionalTenants.Split(';')
                 .Select(t => t.Trim())
                 .Where(t => !string.IsNullOrWhiteSpace(t))
                 .ToList();
 
-            Assert.AreEqual(expectedTenants, pipelinesCredential.AdditionallyAllowedTenantIds);
+            var actualTenants = (string[])typeof(AzurePipelinesCredential)
+                .GetFields(BindingFlags.NonPublic | BindingFlags.Instance).First(f => f.Name.EndsWith("dditionallyAllowedTenantIds"))
+                .GetValue(pipelinesCredential);
+            Assert.AreEqual(expectedTenants, actualTenants);
         }
 
         [Test]
@@ -436,7 +441,7 @@ namespace Azure.Core.Extensions.Tests
             }
             if (tenantId)
             {
-                Assert.AreEqual("tenantId", pwshCredential.TenantId);
+                Assert.AreEqual("tenantId", typeof(AzurePowerShellCredential).GetProperty("TenantId", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(pwshCredential));
             }
 
             string managedIdentityId;
@@ -610,8 +615,8 @@ namespace Azure.Core.Extensions.Tests
 
             var credentialAssertion = (ClientAssertionCredential)typeof(WorkloadIdentityCredential).GetField("_clientAssertionCredential", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(workloadIdentityCredential);
 
-            Assert.AreEqual("ConfigurationTenantId", credentialAssertion.TenantId);
-            Assert.AreEqual("ConfigurationClientId", credentialAssertion.ClientId);
+            Assert.AreEqual("ConfigurationTenantId", typeof(ClientAssertionCredential).GetProperty("TenantId", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(credentialAssertion));
+            Assert.AreEqual("ConfigurationClientId", typeof(ClientAssertionCredential).GetProperty("ClientId", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(credentialAssertion));
 
             Type fileCacheType = typeof(WorkloadIdentityCredential).Assembly.DefinedTypes.Single(x => x.FullName == "Azure.Identity.FileContentsCache");
             var fileCache = typeof(WorkloadIdentityCredential).GetField("_tokenFileCache", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(workloadIdentityCredential);
@@ -638,8 +643,8 @@ namespace Azure.Core.Extensions.Tests
 
             var credentialAssertion = (ClientAssertionCredential)typeof(WorkloadIdentityCredential).GetField("_clientAssertionCredential", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(workloadIdentityCredential);
 
-            Assert.AreEqual("EnvTenantId", credentialAssertion.TenantId);
-            Assert.AreEqual("EnvClientId", credentialAssertion.ClientId);
+            Assert.AreEqual("EnvTenantId", typeof(ClientAssertionCredential).GetProperty("TenantId", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(credentialAssertion));
+            Assert.AreEqual("EnvClientId", typeof(ClientAssertionCredential).GetProperty("ClientId", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(credentialAssertion));
 
             Type fileCacheType = typeof(WorkloadIdentityCredential).Assembly.DefinedTypes.Single(x => x.FullName == "Azure.Identity.FileContentsCache");
             var fileCache = typeof(WorkloadIdentityCredential).GetField("_tokenFileCache", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(workloadIdentityCredential);
@@ -695,15 +700,15 @@ namespace Azure.Core.Extensions.Tests
 
             var credentialAssertion = (ClientAssertionCredential)typeof(WorkloadIdentityCredential).GetField("_clientAssertionCredential", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(workloadIdentityCredential);
 
-            Assert.AreEqual("EnvTenantId", credentialAssertion.TenantId);
-            Assert.AreEqual("EnvClientId", credentialAssertion.ClientId);
+            Assert.AreEqual("EnvTenantId", typeof(ClientAssertionCredential).GetProperty("TenantId", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(credentialAssertion));
+            Assert.AreEqual("EnvClientId", typeof(ClientAssertionCredential).GetProperty("ClientId", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(credentialAssertion));
 
             var expectedTenants = additionalTenants.Split(';')
                 .Select(t => t.Trim())
                 .Where(t => !string.IsNullOrWhiteSpace(t))
                 .ToList();
 
-            Assert.AreEqual(expectedTenants, workloadIdentityCredential.AdditionallyAllowedTenantIds);
+            Assert.AreEqual(expectedTenants, typeof(WorkloadIdentityCredential).GetProperty("AdditionallyAllowedTenantIds", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(workloadIdentityCredential));
         }
 
         [Test]

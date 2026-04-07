@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.Reflection;
 using Azure.Core.Diagnostics;
 using Azure.Identity;
 using Microsoft.Extensions.Azure;
@@ -48,9 +49,9 @@ namespace Azure.Core.Extensions.Tests
             Assert.IsInstanceOf<ClientSecretCredential>(credential);
             var clientSecretCredential = (ClientSecretCredential)credential;
 
-            Assert.AreEqual("ConfigurationClientId", clientSecretCredential.ClientId);
-            Assert.AreEqual("ConfigurationClientSecret", clientSecretCredential.ClientSecret);
-            Assert.AreEqual("ConfigurationTenantId", clientSecretCredential.TenantId);
+            Assert.AreEqual("ConfigurationClientId", typeof(ClientSecretCredential).GetProperty("ClientId", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(clientSecretCredential));
+            Assert.AreEqual("ConfigurationClientSecret", typeof(ClientSecretCredential).GetProperty("ClientSecret", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(clientSecretCredential));
+            Assert.AreEqual("ConfigurationTenantId", typeof(ClientSecretCredential).GetProperty("TenantId", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(clientSecretCredential));
         }
 
         [Test]
