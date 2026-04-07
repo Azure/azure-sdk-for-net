@@ -4,7 +4,7 @@
 
 ### Features Added
 
-- Upgraded api-version tag to 'package-2025-08-01-preview'.
+- Upgraded api-version to '2025-08-01-preview'.
 
 ## 1.2.0-beta.1 (2025-08-12)
 
