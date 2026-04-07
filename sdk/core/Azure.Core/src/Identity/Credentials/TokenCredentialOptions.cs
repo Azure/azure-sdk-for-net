@@ -6,9 +6,9 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 using Azure.Core;
 using Microsoft.Extensions.Configuration;
-using System.Runtime.CompilerServices;
 
 namespace Azure.Identity
 {
@@ -16,7 +16,7 @@ namespace Azure.Identity
     /// Options to configure requests made to the OAUTH identity service.
     /// </summary>
 #pragma warning disable AZC0034 // Type moved from Azure.Identity to Azure.Core; name conflict with NuGet Azure.Identity is expected
-[TypeForwardedFrom("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
+    [TypeForwardedFrom("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
     public class TokenCredentialOptions : ClientOptions
     {
         private Uri _authorityHost;

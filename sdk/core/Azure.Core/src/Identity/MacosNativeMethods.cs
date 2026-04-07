@@ -4,9 +4,9 @@
 #nullable disable
 
 using System;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.Runtime.CompilerServices;
 
 namespace Azure.Identity
 {
@@ -73,7 +73,7 @@ namespace Azure.Identity
                 _ => $"Unknown error. [{status}]",
             };
 
-[TypeForwardedFrom("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
+        [TypeForwardedFrom("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
         public static class Imports
         {
             private const string CoreFoundationLibrary = "/System/Library/Frameworks/CoreFoundation.framework/Versions/A/CoreFoundation";

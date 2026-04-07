@@ -4,8 +4,8 @@
 #nullable disable
 
 using System;
-using System.Runtime.InteropServices;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 
 namespace Azure.Identity
 {
@@ -13,7 +13,7 @@ namespace Azure.Identity
     {
         public const string SECRET_COLLECTION_SESSION = "session";
 
-[TypeForwardedFrom("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
+        [TypeForwardedFrom("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
         public enum SecretSchemaAttributeType
         {
             SECRET_SCHEMA_ATTRIBUTE_STRING = 0,
@@ -21,7 +21,7 @@ namespace Azure.Identity
             SECRET_SCHEMA_ATTRIBUTE_BOOLEAN = 2,
         }
 
-[TypeForwardedFrom("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
+        [TypeForwardedFrom("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
         public enum SecretSchemaFlags
         {
             SECRET_SCHEMA_NONE = 0,

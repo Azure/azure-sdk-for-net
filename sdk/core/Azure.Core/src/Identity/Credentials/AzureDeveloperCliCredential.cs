@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Runtime.Versioning;
 using System.Text;
@@ -17,7 +18,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using System.Runtime.CompilerServices;
 
 namespace Azure.Identity
 {
@@ -26,7 +26,7 @@ namespace Azure.Identity
     /// </summary>
 #pragma warning disable AZC0034 // Type moved from Azure.Identity to Azure.Core; name conflict with NuGet Azure.Identity is expected
     [UnsupportedOSPlatform("browser")]
-[TypeForwardedFrom("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
+    [TypeForwardedFrom("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
     public class AzureDeveloperCliCredential : TokenCredential
     {
         internal const string AzdCliNotInstalled = "Azure Developer CLI could not be found.";
@@ -185,7 +185,7 @@ namespace Azure.Identity
                 }
 
                 bool isAADSTSError = errorText.Contains("AADSTS");
-                bool isLoginError  = errorText.IndexOf("azd auth login", StringComparison.OrdinalIgnoreCase) != -1;
+                bool isLoginError = errorText.IndexOf("azd auth login", StringComparison.OrdinalIgnoreCase) != -1;
 
                 if (isLoginError && !isAADSTSError)
                 {

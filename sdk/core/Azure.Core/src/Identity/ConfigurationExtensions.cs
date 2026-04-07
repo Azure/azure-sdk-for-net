@@ -7,12 +7,12 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 using System.Runtime.Versioning;
 using Azure.Core;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System.Runtime.CompilerServices;
 
 namespace Azure.Identity
 {
@@ -21,7 +21,7 @@ namespace Azure.Identity
     /// </summary>
     [Experimental("SCME0002")]
     [UnsupportedOSPlatform("browser")]
-[TypeForwardedFrom("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
+    [TypeForwardedFrom("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
     public static class ConfigurationExtensions
     {
         /// <summary>
