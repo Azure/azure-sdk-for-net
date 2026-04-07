@@ -83,6 +83,8 @@ namespace Azure.Generator.Management.Providers
 
         internal ResourceScope ResourceScope => _resourceMetadata.ResourceScope;
         internal string? ParentResourceIdPattern => _resourceMetadata.ParentResourceId;
+        internal string ResourceIdPattern => _resourceMetadata.ResourceIdPattern;
+        internal string? ParentResourceType => _resourceMetadata.ParentResourceType;
 
         internal bool IsExtensionResource => ResourceScope == ResourceScope.Extension;
 

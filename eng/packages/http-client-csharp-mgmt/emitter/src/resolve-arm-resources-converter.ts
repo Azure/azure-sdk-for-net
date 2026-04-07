@@ -566,6 +566,16 @@ export function getOperationScopeFromPath(path: string): ResourceScope {
   // This covers scope-based operations like /{resourceUri}/providers/..., /{scope}/providers/..., /{resourceId}/providers/..., etc.
   if (/^\/\{[^}]+\}\/providers\//.test(path)) {
     return ResourceScope.Extension;
+  } else if (countProviderSegments(path) > 1) {
+    // Paths with multiple /providers/ segments extend a specific ARM resource.
+    // Determine the scope from the parent path (before the second /providers/).
+    const firstProviderIndex = path.indexOf("/providers/");
+    const secondProviderIndex = path.indexOf(
+      "/providers/",
+      firstProviderIndex + "/providers/".length
+    );
+    const parentPath = path.substring(0, secondProviderIndex);
+    return getScopeFromParentPath(parentPath);
   } else if (
     /^\/subscriptions\/\{[^}]+\}\/resourceGroups\/\{[^}]+\}\//.test(path)
   ) {
@@ -573,26 +583,32 @@ export function getOperationScopeFromPath(path: string): ResourceScope {
   } else if (/^\/subscriptions\/\{[^}]+\}\//.test(path)) {
     return ResourceScope.Subscription;
   } else if (
-    /^\/providers\/Microsoft\.Management\/managementGroups\/\{[^}]+\}\//.test(
+    /^\/providers\/Microsoft\.Management\/managementGroups\/\{[^}]+\}/.test(
       path
     )
   ) {
     return ResourceScope.ManagementGroup;
-  } else if (hasMultipleProviderSegments(path)) {
-    // Paths with multiple /providers/ segments indicate extension resources
-    // e.g., /providers/Microsoft.Management/serviceGroups/{name}/providers/Microsoft.Edge/sites/{siteName}
-    return ResourceScope.Extension;
   }
-  return ResourceScope.Tenant; // all the templates work as if there is a tenant decorator when there is no such decorator
+  return ResourceScope.Tenant;
 }
 
 /**
- * Check if a path has multiple /providers/ segments, indicating an extension resource
- * that extends another ARM resource.
+ * Determine the scope from the parent path (the part before the second /providers/ segment).
+ * Uses exact matching against known scope patterns: ResourceGroup, Subscription, ManagementGroup.
+ * If the parent path has additional segments beyond the scope (e.g., a specific VM resource),
+ * the resource is an extension of that parent resource and gets Extension scope.
  */
-function hasMultipleProviderSegments(path: string): boolean {
-  const providerMatches = path.match(/\/providers\//gi);
-  return providerMatches !== null && providerMatches.length > 1;
+function getScopeFromParentPath(parentPath: string): ResourceScope {
+  if (/^\/subscriptions\/\{[^}]+\}\/resourceGroups\/\{[^}]+\}$/.test(parentPath)) {
+    return ResourceScope.ResourceGroup;
+  } else if (/^\/subscriptions\/\{[^}]+\}$/.test(parentPath)) {
+    return ResourceScope.Subscription;
+  } else if (
+    /^\/providers\/Microsoft\.Management\/managementGroups\/\{[^}]+\}$/.test(parentPath)
+  ) {
+    return ResourceScope.ManagementGroup;
+  }
+  return ResourceScope.Extension;
 }
 
 /**

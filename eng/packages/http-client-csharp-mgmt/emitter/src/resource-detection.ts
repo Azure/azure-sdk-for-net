@@ -48,10 +48,7 @@ import {
   builtInResourceOperationName,
   parentResourceName,
   readsResourceName,
-  resourceGroupResource,
   singleton,
-  subscriptionResource,
-  tenantResource
 } from "./sdk-context-options.js";
 import {
   DecoratorApplication,
@@ -1039,20 +1036,13 @@ function getSingletonResource(
   return singletonResource ?? "default";
 }
 function getResourceScope(
-  model: InputModelType,
+  _model: InputModelType,
   methods?: ResourceMethod[]
 ): ResourceScope {
-  // First, check for explicit scope decorators
-  const decorators = model.decorators;
-  if (decorators?.some((d) => d.name == tenantResource)) {
-    return ResourceScope.Tenant;
-  } else if (decorators?.some((d) => d.name == subscriptionResource)) {
-    return ResourceScope.Subscription;
-  } else if (decorators?.some((d) => d.name == resourceGroupResource)) {
-    return ResourceScope.ResourceGroup;
-  }
-
-  // Fall back to Read method's scope only if no scope decorators are found
+  // Determine scope from the Read method's operation path, which is the source of truth.
+  // Scope decorators (@resourceGroupResource, etc.) can be inherited implicitly from base
+  // model types like ProxyResource and may not reflect the actual scope for extension
+  // resources that use Legacy.ExtensionOperations with specific parent types.
   if (methods) {
     const getMethod = methods.find(
       (m) => m.kind === ResourceOperationKind.Read
@@ -1063,7 +1053,7 @@ function getResourceScope(
   }
 
   // Final fallback to ResourceGroup
-  return ResourceScope.ResourceGroup; // all the templates work as if there is a resource group decorator when there is no such decorator
+  return ResourceScope.ResourceGroup;
 }
 
 /**
