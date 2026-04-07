@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.NetworkFunction
         {
             if (id.ResourceType != AzureTrafficCollectorResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AzureTrafficCollectorResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AzureTrafficCollectorResource.ResourceType), nameof(id));
             }
         }
 

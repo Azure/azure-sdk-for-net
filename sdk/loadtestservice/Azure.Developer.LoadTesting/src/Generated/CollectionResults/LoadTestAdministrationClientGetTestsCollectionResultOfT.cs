@@ -22,6 +22,7 @@ namespace Azure.Developer.LoadTesting
         private readonly DateTimeOffset? _lastModifiedEndTime;
         private readonly int? _maxPageSize;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of LoadTestAdministrationClientGetTestsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The LoadTestAdministrationClient client used to send requests. </param>
@@ -38,7 +39,8 @@ namespace Azure.Developer.LoadTesting
         /// <param name="lastModifiedEndTime"> End DateTime(RFC 3339 literal format) of the last updated time range to filter tests. </param>
         /// <param name="maxPageSize"> Number of results in response. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public LoadTestAdministrationClientGetTestsCollectionResultOfT(LoadTestAdministrationClient client, string @orderby, string search, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, int? maxPageSize, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public LoadTestAdministrationClientGetTestsCollectionResultOfT(LoadTestAdministrationClient client, string @orderby, string search, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, int? maxPageSize, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _orderby = @orderby;
@@ -47,6 +49,7 @@ namespace Azure.Developer.LoadTesting
             _lastModifiedEndTime = lastModifiedEndTime;
             _maxPageSize = maxPageSize;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of LoadTestAdministrationClientGetTestsCollectionResultOfT as an enumerable collection. </summary>
@@ -80,7 +83,7 @@ namespace Azure.Developer.LoadTesting
         {
             int? pageSize = pageSizeHint.HasValue ? pageSizeHint.Value : _maxPageSize;
             HttpMessage message = nextLink != null ? _client.CreateNextGetTestsRequest(nextLink, pageSize, _context) : _client.CreateGetTestsRequest(_orderby, _search, _lastModifiedStartTime, _lastModifiedEndTime, pageSize, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetTests");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

@@ -20,14 +20,13 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
+            ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential);
 
             #region Snippet:Sample3_ConversationsAuthoring_Export
             string projectName = "{projectName}";
-            ConversationAuthoringProject projectClient = client.GetProject(projectName);
-
-            Operation operation = projectClient.Export(
+            Operation operation = client.Export(
                 waitUntil: WaitUntil.Completed,
+                projectName: projectName,
                 stringIndexType: StringIndexType.Utf16CodeUnit,
                 exportedProjectFormat: ConversationAuthoringExportedProjectFormat.Conversation
             );
@@ -46,14 +45,13 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
+            ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential);
 
             #region Snippet:Sample3_ConversationsAuthoring_ExportAsync
             string projectName = "{projectName}";
-            ConversationAuthoringProject projectClient = client.GetProject(projectName);
-
-            Operation operation = await projectClient.ExportAsync(
+            Operation operation = await client.ExportAsync(
                 waitUntil: WaitUntil.Completed,
+                projectName: projectName,
                 stringIndexType: StringIndexType.Utf16CodeUnit,
                 exportedProjectFormat: ConversationAuthoringExportedProjectFormat.Conversation
             );

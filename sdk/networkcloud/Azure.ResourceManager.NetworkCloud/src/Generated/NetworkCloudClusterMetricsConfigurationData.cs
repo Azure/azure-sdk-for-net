@@ -7,114 +7,125 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetworkCloud.Models;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
-    /// <summary>
-    /// A class representing the NetworkCloudClusterMetricsConfiguration data model.
-    /// ClusterMetricsConfiguration represents the metrics configuration of an on-premises Network Cloud cluster.
-    /// </summary>
+    /// <summary> ClusterMetricsConfiguration represents the metrics configuration of an on-premises Network Cloud cluster. </summary>
     public partial class NetworkCloudClusterMetricsConfigurationData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudClusterMetricsConfigurationData"/>. </summary>
-        /// <param name="location"> The location. </param>
-        /// <param name="extendedLocation"> The extended location of the cluster associated with the resource. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="collectionInterval"> The interval in minutes by which metrics will be collected. </param>
+        /// <param name="extendedLocation"> The extended location of the resource. This property is required when creating the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="extendedLocation"/> is null. </exception>
-        public NetworkCloudClusterMetricsConfigurationData(AzureLocation location, ExtendedLocation extendedLocation, long collectionInterval) : base(location)
+        public NetworkCloudClusterMetricsConfigurationData(AzureLocation location, long collectionInterval, ExtendedLocation extendedLocation) : base(location)
         {
             Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
 
+            Properties = new ClusterMetricsConfigurationProperties(collectionInterval);
             ExtendedLocation = extendedLocation;
-            CollectionInterval = collectionInterval;
-            DisabledMetrics = new ChangeTrackingList<string>();
-            EnabledMetrics = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudClusterMetricsConfigurationData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="etag"> Resource ETag. </param>
-        /// <param name="extendedLocation"> The extended location of the cluster associated with the resource. </param>
-        /// <param name="collectionInterval"> The interval in minutes by which metrics will be collected. </param>
-        /// <param name="detailedStatus"> The more detailed status of the metrics configuration. </param>
-        /// <param name="detailedStatusMessage"> The descriptive message about the current detailed status. </param>
-        /// <param name="disabledMetrics"> The list of metrics that are available for the cluster but disabled at the moment. </param>
-        /// <param name="enabledMetrics"> The list of metric names that have been chosen to be enabled in addition to the core set of enabled metrics. </param>
-        /// <param name="provisioningState"> The provisioning state of the metrics configuration. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkCloudClusterMetricsConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ExtendedLocation extendedLocation, long collectionInterval, ClusterMetricsConfigurationDetailedStatus? detailedStatus, string detailedStatusMessage, IReadOnlyList<string> disabledMetrics, IList<string> enabledMetrics, ClusterMetricsConfigurationProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The list of the resource properties. </param>
+        /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
+        /// <param name="extendedLocation"> The extended location of the resource. This property is required when creating the resource. </param>
+        internal NetworkCloudClusterMetricsConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, ClusterMetricsConfigurationProperties properties, ETag? eTag, ExtendedLocation extendedLocation) : base(id, name, resourceType, systemData, tags, location)
         {
-            ETag = etag;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
+            ETag = eTag;
             ExtendedLocation = extendedLocation;
-            CollectionInterval = collectionInterval;
-            DetailedStatus = detailedStatus;
-            DetailedStatusMessage = detailedStatusMessage;
-            DisabledMetrics = disabledMetrics;
-            EnabledMetrics = enabledMetrics;
-            ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkCloudClusterMetricsConfigurationData"/> for deserialization. </summary>
-        internal NetworkCloudClusterMetricsConfigurationData()
-        {
-        }
+        /// <summary> The list of the resource properties. </summary>
+        internal ClusterMetricsConfigurationProperties Properties { get; set; }
 
-        /// <summary> Resource ETag. </summary>
+        /// <summary> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </summary>
         public ETag? ETag { get; }
-        /// <summary> The extended location of the cluster associated with the resource. </summary>
-        public ExtendedLocation ExtendedLocation { get; set; }
-        /// <summary> The interval in minutes by which metrics will be collected. </summary>
-        public long CollectionInterval { get; set; }
-        /// <summary> The more detailed status of the metrics configuration. </summary>
-        public ClusterMetricsConfigurationDetailedStatus? DetailedStatus { get; }
-        /// <summary> The descriptive message about the current detailed status. </summary>
-        public string DetailedStatusMessage { get; }
-        /// <summary> The list of metrics that are available for the cluster but disabled at the moment. </summary>
-        public IReadOnlyList<string> DisabledMetrics { get; }
+
         /// <summary> The list of metric names that have been chosen to be enabled in addition to the core set of enabled metrics. </summary>
-        public IList<string> EnabledMetrics { get; }
+        public IList<string> EnabledMetrics
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterMetricsConfigurationProperties();
+                }
+                return Properties.EnabledMetrics;
+            }
+        }
+
+        /// <summary> The interval in minutes by which metrics will be collected. </summary>
+        public long CollectionInterval
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CollectionInterval;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterMetricsConfigurationProperties();
+                }
+                Properties.CollectionInterval = value;
+            }
+        }
+
+        /// <summary> The more detailed status of the metrics configuration. </summary>
+        public ClusterMetricsConfigurationDetailedStatus? DetailedStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DetailedStatus;
+            }
+        }
+
+        /// <summary> The descriptive message about the current detailed status. </summary>
+        public string DetailedStatusMessage
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DetailedStatusMessage;
+            }
+        }
+
+        /// <summary> The list of metrics that are available for the cluster but disabled at the moment. </summary>
+        public IReadOnlyList<string> DisabledMetrics
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterMetricsConfigurationProperties();
+                }
+                return Properties.DisabledMetrics;
+            }
+        }
+
         /// <summary> The provisioning state of the metrics configuration. </summary>
-        public ClusterMetricsConfigurationProvisioningState? ProvisioningState { get; }
+        public ClusterMetricsConfigurationProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }

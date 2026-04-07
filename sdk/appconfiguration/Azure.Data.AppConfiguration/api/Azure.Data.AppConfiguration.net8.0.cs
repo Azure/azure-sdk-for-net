@@ -110,6 +110,7 @@ namespace Azure.Data.AppConfiguration
     public partial class ConfigurationClientSettings : System.ClientModel.Primitives.ClientSettings
     {
         public ConfigurationClientSettings() { }
+        public string ConnectionString { get { throw null; } set { } }
         public System.Uri? Endpoint { get { throw null; } set { } }
         public Azure.Data.AppConfiguration.ConfigurationClientOptions? Options { get { throw null; } set { } }
         protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }

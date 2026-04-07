@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     public readonly partial struct BareMetalMachinePowerState : IEquatable<BareMetalMachinePowerState>
     {
         private readonly string _value;
+        /// <summary> The bare metal machine was marked as powered on in the latest check of the baseboard management controller. </summary>
+        private const string OnValue = "On";
+        /// <summary> The bare metal machine was marked as powered off in the latest check of the baseboard management controller. </summary>
+        private const string OffValue = "Off";
 
         /// <summary> Initializes a new instance of <see cref="BareMetalMachinePowerState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BareMetalMachinePowerState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string OnValue = "On";
-        private const string OffValue = "Off";
-
-        /// <summary> On. </summary>
+        /// <summary> The bare metal machine was marked as powered on in the latest check of the baseboard management controller. </summary>
         public static BareMetalMachinePowerState On { get; } = new BareMetalMachinePowerState(OnValue);
-        /// <summary> Off. </summary>
+
+        /// <summary> The bare metal machine was marked as powered off in the latest check of the baseboard management controller. </summary>
         public static BareMetalMachinePowerState Off { get; } = new BareMetalMachinePowerState(OffValue);
+
         /// <summary> Determines if two <see cref="BareMetalMachinePowerState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BareMetalMachinePowerState left, BareMetalMachinePowerState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BareMetalMachinePowerState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BareMetalMachinePowerState left, BareMetalMachinePowerState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BareMetalMachinePowerState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BareMetalMachinePowerState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BareMetalMachinePowerState(string value) => new BareMetalMachinePowerState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BareMetalMachinePowerState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BareMetalMachinePowerState?(string value) => value == null ? null : new BareMetalMachinePowerState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BareMetalMachinePowerState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BareMetalMachinePowerState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
