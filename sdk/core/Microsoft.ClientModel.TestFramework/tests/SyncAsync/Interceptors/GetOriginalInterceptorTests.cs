@@ -1,10 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Reflection;
 using Castle.DynamicProxy;
 using NUnit.Framework;
+using System;
+using System.Reflection;
 
 namespace Microsoft.ClientModel.TestFramework.Tests.SyncAsync.Interceptors;
 
