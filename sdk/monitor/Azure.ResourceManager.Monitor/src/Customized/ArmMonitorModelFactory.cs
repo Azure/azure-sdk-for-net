@@ -44,3 +44,4 @@ namespace Azure.ResourceManager.Monitor.Models
             => MetricAlertData(id, name, resourceType, systemData, tags, location, description, severity, isEnabled, scopes, evaluationFrequency, windowSize, targetResourceType, targetResourceRegion, criteria, isAutoMitigateEnabled, null, actions, lastUpdatedOn, isMigrated, null, null, null);
     }
 }
+// Test comment for batching validation - DO NOT MERGE
