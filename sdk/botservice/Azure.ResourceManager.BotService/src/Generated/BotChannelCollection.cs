@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.BotService
         {
             if (id.ResourceType != BotResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, BotResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, BotResource.ResourceType), nameof(id));
             }
         }
 

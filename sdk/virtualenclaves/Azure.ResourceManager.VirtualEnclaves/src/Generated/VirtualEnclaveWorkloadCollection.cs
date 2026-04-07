@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.VirtualEnclaves
         {
             if (id.ResourceType != VirtualEnclaveResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, VirtualEnclaveResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, VirtualEnclaveResource.ResourceType), nameof(id));
             }
         }
 

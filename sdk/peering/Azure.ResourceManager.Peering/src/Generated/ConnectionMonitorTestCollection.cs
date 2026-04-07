@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Peering
         {
             if (id.ResourceType != PeeringServiceResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, PeeringServiceResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, PeeringServiceResource.ResourceType), nameof(id));
             }
         }
 

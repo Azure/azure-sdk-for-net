@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         {
             if (id.ResourceType != DeidServiceResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DeidServiceResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DeidServiceResource.ResourceType), nameof(id));
             }
         }
 

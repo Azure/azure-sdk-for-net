@@ -12,7 +12,7 @@ using Azure.ResourceManager.ContainerService;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> VPA (Vertical Pod Autoscaler) settings for the workload auto-scaler profile. </summary>
-    internal partial class ManagedClusterVerticalPodAutoscaler
+    public partial class ManagedClusterVerticalPodAutoscaler
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -26,15 +26,21 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterVerticalPodAutoscaler"/>. </summary>
         /// <param name="isVpaEnabled"> Whether to enable VPA. Default value is false. </param>
+        /// <param name="addonAutoscaling"> Whether VPA add-on is enabled and configured to scale AKS-managed add-ons. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterVerticalPodAutoscaler(bool isVpaEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedClusterVerticalPodAutoscaler(bool isVpaEnabled, ManagedClusterAddonAutoscaling? addonAutoscaling, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsVpaEnabled = isVpaEnabled;
+            AddonAutoscaling = addonAutoscaling;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Whether to enable VPA. Default value is false. </summary>
         [WirePath("enabled")]
         public bool IsVpaEnabled { get; set; }
+
+        /// <summary> Whether VPA add-on is enabled and configured to scale AKS-managed add-ons. </summary>
+        [WirePath("addonAutoscaling")]
+        public ManagedClusterAddonAutoscaling? AddonAutoscaling { get; set; }
     }
 }

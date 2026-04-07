@@ -13,174 +13,523 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql
 {
-    /// <summary>
-    /// A class representing the CosmosDBForPostgreSqlCluster data model.
-    /// Represents a cluster.
-    /// </summary>
+    /// <summary> Represents a cluster. </summary>
     public partial class CosmosDBForPostgreSqlClusterData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlClusterData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public CosmosDBForPostgreSqlClusterData(AzureLocation location) : base(location)
         {
-            ServerNames = new ChangeTrackingList<CosmosDBForPostgreSqlServerNameItem>();
-            ReadReplicas = new ChangeTrackingList<string>();
-            PrivateEndpointConnections = new ChangeTrackingList<CosmosDBForPostgreSqlSimplePrivateEndpointConnection>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlClusterData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="administratorLogin"> The administrator's login name of the servers in the cluster. </param>
-        /// <param name="administratorLoginPassword"> The password of the administrator login. Required for creation. </param>
-        /// <param name="provisioningState"> Provisioning state of the cluster. </param>
-        /// <param name="state"> A state of a cluster/server that is visible to user. </param>
-        /// <param name="postgresqlVersion"> The major PostgreSQL version on all cluster servers. </param>
-        /// <param name="citusVersion"> The Citus extension version on all cluster servers. </param>
-        /// <param name="maintenanceWindow"> Maintenance window of a cluster. </param>
-        /// <param name="preferredPrimaryZone"> Preferred primary availability zone (AZ) for all cluster servers. </param>
-        /// <param name="isShardsOnCoordinatorEnabled"> If distributed tables are placed on coordinator or not. Should be set to 'true' on single node clusters. Requires shard rebalancing after value is changed. </param>
-        /// <param name="isHAEnabled"> If high availability (HA) is enabled or not for the cluster. </param>
-        /// <param name="coordinatorServerEdition"> The edition of a coordinator server (default: GeneralPurpose). Required for creation. </param>
-        /// <param name="coordinatorStorageQuotaInMb"> The storage of a server in MB. Required for creation. See https://learn.microsoft.com/azure/cosmos-db/postgresql/resources-compute for more information. </param>
-        /// <param name="coordinatorVCores"> The vCores count of a server (max: 96). Required for creation. See https://learn.microsoft.com/azure/cosmos-db/postgresql/resources-compute for more information. </param>
-        /// <param name="isCoordinatorPublicIPAccessEnabled"> If public access is enabled on coordinator. </param>
-        /// <param name="nodeServerEdition"> The edition of a node server (default: MemoryOptimized). </param>
-        /// <param name="nodeCount"> Worker node count of the cluster. When node count is 0, it represents a single node configuration with the ability to create distributed tables on that node. 2 or more worker nodes represent multi-node configuration. Node count value cannot be 1. Required for creation. </param>
-        /// <param name="nodeStorageQuotaInMb"> The storage in MB on each worker node. See https://learn.microsoft.com/azure/cosmos-db/postgresql/resources-compute for more information. </param>
-        /// <param name="nodeVCores"> The compute in vCores on each worker node (max: 104). See https://learn.microsoft.com/azure/cosmos-db/postgresql/resources-compute for more information. </param>
-        /// <param name="isNodePublicIPAccessEnabled"> If public access is enabled on worker nodes. </param>
-        /// <param name="serverNames"> The list of server names in the cluster. </param>
-        /// <param name="sourceResourceId"> The resource id of source cluster for read replica clusters. </param>
-        /// <param name="sourceLocation"> The Azure region of source cluster for read replica clusters. </param>
-        /// <param name="pointInTimeUTC"> Date and time in UTC (ISO8601 format) for cluster restore. </param>
-        /// <param name="readReplicas"> The array of read replica clusters. </param>
-        /// <param name="earliestRestoreOn"> The earliest restore point time (ISO8601 format) for the cluster. </param>
-        /// <param name="privateEndpointConnections"> The private endpoint connections for a cluster. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CosmosDBForPostgreSqlClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string administratorLogin, string administratorLoginPassword, string provisioningState, string state, string postgresqlVersion, string citusVersion, CosmosDBForPostgreSqlMaintenanceWindow maintenanceWindow, string preferredPrimaryZone, bool? isShardsOnCoordinatorEnabled, bool? isHAEnabled, string coordinatorServerEdition, int? coordinatorStorageQuotaInMb, int? coordinatorVCores, bool? isCoordinatorPublicIPAccessEnabled, string nodeServerEdition, int? nodeCount, int? nodeStorageQuotaInMb, int? nodeVCores, bool? isNodePublicIPAccessEnabled, IReadOnlyList<CosmosDBForPostgreSqlServerNameItem> serverNames, ResourceIdentifier sourceResourceId, AzureLocation? sourceLocation, DateTimeOffset? pointInTimeUTC, IReadOnlyList<string> readReplicas, DateTimeOffset? earliestRestoreOn, IReadOnlyList<CosmosDBForPostgreSqlSimplePrivateEndpointConnection> privateEndpointConnections, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Properties of the cluster. </param>
+        /// <param name="identity"> Describes the identity of the cluster. </param>
+        internal CosmosDBForPostgreSqlClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, ClusterProperties properties, IdentityProperties identity) : base(id, name, resourceType, systemData, tags, location)
         {
-            AdministratorLogin = administratorLogin;
-            AdministratorLoginPassword = administratorLoginPassword;
-            ProvisioningState = provisioningState;
-            State = state;
-            PostgresqlVersion = postgresqlVersion;
-            CitusVersion = citusVersion;
-            MaintenanceWindow = maintenanceWindow;
-            PreferredPrimaryZone = preferredPrimaryZone;
-            IsShardsOnCoordinatorEnabled = isShardsOnCoordinatorEnabled;
-            IsHAEnabled = isHAEnabled;
-            CoordinatorServerEdition = coordinatorServerEdition;
-            CoordinatorStorageQuotaInMb = coordinatorStorageQuotaInMb;
-            CoordinatorVCores = coordinatorVCores;
-            IsCoordinatorPublicIPAccessEnabled = isCoordinatorPublicIPAccessEnabled;
-            NodeServerEdition = nodeServerEdition;
-            NodeCount = nodeCount;
-            NodeStorageQuotaInMb = nodeStorageQuotaInMb;
-            NodeVCores = nodeVCores;
-            IsNodePublicIPAccessEnabled = isNodePublicIPAccessEnabled;
-            ServerNames = serverNames;
-            SourceResourceId = sourceResourceId;
-            SourceLocation = sourceLocation;
-            PointInTimeUTC = pointInTimeUTC;
-            ReadReplicas = readReplicas;
-            EarliestRestoreOn = earliestRestoreOn;
-            PrivateEndpointConnections = privateEndpointConnections;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
+            Identity = identity;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlClusterData"/> for deserialization. </summary>
-        internal CosmosDBForPostgreSqlClusterData()
+        /// <summary> Properties of the cluster. </summary>
+        internal ClusterProperties Properties { get; set; }
+
+        /// <summary> Describes the identity of the cluster. </summary>
+        public IdentityProperties Identity { get; set; }
+
+        /// <summary> Indicates whether the cluster was created using AAD authentication. </summary>
+        public AadEnabledEnum? AadAuthEnabled
         {
+            get
+            {
+                return Properties is null ? default : Properties.AadAuthEnabled;
+            }
         }
 
         /// <summary> The administrator's login name of the servers in the cluster. </summary>
-        public string AdministratorLogin { get; }
+        public string AdministratorLogin
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AdministratorLogin;
+            }
+        }
+
         /// <summary> The password of the administrator login. Required for creation. </summary>
-        public string AdministratorLoginPassword { get; set; }
+        public string AdministratorLoginPassword
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AdministratorLoginPassword;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterProperties();
+                }
+                Properties.AdministratorLoginPassword = value;
+            }
+        }
+
+        /// <summary> The data encryption properties of a cluster. </summary>
+        public DataEncryption DataEncryption
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DataEncryption;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterProperties();
+                }
+                Properties.DataEncryption = value;
+            }
+        }
+
         /// <summary> Provisioning state of the cluster. </summary>
-        public string ProvisioningState { get; }
+        public string ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> A state of a cluster/server that is visible to user. </summary>
-        public string State { get; }
+        public string State
+        {
+            get
+            {
+                return Properties is null ? default : Properties.State;
+            }
+        }
+
         /// <summary> The major PostgreSQL version on all cluster servers. </summary>
-        public string PostgresqlVersion { get; set; }
+        public string PostgresqlVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PostgresqlVersion;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterProperties();
+                }
+                Properties.PostgresqlVersion = value;
+            }
+        }
+
         /// <summary> The Citus extension version on all cluster servers. </summary>
-        public string CitusVersion { get; set; }
+        public string CitusVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CitusVersion;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterProperties();
+                }
+                Properties.CitusVersion = value;
+            }
+        }
+
         /// <summary> Maintenance window of a cluster. </summary>
-        public CosmosDBForPostgreSqlMaintenanceWindow MaintenanceWindow { get; set; }
+        public CosmosDBForPostgreSqlMaintenanceWindow MaintenanceWindow
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MaintenanceWindow;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterProperties();
+                }
+                Properties.MaintenanceWindow = value;
+            }
+        }
+
         /// <summary> Preferred primary availability zone (AZ) for all cluster servers. </summary>
-        public string PreferredPrimaryZone { get; set; }
+        public string PreferredPrimaryZone
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PreferredPrimaryZone;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterProperties();
+                }
+                Properties.PreferredPrimaryZone = value;
+            }
+        }
+
         /// <summary> If distributed tables are placed on coordinator or not. Should be set to 'true' on single node clusters. Requires shard rebalancing after value is changed. </summary>
-        public bool? IsShardsOnCoordinatorEnabled { get; set; }
+        public bool? IsShardsOnCoordinatorEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsShardsOnCoordinatorEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterProperties();
+                }
+                Properties.IsShardsOnCoordinatorEnabled = value.Value;
+            }
+        }
+
         /// <summary> If high availability (HA) is enabled or not for the cluster. </summary>
-        public bool? IsHAEnabled { get; set; }
+        public bool? IsHAEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsHAEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterProperties();
+                }
+                Properties.IsHAEnabled = value.Value;
+            }
+        }
+
         /// <summary> The edition of a coordinator server (default: GeneralPurpose). Required for creation. </summary>
-        public string CoordinatorServerEdition { get; set; }
+        public string CoordinatorServerEdition
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CoordinatorServerEdition;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterProperties();
+                }
+                Properties.CoordinatorServerEdition = value;
+            }
+        }
+
         /// <summary> The storage of a server in MB. Required for creation. See https://learn.microsoft.com/azure/cosmos-db/postgresql/resources-compute for more information. </summary>
-        public int? CoordinatorStorageQuotaInMb { get; set; }
+        public int? CoordinatorStorageQuotaInMb
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CoordinatorStorageQuotaInMb;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterProperties();
+                }
+                Properties.CoordinatorStorageQuotaInMb = value.Value;
+            }
+        }
+
         /// <summary> The vCores count of a server (max: 96). Required for creation. See https://learn.microsoft.com/azure/cosmos-db/postgresql/resources-compute for more information. </summary>
-        public int? CoordinatorVCores { get; set; }
+        public int? CoordinatorVCores
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CoordinatorVCores;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterProperties();
+                }
+                Properties.CoordinatorVCores = value.Value;
+            }
+        }
+
         /// <summary> If public access is enabled on coordinator. </summary>
-        public bool? IsCoordinatorPublicIPAccessEnabled { get; set; }
+        public bool? IsCoordinatorPublicIPAccessEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsCoordinatorPublicIPAccessEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterProperties();
+                }
+                Properties.IsCoordinatorPublicIPAccessEnabled = value.Value;
+            }
+        }
+
         /// <summary> The edition of a node server (default: MemoryOptimized). </summary>
-        public string NodeServerEdition { get; set; }
+        public string NodeServerEdition
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NodeServerEdition;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterProperties();
+                }
+                Properties.NodeServerEdition = value;
+            }
+        }
+
         /// <summary> Worker node count of the cluster. When node count is 0, it represents a single node configuration with the ability to create distributed tables on that node. 2 or more worker nodes represent multi-node configuration. Node count value cannot be 1. Required for creation. </summary>
-        public int? NodeCount { get; set; }
+        public int? NodeCount
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NodeCount;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterProperties();
+                }
+                Properties.NodeCount = value.Value;
+            }
+        }
+
         /// <summary> The storage in MB on each worker node. See https://learn.microsoft.com/azure/cosmos-db/postgresql/resources-compute for more information. </summary>
-        public int? NodeStorageQuotaInMb { get; set; }
+        public int? NodeStorageQuotaInMb
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NodeStorageQuotaInMb;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterProperties();
+                }
+                Properties.NodeStorageQuotaInMb = value.Value;
+            }
+        }
+
         /// <summary> The compute in vCores on each worker node (max: 104). See https://learn.microsoft.com/azure/cosmos-db/postgresql/resources-compute for more information. </summary>
-        public int? NodeVCores { get; set; }
+        public int? NodeVCores
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NodeVCores;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterProperties();
+                }
+                Properties.NodeVCores = value.Value;
+            }
+        }
+
         /// <summary> If public access is enabled on worker nodes. </summary>
-        public bool? IsNodePublicIPAccessEnabled { get; set; }
+        public bool? IsNodePublicIPAccessEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsNodePublicIPAccessEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterProperties();
+                }
+                Properties.IsNodePublicIPAccessEnabled = value.Value;
+            }
+        }
+
         /// <summary> The list of server names in the cluster. </summary>
-        public IReadOnlyList<CosmosDBForPostgreSqlServerNameItem> ServerNames { get; }
+        public IReadOnlyList<CosmosDBForPostgreSqlServerNameItem> ServerNames
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterProperties();
+                }
+                return Properties.ServerNames;
+            }
+        }
+
         /// <summary> The resource id of source cluster for read replica clusters. </summary>
-        public ResourceIdentifier SourceResourceId { get; set; }
+        public ResourceIdentifier SourceResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SourceResourceId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterProperties();
+                }
+                Properties.SourceResourceId = value;
+            }
+        }
+
         /// <summary> The Azure region of source cluster for read replica clusters. </summary>
-        public AzureLocation? SourceLocation { get; set; }
+        public AzureLocation? SourceLocation
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SourceLocation;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterProperties();
+                }
+                Properties.SourceLocation = value.Value;
+            }
+        }
+
+        /// <summary> Indicates whether the cluster was created with a password or using AAD authentication. </summary>
+        public PasswordEnabledEnum? PasswordEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PasswordEnabled;
+            }
+        }
+
         /// <summary> Date and time in UTC (ISO8601 format) for cluster restore. </summary>
-        public DateTimeOffset? PointInTimeUTC { get; set; }
+        public DateTimeOffset? PointInTimeUTC
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PointInTimeUTC;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterProperties();
+                }
+                Properties.PointInTimeUTC = value.Value;
+            }
+        }
+
         /// <summary> The array of read replica clusters. </summary>
-        public IReadOnlyList<string> ReadReplicas { get; }
+        public IReadOnlyList<string> ReadReplicas
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterProperties();
+                }
+                return Properties.ReadReplicas;
+            }
+        }
+
         /// <summary> The earliest restore point time (ISO8601 format) for the cluster. </summary>
-        public DateTimeOffset? EarliestRestoreOn { get; }
+        public DateTimeOffset? EarliestRestoreOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EarliestRestoreOn;
+            }
+        }
+
         /// <summary> The private endpoint connections for a cluster. </summary>
-        public IReadOnlyList<CosmosDBForPostgreSqlSimplePrivateEndpointConnection> PrivateEndpointConnections { get; }
+        public IReadOnlyList<CosmosDBForPostgreSqlSimplePrivateEndpointConnection> PrivateEndpointConnections
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterProperties();
+                }
+                return Properties.PrivateEndpointConnections;
+            }
+        }
+
+        /// <summary> The database name of the cluster. Only one database per cluster is supported. </summary>
+        public string DatabaseName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DatabaseName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterProperties();
+                }
+                Properties.DatabaseName = value;
+            }
+        }
+
+        /// <summary> If cluster backup is stored in another Azure region in addition to the copy of the backup stored in the cluster's region. Enabled only at the time of cluster creation. </summary>
+        public bool? EnableGeoBackup
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnableGeoBackup;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterProperties();
+                }
+                Properties.EnableGeoBackup = value.Value;
+            }
+        }
+
+        /// <summary> Authentication configuration of a cluster. </summary>
+        public AuthConfig AuthConfig
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AuthConfig;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterProperties();
+                }
+                Properties.AuthConfig = value;
+            }
+        }
     }
 }
