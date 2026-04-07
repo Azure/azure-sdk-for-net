@@ -609,7 +609,6 @@ namespace Azure.AI.Agents.Persistent
             try
             {
                 using HttpMessage message = CreateSubmitToolOutputsToRunRequest(threadId, runId, content, context);
-                message.BufferResponse = !stream;
                 var response = Pipeline.ProcessMessage(message, context, CancellationToken.None);
                 otelScope?.RecordSubmitToolOutputsResponse(response, stream);
                 return response;
@@ -633,7 +632,6 @@ namespace Azure.AI.Agents.Persistent
             try
             {
                 using HttpMessage message = CreateSubmitToolOutputsToRunRequest(threadId, runId, content, context);
-                message.BufferResponse = !stream;
                 var response = await Pipeline.ProcessMessageAsync(message, context, CancellationToken.None).ConfigureAwait(false);
                 otelScope?.RecordSubmitToolOutputsResponse(response, stream);
                 return response;

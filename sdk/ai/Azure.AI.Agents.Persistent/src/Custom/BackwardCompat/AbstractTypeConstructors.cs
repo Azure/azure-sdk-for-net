@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using Microsoft.TypeSpec.Generator.Customizations;
-using CodeGenSuppressAttribute = Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppressAttribute;
 
 // Backward-compat shims: restore protected constructors that existed in the GA 1.0.0 contract.
 // The new emitter uses private protected constructors with a type discriminator parameter;

@@ -526,7 +526,6 @@ namespace Azure.AI.Agents.Persistent
             try
             {
                 using HttpMessage message = CreateInternalCreateRunRequest(threadId, content, include, context);
-                message.BufferResponse = false;
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -546,7 +545,6 @@ namespace Azure.AI.Agents.Persistent
             try
             {
                 using HttpMessage message = CreateInternalCreateRunRequest(threadId, content, include, context);
-                message.BufferResponse = false;
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)

@@ -1606,7 +1606,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             if (includeContent)
             {
                 Assert.Greater(fileSearchCall.FileSearch.Results[0].Content.Count, 0);
-                Assert.AreEqual("text", fileSearchCall.FileSearch.Results[0].Content[0].Type);
+                Assert.AreEqual("text", fileSearchCall.FileSearch.Results[0].Content[0].Type.ToString());
                 Assert.False(string.IsNullOrEmpty(fileSearchCall.FileSearch.Results[0].Content[0].Text));
             }
             else
