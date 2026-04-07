@@ -8,13 +8,9 @@ using System.ComponentModel;
 using System.Threading;
 using Azure.ResourceManager.Resources;
 
+// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.NetworkCloud
 {
-    /// <summary>
-    /// A class representing a collection of <see cref="NetworkCloudRackResource"/> and their operations.
-    /// Each <see cref="NetworkCloudRackResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="NetworkCloudRackCollection"/> instance call the GetNetworkCloudRacks method from an instance of <see cref="ResourceGroupResource"/>.
-    /// </summary>
     public partial class NetworkCloudRackCollection : ArmCollection, IEnumerable<NetworkCloudRackResource>, IAsyncEnumerable<NetworkCloudRackResource>
     {
         /// <summary>
@@ -27,10 +23,6 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Racks_ListByResourceGroup</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -54,10 +46,6 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Racks_ListByResourceGroup</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

@@ -19,21 +19,10 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> Model factory for models. </summary>
-    // Suppress: custom replacement below uses StorageProvisioningState? (prior GA type)
-    // instead of generated StorageTaskAssignmentProvisioningState?.
-    [CodeGenSuppress("StorageTaskAssignmentPatchProperties", typeof(string), typeof(bool?), typeof(string), typeof(StorageTaskAssignmentUpdateExecutionContext), typeof(string), typeof(StorageTaskAssignmentProvisioningState?), typeof(StorageTaskReportProperties))]
-    // Suppress: prior GA used this wrapper-type signature; prevent generator from re-emitting
-    // it so it doesn't conflict with the existing backward-compat overload.
-    [CodeGenSuppress("FileServiceUsageData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(FileServiceUsageProperties))]
-    // Suppress: prior GA used flattened params, not a DeletedAccountProperties wrapper.
-    [CodeGenSuppress("DeletedAccountData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(DeletedAccountProperties))]
-    // Suppress: prior GA used flattened params, not a StoragePrivateLinkResourceProperties wrapper.
-    [CodeGenSuppress("StoragePrivateLinkResourceData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(StoragePrivateLinkResourceProperties))]
-    // Suppress: prior GA used this wrapper-type signature; prevent generator from re-emitting
-    // it so it doesn't conflict with the existing backward-compat overload.
+    // Suppress: generated method uses string groupId; prior GA used ResourceIdentifier groupId.
+    [CodeGenSuppress("StoragePrivateLinkResourceData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(string), typeof(IEnumerable<string>), typeof(IEnumerable<string>))]
     [CodeGenSuppress("StorageTaskReportInstance", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(StorageTaskReportProperties))]
-    // Suppress: prior GA used flattened params, not a StoragePrivateEndpointConnectionProperties wrapper.
-    [CodeGenSuppress("StoragePrivateEndpointConnectionData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(StoragePrivateEndpointConnectionProperties))]
+    [CodeGenSuppress("FileServiceUsageData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(FileServiceUsageProperties))]
     public static partial class ArmStorageModelFactory
     {
         /// <summary> Initializes a new instance of StorageTaskAssignmentPatchProperties (backward-compat overload). </summary>
