@@ -13,7 +13,7 @@ using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    /// <summary> Paramters to be used during configuration of backup of blobs using AutoProtection settings. </summary>
+    /// <summary> Parameters to be used during configuration of backup of blobs using AutoProtection settings. </summary>
     public partial class BlobBackupDatasourceParametersForAutoProtection : BackupDataSourceSettings, IJsonModel<BlobBackupDatasourceParametersForAutoProtection>
     {
         /// <summary> Initializes a new instance of <see cref="BlobBackupDatasourceParametersForAutoProtection"/> for deserialization. </summary>
