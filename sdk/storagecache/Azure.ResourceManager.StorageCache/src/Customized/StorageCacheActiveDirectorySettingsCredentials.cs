@@ -34,3 +34,5 @@ namespace Azure.ResourceManager.StorageCache.Models
         public string Password { get; set; }
     }
 }
+
+// Test comment for batching validation - DO NOT MERGE

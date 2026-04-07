@@ -43,3 +43,5 @@ namespace Azure.ResourceManager.StandbyPool.Models
         }
     }
 }
+
+// Test comment for batching validation - DO NOT MERGE

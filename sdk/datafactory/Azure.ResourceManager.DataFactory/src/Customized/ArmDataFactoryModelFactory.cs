@@ -42,3 +42,5 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
     }
 }
+
+// Test comment for batching validation - DO NOT MERGE
