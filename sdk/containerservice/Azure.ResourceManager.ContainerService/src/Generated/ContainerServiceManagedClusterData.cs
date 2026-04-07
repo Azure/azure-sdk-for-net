@@ -362,6 +362,24 @@ namespace Azure.ResourceManager.ContainerService
             }
         }
 
+        /// <summary> Enable namespace as Azure resource. The default value is false. It can be enabled/disabled on creation and updating of the managed cluster. See [https://aka.ms/NamespaceARMResource](https://aka.ms/NamespaceARMResource) for more details on Namespace as a ARM Resource. </summary>
+        [WirePath("properties.enableNamespaceResources")]
+        public bool? IsNamespaceResourcesEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsNamespaceResourcesEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedClusterProperties();
+                }
+                Properties.IsNamespaceResourcesEnabled = value.Value;
+            }
+        }
+
         /// <summary> The network configuration profile. </summary>
         [WirePath("properties.networkProfile")]
         public ContainerServiceNetworkProfile NetworkProfile
@@ -570,6 +588,24 @@ namespace Azure.ResourceManager.ContainerService
             }
         }
 
+        /// <summary> Ingress profile for the managed cluster. </summary>
+        [WirePath("properties.ingressProfile")]
+        public ManagedClusterIngressProfile IngressProfile
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IngressProfile;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedClusterProperties();
+                }
+                Properties.IngressProfile = value;
+            }
+        }
+
         /// <summary> PublicNetworkAccess of the managedCluster. Allow or deny public network access for AKS. </summary>
         [WirePath("properties.publicNetworkAccess")]
         public ContainerServicePublicNetworkAccess? PublicNetworkAccess
@@ -603,6 +639,24 @@ namespace Azure.ResourceManager.ContainerService
                     Properties = new ManagedClusterProperties();
                 }
                 Properties.WorkloadAutoScalerProfile = value;
+            }
+        }
+
+        /// <summary> Azure Monitor addon profiles for monitoring the managed cluster. </summary>
+        [WirePath("properties.azureMonitorProfile")]
+        public ManagedClusterAzureMonitorProfile AzureMonitorProfile
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AzureMonitorProfile;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedClusterProperties();
+                }
+                Properties.AzureMonitorProfile = value;
             }
         }
 
@@ -670,6 +724,24 @@ namespace Azure.ResourceManager.ContainerService
             }
         }
 
+        /// <summary> Health monitor profile for the managed cluster. </summary>
+        [WirePath("properties.healthMonitorProfile")]
+        public ManagedClusterHealthMonitorProfile HealthMonitorProfile
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HealthMonitorProfile;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedClusterProperties();
+                }
+                Properties.HealthMonitorProfile = value;
+            }
+        }
+
         /// <summary> Tells whether the cluster is Running or Stopped. </summary>
         [WirePath("properties.powerState.code")]
         public ContainerServiceStateCode? PowerStateCode
@@ -677,6 +749,24 @@ namespace Azure.ResourceManager.ContainerService
             get
             {
                 return Properties is null ? default : Properties.PowerStateCode;
+            }
+        }
+
+        /// <summary> This is the ARM ID of the source object to be used to create the target object. </summary>
+        [WirePath("properties.creationData.sourceResourceId")]
+        public ResourceIdentifier CreationDataSourceResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreationDataSourceResourceId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedClusterProperties();
+                }
+                Properties.CreationDataSourceResourceId = value;
             }
         }
 
@@ -749,6 +839,42 @@ namespace Azure.ResourceManager.ContainerService
                     Properties = new ManagedClusterProperties();
                 }
                 Properties.IsAIToolchainOperatorEnabled = value.Value;
+            }
+        }
+
+        /// <summary> The config customization mode for this scheduler instance. </summary>
+        [WirePath("properties.schedulerProfile.schedulerInstanceProfiles.upstream.schedulerConfigMode")]
+        public SchedulerConfigMode? UpstreamSchedulerConfigMode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UpstreamSchedulerConfigMode;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedClusterProperties();
+                }
+                Properties.UpstreamSchedulerConfigMode = value.Value;
+            }
+        }
+
+        /// <summary> Whether to enable hosted system addons for the cluster. </summary>
+        [WirePath("properties.hostedSystemProfile.enabled")]
+        public bool? IsHostedSystemAddonsEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsHostedSystemAddonsEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedClusterProperties();
+                }
+                Properties.IsHostedSystemAddonsEnabled = value.Value;
             }
         }
 

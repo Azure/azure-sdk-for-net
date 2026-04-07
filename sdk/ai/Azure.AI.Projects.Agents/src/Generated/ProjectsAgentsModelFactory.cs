@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using OpenAI;
+using OpenAI.Responses;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -46,7 +47,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary>
         /// The ProjectsAgentDefinition.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DeclarativeAgentDefinition"/>, <see cref="Agents.WorkflowAgentDefinition"/>, and <see cref="Agents.HostedAgentDefinition"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.DeclarativeAgentDefinition"/>, <see cref="Agents.WorkflowAgentDefinition"/>, and <see cref="Agents.HostedAgentDefinition"/>.
         /// </summary>
         /// <param name="kind"></param>
         /// <param name="contentFilterConfiguration"> Configuration for Responsible AI (RAI) content filtering and safety features. </param>
@@ -62,6 +63,53 @@ namespace Azure.AI.Projects.Agents
         public static ContentFilterConfiguration ContentFilterConfiguration(string raiPolicyName = default)
         {
             return new ContentFilterConfiguration(raiPolicyName, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The prompt agent definition. </summary>
+        /// <param name="contentFilterConfiguration"> Configuration for Responsible AI (RAI) content filtering and safety features. </param>
+        /// <param name="model"> The model deployment to use for this agent. </param>
+        /// <param name="instructions"> A system (or developer) message inserted into the model's context. </param>
+        /// <param name="temperature">
+        /// What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic.
+        /// We generally recommend altering this or `top_p` but not both.
+        /// </param>
+        /// <param name="topP">
+        /// An alternative to sampling with temperature, called nucleus sampling,
+        /// where the model considers the results of the tokens with top_p probability
+        /// mass. So 0.1 means only the tokens comprising the top 10% probability mass
+        /// are considered.
+        /// We generally recommend altering this or `temperature` but not both.
+        /// </param>
+        /// <param name="reasoningOptions"></param>
+        /// <param name="tools">
+        /// An array of tools the model may call while generating a response. You
+        /// can specify which tool to use by setting the `tool_choice` parameter.
+        /// </param>
+        /// <param name="toolChoice">
+        /// How the model should select which tool (or tools) to use when generating a response.
+        /// See the `tools` parameter to see how to specify which tools the model can call.
+        /// </param>
+        /// <param name="textOptions"> Configuration options for a text response from the model. Can be plain text or structured JSON data. </param>
+        /// <param name="structuredInputs"> Set of structured inputs that can participate in prompt template substitution or tool argument bindings. </param>
+        /// <returns> A new <see cref="Agents.DeclarativeAgentDefinition"/> instance for mocking. </returns>
+        public static DeclarativeAgentDefinition DeclarativeAgentDefinition(ContentFilterConfiguration contentFilterConfiguration = default, string model = default, string instructions = default, float? temperature = default, float? topP = default, ResponseReasoningOptions reasoningOptions = default, IEnumerable<ResponseTool> tools = default, BinaryData toolChoice = default, ResponseTextOptions textOptions = default, IDictionary<string, StructuredInputDefinition> structuredInputs = default)
+        {
+            tools ??= new ChangeTrackingList<ResponseTool>();
+            structuredInputs ??= new ChangeTrackingDictionary<string, StructuredInputDefinition>();
+
+            return new DeclarativeAgentDefinition(
+                ProjectsAgentKind.Prompt,
+                contentFilterConfiguration,
+                additionalBinaryDataProperties: null,
+                model,
+                instructions,
+                temperature,
+                topP,
+                reasoningOptions,
+                tools.ToList(),
+                toolChoice,
+                textOptions,
+                structuredInputs);
         }
 
         /// <summary>

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.FileShares
         {
             if (id.ResourceType != FileShareResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, FileShareResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, FileShareResource.ResourceType), nameof(id));
             }
         }
 

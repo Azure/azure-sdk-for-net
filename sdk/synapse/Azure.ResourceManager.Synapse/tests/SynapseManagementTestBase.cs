@@ -7,6 +7,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Core.TestFramework.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Storage;
@@ -29,11 +30,23 @@ namespace Azure.ResourceManager.Synapse.Tests
         protected SynapseManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
         {
+            ConfigureSanitizers();
         }
 
         protected SynapseManagementTestBase(bool isAsync)
             : base(isAsync)
         {
+            ConfigureSanitizers();
+        }
+
+        private void ConfigureSanitizers()
+        {
+            // TODO: Remove this sanitizer after re-recording (see https://github.com/Azure/azure-sdk-for-net/issues/57594)
+            // Storage Management SDK now serializes empty "properties": {} unconditionally, but recordings predate that change.
+            BodyRegexSanitizers.Add(new BodyRegexSanitizer(@",?\s*""properties""\s*:\s*\{\s*\}")
+            {
+                Value = ""
+            });
         }
 
         [SetUp]

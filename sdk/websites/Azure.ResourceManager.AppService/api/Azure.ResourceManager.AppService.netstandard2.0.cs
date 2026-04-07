@@ -2063,6 +2063,7 @@ namespace Azure.ResourceManager.AppService
         public string AcrUserManagedIdentityId { get { throw null; } set { } }
         public bool? AllowIPSecurityRestrictionsForScmToUseMain { get { throw null; } set { } }
         public System.Uri ApiDefinitionUri { get { throw null; } set { } }
+        public string ApiDefinitionUriStringValue { get { throw null; } set { } }
         public string ApiManagementConfigId { get { throw null; } set { } }
         public string AppCommandLine { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.AppServiceNameValuePair> AppSettings { get { throw null; } set { } }
@@ -9997,6 +9998,7 @@ namespace Azure.ResourceManager.AppService.Models
     {
         public FunctionAppStorage() { }
         public Azure.ResourceManager.AppService.Models.FunctionAppStorageAuthentication Authentication { get { throw null; } set { } }
+        public string AzureStorageUriStringValue { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.FunctionAppStorageType? StorageType { get { throw null; } set { } }
         public System.Uri Value { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -11323,6 +11325,7 @@ namespace Azure.ResourceManager.AppService.Models
         public string AcrUserManagedIdentityId { get { throw null; } set { } }
         public bool? AllowIPSecurityRestrictionsForScmToUseMain { get { throw null; } set { } }
         public System.Uri ApiDefinitionUri { get { throw null; } set { } }
+        public string ApiDefinitionUriStringValue { get { throw null; } set { } }
         public string ApiManagementConfigId { get { throw null; } set { } }
         public string AppCommandLine { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.AppServiceNameValuePair> AppSettings { get { throw null; } set { } }

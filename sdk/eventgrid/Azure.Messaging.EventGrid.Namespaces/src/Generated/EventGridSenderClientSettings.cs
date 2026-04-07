@@ -17,5 +17,8 @@ namespace Azure.Messaging.EventGrid.Namespaces
     {
         /// <summary> Gets or sets the Endpoint. </summary>
         public Uri Endpoint { get; set; }
+
+        /// <summary> Gets or sets the TopicName. </summary>
+        public string TopicName { get; set; }
     }
 }

@@ -5,12 +5,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary>
     /// Base class for targets with discriminator support.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: 
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureAIModelTarget"/> and <see cref="AzureAIAgentTarget"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownEvaluationTarget))]
     public abstract partial class EvaluationTarget : IJsonModel<EvaluationTarget>

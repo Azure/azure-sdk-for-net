@@ -11,7 +11,7 @@ using Azure.ResourceManager.Search;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    /// <summary> The SKU of the search service. Valid values include: 'free': Shared service. 'basic': Dedicated service with up to 3 replicas. 'standard': Dedicated service with up to 12 partitions and 12 replicas. 'standard2': Similar to standard, but with more capacity per search unit. 'standard3': The largest Standard offering with up to 12 partitions and 12 replicas (or up to 3 partitions with more indexes if you also set the hostingMode property to 'highDensity'). 'storage_optimized_l1': Supports 1TB per partition, up to 12 partitions. 'storage_optimized_l2': Supports 2TB per partition, up to 12 partitions.'. </summary>
+    /// <summary> The SKU of the search service. Valid values include: 'free': Shared service. 'basic': Dedicated service with up to 3 replicas. 'standard': Dedicated service with up to 12 partitions and 12 replicas. 'standard2': Similar to standard, but with more capacity per search unit. 'standard3': The largest Standard offering with up to 12 partitions and 12 replicas (or up to 3 partitions with more indexes if you also set the hostingMode property to 'highDensity'). 'storage_optimized_l1': Supports 1TB per partition, up to 12 partitions. 'storage_optimized_l2': Supports 2TB per partition, up to 12 partitions. 'serverless': Serverless tier with auto-scaling capabilities. </summary>
     public readonly partial struct SearchServiceSkuName : IEquatable<SearchServiceSkuName>
     {
         private readonly string _value;
@@ -29,6 +29,8 @@ namespace Azure.ResourceManager.Search.Models
         private const string StorageOptimizedL1Value = "storage_optimized_l1";
         /// <summary> Billable tier for a dedicated service that supports 2TB per partition, up to 12 partitions. </summary>
         private const string StorageOptimizedL2Value = "storage_optimized_l2";
+        /// <summary> Serverless tier, offering low-touch, consumption-based, and pay-as-you-go experience, with auto-scaling capabilities. </summary>
+        private const string ServerlessValue = "serverless";
 
         /// <summary> Initializes a new instance of <see cref="SearchServiceSkuName"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -60,6 +62,9 @@ namespace Azure.ResourceManager.Search.Models
 
         /// <summary> Billable tier for a dedicated service that supports 2TB per partition, up to 12 partitions. </summary>
         public static SearchServiceSkuName StorageOptimizedL2 { get; } = new SearchServiceSkuName(StorageOptimizedL2Value);
+
+        /// <summary> Serverless tier, offering low-touch, consumption-based, and pay-as-you-go experience, with auto-scaling capabilities. </summary>
+        public static SearchServiceSkuName Serverless { get; } = new SearchServiceSkuName(ServerlessValue);
 
         /// <summary> Determines if two <see cref="SearchServiceSkuName"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

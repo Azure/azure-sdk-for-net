@@ -31,3 +31,4 @@ extends:
       safeName: AzureMonitorQueryMetrics
     - name: Azure.Monitor.Ingestion
       safeName: AzureMonitorIngestion
+    TestDependsOnDependency: Azure.Monitor.OpenTelemetry.Exporter Azure.Monitor.Query.Logs

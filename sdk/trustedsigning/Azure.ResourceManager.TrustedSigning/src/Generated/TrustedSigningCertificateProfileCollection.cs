@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.TrustedSigning
         {
             if (id.ResourceType != TrustedSigningAccountResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, TrustedSigningAccountResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, TrustedSigningAccountResource.ResourceType), nameof(id));
             }
         }
 

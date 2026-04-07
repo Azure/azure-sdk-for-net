@@ -6,50 +6,27 @@
 #nullable disable
 
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Mocking
 {
-    /// <summary> A class to add extension methods to ArmClient. </summary>
+    /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableStorageArmClient : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableStorageArmClient"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableStorageArmClient for mocking. </summary>
         protected MockableStorageArmClient()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableStorageArmClient"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableStorageArmClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableStorageArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        internal MockableStorageArmClient(ArmClient client) : this(client, ResourceIdentifier.Root)
-        {
-        }
-
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="BlobServiceResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BlobServiceResource.CreateResourceIdentifier" /> to create a <see cref="BlobServiceResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BlobServiceResource"/> object. </returns>
-        public virtual BlobServiceResource GetBlobServiceResource(ResourceIdentifier id)
-        {
-            BlobServiceResource.ValidateResourceId(id);
-            return new BlobServiceResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="BlobContainerResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BlobContainerResource.CreateResourceIdentifier" /> to create a <see cref="BlobContainerResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="BlobContainerResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="BlobContainerResource"/> object. </returns>
         public virtual BlobContainerResource GetBlobContainerResource(ResourceIdentifier id)
@@ -58,10 +35,7 @@ namespace Azure.ResourceManager.Storage.Mocking
             return new BlobContainerResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing an <see cref="ImmutabilityPolicyResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ImmutabilityPolicyResource.CreateResourceIdentifier" /> to create an <see cref="ImmutabilityPolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="ImmutabilityPolicyResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ImmutabilityPolicyResource"/> object. </returns>
         public virtual ImmutabilityPolicyResource GetImmutabilityPolicyResource(ResourceIdentifier id)
@@ -70,70 +44,16 @@ namespace Azure.ResourceManager.Storage.Mocking
             return new ImmutabilityPolicyResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="FileServiceResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="FileServiceResource.CreateResourceIdentifier" /> to create a <see cref="FileServiceResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="BlobServiceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="FileServiceResource"/> object. </returns>
-        public virtual FileServiceResource GetFileServiceResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="BlobServiceResource"/> object. </returns>
+        public virtual BlobServiceResource GetBlobServiceResource(ResourceIdentifier id)
         {
-            FileServiceResource.ValidateResourceId(id);
-            return new FileServiceResource(Client, id);
+            BlobServiceResource.ValidateResourceId(id);
+            return new BlobServiceResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="FileServiceUsageResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="FileServiceUsageResource.CreateResourceIdentifier" /> to create a <see cref="FileServiceUsageResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="FileServiceUsageResource"/> object. </returns>
-        public virtual FileServiceUsageResource GetFileServiceUsageResource(ResourceIdentifier id)
-        {
-            FileServiceUsageResource.ValidateResourceId(id);
-            return new FileServiceUsageResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="FileShareResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="FileShareResource.CreateResourceIdentifier" /> to create a <see cref="FileShareResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="FileShareResource"/> object. </returns>
-        public virtual FileShareResource GetFileShareResource(ResourceIdentifier id)
-        {
-            FileShareResource.ValidateResourceId(id);
-            return new FileShareResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="QueueServiceResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="QueueServiceResource.CreateResourceIdentifier" /> to create a <see cref="QueueServiceResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="QueueServiceResource"/> object. </returns>
-        public virtual QueueServiceResource GetQueueServiceResource(ResourceIdentifier id)
-        {
-            QueueServiceResource.ValidateResourceId(id);
-            return new QueueServiceResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="StorageQueueResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StorageQueueResource.CreateResourceIdentifier" /> to create a <see cref="StorageQueueResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StorageQueueResource"/> object. </returns>
-        public virtual StorageQueueResource GetStorageQueueResource(ResourceIdentifier id)
-        {
-            StorageQueueResource.ValidateResourceId(id);
-            return new StorageQueueResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="StorageAccountResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StorageAccountResource.CreateResourceIdentifier" /> to create a <see cref="StorageAccountResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="StorageAccountResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="StorageAccountResource"/> object. </returns>
         public virtual StorageAccountResource GetStorageAccountResource(ResourceIdentifier id)
@@ -142,10 +62,7 @@ namespace Azure.ResourceManager.Storage.Mocking
             return new StorageAccountResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="StorageAccountMigrationResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StorageAccountMigrationResource.CreateResourceIdentifier" /> to create a <see cref="StorageAccountMigrationResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="StorageAccountMigrationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="StorageAccountMigrationResource"/> object. </returns>
         public virtual StorageAccountMigrationResource GetStorageAccountMigrationResource(ResourceIdentifier id)
@@ -154,10 +71,43 @@ namespace Azure.ResourceManager.Storage.Mocking
             return new StorageAccountMigrationResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="DeletedAccountResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DeletedAccountResource.CreateResourceIdentifier" /> to create a <see cref="DeletedAccountResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="FileShareResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="FileShareResource"/> object. </returns>
+        public virtual FileShareResource GetFileShareResource(ResourceIdentifier id)
+        {
+            FileShareResource.ValidateResourceId(id);
+            return new FileShareResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="FileServiceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="FileServiceResource"/> object. </returns>
+        public virtual FileServiceResource GetFileServiceResource(ResourceIdentifier id)
+        {
+            FileServiceResource.ValidateResourceId(id);
+            return new FileServiceResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="FileServiceUsageResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="FileServiceUsageResource"/> object. </returns>
+        public virtual FileServiceUsageResource GetFileServiceUsageResource(ResourceIdentifier id)
+        {
+            FileServiceUsageResource.ValidateResourceId(id);
+            return new FileServiceUsageResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="QueueServiceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="QueueServiceResource"/> object. </returns>
+        public virtual QueueServiceResource GetQueueServiceResource(ResourceIdentifier id)
+        {
+            QueueServiceResource.ValidateResourceId(id);
+            return new QueueServiceResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="DeletedAccountResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DeletedAccountResource"/> object. </returns>
         public virtual DeletedAccountResource GetDeletedAccountResource(ResourceIdentifier id)
@@ -166,10 +116,7 @@ namespace Azure.ResourceManager.Storage.Mocking
             return new DeletedAccountResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="StorageAccountManagementPolicyResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StorageAccountManagementPolicyResource.CreateResourceIdentifier" /> to create a <see cref="StorageAccountManagementPolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="StorageAccountManagementPolicyResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="StorageAccountManagementPolicyResource"/> object. </returns>
         public virtual StorageAccountManagementPolicyResource GetStorageAccountManagementPolicyResource(ResourceIdentifier id)
@@ -178,10 +125,7 @@ namespace Azure.ResourceManager.Storage.Mocking
             return new StorageAccountManagementPolicyResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="BlobInventoryPolicyResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BlobInventoryPolicyResource.CreateResourceIdentifier" /> to create a <see cref="BlobInventoryPolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="BlobInventoryPolicyResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="BlobInventoryPolicyResource"/> object. </returns>
         public virtual BlobInventoryPolicyResource GetBlobInventoryPolicyResource(ResourceIdentifier id)
@@ -190,10 +134,7 @@ namespace Azure.ResourceManager.Storage.Mocking
             return new BlobInventoryPolicyResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="StoragePrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StoragePrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="StoragePrivateEndpointConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="StoragePrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="StoragePrivateEndpointConnectionResource"/> object. </returns>
         public virtual StoragePrivateEndpointConnectionResource GetStoragePrivateEndpointConnectionResource(ResourceIdentifier id)
@@ -202,34 +143,7 @@ namespace Azure.ResourceManager.Storage.Mocking
             return new StoragePrivateEndpointConnectionResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing an <see cref="ObjectReplicationPolicyResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ObjectReplicationPolicyResource.CreateResourceIdentifier" /> to create an <see cref="ObjectReplicationPolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ObjectReplicationPolicyResource"/> object. </returns>
-        public virtual ObjectReplicationPolicyResource GetObjectReplicationPolicyResource(ResourceIdentifier id)
-        {
-            ObjectReplicationPolicyResource.ValidateResourceId(id);
-            return new ObjectReplicationPolicyResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="StorageAccountLocalUserResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StorageAccountLocalUserResource.CreateResourceIdentifier" /> to create a <see cref="StorageAccountLocalUserResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StorageAccountLocalUserResource"/> object. </returns>
-        public virtual StorageAccountLocalUserResource GetStorageAccountLocalUserResource(ResourceIdentifier id)
-        {
-            StorageAccountLocalUserResource.ValidateResourceId(id);
-            return new StorageAccountLocalUserResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="EncryptionScopeResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EncryptionScopeResource.CreateResourceIdentifier" /> to create an <see cref="EncryptionScopeResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="EncryptionScopeResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="EncryptionScopeResource"/> object. </returns>
         public virtual EncryptionScopeResource GetEncryptionScopeResource(ResourceIdentifier id)
@@ -238,10 +152,7 @@ namespace Azure.ResourceManager.Storage.Mocking
             return new EncryptionScopeResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="TableServiceResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="TableServiceResource.CreateResourceIdentifier" /> to create a <see cref="TableServiceResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="TableServiceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="TableServiceResource"/> object. </returns>
         public virtual TableServiceResource GetTableServiceResource(ResourceIdentifier id)
@@ -250,22 +161,7 @@ namespace Azure.ResourceManager.Storage.Mocking
             return new TableServiceResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="TableResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="TableResource.CreateResourceIdentifier" /> to create a <see cref="TableResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="TableResource"/> object. </returns>
-        public virtual TableResource GetTableResource(ResourceIdentifier id)
-        {
-            TableResource.ValidateResourceId(id);
-            return new TableResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="NetworkSecurityPerimeterConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetworkSecurityPerimeterConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="NetworkSecurityPerimeterConfigurationResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="NetworkSecurityPerimeterConfigurationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="NetworkSecurityPerimeterConfigurationResource"/> object. </returns>
         public virtual NetworkSecurityPerimeterConfigurationResource GetNetworkSecurityPerimeterConfigurationResource(ResourceIdentifier id)
@@ -274,16 +170,49 @@ namespace Azure.ResourceManager.Storage.Mocking
             return new NetworkSecurityPerimeterConfigurationResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="StorageTaskAssignmentResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StorageTaskAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="StorageTaskAssignmentResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="StorageTaskAssignmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="StorageTaskAssignmentResource"/> object. </returns>
         public virtual StorageTaskAssignmentResource GetStorageTaskAssignmentResource(ResourceIdentifier id)
         {
             StorageTaskAssignmentResource.ValidateResourceId(id);
             return new StorageTaskAssignmentResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="StorageQueueResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="StorageQueueResource"/> object. </returns>
+        public virtual StorageQueueResource GetStorageQueueResource(ResourceIdentifier id)
+        {
+            StorageQueueResource.ValidateResourceId(id);
+            return new StorageQueueResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ObjectReplicationPolicyResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ObjectReplicationPolicyResource"/> object. </returns>
+        public virtual ObjectReplicationPolicyResource GetObjectReplicationPolicyResource(ResourceIdentifier id)
+        {
+            ObjectReplicationPolicyResource.ValidateResourceId(id);
+            return new ObjectReplicationPolicyResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="StorageAccountLocalUserResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="StorageAccountLocalUserResource"/> object. </returns>
+        public virtual StorageAccountLocalUserResource GetStorageAccountLocalUserResource(ResourceIdentifier id)
+        {
+            StorageAccountLocalUserResource.ValidateResourceId(id);
+            return new StorageAccountLocalUserResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="TableResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="TableResource"/> object. </returns>
+        public virtual TableResource GetTableResource(ResourceIdentifier id)
+        {
+            TableResource.ValidateResourceId(id);
+            return new TableResource(Client, id);
         }
     }
 }

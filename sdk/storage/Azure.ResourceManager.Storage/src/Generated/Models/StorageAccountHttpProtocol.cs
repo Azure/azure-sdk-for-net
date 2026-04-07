@@ -10,9 +10,9 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> The protocol permitted for a request made with the account SAS. </summary>
     public enum StorageAccountHttpProtocol
     {
-        /// <summary> https,http. </summary>
+        /// <summary> HttpsHttp. </summary>
         HttpsHttp,
-        /// <summary> https. </summary>
+        /// <summary> Https. </summary>
         Https
     }
 }
