@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.OnlineExperimentation
         {
             if (id.ResourceType != OnlineExperimentationWorkspaceResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, OnlineExperimentationWorkspaceResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, OnlineExperimentationWorkspaceResource.ResourceType), nameof(id));
             }
         }
 

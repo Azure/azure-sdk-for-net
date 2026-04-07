@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.EventHubs
         {
             if (id.ResourceType != EventHubResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, EventHubResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, EventHubResource.ResourceType), nameof(id));
             }
         }
 

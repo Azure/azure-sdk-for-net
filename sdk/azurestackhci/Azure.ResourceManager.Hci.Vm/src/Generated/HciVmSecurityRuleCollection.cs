@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Hci.Vm
         {
             if (id.ResourceType != HciVmNetworkSecurityGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, HciVmNetworkSecurityGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, HciVmNetworkSecurityGroupResource.ResourceType), nameof(id));
             }
         }
 

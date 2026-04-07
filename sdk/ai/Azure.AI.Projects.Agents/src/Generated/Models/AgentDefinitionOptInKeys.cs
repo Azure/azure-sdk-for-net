@@ -10,6 +10,8 @@ namespace Azure.AI.Projects.Agents
         /// <summary> HostedAgentsV1Preview. </summary>
         HostedAgentsV1Preview,
         /// <summary> WorkflowAgentsV1Preview. </summary>
-        WorkflowAgentsV1Preview
+        WorkflowAgentsV1Preview,
+        /// <summary> ContainerAgentsV1Preview. </summary>
+        ContainerAgentsV1Preview
     }
 }

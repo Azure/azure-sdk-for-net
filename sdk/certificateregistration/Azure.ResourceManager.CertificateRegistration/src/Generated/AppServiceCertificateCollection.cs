@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CertificateRegistration
         {
             if (id.ResourceType != AppServiceCertificateOrderResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AppServiceCertificateOrderResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AppServiceCertificateOrderResource.ResourceType), nameof(id));
             }
         }
 

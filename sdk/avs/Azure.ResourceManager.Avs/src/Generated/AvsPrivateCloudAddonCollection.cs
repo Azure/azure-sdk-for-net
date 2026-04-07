@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Avs
         {
             if (id.ResourceType != AvsPrivateCloudResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AvsPrivateCloudResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AvsPrivateCloudResource.ResourceType), nameof(id));
             }
         }
 

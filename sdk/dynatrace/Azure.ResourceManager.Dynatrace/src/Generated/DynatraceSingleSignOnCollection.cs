@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Dynatrace
         {
             if (id.ResourceType != DynatraceMonitorResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DynatraceMonitorResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DynatraceMonitorResource.ResourceType), nameof(id));
             }
         }
 

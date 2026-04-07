@@ -10,7 +10,7 @@ To create a `ConversationAnalysisAuthoringClient`, you will need the service end
 Uri endpoint = new Uri("{endpoint}");
 AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
 ConversationAnalysisAuthoringClientOptions options = new ConversationAnalysisAuthoringClientOptions(ConversationAnalysisAuthoringClientOptions.ServiceVersion.V2025_11_15_Preview);
-ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential, options);
+ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential, options);
 ```
 
 Or you can also create a `ConversationAnalysisAuthoringClient` using Azure Active Directory (AAD) authentication. Your user or service principal must be assigned the "Cognitive Services Language Reader" role.
@@ -23,10 +23,7 @@ To retrieve deployment details, call `GetDeployment` on the `ConversationAuthori
 ```C# Snippet:Sample15_ConversationsAuthoring_GetDeployment
 string projectName = "{projectName}";
 string deploymentName = "{deploymentName}";
-
-ConversationAuthoringDeployment deploymentClient = client.GetDeployment(projectName, deploymentName);
-
-Response<ConversationAuthoringProjectDeployment> response = deploymentClient.GetDeployment();
+Response<ConversationAuthoringProjectDeployment> response = client.GetDeployment(projectName, deploymentName);
 
 ConversationAuthoringProjectDeployment deployment = response.Value;
 
@@ -44,13 +41,6 @@ if (deployment.AssignedResources != null)
     {
         Console.WriteLine($"Resource ID: {assignedResource.ResourceId}");
         Console.WriteLine($"Region: {assignedResource.Region}");
-
-        if (assignedResource.AssignedAoaiResource != null)
-        {
-            Console.WriteLine($"AOAI Kind: {assignedResource.AssignedAoaiResource.Kind}");
-            Console.WriteLine($"AOAI Resource ID: {assignedResource.AssignedAoaiResource.ResourceId}");
-            Console.WriteLine($"AOAI Deployment Name: {assignedResource.AssignedAoaiResource.DeploymentName}");
-        }
     }
 }
 ```
@@ -62,10 +52,7 @@ To retrieve deployment details asynchronously, call `GetDeploymentAsync` on the 
 ```C# Snippet:Sample15_ConversationsAuthoring_GetDeploymentAsync
 string projectName = "{projectName}";
 string deploymentName = "{deploymentName}";
-
-ConversationAuthoringDeployment deploymentClient = client.GetDeployment(projectName, deploymentName);
-
-Response<ConversationAuthoringProjectDeployment> response = await deploymentClient.GetDeploymentAsync();
+Response<ConversationAuthoringProjectDeployment> response = await client.GetDeploymentAsync(projectName, deploymentName);
 
 ConversationAuthoringProjectDeployment deployment = response.Value;
 
@@ -83,13 +70,6 @@ if (deployment.AssignedResources != null)
     {
         Console.WriteLine($"Resource ID: {assignedResource.ResourceId}");
         Console.WriteLine($"Region: {assignedResource.Region}");
-
-        if (assignedResource.AssignedAoaiResource != null)
-        {
-            Console.WriteLine($"AOAI Kind: {assignedResource.AssignedAoaiResource.Kind}");
-            Console.WriteLine($"AOAI Resource ID: {assignedResource.AssignedAoaiResource.ResourceId}");
-            Console.WriteLine($"AOAI Deployment Name: {assignedResource.AssignedAoaiResource.DeploymentName}");
-        }
     }
 }
 ```

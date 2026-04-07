@@ -8,74 +8,80 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     /// <summary> BareMetalMachineKeySetPatchParameters represents the body of the request to patch the bare metal machine key set. </summary>
     public partial class NetworkCloudBareMetalMachineKeySetPatch
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudBareMetalMachineKeySetPatch"/>. </summary>
         public NetworkCloudBareMetalMachineKeySetPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
-            JumpHostsAllowed = new ChangeTrackingList<IPAddress>();
-            UserList = new ChangeTrackingList<KeySetUser>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudBareMetalMachineKeySetPatch"/>. </summary>
-        /// <param name="tags"> The Azure resource tags that will replace the existing ones. </param>
-        /// <param name="expireOn"> The date and time after which the users in this key set will be removed from the bare metal machines. </param>
-        /// <param name="jumpHostsAllowed"> The list of IP addresses of jump hosts with management network access from which a login will be allowed for the users. </param>
-        /// <param name="userList"> The unique list of permitted users. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkCloudBareMetalMachineKeySetPatch(IDictionary<string, string> tags, DateTimeOffset? expireOn, IList<IPAddress> jumpHostsAllowed, IList<KeySetUser> userList, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> The list of the resource properties. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkCloudBareMetalMachineKeySetPatch(BareMetalMachineKeySetPatchProperties properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            Properties = properties;
             Tags = tags;
-            ExpireOn = expireOn;
-            JumpHostsAllowed = jumpHostsAllowed;
-            UserList = userList;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The Azure resource tags that will replace the existing ones. </summary>
+        /// <summary> The list of the resource properties. </summary>
+        internal BareMetalMachineKeySetPatchProperties Properties { get; set; }
+
+        /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
+
         /// <summary> The date and time after which the users in this key set will be removed from the bare metal machines. </summary>
-        public DateTimeOffset? ExpireOn { get; set; }
+        public DateTimeOffset? ExpireOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExpireOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BareMetalMachineKeySetPatchProperties();
+                }
+                Properties.ExpireOn = value.Value;
+            }
+        }
+
         /// <summary> The list of IP addresses of jump hosts with management network access from which a login will be allowed for the users. </summary>
-        public IList<IPAddress> JumpHostsAllowed { get; }
+        public IList<IPAddress> JumpHostsAllowed
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new BareMetalMachineKeySetPatchProperties();
+                }
+                return Properties.JumpHostsAllowed;
+            }
+        }
+
         /// <summary> The unique list of permitted users. </summary>
-        public IList<KeySetUser> UserList { get; }
+        public IList<KeySetUser> UserList
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new BareMetalMachineKeySetPatchProperties();
+                }
+                return Properties.UserList;
+            }
+        }
     }
 }

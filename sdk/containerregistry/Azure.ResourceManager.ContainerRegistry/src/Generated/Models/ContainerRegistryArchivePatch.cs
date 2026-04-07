@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     /// <summary> The parameters for updating a archive. </summary>
     public partial class ContainerRegistryArchivePatch
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryArchivePatch"/>. </summary>
         public ContainerRegistryArchivePatch()
@@ -51,16 +23,34 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryArchivePatch"/>. </summary>
-        /// <param name="publishedVersion"> The published version of the archive. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerRegistryArchivePatch(string publishedVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> The properties of the connected registry update parameters. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerRegistryArchivePatch(ArchiveUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            PublishedVersion = publishedVersion;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> The properties of the connected registry update parameters. </summary>
+        [WirePath("properties")]
+        internal ArchiveUpdateProperties Properties { get; set; }
 
         /// <summary> The published version of the archive. </summary>
         [WirePath("properties.publishedVersion")]
-        public string PublishedVersion { get; set; }
+        public string PublishedVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublishedVersion;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ArchiveUpdateProperties();
+                }
+                Properties.PublishedVersion = value;
+            }
+        }
     }
 }

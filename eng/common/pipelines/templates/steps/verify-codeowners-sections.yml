@@ -8,7 +8,7 @@ parameters:
 
 steps:
   - ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
-    # 1. Check if CODEOWNERS changed; skip everything if it hasn't
+    # 1. Check if CODEOWNERS changed; if so, check whether the PR was opened by azure-sdk
     - pwsh: |
         $scriptPath = [System.IO.Path]::Combine("${{ parameters.SourceRootPath }}", "eng", "common", "scripts", "get-changedfiles.ps1")
         try {
@@ -27,11 +27,26 @@ steps:
 
         if (!$changedFiles) {
           Write-Host "CODEOWNERS file has not changed."
-          Write-Host "##vso[task.setvariable variable=CodeownersChanged]false"
-        } else {
-          Write-Host "CODEOWNERS file has changed."
-          Write-Host "##vso[task.setvariable variable=CodeownersChanged]true"
+          Write-Host "##vso[task.setvariable variable=ShouldCheckCodeownersEdits]false"
+          exit 0
         }
+
+        Write-Host "CODEOWNERS file has changed."
+
+        $prNumber = "$(System.PullRequest.PullRequestNumber)"
+        $repoName = "$(Build.Repository.Name)"
+        $prUrl = "https://api.github.com/repos/$repoName/pulls/$prNumber"
+        $prData = Invoke-RestMethod -Uri $prUrl -MaximumRetryCount 10 -RetryIntervalSec 6
+        $prAuthor = $prData.user.login
+        Write-Host "PR author: $prAuthor"
+
+        if ($prAuthor -ieq "azure-sdk") {
+          Write-Host "PR opened by azure-sdk. Skipping CODEOWNERS section check."
+          Write-Host "##vso[task.setvariable variable=ShouldCheckCodeownersEdits]false"
+          exit 0
+        }
+
+        Write-Host "##vso[task.setvariable variable=ShouldCheckCodeownersEdits]true"
       displayName: 'Check if CODEOWNERS changed'
       workingDirectory: ${{ parameters.SourceRootPath }}
       condition: and(succeeded(), ne(variables['Skip.VerifyCodeownersSections'], 'true'))
@@ -40,7 +55,7 @@ steps:
     - template: /eng/common/pipelines/templates/steps/install-azsdk-cli.yml
       parameters:
         SourceRootPath: ${{ parameters.SourceRootPath }}
-        Condition: and(succeeded(), eq(variables['CodeownersChanged'], 'true'))
+        Condition: and(succeeded(), eq(variables['ShouldCheckCodeownersEdits'], 'true'))
 
     # 3. Prepare before/after CODEOWNERS files
     - pwsh: |
@@ -61,13 +76,13 @@ steps:
 
         if ($LASTEXITCODE) {
           Write-Host "Could not retrieve CODEOWNERS from HEAD~1. The file may be newly added. Skipping."
-          Write-Host "##vso[task.setvariable variable=CodeownersChanged]false"
+          Write-Host "##vso[task.setvariable variable=ShouldCheckCodeownersEdits]false"
           exit 0
         }
         Write-Host "Extracted parent CODEOWNERS to $beforeFile"
       displayName: 'Prepare CODEOWNERS before/after files'
       workingDirectory: ${{ parameters.SourceRootPath }}
-      condition: and(succeeded(), eq(variables['CodeownersChanged'], 'true'))
+      condition: and(succeeded(), eq(variables['ShouldCheckCodeownersEdits'], 'true'))
 
     # 4. Run the section comparison script
     - task: Powershell@2
@@ -83,4 +98,4 @@ steps:
           -TempDirectory "${{ parameters.TempDirectory }}"
         pwsh: true
         workingDirectory: ${{ parameters.SourceRootPath }}
-      condition: and(succeeded(), eq(variables['CodeownersChanged'], 'true'))
+      condition: and(succeeded(), eq(variables['ShouldCheckCodeownersEdits'], 'true'))

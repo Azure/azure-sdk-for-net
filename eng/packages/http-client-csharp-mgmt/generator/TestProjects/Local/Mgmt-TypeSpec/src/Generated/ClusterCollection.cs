@@ -51,7 +51,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -296,7 +296,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ClusterData, ClusterResource>(new ClustersGetByResourceGroupAsyncCollectionResultOfT(_clustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new ClusterResource(Client, data));
+            return new AsyncPageableWrapper<ClusterData, ClusterResource>(new ClustersGetByResourceGroupAsyncCollectionResultOfT(_clustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ClusterCollection.GetAll"), data => new ClusterResource(Client, data));
         }
 
         /// <summary>
@@ -324,7 +324,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ClusterData, ClusterResource>(new ClustersGetByResourceGroupCollectionResultOfT(_clustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new ClusterResource(Client, data));
+            return new PageableWrapper<ClusterData, ClusterResource>(new ClustersGetByResourceGroupCollectionResultOfT(_clustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ClusterCollection.GetAll"), data => new ClusterResource(Client, data));
         }
 
         /// <summary>

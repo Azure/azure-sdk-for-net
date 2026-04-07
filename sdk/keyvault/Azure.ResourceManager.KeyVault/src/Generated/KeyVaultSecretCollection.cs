@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.KeyVault
         {
             if (id.ResourceType != KeyVaultResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, KeyVaultResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, KeyVaultResource.ResourceType), nameof(id));
             }
         }
 

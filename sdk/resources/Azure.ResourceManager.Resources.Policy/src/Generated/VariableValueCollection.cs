@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Resources.Policy
         {
             if (id.ResourceType != VariableResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, VariableResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, VariableResource.ResourceType), nameof(id));
             }
         }
 

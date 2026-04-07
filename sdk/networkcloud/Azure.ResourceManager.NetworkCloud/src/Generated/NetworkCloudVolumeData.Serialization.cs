@@ -10,16 +10,80 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetworkCloud.Models;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
-    public partial class NetworkCloudVolumeData : IUtf8JsonSerializable, IJsonModel<NetworkCloudVolumeData>
+    /// <summary> Volume represents storage made available for use by resources running on the cluster. </summary>
+    public partial class NetworkCloudVolumeData : TrackedResourceData, IJsonModel<NetworkCloudVolumeData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkCloudVolumeData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudVolumeData"/> for deserialization. </summary>
+        internal NetworkCloudVolumeData()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkCloudVolumeData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeNetworkCloudVolumeData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NetworkCloudVolumeData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkCloudVolumeData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkCloudContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(NetworkCloudVolumeData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<NetworkCloudVolumeData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NetworkCloudVolumeData IPersistableModel<NetworkCloudVolumeData>.Create(BinaryData data, ModelReaderWriterOptions options) => (NetworkCloudVolumeData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<NetworkCloudVolumeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="networkCloudVolumeData"> The <see cref="NetworkCloudVolumeData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(NetworkCloudVolumeData networkCloudVolumeData)
+        {
+            if (networkCloudVolumeData == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(networkCloudVolumeData, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="NetworkCloudVolumeData"/> from. </param>
+        internal static NetworkCloudVolumeData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeNetworkCloudVolumeData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NetworkCloudVolumeData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -31,13 +95,14 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkCloudVolumeData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkCloudVolumeData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NetworkCloudVolumeData)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("properties"u8);
+            writer.WriteObjectValue(Properties, options);
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
@@ -45,282 +110,138 @@ namespace Azure.ResourceManager.NetworkCloud
             }
             writer.WritePropertyName("extendedLocation"u8);
             writer.WriteObjectValue(ExtendedLocation, options);
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(AllocatedInSizeMiB))
-            {
-                writer.WritePropertyName("allocatedSizeMiB"u8);
-                writer.WriteNumberValue(AllocatedInSizeMiB.Value);
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(AttachedTo))
-            {
-                writer.WritePropertyName("attachedTo"u8);
-                writer.WriteStartArray();
-                foreach (var item in AttachedTo)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsDefined(DetailedStatus))
-            {
-                writer.WritePropertyName("detailedStatus"u8);
-                writer.WriteStringValue(DetailedStatus.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(DetailedStatusMessage))
-            {
-                writer.WritePropertyName("detailedStatusMessage"u8);
-                writer.WriteStringValue(DetailedStatusMessage);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(SerialNumber))
-            {
-                writer.WritePropertyName("serialNumber"u8);
-                writer.WriteStringValue(SerialNumber);
-            }
-            writer.WritePropertyName("sizeMiB"u8);
-            writer.WriteNumberValue(SizeInMiB);
-            if (Optional.IsDefined(StorageApplianceId))
-            {
-                writer.WritePropertyName("storageApplianceId"u8);
-                writer.WriteStringValue(StorageApplianceId);
-            }
-            writer.WriteEndObject();
         }
 
-        NetworkCloudVolumeData IJsonModel<NetworkCloudVolumeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NetworkCloudVolumeData IJsonModel<NetworkCloudVolumeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (NetworkCloudVolumeData)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkCloudVolumeData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkCloudVolumeData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NetworkCloudVolumeData)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeNetworkCloudVolumeData(document.RootElement, options);
         }
 
-        internal static NetworkCloudVolumeData DeserializeNetworkCloudVolumeData(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static NetworkCloudVolumeData DeserializeNetworkCloudVolumeData(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ETag? etag = default;
-            ExtendedLocation extendedLocation = default;
-            IDictionary<string, string> tags = default;
-            AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            ResourceType resourceType = default;
             SystemData systemData = default;
-            long? allocatedSizeMiB = default;
-            IReadOnlyList<string> attachedTo = default;
-            VolumeDetailedStatus? detailedStatus = default;
-            string detailedStatusMessage = default;
-            VolumeProvisioningState? provisioningState = default;
-            string serialNumber = default;
-            long sizeMiB = default;
-            ResourceIdentifier storageApplianceId = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, string> tags = default;
+            AzureLocation location = default;
+            VolumeProperties properties = default;
+            ETag? eTag = default;
+            ExtendedLocation extendedLocation = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("etag"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    etag = new ETag(property.Value.GetString());
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("extendedLocation"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value, options);
+                    name = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tags"u8))
+                if (prop.NameEquals("type"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceType = new ResourceType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("systemData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkCloudContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("tags"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"u8))
+                if (prop.NameEquals("location"u8))
                 {
-                    location = new AzureLocation(property.Value.GetString());
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("properties"u8))
                 {
-                    id = new ResourceIdentifier(property.Value.GetString());
+                    properties = VolumeProperties.DeserializeVolumeProperties(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("name"u8))
+                if (prop.NameEquals("etag"u8))
                 {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkCloudContext.Default);
+                    eTag = new ETag(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("extendedLocation"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("allocatedSizeMiB"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            allocatedSizeMiB = property0.Value.GetInt64();
-                            continue;
-                        }
-                        if (property0.NameEquals("attachedTo"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            attachedTo = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("detailedStatus"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            detailedStatus = new VolumeDetailedStatus(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("detailedStatusMessage"u8))
-                        {
-                            detailedStatusMessage = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new VolumeProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("serialNumber"u8))
-                        {
-                            serialNumber = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("sizeMiB"u8))
-                        {
-                            sizeMiB = property0.Value.GetInt64();
-                            continue;
-                        }
-                        if (property0.NameEquals("storageApplianceId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            storageApplianceId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                    }
+                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new NetworkCloudVolumeData(
                 id,
                 name,
-                type,
+                resourceType,
                 systemData,
+                additionalBinaryDataProperties,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                etag,
-                extendedLocation,
-                allocatedSizeMiB,
-                attachedTo ?? new ChangeTrackingList<string>(),
-                detailedStatus,
-                detailedStatusMessage,
-                provisioningState,
-                serialNumber,
-                sizeMiB,
-                storageApplianceId,
-                serializedAdditionalRawData);
+                properties,
+                eTag,
+                extendedLocation);
         }
-
-        BinaryData IPersistableModel<NetworkCloudVolumeData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkCloudVolumeData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkCloudContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(NetworkCloudVolumeData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        NetworkCloudVolumeData IPersistableModel<NetworkCloudVolumeData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkCloudVolumeData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeNetworkCloudVolumeData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(NetworkCloudVolumeData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<NetworkCloudVolumeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

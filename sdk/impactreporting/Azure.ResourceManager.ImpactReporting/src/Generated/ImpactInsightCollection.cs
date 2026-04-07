@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ImpactReporting
         {
             if (id.ResourceType != WorkloadImpactResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, WorkloadImpactResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, WorkloadImpactResource.ResourceType), nameof(id));
             }
         }
 

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         {
             if (id.ResourceType != EdgeSolutionResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, EdgeSolutionResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, EdgeSolutionResource.ResourceType), nameof(id));
             }
         }
 

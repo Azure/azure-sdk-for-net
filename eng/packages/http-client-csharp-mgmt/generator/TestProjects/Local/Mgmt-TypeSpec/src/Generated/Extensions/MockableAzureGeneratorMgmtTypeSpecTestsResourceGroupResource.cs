@@ -1478,7 +1478,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PrivateLinksGetAllPrivateLinkResourcesAsyncCollectionResultOfT(PrivateLinksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context);
+            return new PrivateLinksGetAllPrivateLinkResourcesAsyncCollectionResultOfT(PrivateLinksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetAllPrivateLinkResources");
         }
 
         /// <summary>
@@ -1506,7 +1506,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PrivateLinksGetAllPrivateLinkResourcesCollectionResultOfT(PrivateLinksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context);
+            return new PrivateLinksGetAllPrivateLinkResourcesCollectionResultOfT(PrivateLinksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetAllPrivateLinkResources");
         }
     }
 }

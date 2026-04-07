@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             if (id.ResourceType != ScalingPlanResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ScalingPlanResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ScalingPlanResource.ResourceType), nameof(id));
             }
         }
 

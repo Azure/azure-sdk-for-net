@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ContainerService
             return message;
         }
 
-        internal HttpMessage CreateDeleteRequest(Guid subscriptionId, string resourceGroupName, string resourceName, ETag? ifMatch, RequestContext context)
+        internal HttpMessage CreateDeleteRequest(Guid subscriptionId, string resourceGroupName, string resourceName, ETag? ifMatch, bool? ignorePodDisruptionBudget, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -132,6 +132,10 @@ namespace Azure.ResourceManager.ContainerService
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (ignorePodDisruptionBudget != null)
+            {
+                uri.AppendQuery("ignore-pod-disruption-budget", TypeFormatters.ConvertToString(ignorePodDisruptionBudget), true);
             }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
@@ -590,6 +594,30 @@ namespace Azure.ResourceManager.ContainerService
             request.Uri = uri;
             request.Method = RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateRebalanceLoadBalancersRequest(Guid subscriptionId, string resourceGroupName, string resourceName, RequestContent content, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ContainerService/managedClusters/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/rebalanceLoadBalancers", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Content = content;
             return message;
         }
 
