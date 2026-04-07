@@ -1,7 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Threading;
+using Azure.AI.Projects.Agents;
 
 // AZC0015: We return AsyncCollectionResult<T> and CollectionResult<T> instead of Pageable<T>.
 [assembly: SuppressMessage("Usage", "AZC0015", Justification = "Returns ClientResult<AgentRecord>.", Scope = "member", Target = "~M:Azure.AI.Projects.Agents.AgentAdministrationClient.GetAgent(System.String,System.Threading.CancellationToken)")]
@@ -67,6 +70,9 @@ using System.Diagnostics.CodeAnalysis;
 
 [assembly: SuppressMessage("Usage", "AZC0015", Justification = "Returns Task<ClientResult>.", Scope = "member", Target = "~M:Azure.AI.Projects.Agents.AgentAdministrationClient.DeleteAgentVersionAsync(System.String,System.String,System.ClientModel.Primitives.RequestOptions)")]
 [assembly: SuppressMessage("Usage", "AZC0015", Justification = "Returns ClientResult.", Scope = "member", Target = "~M:Azure.AI.Projects.Agents.AgentAdministrationClient.DeleteAgentVersion(System.String,System.String,System.ClientModel.Primitives.RequestOptions)")]
+
+[assembly: SuppressMessage("Usage", "AZC0015", Justification = "Returns ClientResult<ProjectsAgentRecord>.", Scope = "member", Target = "~M:Azure.AI.Projects.Agents.AgentAdministrationClient.CreateAgent(System.String,Azure.AI.Projects.Agents.ProjectsAgentDefinition,System.Collections.Generic.IDictionary{string,struing},System.String,Azure.AI.Projects.Agents.AgentBlueprintReference,Azure.AI.Projects.Agents.AgentEndpoint,Azure.AI.Projects.Agents.AgentCard,System.Nullable{Azure.AI.Projects.Agents.AgentDefinitionOptInKeys},System.Threading.CancellationToken)")]
+                                                                                                                                                                         //(string name, ProjectsAgentDefinition definition, IDictionary<string, string> metadata = default, string description = default, AgentBlueprintReference blueprintReference = default, AgentEndpoint agentEndpoint = default, AgentCard agentCard = default, AgentDefinitionOptInKeys ? foundryFeatures = default, CancellationToken cancellationToken = default)
 
 // AZC0007 Suppress the warning on AgentAdministrationClient creation.
 [assembly: SuppressMessage("Usage", "AZC0007", Justification = "Custom constructor for AgentsClient.", Scope = "member", Target = "~T:Azure.AI.Projects.Agents.AgentAdministrationClient")]

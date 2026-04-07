@@ -11,6 +11,7 @@ namespace Azure.AI.Projects
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this FoundryFeaturesOptInKeys value) => value switch
         {
+            FoundryFeaturesOptInKeys.SkillsV1Preview => "Skills=V1Preview",
             FoundryFeaturesOptInKeys.EvaluationsV1Preview => "Evaluations=V1Preview",
             FoundryFeaturesOptInKeys.SchedulesV1Preview => "Schedules=V1Preview",
             FoundryFeaturesOptInKeys.RedTeamsV1Preview => "RedTeams=V1Preview",
@@ -23,6 +24,10 @@ namespace Azure.AI.Projects
         /// <param name="value"> The value to deserialize. </param>
         public static FoundryFeaturesOptInKeys ToFoundryFeaturesOptInKeys(this string value)
         {
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Skills=V1Preview"))
+            {
+                return FoundryFeaturesOptInKeys.SkillsV1Preview;
+            }
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "Evaluations=V1Preview"))
             {
                 return FoundryFeaturesOptInKeys.EvaluationsV1Preview;

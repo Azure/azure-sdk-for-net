@@ -102,14 +102,14 @@ Console.WriteLine($"Retrieved toolbox: {toolBox.Name} ({toolBox.Id})");
 
 Synchronous sample:
 ```C# Snippet:Sample_UpdateToolbox_ToolboxesCRUD_Sync
-string newVersion = record.DefaultVersion == toolBox1.Version ? toolBox2.Version : toolBox1.Version;
+string newVersion = string.Equals(record.DefaultVersion, toolBox1.Version) ? toolBox2.Version : toolBox1.Version;
 record = toolboxClient.UpdateToolbox(toolboxName, newVersion);
 Console.WriteLine($"The default version for a toolbox {record.Name} is now {record.DefaultVersion}");
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_UpdateToolbox_ToolboxesCRUD_Async
-string newVersion = record.DefaultVersion == toolBox1.Version ? toolBox2.Version : toolBox1.Version;
+string newVersion = string.Equals(record.DefaultVersion, toolBox1.Version) ? toolBox2.Version : toolBox1.Version;
 record = await toolboxClient.UpdateToolboxAsync(toolboxName, newVersion);
 Console.WriteLine($"The default version for a toolbox {record.Name} is now {record.DefaultVersion}");
 ```
@@ -163,7 +163,7 @@ foreach (ToolboxRecord item in records)
 Synchronous sample:
 ```C# Snippet:Sample_DeleteToolbox_ToolboxesCRUD_Sync
 // We cannot delete the default version.
-string deleteVersion = record.DefaultVersion == toolBox1.Version ? toolBox2.Version : toolBox1.Version;
+string deleteVersion = string.Equals(record.DefaultVersion, toolBox1.Version) ? toolBox2.Version : toolBox1.Version;
 toolboxClient.DeleteToolboxVersion(toolBox.Name, deleteVersion);
 toolboxClient.DeleteToolbox(toolBox.Name);
 ```
@@ -171,7 +171,7 @@ toolboxClient.DeleteToolbox(toolBox.Name);
 Asynchronous sample:
 ```C# Snippet:Sample_DeleteToolbox_ToolboxesCRUD_Async
 // We cannot delete the default version.
-string deleteVersion = record.DefaultVersion == toolBox1.Version ? toolBox2.Version : toolBox1.Version;
+string deleteVersion = string.Equals(record.DefaultVersion, toolBox1.Version) ? toolBox2.Version : toolBox1.Version;
 await toolboxClient.DeleteToolboxVersionAsync(toolBox.Name, deleteVersion);
 await toolboxClient.DeleteToolboxAsync(toolBox.Name);
 ```

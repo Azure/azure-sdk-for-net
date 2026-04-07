@@ -7,6 +7,8 @@ namespace Azure.AI.Projects.Agents
     /// <summary></summary>
     public enum FoundryFeaturesOptInKeys
     {
+        /// <summary> SkillsV1Preview. </summary>
+        SkillsV1Preview,
         /// <summary> EvaluationsV1Preview. </summary>
         EvaluationsV1Preview,
         /// <summary> SchedulesV1Preview. </summary>

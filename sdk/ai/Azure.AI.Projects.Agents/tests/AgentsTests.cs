@@ -2,10 +2,15 @@
 // Licensed under the MIT License.
 using System;
 using System.ClientModel;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.ClientModel.TestFramework;
+using Microsoft.Testing.Platform.OutputDevice;
 using NUnit.Framework;
+using OpenAI.Responses;
 
+#pragma warning disable AAIP001
 namespace Azure.AI.Projects.Agents.Tests;
 
 public class AgentsTests : AgentsTestBase
@@ -69,5 +74,157 @@ public class AgentsTests : AgentsTestBase
         Assert.That(agentVersion.Metadata, Is.Empty);
         await agentsClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         Assert.ThrowsAsync<ClientResultException>(async () => await agentsClient.GetAgentVersionAsync(agentVersion.Name, agentVersion.Version));
+    }
+
+    [RecordedTest]
+    public async Task TestToolboxesCRUD()
+    {
+        AgentAdministrationClient agentsClient = GetTestClient();
+        AgentToolboxes toolboxClient = agentsClient.GetAgentToolboxes();
+        try
+        {
+            await toolboxClient.DeleteToolboxAsync("mcp1");
+        }
+        catch { }
+        try
+        {
+            await toolboxClient.DeleteToolboxAsync("mcp2");
+        }
+        catch { }
+        ProjectsAgentTool tool = ProjectsAgentTool.AsProjectTool(ResponseTool.CreateMcpTool(
+            serverLabel: "api-specs",
+            serverUri: new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
+            toolCallApprovalPolicy: new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
+        ));
+        // Create
+        ToolboxVersion toolBox1 = await toolboxClient.CreateToolboxVersionAsync(
+            toolboxName: "mcp1",
+            tools: [tool],
+            description: "Example toolbox created by the azure-ai-projects sample.",
+            metadata: new Dictionary<string, string> {
+                {"team", "Engineers"}
+            }
+        );
+        ToolboxVersion toolBox2 = await toolboxClient.CreateToolboxVersionAsync(
+            toolboxName: "mcp2",
+            tools: [tool],
+            description: "Example toolbox created by the azure-ai-projects sample.",
+            metadata: new Dictionary<string, string> {
+                {"team", "Engineers"}
+            }
+        );
+        ToolboxVersion toolBox3 = await toolboxClient.CreateToolboxVersionAsync(
+            toolboxName: "mcp2",
+            tools: [tool],
+            description: "Example toolbox created by the azure-ai-projects sample.",
+            metadata: new Dictionary<string, string> {
+                {"team", "Engineers"}
+            }
+        );
+        ToolboxRecord record = await toolboxClient.GetToolboxAsync(toolboxName: toolBox2.Name);
+        Assert.That(record.Name, Is.EqualTo(toolBox3.Name));
+        string newVersion = string.Equals(record.DefaultVersion, "1") ? "2" : "1";
+        // Update
+        record = await toolboxClient.UpdateToolboxAsync(record.Name, newVersion);
+        Assert.That(record.Name, Is.EqualTo(toolBox2.Name));
+        Assert.That(record.DefaultVersion, Is.EqualTo(newVersion));
+        // Get
+        record = await toolboxClient.GetToolboxAsync("mcp2");
+        Assert.That(record.Name, Is.EqualTo("mcp2"));
+        Assert.That(record.DefaultVersion, Is.EqualTo(newVersion));
+        // List
+        HashSet<string> recordNames = [..await toolboxClient.GetToolboxesAsync().Select(x => x.Name).ToListAsync()];
+        Assert.That(recordNames, Does.Contain("mcp1"));
+        Assert.That(recordNames, Does.Contain("mcp2"));
+        // Delete
+        await toolboxClient.DeleteToolboxAsync("mcp1");
+        recordNames = [.. await toolboxClient.GetToolboxesAsync().Select(x => x.Name).ToListAsync()];
+        Assert.That(recordNames, Does.Not.Contains("mcp1"));
+        Assert.That(recordNames, Does.Contain("mcp2"));
+        await toolboxClient.DeleteToolboxAsync("mcp2");
+        recordNames = [.. await toolboxClient.GetToolboxesAsync().Select(x => x.Name).ToListAsync()];
+        Assert.That(recordNames, Does.Not.Contains("mcp1"));
+        Assert.That(recordNames, Does.Not.Contains("mcp2"));
+    }
+
+    [RecordedTest]
+    public async Task TestToolboxVersionsCRUD()
+    {
+        AgentAdministrationClient agentsClient = GetTestClient();
+        AgentToolboxes toolboxClient = agentsClient.GetAgentToolboxes();
+        try
+        {
+            await toolboxClient.DeleteToolboxAsync("mcp");
+        }
+        catch { }
+        ProjectsAgentTool tool = ProjectsAgentTool.AsProjectTool(ResponseTool.CreateMcpTool(
+            serverLabel: "api-specs",
+            serverUri: new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
+            toolCallApprovalPolicy: new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
+        ));
+        // Create
+        ToolboxVersion toolBox1 = await toolboxClient.CreateToolboxVersionAsync(
+            toolboxName: "mcp",
+            tools: [tool],
+            description: "Example toolbox created by the azure-ai-projects sample.",
+            metadata: new Dictionary<string, string> {
+                {"team", "Engineers"}
+            }
+        );
+        Assert.That(toolBox1.Name, Is.EqualTo("mcp"));
+        Assert.That(toolBox1.Version, Is.EqualTo("1"));
+        Assert.That(toolBox1.Metadata, Does.ContainKey("team"));
+        Assert.That(toolBox1.Metadata["team"], Is.EqualTo("Engineers"));
+        ToolboxVersion toolBox2 = await toolboxClient.CreateToolboxVersionAsync(
+            toolboxName: "mcp",
+            tools: [tool],
+            description: "Example toolbox created by the azure-ai-projects sample.",
+            metadata: new Dictionary<string, string> {
+                {"team", "Data Scientists"}
+            }
+        );
+        Assert.That(toolBox2.Name, Is.EqualTo("mcp"));
+        Assert.That(toolBox2.Version, Is.EqualTo("2"));
+        Assert.That(toolBox2.Metadata, Does.ContainKey("team"));
+        Assert.That(toolBox2.Metadata["team"], Is.EqualTo("Data Scientists"));
+        // Get
+        ToolboxVersion toolBox = await toolboxClient.GetToolboxVersionAsync(toolboxName: "mcp", version: "1");
+        Assert.That(toolBox.Name, Is.EqualTo("mcp"));
+        Assert.That(toolBox.Version, Is.EqualTo("1"));
+        Assert.That(toolBox.Metadata, Does.ContainKey("team"));
+        Assert.That(toolBox.Metadata["team"], Is.EqualTo("Engineers"));
+        // List
+        List<ToolboxVersion> versions = await toolboxClient.GetToolboxVersionsAsync(toolboxName: "mcp").ToListAsync();
+        Assert.That(versions.Count, Is.EqualTo(2));
+        if (string.Equals(versions[0].Version, "1"))
+        {
+            toolBox1 = versions[0];
+            toolBox2 = versions[1];
+        }
+        else
+        {
+            toolBox1 = versions[1];
+            toolBox2 = versions[0];
+        }
+        Assert.That(toolBox1.Name, Is.EqualTo("mcp"));
+        Assert.That(toolBox1.Version, Is.EqualTo("1"));
+        Assert.That(toolBox1.Metadata, Does.ContainKey("team"));
+        Assert.That(toolBox1.Metadata["team"], Is.EqualTo("Engineers"));
+        Assert.That(toolBox2.Name, Is.EqualTo("mcp"));
+        Assert.That(toolBox2.Version, Is.EqualTo("2"));
+        Assert.That(toolBox2.Metadata, Does.ContainKey("team"));
+        Assert.That(toolBox2.Metadata["team"], Is.EqualTo("Data Scientists"));
+        // Delete
+        ToolboxRecord record = await toolboxClient.GetToolboxAsync("mcp");
+        string deleteVersion = string.Equals(record.DefaultVersion, toolBox1.Version) ? toolBox2.Version : toolBox1.Version;
+        await toolboxClient.DeleteToolboxVersionAsync(toolboxName: "mcp", version: deleteVersion);
+        HashSet<string> versionNumbers = [..await toolboxClient.GetToolboxVersionsAsync(toolboxName: "mcp").Select(x => x.Version).ToListAsync()];
+        Assert.That(versionNumbers, Does.Not.Contains(deleteVersion));
+        Assert.That(versionNumbers, Does.Contain(string.Equals(deleteVersion, "2") ? "1" : "2"));
+        await toolboxClient.DeleteToolboxAsync(toolboxName: record.Name);
+        Assert.ThrowsAsync<ClientResultException>(async () => await toolboxClient.GetToolboxVersionsAsync(toolboxName: "mcp").ToListAsync());
+        //versionNumbers = [.. .Select(x => x.Version).ToListAsync()];
+        //Assert.That(versionNumbers, Does.Not.Contains("1"));
+        //Assert.That(versionNumbers, Does.Not.Contains("2"));
     }
 }
