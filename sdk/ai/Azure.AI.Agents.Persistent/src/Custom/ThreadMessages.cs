@@ -5,6 +5,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading;
@@ -12,8 +13,6 @@ using System.Threading.Tasks;
 using Azure.AI.Agents.Persistent.Telemetry;
 using Azure.Core;
 using Azure.Core.Pipeline;
-
-using System.Linq;
 using Microsoft.TypeSpec.Generator.Customizations;
 namespace Azure.AI.Agents.Persistent
 {
@@ -420,7 +419,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
             throw new NotSupportedException("Protocol paging is not yet supported.");
-}
+        }
 
         /// <summary>
         /// [Protocol Method] Gets a list of messages that exist on a thread.
@@ -455,7 +454,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
             throw new NotSupportedException("Protocol paging is not yet supported.");
-}
+        }
 
         /// <summary> Deletes a thread message. </summary>
         /// <param name="threadId"> The ID of the thread to delete. </param>

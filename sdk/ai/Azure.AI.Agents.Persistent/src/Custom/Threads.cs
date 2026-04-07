@@ -2,14 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.Agents.Persistent.Telemetry;
 using Azure.Core;
 using Azure.Core.Pipeline;
-
-using System.ClientModel.Primitives;
 namespace Azure.AI.Agents.Persistent
 {
     public partial class Threads
@@ -212,7 +211,7 @@ namespace Azure.AI.Agents.Persistent
             // This method is not yet supported, because it is using generated implementation of parser,
             // which is currently do not support next token.
             throw new NotSupportedException("Protocol paging is not yet supported.");
-}
+        }
 
         /// <summary>
         /// [Protocol Method] Gets a list of threads that were previously created.
@@ -241,6 +240,6 @@ namespace Azure.AI.Agents.Persistent
             // This method is not yet supported, because it is using generated implementation of parser,
             // which is currently do not support next token.
             throw new NotSupportedException("Protocol paging is not yet supported.");
-}
+        }
     }
 }

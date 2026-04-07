@@ -2,14 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.Agents.Persistent.Telemetry;
 using Azure.Core;
 using Azure.Core.Pipeline;
-
-using System.ClientModel.Primitives;
 using Microsoft.TypeSpec.Generator.Customizations;
 namespace Azure.AI.Agents.Persistent
 {
@@ -202,7 +201,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
             throw new NotSupportedException("Protocol paging is not yet supported.");
-}
+        }
 
         /// <summary>
         /// [Protocol Method] Gets a list of run steps from a thread run.
@@ -242,6 +241,6 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
             throw new NotSupportedException("Protocol paging is not yet supported.");
-}
+        }
     }
 }

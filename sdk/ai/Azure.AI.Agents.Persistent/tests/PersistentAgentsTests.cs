@@ -1647,7 +1647,8 @@ namespace Azure.AI.Agents.Persistent.Tests
             {
                 string content = "This is a test file";
                 stream.Write(Encoding.UTF8.GetBytes(content), 0, content.Length);
-            };
+            }
+            ;
 
             PersistentAgentsClient client = GetClient();
             PersistentAgentFileInfo fileDataSource = await client.Files.UploadFileAsync(file.FullName, PersistentAgentFilePurpose.Agents);

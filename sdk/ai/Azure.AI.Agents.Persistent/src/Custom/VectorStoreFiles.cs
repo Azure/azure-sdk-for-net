@@ -2,11 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-
-using System.ClientModel.Primitives;
 namespace Azure.AI.Agents.Persistent
 {
     internal partial class VectorStoreFiles
@@ -112,7 +111,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
 
             throw new NotSupportedException("Protocol paging is not yet supported.");
-}
+        }
 
         /// <summary>
         /// [Protocol Method] Returns a list of vector store files.
@@ -147,7 +146,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
 
             throw new NotSupportedException("Protocol paging is not yet supported.");
-}
+        }
 
         /// <summary> Deletes a vector store file. This removes the file‐to‐store link (does not delete the file itself). </summary>
         /// <param name="vectorStoreId"> Identifier of the vector store. </param>

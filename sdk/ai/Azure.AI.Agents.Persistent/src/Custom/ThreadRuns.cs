@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -9,8 +10,6 @@ using System.Threading.Tasks;
 using Azure.AI.Agents.Persistent.Telemetry;
 using Azure.Core;
 using Azure.Core.Pipeline;
-
-using System.ClientModel.Primitives;
 using Microsoft.TypeSpec.Generator.Customizations;
 namespace Azure.AI.Agents.Persistent
 {
@@ -752,7 +751,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
             throw new NotSupportedException("Protocol paging is not yet supported.");
-}
+        }
 
         /// <summary>
         /// [Protocol Method] Gets a list of runs for a specified thread.
@@ -786,7 +785,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
             throw new NotSupportedException("Protocol paging is not yet supported.");
-}
+        }
 
         ////////////////////////////////////////////////////////////////////////////
         // Thread run step client methods.

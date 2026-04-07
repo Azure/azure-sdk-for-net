@@ -3,13 +3,12 @@
 
 using System;
 using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-
-using System.ClientModel.Primitives;
 namespace Azure.AI.Agents.Persistent
 {
     public partial class VectorStores
@@ -108,7 +107,7 @@ namespace Azure.AI.Agents.Persistent
             // This method is not yet supported, because it is using generated implementation of parser,
             // which is currently do not support next token.
             throw new NotSupportedException("Protocol paging is not yet supported.");
-}
+        }
 
         /// <summary>
         /// [Protocol Method] Returns a list of vector stores.
@@ -137,7 +136,7 @@ namespace Azure.AI.Agents.Persistent
             // This method is not yet supported, because it is using generated implementation of parser,
             // which is currently do not support next token.
             throw new NotSupportedException("Protocol paging is not yet supported.");
-}
+        }
 
         /// <summary> Deletes the vector store object matching the specified ID. </summary>
         /// <param name="vectorStoreId"> Identifier of the vector store. </param>

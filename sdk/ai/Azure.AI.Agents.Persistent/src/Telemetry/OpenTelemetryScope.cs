@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
@@ -16,8 +17,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using static Azure.AI.Agents.Persistent.Telemetry.OpenTelemetryConstants;
-
-using System.ClientModel.Primitives;
 namespace Azure.AI.Agents.Persistent.Telemetry
 {
     internal class StreamingMessage

@@ -2,10 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using Azure.Core;
-
-using System.ClientModel.Primitives;
 namespace Azure.AI.Agents.Persistent
 {
     internal partial class VectorStoreFileBatches
@@ -119,7 +118,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(batchId, nameof(batchId));
 
             throw new NotSupportedException("Protocol paging is not yet supported.");
-}
+        }
 
         /// <summary>
         /// [Protocol Method] Returns a list of vector store files in a batch.
@@ -156,6 +155,6 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(batchId, nameof(batchId));
 
             throw new NotSupportedException("Protocol paging is not yet supported.");
-}
+        }
     }
 }

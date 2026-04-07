@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading;
@@ -9,8 +10,6 @@ using System.Threading.Tasks;
 using Azure.AI.Agents.Persistent.Telemetry;
 using Azure.Core;
 using Azure.Core.Pipeline;
-
-using System.ClientModel.Primitives;
 namespace Azure.AI.Agents.Persistent
 {
     public partial class PersistentAgentsAdministrationClient

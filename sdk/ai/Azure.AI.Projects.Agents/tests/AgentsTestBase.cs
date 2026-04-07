@@ -12,8 +12,8 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
-using OpenAI.Responses;
 using NUnit.Framework;
+using OpenAI.Responses;
 
 namespace Azure.AI.Projects.Agents.Tests;
 
