@@ -6,46 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DevCenter
 {
     /// <summary>
-    /// A Class representing an AttachedNetworkConnection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AttachedNetworkConnectionResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetAttachedNetworkConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DevCenterResource"/> using the GetAttachedNetworkConnection method.
+    /// A class representing a AttachedNetworkConnection along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="AttachedNetworkConnectionResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DevCenterResource"/> using the GetAttachedNetworkConnections method.
     /// </summary>
     public partial class AttachedNetworkConnectionResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="AttachedNetworkConnectionResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="devCenterName"> The devCenterName. </param>
-        /// <param name="attachedNetworkConnectionName"> The attachedNetworkConnectionName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string devCenterName, string attachedNetworkConnectionName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/attachednetworks/{attachedNetworkConnectionName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _attachedNetworkConnectionAttachedNetworksClientDiagnostics;
-        private readonly AttachedNetworksRestOperations _attachedNetworkConnectionAttachedNetworksRestClient;
+        private readonly ClientDiagnostics _attachedNetworksClientDiagnostics;
+        private readonly AttachedNetworks _attachedNetworksRestClient;
         private readonly AttachedNetworkConnectionData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DevCenter/devcenters/attachednetworks";
 
-        /// <summary> Initializes a new instance of the <see cref="AttachedNetworkConnectionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of AttachedNetworkConnectionResource for mocking. </summary>
         protected AttachedNetworkConnectionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="AttachedNetworkConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="AttachedNetworkConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AttachedNetworkConnectionResource(ArmClient client, AttachedNetworkConnectionData data) : this(client, data.Id)
@@ -54,71 +43,93 @@ namespace Azure.ResourceManager.DevCenter
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="AttachedNetworkConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="AttachedNetworkConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal AttachedNetworkConnectionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _attachedNetworkConnectionAttachedNetworksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string attachedNetworkConnectionAttachedNetworksApiVersion);
-            _attachedNetworkConnectionAttachedNetworksRestClient = new AttachedNetworksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, attachedNetworkConnectionAttachedNetworksApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string attachedNetworkConnectionApiVersion);
+            _attachedNetworksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", ResourceType.Namespace, Diagnostics);
+            _attachedNetworksRestClient = new AttachedNetworks(_attachedNetworksClientDiagnostics, Pipeline, Endpoint, attachedNetworkConnectionApiVersion ?? "2026-01-01-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual AttachedNetworkConnectionData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="devCenterName"> The devCenterName. </param>
+        /// <param name="attachedNetworkConnectionName"> The attachedNetworkConnectionName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string devCenterName, string attachedNetworkConnectionName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/attachednetworks/{attachedNetworkConnectionName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets an attached NetworkConnection.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/attachednetworks/{attachedNetworkConnectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/attachednetworks/{attachedNetworkConnectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AttachedNetworks_GetByDevCenter</description>
+        /// <term> Operation Id. </term>
+        /// <description> AttachedNetworks_GetByDevCenter. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AttachedNetworkConnectionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AttachedNetworkConnectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<AttachedNetworkConnectionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _attachedNetworkConnectionAttachedNetworksClientDiagnostics.CreateScope("AttachedNetworkConnectionResource.Get");
+            using DiagnosticScope scope = _attachedNetworksClientDiagnostics.CreateScope("AttachedNetworkConnectionResource.Get");
             scope.Start();
             try
             {
-                var response = await _attachedNetworkConnectionAttachedNetworksRestClient.GetByDevCenterAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _attachedNetworksRestClient.CreateGetByDevCenterRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<AttachedNetworkConnectionData> response = Response.FromValue(AttachedNetworkConnectionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new AttachedNetworkConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -132,33 +143,41 @@ namespace Azure.ResourceManager.DevCenter
         /// Gets an attached NetworkConnection.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/attachednetworks/{attachedNetworkConnectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/attachednetworks/{attachedNetworkConnectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AttachedNetworks_GetByDevCenter</description>
+        /// <term> Operation Id. </term>
+        /// <description> AttachedNetworks_GetByDevCenter. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AttachedNetworkConnectionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AttachedNetworkConnectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<AttachedNetworkConnectionResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _attachedNetworkConnectionAttachedNetworksClientDiagnostics.CreateScope("AttachedNetworkConnectionResource.Get");
+            using DiagnosticScope scope = _attachedNetworksClientDiagnostics.CreateScope("AttachedNetworkConnectionResource.Get");
             scope.Start();
             try
             {
-                var response = _attachedNetworkConnectionAttachedNetworksRestClient.GetByDevCenter(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _attachedNetworksRestClient.CreateGetByDevCenterRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<AttachedNetworkConnectionData> response = Response.FromValue(AttachedNetworkConnectionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new AttachedNetworkConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -172,20 +191,20 @@ namespace Azure.ResourceManager.DevCenter
         /// Un-attach a NetworkConnection.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/attachednetworks/{attachedNetworkConnectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/attachednetworks/{attachedNetworkConnectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AttachedNetworks_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> AttachedNetworks_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AttachedNetworkConnectionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AttachedNetworkConnectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -193,14 +212,21 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _attachedNetworkConnectionAttachedNetworksClientDiagnostics.CreateScope("AttachedNetworkConnectionResource.Delete");
+            using DiagnosticScope scope = _attachedNetworksClientDiagnostics.CreateScope("AttachedNetworkConnectionResource.Delete");
             scope.Start();
             try
             {
-                var response = await _attachedNetworkConnectionAttachedNetworksRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DevCenterArmOperation(_attachedNetworkConnectionAttachedNetworksClientDiagnostics, Pipeline, _attachedNetworkConnectionAttachedNetworksRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _attachedNetworksRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                DevCenterArmOperation operation = new DevCenterArmOperation(_attachedNetworksClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -214,20 +240,20 @@ namespace Azure.ResourceManager.DevCenter
         /// Un-attach a NetworkConnection.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/attachednetworks/{attachedNetworkConnectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/attachednetworks/{attachedNetworkConnectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AttachedNetworks_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> AttachedNetworks_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AttachedNetworkConnectionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AttachedNetworkConnectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -235,14 +261,21 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _attachedNetworkConnectionAttachedNetworksClientDiagnostics.CreateScope("AttachedNetworkConnectionResource.Delete");
+            using DiagnosticScope scope = _attachedNetworksClientDiagnostics.CreateScope("AttachedNetworkConnectionResource.Delete");
             scope.Start();
             try
             {
-                var response = _attachedNetworkConnectionAttachedNetworksRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new DevCenterArmOperation(_attachedNetworkConnectionAttachedNetworksClientDiagnostics, Pipeline, _attachedNetworkConnectionAttachedNetworksRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _attachedNetworksRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                DevCenterArmOperation operation = new DevCenterArmOperation(_attachedNetworksClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -253,23 +286,23 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary>
-        /// Creates or updates an attached NetworkConnection.
+        /// Update a AttachedNetworkConnection.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/attachednetworks/{attachedNetworkConnectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/attachednetworks/{attachedNetworkConnectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AttachedNetworks_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> AttachedNetworks_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AttachedNetworkConnectionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AttachedNetworkConnectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -281,14 +314,27 @@ namespace Azure.ResourceManager.DevCenter
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _attachedNetworkConnectionAttachedNetworksClientDiagnostics.CreateScope("AttachedNetworkConnectionResource.Update");
+            using DiagnosticScope scope = _attachedNetworksClientDiagnostics.CreateScope("AttachedNetworkConnectionResource.Update");
             scope.Start();
             try
             {
-                var response = await _attachedNetworkConnectionAttachedNetworksRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DevCenterArmOperation<AttachedNetworkConnectionResource>(new AttachedNetworkConnectionOperationSource(Client), _attachedNetworkConnectionAttachedNetworksClientDiagnostics, Pipeline, _attachedNetworkConnectionAttachedNetworksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _attachedNetworksRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AttachedNetworkConnectionData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                DevCenterArmOperation<AttachedNetworkConnectionResource> operation = new DevCenterArmOperation<AttachedNetworkConnectionResource>(
+                    new AttachedNetworkConnectionOperationSource(Client),
+                    _attachedNetworksClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -299,23 +345,23 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary>
-        /// Creates or updates an attached NetworkConnection.
+        /// Update a AttachedNetworkConnection.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/attachednetworks/{attachedNetworkConnectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/attachednetworks/{attachedNetworkConnectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AttachedNetworks_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> AttachedNetworks_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AttachedNetworkConnectionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AttachedNetworkConnectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -327,14 +373,27 @@ namespace Azure.ResourceManager.DevCenter
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _attachedNetworkConnectionAttachedNetworksClientDiagnostics.CreateScope("AttachedNetworkConnectionResource.Update");
+            using DiagnosticScope scope = _attachedNetworksClientDiagnostics.CreateScope("AttachedNetworkConnectionResource.Update");
             scope.Start();
             try
             {
-                var response = _attachedNetworkConnectionAttachedNetworksRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new DevCenterArmOperation<AttachedNetworkConnectionResource>(new AttachedNetworkConnectionOperationSource(Client), _attachedNetworkConnectionAttachedNetworksClientDiagnostics, Pipeline, _attachedNetworkConnectionAttachedNetworksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _attachedNetworksRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AttachedNetworkConnectionData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                DevCenterArmOperation<AttachedNetworkConnectionResource> operation = new DevCenterArmOperation<AttachedNetworkConnectionResource>(
+                    new AttachedNetworkConnectionOperationSource(Client),
+                    _attachedNetworksClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)

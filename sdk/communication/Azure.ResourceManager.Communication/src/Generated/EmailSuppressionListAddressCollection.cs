@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Communication
         {
             if (id.ResourceType != EmailSuppressionListResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, EmailSuppressionListResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, EmailSuppressionListResource.ResourceType), nameof(id));
             }
         }
 

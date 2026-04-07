@@ -10,13 +10,55 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    public partial class CloudServicesNetworkStorageOptionsPatch : IUtf8JsonSerializable, IJsonModel<CloudServicesNetworkStorageOptionsPatch>
+    /// <summary> CloudServicesNetworkStorageOptionsPatch represents the patchable storage options for the cloud services network. </summary>
+    public partial class CloudServicesNetworkStorageOptionsPatch : IJsonModel<CloudServicesNetworkStorageOptionsPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CloudServicesNetworkStorageOptionsPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual CloudServicesNetworkStorageOptionsPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CloudServicesNetworkStorageOptionsPatch>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeCloudServicesNetworkStorageOptionsPatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CloudServicesNetworkStorageOptionsPatch)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CloudServicesNetworkStorageOptionsPatch>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkCloudContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(CloudServicesNetworkStorageOptionsPatch)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<CloudServicesNetworkStorageOptionsPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CloudServicesNetworkStorageOptionsPatch IPersistableModel<CloudServicesNetworkStorageOptionsPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CloudServicesNetworkStorageOptionsPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CloudServicesNetworkStorageOptionsPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +70,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CloudServicesNetworkStorageOptionsPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CloudServicesNetworkStorageOptionsPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CloudServicesNetworkStorageOptionsPatch)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
@@ -49,15 +90,15 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WritePropertyName("storageApplianceId"u8);
                 writer.WriteStringValue(StorageApplianceId);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -66,22 +107,27 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
         }
 
-        CloudServicesNetworkStorageOptionsPatch IJsonModel<CloudServicesNetworkStorageOptionsPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CloudServicesNetworkStorageOptionsPatch IJsonModel<CloudServicesNetworkStorageOptionsPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual CloudServicesNetworkStorageOptionsPatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CloudServicesNetworkStorageOptionsPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CloudServicesNetworkStorageOptionsPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CloudServicesNetworkStorageOptionsPatch)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeCloudServicesNetworkStorageOptionsPatch(document.RootElement, options);
         }
 
-        internal static CloudServicesNetworkStorageOptionsPatch DeserializeCloudServicesNetworkStorageOptionsPatch(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static CloudServicesNetworkStorageOptionsPatch DeserializeCloudServicesNetworkStorageOptionsPatch(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -89,75 +135,42 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             CloudServicesNetworkStorageMode? mode = default;
             long? sizeMiB = default;
             ResourceIdentifier storageApplianceId = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("mode"u8))
+                if (prop.NameEquals("mode"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    mode = new CloudServicesNetworkStorageMode(property.Value.GetString());
+                    mode = new CloudServicesNetworkStorageMode(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("sizeMiB"u8))
+                if (prop.NameEquals("sizeMiB"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    sizeMiB = property.Value.GetInt64();
+                    sizeMiB = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("storageApplianceId"u8))
+                if (prop.NameEquals("storageApplianceId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    storageApplianceId = new ResourceIdentifier(property.Value.GetString());
+                    storageApplianceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new CloudServicesNetworkStorageOptionsPatch(mode, sizeMiB, storageApplianceId, serializedAdditionalRawData);
+            return new CloudServicesNetworkStorageOptionsPatch(mode, sizeMiB, storageApplianceId, additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<CloudServicesNetworkStorageOptionsPatch>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CloudServicesNetworkStorageOptionsPatch>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkCloudContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(CloudServicesNetworkStorageOptionsPatch)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        CloudServicesNetworkStorageOptionsPatch IPersistableModel<CloudServicesNetworkStorageOptionsPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CloudServicesNetworkStorageOptionsPatch>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeCloudServicesNetworkStorageOptionsPatch(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(CloudServicesNetworkStorageOptionsPatch)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<CloudServicesNetworkStorageOptionsPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

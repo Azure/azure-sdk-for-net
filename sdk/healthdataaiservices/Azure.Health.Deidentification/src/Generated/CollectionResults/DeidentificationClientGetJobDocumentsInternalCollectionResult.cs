@@ -21,6 +21,7 @@ namespace Azure.Health.Deidentification
         private readonly int? _maxpagesize;
         private readonly string _continuationToken;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of DeidentificationClientGetJobDocumentsInternalCollectionResult, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The DeidentificationClient client used to send requests. </param>
@@ -28,13 +29,15 @@ namespace Azure.Health.Deidentification
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="continuationToken"> Token to continue a previous query. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public DeidentificationClientGetJobDocumentsInternalCollectionResult(DeidentificationClient client, string jobName, int? maxpagesize, string continuationToken, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public DeidentificationClientGetJobDocumentsInternalCollectionResult(DeidentificationClient client, string jobName, int? maxpagesize, string continuationToken, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _jobName = jobName;
             _maxpagesize = maxpagesize;
             _continuationToken = continuationToken;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of DeidentificationClientGetJobDocumentsInternalCollectionResult as an enumerable collection. </summary>
@@ -73,7 +76,7 @@ namespace Azure.Health.Deidentification
         {
             int? pageSize = pageSizeHint.HasValue ? pageSizeHint.Value : _maxpagesize;
             HttpMessage message = nextLink != null ? _client.CreateNextGetJobDocumentsInternalRequest(nextLink, pageSize, _context) : _client.CreateGetJobDocumentsInternalRequest(_jobName, pageSize, _continuationToken, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("DeidentificationClient.GetJobDocumentsInternal");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

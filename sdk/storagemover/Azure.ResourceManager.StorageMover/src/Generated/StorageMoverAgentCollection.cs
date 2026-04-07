@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.StorageMover
         {
             if (id.ResourceType != StorageMoverResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, StorageMoverResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, StorageMoverResource.ResourceType), nameof(id));
             }
         }
 

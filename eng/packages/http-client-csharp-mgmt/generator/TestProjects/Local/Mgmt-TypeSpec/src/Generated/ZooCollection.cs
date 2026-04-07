@@ -55,7 +55,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -300,7 +300,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ZooData, ZooResource>(new ZoosGetAllAsyncCollectionResultOfT(_zoosRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new ZooResource(Client, data));
+            return new AsyncPageableWrapper<ZooData, ZooResource>(new ZoosGetAllAsyncCollectionResultOfT(_zoosRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ZooCollection.GetAll"), data => new ZooResource(Client, data));
         }
 
         /// <summary>
@@ -328,7 +328,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ZooData, ZooResource>(new ZoosGetAllCollectionResultOfT(_zoosRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new ZooResource(Client, data));
+            return new PageableWrapper<ZooData, ZooResource>(new ZoosGetAllCollectionResultOfT(_zoosRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ZooCollection.GetAll"), data => new ZooResource(Client, data));
         }
 
         /// <summary>

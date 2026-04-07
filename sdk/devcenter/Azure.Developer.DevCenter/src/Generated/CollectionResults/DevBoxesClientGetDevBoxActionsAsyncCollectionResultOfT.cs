@@ -22,6 +22,7 @@ namespace Azure.Developer.DevCenter
         private readonly string _userId;
         private readonly string _devBoxName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of DevBoxesClientGetDevBoxActionsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The DevBoxesClient client used to send requests. </param>
@@ -29,13 +30,15 @@ namespace Azure.Developer.DevCenter
         /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
         /// <param name="devBoxName"> Display name for the Dev Box. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public DevBoxesClientGetDevBoxActionsAsyncCollectionResultOfT(DevBoxesClient client, string projectName, string userId, string devBoxName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public DevBoxesClientGetDevBoxActionsAsyncCollectionResultOfT(DevBoxesClient client, string projectName, string userId, string devBoxName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _projectName = projectName;
             _userId = userId;
             _devBoxName = devBoxName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of DevBoxesClientGetDevBoxActionsAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -68,7 +71,7 @@ namespace Azure.Developer.DevCenter
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetDevBoxActionsRequest(nextLink, _projectName, _userId, _devBoxName, _context) : _client.CreateGetDevBoxActionsRequest(_projectName, _userId, _devBoxName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("DevBoxesClient.GetDevBoxActions");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

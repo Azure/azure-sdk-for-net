@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         {
             if (id.ResourceType != RedisEnterpriseClusterResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, RedisEnterpriseClusterResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, RedisEnterpriseClusterResource.ResourceType), nameof(id));
             }
         }
 

@@ -1577,12 +1577,6 @@
       ]
     },
     {
-      "filename": "**/sdk/monitor/**/*.cs",
-      "words": [
-        "resourceid"
-      ]
-    },
-    {
       "filename": "**/sdk/hybridnetwork/**/*.cs",
       "words": [
         "nfvi",

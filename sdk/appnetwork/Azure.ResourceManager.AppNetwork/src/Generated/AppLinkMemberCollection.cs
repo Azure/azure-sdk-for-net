@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppNetwork
         {
             if (id.ResourceType != AppLinkResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AppLinkResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AppLinkResource.ResourceType), nameof(id));
             }
         }
 
