@@ -22,3 +22,5 @@ using System.Runtime.InteropServices;
 [assembly: Guid("9daf858f-372a-49ad-a7a0-3b1947d1d20b")]
 
 [assembly: SuppressMessage("Error participant name collection", "AZC0030", Justification = "This issue arises because the ParticipantsCollection includes 'collection' in its name. However, since it has already reached General Availability, changing it now would result in breaking changes.")]
+
+// Test comment for batching validation - DO NOT MERGE

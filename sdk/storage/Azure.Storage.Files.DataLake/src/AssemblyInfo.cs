@@ -13,3 +13,5 @@ using System.Runtime.CompilerServices;
 [assembly: Azure.Core.AzureResourceProviderNamespace("Microsoft.DataLakeStore")]
 
 // Test comment for batching validation - DO NOT MERGE
+
+// Test comment for batching validation - DO NOT MERGE

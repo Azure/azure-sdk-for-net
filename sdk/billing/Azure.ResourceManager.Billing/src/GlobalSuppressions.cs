@@ -11,3 +11,5 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage("Usage", "AZC0030:Avoid model name ending with 'Request'", Justification = "Class names are generated based on the Billing API.")]
 
 // Test comment for batching validation - DO NOT MERGE
+
+// Test comment for batching validation - DO NOT MERGE

@@ -115,3 +115,5 @@ namespace Azure.Data.SchemaRegistry
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 }
+
+// Test comment for batching validation - DO NOT MERGE

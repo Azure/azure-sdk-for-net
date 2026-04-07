@@ -78,3 +78,5 @@ namespace Azure.ResourceManager.Grafana.Models
         }
     }
 }
+
+// Test comment for batching validation - DO NOT MERGE

@@ -78,3 +78,5 @@ public readonly struct RedisBuiltInRole(string value) : IEquatable<RedisBuiltInR
 }
 
 // Test comment for batching validation - DO NOT MERGE
+
+// Test comment for batching validation - DO NOT MERGE

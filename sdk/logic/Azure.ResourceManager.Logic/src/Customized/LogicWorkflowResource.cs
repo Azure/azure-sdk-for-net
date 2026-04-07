@@ -69,3 +69,5 @@ namespace Azure.ResourceManager.Logic
 }
 
 // Test comment for batching validation - DO NOT MERGE
+
+// Test comment for batching validation - DO NOT MERGE

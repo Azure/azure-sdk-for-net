@@ -45,3 +45,5 @@ namespace Azure.ResourceManager.AppService
 }
 
 // Test comment for batching validation - DO NOT MERGE
+
+// Test comment for batching validation - DO NOT MERGE

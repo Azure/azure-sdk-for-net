@@ -2211,3 +2211,5 @@ namespace Azure.Storage.Blobs.Specialized
 }
 
 // Test comment for batching validation - DO NOT MERGE
+
+// Test comment for batching validation - DO NOT MERGE

@@ -113,3 +113,5 @@ public readonly struct SignalRBuiltInRole(string value) : IEquatable<SignalRBuil
 }
 
 // Test comment for batching validation - DO NOT MERGE
+
+// Test comment for batching validation - DO NOT MERGE

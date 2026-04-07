@@ -152,3 +152,5 @@ namespace Azure.ResourceManager.CosmosDB
 }
 
 // Test comment for batching validation - DO NOT MERGE
+
+// Test comment for batching validation - DO NOT MERGE
