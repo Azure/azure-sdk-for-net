@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.WebPubSub
         {
             if (id.ResourceType != WebPubSubReplicaResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, WebPubSubReplicaResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, WebPubSubReplicaResource.ResourceType), nameof(id));
             }
         }
 

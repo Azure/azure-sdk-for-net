@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             if (id.ResourceType != BackupProtectedItemResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, BackupProtectedItemResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, BackupProtectedItemResource.ResourceType), nameof(id));
             }
         }
 

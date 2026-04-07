@@ -14,7 +14,7 @@ using Azure.ResourceManager.ContainerService;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> Azure Monitor addon profiles for monitoring the managed cluster. </summary>
-    internal partial class ManagedClusterAzureMonitorProfile : IJsonModel<ManagedClusterAzureMonitorProfile>
+    public partial class ManagedClusterAzureMonitorProfile : IJsonModel<ManagedClusterAzureMonitorProfile>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -79,6 +79,16 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("metrics"u8);
                 writer.WriteObjectValue(Metrics, options);
             }
+            if (Optional.IsDefined(ContainerInsights))
+            {
+                writer.WritePropertyName("containerInsights"u8);
+                writer.WriteObjectValue(ContainerInsights, options);
+            }
+            if (Optional.IsDefined(AppMonitoring))
+            {
+                writer.WritePropertyName("appMonitoring"u8);
+                writer.WriteObjectValue(AppMonitoring, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -122,6 +132,8 @@ namespace Azure.ResourceManager.ContainerService.Models
                 return null;
             }
             ManagedClusterMonitorProfileMetrics metrics = default;
+            ManagedClusterAzureMonitorProfileContainerInsights containerInsights = default;
+            ManagedClusterAzureMonitorProfileAppMonitoring appMonitoring = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -134,12 +146,30 @@ namespace Azure.ResourceManager.ContainerService.Models
                     metrics = ManagedClusterMonitorProfileMetrics.DeserializeManagedClusterMonitorProfileMetrics(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("containerInsights"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    containerInsights = ManagedClusterAzureMonitorProfileContainerInsights.DeserializeManagedClusterAzureMonitorProfileContainerInsights(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("appMonitoring"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    appMonitoring = ManagedClusterAzureMonitorProfileAppMonitoring.DeserializeManagedClusterAzureMonitorProfileAppMonitoring(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ManagedClusterAzureMonitorProfile(metrics, additionalBinaryDataProperties);
+            return new ManagedClusterAzureMonitorProfile(metrics, containerInsights, appMonitoring, additionalBinaryDataProperties);
         }
     }
 }
