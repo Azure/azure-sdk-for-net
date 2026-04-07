@@ -25,3 +25,5 @@ namespace Azure.ResourceManager.PostgreSql.Models
 #pragma warning restore CA1707
     }
 }
+
+// Test comment for batching validation - DO NOT MERGE

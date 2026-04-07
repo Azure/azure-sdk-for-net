@@ -91,3 +91,5 @@ namespace Azure.ResourceManager.Maintenance
         }
     }
 }
+
+// Test comment for batching validation - DO NOT MERGE
