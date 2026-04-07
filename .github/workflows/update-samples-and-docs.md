@@ -45,10 +45,8 @@ safe-outputs:
 
               const { data: issue } = await github.rest.issues.get({ ...repo, issue_number: issueNum });
               if (issue.labels && issue.labels.length > 0) {
-                for (const label of issue.labels) {
-                  await github.rest.issues.removeLabel({ ...repo, issue_number: issueNum, name: label.name });
-                  core.info(`Removed label '${label.name}' from issue #${issueNum}`);
-                }
+                await github.rest.issues.setLabels({ ...repo, issue_number: issueNum, labels: [] });
+                core.info(`Removed all labels from issue #${issueNum}`);
               }
 
               await github.rest.actions.createWorkflowDispatch({
