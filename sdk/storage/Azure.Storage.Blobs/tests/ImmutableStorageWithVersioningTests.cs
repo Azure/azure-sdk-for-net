@@ -37,37 +37,37 @@ namespace Azure.Storage.Blobs.Test
 
         private BlobContainerClient _containerClient;
 
-        [OneTimeSetUp]
-        public async Task GlobalSetUp()
-        {
-            if (Mode != RecordedTestMode.Playback)
-            {
-                _containerName = Guid.NewGuid().ToString();
-                TenantConfiguration configuration = TestConfigurations.DefaultTargetOAuthTenant;
+        //[OneTimeSetUp]
+        //public async Task GlobalSetUp()
+        //{
+        //    if (Mode != RecordedTestMode.Playback)
+        //    {
+        //        _containerName = Guid.NewGuid().ToString();
+        //        TenantConfiguration configuration = TestConfigurations.DefaultTargetOAuthTenant;
 
-                try
-                {
-                    ArmClient armClient = new ArmClient(TestEnvironment.Credential);
-                    SubscriptionResource subscription = armClient.GetSubscriptionResource(new ResourceIdentifier($"/subscriptions/{configuration.SubscriptionId}"));
-                    ResourceGroupResource resourceGroup = await subscription.GetResourceGroupAsync(configuration.ResourceGroupName);
-                    StorageAccountResource storageAccount = await resourceGroup.GetStorageAccountAsync(configuration.AccountName);
-                    BlobServiceResource blobService = storageAccount.GetBlobService();
-                    BlobContainerCollection blobContainerCollection = blobService.GetBlobContainers();
-                    BlobContainerData blobContainerData = new BlobContainerData();
-                    blobContainerData.ImmutableStorageWithVersioning = new ImmutableStorageWithVersioning
-                    {
-                        IsEnabled = true
-                    };
-                    ArmOperation<BlobContainerResource> blobContainerCreateOperation = await blobContainerCollection.CreateOrUpdateAsync(WaitUntil.Completed, _containerName, blobContainerData);
-                    _container = blobContainerCreateOperation.Value;
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.ToString());
-                }
-                return;
-            }
-        }
+        //        try
+        //        {
+        //            ArmClient armClient = new ArmClient(TestEnvironment.Credential);
+        //            SubscriptionResource subscription = armClient.GetSubscriptionResource(new ResourceIdentifier($"/subscriptions/{configuration.SubscriptionId}"));
+        //            ResourceGroupResource resourceGroup = await subscription.GetResourceGroupAsync(configuration.ResourceGroupName);
+        //            StorageAccountResource storageAccount = await resourceGroup.GetStorageAccountAsync(configuration.AccountName);
+        //            BlobServiceResource blobService = storageAccount.GetBlobService();
+        //            BlobContainerCollection blobContainerCollection = blobService.GetBlobContainers();
+        //            BlobContainerData blobContainerData = new BlobContainerData();
+        //            blobContainerData.ImmutableStorageWithVersioning = new ImmutableStorageWithVersioning
+        //            {
+        //                IsEnabled = true
+        //            };
+        //            ArmOperation<BlobContainerResource> blobContainerCreateOperation = await blobContainerCollection.CreateOrUpdateAsync(WaitUntil.Completed, _containerName, blobContainerData);
+        //            _container = blobContainerCreateOperation.Value;
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            Console.WriteLine(ex.ToString());
+        //        }
+        //        return;
+        //    }
+        //}
 
         [SetUp]
         public void SetUp()
