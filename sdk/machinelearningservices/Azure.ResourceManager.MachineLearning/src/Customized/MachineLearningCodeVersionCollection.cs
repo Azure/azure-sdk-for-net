@@ -60,3 +60,5 @@ namespace Azure.ResourceManager.MachineLearning
         public virtual Pageable<MachineLearningCodeVersionResource> GetAll(string orderBy, int? top, string skip, CancellationToken cancellationToken) => GetAll(orderBy, top, skip, null, null, cancellationToken);
     }
 }
+
+// Test comment for batching validation - DO NOT MERGE

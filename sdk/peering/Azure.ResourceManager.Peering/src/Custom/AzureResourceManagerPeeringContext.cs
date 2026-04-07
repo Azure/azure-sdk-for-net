@@ -12,3 +12,5 @@ namespace Azure.ResourceManager.Peering
     {
     }
 }
+
+// Test comment for batching validation - DO NOT MERGE

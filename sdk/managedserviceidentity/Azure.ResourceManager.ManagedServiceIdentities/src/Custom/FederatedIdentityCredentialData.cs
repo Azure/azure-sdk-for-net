@@ -22,3 +22,5 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         }
     }
 }
+
+// Test comment for batching validation - DO NOT MERGE
