@@ -285,24 +285,11 @@
       "filename": "**/sdk/azurestackhci/**/*.cs",
       "words": [
         "adou",
-        "azurestackhci",
-        "CAPI",
         "cref",
         "drtm",
-        "hcicluster",
         "hvci",
-        "igvm",
         "imds",
-        "localizable",
-        "mycluster",
-        "myasestoragacct",
-        "NDIS",
-        "nttest",
-        "rdma",
         "sevsnp",
-        "testrg",
-        "unpurposed",
-        "VMBUS",
         "wdac"
       ]
     },
@@ -966,6 +953,16 @@
       ]
     },
     {
+      "filename": "**/sdk/kusto/**/*.cs",
+      "words": [
+        "openai",
+        "scsv",
+        "sohsv",
+        "tbps",
+        "tsve"
+      ]
+    },
+    {
       "filename": "**/sdk/labservices/**/*.cs",
       "words": [
         "reimage",
@@ -1424,7 +1421,6 @@
         "informix",
         "magento",
         "netezza",
-        "ondemand",
         "oozie",
         "responsys",
         "sasl",
