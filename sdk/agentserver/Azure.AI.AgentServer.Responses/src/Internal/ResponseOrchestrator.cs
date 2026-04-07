@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using Azure.AI.AgentServer.Core;
@@ -251,10 +252,26 @@ internal sealed class ResponseOrchestrator
     {
         var firstEvent = true;
         var outputItemCount = 0;
+        var parentActivity = Activity.Current;
 
-        await foreach (var evt in _handler.CreateAsync(request, context, ct)
-            .WithCancellation(ct))
+        await using var enumerator = _handler.CreateAsync(request, context, ct)
+            .GetAsyncEnumerator(ct);
+
+        while (true)
         {
+            // Response handlers are async iterators. After each yielded event,
+            // control returns to the orchestrator and the handler resumes on a
+            // later MoveNextAsync call. Re-establish the response activity so
+            // downstream instrumentation observes the /responses span as current.
+            Activity.Current = parentActivity;
+
+            if (!await enumerator.MoveNextAsync())
+            {
+                break;
+            }
+
+            var evt = enumerator.Current;
+
             if (firstEvent)
             {
                 firstEvent = false;
