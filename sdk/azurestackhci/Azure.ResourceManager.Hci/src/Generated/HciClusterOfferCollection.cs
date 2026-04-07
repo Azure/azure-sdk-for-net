@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Hci
         {
             if (id.ResourceType != HciClusterPublisherResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, HciClusterPublisherResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, HciClusterPublisherResource.ResourceType), nameof(id));
             }
         }
 

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Hci
         {
             if (id.ResourceType != EdgeMachineResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, EdgeMachineResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, EdgeMachineResource.ResourceType), nameof(id));
             }
         }
 

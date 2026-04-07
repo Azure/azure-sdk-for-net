@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 using Azure.ResourceManager.Hci.Models;
 using Azure.ResourceManager.Models;
 
@@ -15,11 +14,12 @@ namespace Azure.ResourceManager.Hci
     // The generator uses the standard ARM ManagedServiceIdentity model which nests them.
     public partial class HciClusterData
     {
+        private HciManagedServiceIdentityType? _typeIdentityType;
         /// <summary> Flattened identity type. </summary>
         [WirePath("identity.type")]
         public HciManagedServiceIdentityType? TypeIdentityType
         {
-            get => Identity?.ManagedServiceIdentityType == null ? null : new HciManagedServiceIdentityType(Identity.ManagedServiceIdentityType.ToString());
+            get => _typeIdentityType ??= (Identity?.ManagedServiceIdentityType == null ? null : new HciManagedServiceIdentityType(Identity.ManagedServiceIdentityType.ToString()));
             set
             {
                 if (value == null) return;
@@ -49,9 +49,10 @@ namespace Azure.ResourceManager.Hci
         [WirePath("identity.tenantId")]
         public Guid? TenantId => Identity?.TenantId;
 
+        private IDictionary<string, UserAssignedIdentity> _userAssignedIdentities;
         /// <summary> Flattened user assigned identities. </summary>
         [WirePath("identity.userAssignedIdentities")]
         public IDictionary<string, UserAssignedIdentity> UserAssignedIdentities =>
-            Identity?.UserAssignedIdentities?.ToDictionary(kvp => kvp.Key.ToString(), kvp => kvp.Value);
+            _userAssignedIdentities ??= Identity?.UserAssignedIdentities?.ToDictionary(kvp => kvp.Key.ToString(), kvp => kvp.Value);
     }
 }

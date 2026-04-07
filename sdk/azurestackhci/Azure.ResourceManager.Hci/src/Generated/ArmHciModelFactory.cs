@@ -1118,6 +1118,31 @@ namespace Azure.ResourceManager.Hci.Models
             return new HciArcEnabledEdgeDeviceProperties(deviceConfiguration, provisioningState, additionalBinaryDataProperties: null, reportedProperties);
         }
 
+        /// <param name="deviceState"> edge device state. </param>
+        /// <param name="extensions"> List of Arc extensions installed on edge device. </param>
+        /// <param name="lastSyncedOn"> Most recent edge device sync timestamp in UTC. </param>
+        /// <param name="confidentialVmProfile"> CVM support details for edge device. </param>
+        /// <param name="networkProfile"> HCI device network information. </param>
+        /// <param name="osProfile"> HCI device OS specific information. </param>
+        /// <param name="sbeDeploymentPackageInfo"> Solution builder extension (SBE) deployment package information. </param>
+        /// <param name="storageProfile"> Hci device storage specific information. </param>
+        /// <param name="hardwareProcessorType"> Process type of the device. </param>
+        /// <returns> A new <see cref="Models.HciReportedProperties"/> instance for mocking. </returns>
+        public static HciReportedProperties HciReportedProperties(HciEdgeDeviceState? deviceState = default, IEnumerable<HciEdgeDeviceArcExtension> extensions = default, DateTimeOffset? lastSyncedOn = default, ConfidentialVmProfile confidentialVmProfile = default, HciNetworkProfile networkProfile = default, HciOSProfile osProfile = default, SbeDeploymentPackageInfo sbeDeploymentPackageInfo = default, HciStorageProfile storageProfile = default, string hardwareProcessorType = default)
+        {
+            return new HciReportedProperties(
+                deviceState,
+                extensions is null ? default : new ExtensionProfile((extensions ?? new ChangeTrackingList<HciEdgeDeviceArcExtension>()).ToList(), null),
+                lastSyncedOn,
+                confidentialVmProfile,
+                additionalBinaryDataProperties: null,
+                networkProfile,
+                osProfile,
+                sbeDeploymentPackageInfo,
+                storageProfile,
+                hardwareProcessorType is null ? default : new HciHardwareProfile(hardwareProcessorType, null));
+        }
+
         /// <summary> The network profile of a device. </summary>
         /// <param name="nicDetails"> List of NIC Details of device. </param>
         /// <param name="switchDetails"> List of switch details for edge device. </param>
@@ -2972,19 +2997,7 @@ namespace Azure.ResourceManager.Hci.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static HciReportedProperties HciReportedProperties(HciEdgeDeviceState? deviceState, IEnumerable<HciEdgeDeviceArcExtension> extensions, HciNetworkProfile networkProfile, HciOSProfile osProfile, SbeDeploymentPackageInfo sbeDeploymentPackageInfo)
         {
-            extensions ??= new ChangeTrackingList<HciEdgeDeviceArcExtension>();
-
-            return new HciReportedProperties(
-                deviceState,
-                default,
-                default,
-                default,
-                additionalBinaryDataProperties: null,
-                networkProfile,
-                osProfile,
-                sbeDeploymentPackageInfo,
-                default,
-                default);
+            return HciReportedProperties(deviceState, extensions, lastSyncedOn: default, confidentialVmProfile: default, networkProfile, osProfile, sbeDeploymentPackageInfo, storageProfile: default, hardwareProcessorType: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.HciNetworkProfile"/>. </summary>
