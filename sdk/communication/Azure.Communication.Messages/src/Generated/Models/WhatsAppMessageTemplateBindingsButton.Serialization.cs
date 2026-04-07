@@ -9,8 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Communication.Messages;
 
-namespace Azure.Communication.Messages
+namespace Azure.Communication.Messages.Models.Channels
 {
     /// <summary> The template bindings component button for WhatsApp. </summary>
     public partial class WhatsAppMessageTemplateBindingsButton : IJsonModel<WhatsAppMessageTemplateBindingsButton>
@@ -79,7 +80,7 @@ namespace Azure.Communication.Messages
                 throw new FormatException($"The model {nameof(WhatsAppMessageTemplateBindingsButton)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("subType"u8);
-            writer.WriteStringValue(SubType.ToString());
+            writer.WriteStringValue(SubType);
             writer.WritePropertyName("refValue"u8);
             writer.WriteStringValue(RefValue);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
@@ -124,14 +125,14 @@ namespace Azure.Communication.Messages
             {
                 return null;
             }
-            WhatsAppMessageButtonSubType subType = default;
+            string subType = default;
             string refValue = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("subType"u8))
                 {
-                    subType = new WhatsAppMessageButtonSubType(prop.Value.GetString());
+                    subType = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("refValue"u8))

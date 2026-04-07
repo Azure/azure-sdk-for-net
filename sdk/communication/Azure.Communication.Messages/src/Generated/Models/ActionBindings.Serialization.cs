@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure.Communication.Messages.Models.Channels;
 
 namespace Azure.Communication.Messages
 {

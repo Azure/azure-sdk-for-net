@@ -10,24 +10,24 @@ using System.Collections.Generic;
 
 namespace Azure.Communication.Messages
 {
-    /// <summary> The CreateConversationRequest1. </summary>
-    internal partial class CreateConversationRequest1
+    /// <summary> The CreateConversationRequest. </summary>
+    internal partial class CreateConversationRequest
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CreateConversationRequest1"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CreateConversationRequest"/>. </summary>
         /// <param name="conversation"> The conversation details. </param>
-        internal CreateConversationRequest1(CommunicationConversation conversation)
+        internal CreateConversationRequest(CommunicationConversation conversation)
         {
             Conversation = conversation;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CreateConversationRequest1"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CreateConversationRequest"/>. </summary>
         /// <param name="conversation"> The conversation details. </param>
         /// <param name="initialMessage"> An initial message within the conversation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CreateConversationRequest1(CommunicationConversation conversation, ConversationMessage initialMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CreateConversationRequest(CommunicationConversation conversation, ConversationMessage initialMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Conversation = conversation;
             InitialMessage = initialMessage;

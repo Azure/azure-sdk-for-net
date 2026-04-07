@@ -87,6 +87,16 @@ namespace Microsoft.Extensions.Azure
 
         /// <summary> Registers a <see cref="ConversationThreadClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>
+        /// <param name="endpoint"></param>
+        /// <param name="communicationTokenCredential"></param>
+        public static IAzureClientBuilder<ConversationThreadClient, CommunicationMessagesClientOptions> AddConversationThreadClient<TBuilder>(this TBuilder builder, Uri endpoint, global::.CommunicationTokenCredential communicationTokenCredential)
+            where TBuilder : IAzureClientFactoryBuilder
+        {
+            return builder.RegisterClientFactory<ConversationThreadClient, CommunicationMessagesClientOptions>(options => new ConversationThreadClient(endpoint, communicationTokenCredential, options));
+        }
+
+        /// <summary> Registers a <see cref="ConversationThreadClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
+        /// <param name="builder"> The builder to register with. </param>
         /// <param name="configuration"> The configuration to use for the client. </param>
         [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]

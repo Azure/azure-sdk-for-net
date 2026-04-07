@@ -12,7 +12,7 @@ namespace Azure.Communication.Messages
 {
     /// <summary>
     /// The binding object to link values to the template specific locations
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="WhatsAppMessageTemplateBindings"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.Channels.WhatsAppMessageTemplateBindings"/>.
     /// </summary>
     public abstract partial class MessageTemplateBindings
     {

@@ -9,8 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Communication.Messages;
 
-namespace Azure.Communication.Messages
+namespace Azure.Communication.Messages.Models.Channels
 {
     /// <summary> WhatsApp List Binding actions to the interactive message. </summary>
     public partial class WhatsAppListActionBindings : ActionBindings, IJsonModel<WhatsAppListActionBindings>

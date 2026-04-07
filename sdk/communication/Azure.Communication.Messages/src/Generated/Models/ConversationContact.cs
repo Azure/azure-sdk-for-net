@@ -12,7 +12,7 @@ namespace Azure.Communication.Messages
 {
     /// <summary>
     /// Details of an external platform contact.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CommunicationContact"/>, <see cref="BotContact"/>, and <see cref="WhatsAppContact"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CommunicationContact"/>, <see cref="BotContact"/>, and <see cref="Models.Channels.WhatsAppContact"/>.
     /// </summary>
     public abstract partial class ConversationContact
     {

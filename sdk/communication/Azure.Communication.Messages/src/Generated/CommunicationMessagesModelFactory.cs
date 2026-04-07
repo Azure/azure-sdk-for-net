@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure;
+using Azure.Communication.Messages.Models.Channels;
 
 namespace Azure.Communication.Messages
 {
@@ -174,7 +175,7 @@ namespace Azure.Communication.Messages
 
         /// <summary>
         /// Binding actions to the interactive message.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Messages.WhatsAppListActionBindings"/>, <see cref="Messages.WhatsAppButtonActionBindings"/>, and <see cref="Messages.WhatsAppUrlActionBindings"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.Channels.WhatsAppListActionBindings"/>, <see cref="Models.Channels.WhatsAppButtonActionBindings"/>, and <see cref="Models.Channels.WhatsAppUrlActionBindings"/>.
         /// </summary>
         /// <param name="kind"> Kind of the MessageActionBinding. </param>
         /// <returns> A new <see cref="Messages.ActionBindings"/> instance for mocking. </returns>
@@ -185,7 +186,7 @@ namespace Azure.Communication.Messages
 
         /// <summary> WhatsApp List Binding actions to the interactive message. </summary>
         /// <param name="content"> Action content of Interactive message. </param>
-        /// <returns> A new <see cref="Messages.WhatsAppListActionBindings"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.Channels.WhatsAppListActionBindings"/> instance for mocking. </returns>
         public static WhatsAppListActionBindings WhatsAppListActionBindings(ActionGroupContent content = default)
         {
             return new WhatsAppListActionBindings(MessageActionBindingKind.WhatsAppListAction, additionalBinaryDataProperties: null, content);
@@ -193,7 +194,7 @@ namespace Azure.Communication.Messages
 
         /// <summary> WhatsApp Binding actions to the interactive message. </summary>
         /// <param name="content"> Action content of Interactive message. </param>
-        /// <returns> A new <see cref="Messages.WhatsAppButtonActionBindings"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.Channels.WhatsAppButtonActionBindings"/> instance for mocking. </returns>
         public static WhatsAppButtonActionBindings WhatsAppButtonActionBindings(ButtonSetContent content = default)
         {
             return new WhatsAppButtonActionBindings(MessageActionBindingKind.WhatsAppButtonAction, additionalBinaryDataProperties: null, content);
@@ -201,7 +202,7 @@ namespace Azure.Communication.Messages
 
         /// <summary> WhatsApp Binding actions to the interactive message. </summary>
         /// <param name="content"> Action content of Interactive message. </param>
-        /// <returns> A new <see cref="Messages.WhatsAppUrlActionBindings"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.Channels.WhatsAppUrlActionBindings"/> instance for mocking. </returns>
         public static WhatsAppUrlActionBindings WhatsAppUrlActionBindings(LinkContent content = default)
         {
             return new WhatsAppUrlActionBindings(MessageActionBindingKind.WhatsAppUrlAction, additionalBinaryDataProperties: null, content);
@@ -228,7 +229,7 @@ namespace Azure.Communication.Messages
 
         /// <summary>
         /// The binding object to link values to the template specific locations
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Messages.WhatsAppMessageTemplateBindings"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.Channels.WhatsAppMessageTemplateBindings"/>.
         /// </summary>
         /// <param name="kind"> The type discriminator describing a template bindings type. </param>
         /// <returns> A new <see cref="Messages.MessageTemplateBindings"/> instance for mocking. </returns>
@@ -242,7 +243,7 @@ namespace Azure.Communication.Messages
         /// <param name="body"> The body template bindings. </param>
         /// <param name="footer"> The footer template bindings. </param>
         /// <param name="buttons"> The button template bindings. </param>
-        /// <returns> A new <see cref="Messages.WhatsAppMessageTemplateBindings"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.Channels.WhatsAppMessageTemplateBindings"/> instance for mocking. </returns>
         public static WhatsAppMessageTemplateBindings WhatsAppMessageTemplateBindings(IEnumerable<WhatsAppMessageTemplateBindingsComponent> header = default, IEnumerable<WhatsAppMessageTemplateBindingsComponent> body = default, IEnumerable<WhatsAppMessageTemplateBindingsComponent> footer = default, IEnumerable<WhatsAppMessageTemplateBindingsButton> buttons = default)
         {
             header ??= new ChangeTrackingList<WhatsAppMessageTemplateBindingsComponent>();
@@ -261,7 +262,7 @@ namespace Azure.Communication.Messages
 
         /// <summary> The template bindings component for WhatsApp. </summary>
         /// <param name="refValue"> The name of the referenced item in the template values. </param>
-        /// <returns> A new <see cref="Messages.WhatsAppMessageTemplateBindingsComponent"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.Channels.WhatsAppMessageTemplateBindingsComponent"/> instance for mocking. </returns>
         public static WhatsAppMessageTemplateBindingsComponent WhatsAppMessageTemplateBindingsComponent(string refValue = default)
         {
             return new WhatsAppMessageTemplateBindingsComponent(refValue, additionalBinaryDataProperties: null);
@@ -270,8 +271,8 @@ namespace Azure.Communication.Messages
         /// <summary> The template bindings component button for WhatsApp. </summary>
         /// <param name="subType"> The WhatsApp button sub type. </param>
         /// <param name="refValue"> The name of the referenced item in the template values. </param>
-        /// <returns> A new <see cref="Messages.WhatsAppMessageTemplateBindingsButton"/> instance for mocking. </returns>
-        public static WhatsAppMessageTemplateBindingsButton WhatsAppMessageTemplateBindingsButton(WhatsAppMessageButtonSubType subType = default, string refValue = default)
+        /// <returns> A new <see cref="Models.Channels.WhatsAppMessageTemplateBindingsButton"/> instance for mocking. </returns>
+        public static WhatsAppMessageTemplateBindingsButton WhatsAppMessageTemplateBindingsButton(string subType = default, string refValue = default)
         {
             return new WhatsAppMessageTemplateBindingsButton(subType, refValue, additionalBinaryDataProperties: null);
         }
@@ -332,7 +333,7 @@ namespace Azure.Communication.Messages
 
         /// <summary>
         /// Details of an external platform contact.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Messages.CommunicationContact"/>, <see cref="Messages.BotContact"/>, and <see cref="Messages.WhatsAppContact"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Messages.CommunicationContact"/>, <see cref="Messages.BotContact"/>, and <see cref="Models.Channels.WhatsAppContact"/>.
         /// </summary>
         /// <param name="id"> External platform identifier. </param>
         /// <param name="kind"> Type of message platform (e.g., WhatsApp). </param>
@@ -361,7 +362,7 @@ namespace Azure.Communication.Messages
 
         /// <summary> WhatsApp Contact. </summary>
         /// <param name="id"> External platform identifier. </param>
-        /// <returns> A new <see cref="Messages.WhatsAppContact"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.Channels.WhatsAppContact"/> instance for mocking. </returns>
         public static WhatsAppContact WhatsAppContact(string id = default)
         {
             return new WhatsAppContact(id, MessagePlatformKind.WhatsApp, additionalBinaryDataProperties: null);

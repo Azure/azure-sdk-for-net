@@ -12,7 +12,7 @@ namespace Azure.Communication.Messages
 {
     /// <summary>
     /// Binding actions to the interactive message.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="WhatsAppListActionBindings"/>, <see cref="WhatsAppButtonActionBindings"/>, and <see cref="WhatsAppUrlActionBindings"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.Channels.WhatsAppListActionBindings"/>, <see cref="Models.Channels.WhatsAppButtonActionBindings"/>, and <see cref="Models.Channels.WhatsAppUrlActionBindings"/>.
     /// </summary>
     public abstract partial class ActionBindings
     {

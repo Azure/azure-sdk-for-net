@@ -12,7 +12,7 @@ namespace Azure.Communication.Messages
 {
     /// <summary>
     /// The message template as returned from the service.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="WhatsAppMessageTemplateItem"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.Channels.WhatsAppMessageTemplateItem"/>.
     /// </summary>
     public abstract partial class MessageTemplateItem
     {

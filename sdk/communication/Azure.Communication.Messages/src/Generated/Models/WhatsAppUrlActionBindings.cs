@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Communication.Messages;
 
-namespace Azure.Communication.Messages
+namespace Azure.Communication.Messages.Models.Channels
 {
     /// <summary> WhatsApp Binding actions to the interactive message. </summary>
     public partial class WhatsAppUrlActionBindings : ActionBindings

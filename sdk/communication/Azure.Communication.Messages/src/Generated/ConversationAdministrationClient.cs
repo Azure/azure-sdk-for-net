@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -18,14 +19,40 @@ namespace Azure.Communication.Messages
     public partial class ConversationAdministrationClient
     {
         private readonly Uri _endpoint;
-        /// <summary> A credential used to authenticate to the service. </summary>
-        private readonly AzureKeyCredential _keyCredential;
         private const string AuthorizationHeader = "Authorization";
         private const string AuthorizationApiKeyPrefix = "Bearer";
-        /// <summary> A credential used to authenticate to the service. </summary>
-        private readonly TokenCredential _tokenCredential;
         private static readonly string[] AuthorizationScopes = new string[] { "https://communication.azure.com/.default" };
         private readonly string _apiVersion;
+
+        /// <summary> Initializes a new instance of ConversationAdministrationClient. </summary>
+        /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        internal ConversationAdministrationClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, CommunicationMessagesClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+
+            options ??= new CommunicationMessagesClientOptions();
+
+            _endpoint = endpoint;
+            if (authenticationPolicy != null)
+            {
+                Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
+            }
+            else
+            {
+                Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
+            }
+            _apiVersion = options.Version;
+            ClientDiagnostics = new ClientDiagnostics(options, true);
+        }
+
+        /// <summary> Initializes a new instance of ConversationAdministrationClient from a <see cref="ConversationAdministrationClientSettings"/>. </summary>
+        /// <param name="settings"> The settings for ConversationAdministrationClient. </param>
+        [Experimental("SCME0002")]
+        public ConversationAdministrationClient(ConversationAdministrationClientSettings settings) : this(null, settings?.Endpoint, settings?.Options)
+        {
+        }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline { get; }
@@ -105,7 +132,7 @@ namespace Azure.Communication.Messages
         {
             Argument.AssertNotNull(conversation, nameof(conversation));
 
-            CreateConversationRequest1 spreadModel = new CreateConversationRequest1(conversation, initialMessage, default);
+            CreateConversationRequest spreadModel = new CreateConversationRequest(conversation, initialMessage, default);
             Response result = CreateConversation(spreadModel, cancellationToken.ToRequestContext());
             return Response.FromValue((CommunicationConversation)result, result);
         }
@@ -120,7 +147,7 @@ namespace Azure.Communication.Messages
         {
             Argument.AssertNotNull(conversation, nameof(conversation));
 
-            CreateConversationRequest1 spreadModel = new CreateConversationRequest1(conversation, initialMessage, default);
+            CreateConversationRequest spreadModel = new CreateConversationRequest(conversation, initialMessage, default);
             Response result = await CreateConversationAsync(spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((CommunicationConversation)result, result);
         }

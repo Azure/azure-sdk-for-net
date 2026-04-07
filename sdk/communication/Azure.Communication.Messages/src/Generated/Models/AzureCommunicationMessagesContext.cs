@@ -7,6 +7,7 @@
 
 using System.ClientModel.Primitives;
 using Azure;
+using Azure.Communication.Messages.Models.Channels;
 
 namespace Azure.Communication.Messages
 {
@@ -32,7 +33,7 @@ namespace Azure.Communication.Messages
     [ModelReaderWriterBuildable(typeof(ConversationMessageContent))]
     [ModelReaderWriterBuildable(typeof(ConversationMessageItem))]
     [ModelReaderWriterBuildable(typeof(ConversationParticipant))]
-    [ModelReaderWriterBuildable(typeof(CreateConversationRequest1))]
+    [ModelReaderWriterBuildable(typeof(CreateConversationRequest))]
     [ModelReaderWriterBuildable(typeof(DocumentConversationMessageContent))]
     [ModelReaderWriterBuildable(typeof(DocumentMessageContent))]
     [ModelReaderWriterBuildable(typeof(DocumentNotificationContent))]

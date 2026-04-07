@@ -8,8 +8,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Communication.Messages;
 
-namespace Azure.Communication.Messages
+namespace Azure.Communication.Messages.Models.Channels
 {
     /// <summary> The WhatsApp-specific template response contract. </summary>
     public partial class WhatsAppMessageTemplateItem : MessageTemplateItem

@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Communication.Messages;
 
-namespace Azure.Communication.Messages
+namespace Azure.Communication.Messages.Models.Channels
 {
     /// <summary> The template bindings for WhatsApp. </summary>
     public partial class WhatsAppMessageTemplateBindings : MessageTemplateBindings

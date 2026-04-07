@@ -9,8 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Communication.Messages;
 
-namespace Azure.Communication.Messages
+namespace Azure.Communication.Messages.Models.Channels
 {
     /// <summary> The template bindings for WhatsApp. </summary>
     public partial class WhatsAppMessageTemplateBindings : MessageTemplateBindings, IJsonModel<WhatsAppMessageTemplateBindings>
