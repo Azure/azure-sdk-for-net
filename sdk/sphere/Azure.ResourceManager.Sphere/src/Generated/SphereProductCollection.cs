@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Sphere
         {
             if (id.ResourceType != SphereCatalogResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SphereCatalogResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SphereCatalogResource.ResourceType), nameof(id));
             }
         }
 

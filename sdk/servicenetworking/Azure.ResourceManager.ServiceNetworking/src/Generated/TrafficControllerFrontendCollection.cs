@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         {
             if (id.ResourceType != TrafficControllerResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, TrafficControllerResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, TrafficControllerResource.ResourceType), nameof(id));
             }
         }
 

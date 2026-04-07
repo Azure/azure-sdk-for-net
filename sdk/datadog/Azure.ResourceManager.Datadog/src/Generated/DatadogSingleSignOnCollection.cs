@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Datadog
         {
             if (id.ResourceType != DatadogMonitorResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DatadogMonitorResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DatadogMonitorResource.ResourceType), nameof(id));
             }
         }
 

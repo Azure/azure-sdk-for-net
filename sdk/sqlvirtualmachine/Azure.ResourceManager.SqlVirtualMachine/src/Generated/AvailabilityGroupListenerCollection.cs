@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         {
             if (id.ResourceType != SqlVmGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SqlVmGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SqlVmGroupResource.ResourceType), nameof(id));
             }
         }
 

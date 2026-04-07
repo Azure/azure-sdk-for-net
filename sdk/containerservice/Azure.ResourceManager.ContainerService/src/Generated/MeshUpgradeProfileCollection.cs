@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ContainerService
         {
             if (id.ResourceType != ContainerServiceManagedClusterResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ContainerServiceManagedClusterResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ContainerServiceManagedClusterResource.ResourceType), nameof(id));
             }
         }
 

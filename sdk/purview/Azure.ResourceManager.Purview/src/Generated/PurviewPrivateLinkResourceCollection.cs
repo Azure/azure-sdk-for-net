@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Purview
         {
             if (id.ResourceType != PurviewAccountResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, PurviewAccountResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, PurviewAccountResource.ResourceType), nameof(id));
             }
         }
 
