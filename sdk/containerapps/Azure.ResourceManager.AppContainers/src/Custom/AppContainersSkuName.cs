@@ -54,3 +54,5 @@ namespace Azure.ResourceManager.AppContainers.Models
         public override string ToString() => _value;
     }
 }
+
+// Test comment for batching validation - DO NOT MERGE

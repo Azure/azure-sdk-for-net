@@ -247,3 +247,5 @@ public partial class ConnectedRegistry : ProvisionableResource
     public static ConnectedRegistry FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
         new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }
+
+// Test comment for batching validation - DO NOT MERGE

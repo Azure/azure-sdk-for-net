@@ -277,3 +277,5 @@ public partial class KustoAttachedDatabaseConfiguration : ProvisionableResource
     public static KustoAttachedDatabaseConfiguration FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
         new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }
+
+// Test comment for batching validation - DO NOT MERGE

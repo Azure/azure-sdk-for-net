@@ -41,3 +41,5 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             => FhirServiceData(id, name, resourceType, systemData, tags, location, kind, provisioningState, acrConfiguration, authenticationConfiguration, corsConfiguration, null, privateEndpointConnections, publicNetworkAccess, eventState, resourceVersionPolicyConfiguration, importConfiguration, null, null, identity, etag);
     }
 }
+
+// Test comment for batching validation - DO NOT MERGE

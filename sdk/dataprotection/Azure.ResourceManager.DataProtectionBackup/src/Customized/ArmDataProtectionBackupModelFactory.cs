@@ -45,3 +45,5 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             => BackupRestoreContent(objectType, restoreTargetInfo, sourceDataStoreType, sourceResourceId, null, identityDetails);
     }
 }
+
+// Test comment for batching validation - DO NOT MERGE
