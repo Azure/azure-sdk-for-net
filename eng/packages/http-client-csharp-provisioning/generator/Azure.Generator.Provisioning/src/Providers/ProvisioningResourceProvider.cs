@@ -317,6 +317,19 @@ namespace Azure.Generator.Provisioning.Providers
             if (apiVersions == null || apiVersions.Count == 0)
                 return [];
 
+            // When the current (default) API version is GA, exclude preview versions.
+            // Preview versions are only included when the current version is itself a preview.
+            var defaultVersion = apiVersions[apiVersions.Count - 1];
+            var isDefaultPreview = defaultVersion.Contains("preview", StringComparison.OrdinalIgnoreCase);
+            if (!isDefaultPreview)
+            {
+                var gaVersions = apiVersions.Where(v => !v.Contains("preview", StringComparison.OrdinalIgnoreCase)).ToList();
+                apiVersions = gaVersions;
+            }
+
+            if (apiVersions.Count == 0)
+                return [];
+
             // ResourceVersions nested class
             return [new ResourceVersionsProvider(this, apiVersions)];
         }
