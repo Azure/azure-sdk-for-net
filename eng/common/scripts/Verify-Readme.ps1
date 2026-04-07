@@ -89,7 +89,7 @@ if ($LASTEXITCODE -ne 0) {
   exit 1
 }
 
-Write-Host "pip install doc-warden==$DocWardenVersion --quiet"
+Write-Host "pip install doc-warden==$DocWardenVersion --quiet --index-url $FeedUrl"
 pip install doc-warden==$DocWardenVersion --quiet --index-url $FeedUrl
 if ($LASTEXITCODE -ne 0) {
   LogError "pip install doc-warden==$DocWardenVersion --quiet --index-url $FeedUrl failed with exit code $LASTEXITCODE"
