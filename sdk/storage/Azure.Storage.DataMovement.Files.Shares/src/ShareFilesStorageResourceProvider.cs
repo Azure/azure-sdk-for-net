@@ -281,11 +281,6 @@ namespace Azure.Storage.DataMovement.Files.Shares
             CancellationToken cancellationToken = default)
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
-
-            // Parse snapshot from URI if present
-            ShareUriBuilder uriBuilder = new ShareUriBuilder(directoryUri);
-            options = ParseSnapshotFromUri(uriBuilder, options);
-
             ShareClientOptions clientOptions = GetUserAgentClientOptions();
 
             ShareDirectoryClient CreateTokenClient()
@@ -302,13 +297,6 @@ namespace Azure.Storage.DataMovement.Files.Shares
                 CredentialType.Sas => new ShareDirectoryClient(directoryUri, await _getAzureSasCredential(directoryUri, cancellationToken).ConfigureAwait(false), clientOptions),
                 _ => throw BadCredentialTypeException(_credentialType),
             };
-
-            // Apply snapshot if present in options
-            if (!string.IsNullOrEmpty(options?.Snapshot))
-            {
-                client = client.WithSnapshot(options.Snapshot);
-            }
-
             return new ShareDirectoryStorageResourceContainer(client, options);
         }
 
@@ -334,11 +322,6 @@ namespace Azure.Storage.DataMovement.Files.Shares
             CancellationToken cancellationToken = default)
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
-
-            // Parse snapshot from URI if present
-            ShareUriBuilder uriBuilder = new ShareUriBuilder(fileUri);
-            options = ParseSnapshotFromUri(uriBuilder, options);
-
             ShareClientOptions clientOptions = GetUserAgentClientOptions();
 
             ShareFileClient CreateTokenClient()
@@ -355,13 +338,6 @@ namespace Azure.Storage.DataMovement.Files.Shares
                 CredentialType.Sas => new ShareFileClient(fileUri, await _getAzureSasCredential(fileUri, cancellationToken).ConfigureAwait(false), clientOptions),
                 _ => throw BadCredentialTypeException(_credentialType),
             };
-
-            // Apply snapshot if present in options
-            if (!string.IsNullOrEmpty(options?.Snapshot))
-            {
-                client = client.WithSnapshot(options.Snapshot);
-            }
-
             return new ShareFileStorageResource(client, options);
         }
         #endregion
@@ -409,41 +385,6 @@ namespace Azure.Storage.DataMovement.Files.Shares
             return new ShareFileStorageResource(client, options);
         }
         #endregion
-
-        /// <summary>
-        /// Parses snapshot information from the URI and updates or validates the options.
-        /// </summary>
-        private static ShareFileStorageResourceOptions ParseSnapshotFromUri(
-            ShareUriBuilder uriBuilder,
-            ShareFileStorageResourceOptions options)
-        {
-            string uriSnapshot = uriBuilder.Snapshot;
-
-            // If no snapshot in the URI, no need to modify options
-            if (string.IsNullOrEmpty(uriSnapshot))
-            {
-                return options;
-            }
-
-            // If options is null, create new one with URI value
-            if (options == null)
-            {
-                options = new ShareFileStorageResourceOptions
-                {
-                    Snapshot = uriSnapshot
-                };
-                return options;
-            }
-
-            // Validate that URI and options don't conflict
-            if (!string.IsNullOrEmpty(options.Snapshot) && options.Snapshot != uriSnapshot)
-            {
-                throw Azure.Storage.Errors.SnapshotMismatch(uriSnapshot, options.Snapshot);
-            }
-
-            options.Snapshot = uriSnapshot;
-            return options;
-        }
 
         private static ArgumentException BadCredentialTypeException(CredentialType credentialType)
             => new ArgumentException(

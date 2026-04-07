@@ -3,7 +3,6 @@
 
 using System;
 using System.ComponentModel;
-using System.IO;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
@@ -324,11 +323,6 @@ namespace Azure.Storage.DataMovement.Blobs
             CancellationToken cancellationToken = default)
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
-
-            // Parse snapshot/version from URI if present
-            BlobUriBuilder uriBuilder = new BlobUriBuilder(blobUri);
-            options = ParseSnapshotAndVersionFromUri(uriBuilder, options);
-
             BlobClientOptions clientOptions = GetUserAgentClientOptions();
             if (options is BlockBlobStorageResourceOptions)
             {
@@ -703,61 +697,6 @@ namespace Azure.Storage.DataMovement.Blobs
                 => new AppendBlobStorageResource(
                     new AppendBlobClient(GetUri(properties, isSource), credential),
                     !isSource ? destinationCheckpointDetails.GetAppendBlobResourceOptions() : default);
-        }
-        #endregion
-
-        #region Helper Methods
-        /// <summary>
-        /// Parses snapshot and version information from the URI and updates or validates the options.
-        /// </summary>
-        private static BlobStorageResourceOptions ParseSnapshotAndVersionFromUri(
-            BlobUriBuilder uriBuilder,
-            BlobStorageResourceOptions options)
-        {
-            string uriSnapshot = uriBuilder.Snapshot;
-            string uriVersionId = uriBuilder.VersionId;
-
-            // If neither is in the URI, no need to modify options
-            if (string.IsNullOrEmpty(uriSnapshot) && string.IsNullOrEmpty(uriVersionId))
-            {
-                return options;
-            }
-
-            // If options is null, create new one with URI values
-            if (options == null)
-            {
-                options = new BlobStorageResourceOptions();
-                if (!string.IsNullOrEmpty(uriSnapshot))
-                {
-                    options.Snapshot = uriSnapshot;
-                }
-                if (!string.IsNullOrEmpty(uriVersionId))
-                {
-                    options.VersionId = uriVersionId;
-                }
-                return options;
-            }
-
-            // Validate that URI and options don't conflict
-            if (!string.IsNullOrEmpty(uriSnapshot))
-            {
-                if (!string.IsNullOrEmpty(options.Snapshot) && options.Snapshot != uriSnapshot)
-                {
-                    throw Errors.SnapshotMismatch(uriSnapshot, options.Snapshot);
-                }
-                options.Snapshot = uriSnapshot;
-            }
-
-            if (!string.IsNullOrEmpty(uriVersionId))
-            {
-                if (!string.IsNullOrEmpty(options.VersionId) && options.VersionId != uriVersionId)
-                {
-                    throw Errors.VersionIdMismatch(uriVersionId, options.VersionId);
-                }
-                options.VersionId = uriVersionId;
-            }
-
-            return options;
         }
         #endregion
 

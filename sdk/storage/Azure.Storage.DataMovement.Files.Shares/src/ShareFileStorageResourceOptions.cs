@@ -46,8 +46,6 @@ namespace Azure.Storage.DataMovement.Files.Shares
         private Metadata _fileMetadata = default;
         internal bool _isFileMetadataSet = false;
 
-        private string _snapshot = default;
-
         /// <summary>
         /// Optional. Specifies whether protocol validation for the resource should be skipped before starting the transfer.
         /// By default this value is set to false. This is intended to be set on the source and destination Share.
@@ -294,11 +292,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
         /// Optional. Snapshot identifier for reading from a specific snapshot.
         /// Only valid for source resources.
         /// </summary>
-        public string Snapshot
-        {
-            get => _snapshot;
-            set => _snapshot = value;
-        }
+        public string Snapshot;
 
         /// <summary>
         /// Constructor for ShareFileStorageResourceOptions.
