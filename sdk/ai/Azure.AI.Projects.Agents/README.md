@@ -208,7 +208,7 @@ az cognitiveservices agent delete --account-name ACCOUNTNAME --project-name PROJ
 
 ### Toolboxes
 
-Toolboxes allow us to store tools in azure so that they can be retrieved and used by the Agents.
+Toolboxes allow us to store tools in Azure so that they can be retrieved and used by the Agents.
 As for the Hosted Agent we will need to set the experimental header, but in this scenario the header is `Toolboxes=V1Preview`,  we also need to disable the `AAIP001` warning.
 
 In the example below we create two versions of MCP tool and save it to Azure.
@@ -236,7 +236,7 @@ ToolboxVersion toolBox2 = await toolboxClient.CreateToolboxVersionAsync(
 );
 string status = "unknown status";
 toolBox1.Metadata?.TryGetValue("team", out status);
-Console.WriteLine($"Toolbox: {toolBox1.Name}, version: {toolBox1.Version}, (tools: {toolBox1.Tools.Count}) (team: {status}");
+Console.WriteLine($"Toolbox: {toolBox1.Name}, version: {toolBox1.Version}, (tools: {toolBox1.Tools.Count}) (team: {status}).");
 ```
 
 There are two objects which help to work with the Toolboxes: `ToolboxRecord` and `ToolboxVersion`. `ToolboxRecord` can be retrieved by

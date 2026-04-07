@@ -67,7 +67,7 @@ ToolboxVersion toolBox2 = toolboxClient.CreateToolboxVersion(
 );
 string status = "unknown status";
 toolBox1.Metadata?.TryGetValue("team", out status);
-Console.WriteLine($"Toolbox: {toolBox1.Name}, version: {toolBox1.Version}, (tools: {toolBox1.Tools.Count}) (team: {status}");
+Console.WriteLine($"Toolbox: {toolBox1.Name}, version: {toolBox1.Version}, (tools: {toolBox1.Tools.Count}) (team: {status}).");
 ```
 
 Asynchronous sample:
@@ -95,7 +95,7 @@ ToolboxVersion toolBox2 = await toolboxClient.CreateToolboxVersionAsync(
 );
 string status = "unknown status";
 toolBox1.Metadata?.TryGetValue("team", out status);
-Console.WriteLine($"Toolbox: {toolBox1.Name}, version: {toolBox1.Version}, (tools: {toolBox1.Tools.Count}) (team: {status}");
+Console.WriteLine($"Toolbox: {toolBox1.Name}, version: {toolBox1.Version}, (tools: {toolBox1.Tools.Count}) (team: {status}).");
 ```
 
 3. Retrieve the `ToolboxRecord` object. This object contains the name and a default version of a toolbox.

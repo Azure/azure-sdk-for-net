@@ -69,7 +69,7 @@ public class Sample_Toolboxes_CRUD : SamplesBase
         );
         string status = "unknown status";
         toolBox1.Metadata?.TryGetValue("team", out status);
-        Console.WriteLine($"Toolbox: {toolBox1.Name}, version: {toolBox1.Version}, (tools: {toolBox1.Tools.Count}) (team: {status}");
+        Console.WriteLine($"Toolbox: {toolBox1.Name}, version: {toolBox1.Version}, (tools: {toolBox1.Tools.Count}) (team: {status}).");
         #endregion
 
         #region Snippet:Sample_GetToolbox_ToolboxesCRUD_Async
@@ -153,7 +153,7 @@ public class Sample_Toolboxes_CRUD : SamplesBase
         );
         string status = "unknown status";
         toolBox1.Metadata?.TryGetValue("team", out status);
-        Console.WriteLine($"Toolbox: {toolBox1.Name}, version: {toolBox1.Version}, (tools: {toolBox1.Tools.Count}) (team: {status}");
+        Console.WriteLine($"Toolbox: {toolBox1.Name}, version: {toolBox1.Version}, (tools: {toolBox1.Tools.Count}) (team: {status}).");
         #endregion
 
         #region Snippet:Sample_GetToolbox_ToolboxesCRUD_Sync

@@ -11,7 +11,7 @@ namespace Azure.AI.Projects.Agents;
 public partial class HostedAgentDefinition
 {
     /// <summary> Initializes a new instance of <see cref="HostedAgentDefinition"/>. </summary>
-    /// <param name="versions">The porotocal versions for the hosted agent. </param>
+    /// <param name="versions"> The protocols that the agent supports for ingress communication of the containers. </param>
     /// <param name="cpu"> The CPU configuration for the hosted agent. </param>
     /// <param name="memory"> The memory configuration for the hosted agent. </param>
     /// <exception cref="ArgumentNullException"> <paramref name="cpu"/> or <paramref name="memory"/> is null. </exception>
@@ -26,9 +26,12 @@ public partial class HostedAgentDefinition
         Memory = memory;
         EnvironmentVariables = new ChangeTrackingDictionary<string, string>();
         ProtocolVersions = new ChangeTrackingList<ProtocolVersionRecord>();
-        foreach (ProtocolVersionRecord version in versions)
+        if (versions != null)
         {
-            ProtocolVersions.Add(version);
+            foreach (ProtocolVersionRecord version in versions)
+            {
+                Versions.Add(version);
+            }
         }
     }
 }

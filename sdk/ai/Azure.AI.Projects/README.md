@@ -1386,7 +1386,7 @@ ToolboxVersion toolBox2 = await toolboxClient.CreateToolboxVersionAsync(
 );
 string status = "unknown status";
 toolBox1.Metadata?.TryGetValue("team", out status);
-Console.WriteLine($"Toolbox: {toolBox1.Name}, version: {toolBox1.Version}, (tools: {toolBox1.Tools.Count}) (team: {status}");
+Console.WriteLine($"Toolbox: {toolBox1.Name}, version: {toolBox1.Version}, (tools: {toolBox1.Tools.Count}) (team: {status}).");
 ```
 
 There are two objects which help to work with the Toolboxes: `ToolboxRecord` and `ToolboxVersion`. `ToolboxRecord` can be retrieved by
