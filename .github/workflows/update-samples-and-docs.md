@@ -18,6 +18,34 @@ safe-outputs:
     max: 1
   noop:
     report-as-issue: false
+  jobs:
+    dispatch_triage:
+      description: "Dispatch the issue triage workflow for the newly created issue"
+      runs-on: ubuntu-latest
+      needs: safe_outputs
+      output: "Triage workflow dispatched"
+      permissions:
+        actions: write
+      steps:
+        - name: Dispatch triage workflow
+          uses: actions/github-script@v8
+          env:
+            CREATED_ISSUE_NUMBER: "${{ needs.safe_outputs.outputs.created_issue_number }}"
+          with:
+            script: |
+              const issueNumber = process.env.CREATED_ISSUE_NUMBER;
+              if (!issueNumber || issueNumber === '') {
+                core.info('No issue was created; skipping triage dispatch');
+                return;
+              }
+              await github.rest.actions.createWorkflowDispatch({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                workflow_id: 'issue-triage.lock.yml',
+                ref: 'main',
+                inputs: { issue_number: issueNumber }
+              });
+              core.info(`Dispatched triage for issue #${issueNumber}`);
 
 tools:
   web-fetch:
@@ -161,21 +189,24 @@ Run these commands in order. Each must succeed before proceeding to the next. Th
 
 </details>
 
-## Service Contacts
+## Next Steps
 
-<CODEOWNERS contacts for the affected service directory>
-
-### Suggested next steps
-
-Consider assigning this issue to **Copilot coding agent** for implementation
+> [!TIP]
+> **Ready for automated implementation?** Assign this issue to **@copilot** to have Copilot coding agent implement the changes described in the Implementation Guide above
 ```
+
+#### Step 5: Dispatch Triage
+
+After the issue has been filed, use the `dispatch_triage` tool to trigger the issue triage workflow on the newly created issue
+
+This dispatches full triage — including label prediction, CODEOWNERS owner lookup, and routing — on the created issue. The docs workflow does not apply labels or route to owners directly; triage handles that
 
 ### Rules
 
 - Do NOT write code, create patches, or modify any files in the repository
-- Do NOT apply any labels to the issue — no labels of any kind
 - Do NOT assign the issue to anyone
 - File at most one issue per push; scope to the most impactful documentation gap
 - Title must start with `[<Service>] Docs:`
 - Always include the PR/commit author who triggered the push using @mention
 - If multiple packages changed in the same push, prioritize the one with the largest documentation gap
+- After creating the issue, always call `dispatch_triage` to trigger full triage

@@ -23,6 +23,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         private readonly string _language;
         private readonly string _multilingual;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of ConversationAnalysisAuthoringGetSupportedPrebuiltEntitiesCollectionResult, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The ConversationAnalysisAuthoring client used to send requests. </param>
@@ -32,7 +33,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="language"> The language to get supported prebuilt entities for. Required if multilingual is false. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <param name="multilingual"> Whether to get the support prebuilt entities for multilingual or monolingual projects. If true, the language parameter is ignored. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ConversationAnalysisAuthoringGetSupportedPrebuiltEntitiesCollectionResult(ConversationAnalysisAuthoring client, int? maxCount, int? skip, int? maxPageSize, string language, string multilingual, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public ConversationAnalysisAuthoringGetSupportedPrebuiltEntitiesCollectionResult(ConversationAnalysisAuthoring client, int? maxCount, int? skip, int? maxPageSize, string language, string multilingual, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _maxCount = maxCount;
@@ -41,6 +43,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             _language = language;
             _multilingual = multilingual;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of ConversationAnalysisAuthoringGetSupportedPrebuiltEntitiesCollectionResult as an enumerable collection. </summary>
@@ -79,7 +82,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         {
             int? pageSize = pageSizeHint.HasValue ? pageSizeHint.Value : _maxPageSize;
             HttpMessage message = nextLink != null ? _client.CreateNextGetSupportedPrebuiltEntitiesRequest(nextLink, pageSize, _context) : _client.CreateGetSupportedPrebuiltEntitiesRequest(_maxCount, _skip, pageSize, _language, _multilingual, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ConversationAnalysisAuthoring.GetSupportedPrebuiltEntities");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

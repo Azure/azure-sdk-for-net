@@ -761,7 +761,7 @@ namespace Azure.Search.Documents.Indexes
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetIndexes(RequestContext context)
         {
-            return new SearchIndexClientGetIndexesCollectionResult(this, context);
+            return new SearchIndexClientGetIndexesCollectionResult(this, context, "SearchIndexClient.GetIndexes");
         }
 
         /// <summary>
@@ -777,7 +777,7 @@ namespace Azure.Search.Documents.Indexes
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetIndexesAsync(RequestContext context)
         {
-            return new SearchIndexClientGetIndexesAsyncCollectionResult(this, context);
+            return new SearchIndexClientGetIndexesAsyncCollectionResult(this, context, "SearchIndexClient.GetIndexes");
         }
 
         /// <summary>
@@ -794,7 +794,7 @@ namespace Azure.Search.Documents.Indexes
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetIndexesWithSelectedProperties(IEnumerable<string> @select, RequestContext context)
         {
-            return new SearchIndexClientGetIndexesWithSelectedPropertiesCollectionResult(this, @select, context);
+            return new SearchIndexClientGetIndexesWithSelectedPropertiesCollectionResult(this, @select, context, "SearchIndexClient.GetIndexesWithSelectedProperties");
         }
 
         /// <summary>
@@ -811,7 +811,7 @@ namespace Azure.Search.Documents.Indexes
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetIndexesWithSelectedPropertiesAsync(IEnumerable<string> @select, RequestContext context)
         {
-            return new SearchIndexClientGetIndexesWithSelectedPropertiesAsyncCollectionResult(this, @select, context);
+            return new SearchIndexClientGetIndexesWithSelectedPropertiesAsyncCollectionResult(this, @select, context, "SearchIndexClient.GetIndexesWithSelectedProperties");
         }
 
         /// <summary> Lists all indexes available for a search service. </summary>
@@ -820,7 +820,7 @@ namespace Azure.Search.Documents.Indexes
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<SearchIndexResponse> GetIndexesWithSelectedProperties(IEnumerable<string> @select = default, CancellationToken cancellationToken = default)
         {
-            return new SearchIndexClientGetIndexesWithSelectedPropertiesCollectionResultOfT(this, @select, cancellationToken.ToRequestContext());
+            return new SearchIndexClientGetIndexesWithSelectedPropertiesCollectionResultOfT(this, @select, cancellationToken.ToRequestContext(), "SearchIndexClient.GetIndexesWithSelectedProperties");
         }
 
         /// <summary> Lists all indexes available for a search service. </summary>
@@ -829,7 +829,7 @@ namespace Azure.Search.Documents.Indexes
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<SearchIndexResponse> GetIndexesWithSelectedPropertiesAsync(IEnumerable<string> @select = default, CancellationToken cancellationToken = default)
         {
-            return new SearchIndexClientGetIndexesWithSelectedPropertiesAsyncCollectionResultOfT(this, @select, cancellationToken.ToRequestContext());
+            return new SearchIndexClientGetIndexesWithSelectedPropertiesAsyncCollectionResultOfT(this, @select, cancellationToken.ToRequestContext(), "SearchIndexClient.GetIndexesWithSelectedProperties");
         }
 
         /// <summary>
@@ -1363,7 +1363,7 @@ namespace Azure.Search.Documents.Indexes
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetAliases(RequestContext context)
         {
-            return new SearchIndexClientGetAliasesCollectionResult(this, context);
+            return new SearchIndexClientGetAliasesCollectionResult(this, context, "SearchIndexClient.GetAliases");
         }
 
         /// <summary>
@@ -1379,7 +1379,7 @@ namespace Azure.Search.Documents.Indexes
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetAliasesAsync(RequestContext context)
         {
-            return new SearchIndexClientGetAliasesAsyncCollectionResult(this, context);
+            return new SearchIndexClientGetAliasesAsyncCollectionResult(this, context, "SearchIndexClient.GetAliases");
         }
 
         /// <summary> Lists all aliases available for a search service. </summary>
@@ -1387,7 +1387,7 @@ namespace Azure.Search.Documents.Indexes
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<SearchAlias> GetAliases(CancellationToken cancellationToken = default)
         {
-            return new SearchIndexClientGetAliasesCollectionResultOfT(this, cancellationToken.ToRequestContext());
+            return new SearchIndexClientGetAliasesCollectionResultOfT(this, cancellationToken.ToRequestContext(), "SearchIndexClient.GetAliases");
         }
 
         /// <summary> Lists all aliases available for a search service. </summary>
@@ -1395,7 +1395,7 @@ namespace Azure.Search.Documents.Indexes
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<SearchAlias> GetAliasesAsync(CancellationToken cancellationToken = default)
         {
-            return new SearchIndexClientGetAliasesAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext());
+            return new SearchIndexClientGetAliasesAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext(), "SearchIndexClient.GetAliases");
         }
 
         /// <summary>
@@ -1769,7 +1769,7 @@ namespace Azure.Search.Documents.Indexes
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetKnowledgeBases(RequestContext context)
         {
-            return new SearchIndexClientGetKnowledgeBasesCollectionResult(this, context);
+            return new SearchIndexClientGetKnowledgeBasesCollectionResult(this, context, "SearchIndexClient.GetKnowledgeBases");
         }
 
         /// <summary>
@@ -1785,7 +1785,7 @@ namespace Azure.Search.Documents.Indexes
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetKnowledgeBasesAsync(RequestContext context)
         {
-            return new SearchIndexClientGetKnowledgeBasesAsyncCollectionResult(this, context);
+            return new SearchIndexClientGetKnowledgeBasesAsyncCollectionResult(this, context, "SearchIndexClient.GetKnowledgeBases");
         }
 
         /// <summary> Lists all knowledge bases available for a search service. </summary>
@@ -1793,7 +1793,7 @@ namespace Azure.Search.Documents.Indexes
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<KnowledgeBase> GetKnowledgeBases(CancellationToken cancellationToken = default)
         {
-            return new SearchIndexClientGetKnowledgeBasesCollectionResultOfT(this, cancellationToken.ToRequestContext());
+            return new SearchIndexClientGetKnowledgeBasesCollectionResultOfT(this, cancellationToken.ToRequestContext(), "SearchIndexClient.GetKnowledgeBases");
         }
 
         /// <summary> Lists all knowledge bases available for a search service. </summary>
@@ -1801,7 +1801,7 @@ namespace Azure.Search.Documents.Indexes
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<KnowledgeBase> GetKnowledgeBasesAsync(CancellationToken cancellationToken = default)
         {
-            return new SearchIndexClientGetKnowledgeBasesAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext());
+            return new SearchIndexClientGetKnowledgeBasesAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext(), "SearchIndexClient.GetKnowledgeBases");
         }
 
         /// <summary>
@@ -2149,7 +2149,7 @@ namespace Azure.Search.Documents.Indexes
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetKnowledgeSources(RequestContext context)
         {
-            return new SearchIndexClientGetKnowledgeSourcesCollectionResult(this, context);
+            return new SearchIndexClientGetKnowledgeSourcesCollectionResult(this, context, "SearchIndexClient.GetKnowledgeSources");
         }
 
         /// <summary>
@@ -2165,7 +2165,7 @@ namespace Azure.Search.Documents.Indexes
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetKnowledgeSourcesAsync(RequestContext context)
         {
-            return new SearchIndexClientGetKnowledgeSourcesAsyncCollectionResult(this, context);
+            return new SearchIndexClientGetKnowledgeSourcesAsyncCollectionResult(this, context, "SearchIndexClient.GetKnowledgeSources");
         }
 
         /// <summary> Lists all knowledge sources available for a search service. </summary>
@@ -2173,7 +2173,7 @@ namespace Azure.Search.Documents.Indexes
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<KnowledgeSource> GetKnowledgeSources(CancellationToken cancellationToken = default)
         {
-            return new SearchIndexClientGetKnowledgeSourcesCollectionResultOfT(this, cancellationToken.ToRequestContext());
+            return new SearchIndexClientGetKnowledgeSourcesCollectionResultOfT(this, cancellationToken.ToRequestContext(), "SearchIndexClient.GetKnowledgeSources");
         }
 
         /// <summary> Lists all knowledge sources available for a search service. </summary>
@@ -2181,7 +2181,7 @@ namespace Azure.Search.Documents.Indexes
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<KnowledgeSource> GetKnowledgeSourcesAsync(CancellationToken cancellationToken = default)
         {
-            return new SearchIndexClientGetKnowledgeSourcesAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext());
+            return new SearchIndexClientGetKnowledgeSourcesAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext(), "SearchIndexClient.GetKnowledgeSources");
         }
 
         /// <summary>
@@ -2423,7 +2423,7 @@ namespace Azure.Search.Documents.Indexes
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetIndexStatsSummary(RequestContext context)
         {
-            return new SearchIndexClientGetIndexStatsSummaryCollectionResult(this, context);
+            return new SearchIndexClientGetIndexStatsSummaryCollectionResult(this, context, "SearchIndexClient.GetIndexStatsSummary");
         }
 
         /// <summary>
@@ -2439,7 +2439,7 @@ namespace Azure.Search.Documents.Indexes
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetIndexStatsSummaryAsync(RequestContext context)
         {
-            return new SearchIndexClientGetIndexStatsSummaryAsyncCollectionResult(this, context);
+            return new SearchIndexClientGetIndexStatsSummaryAsyncCollectionResult(this, context, "SearchIndexClient.GetIndexStatsSummary");
         }
 
         /// <summary> Retrieves a summary of statistics for all indexes in the search service. </summary>
@@ -2447,7 +2447,7 @@ namespace Azure.Search.Documents.Indexes
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<IndexStatisticsSummary> GetIndexStatsSummary(CancellationToken cancellationToken = default)
         {
-            return new SearchIndexClientGetIndexStatsSummaryCollectionResultOfT(this, cancellationToken.ToRequestContext());
+            return new SearchIndexClientGetIndexStatsSummaryCollectionResultOfT(this, cancellationToken.ToRequestContext(), "SearchIndexClient.GetIndexStatsSummary");
         }
 
         /// <summary> Retrieves a summary of statistics for all indexes in the search service. </summary>
@@ -2455,7 +2455,7 @@ namespace Azure.Search.Documents.Indexes
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<IndexStatisticsSummary> GetIndexStatsSummaryAsync(CancellationToken cancellationToken = default)
         {
-            return new SearchIndexClientGetIndexStatsSummaryAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext());
+            return new SearchIndexClientGetIndexStatsSummaryAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext(), "SearchIndexClient.GetIndexStatsSummary");
         }
     }
 }

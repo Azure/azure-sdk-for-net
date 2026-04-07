@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Storage
         {
             if (id.ResourceType != StorageAccountResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, StorageAccountResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, StorageAccountResource.ResourceType), nameof(id));
             }
         }
 

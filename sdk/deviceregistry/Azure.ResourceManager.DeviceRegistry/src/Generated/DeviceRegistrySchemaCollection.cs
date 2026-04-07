@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         {
             if (id.ResourceType != DeviceRegistrySchemaRegistryResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DeviceRegistrySchemaRegistryResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DeviceRegistrySchemaRegistryResource.ResourceType), nameof(id));
             }
         }
 

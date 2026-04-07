@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             if (id.ResourceType != AutonomousDatabaseResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AutonomousDatabaseResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AutonomousDatabaseResource.ResourceType), nameof(id));
             }
         }
 

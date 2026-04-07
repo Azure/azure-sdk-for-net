@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             if (id.ResourceType != VirtualApplicationGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, VirtualApplicationGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, VirtualApplicationGroupResource.ResourceType), nameof(id));
             }
         }
 

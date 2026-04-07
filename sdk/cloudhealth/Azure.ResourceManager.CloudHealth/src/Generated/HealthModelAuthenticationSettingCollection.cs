@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CloudHealth
         {
             if (id.ResourceType != HealthModelResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, HealthModelResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, HealthModelResource.ResourceType), nameof(id));
             }
         }
 

@@ -13,84 +13,97 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql
 {
-    /// <summary>
-    /// A class representing the CosmosDBForPostgreSqlConfiguration data model.
-    /// Represents configuration details for coordinator and node.
-    /// </summary>
+    /// <summary> Represents configuration details for coordinator and node. </summary>
     public partial class CosmosDBForPostgreSqlConfigurationData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlConfigurationData"/>. </summary>
         public CosmosDBForPostgreSqlConfigurationData()
         {
-            ServerRoleGroupConfigurations = new ChangeTrackingList<CosmosDBForPostgreSqlServerRoleGroupConfiguration>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlConfigurationData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="description"> Description of the configuration. </param>
-        /// <param name="dataType"> Data type of the configuration. </param>
-        /// <param name="allowedValues"> Allowed values of the configuration. </param>
-        /// <param name="isRestartRequired"> If configuration change requires restart. </param>
-        /// <param name="serverRoleGroupConfigurations"> The list of server role group configuration values. </param>
-        /// <param name="provisioningState"> Provisioning state of the configuration. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CosmosDBForPostgreSqlConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, CosmosDBForPostgreSqlConfigurationDataType? dataType, string allowedValues, bool? isRestartRequired, IList<CosmosDBForPostgreSqlServerRoleGroupConfiguration> serverRoleGroupConfigurations, CosmosDBForPostgreSqlProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The properties of configuration. </param>
+        internal CosmosDBForPostgreSqlConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ConfigurationProperties properties) : base(id, name, resourceType, systemData)
         {
-            Description = description;
-            DataType = dataType;
-            AllowedValues = allowedValues;
-            IsRestartRequired = isRestartRequired;
-            ServerRoleGroupConfigurations = serverRoleGroupConfigurations;
-            ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
+        /// <summary> The properties of configuration. </summary>
+        internal ConfigurationProperties Properties { get; set; }
+
         /// <summary> Description of the configuration. </summary>
-        public string Description { get; }
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+        }
+
         /// <summary> Data type of the configuration. </summary>
-        public CosmosDBForPostgreSqlConfigurationDataType? DataType { get; }
+        public CosmosDBForPostgreSqlConfigurationDataType? DataType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DataType;
+            }
+        }
+
         /// <summary> Allowed values of the configuration. </summary>
-        public string AllowedValues { get; }
+        public string AllowedValues
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AllowedValues;
+            }
+        }
+
         /// <summary> If configuration change requires restart. </summary>
-        public bool? IsRestartRequired { get; set; }
+        public bool? IsRestartRequired
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsRestartRequired;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ConfigurationProperties();
+                }
+                Properties.IsRestartRequired = value.Value;
+            }
+        }
+
         /// <summary> The list of server role group configuration values. </summary>
-        public IList<CosmosDBForPostgreSqlServerRoleGroupConfiguration> ServerRoleGroupConfigurations { get; }
+        public IList<CosmosDBForPostgreSqlServerRoleGroupConfiguration> ServerRoleGroupConfigurations
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ConfigurationProperties();
+                }
+                return Properties.ServerRoleGroupConfigurations;
+            }
+        }
+
         /// <summary> Provisioning state of the configuration. </summary>
-        public CosmosDBForPostgreSqlProvisioningState? ProvisioningState { get; }
+        public CosmosDBForPostgreSqlProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }

@@ -162,6 +162,57 @@ namespace Azure.Generator.Management.Tests.Common
         }
 
         /// <summary>
+        /// Creates a non-singleton resource with only GET and PUT (no PATCH at all).
+        /// Since there is no Update method, the Create (PUT) method gets added to the resource's methods
+        /// by the categorization fallback, and tag methods SHOULD be generated using PUT.
+        /// This mirrors real SDK resources like CosmosDB CassandraKeyspaceResource.
+        /// </summary>
+        public static (InputClient InputClient, IReadOnlyList<InputModelType> InputModels) ClientWithResourceNoPatchOnlyPut()
+        {
+            const string TestClientName = "TestClient";
+            const string ResourceModelName = "ResponseType";
+            var responseModel = InputFactory.Model(ResourceModelName,
+                        usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json,
+                        properties:
+                        [
+                            InputFactory.Property("id", InputPrimitiveType.String, isReadOnly: true),
+                            InputFactory.Property("type", InputPrimitiveType.String, isReadOnly: true),
+                            InputFactory.Property("name", InputPrimitiveType.String, isReadOnly: true),
+                            InputFactory.Property("tags", new InputDictionaryType("dict", InputPrimitiveType.String, InputPrimitiveType.String), isReadOnly: false),
+                        ],
+                        decorators: []);
+            var responseType = InputFactory.OperationResponse(statusCodes: [200], bodytype: responseModel);
+            var uuidType = new InputPrimitiveType(InputPrimitiveTypeKind.String, "uuid", "Azure.Core.uuid");
+            var subsIdOpParameter = InputFactory.PathParameter("subscriptionId", uuidType, isRequired: true);
+            var rgOpParameter = InputFactory.PathParameter("resourceGroupName", InputPrimitiveType.String, isRequired: true);
+            var testNameOpParameter = InputFactory.PathParameter("testName", InputPrimitiveType.String, isRequired: true);
+            var dataOpParameter = InputFactory.BodyParameter("data", responseModel, isRequired: true);
+            var getOperation = InputFactory.Operation(name: "get", responses: [responseType], parameters: [subsIdOpParameter, rgOpParameter, testNameOpParameter], path: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}");
+            // PUT operation WITH body parameter — no PATCH at all
+            var createOperation = InputFactory.Operation(name: "createTest", responses: [responseType], parameters: [subsIdOpParameter, rgOpParameter, testNameOpParameter, dataOpParameter], path: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}", httpMethod: "PUT");
+            var subscriptionIdParameter = InputFactory.MethodParameter("subscriptionId", uuidType, location: InputRequestLocation.Path);
+            var resourceGroupParameter = InputFactory.MethodParameter("resourceGroupName", InputPrimitiveType.String, location: InputRequestLocation.Path);
+            var testNameParameter = InputFactory.MethodParameter("testName", InputPrimitiveType.String, location: InputRequestLocation.Path, isRequired: true);
+            var dataParameter = InputFactory.MethodParameter("data", responseModel, location: InputRequestLocation.Body, isRequired: true);
+            var getMethod = InputFactory.BasicServiceMethod("get", getOperation, parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter], crossLanguageDefinitionId: Guid.NewGuid().ToString());
+            var createMethod = InputFactory.BasicServiceMethod("createTest", createOperation, parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter, dataParameter], crossLanguageDefinitionId: Guid.NewGuid().ToString());
+
+            var resourceIdPattern = "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}";
+            var armProviderDecorator = BuildArmProviderSchema(responseModel, [
+                new ResourceMethod(ResourceOperationKind.Read, getMethod, getMethod.Operation.Path, ResourceScope.ResourceGroup, resourceIdPattern, null!),
+                new ResourceMethod(ResourceOperationKind.Create, createMethod, createMethod.Operation.Path, ResourceScope.ResourceGroup, resourceIdPattern, null!)
+            ], resourceIdPattern, "Microsoft.Tests/tests", null, ResourceScope.ResourceGroup, "ResponseType");
+
+            var client = InputFactory.Client(
+                TestClientName,
+                methods: [getMethod, createMethod],
+                decorators: [armProviderDecorator],
+                crossLanguageDefinitionId: $"Test.{TestClientName}");
+
+            return (client, [responseModel]);
+        }
+
+        /// <summary>
         /// Creates a client with a resource where the PATCH operation has no request body but a PUT operation exists.
         /// Tag methods should still be generated using the PUT operation as fallback.
         /// </summary>
@@ -205,6 +256,63 @@ namespace Azure.Generator.Management.Tests.Common
                 new ResourceMethod(ResourceOperationKind.Create, createMethod, createMethod.Operation.Path, ResourceScope.ResourceGroup, resourceIdPattern, null!),
                 new ResourceMethod(ResourceOperationKind.Update, updateMethod, updateMethod.Operation.Path, ResourceScope.ResourceGroup, resourceIdPattern, null!)
             ], resourceIdPattern, "Microsoft.Tests/tests", null, ResourceScope.ResourceGroup, "ResponseType");
+
+            var client = InputFactory.Client(
+                TestClientName,
+                methods: [getMethod, createMethod, updateMethod],
+                decorators: [armProviderDecorator],
+                crossLanguageDefinitionId: $"Test.{TestClientName}");
+
+            return (client, [responseModel]);
+        }
+
+        /// <summary>
+        /// Creates a singleton resource where the PATCH operation has no request body but a PUT operation exists.
+        /// For singleton resources, the Create (PUT) method is categorized into the resource (not the collection),
+        /// so tag methods SHOULD be generated using the PUT fallback.
+        /// </summary>
+        public static (InputClient InputClient, IReadOnlyList<InputModelType> InputModels) ClientWithSingletonResourceBodylessPatchAndPut()
+        {
+            const string TestClientName = "TestClient";
+            const string ResourceModelName = "ResponseType";
+            var responseModel = InputFactory.Model(ResourceModelName,
+                        usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json,
+                        properties:
+                        [
+                            InputFactory.Property("id", InputPrimitiveType.String, isReadOnly: true),
+                            InputFactory.Property("type", InputPrimitiveType.String, isReadOnly: true),
+                            InputFactory.Property("name", InputPrimitiveType.String, isReadOnly: true),
+                            InputFactory.Property("tags", new InputDictionaryType("dict", InputPrimitiveType.String, InputPrimitiveType.String), isReadOnly: false),
+                        ],
+                        decorators: []);
+            var responseType = InputFactory.OperationResponse(statusCodes: [200], bodytype: responseModel);
+            var uuidType = new InputPrimitiveType(InputPrimitiveTypeKind.String, "uuid", "Azure.Core.uuid");
+            var subsIdOpParameter = InputFactory.PathParameter("subscriptionId", uuidType, isRequired: true);
+            var rgOpParameter = InputFactory.PathParameter("resourceGroupName", InputPrimitiveType.String, isRequired: true);
+            var testNameOpParameter = InputFactory.PathParameter("testName", InputPrimitiveType.String, isRequired: true);
+            var dataOpParameter = InputFactory.BodyParameter("data", responseModel, isRequired: true);
+            // Singleton resource path - ends with a fixed name "default"
+            var singletonPath = "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}/policies/default";
+            var getOperation = InputFactory.Operation(name: "get", responses: [responseType], parameters: [subsIdOpParameter, rgOpParameter, testNameOpParameter], path: singletonPath);
+            // PUT operation WITH body parameter
+            var createOperation = InputFactory.Operation(name: "createTest", responses: [responseType], parameters: [subsIdOpParameter, rgOpParameter, testNameOpParameter, dataOpParameter], path: singletonPath, httpMethod: "PUT");
+            // PATCH operation with NO body parameter
+            var updateOperation = InputFactory.Operation(name: "update", responses: [responseType], parameters: [subsIdOpParameter, rgOpParameter, testNameOpParameter], path: singletonPath, httpMethod: "PATCH");
+            var subscriptionIdParameter = InputFactory.MethodParameter("subscriptionId", uuidType, location: InputRequestLocation.Path);
+            var resourceGroupParameter = InputFactory.MethodParameter("resourceGroupName", InputPrimitiveType.String, location: InputRequestLocation.Path);
+            var testNameParameter = InputFactory.MethodParameter("testName", InputPrimitiveType.String, location: InputRequestLocation.Path, isRequired: true);
+            var dataParameter = InputFactory.MethodParameter("data", responseModel, location: InputRequestLocation.Body, isRequired: true);
+            var getMethod = InputFactory.BasicServiceMethod("get", getOperation, parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter], crossLanguageDefinitionId: Guid.NewGuid().ToString());
+            var createMethod = InputFactory.BasicServiceMethod("createTest", createOperation, parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter, dataParameter], crossLanguageDefinitionId: Guid.NewGuid().ToString());
+            // Update method has no body parameter
+            var updateMethod = InputFactory.BasicServiceMethod("update", updateOperation, parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter], crossLanguageDefinitionId: Guid.NewGuid().ToString());
+
+            var resourceIdPattern = singletonPath;
+            var armProviderDecorator = BuildArmProviderSchema(responseModel, [
+                new ResourceMethod(ResourceOperationKind.Read, getMethod, getMethod.Operation.Path, ResourceScope.ResourceGroup, resourceIdPattern, null!),
+                new ResourceMethod(ResourceOperationKind.Create, createMethod, createMethod.Operation.Path, ResourceScope.ResourceGroup, resourceIdPattern, null!),
+                new ResourceMethod(ResourceOperationKind.Update, updateMethod, updateMethod.Operation.Path, ResourceScope.ResourceGroup, resourceIdPattern, null!)
+            ], resourceIdPattern, "Microsoft.Tests/tests/policies", "default", ResourceScope.ResourceGroup, "ResponseType");
 
             var client = InputFactory.Client(
                 TestClientName,

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         {
             if (id.ResourceType != NewRelicMonitorResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, NewRelicMonitorResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, NewRelicMonitorResource.ResourceType), nameof(id));
             }
         }
 

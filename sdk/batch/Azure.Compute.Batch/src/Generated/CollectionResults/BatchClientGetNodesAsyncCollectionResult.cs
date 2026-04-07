@@ -25,6 +25,7 @@ namespace Azure.Compute.Batch
         private readonly string _filter;
         private readonly IEnumerable<string> _select;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of BatchClientGetNodesAsyncCollectionResult, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The BatchClient client used to send requests. </param>
@@ -45,7 +46,8 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="select"> An OData $select clause. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public BatchClientGetNodesAsyncCollectionResult(BatchClient client, string poolId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, string filter, IEnumerable<string> @select, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public BatchClientGetNodesAsyncCollectionResult(BatchClient client, string poolId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, string filter, IEnumerable<string> @select, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _poolId = poolId;
@@ -55,6 +57,7 @@ namespace Azure.Compute.Batch
             _filter = filter;
             _select = @select;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of BatchClientGetNodesAsyncCollectionResult as an enumerable collection. </summary>
@@ -92,7 +95,7 @@ namespace Azure.Compute.Batch
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetNodesRequest(nextLink, _poolId, _timeOutInSeconds, _ocpDate, _maxresults, _filter, _select, _context) : _client.CreateGetNodesRequest(_poolId, _timeOutInSeconds, _ocpDate, _maxresults, _filter, _select, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("BatchClient.GetNodes");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

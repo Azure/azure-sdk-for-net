@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ComputeLimit
         {
             if (id.ResourceType != SubscriptionResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
             }
         }
 
