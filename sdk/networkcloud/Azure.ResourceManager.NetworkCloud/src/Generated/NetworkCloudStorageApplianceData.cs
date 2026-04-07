@@ -8,177 +8,291 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetworkCloud.Models;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
-    /// <summary>
-    /// A class representing the NetworkCloudStorageAppliance data model.
-    /// StorageAppliance represents on-premises Network Cloud storage appliance.
-    /// </summary>
+    /// <summary> StorageAppliance represents on-premises Network Cloud storage appliance. </summary>
     public partial class NetworkCloudStorageApplianceData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudStorageApplianceData"/>. </summary>
-        /// <param name="location"> The location. </param>
-        /// <param name="extendedLocation"> The extended location of the cluster associated with the resource. </param>
-        /// <param name="administratorCredentials"> The credentials of the administrative interface on this storage appliance. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="rackId"> The resource ID of the rack where this storage appliance resides. </param>
+        /// <param name="storageApplianceSkuId"> The SKU for the storage appliance. </param>
         /// <param name="rackSlot"> The slot the storage appliance is in the rack based on the BOM configuration. </param>
         /// <param name="serialNumber"> The serial number for the storage appliance. </param>
-        /// <param name="storageApplianceSkuId"> The SKU for the storage appliance. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="extendedLocation"/>, <paramref name="administratorCredentials"/>, <paramref name="rackId"/>, <paramref name="serialNumber"/> or <paramref name="storageApplianceSkuId"/> is null. </exception>
-        public NetworkCloudStorageApplianceData(AzureLocation location, ExtendedLocation extendedLocation, AdministrativeCredentials administratorCredentials, ResourceIdentifier rackId, long rackSlot, string serialNumber, string storageApplianceSkuId) : base(location)
+        /// <param name="administratorCredentials"> The credentials of the administrative interface on this storage appliance. </param>
+        /// <param name="extendedLocation"> The extended location of the resource. This property is required when creating the resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="rackId"/>, <paramref name="storageApplianceSkuId"/>, <paramref name="serialNumber"/>, <paramref name="administratorCredentials"/> or <paramref name="extendedLocation"/> is null. </exception>
+        public NetworkCloudStorageApplianceData(AzureLocation location, ResourceIdentifier rackId, string storageApplianceSkuId, long rackSlot, string serialNumber, AdministrativeCredentials administratorCredentials, ExtendedLocation extendedLocation) : base(location)
         {
-            Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
-            Argument.AssertNotNull(administratorCredentials, nameof(administratorCredentials));
             Argument.AssertNotNull(rackId, nameof(rackId));
-            Argument.AssertNotNull(serialNumber, nameof(serialNumber));
             Argument.AssertNotNull(storageApplianceSkuId, nameof(storageApplianceSkuId));
+            Argument.AssertNotNull(serialNumber, nameof(serialNumber));
+            Argument.AssertNotNull(administratorCredentials, nameof(administratorCredentials));
+            Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
 
+            Properties = new StorageApplianceProperties(rackId, storageApplianceSkuId, rackSlot, serialNumber, administratorCredentials);
             ExtendedLocation = extendedLocation;
-            AdministratorCredentials = administratorCredentials;
-            RackId = rackId;
-            RackSlot = rackSlot;
-            SecretRotationStatus = new ChangeTrackingList<SecretRotationStatus>();
-            SerialNumber = serialNumber;
-            StorageApplianceSkuId = storageApplianceSkuId;
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudStorageApplianceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="etag"> Resource ETag. </param>
-        /// <param name="extendedLocation"> The extended location of the cluster associated with the resource. </param>
-        /// <param name="administratorCredentials"> The credentials of the administrative interface on this storage appliance. </param>
-        /// <param name="caCertificate"> The CA certificate information issued by the platform for connecting to TLS interfaces for the storage appliance. Callers add this certificate to their trusted CA store to allow secure communication with the storage appliance. </param>
-        /// <param name="capacity"> The total capacity of the storage appliance. Measured in GiB. </param>
-        /// <param name="capacityUsed"> The amount of storage consumed. Measured in GiB. </param>
-        /// <param name="clusterId"> The resource ID of the cluster this storage appliance is associated with. </param>
-        /// <param name="detailedStatus"> The detailed status of the storage appliance. </param>
-        /// <param name="detailedStatusMessage"> The descriptive message about the current detailed status. </param>
-        /// <param name="managementIPv4Address"> The endpoint for the management interface of the storage appliance. </param>
-        /// <param name="manufacturer"> The manufacturer of the storage appliance. </param>
-        /// <param name="model"> The model of the storage appliance. </param>
-        /// <param name="provisioningState"> The provisioning state of the storage appliance. </param>
-        /// <param name="rackId"> The resource ID of the rack where this storage appliance resides. </param>
-        /// <param name="rackSlot"> The slot the storage appliance is in the rack based on the BOM configuration. </param>
-        /// <param name="remoteVendorManagementFeature"> The indicator of whether the storage appliance supports remote vendor management. </param>
-        /// <param name="remoteVendorManagementStatus"> The indicator of whether the remote vendor management feature is enabled or disabled, or unsupported if it is an unsupported feature. </param>
-        /// <param name="secretRotationStatus"> The list of statuses that represent secret rotation activity. </param>
-        /// <param name="serialNumber"> The serial number for the storage appliance. </param>
-        /// <param name="storageApplianceSkuId"> The SKU for the storage appliance. </param>
-        /// <param name="version"> The version of the storage appliance. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkCloudStorageApplianceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ExtendedLocation extendedLocation, AdministrativeCredentials administratorCredentials, NetworkCloudCertificateInfo caCertificate, long? capacity, long? capacityUsed, ResourceIdentifier clusterId, StorageApplianceDetailedStatus? detailedStatus, string detailedStatusMessage, IPAddress managementIPv4Address, string manufacturer, string model, StorageApplianceProvisioningState? provisioningState, ResourceIdentifier rackId, long rackSlot, RemoteVendorManagementFeature? remoteVendorManagementFeature, RemoteVendorManagementStatus? remoteVendorManagementStatus, IReadOnlyList<SecretRotationStatus> secretRotationStatus, string serialNumber, string storageApplianceSkuId, string version, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The list of the resource properties. </param>
+        /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
+        /// <param name="extendedLocation"> The extended location of the resource. This property is required when creating the resource. </param>
+        internal NetworkCloudStorageApplianceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, StorageApplianceProperties properties, ETag? eTag, ExtendedLocation extendedLocation) : base(id, name, resourceType, systemData, tags, location)
         {
-            ETag = etag;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
+            ETag = eTag;
             ExtendedLocation = extendedLocation;
-            AdministratorCredentials = administratorCredentials;
-            CACertificate = caCertificate;
-            Capacity = capacity;
-            CapacityUsed = capacityUsed;
-            ClusterId = clusterId;
-            DetailedStatus = detailedStatus;
-            DetailedStatusMessage = detailedStatusMessage;
-            ManagementIPv4Address = managementIPv4Address;
-            Manufacturer = manufacturer;
-            Model = model;
-            ProvisioningState = provisioningState;
-            RackId = rackId;
-            RackSlot = rackSlot;
-            RemoteVendorManagementFeature = remoteVendorManagementFeature;
-            RemoteVendorManagementStatus = remoteVendorManagementStatus;
-            SecretRotationStatus = secretRotationStatus;
-            SerialNumber = serialNumber;
-            StorageApplianceSkuId = storageApplianceSkuId;
-            Version = version;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkCloudStorageApplianceData"/> for deserialization. </summary>
-        internal NetworkCloudStorageApplianceData()
-        {
-        }
+        /// <summary> The list of the resource properties. </summary>
+        internal StorageApplianceProperties Properties { get; set; }
 
-        /// <summary> Resource ETag. </summary>
+        /// <summary> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </summary>
         public ETag? ETag { get; }
-        /// <summary> The extended location of the cluster associated with the resource. </summary>
-        public ExtendedLocation ExtendedLocation { get; set; }
-        /// <summary> The credentials of the administrative interface on this storage appliance. </summary>
-        public AdministrativeCredentials AdministratorCredentials { get; set; }
-        /// <summary> The CA certificate information issued by the platform for connecting to TLS interfaces for the storage appliance. Callers add this certificate to their trusted CA store to allow secure communication with the storage appliance. </summary>
-        public NetworkCloudCertificateInfo CACertificate { get; }
-        /// <summary> The total capacity of the storage appliance. Measured in GiB. </summary>
-        public long? Capacity { get; }
-        /// <summary> The amount of storage consumed. Measured in GiB. </summary>
-        public long? CapacityUsed { get; }
-        /// <summary> The resource ID of the cluster this storage appliance is associated with. </summary>
-        public ResourceIdentifier ClusterId { get; }
-        /// <summary> The detailed status of the storage appliance. </summary>
-        public StorageApplianceDetailedStatus? DetailedStatus { get; }
-        /// <summary> The descriptive message about the current detailed status. </summary>
-        public string DetailedStatusMessage { get; }
-        /// <summary> The endpoint for the management interface of the storage appliance. </summary>
-        public IPAddress ManagementIPv4Address { get; }
-        /// <summary> The manufacturer of the storage appliance. </summary>
-        public string Manufacturer { get; }
-        /// <summary> The model of the storage appliance. </summary>
-        public string Model { get; }
-        /// <summary> The provisioning state of the storage appliance. </summary>
-        public StorageApplianceProvisioningState? ProvisioningState { get; }
+
         /// <summary> The resource ID of the rack where this storage appliance resides. </summary>
-        public ResourceIdentifier RackId { get; set; }
-        /// <summary> The slot the storage appliance is in the rack based on the BOM configuration. </summary>
-        public long RackSlot { get; set; }
-        /// <summary> The indicator of whether the storage appliance supports remote vendor management. </summary>
-        public RemoteVendorManagementFeature? RemoteVendorManagementFeature { get; }
-        /// <summary> The indicator of whether the remote vendor management feature is enabled or disabled, or unsupported if it is an unsupported feature. </summary>
-        public RemoteVendorManagementStatus? RemoteVendorManagementStatus { get; }
-        /// <summary> The list of statuses that represent secret rotation activity. </summary>
-        public IReadOnlyList<SecretRotationStatus> SecretRotationStatus { get; }
-        /// <summary> The serial number for the storage appliance. </summary>
-        public string SerialNumber { get; set; }
+        public ResourceIdentifier RackId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RackId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageApplianceProperties();
+                }
+                Properties.RackId = value;
+            }
+        }
+
         /// <summary> The SKU for the storage appliance. </summary>
-        public string StorageApplianceSkuId { get; set; }
+        public string StorageApplianceSkuId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StorageApplianceSkuId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageApplianceProperties();
+                }
+                Properties.StorageApplianceSkuId = value;
+            }
+        }
+
+        /// <summary> The slot the storage appliance is in the rack based on the BOM configuration. </summary>
+        public long RackSlot
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RackSlot;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageApplianceProperties();
+                }
+                Properties.RackSlot = value;
+            }
+        }
+
+        /// <summary> The serial number for the storage appliance. </summary>
+        public string SerialNumber
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SerialNumber;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageApplianceProperties();
+                }
+                Properties.SerialNumber = value;
+            }
+        }
+
+        /// <summary> The credentials of the administrative interface on this storage appliance. </summary>
+        public AdministrativeCredentials AdministratorCredentials
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AdministratorCredentials;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageApplianceProperties();
+                }
+                Properties.AdministratorCredentials = value;
+            }
+        }
+
+        /// <summary> The CA certificate information issued by the platform for connecting to TLS interfaces for the storage appliance. Callers add this certificate to their trusted CA store to allow secure communication with the storage appliance. </summary>
+        public NetworkCloudCertificateInfo CACertificate
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CACertificate;
+            }
+        }
+
+        /// <summary> The total capacity of the storage appliance. Measured in GiB. </summary>
+        public long? Capacity
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Capacity;
+            }
+        }
+
+        /// <summary> The amount of storage consumed. Measured in GiB. </summary>
+        public long? CapacityUsed
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CapacityUsed;
+            }
+        }
+
+        /// <summary> The resource ID of the cluster this storage appliance is associated with. </summary>
+        public ResourceIdentifier ClusterId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ClusterId;
+            }
+        }
+
+        /// <summary> The detailed status of the storage appliance. </summary>
+        public StorageApplianceDetailedStatus? DetailedStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DetailedStatus;
+            }
+        }
+
+        /// <summary> The descriptive message about the current detailed status. </summary>
+        public string DetailedStatusMessage
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DetailedStatusMessage;
+            }
+        }
+
+        /// <summary> The list of expansion shelves connected to the storage appliance. </summary>
+        public IReadOnlyList<StorageApplianceExpansionShelf> ExpansionShelves
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageApplianceProperties();
+                }
+                return Properties.ExpansionShelves;
+            }
+        }
+
+        /// <summary> The endpoint for the management interface of the storage appliance. </summary>
+        public IPAddress ManagementIPv4Address
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ManagementIPv4Address;
+            }
+        }
+
+        /// <summary> The manufacturer of the storage appliance. </summary>
+        public string Manufacturer
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Manufacturer;
+            }
+        }
+
+        /// <summary> The model of the storage appliance. </summary>
+        public string Model
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Model;
+            }
+        }
+
+        /// <summary> The indicator of whether the storage appliance supports remote vendor management. </summary>
+        public RemoteVendorManagementFeature? RemoteVendorManagementFeature
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RemoteVendorManagementFeature;
+            }
+        }
+
+        /// <summary> The indicator of whether the remote vendor management feature is enabled or disabled, or unsupported if it is an unsupported feature. </summary>
+        public RemoteVendorManagementStatus? RemoteVendorManagementStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RemoteVendorManagementStatus;
+            }
+        }
+
+        /// <summary> The list of statuses that represent secret rotation activity. </summary>
+        public IReadOnlyList<SecretRotationStatus> SecretRotationStatus
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageApplianceProperties();
+                }
+                return Properties.SecretRotationStatus;
+            }
+        }
+
         /// <summary> The version of the storage appliance. </summary>
-        public string Version { get; }
+        public string Version
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Version;
+            }
+        }
+
+        /// <summary> The provisioning state of the storage appliance. </summary>
+        public StorageApplianceProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }

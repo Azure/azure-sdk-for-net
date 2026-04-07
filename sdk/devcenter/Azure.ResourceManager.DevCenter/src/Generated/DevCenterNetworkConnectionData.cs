@@ -13,103 +13,154 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevCenter
 {
-    /// <summary>
-    /// A class representing the DevCenterNetworkConnection data model.
-    /// Network related settings
-    /// </summary>
+    /// <summary> Network related settings. </summary>
     public partial class DevCenterNetworkConnectionData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DevCenterNetworkConnectionData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public DevCenterNetworkConnectionData(AzureLocation location) : base(location)
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="DevCenterNetworkConnectionData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="subnetId"> The subnet to attach Virtual Machines to. </param>
-        /// <param name="domainName"> Active Directory domain name. </param>
-        /// <param name="organizationUnit"> Active Directory domain Organization Unit (OU). </param>
-        /// <param name="domainUsername"> The username of an Active Directory account (user or service account) that has permissions to create computer objects in Active Directory. Required format: admin@contoso.com. </param>
-        /// <param name="domainPassword"> The password for the account used to join domain. </param>
-        /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        /// <param name="healthCheckStatus"> Overall health status of the network connection. Health checks are run on creation, update, and periodically to validate the network connection. </param>
-        /// <param name="networkingResourceGroupName"> The name for resource group where NICs will be placed. </param>
-        /// <param name="domainJoinType"> AAD Join type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevCenterNetworkConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceIdentifier subnetId, string domainName, string organizationUnit, string domainUsername, string domainPassword, DevCenterProvisioningState? provisioningState, DevCenterHealthCheckStatus? healthCheckStatus, string networkingResourceGroupName, DomainJoinType? domainJoinType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Properties of a Network Connection. </param>
+        internal DevCenterNetworkConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, NetworkProperties properties) : base(id, name, resourceType, systemData, tags, location)
         {
-            SubnetId = subnetId;
-            DomainName = domainName;
-            OrganizationUnit = organizationUnit;
-            DomainUsername = domainUsername;
-            DomainPassword = domainPassword;
-            ProvisioningState = provisioningState;
-            HealthCheckStatus = healthCheckStatus;
-            NetworkingResourceGroupName = networkingResourceGroupName;
-            DomainJoinType = domainJoinType;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DevCenterNetworkConnectionData"/> for deserialization. </summary>
-        internal DevCenterNetworkConnectionData()
-        {
-        }
+        /// <summary> Properties of a Network Connection. </summary>
+        internal NetworkProperties Properties { get; set; }
 
         /// <summary> The subnet to attach Virtual Machines to. </summary>
-        public ResourceIdentifier SubnetId { get; set; }
+        public ResourceIdentifier SubnetId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SubnetId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkProperties();
+                }
+                Properties.SubnetId = value;
+            }
+        }
+
         /// <summary> Active Directory domain name. </summary>
-        public string DomainName { get; set; }
+        public string DomainName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DomainName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkProperties();
+                }
+                Properties.DomainName = value;
+            }
+        }
+
         /// <summary> Active Directory domain Organization Unit (OU). </summary>
-        public string OrganizationUnit { get; set; }
+        public string OrganizationUnit
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OrganizationUnit;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkProperties();
+                }
+                Properties.OrganizationUnit = value;
+            }
+        }
+
         /// <summary> The username of an Active Directory account (user or service account) that has permissions to create computer objects in Active Directory. Required format: admin@contoso.com. </summary>
-        public string DomainUsername { get; set; }
+        public string DomainUsername
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DomainUsername;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkProperties();
+                }
+                Properties.DomainUsername = value;
+            }
+        }
+
         /// <summary> The password for the account used to join domain. </summary>
-        public string DomainPassword { get; set; }
+        public string DomainPassword
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DomainPassword;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkProperties();
+                }
+                Properties.DomainPassword = value;
+            }
+        }
+
         /// <summary> The provisioning state of the resource. </summary>
-        public DevCenterProvisioningState? ProvisioningState { get; }
+        public DevCenterProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> Overall health status of the network connection. Health checks are run on creation, update, and periodically to validate the network connection. </summary>
-        public DevCenterHealthCheckStatus? HealthCheckStatus { get; }
+        public DevCenterHealthCheckStatus? HealthCheckStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HealthCheckStatus;
+            }
+        }
+
         /// <summary> The name for resource group where NICs will be placed. </summary>
-        public string NetworkingResourceGroupName { get; set; }
-        /// <summary> AAD Join type. </summary>
-        public DomainJoinType? DomainJoinType { get; set; }
+        public string NetworkingResourceGroupName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NetworkingResourceGroupName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkProperties();
+                }
+                Properties.NetworkingResourceGroupName = value;
+            }
+        }
     }
 }

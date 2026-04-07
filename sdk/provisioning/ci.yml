@@ -25,3 +25,4 @@ extends:
       safeName: AzureProvisioning
     - name: Azure.Provisioning.Deployment
       safeName: AzureProvisioningDeployment
+    TestDependsOnDependency: Azure.Provisioning Azure.Provisioning.Deployment

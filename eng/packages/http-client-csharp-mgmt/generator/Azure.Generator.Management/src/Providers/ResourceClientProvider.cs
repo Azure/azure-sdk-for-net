@@ -471,8 +471,11 @@ namespace Azure.Generator.Management.Providers
                 return (false, null);
             }
 
-            // If there is no patch method with a body, fall back to the put method
-            var putMethod = _resourceMetadata.Methods.FirstOrDefault(m => m.Kind == ResourceOperationKind.Create);
+            // If there is no patch method with a body, fall back to the put method.
+            // Search _resourceServiceMethods (the categorized set) instead of _resourceMetadata.Methods
+            // because for non-singleton resources with an Update method, the Create method is only
+            // assigned to the collection, not the resource.
+            var putMethod = _resourceServiceMethods.FirstOrDefault(m => m.Kind == ResourceOperationKind.Create);
             return (false, putMethod);
         }
 
