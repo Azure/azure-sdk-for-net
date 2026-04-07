@@ -13,6 +13,10 @@ namespace Microsoft.ClientModel.TestFramework.Tests;
 
 public class RecordedTestAttributeTests
 {
+    private static void MockTestMethod()
+    {
+    }
+
     private class MockRecordedTestBase : RecordedTestBase
     {
         public MockRecordedTestBase(RecordedTestMode mode) : base(false)
@@ -48,7 +52,7 @@ public class RecordedTestAttributeTests
         }
         public override TestResult MakeTestResult()
         {
-            return new TestCaseResult(new TestMethod(new MethodWrapper(typeof(RecordedTestAttributeTests), "MockTest")));
+            return new TestCaseResult(new TestMethod(new MethodWrapper(typeof(RecordedTestAttributeTests), nameof(MockTestMethod))));
         }
         public override TNode AddToXml(TNode parentNode, bool recursive)
         {
