@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         {
             if (id.ResourceType != DataReplicationProtectedItemResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DataReplicationProtectedItemResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DataReplicationProtectedItemResource.ResourceType), nameof(id));
             }
         }
 

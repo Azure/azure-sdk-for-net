@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.IotOperations
         {
             if (id.ResourceType != IotOperationsInstanceResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, IotOperationsInstanceResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, IotOperationsInstanceResource.ResourceType), nameof(id));
             }
         }
 

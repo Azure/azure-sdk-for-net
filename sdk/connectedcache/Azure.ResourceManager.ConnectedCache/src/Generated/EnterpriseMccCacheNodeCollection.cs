@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ConnectedCache
         {
             if (id.ResourceType != EnterpriseMccCustomerResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, EnterpriseMccCustomerResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, EnterpriseMccCustomerResource.ResourceType), nameof(id));
             }
         }
 

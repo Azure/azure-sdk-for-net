@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         {
             if (id.ResourceType != ContainerRegistryArchiveResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ContainerRegistryArchiveResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ContainerRegistryArchiveResource.ResourceType), nameof(id));
             }
         }
 

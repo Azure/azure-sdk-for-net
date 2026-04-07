@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Relay
         {
             if (id.ResourceType != WcfRelayResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, WcfRelayResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, WcfRelayResource.ResourceType), nameof(id));
             }
         }
 

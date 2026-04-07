@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DomainRegistration
         {
             if (id.ResourceType != AppServiceDomainResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AppServiceDomainResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AppServiceDomainResource.ResourceType), nameof(id));
             }
         }
 

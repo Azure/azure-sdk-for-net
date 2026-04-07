@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ApiCenter
         {
             if (id.ResourceType != ApiCenterServiceResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ApiCenterServiceResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ApiCenterServiceResource.ResourceType), nameof(id));
             }
         }
 
