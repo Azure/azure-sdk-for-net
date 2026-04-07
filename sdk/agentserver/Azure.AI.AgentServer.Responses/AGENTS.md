@@ -9,17 +9,15 @@
 
 The Responses library has **authoritative contract documents** that define all required behaviour.
 
-### Key documents
+### Responses-specific spec documents
 
 | Document | Location | Defines |
 |----------|----------|---------|
-| **API Behaviour Contract** | `/tmp/foundrysdk_specs/specs/hosted-agents/container-spec/docs/docs/responses-api-behaviour-contract.md` | Observable HTTP behaviour, endpoint matrices, error shapes, SSE contract, behavioural rules (B1–B37) |
-| **Protocol Spec** | `/tmp/foundrysdk_specs/specs/hosted-agents/container-spec/docs/docs/responses-protocol-spec.md` | Wire-level SSE format, distributed tracing, storage & persistence, content-type negotiation |
-| **Container Image Spec** | `/tmp/foundrysdk_specs/specs/hosted-agents/container-spec/docs/docs/container-image-spec.md` | Infrastructure requirements: networking, health probe, env vars, observability, graceful shutdown, identity header |
-| **Package Architecture** | `/tmp/foundrysdk_specs/specs/hosted-agents/container-spec/docs/docs/package-architecture.md` | Package layering, developer tiers (zero-config → spec-only), dependency graph |
-| **Handler Implementation Guide** | `docs/handler-implementation-guide.md` | Handler contract, builder pattern, cancellation, error handling, configuration |
+| **API Behaviour Contract** | `/tmp/foundrysdk_specs/specs/hosted-agents/container-spec/docs/responses-api-behaviour-contract.md` | Observable HTTP behaviour, endpoint matrices, error shapes, SSE contract, behavioural rules (B1–B37) |
+| **Library Behaviour Spec** | `/tmp/foundrysdk_specs/specs/hosted-agents/container-spec/docs/responses-library-behaviour-spec.md` | Language-agnostic library rules: handler contract, builder pattern, cancellation, streaming lifecycle |
+| **Protocol Spec** | `/tmp/foundrysdk_specs/specs/hosted-agents/container-spec/docs/responses-protocol-spec.md` | Wire-level SSE format, distributed tracing, storage & persistence, content-type negotiation |
 
-> **Dev setup**: Clone the specs repo and ensure the paths above resolve locally (e.g., `git clone <specs-repo> /tmp/foundrysdk_specs`).
+Cross-package specs (container image, package architecture, tools integration, handler guide) are in the parent [AGENTS.md](../AGENTS.md) §1 "Authoritative spec documents".
 
 ### Compliance workflow
 

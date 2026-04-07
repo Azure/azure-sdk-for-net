@@ -87,7 +87,7 @@ public class StreamingGreetingHandler : ResponseHandler
 
 ## With full event control
 
-When you need multiple content parts in a single message (e.g., text + refusal), emit refusal content instead of text, set custom properties on the output item before `EmitAdded()`, or interleave non-event work between builder calls, use the builder API. Each `Add*` returns a builder; each `Emit*` call produces one SSE event:
+When you need to interleave non-event work between individual delta/done calls within a content part, or set custom properties on the output item before `EmitAdded()`, drop down to the builder API. Each `Add*` returns a builder; each `Emit*` call produces one SSE event. (For multiple content parts such as text + refusal, you can stay at the convenience level — see `OutputItemMessageBuilder.TextContent()` and `RefusalContent()`.)
 
 ```C# Snippet:Responses_Sample3_GreetingHandler
 public class GreetingHandlerFullControl : ResponseHandler
