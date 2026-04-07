@@ -88,11 +88,13 @@ internal sealed class ResponseOrchestrator
         ResponseContext context,
         CancellationToken ct)
     {
+        var parentActivity = Activity.Current;
+
         if (execution.IsStreaming)
         {
             // Streaming: return a lazy event stream. Error recovery + finalization
             // happen inside the stream when the consumer iterates it.
-            var events = CreateStreamingAsync(request, execution, context, ct);
+            var events = CreateStreamingAsync(request, execution, context, parentActivity, ct);
             return OrchestratorResult.Streaming(events);
         }
 
@@ -100,7 +102,7 @@ internal sealed class ResponseOrchestrator
         var publisher = await _streamProvider.CreateEventPublisherAsync(execution.ResponseId, ct);
         try
         {
-            await foreach (var _ in ProcessEventsAsync(request, execution, context, publisher, ct)
+            await foreach (var _ in ProcessEventsAsync(request, execution, context, publisher, parentActivity, ct)
                 .WithCancellation(ct))
             {
                 // Consume — non-streaming just accumulates state.
@@ -248,11 +250,11 @@ internal sealed class ResponseOrchestrator
         ResponseExecution execution,
         ResponseContext context,
         IAsyncObserver<ResponseStreamEvent> publisher,
+        Activity? parentActivity,
         [EnumeratorCancellation] CancellationToken ct)
     {
         var firstEvent = true;
         var outputItemCount = 0;
-        var parentActivity = Activity.Current;
 
         await using var enumerator = _handler.CreateAsync(request, context, ct)
             .GetAsyncEnumerator(ct);
@@ -432,10 +434,11 @@ internal sealed class ResponseOrchestrator
         CreateResponse request,
         ResponseExecution execution,
         ResponseContext context,
+        Activity? parentActivity,
         [EnumeratorCancellation] CancellationToken ct)
     {
         var publisher = await _streamProvider.CreateEventPublisherAsync(execution.ResponseId, ct);
-        var enumerator = ProcessEventsAsync(request, execution, context, publisher, ct)
+        var enumerator = ProcessEventsAsync(request, execution, context, publisher, parentActivity, ct)
             .GetAsyncEnumerator(ct);
         var terminalEventYielded = false;
         try

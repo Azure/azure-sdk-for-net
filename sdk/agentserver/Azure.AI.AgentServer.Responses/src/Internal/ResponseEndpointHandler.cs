@@ -188,6 +188,7 @@ internal sealed class ResponseEndpointHandler
             // CTS includes httpContext.RequestAborted for non-bg only (disconnect → cancel).
             // Do NOT use 'using' — SseResult takes ownership and disposes the CTS.
             CancellationTokenSource? linkedCts = null;
+            var previousActivity = Activity.Current;
             try
             {
                 if (isBackground)
@@ -205,6 +206,7 @@ internal sealed class ResponseEndpointHandler
                     httpContext.RequestAborted.Register(() => execution.ClientDisconnected = true);
                 }
 
+                Activity.Current = activity;
                 var result = await _orchestrator.CreateAsync(request, execution, context, linkedCts.Token);
 
                 // SseResult takes ownership of linkedCts and activity — it will
@@ -227,9 +229,14 @@ internal sealed class ResponseEndpointHandler
                 activity?.Dispose();
                 throw;
             }
+            finally
+            {
+                Activity.Current = previousActivity;
+            }
         }
         else if (isBackground)
         {
+            var previousActivity = Activity.Current;
             try
             {
                 // Background (non-streaming): run handler in background task.
@@ -237,25 +244,37 @@ internal sealed class ResponseEndpointHandler
                 // is the source of truth, not a SDK-constructed seed.
                 execution.ExecutionTask = Task.Run(async () =>
                 {
+                    var backgroundPreviousActivity = Activity.Current;
                     using var bgLinkedCts = CancellationTokenSource.CreateLinkedTokenSource(
                         providerCt, execution.CancellationTokenSource.Token);
-                    await _orchestrator.CreateAsync(request, execution, context, bgLinkedCts.Token);
+                    try
+                    {
+                        Activity.Current = activity;
+                        await _orchestrator.CreateAsync(request, execution, context, bgLinkedCts.Token);
+                    }
+                    finally
+                    {
+                        Activity.Current = backgroundPreviousActivity;
+                    }
                 });
 
                 // Await the handler's response.created (or a pre-created error).
                 // If the handler fails before response.created, the signal faults
                 // and the exception propagates to the exception filter → HTTP 500.
                 // The signal delivers an independent snapshot — no re-snapshot needed.
+                Activity.Current = activity;
                 var handlerResponse = await execution.ResponseCreatedSignal.Task;
                 return Results.Json(handlerResponse, SharedJsonOptions.Instance, statusCode: 200);
             }
             finally
             {
+                Activity.Current = previousActivity;
                 activity?.Dispose();
             }
         }
         else
         {
+            var previousActivity = Activity.Current;
             try
             {
                 // Default (non-streaming, non-background): run to completion, return final response.
@@ -267,12 +286,14 @@ internal sealed class ResponseEndpointHandler
                     providerCt, execution.CancellationTokenSource.Token, httpContext.RequestAborted);
                 httpContext.RequestAborted.Register(() => execution.ClientDisconnected = true);
 
+                Activity.Current = activity;
                 await _orchestrator.CreateAsync(request, execution, context, linkedCts.Token);
 
                 return Results.Json(execution.Response!.Snapshot(), SharedJsonOptions.Instance, statusCode: 200);
             }
             finally
             {
+                Activity.Current = previousActivity;
                 activity?.Dispose();
             }
         }

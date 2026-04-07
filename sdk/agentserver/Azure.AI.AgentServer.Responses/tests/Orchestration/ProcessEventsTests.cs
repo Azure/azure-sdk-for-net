@@ -239,7 +239,7 @@ public class ProcessEventsTests : IDisposable
         IAsyncObserver<ResponseStreamEvent> publisher)
     {
         await foreach (var _ in _orchestrator.ProcessEventsAsync(
-            request, execution, context, publisher, CancellationToken.None))
+            request, execution, context, publisher, null, CancellationToken.None))
         {
             // Consume all events
         }
