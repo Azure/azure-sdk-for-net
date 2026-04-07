@@ -26,6 +26,7 @@ namespace Azure.AI.Translation.Document
         private readonly DateTimeOffset? _createdDateTimeUtcEnd;
         private readonly IEnumerable<string> _orderby;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of DocumentTranslationClientGetDocumentsStatusCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The DocumentTranslationClient client used to send requests. </param>
@@ -69,7 +70,8 @@ namespace Azure.AI.Translation.Document
         /// <param name="createdDateTimeUtcEnd"> the end datetime to get items before. </param>
         /// <param name="orderby"> the sorting query for the collection (ex: 'CreatedDateTimeUtc asc','CreatedDateTimeUtc desc'). </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public DocumentTranslationClientGetDocumentsStatusCollectionResultOfT(DocumentTranslationClient client, Guid translationId, int? maxCount, int? skip, int? maxpagesize, IEnumerable<Guid> documentIds, IEnumerable<string> statuses, DateTimeOffset? createdDateTimeUtcStart, DateTimeOffset? createdDateTimeUtcEnd, IEnumerable<string> @orderby, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public DocumentTranslationClientGetDocumentsStatusCollectionResultOfT(DocumentTranslationClient client, Guid translationId, int? maxCount, int? skip, int? maxpagesize, IEnumerable<Guid> documentIds, IEnumerable<string> statuses, DateTimeOffset? createdDateTimeUtcStart, DateTimeOffset? createdDateTimeUtcEnd, IEnumerable<string> @orderby, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _translationId = translationId;
@@ -82,6 +84,7 @@ namespace Azure.AI.Translation.Document
             _createdDateTimeUtcEnd = createdDateTimeUtcEnd;
             _orderby = @orderby;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of DocumentTranslationClientGetDocumentsStatusCollectionResultOfT as an enumerable collection. </summary>
@@ -115,7 +118,7 @@ namespace Azure.AI.Translation.Document
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetDocumentsStatusRequest(nextLink, _translationId, _maxCount, _skip, _maxpagesize, _documentIds, _statuses, _createdDateTimeUtcStart, _createdDateTimeUtcEnd, _orderby, _context) : _client.CreateGetDocumentsStatusRequest(_translationId, _maxCount, _skip, _maxpagesize, _documentIds, _statuses, _createdDateTimeUtcStart, _createdDateTimeUtcEnd, _orderby, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("DocumentTranslationClient.GetDocumentsStatus");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

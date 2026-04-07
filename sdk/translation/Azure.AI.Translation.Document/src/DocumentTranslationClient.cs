@@ -214,7 +214,6 @@ namespace Azure.AI.Translation.Document
         /// </summary>
         /// <param name="options">Options to use when filtering result.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        [ForwardsClientCalls]
         public virtual Pageable<TranslationStatusResult> GetTranslationStatuses(GetTranslationStatusesOptions options = default, CancellationToken cancellationToken = default)
         {
             var statusList = options?.Statuses.Count > 0 ? options.Statuses.Select(status => status.ToString()) : null;
@@ -235,7 +234,6 @@ namespace Azure.AI.Translation.Document
         /// </summary>
         /// <param name="options">Options to use when filtering result.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        [ForwardsClientCalls]
         public virtual AsyncPageable<TranslationStatusResult> GetTranslationStatusesAsync(GetTranslationStatusesOptions options = default, CancellationToken cancellationToken = default)
         {
             var statusList = options?.Statuses.Count > 0 ? options.Statuses.Select(status => status.ToString()) : null;

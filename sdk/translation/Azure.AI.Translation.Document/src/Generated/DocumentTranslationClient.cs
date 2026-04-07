@@ -598,7 +598,8 @@ namespace Azure.AI.Translation.Document
                 createdDateTimeUtcStart,
                 createdDateTimeUtcEnd,
                 @orderby,
-                context);
+                context,
+                "DocumentTranslationClient.GetDocumentsStatus");
         }
 
         /// <summary>
@@ -702,7 +703,8 @@ namespace Azure.AI.Translation.Document
                 createdDateTimeUtcStart,
                 createdDateTimeUtcEnd,
                 @orderby,
-                context);
+                context,
+                "DocumentTranslationClient.GetDocumentsStatus");
         }
 
         /// <summary>
@@ -800,7 +802,8 @@ namespace Azure.AI.Translation.Document
                 createdDateTimeUtcStart,
                 createdDateTimeUtcEnd,
                 @orderby,
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "DocumentTranslationClient.GetDocumentsStatus");
         }
 
         /// <summary>
@@ -898,7 +901,8 @@ namespace Azure.AI.Translation.Document
                 createdDateTimeUtcStart,
                 createdDateTimeUtcEnd,
                 @orderby,
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "DocumentTranslationClient.GetDocumentsStatus");
         }
 
         /// <summary>

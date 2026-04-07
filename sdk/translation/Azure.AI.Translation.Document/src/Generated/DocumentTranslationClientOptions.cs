@@ -30,6 +30,10 @@ namespace Azure.AI.Translation.Document
             {
                 Version = version;
             }
+            if (section["Audience"] is string audience)
+            {
+                Audience = new DocumentTranslationAudience(audience);
+            }
             ConfigureLogging();
         }
 
