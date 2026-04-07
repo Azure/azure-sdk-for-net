@@ -88,9 +88,9 @@ if ($LASTEXITCODE -ne 0) {
   exit 1
 }
 Write-Host "pip install doc-warden==$DocWardenVersion --quiet"
-pip install doc-warden==$DocWardenVersion --quiet
+pip install doc-warden==$DocWardenVersion --quiet --index-url https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-python/pypi/simple/
 if ($LASTEXITCODE -ne 0) {
-  LogError "pip install doc-warden==$DocWardenVersion --quiet failed with exit code $LASTEXITCODE"
+  LogError "pip install doc-warden==$DocWardenVersion --quiet --index-url https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-python/pypi/simple/ failed with exit code $LASTEXITCODE"
   exit 1
 }
 
