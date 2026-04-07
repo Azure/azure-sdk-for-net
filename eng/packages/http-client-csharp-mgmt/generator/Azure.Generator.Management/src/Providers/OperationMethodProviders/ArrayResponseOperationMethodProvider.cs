@@ -197,9 +197,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 _restClient,
                 _serviceMethod,
                 _itemType,
-                _listType,
                 _isAsync,
-                scopeName,
                 constructorParams,
                 _methodName,  // Pass the actual method name for proper class naming
                 _enclosingType.Name);  // Pass the enclosing type name (e.g., "FooResource")

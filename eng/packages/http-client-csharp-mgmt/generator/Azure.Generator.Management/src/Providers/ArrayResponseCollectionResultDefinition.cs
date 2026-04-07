@@ -34,9 +34,7 @@ namespace Azure.Generator.Management.Providers
         private readonly ClientProvider _restClient;
         private readonly InputServiceMethod _serviceMethod;
         private readonly CSharpType _itemType;
-        private readonly CSharpType _listType;
         private readonly bool _isAsync;
-        private readonly string _scopeName;
         private readonly IReadOnlyList<ParameterProvider> _constructorParameters;
         private readonly string _methodName;
         private readonly string _enclosingTypeName;
@@ -55,9 +53,7 @@ namespace Azure.Generator.Management.Providers
             ClientProvider restClient,
             InputServiceMethod serviceMethod,
             CSharpType itemType,
-            CSharpType listType,
             bool isAsync,
-            string scopeName,
             IReadOnlyList<ParameterProvider> constructorParameters,
             string methodName,
             string enclosingTypeName)
@@ -65,9 +61,7 @@ namespace Azure.Generator.Management.Providers
             _restClient = restClient;
             _serviceMethod = serviceMethod;
             _itemType = itemType;
-            _listType = listType;
             _isAsync = isAsync;
-            _scopeName = scopeName;
             _constructorParameters = constructorParameters;
             _methodName = methodName;
             _enclosingTypeName = enclosingTypeName;
