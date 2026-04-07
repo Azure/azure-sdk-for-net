@@ -148,6 +148,17 @@ internal sealed class ResponseOrchestrator
                 throw new ResourceNotFoundException($"Response '{responseId}' not found.");
             }
 
+            // If the response reached a terminal status but finalization (persistence +
+            // MarkCompleted) hasn't finished yet, wait for the execution task so the
+            // caller never observes a terminal status before side effects are durable.
+            if (execution.CompletedAt is null
+                && execution.Response is not null
+                && IsTerminalStatus(execution.Response.Status)
+                && execution.ExecutionTask is not null)
+            {
+                await execution.ExecutionTask.WaitAsync(TimeSpan.FromSeconds(10));
+            }
+
             return execution.Response!.Snapshot();
         }
 
