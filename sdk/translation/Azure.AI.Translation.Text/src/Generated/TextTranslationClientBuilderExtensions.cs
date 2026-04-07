@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure;
 using Azure.AI.Translation.Text;
 using Azure.Core;
 using Azure.Core.Extensions;
@@ -17,11 +18,28 @@ namespace Microsoft.Extensions.Azure
     {
         /// <summary> Registers a <see cref="TextTranslationClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>
-        /// <param name="endpoint"></param>
-        public static IAzureClientBuilder<TextTranslationClient, TextTranslationClientOptions> AddTextTranslationClient<TBuilder>(this TBuilder builder, Uri endpoint)
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public static IAzureClientBuilder<TextTranslationClient, TextTranslationClientOptions> AddTextTranslationClient<TBuilder>(this TBuilder builder, Uri endpoint, AzureKeyCredential credential)
             where TBuilder : IAzureClientFactoryBuilder
         {
-            return builder.RegisterClientFactory<TextTranslationClient, TextTranslationClientOptions>(options => new TextTranslationClient(endpoint, options));
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
+
+            return builder.RegisterClientFactory<TextTranslationClient, TextTranslationClientOptions>(options => new TextTranslationClient(endpoint, credential, options));
+        }
+
+        /// <summary> Registers a <see cref="TextTranslationClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
+        /// <param name="builder"> The builder to register with. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
+        public static IAzureClientBuilder<TextTranslationClient, TextTranslationClientOptions> AddTextTranslationClient<TBuilder>(this TBuilder builder, Uri endpoint)
+            where TBuilder : IAzureClientFactoryBuilderWithCredential
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+
+            return builder.RegisterClientFactory<TextTranslationClient, TextTranslationClientOptions>((options, credential) => new TextTranslationClient(endpoint, credential, options));
         }
 
         /// <summary> Registers a <see cref="TextTranslationClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
