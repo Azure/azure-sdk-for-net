@@ -6,15 +6,291 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.IO;
+using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
+using Azure.Storage.Files.DataLake;
 
 namespace Azure.Storage.Files.DataLake.Models
 {
-    internal partial class BlobPropertiesInternal
+    /// <summary> Properties of a blob. </summary>
+    internal partial class BlobPropertiesInternal : IPersistableModel<BlobPropertiesInternal>, IXmlSerializable
     {
-        internal static BlobPropertiesInternal DeserializeBlobPropertiesInternal(XElement element)
+        /// <summary> Initializes a new instance of <see cref="BlobPropertiesInternal"/> for deserialization. </summary>
+        internal BlobPropertiesInternal()
         {
+        }
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BlobPropertiesInternal PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BlobPropertiesInternal>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "X":
+                    using (Stream dataStream = data.ToStream())
+                    {
+                        return DeserializeBlobPropertiesInternal(XElement.Load(dataStream, LoadOptions.PreserveWhitespace), options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BlobPropertiesInternal)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BlobPropertiesInternal>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "X":
+                    using (MemoryStream stream = new MemoryStream(256))
+                    {
+                        using (XmlWriter writer = XmlWriter.Create(stream, ModelSerializationExtensions.XmlWriterSettings))
+                        {
+                            WriteXml(writer, options, "Properties");
+                        }
+                        if (stream.Position > int.MaxValue)
+                        {
+                            return BinaryData.FromStream(stream);
+                        }
+                        else
+                        {
+                            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+                        }
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BlobPropertiesInternal)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<BlobPropertiesInternal>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BlobPropertiesInternal IPersistableModel<BlobPropertiesInternal>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<BlobPropertiesInternal>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
+
+        /// <param name="writer"> The XML writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        /// <param name="nameHint"> An optional name hint. </param>
+        private void WriteXml(XmlWriter writer, ModelReaderWriterOptions options, string nameHint)
+        {
+            if (nameHint != null)
+            {
+                writer.WriteStartElement(nameHint);
+            }
+
+            XmlModelWriteCore(writer, options);
+
+            if (nameHint != null)
+            {
+                writer.WriteEndElement();
+            }
+        }
+
+        /// <param name="writer"> The XML writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal virtual void XmlModelWriteCore(XmlWriter writer, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BlobPropertiesInternal>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "X")
+            {
+                throw new FormatException($"The model {nameof(BlobPropertiesInternal)} does not support writing '{format}' format.");
+            }
+
+            if (Optional.IsDefined(CreationTime))
+            {
+                writer.WriteStartElement("Creation-Time");
+                writer.WriteStringValue(CreationTime.Value, "R");
+                writer.WriteEndElement();
+            }
+            writer.WriteStartElement("Last-Modified");
+            writer.WriteStringValue(LastModified, "R");
+            writer.WriteEndElement();
+            writer.WriteStartElement("Etag");
+            writer.WriteValue(Etag);
+            writer.WriteEndElement();
+            if (Optional.IsDefined(ContentLength))
+            {
+                writer.WriteStartElement("Content-Length");
+                writer.WriteValue(ContentLength.Value);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(ContentType))
+            {
+                writer.WriteStartElement("Content-Type");
+                writer.WriteValue(ContentType);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(ContentEncoding))
+            {
+                writer.WriteStartElement("Content-Encoding");
+                writer.WriteValue(ContentEncoding);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(ContentLanguage))
+            {
+                writer.WriteStartElement("Content-Language");
+                writer.WriteValue(ContentLanguage);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(ContentMd5))
+            {
+                writer.WriteStartElement("Content-MD5");
+                writer.WriteBase64StringValue(ContentMd5.ToArray(), "D");
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(ContentDisposition))
+            {
+                writer.WriteStartElement("Content-Disposition");
+                writer.WriteValue(ContentDisposition);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(CacheControl))
+            {
+                writer.WriteStartElement("Cache-Control");
+                writer.WriteValue(CacheControl);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(BlobSequenceNumber))
+            {
+                writer.WriteStartElement("x-ms-blob-sequence-number");
+                writer.WriteValue(BlobSequenceNumber.Value);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(CopyId))
+            {
+                writer.WriteStartElement("CopyId");
+                writer.WriteValue(CopyId);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(CopySource))
+            {
+                writer.WriteStartElement("CopySource");
+                writer.WriteValue(CopySource);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(CopyProgress))
+            {
+                writer.WriteStartElement("CopyProgress");
+                writer.WriteValue(CopyProgress);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(CopyCompletionTime))
+            {
+                writer.WriteStartElement("CopyCompletionTime");
+                writer.WriteStringValue(CopyCompletionTime.Value, "R");
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(CopyStatusDescription))
+            {
+                writer.WriteStartElement("CopyStatusDescription");
+                writer.WriteValue(CopyStatusDescription);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(ServerEncrypted))
+            {
+                writer.WriteStartElement("ServerEncrypted");
+                writer.WriteValue(ServerEncrypted.Value);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(IncrementalCopy))
+            {
+                writer.WriteStartElement("IncrementalCopy");
+                writer.WriteValue(IncrementalCopy.Value);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(DestinationSnapshot))
+            {
+                writer.WriteStartElement("DestinationSnapshot");
+                writer.WriteValue(DestinationSnapshot);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(DeletedTime))
+            {
+                writer.WriteStartElement("DeletedTime");
+                writer.WriteStringValue(DeletedTime.Value, "R");
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(RemainingRetentionDays))
+            {
+                writer.WriteStartElement("RemainingRetentionDays");
+                writer.WriteValue(RemainingRetentionDays.Value);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(AccessTierInferred))
+            {
+                writer.WriteStartElement("AccessTierInferred");
+                writer.WriteValue(AccessTierInferred.Value);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(CustomerProvidedKeySha256))
+            {
+                writer.WriteStartElement("CustomerProvidedKeySha256");
+                writer.WriteValue(CustomerProvidedKeySha256);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(EncryptionScope))
+            {
+                writer.WriteStartElement("EncryptionScope");
+                writer.WriteValue(EncryptionScope);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(AccessTierChangeTime))
+            {
+                writer.WriteStartElement("AccessTierChangeTime");
+                writer.WriteStringValue(AccessTierChangeTime.Value, "R");
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(TagCount))
+            {
+                writer.WriteStartElement("TagCount");
+                writer.WriteValue(TagCount.Value);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(ExpiresOn))
+            {
+                writer.WriteStartElement("Expiry-Time");
+                writer.WriteStringValue(ExpiresOn.Value, "R");
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(IsSealed))
+            {
+                writer.WriteStartElement("Sealed");
+                writer.WriteValue(IsSealed.Value);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(LastAccessedOn))
+            {
+                writer.WriteStartElement("LastAccessTime");
+                writer.WriteStringValue(LastAccessedOn.Value, "R");
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(DeleteTime))
+            {
+                writer.WriteStartElement("DeleteTime");
+                writer.WriteStringValue(DeleteTime.Value, "R");
+                writer.WriteEndElement();
+            }
+        }
+
+        /// <param name="element"> The xml element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static BlobPropertiesInternal DeserializeBlobPropertiesInternal(XElement element, ModelReaderWriterOptions options)
+        {
+            if (element == null)
+            {
+                return null;
+            }
+
             DateTimeOffset? creationTime = default;
             DateTimeOffset lastModified = default;
             string etag = default;
@@ -22,7 +298,7 @@ namespace Azure.Storage.Files.DataLake.Models
             string contentType = default;
             string contentEncoding = default;
             string contentLanguage = default;
-            byte[] contentMD5 = default;
+            BinaryData contentMd5 = default;
             string contentDisposition = default;
             string cacheControl = default;
             long? blobSequenceNumber = default;
@@ -45,125 +321,161 @@ namespace Azure.Storage.Files.DataLake.Models
             bool? isSealed = default;
             DateTimeOffset? lastAccessedOn = default;
             DateTimeOffset? deleteTime = default;
-            if (element.Element("Creation-Time") is XElement creationTimeElement)
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+
+            foreach (var child in element.Elements())
             {
-                creationTime = creationTimeElement.GetDateTimeOffsetValue("R");
-            }
-            if (element.Element("Last-Modified") is XElement lastModifiedElement)
-            {
-                lastModified = lastModifiedElement.GetDateTimeOffsetValue("R");
-            }
-            if (element.Element("Etag") is XElement etagElement)
-            {
-                etag = (string)etagElement;
-            }
-            if (element.Element("Content-Length") is XElement contentLengthElement)
-            {
-                contentLength = (long?)contentLengthElement;
-            }
-            if (element.Element("Content-Type") is XElement contentTypeElement)
-            {
-                contentType = (string)contentTypeElement;
-            }
-            if (element.Element("Content-Encoding") is XElement contentEncodingElement)
-            {
-                contentEncoding = (string)contentEncodingElement;
-            }
-            if (element.Element("Content-Language") is XElement contentLanguageElement)
-            {
-                contentLanguage = (string)contentLanguageElement;
-            }
-            if (element.Element("Content-MD5") is XElement contentMD5Element)
-            {
-                contentMD5 = contentMD5Element.GetBytesFromBase64Value("D");
-            }
-            if (element.Element("Content-Disposition") is XElement contentDispositionElement)
-            {
-                contentDisposition = (string)contentDispositionElement;
-            }
-            if (element.Element("Cache-Control") is XElement cacheControlElement)
-            {
-                cacheControl = (string)cacheControlElement;
-            }
-            if (element.Element("x-ms-blob-sequence-number") is XElement xMsBlobSequenceNumberElement)
-            {
-                blobSequenceNumber = (long?)xMsBlobSequenceNumberElement;
-            }
-            if (element.Element("CopyId") is XElement copyIdElement)
-            {
-                copyId = (string)copyIdElement;
-            }
-            if (element.Element("CopySource") is XElement copySourceElement)
-            {
-                copySource = (string)copySourceElement;
-            }
-            if (element.Element("CopyProgress") is XElement copyProgressElement)
-            {
-                copyProgress = (string)copyProgressElement;
-            }
-            if (element.Element("CopyCompletionTime") is XElement copyCompletionTimeElement)
-            {
-                copyCompletionTime = copyCompletionTimeElement.GetDateTimeOffsetValue("R");
-            }
-            if (element.Element("CopyStatusDescription") is XElement copyStatusDescriptionElement)
-            {
-                copyStatusDescription = (string)copyStatusDescriptionElement;
-            }
-            if (element.Element("ServerEncrypted") is XElement serverEncryptedElement)
-            {
-                serverEncrypted = (bool?)serverEncryptedElement;
-            }
-            if (element.Element("IncrementalCopy") is XElement incrementalCopyElement)
-            {
-                incrementalCopy = (bool?)incrementalCopyElement;
-            }
-            if (element.Element("DestinationSnapshot") is XElement destinationSnapshotElement)
-            {
-                destinationSnapshot = (string)destinationSnapshotElement;
-            }
-            if (element.Element("DeletedTime") is XElement deletedTimeElement)
-            {
-                deletedTime = deletedTimeElement.GetDateTimeOffsetValue("R");
-            }
-            if (element.Element("RemainingRetentionDays") is XElement remainingRetentionDaysElement)
-            {
-                remainingRetentionDays = (int?)remainingRetentionDaysElement;
-            }
-            if (element.Element("AccessTierInferred") is XElement accessTierInferredElement)
-            {
-                accessTierInferred = (bool?)accessTierInferredElement;
-            }
-            if (element.Element("CustomerProvidedKeySha256") is XElement customerProvidedKeySha256Element)
-            {
-                customerProvidedKeySha256 = (string)customerProvidedKeySha256Element;
-            }
-            if (element.Element("EncryptionScope") is XElement encryptionScopeElement)
-            {
-                encryptionScope = (string)encryptionScopeElement;
-            }
-            if (element.Element("AccessTierChangeTime") is XElement accessTierChangeTimeElement)
-            {
-                accessTierChangeTime = accessTierChangeTimeElement.GetDateTimeOffsetValue("R");
-            }
-            if (element.Element("TagCount") is XElement tagCountElement)
-            {
-                tagCount = (int?)tagCountElement;
-            }
-            if (element.Element("Expiry-Time") is XElement expiryTimeElement)
-            {
-                expiresOn = expiryTimeElement.GetDateTimeOffsetValue("R");
-            }
-            if (element.Element("Sealed") is XElement sealedElement)
-            {
-                isSealed = (bool?)sealedElement;
-            }
-            if (element.Element("LastAccessTime") is XElement lastAccessTimeElement)
-            {
-                lastAccessedOn = lastAccessTimeElement.GetDateTimeOffsetValue("R");
-            }
-            if (element.Element("DeleteTime") is XElement deleteTimeElement)
-            {
-                deleteTime = deleteTimeElement.GetDateTimeOffsetValue("R");
+                string localName = child.Name.LocalName;
+                if (localName == "Creation-Time")
+                {
+                    creationTime = child.GetDateTimeOffset("R");
+                    continue;
+                }
+                if (localName == "Last-Modified")
+                {
+                    lastModified = child.GetDateTimeOffset("R");
+                    continue;
+                }
+                if (localName == "Etag")
+                {
+                    etag = (string)child;
+                    continue;
+                }
+                if (localName == "Content-Length")
+                {
+                    contentLength = (long?)child;
+                    continue;
+                }
+                if (localName == "Content-Type")
+                {
+                    contentType = (string)child;
+                    continue;
+                }
+                if (localName == "Content-Encoding")
+                {
+                    contentEncoding = (string)child;
+                    continue;
+                }
+                if (localName == "Content-Language")
+                {
+                    contentLanguage = (string)child;
+                    continue;
+                }
+                if (localName == "Content-MD5")
+                {
+                    contentMd5 = BinaryData.FromBytes(child.GetBytesFromBase64("D"));
+                    continue;
+                }
+                if (localName == "Content-Disposition")
+                {
+                    contentDisposition = (string)child;
+                    continue;
+                }
+                if (localName == "Cache-Control")
+                {
+                    cacheControl = (string)child;
+                    continue;
+                }
+                if (localName == "x-ms-blob-sequence-number")
+                {
+                    blobSequenceNumber = (long?)child;
+                    continue;
+                }
+                if (localName == "CopyId")
+                {
+                    copyId = (string)child;
+                    continue;
+                }
+                if (localName == "CopySource")
+                {
+                    copySource = (string)child;
+                    continue;
+                }
+                if (localName == "CopyProgress")
+                {
+                    copyProgress = (string)child;
+                    continue;
+                }
+                if (localName == "CopyCompletionTime")
+                {
+                    copyCompletionTime = child.GetDateTimeOffset("R");
+                    continue;
+                }
+                if (localName == "CopyStatusDescription")
+                {
+                    copyStatusDescription = (string)child;
+                    continue;
+                }
+                if (localName == "ServerEncrypted")
+                {
+                    serverEncrypted = (bool?)child;
+                    continue;
+                }
+                if (localName == "IncrementalCopy")
+                {
+                    incrementalCopy = (bool?)child;
+                    continue;
+                }
+                if (localName == "DestinationSnapshot")
+                {
+                    destinationSnapshot = (string)child;
+                    continue;
+                }
+                if (localName == "DeletedTime")
+                {
+                    deletedTime = child.GetDateTimeOffset("R");
+                    continue;
+                }
+                if (localName == "RemainingRetentionDays")
+                {
+                    remainingRetentionDays = (int?)child;
+                    continue;
+                }
+                if (localName == "AccessTierInferred")
+                {
+                    accessTierInferred = (bool?)child;
+                    continue;
+                }
+                if (localName == "CustomerProvidedKeySha256")
+                {
+                    customerProvidedKeySha256 = (string)child;
+                    continue;
+                }
+                if (localName == "EncryptionScope")
+                {
+                    encryptionScope = (string)child;
+                    continue;
+                }
+                if (localName == "AccessTierChangeTime")
+                {
+                    accessTierChangeTime = child.GetDateTimeOffset("R");
+                    continue;
+                }
+                if (localName == "TagCount")
+                {
+                    tagCount = (int?)child;
+                    continue;
+                }
+                if (localName == "Expiry-Time")
+                {
+                    expiresOn = child.GetDateTimeOffset("R");
+                    continue;
+                }
+                if (localName == "Sealed")
+                {
+                    isSealed = (bool?)child;
+                    continue;
+                }
+                if (localName == "LastAccessTime")
+                {
+                    lastAccessedOn = child.GetDateTimeOffset("R");
+                    continue;
+                }
+                if (localName == "DeleteTime")
+                {
+                    deleteTime = child.GetDateTimeOffset("R");
+                    continue;
+                }
             }
             return new BlobPropertiesInternal(
                 creationTime,
@@ -173,7 +485,7 @@ namespace Azure.Storage.Files.DataLake.Models
                 contentType,
                 contentEncoding,
                 contentLanguage,
-                contentMD5,
+                contentMd5,
                 contentDisposition,
                 cacheControl,
                 blobSequenceNumber,
@@ -195,7 +507,12 @@ namespace Azure.Storage.Files.DataLake.Models
                 expiresOn,
                 isSealed,
                 lastAccessedOn,
-                deleteTime);
+                deleteTime,
+                additionalBinaryDataProperties);
         }
+
+        /// <param name="writer"> The XML writer. </param>
+        /// <param name="nameHint"> An optional name hint. </param>
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteXml(writer, ModelSerializationExtensions.WireOptions, nameHint);
     }
 }

@@ -7,16 +7,16 @@
 
 namespace Azure.Storage.Files.DataLake.Models
 {
-    /// <summary> The DataLakeLeaseAction. </summary>
+    /// <summary> The lease action for append and flush operations. </summary>
     public enum DataLakeLeaseAction
     {
-        /// <summary> acquire. </summary>
+        /// <summary> Acquire a lease. </summary>
         Acquire,
-        /// <summary> auto-renew. </summary>
+        /// <summary> Auto-renew the lease. </summary>
         AutoRenew,
-        /// <summary> release. </summary>
+        /// <summary> Release the lease only on flush. </summary>
         Release,
-        /// <summary> acquire-release. </summary>
+        /// <summary> Acquire, complete the operation, and release the lease. </summary>
         AcquireRelease
     }
 }

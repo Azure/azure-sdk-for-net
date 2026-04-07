@@ -6,24 +6,33 @@
 #nullable disable
 
 using System;
-using Azure.Storage.Common;
+using System.Collections.Generic;
 
 namespace Azure.Storage.Files.DataLake.Models
 {
-    /// <summary> The BlobPrefix. </summary>
+    /// <summary> A blob prefix. </summary>
     internal partial class BlobPrefix
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="BlobPrefix"/>. </summary>
-        /// <param name="name"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <param name="name"> The prefix name. </param>
         internal BlobPrefix(string name)
         {
-            Argument.AssertNotNull(name, nameof(name));
-
             Name = name;
         }
 
-        /// <summary> Gets the name. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobPrefix"/>. </summary>
+        /// <param name="name"> The prefix name. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BlobPrefix(string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        {
+            Name = name;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary> The prefix name. </summary>
         public string Name { get; }
     }
 }

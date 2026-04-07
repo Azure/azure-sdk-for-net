@@ -612,10 +612,24 @@ namespace Azure.Storage.Files.DataLake
             };
         }
 
-        internal static PathSegment ToPathSegment(this ResponseWithHeaders<PathList, FileSystemListPathsHeaders> response)
+        internal const string ContinuationHeader = "x-ms-continuation";
+        private const string LastModifiedHeader = "Last-Modified";
+        private const string OwnerHeader = "x-ms-owner";
+        private const string GroupHeader = "x-ms-group";
+        private const string PermissionsHeader = "x-ms-permissions";
+        private const string AclHeader = "x-ms-acl";
+        internal const string ResourceTypeHeader = "x-ms-resource-type";
+        private const string CreationTimeHeader = "x-ms-creation-time";
+        private const string ExpiryTimeHeader = "x-ms-expiry-time";
+        private const string EncryptionKeySha256Header = "x-ms-encryption-key-sha256";
+        private const string ServerEncryptedHeader = "x-ms-server-encrypted";
+        private const string EncryptionScopeHeader = "x-ms-encryption-scope";
+        private const string EncryptionContextHeader = "x-ms-encryption-context";
+
+        internal static PathSegment ToPathSegment(this Response<PathList> response)
             => new PathSegment
             {
-                Continuation = response.Headers.Continuation,
+                Continuation = response.GetRawResponse().Headers.TryGetValue(ContinuationHeader, out string continuation) ? continuation : null,
                 Paths = response.Value.ToPathItems()
             };
 
@@ -641,7 +655,7 @@ namespace Azure.Storage.Files.DataLake
                 Name = path.Name,
                 IsDirectory = path.IsDirectory != null && bool.Parse(path.IsDirectory),
                 LastModified = path.LastModified.GetValueOrDefault(),
-                ETag = new ETag(path.Etag),
+                ETag = new ETag(path.ETag),
                 ContentLength = path.ContentLength == null ? 0 : long.Parse(path.ContentLength, CultureInfo.InvariantCulture),
                 Owner = path.Owner,
                 Group = path.Group,
@@ -681,62 +695,41 @@ namespace Azure.Storage.Files.DataLake
             return default;
         }
 
-        internal static PathInfo ToPathInfo(this ResponseWithHeaders<PathCreateHeaders> response)
+        internal static PathInfo ToPathInfo(this Response response)
             => new PathInfo
             {
-                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
-                LastModified = response.Headers.LastModified.GetValueOrDefault()
+                ETag = response.Headers.TryGetValue(Constants.HeaderNames.ETag, out string etagValue) ? new ETag(etagValue) : default,
+                LastModified = (response.Headers.TryGetValue(LastModifiedHeader, out DateTimeOffset? lastModified) ? lastModified : null).GetValueOrDefault()
             };
 
-        internal static PathAccessControl ToPathAccessControl(this ResponseWithHeaders<PathGetPropertiesHeaders> response)
+        internal static PathAccessControl ToPathAccessControl(this Response response)
             => new PathAccessControl
             {
-                Owner = response.Headers.Owner,
-                Group = response.Headers.Group,
-                Permissions = PathPermissions.ParseSymbolicPermissions(response.Headers.Permissions),
-                AccessControlList = PathAccessControlExtensions.ParseAccessControlList(response.Headers.ACL)
+                Owner = response.Headers.TryGetValue(OwnerHeader, out string owner) ? owner : null,
+                Group = response.Headers.TryGetValue(GroupHeader, out string group) ? group : null,
+                Permissions = response.Headers.TryGetValue(PermissionsHeader, out string permissions) ? PathPermissions.ParseSymbolicPermissions(permissions) : null,
+                AccessControlList = response.Headers.TryGetValue(AclHeader, out string acl) ? PathAccessControlExtensions.ParseAccessControlList(acl) : null
             };
 
-        internal static PathSystemProperties ToPathSystemProperties(this ResponseWithHeaders<PathGetPropertiesHeaders> response)
+        internal static PathSystemProperties ToPathSystemProperties(this Response response)
             => new PathSystemProperties
             {
-                CreationTime = response.Headers.CreationTime,
-                LastModifiedTime = response.Headers.LastModified,
-                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
-                ContentLength = response.Headers.ContentLength,
-                IsDirectory = response.Headers.ResourceType == Constants.DataLake.DirectoryResourceType,
-                IsServerEncrypted = response.Headers.IsServerEncrypted,
-                EncryptionKeySha256 = response.Headers.EncryptionKeySha256,
-                ExpiresOn = response.Headers.ExpiresOn,
-                EncryptionScope = response.Headers.EncryptionScope,
-                EncryptionContext = response.Headers.EncryptionContext,
-                Owner = response.Headers.Owner,
-                Group = response.Headers.Group,
-                Permissions = PathPermissions.ParseSymbolicPermissions(response.Headers.Permissions),
+                CreationTime = response.Headers.TryGetValue(CreationTimeHeader, out DateTimeOffset? creationTime) ? creationTime : null,
+                LastModifiedTime = response.Headers.TryGetValue(LastModifiedHeader, out DateTimeOffset? lastModifiedTime) ? lastModifiedTime : null,
+                ETag = response.Headers.TryGetValue(Constants.HeaderNames.ETag, out string etag) ? new ETag(etag) : default,
+                ContentLength = response.Headers.TryGetValue(Constants.HeaderNames.ContentLength, out long? contentLength) ? contentLength : null,
+                IsDirectory = response.Headers.TryGetValue(ResourceTypeHeader, out string resourceType) && resourceType == Constants.DataLake.DirectoryResourceType,
+                IsServerEncrypted = response.Headers.TryGetValue(ServerEncryptedHeader, out bool? isServerEncrypted) ? isServerEncrypted : null,
+                EncryptionKeySha256 = response.Headers.TryGetValue(EncryptionKeySha256Header, out string encryptionKeySha256) ? encryptionKeySha256 : null,
+                ExpiresOn = response.Headers.TryGetValue(ExpiryTimeHeader, out DateTimeOffset? expiresOn) ? expiresOn : null,
+                EncryptionScope = response.Headers.TryGetValue(EncryptionScopeHeader, out string encryptionScope) ? encryptionScope : null,
+                EncryptionContext = response.Headers.TryGetValue(EncryptionContextHeader, out string encryptionContext) ? encryptionContext : null,
+                Owner = response.Headers.TryGetValue(OwnerHeader, out string sysOwner) ? sysOwner : null,
+                Group = response.Headers.TryGetValue(GroupHeader, out string sysGroup) ? sysGroup : null,
+                Permissions = response.Headers.TryGetValue(PermissionsHeader, out string sysPermissions) ? PathPermissions.ParseSymbolicPermissions(sysPermissions) : null,
             };
 
-        internal static PathInfo ToPathInfo(this ResponseWithHeaders<PathSetAccessControlHeaders> response)
-            => new PathInfo
-            {
-                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
-                LastModified = response.Headers.LastModified.GetValueOrDefault()
-            };
-
-        internal static PathInfo ToPathInfo(this ResponseWithHeaders<PathFlushDataHeaders> response)
-            => new PathInfo
-            {
-                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
-                LastModified = response.Headers.LastModified.GetValueOrDefault()
-            };
-
-        internal static PathInfo ToPathInfo(this ResponseWithHeaders<PathSetExpiryHeaders> response)
-            => new PathInfo
-            {
-                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
-                LastModified = response.Headers.LastModified.GetValueOrDefault()
-            };
-
-        internal static PathDeletedSegment ToPathDeletedSegment(this ResponseWithHeaders<ListBlobsHierarchySegmentResponse, FileSystemListBlobHierarchySegmentHeaders> response)
+        internal static PathDeletedSegment ToPathDeletedSegment(this Response<ListBlobsHierarchySegmentResponse> response)
         {
             if (response == null)
             {

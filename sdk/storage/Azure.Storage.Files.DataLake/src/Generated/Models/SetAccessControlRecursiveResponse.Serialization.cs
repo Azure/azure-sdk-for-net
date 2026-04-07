@@ -5,15 +5,144 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Storage.Common;
+using Azure;
+using Azure.Storage.Files.DataLake;
 
 namespace Azure.Storage.Files.DataLake.Models
 {
-    internal partial class SetAccessControlRecursiveResponse
+    internal partial class SetAccessControlRecursiveResponse : IJsonModel<SetAccessControlRecursiveResponse>
     {
-        internal static SetAccessControlRecursiveResponse DeserializeSetAccessControlRecursiveResponse(JsonElement element)
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SetAccessControlRecursiveResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SetAccessControlRecursiveResponse>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSetAccessControlRecursiveResponse(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SetAccessControlRecursiveResponse)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SetAccessControlRecursiveResponse>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureStorageFilesDataLakeContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(SetAccessControlRecursiveResponse)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SetAccessControlRecursiveResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SetAccessControlRecursiveResponse IPersistableModel<SetAccessControlRecursiveResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SetAccessControlRecursiveResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SetAccessControlRecursiveResponse"/> from. </param>
+        public static explicit operator SetAccessControlRecursiveResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeSetAccessControlRecursiveResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        void IJsonModel<SetAccessControlRecursiveResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SetAccessControlRecursiveResponse>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SetAccessControlRecursiveResponse)} does not support writing '{format}' format.");
+            }
+            if (Optional.IsDefined(DirectoriesSuccessful))
+            {
+                writer.WritePropertyName("directoriesSuccessful"u8);
+                writer.WriteNumberValue(DirectoriesSuccessful.Value);
+            }
+            if (Optional.IsDefined(FilesSuccessful))
+            {
+                writer.WritePropertyName("filesSuccessful"u8);
+                writer.WriteNumberValue(FilesSuccessful.Value);
+            }
+            if (Optional.IsDefined(FailureCount))
+            {
+                writer.WritePropertyName("failureCount"u8);
+                writer.WriteNumberValue(FailureCount.Value);
+            }
+            if (Optional.IsCollectionDefined(FailedEntries))
+            {
+                writer.WritePropertyName("failedEntries"u8);
+                writer.WriteStartArray();
+                foreach (AclFailedEntry item in FailedEntries)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SetAccessControlRecursiveResponse IJsonModel<SetAccessControlRecursiveResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SetAccessControlRecursiveResponse JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SetAccessControlRecursiveResponse>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SetAccessControlRecursiveResponse)} does not support reading '{format}' format.");
+            }
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSetAccessControlRecursiveResponse(document.RootElement, options);
+        }
+
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static SetAccessControlRecursiveResponse DeserializeSetAccessControlRecursiveResponse(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -23,59 +152,56 @@ namespace Azure.Storage.Files.DataLake.Models
             int? filesSuccessful = default;
             int? failureCount = default;
             IReadOnlyList<AclFailedEntry> failedEntries = default;
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("directoriesSuccessful"u8))
+                if (prop.NameEquals("directoriesSuccessful"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    directoriesSuccessful = property.Value.GetInt32();
+                    directoriesSuccessful = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("filesSuccessful"u8))
+                if (prop.NameEquals("filesSuccessful"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    filesSuccessful = property.Value.GetInt32();
+                    filesSuccessful = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("failureCount"u8))
+                if (prop.NameEquals("failureCount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    failureCount = property.Value.GetInt32();
+                    failureCount = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("failedEntries"u8))
+                if (prop.NameEquals("failedEntries"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<AclFailedEntry> array = new List<AclFailedEntry>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AclFailedEntry.DeserializeAclFailedEntry(item));
+                        array.Add(AclFailedEntry.DeserializeAclFailedEntry(item, options));
                     }
                     failedEntries = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                }
             }
-            return new SetAccessControlRecursiveResponse(directoriesSuccessful, filesSuccessful, failureCount, failedEntries ?? new ChangeTrackingList<AclFailedEntry>());
-        }
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static SetAccessControlRecursiveResponse FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeSetAccessControlRecursiveResponse(document.RootElement);
+            return new SetAccessControlRecursiveResponse(directoriesSuccessful, filesSuccessful, failureCount, failedEntries ?? new ChangeTrackingList<AclFailedEntry>(), additionalBinaryDataProperties);
         }
     }
 }

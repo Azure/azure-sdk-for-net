@@ -5,14 +5,17 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Storage.Common;
+using Azure.Storage.Files.DataLake;
 
 namespace Azure.Storage.Files.DataLake.Models
 {
-    /// <summary> The PathList. </summary>
     internal partial class PathList
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="PathList"/>. </summary>
         internal PathList()
         {
@@ -20,13 +23,15 @@ namespace Azure.Storage.Files.DataLake.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PathList"/>. </summary>
-        /// <param name="paths"></param>
-        internal PathList(IReadOnlyList<Path> paths)
+        /// <param name="paths"> The list of paths. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal PathList(IList<Path> paths, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Paths = paths;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the paths. </summary>
-        public IReadOnlyList<Path> Paths { get; }
+        /// <summary> The list of paths. </summary>
+        public IList<Path> Paths { get; }
     }
 }

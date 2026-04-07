@@ -7,18 +7,18 @@
 
 namespace Azure.Storage.Files.DataLake.Models
 {
-    /// <summary> The PathUpdateAction. </summary>
+    /// <summary> The action to perform on the path during update. </summary>
     public enum PathUpdateAction
     {
-        /// <summary> append. </summary>
+        /// <summary> Append data to the file. </summary>
         Append,
-        /// <summary> flush. </summary>
+        /// <summary> Flush previously uploaded data to a file. </summary>
         Flush,
-        /// <summary> setProperties. </summary>
+        /// <summary> Set the properties of a file or directory. </summary>
         SetProperties,
-        /// <summary> setAccessControl. </summary>
+        /// <summary> Set the access control for a file or directory. </summary>
         SetAccessControl,
-        /// <summary> setAccessControlRecursive. </summary>
+        /// <summary> Set the access control list for a directory recursively. </summary>
         SetAccessControlRecursive
     }
 }

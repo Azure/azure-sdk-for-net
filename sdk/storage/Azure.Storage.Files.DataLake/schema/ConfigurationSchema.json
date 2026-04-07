@@ -1,0 +1,64 @@
+{
+  "type": "object",
+  "properties": {
+    "AzureClients": {
+      "type": "object",
+      "properties": {
+        "DataLakeClient": {
+          "type": "object",
+          "description": "Configuration for DataLakeClient.",
+          "properties": {
+            "Url": {
+              "type": "string",
+              "format": "uri",
+              "description": "Gets or sets the Url."
+            },
+            "Credential": {
+              "$ref": "#/definitions/credential"
+            },
+            "Options": {
+              "$ref": "#/definitions/dataLakeClientOptions"
+            }
+          }
+        }
+      },
+      "additionalProperties": {
+        "type": "object",
+        "description": "Configuration for a named client instance."
+      }
+    }
+  },
+  "definitions": {
+    "dataLakeClientOptions": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/azureOptions"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "Version": {
+              "type": "string"
+            },
+            "CustomerProvidedKey": {
+              "type": "string"
+            },
+            "GeoRedundantSecondaryUri": {
+              "type": "string",
+              "format": "uri"
+            },
+            "EnableTenantDiscovery": {
+              "type": "boolean"
+            },
+            "TransferValidation": {
+              "type": "object"
+            },
+            "Audience": {
+              "type": "string"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

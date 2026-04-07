@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 18
+VisualStudioVersion = 18.1.11312.151 d18.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Storage.Files.DataLake", "src\Azure.Storage.Files.DataLake.csproj", "{6BC8928A-7628-97E8-2E3F-C982E199E5B4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Storage.Files.DataLake.Tests", "tests\Azure.Storage.Files.DataLake.Tests.csproj", "{1784FCFD-1039-91C2-1F32-64A204EC643E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Storage.Files.DataLake.Samples.Tests", "samples\Azure.Storage.Files.DataLake.Samples.Tests.csproj", "{CA6A5639-4D5B-5340-FD08-8A50CC970637}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6BC8928A-7628-97E8-2E3F-C982E199E5B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6BC8928A-7628-97E8-2E3F-C982E199E5B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6BC8928A-7628-97E8-2E3F-C982E199E5B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6BC8928A-7628-97E8-2E3F-C982E199E5B4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1784FCFD-1039-91C2-1F32-64A204EC643E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1784FCFD-1039-91C2-1F32-64A204EC643E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1784FCFD-1039-91C2-1F32-64A204EC643E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1784FCFD-1039-91C2-1F32-64A204EC643E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA6A5639-4D5B-5340-FD08-8A50CC970637}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA6A5639-4D5B-5340-FD08-8A50CC970637}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA6A5639-4D5B-5340-FD08-8A50CC970637}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA6A5639-4D5B-5340-FD08-8A50CC970637}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F6F99BB5-F88F-40CE-BCA1-EF342E968F63}
+	EndGlobalSection
+EndGlobal
