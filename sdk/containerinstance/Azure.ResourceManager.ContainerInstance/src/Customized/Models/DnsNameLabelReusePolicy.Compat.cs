@@ -11,6 +11,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     {
         /// <summary> NoReuse (backward-compat alias for Noreuse). </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DnsNameLabelReusePolicy NoReuse { get; } = Noreuse;
+        public static DnsNameLabelReusePolicy NoReuse { get; } = new DnsNameLabelReusePolicy(NoreuseValue);
     }
 }

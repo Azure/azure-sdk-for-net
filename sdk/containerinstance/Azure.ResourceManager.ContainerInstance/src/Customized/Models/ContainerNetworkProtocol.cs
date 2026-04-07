@@ -11,9 +11,9 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     {
         /// <summary> TCP. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ContainerNetworkProtocol Tcp { get; } = new ContainerNetworkProtocol(TCP.ToString());
+        public static ContainerNetworkProtocol Tcp { get; } = new ContainerNetworkProtocol(TCPValue);
         /// <summary> UDP. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ContainerNetworkProtocol Udp { get; } = new ContainerNetworkProtocol(UDP.ToString());
+        public static ContainerNetworkProtocol Udp { get; } = new ContainerNetworkProtocol(UDPValue);
     }
 }

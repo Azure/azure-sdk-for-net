@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 throw new FormatException($"The model {nameof(ContainerGroupData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsCollectionDefined(Zones))
+            if (Zones != null && Optional.IsCollectionDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -122,8 +122,11 @@ namespace Azure.ResourceManager.ContainerInstance
                 writer.WritePropertyName("identity"u8);
                 ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties, options);
+            if (Properties != null)
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
