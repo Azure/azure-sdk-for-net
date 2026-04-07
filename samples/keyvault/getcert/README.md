@@ -58,7 +58,7 @@ This sample requires creating a certificate with an exportable private key. You'
 
 To build the sample:
 
-1. Install [.NET Core 3.1](https://dot.net) or newer.
+1. Install [.NET 10](https://dot.net) or newer.
 
 2. Run in the project directory:
 
