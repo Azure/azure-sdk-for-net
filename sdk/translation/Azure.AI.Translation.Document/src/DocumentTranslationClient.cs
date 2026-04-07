@@ -272,7 +272,7 @@ namespace Azure.AI.Translation.Document
                 createdDateTimeUtcEnd,
                 orderBy,
                 cancellationToken.ToRequestContext(),
-                $"{nameof(DocumentTranslationClient)}.{nameof(GetTranslationsStatusAsync)}");
+                $"{nameof(DocumentTranslationClient)}.{nameof(GetTranslationStatuses)}");
         }
 
         /// <summary> Returns a list of batch requests submitted and the status for each request. </summary>
@@ -298,7 +298,7 @@ namespace Azure.AI.Translation.Document
                 createdDateTimeUtcEnd,
                 orderBy,
                 cancellationToken.ToRequestContext(),
-                $"{nameof(DocumentTranslationClient)}.{nameof(GetTranslationsStatus)}");
+                $"{nameof(DocumentTranslationClient)}.{nameof(GetTranslationStatuses)}");
         }
 
         /// <summary>
@@ -327,7 +327,7 @@ namespace Azure.AI.Translation.Document
                 createdDateTimeUtcEnd,
                 orderBy,
                 context,
-                $"{nameof(DocumentTranslationClient)}.{nameof(GetTranslationsStatusAsync)}");
+                $"{nameof(DocumentTranslationClient)}.{nameof(GetTranslationStatuses)}");
         }
 
         /// <summary>
@@ -356,7 +356,7 @@ namespace Azure.AI.Translation.Document
                 createdDateTimeUtcEnd,
                 orderBy,
                 context,
-                $"{nameof(DocumentTranslationClient)}.{nameof(GetTranslationsStatus)}");
+                $"{nameof(DocumentTranslationClient)}.{nameof(GetTranslationStatuses)}");
         }
 
         #region supported formats functions nobody wants to see these
