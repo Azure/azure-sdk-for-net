@@ -5,6 +5,7 @@
 ### Bugs Fixed
 
 - Fixed `VerifyConnection` in `ConfidentialLedgerClientOptions` defaulting to `false`, which caused TLS certificate verification to be skipped unless explicitly enabled. It now defaults to `true`.
+- Improved redirect performance for write operations by caching the latest primary node URL from redirect responses and reusing it for subsequent non-GET requests. The cache is lazily populated and refreshed whenever the service redirects to a different primary node.
 
 ## 1.4.1-beta.3 (2026-02-17)
 
