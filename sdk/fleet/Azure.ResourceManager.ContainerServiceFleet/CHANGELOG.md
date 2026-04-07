@@ -1,14 +1,12 @@
 # Release History
 
-## 1.2.0-beta.2 (Unreleased)
+## 1.2.0-beta.2 (2026-04-06)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Upgraded api-version tag to 'package-2025-08-01-preview'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/main/specification/containerservice/resource-manager/Microsoft.ContainerService/fleet/readme.md.
+    - Added ManagedNamespace support with full CRUD lifecycle, including propagation policies (placement-based with affinity, tolerations, and label/property selectors), adoption policies, deletion policies, resource quotas, and network policies.
+    - Added `LongTermSupport` property to `AutoUpgradeProfileData`.
 
 ## 1.2.0-beta.1 (2025-08-12)
 
