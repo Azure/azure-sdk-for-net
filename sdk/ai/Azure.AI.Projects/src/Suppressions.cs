@@ -10,3 +10,5 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage("Usage", "AZC0012", Justification = ".", Scope = "member", Target = "~T:Azure.AI.Projects.Schedules")]
 [assembly: SuppressMessage("Usage", "AZC0012", Justification = ".", Scope = "member", Target = "~T:Azure.AI.Projects.Target")]
 [assembly: SuppressMessage("Usage", "AZC0012", Justification = ".", Scope = "member", Target = "~T:Azure.AI.Projects.Trigger")]
+
+// Test comment for batching validation - DO NOT MERGE
