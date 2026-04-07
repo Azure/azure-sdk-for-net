@@ -20,9 +20,7 @@ namespace Azure.ResourceManager.Hci
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This method is now deprecated. Please use the new method `GetHciClusterOfferResource` moving forward.")]
         public static OfferResource GetOfferResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return (OfferResource)(object)GetHciClusterOfferResource(client, id);
-        }
+            => throw new NotSupportedException("This method is obsolete. Please use GetHciClusterOfferResource instead.");
 
         /// <summary>
         /// Gets an object representing a <see cref="PublisherResource"/> (backward-compat).
@@ -32,9 +30,7 @@ namespace Azure.ResourceManager.Hci
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This method is now deprecated. Please use the new method `GetHciClusterPublisherResource` moving forward.")]
         public static PublisherResource GetPublisherResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return (PublisherResource)(object)GetHciClusterPublisherResource(client, id);
-        }
+            => throw new NotSupportedException("This method is obsolete. Please use GetHciClusterPublisherResource instead.");
 
         /// <summary>
         /// Gets an object representing an <see cref="UpdateResource"/> (backward-compat).
@@ -44,9 +40,7 @@ namespace Azure.ResourceManager.Hci
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This method is now deprecated. Please use the new method `GetHciClusterUpdateResource` moving forward.")]
         public static UpdateResource GetUpdateResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return (UpdateResource)(object)GetHciClusterUpdateResource(client, id);
-        }
+            => throw new NotSupportedException("This method is obsolete. Please use GetHciClusterUpdateResource instead.");
 
         /// <summary>
         /// Gets an object representing an <see cref="UpdateRunResource"/> (backward-compat).
@@ -56,9 +50,7 @@ namespace Azure.ResourceManager.Hci
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This method is now deprecated. Please use the new method `GetHciClusterUpdateRunResource` moving forward.")]
         public static UpdateRunResource GetUpdateRunResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return (UpdateRunResource)(object)GetHciClusterUpdateRunResource(client, id);
-        }
+            => throw new NotSupportedException("This method is obsolete. Please use GetHciClusterUpdateRunResource instead.");
 
         /// <summary>
         /// Gets an object representing an <see cref="UpdateSummaryResource"/> (backward-compat).
@@ -68,8 +60,6 @@ namespace Azure.ResourceManager.Hci
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This method is now deprecated. Please use the new method `GetHciClusterUpdateSummaryResource` moving forward.")]
         public static UpdateSummaryResource GetUpdateSummaryResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return (UpdateSummaryResource)(object)GetHciClusterUpdateSummaryResource(client, id);
-        }
+            => throw new NotSupportedException("This method is obsolete. Please use GetHciClusterUpdateSummaryResource instead.");
     }
 }
