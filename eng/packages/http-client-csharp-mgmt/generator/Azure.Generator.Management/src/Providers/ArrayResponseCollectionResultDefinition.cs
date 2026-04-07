@@ -37,6 +37,11 @@ namespace Azure.Generator.Management.Providers
         private readonly string _methodName;
         private readonly string _enclosingTypeName;
 
+        private readonly FieldProvider _clientField;
+        private readonly IReadOnlyList<FieldProvider> _parameterFields;
+        private readonly FieldProvider _contextField;
+        private readonly FieldProvider _diagnosticScopeField;
+
         private static readonly ParameterProvider ContinuationTokenParameter =
             new("continuationToken", $"A continuation token indicating where to resume paging.", new CSharpType(typeof(string)));
         private static readonly ParameterProvider PageSizeHintParameter =
@@ -62,6 +67,27 @@ namespace Azure.Generator.Management.Providers
             _constructorParameters = constructorParameters;
             _methodName = methodName;
             _enclosingTypeName = enclosingTypeName;
+
+            _clientField = new FieldProvider(
+                FieldModifiers.Private | FieldModifiers.ReadOnly,
+                _restClient.Type,
+                "_client",
+                this);
+            _parameterFields = _constructorParameters.Select(p => new FieldProvider(
+                FieldModifiers.Private | FieldModifiers.ReadOnly,
+                p.Type,
+                ToFieldName(p.Name),
+                this)).ToArray();
+            _contextField = new FieldProvider(
+                FieldModifiers.Private | FieldModifiers.ReadOnly,
+                typeof(RequestContext),
+                "_context",
+                this);
+            _diagnosticScopeField = new FieldProvider(
+                FieldModifiers.Private | FieldModifiers.ReadOnly,
+                typeof(string),
+                "_diagnosticScope",
+                this);
         }
 
         protected override string BuildRelativeFilePath() =>
@@ -89,40 +115,7 @@ namespace Azure.Generator.Management.Providers
 
         protected override FieldProvider[] BuildFields()
         {
-            var fields = new List<FieldProvider>
-            {
-                new FieldProvider(
-                    FieldModifiers.Private | FieldModifiers.ReadOnly,
-                    _restClient.Type,
-                    "_client",
-                    this)
-            };
-
-            // Add fields for constructor parameters
-            foreach (var param in _constructorParameters)
-            {
-                fields.Add(new FieldProvider(
-                    FieldModifiers.Private | FieldModifiers.ReadOnly,
-                    param.Type,
-                    ToFieldName(param.Name),
-                    this));
-            }
-
-            // Add _context field
-            fields.Add(new FieldProvider(
-                FieldModifiers.Private | FieldModifiers.ReadOnly,
-                typeof(RequestContext),
-                "_context",
-                this));
-
-            // Add _diagnosticScope field
-            fields.Add(new FieldProvider(
-                FieldModifiers.Private | FieldModifiers.ReadOnly,
-                typeof(string),
-                "_diagnosticScope",
-                this));
-
-            return [.. fields];
+            return [_clientField, .. _parameterFields, _contextField, _diagnosticScopeField];
         }
 
         protected override ConstructorProvider[] BuildConstructors()
@@ -146,16 +139,16 @@ namespace Azure.Generator.Management.Providers
 
             var bodyStatements = new List<MethodBodyStatement>
             {
-                This.Property("_client").Assign(parameters[0]).Terminate()
+                _clientField.Assign(parameters[0]).Terminate()
             };
 
-            foreach (var param in _constructorParameters)
+            for (int i = 0; i < _constructorParameters.Count; i++)
             {
-                bodyStatements.Add(This.Property(ToFieldName(param.Name)).Assign(param).Terminate());
+                bodyStatements.Add(_parameterFields[i].Assign(_constructorParameters[i]).Terminate());
             }
 
-            bodyStatements.Add(This.Property("_context").Assign(contextParam).Terminate());
-            bodyStatements.Add(This.Property("_diagnosticScope").Assign(scopeParam).Terminate());
+            bodyStatements.Add(_contextField.Assign(contextParam).Terminate());
+            bodyStatements.Add(_diagnosticScopeField.Assign(scopeParam).Terminate());
 
             return [new ConstructorProvider(signature, bodyStatements.ToArray(), this)];
         }
@@ -235,30 +228,30 @@ namespace Azure.Generator.Management.Providers
             var requestArgs = new List<ValueExpression>();
 
             // Add arguments from fields
-            foreach (var param in _constructorParameters)
+            foreach (var field in _parameterFields)
             {
-                requestArgs.Add(This.Property(ToFieldName(param.Name)));
+                requestArgs.Add(field);
             }
 
             // Add context parameter
-            requestArgs.Add(This.Property("_context"));
+            requestArgs.Add(_contextField);
 
             var bodyStatements = new List<MethodBodyStatement>
             {
                 Declare("message", typeof(HttpMessage),
-                    This.Property("_client").Invoke(createRequestMethodName, requestArgs),
+                    _clientField.Invoke(createRequestMethodName, requestArgs),
                     out var messageVariable),
                 UsingDeclare("scope", typeof(DiagnosticScope),
-                    This.Property("_client").Property("ClientDiagnostics").Invoke("CreateScope", [This.Property("_diagnosticScope")]),
+                    _clientField.Property("ClientDiagnostics").Invoke("CreateScope", [_diagnosticScopeField]),
                     out var scopeVariable),
                 scopeVariable.Invoke("Start").Terminate()
             };
 
             var tryStatements = new List<MethodBodyStatement>
             {
-                Return(This.Property("_client").Property("Pipeline").Invoke(
+                Return(_clientField.Property("Pipeline").Invoke(
                     _isAsync ? "ProcessMessageAsync" : "ProcessMessage",
-                    [messageVariable, This.Property("_context")],
+                    [messageVariable, _contextField],
                     _isAsync))
             };
 
