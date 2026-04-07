@@ -443,10 +443,11 @@ if (-not $SkipConstitution) {
 Generate the constitution for the Azure.AI.AgentServer project.
 
 Project context:
-- Read AGENTS.md in the current directory for core principles (Section 0).
+- Read AGENTS.md in the current directory.
 - Read Azure.AI.AgentServer.Responses/AGENTS.md for protocol-specific rules.
 - The project is a set of .NET class libraries for building ASP.NET Core servers
   implementing Azure AI agent protocols. Library, not application. Distributed via NuGet.
+- Extract core priciples, rules, and constraints that govern the project.
 - The constitution template is at .specify/templates/constitution-template.md
 - Write the completed constitution to .specify/memory/constitution.md
 

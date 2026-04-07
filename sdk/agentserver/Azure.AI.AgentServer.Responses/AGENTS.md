@@ -7,26 +7,24 @@
 
 ## 1. Contract Compliance (MANDATORY)
 
-The Responses library has three **authoritative contract documents** that define all required behaviour. Any code change to this project **must** be verified against these contracts before committing.
+The Responses library has **authoritative contract documents** that define all required behaviour.
 
-### Authoritative trio (read before ANY code change)
+### Key documents
 
-| Document | Path | Defines |
-|----------|------|---------|
-| **API Behaviour Contract** | `docs/api-behaviour-contract.md` | Observable HTTP behaviour, endpoint matrices, error shapes, SSE contract, behavioural rules (B1–B39) |
-| **Library Behaviour Spec** | `docs/library-behaviour-spec.md` | Language-agnostic library requirements: event processing, state management, terminal authority, cancellation, persistence, observability (S-001–S-052) |
+| Document | Location | Defines |
+|----------|----------|---------|
+| **API Behaviour Contract** | `/tmp/foundrysdk_specs/specs/hosted-agents/container-spec/docs/docs/responses-api-behaviour-contract.md` | Observable HTTP behaviour, endpoint matrices, error shapes, SSE contract, behavioural rules (B1–B37) |
+| **Protocol Spec** | `/tmp/foundrysdk_specs/specs/hosted-agents/container-spec/docs/docs/responses-protocol-spec.md` | Wire-level SSE format, distributed tracing, storage & persistence, content-type negotiation |
+| **Container Image Spec** | `/tmp/foundrysdk_specs/specs/hosted-agents/container-spec/docs/docs/container-image-spec.md` | Infrastructure requirements: networking, health probe, env vars, observability, graceful shutdown, identity header |
+| **Package Architecture** | `/tmp/foundrysdk_specs/specs/hosted-agents/container-spec/docs/docs/package-architecture.md` | Package layering, developer tiers (zero-config → spec-only), dependency graph |
 | **Handler Implementation Guide** | `docs/handler-implementation-guide.md` | Handler contract, builder pattern, cancellation, error handling, configuration |
 
-### Supporting docs
-
-| Document | Path | Defines |
-|----------|------|---------|
-| Doc ownership matrix | `docs/doc-ownership-matrix.md` | Topic-to-document mapping, canonical sources |
+> **Dev setup**: Clone the specs repo and ensure the paths above resolve locally (e.g., `git clone <specs-repo> /tmp/foundrysdk_specs`).
 
 ### Compliance workflow
 
-1. **Before implementing**: Read the relevant sections of the authoritative trio for the feature/endpoint being changed.
-2. **Key rules to check**: Endpoint behaviour matrices (B1–B39), library processing rules (S-001–S-052), terminal event authority (S-018–S-022), cancellation categories (S-023–S-026), persistence timing (S-034–S-036).
+1. **Before implementing**: Read the relevant sections of the spec documents for the feature/endpoint being changed.
+2. **Key rules to check**: Endpoint behaviour matrices (B1–B39), library processing rules, terminal event authority (S-018–S-022), cancellation categories (S-023–S-026), persistence timing (S-034–S-036).
 3. **After implementing**: Audit the change against the contracts. Pay special attention to:
    - **B16**: Non-background in-flight responses are NOT findable (GET/DELETE/Cancel → 404).
    - **B2**: SSE replay requires `background=true` AND `stream=true` AND `store=true`.
@@ -34,7 +32,7 @@ The Responses library has three **authoritative contract documents** that define
    - **S-036**: Non-background cancelled responses are ephemeral (not persisted).
    - **S-019**: Cancellation winddown — the library is sole authority on terminal event.
 4. **Tests**: Any behavioural change MUST include protocol tests in `tests/Protocol/`. Unit tests alone are insufficient.
-5. **If in doubt**: The contract document wins over the code. Fix the code, not the contract.
+5. **If in doubt**: The spec wins over the code. Fix the code, not the spec.
 
 ## 2. Key Namespaces
 

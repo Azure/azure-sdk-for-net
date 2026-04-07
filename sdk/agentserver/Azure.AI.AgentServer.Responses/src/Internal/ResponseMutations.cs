@@ -198,6 +198,25 @@ internal static class ResponseMutations
     }
 
     /// <summary>
+    /// Re-stamps the request echo-through fields (<c>Background</c>,
+    /// <c>PreviousResponseId</c>, <c>Conversation</c>) on the response after
+    /// a <see cref="ReplaceResponse"/> call (S-040). The handler's
+    /// <c>ReplaceResponse</c> may construct the response object any way it
+    /// wants, so the SDK must guarantee these fields always reflect the
+    /// original request values.
+    /// </summary>
+    internal static void StampRequestEchoFields(ResponseExecution execution, CreateResponse request)
+    {
+        execution.Response!.Background = request.Background;
+        execution.Response!.PreviousResponseId = request.PreviousResponseId;
+
+        var conversationId = request.GetConversationId();
+        execution.Response!.Conversation = conversationId != null
+            ? new ConversationReference(conversationId)
+            : null;
+    }
+
+    /// <summary>
     /// Sets an output item at the given index, padding the list with nulls if needed.
     /// </summary>
     internal static void SetOutputItemAtIndex(this IList<OutputItem> output, int index, OutputItem item)

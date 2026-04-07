@@ -315,12 +315,12 @@ internal sealed class ResponseEndpointHandler
                 // This also covers store=false (never persisted → 404).
                 await _provider.GetResponseAsync(responseId, isolation);
 
-                // TODO: B2 requires checking that the response was created with
-                // background=true AND stream=true. After the execution leaves the
-                // tracker, mode flags are not persisted on the Response model.
-                // The stream provider may still have events for non-bg responses
-                // within the EventStreamTtl window. A full fix requires storing
-                // mode flags in the provider or stream provider abstract class.
+                // B2: non-bg and non-streaming responses had their event stream
+                // deleted in FinalizeExecutionAsync (see ResponseOrchestrator).
+                // SubscribeToEventsAsync below will throw for missing streams,
+                // which maps to 400 for the caller. For custom stream providers
+                // backed by persistent storage, the provider must enforce B2
+                // mode-flag checks independently.
             }
 
             // In-flight and passed guards OR not-in-flight and exists in provider —
@@ -391,6 +391,16 @@ internal sealed class ResponseEndpointHandler
         // This works whether or not the response was in the tracker — the provider
         // is the source of truth for persisted responses.
         await _provider.DeleteResponseAsync(responseId, isolation);
+
+        // Clean up event stream — deleted responses should not be replayable.
+        try
+        {
+            await _streamProvider.DeleteEventStreamAsync(responseId);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogWarning(ex, "DeleteEventStreamAsync failed during response deletion for {ResponseId}", responseId);
+        }
 
         var result = AzureAIAgentServerResponsesModelFactory.DeleteResponseResult(id: responseId);
         return Results.Json(result, SharedJsonOptions.Instance, statusCode: 200);
