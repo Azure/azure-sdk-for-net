@@ -33,10 +33,11 @@ description: Automation Client
 openapi-type: arm
 
 input-file:
-  - https://github.com/Azure/azure-rest-api-specs/blob/1116f6655f2756046998e0a6e832ac8f7e193d12/specification/automation/resource-manager/Microsoft.Automation/stable/2024-10-23/openapi.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/1116f6655f2756046998e0a6e832ac8f7e193d12/specification/automation/resource-manager/Microsoft.Automation/preview/2020-01-13-preview/dscCompilationJob.json
+  - https://github.com/Azure/azure-rest-api-specs/blob/e191949499d1d3b60a1b2a979d9e35f122a94978/specification/automation/resource-manager/Microsoft.Automation/stable/2024-10-23/openapi.json
+  - https://github.com/Azure/azure-rest-api-specs/blob/e191949499d1d3b60a1b2a979d9e35f122a94978/specification/automation/resource-manager/Microsoft.Automation/preview/2020-01-13-preview/dscCompilationJob.json
 
 rename-mapping:
+  Python2PackageCreateParameters: AutomationAccountPython2PackageCreateOrUpdateContent
   AutomationAccount.properties.publicNetworkAccess: IsPublicNetworkAccessAllowed
   AutomationAccount.properties.disableLocalAuth: IsLocalAuthDisabled
   DscConfiguration.properties.logVerbose: IsLogVerboseEnabled
@@ -265,13 +266,11 @@ operation-positions:
   SoftwareUpdateConfigurations_List: collection
 
 directive:
-  # --- Align dscCompilationJob.json definitions with openapi.json to eliminate duplicate schemas ---
-  # 1. JobStream: add missing 'type: object'
+  # Align dscCompilationJob.json definitions with openapi.json to eliminate duplicate schemas
   - from: dscCompilationJob.json
     where: $.definitions.JobStream
     transform: >
       $['type'] = 'object';
-  # 2. JobStreamListResult: add type, required, align descriptions
   - from: dscCompilationJob.json
     where: $.definitions.JobStreamListResult
     transform: >
@@ -280,7 +279,6 @@ directive:
       $.properties.value.description = 'The JobStream items on this page';
       $.properties.nextLink.description = 'The link to the next page of items';
       $.properties.nextLink['format'] = 'uri';
-  # 3. JobStreamProperties: align all differences with openapi.json version
   - from: dscCompilationJob.json
     where: $.definitions.JobStreamProperties
     transform: >
@@ -293,7 +291,6 @@ directive:
         '$ref': '#/definitions/JobStreamType',
         'description': 'Gets or sets the stream type.'
       };
-  # 4. Inject JobStreamType definition (needed by streamType $ref above)
   - from: dscCompilationJob.json
     where: $.definitions
     transform: >
@@ -306,6 +303,18 @@ directive:
           'modelAsString': true
         }
       };
+  # New swagger shares PythonPackageCreateParameters between Python2 and Python3.
+  # Clone a dedicated definition for Python2 to preserve backward-compatible type name.
+  - from: openapi.json
+    where: $.definitions
+    transform: >
+      if (!$['Python2PackageCreateParameters']) {
+        $['Python2PackageCreateParameters'] = JSON.parse(JSON.stringify($['PythonPackageCreateParameters']));
+      }
+  - from: openapi.json
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/python2Packages/{packageName}'].put.parameters[?(@.name=='parameters')]
+    transform: >
+      $.schema = { '$ref': '#/definitions/Python2PackageCreateParameters' };
   - from: openapi.json
     where: $.definitions
     transform: >
@@ -351,5 +360,9 @@ directive:
     where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/configurations/{configurationName}/content'].get
     transform: >
       $.produces = ["text/powershell"]
+  - from: openapi.json
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/nodes/{nodeId}/reports/{reportId}/content'].get
+    transform: >
+      $.produces = ["application/json"]
 
 ```

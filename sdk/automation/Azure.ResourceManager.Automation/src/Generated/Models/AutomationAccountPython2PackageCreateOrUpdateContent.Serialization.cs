@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class PythonPackageCreateParameters : IUtf8JsonSerializable, IJsonModel<PythonPackageCreateParameters>
+    public partial class AutomationAccountPython2PackageCreateOrUpdateContent : IUtf8JsonSerializable, IJsonModel<AutomationAccountPython2PackageCreateOrUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PythonPackageCreateParameters>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutomationAccountPython2PackageCreateOrUpdateContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<PythonPackageCreateParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AutomationAccountPython2PackageCreateOrUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PythonPackageCreateParameters>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AutomationAccountPython2PackageCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PythonPackageCreateParameters)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationAccountPython2PackageCreateOrUpdateContent)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsCollectionDefined(Tags))
@@ -67,19 +67,19 @@ namespace Azure.ResourceManager.Automation.Models
             }
         }
 
-        PythonPackageCreateParameters IJsonModel<PythonPackageCreateParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        AutomationAccountPython2PackageCreateOrUpdateContent IJsonModel<AutomationAccountPython2PackageCreateOrUpdateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PythonPackageCreateParameters>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AutomationAccountPython2PackageCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PythonPackageCreateParameters)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationAccountPython2PackageCreateOrUpdateContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePythonPackageCreateParameters(document.RootElement, options);
+            return DeserializeAutomationAccountPython2PackageCreateOrUpdateContent(document.RootElement, options);
         }
 
-        internal static PythonPackageCreateParameters DeserializePythonPackageCreateParameters(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static AutomationAccountPython2PackageCreateOrUpdateContent DeserializeAutomationAccountPython2PackageCreateOrUpdateContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -130,38 +130,38 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new PythonPackageCreateParameters(tags ?? new ChangeTrackingDictionary<string, string>(), contentLink, serializedAdditionalRawData);
+            return new AutomationAccountPython2PackageCreateOrUpdateContent(tags ?? new ChangeTrackingDictionary<string, string>(), contentLink, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<PythonPackageCreateParameters>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<AutomationAccountPython2PackageCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PythonPackageCreateParameters>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AutomationAccountPython2PackageCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerAutomationContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(PythonPackageCreateParameters)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationAccountPython2PackageCreateOrUpdateContent)} does not support writing '{options.Format}' format.");
             }
         }
 
-        PythonPackageCreateParameters IPersistableModel<PythonPackageCreateParameters>.Create(BinaryData data, ModelReaderWriterOptions options)
+        AutomationAccountPython2PackageCreateOrUpdateContent IPersistableModel<AutomationAccountPython2PackageCreateOrUpdateContent>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PythonPackageCreateParameters>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AutomationAccountPython2PackageCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializePythonPackageCreateParameters(document.RootElement, options);
+                        return DeserializeAutomationAccountPython2PackageCreateOrUpdateContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PythonPackageCreateParameters)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationAccountPython2PackageCreateOrUpdateContent)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<PythonPackageCreateParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AutomationAccountPython2PackageCreateOrUpdateContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

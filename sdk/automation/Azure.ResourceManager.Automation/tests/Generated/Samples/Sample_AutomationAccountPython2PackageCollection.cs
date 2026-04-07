@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Automation.Samples
 
             // invoke the operation
             string packageName = "OmsCompositeResources";
-            PythonPackageCreateParameters pythonPackageCreateParameters = new PythonPackageCreateParameters(new AutomationContentLink
+            AutomationAccountPython2PackageCreateOrUpdateContent content = new AutomationAccountPython2PackageCreateOrUpdateContent(new AutomationContentLink
             {
                 Uri = new Uri("https://teststorage.blob.core.windows.net/dsccomposite/OmsCompositeResources.zip"),
                 ContentHash = new AutomationContentHash("sha265", "07E108A962B81DD9C9BAA89BB47C0F6EE52B29E83758B07795E408D258B2B87A"),
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Automation.Samples
             {
                 Tags = { },
             };
-            ArmOperation<AutomationAccountPython2PackageResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, packageName, pythonPackageCreateParameters);
+            ArmOperation<AutomationAccountPython2PackageResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, packageName, content);
             AutomationAccountPython2PackageResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

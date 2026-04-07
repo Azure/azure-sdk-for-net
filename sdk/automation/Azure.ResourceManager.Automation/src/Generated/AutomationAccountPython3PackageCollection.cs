@@ -75,21 +75,21 @@ namespace Azure.ResourceManager.Automation
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="packageName"> The python package name. </param>
-        /// <param name="pythonPackageCreateParameters"> The create or update parameters for python package. </param>
+        /// <param name="content"> The create or update parameters for python package. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="packageName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="packageName"/> or <paramref name="pythonPackageCreateParameters"/> is null. </exception>
-        public virtual async Task<ArmOperation<AutomationAccountPython3PackageResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string packageName, PythonPackageCreateParameters pythonPackageCreateParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="packageName"/> or <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<AutomationAccountPython3PackageResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string packageName, AutomationAccountPython3PackageCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(packageName, nameof(packageName));
-            Argument.AssertNotNull(pythonPackageCreateParameters, nameof(pythonPackageCreateParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _automationAccountPython3PackagePython3PackageClientDiagnostics.CreateScope("AutomationAccountPython3PackageCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _automationAccountPython3PackagePython3PackageRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, packageName, pythonPackageCreateParameters, cancellationToken).ConfigureAwait(false);
-                var uri = _automationAccountPython3PackagePython3PackageRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, packageName, pythonPackageCreateParameters);
+                var response = await _automationAccountPython3PackagePython3PackageRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, packageName, content, cancellationToken).ConfigureAwait(false);
+                var uri = _automationAccountPython3PackagePython3PackageRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, packageName, content);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 var operation = new AutomationArmOperation<AutomationAccountPython3PackageResource>(Response.FromValue(new AutomationAccountPython3PackageResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
@@ -126,21 +126,21 @@ namespace Azure.ResourceManager.Automation
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="packageName"> The python package name. </param>
-        /// <param name="pythonPackageCreateParameters"> The create or update parameters for python package. </param>
+        /// <param name="content"> The create or update parameters for python package. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="packageName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="packageName"/> or <paramref name="pythonPackageCreateParameters"/> is null. </exception>
-        public virtual ArmOperation<AutomationAccountPython3PackageResource> CreateOrUpdate(WaitUntil waitUntil, string packageName, PythonPackageCreateParameters pythonPackageCreateParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="packageName"/> or <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<AutomationAccountPython3PackageResource> CreateOrUpdate(WaitUntil waitUntil, string packageName, AutomationAccountPython3PackageCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(packageName, nameof(packageName));
-            Argument.AssertNotNull(pythonPackageCreateParameters, nameof(pythonPackageCreateParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _automationAccountPython3PackagePython3PackageClientDiagnostics.CreateScope("AutomationAccountPython3PackageCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _automationAccountPython3PackagePython3PackageRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, packageName, pythonPackageCreateParameters, cancellationToken);
-                var uri = _automationAccountPython3PackagePython3PackageRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, packageName, pythonPackageCreateParameters);
+                var response = _automationAccountPython3PackagePython3PackageRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, packageName, content, cancellationToken);
+                var uri = _automationAccountPython3PackagePython3PackageRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, packageName, content);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 var operation = new AutomationArmOperation<AutomationAccountPython3PackageResource>(Response.FromValue(new AutomationAccountPython3PackageResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)

@@ -499,7 +499,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="reportId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="reportId"/> is null. </exception>
-        public virtual async Task<Response<BinaryData>> GetContentNodeReportAsync(string reportId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<string>> GetContentNodeReportAsync(string reportId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reportId, nameof(reportId));
 
@@ -538,7 +538,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="reportId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="reportId"/> is null. </exception>
-        public virtual Response<BinaryData> GetContentNodeReport(string reportId, CancellationToken cancellationToken = default)
+        public virtual Response<string> GetContentNodeReport(string reportId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reportId, nameof(reportId));
 

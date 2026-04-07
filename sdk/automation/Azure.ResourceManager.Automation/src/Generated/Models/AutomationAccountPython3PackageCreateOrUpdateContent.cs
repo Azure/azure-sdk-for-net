@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Automation.Models
 {
     /// <summary> The parameters supplied to the create or update module operation. </summary>
-    public partial class PythonPackageCreateParameters
+    public partial class AutomationAccountPython3PackageCreateOrUpdateContent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,10 +45,10 @@ namespace Azure.ResourceManager.Automation.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="PythonPackageCreateParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationAccountPython3PackageCreateOrUpdateContent"/>. </summary>
         /// <param name="contentLink"> Gets or sets the module content link. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="contentLink"/> is null. </exception>
-        public PythonPackageCreateParameters(AutomationContentLink contentLink)
+        public AutomationAccountPython3PackageCreateOrUpdateContent(AutomationContentLink contentLink)
         {
             Argument.AssertNotNull(contentLink, nameof(contentLink));
 
@@ -56,19 +56,19 @@ namespace Azure.ResourceManager.Automation.Models
             ContentLink = contentLink;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PythonPackageCreateParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationAccountPython3PackageCreateOrUpdateContent"/>. </summary>
         /// <param name="tags"> Gets or sets the tags attached to the resource. </param>
         /// <param name="contentLink"> Gets or sets the module content link. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PythonPackageCreateParameters(IDictionary<string, string> tags, AutomationContentLink contentLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AutomationAccountPython3PackageCreateOrUpdateContent(IDictionary<string, string> tags, AutomationContentLink contentLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tags = tags;
             ContentLink = contentLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PythonPackageCreateParameters"/> for deserialization. </summary>
-        internal PythonPackageCreateParameters()
+        /// <summary> Initializes a new instance of <see cref="AutomationAccountPython3PackageCreateOrUpdateContent"/> for deserialization. </summary>
+        internal AutomationAccountPython3PackageCreateOrUpdateContent()
         {
         }
 

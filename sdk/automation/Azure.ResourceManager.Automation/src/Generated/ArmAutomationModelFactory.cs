@@ -1060,15 +1060,26 @@ namespace Azure.ResourceManager.Automation.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.PythonPackageCreateParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AutomationAccountPython2PackageCreateOrUpdateContent"/>. </summary>
         /// <param name="tags"> Gets or sets the tags attached to the resource. </param>
         /// <param name="contentLink"> Gets or sets the module content link. </param>
-        /// <returns> A new <see cref="Models.PythonPackageCreateParameters"/> instance for mocking. </returns>
-        public static PythonPackageCreateParameters PythonPackageCreateParameters(IDictionary<string, string> tags = null, AutomationContentLink contentLink = null)
+        /// <returns> A new <see cref="Models.AutomationAccountPython2PackageCreateOrUpdateContent"/> instance for mocking. </returns>
+        public static AutomationAccountPython2PackageCreateOrUpdateContent AutomationAccountPython2PackageCreateOrUpdateContent(IDictionary<string, string> tags = null, AutomationContentLink contentLink = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new PythonPackageCreateParameters(tags, contentLink, serializedAdditionalRawData: null);
+            return new AutomationAccountPython2PackageCreateOrUpdateContent(tags, contentLink, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.AutomationAccountPython3PackageCreateOrUpdateContent"/>. </summary>
+        /// <param name="tags"> Gets or sets the tags attached to the resource. </param>
+        /// <param name="contentLink"> Gets or sets the module content link. </param>
+        /// <returns> A new <see cref="Models.AutomationAccountPython3PackageCreateOrUpdateContent"/> instance for mocking. </returns>
+        public static AutomationAccountPython3PackageCreateOrUpdateContent AutomationAccountPython3PackageCreateOrUpdateContent(IDictionary<string, string> tags = null, AutomationContentLink contentLink = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new AutomationAccountPython3PackageCreateOrUpdateContent(tags, contentLink, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Automation.AutomationRunbookData"/>. </summary>
