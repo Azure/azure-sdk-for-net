@@ -163,7 +163,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             if (string.Equals(errorText, "long"))
             {
                 StringBuilder sb = new();
-                for (int i=0; i<500; i++)
+                for (int i = 0; i < 500; i++)
                 {
                     sb.Append("Really long string ");
                 }
@@ -181,7 +181,7 @@ namespace Azure.AI.Agents.Persistent.Tests
         public void TestSseKeepalive()
         {
             SseItem<byte[]> keepaliveItem = new(new byte[] { }, "keepalive");
-            List<StreamingUpdate> updates = [..StreamingUpdate.FromEvent(keepaliveItem)];
+            List<StreamingUpdate> updates = [.. StreamingUpdate.FromEvent(keepaliveItem)];
             Assert.That(updates.Count, Is.EqualTo(1));
             Assert.That(updates[0], Is.InstanceOf<KeepAliveUpdate>());
         }
