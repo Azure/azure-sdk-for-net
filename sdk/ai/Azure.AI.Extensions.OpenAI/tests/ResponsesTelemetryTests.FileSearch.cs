@@ -225,12 +225,14 @@ public partial class ResponsesTelemetryTests
     #region File Search Non-streaming tests
 
     [RecordedTest]
+    [Ignore("File upload multipart body contains machine-specific temp path, causing recording playback mismatch across environments.")]
     public async Task TestFileSearchWithContentRecordingEnabled()
     {
         await RunFileSearchTelemetryTestAsync(contentRecordingEnabled: true, streaming: false);
     }
 
     [RecordedTest]
+    [Ignore("File upload multipart body contains machine-specific temp path, causing recording playback mismatch across environments.")]
     public async Task TestFileSearchWithContentRecordingDisabled()
     {
         await RunFileSearchTelemetryTestAsync(contentRecordingEnabled: false, streaming: false);
@@ -241,12 +243,14 @@ public partial class ResponsesTelemetryTests
     #region File Search Streaming tests
 
     [RecordedTest]
+    [Ignore("File upload multipart body contains machine-specific temp path, causing recording playback mismatch across environments.")]
     public async Task TestFileSearchStreamingWithContentRecordingEnabled()
     {
         await RunFileSearchTelemetryTestAsync(contentRecordingEnabled: true, streaming: true);
     }
 
     [RecordedTest]
+    [Ignore("File upload multipart body contains machine-specific temp path, causing recording playback mismatch across environments.")]
     public async Task TestFileSearchStreamingWithContentRecordingDisabled()
     {
         await RunFileSearchTelemetryTestAsync(contentRecordingEnabled: false, streaming: true);
