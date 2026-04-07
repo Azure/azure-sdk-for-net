@@ -7,6 +7,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.TypeSpec.Generator;
 using System;
 using System.ComponentModel.Composition;
+using System.Threading.Tasks;
 
 namespace Azure.Generator.Management
 {
@@ -91,5 +92,10 @@ namespace Azure.Generator.Management
             }
             return false;
         }
+
+        /// <summary>
+        /// Management plane SDKs do not need ConfigurationSchema.json generation.
+        /// </summary>
+        public override Task WriteAdditionalFiles(string outputPath) => Task.CompletedTask;
     }
 }
