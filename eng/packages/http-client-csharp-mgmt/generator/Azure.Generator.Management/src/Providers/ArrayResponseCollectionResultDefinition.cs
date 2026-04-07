@@ -2,8 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -91,7 +95,7 @@ namespace Azure.Generator.Management.Providers
         }
 
         protected override string BuildRelativeFilePath() =>
-            System.IO.Path.Combine("src", "Generated", "CollectionResults", $"{Name}.cs");
+            Path.Combine("src", "Generated", "CollectionResults", $"{Name}.cs");
 
         protected override string BuildName()
         {
@@ -283,8 +287,8 @@ namespace Azure.Generator.Management.Providers
             var bodyStatements = new List<MethodBodyStatement>
             {
                 // using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-                UsingDeclare("document", typeof(System.Text.Json.JsonDocument),
-                    Static(typeof(System.Text.Json.JsonDocument)).Invoke("Parse",
+                UsingDeclare("document", typeof(JsonDocument),
+                    Static(typeof(JsonDocument)).Invoke("Parse",
                         new ValueExpression[]
                         {
                             responseParam.Property("Content"),
@@ -293,7 +297,7 @@ namespace Azure.Generator.Management.Providers
                     out var documentVariable),
 
                 // var array = document.RootElement;
-                Declare("array", typeof(System.Text.Json.JsonElement),
+                Declare("array", typeof(JsonElement),
                     documentVariable.Property("RootElement"),
                     out var arrayVariable),
 
@@ -303,8 +307,8 @@ namespace Azure.Generator.Management.Providers
                     out var resultVariable),
 
                 // foreach (var element in array.EnumerateArray())
-                new Microsoft.TypeSpec.Generator.Statements.ForEachStatement(
-                    typeof(System.Text.Json.JsonElement),
+                new ForEachStatement(
+                    typeof(JsonElement),
                     "element",
                     arrayVariable.Invoke("EnumerateArray"),
                     isAsync: false,
@@ -315,11 +319,11 @@ namespace Azure.Generator.Management.Providers
                     resultVariable.Invoke("Add",
                         new ValueExpression[]
                         {
-                            Static(new CSharpType(typeof(System.ClientModel.Primitives.ModelReaderWriter))).Invoke("Read",
+                            Static(new CSharpType(typeof(ModelReaderWriter))).Invoke("Read",
                                 new ValueExpression[]
                                 {
                                     New.Instance(typeof(BinaryData),
-                                        Static(typeof(System.Text.Encoding)).Property("UTF8").Invoke("GetBytes",
+                                        Static(typeof(Encoding)).Property("UTF8").Invoke("GetBytes",
                                             elementVariable.Invoke("GetRawText"))),
                                     Static<ModelSerializationExtensionsDefinition>().Property("WireOptions"),
                                     Static(ManagementClientGenerator.Instance.OutputLibrary.ModelReaderWriterContextType).Property("Default")
