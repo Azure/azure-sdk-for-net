@@ -43,3 +43,5 @@ namespace Azure.ResourceManager.AppService
         public BinaryData Thumbprint => BinaryData.FromString(ThumbprintString);
     }
 }
+
+// Test comment for batching validation - DO NOT MERGE
