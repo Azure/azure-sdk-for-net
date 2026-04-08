@@ -419,12 +419,8 @@ export function buildArmProviderSchema(
 
   // Update the model's resourceScope based on resource scope decorator if it exists or based on the Read method's scope.
   // This is specific to legacy resource detection
-  for (const [metadataKey, metadata] of resourcePathToMetadataMap) {
-    const modelId = metadataKey.split("|")[0];
-    const model = resourceModelMap.get(modelId);
-    if (model) {
-      metadata.resourceScope = getResourceScope(model, metadata.methods);
-    }
+  for (const metadata of resourcePathToMetadataMap.values()) {
+      metadata.resourceScope = getResourceScope(metadata.methods);
   }
 
   // Create parent lookup context for legacy resource detection
@@ -1036,7 +1032,6 @@ function getSingletonResource(
   return singletonResource ?? "default";
 }
 function getResourceScope(
-  _model: InputModelType,
   methods?: ResourceMethod[]
 ): ResourceScope {
   // Determine scope from the Read method's operation path, which is the source of truth.
@@ -1047,6 +1042,8 @@ function getResourceScope(
     const getMethod = methods.find(
       (m) => m.kind === ResourceOperationKind.Read
     );
+    // We have logic to filter out resources without get/read operations later in post-processing,
+    // so it's possible to have a resource with no Read method. In that case, we skip scope detection since the resource will be filtered out anyway.
     if (getMethod) {
       return getMethod.operationScope;
     }

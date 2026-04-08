@@ -564,51 +564,27 @@ function convertScopeToResourceScope(
 export function getOperationScopeFromPath(path: string): ResourceScope {
   // Match any path starting with a variable segment followed by /providers/
   // This covers scope-based operations like /{resourceUri}/providers/..., /{scope}/providers/..., /{resourceId}/providers/..., etc.
-  if (/^\/\{[^}]+\}\/providers\//.test(path)) {
-    return ResourceScope.Extension;
-  } else if (countProviderSegments(path) > 1) {
-    // Paths with multiple /providers/ segments extend a specific ARM resource.
-    // Determine the scope from the parent path (before the second /providers/).
-    const firstProviderIndex = path.indexOf("/providers/");
-    const secondProviderIndex = path.indexOf(
-      "/providers/",
-      firstProviderIndex + "/providers/".length
-    );
-    const parentPath = path.substring(0, secondProviderIndex);
-    return getScopeFromParentPath(parentPath);
-  } else if (
-    /^\/subscriptions\/\{[^}]+\}\/resourceGroups\/\{[^}]+\}\//.test(path)
+  const lastProviderIndex = path.lastIndexOf("/providers/");
+  const scopePath = path.substring(0, lastProviderIndex);
+  if (!scopePath) {
+      return ResourceScope.Tenant;
+  }
+  else if (
+    /^\/subscriptions\/\{[^}]+\}\/resourceGroups\/\{[^}]+\}$/.test(scopePath)
   ) {
     return ResourceScope.ResourceGroup;
-  } else if (/^\/subscriptions\/\{[^}]+\}\//.test(path)) {
+  } else if (/^\/subscriptions\/\{[^}]+\}$/.test(scopePath)) {
     return ResourceScope.Subscription;
   } else if (
-    /^\/providers\/Microsoft\.Management\/managementGroups\/\{[^}]+\}/.test(
-      path
+    /^\/providers\/Microsoft\.Management\/managementGroups\/\{[^}]+\}$/.test(
+      scopePath
     )
   ) {
     return ResourceScope.ManagementGroup;
   }
-  return ResourceScope.Tenant;
-}
-
-/**
- * Determine the scope from the parent path (the part before the second /providers/ segment).
- * Uses exact matching against known scope patterns: ResourceGroup, Subscription, ManagementGroup.
- * If the parent path has additional segments beyond the scope (e.g., a specific VM resource),
- * the resource is an extension of that parent resource and gets Extension scope.
- */
-function getScopeFromParentPath(parentPath: string): ResourceScope {
-  if (/^\/subscriptions\/\{[^}]+\}\/resourceGroups\/\{[^}]+\}$/.test(parentPath)) {
-    return ResourceScope.ResourceGroup;
-  } else if (/^\/subscriptions\/\{[^}]+\}$/.test(parentPath)) {
-    return ResourceScope.Subscription;
-  } else if (
-    /^\/providers\/Microsoft\.Management\/managementGroups\/\{[^}]+\}$/.test(parentPath)
-  ) {
-    return ResourceScope.ManagementGroup;
+  else {
+    return ResourceScope.Extension;
   }
-  return ResourceScope.Extension;
 }
 
 /**
