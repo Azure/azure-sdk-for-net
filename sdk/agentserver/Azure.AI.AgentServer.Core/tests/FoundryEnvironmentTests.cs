@@ -21,7 +21,7 @@ public class FoundryEnvironmentTests
         Environment.SetEnvironmentVariable("OTEL_EXPORTER_OTLP_ENDPOINT", null);
         Environment.SetEnvironmentVariable("APPLICATIONINSIGHTS_CONNECTION_STRING", null);
         Environment.SetEnvironmentVariable("SSE_KEEPALIVE_INTERVAL", null);
-        Environment.SetEnvironmentVariable("FOUNDRY_HOSTED", null);
+        Environment.SetEnvironmentVariable("FOUNDRY_HOSTING_ENVIRONMENT", null);
         FoundryEnvironment.Reload();
     }
 
@@ -174,29 +174,21 @@ public class FoundryEnvironmentTests
     }
 
     // ---------------------------------------------------------------
-    // IsHosted (driven by FOUNDRY_HOSTED env var)
+    // IsHosted (driven by FOUNDRY_HOSTING_ENVIRONMENT env var)
     // ---------------------------------------------------------------
 
     [Test]
-    public void IsHosted_ReturnsTrue_WhenFoundryHostedIsTrue()
+    public void IsHosted_ReturnsTrue_WhenFoundryHostingEnvironmentIsSet()
     {
-        Environment.SetEnvironmentVariable("FOUNDRY_HOSTED", "true");
+        Environment.SetEnvironmentVariable("FOUNDRY_HOSTING_ENVIRONMENT", "production");
         FoundryEnvironment.Reload();
         Assert.That(FoundryEnvironment.IsHosted, Is.True);
     }
 
     [Test]
-    public void IsHosted_ReturnsTrue_CaseInsensitive()
+    public void IsHosted_ReturnsTrue_WhenAnyNonEmptyValue()
     {
-        Environment.SetEnvironmentVariable("FOUNDRY_HOSTED", "TRUE");
-        FoundryEnvironment.Reload();
-        Assert.That(FoundryEnvironment.IsHosted, Is.True);
-    }
-
-    [Test]
-    public void IsHosted_ReturnsTrue_MixedCase()
-    {
-        Environment.SetEnvironmentVariable("FOUNDRY_HOSTED", "True");
+        Environment.SetEnvironmentVariable("FOUNDRY_HOSTING_ENVIRONMENT", "staging");
         FoundryEnvironment.Reload();
         Assert.That(FoundryEnvironment.IsHosted, Is.True);
     }
@@ -209,25 +201,9 @@ public class FoundryEnvironmentTests
     }
 
     [Test]
-    public void IsHosted_ReturnsFalse_WhenSetToFalse()
-    {
-        Environment.SetEnvironmentVariable("FOUNDRY_HOSTED", "false");
-        FoundryEnvironment.Reload();
-        Assert.That(FoundryEnvironment.IsHosted, Is.False);
-    }
-
-    [Test]
     public void IsHosted_ReturnsFalse_WhenEmpty()
     {
-        Environment.SetEnvironmentVariable("FOUNDRY_HOSTED", "");
-        FoundryEnvironment.Reload();
-        Assert.That(FoundryEnvironment.IsHosted, Is.False);
-    }
-
-    [Test]
-    public void IsHosted_ReturnsFalse_WhenArbitraryValue()
-    {
-        Environment.SetEnvironmentVariable("FOUNDRY_HOSTED", "yes");
+        Environment.SetEnvironmentVariable("FOUNDRY_HOSTING_ENVIRONMENT", "");
         FoundryEnvironment.Reload();
         Assert.That(FoundryEnvironment.IsHosted, Is.False);
     }

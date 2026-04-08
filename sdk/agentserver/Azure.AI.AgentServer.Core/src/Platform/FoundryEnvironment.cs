@@ -61,11 +61,12 @@ public static class FoundryEnvironment
 
     /// <summary>
     /// Indicates whether the process is running in a Foundry hosted environment.
-    /// Returns <c>true</c> when the <c>FOUNDRY_HOSTED</c> environment variable is set to <c>true</c>.
+    /// Returns <c>true</c> when the <c>FOUNDRY_HOSTING_ENVIRONMENT</c> environment variable
+    /// is set to a non-empty value.
     /// </summary>
     /// <remarks>
-    /// This variable is injected by the Azure AI Foundry hosting infrastructure.
-    /// The value is compared case-insensitively.
+    /// This variable is injected by the Azure AI Foundry hosting infrastructure as a
+    /// non-empty value when the container is running in a Foundry context.
     /// </remarks>
     public static bool IsHosted { get; private set; }
 
@@ -109,11 +110,8 @@ public static class FoundryEnvironment
                 ? TimeSpan.FromSeconds(seconds)
                 : Timeout.InfiniteTimeSpan;
 
-        // IsHosted: true when the FOUNDRY_HOSTED environment variable is set to "true".
-        // This variable is injected by the Azure AI Foundry hosting infrastructure.
-        IsHosted = string.Equals(
-            Environment.GetEnvironmentVariable("FOUNDRY_HOSTED"),
-            "true",
-            StringComparison.OrdinalIgnoreCase);
+        // IsHosted: true when the FOUNDRY_HOSTING_ENVIRONMENT environment variable exists
+        // and is non-empty. This variable is injected by the Azure AI Foundry hosting infrastructure.
+        IsHosted = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("FOUNDRY_HOSTING_ENVIRONMENT"));
     }
 }
