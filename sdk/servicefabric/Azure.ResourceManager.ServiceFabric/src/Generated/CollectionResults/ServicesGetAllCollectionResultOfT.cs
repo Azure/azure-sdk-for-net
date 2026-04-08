@@ -14,7 +14,7 @@ using Azure.ResourceManager.ServiceFabric.Models;
 
 namespace Azure.ResourceManager.ServiceFabric
 {
-    internal partial class ServicesGetAllCollectionResultOfT : Pageable<ServiceResourceData>
+    internal partial class ServicesGetAllCollectionResultOfT : Pageable<ServiceFabricServiceData>
     {
         private readonly Services _client;
         private readonly string _subscriptionId;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of ServicesGetAllCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<ServiceResourceData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<ServiceFabricServiceData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ServiceFabric
                     yield break;
                 }
                 ServiceResourceList result = ServiceResourceList.FromResponse(response);
-                yield return Page<ServiceResourceData>.FromValues((IReadOnlyList<ServiceResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<ServiceFabricServiceData>.FromValues((IReadOnlyList<ServiceFabricServiceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ServiceFabric
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _clusterName, _applicationName, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _clusterName, _applicationName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ServiceResourceCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ServiceFabricServiceCollection.GetAll");
             scope.Start();
             try
             {

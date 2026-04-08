@@ -13,14 +13,14 @@ using Azure.ResourceManager.ServiceFabric.Models;
 namespace Azure.ResourceManager.ServiceFabric
 {
     /// <summary> An application type version resource for the specified application type name resource. </summary>
-    public partial class ApplicationTypeVersionResourceData : ServiceFabricProxyResource
+    public partial class ServiceFabricApplicationTypeVersionData : ServiceFabricProxyResource
     {
-        /// <summary> Initializes a new instance of <see cref="ApplicationTypeVersionResourceData"/>. </summary>
-        public ApplicationTypeVersionResourceData()
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricApplicationTypeVersionData"/>. </summary>
+        public ServiceFabricApplicationTypeVersionData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ApplicationTypeVersionResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricApplicationTypeVersionData"/>. </summary>
         /// <param name="id"> Azure resource identifier. </param>
         /// <param name="name"> Azure resource name. </param>
         /// <param name="type"> Azure resource type. </param>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="systemData"> Metadata pertaining to creation and last modification of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The properties of the application type version resource. </param>
-        internal ApplicationTypeVersionResourceData(string id, string name, string @type, string location, IDictionary<string, string> tags, string eTag, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ApplicationTypeVersionResourceProperties properties) : base(id, name, @type, location, tags, eTag, systemData, additionalBinaryDataProperties)
+        internal ServiceFabricApplicationTypeVersionData(string id, string name, string @type, string location, IDictionary<string, string> tags, string eTag, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ApplicationTypeVersionResourceProperties properties) : base(id, name, @type, location, tags, eTag, systemData, additionalBinaryDataProperties)
         {
             Properties = properties;
         }

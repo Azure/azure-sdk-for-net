@@ -14,7 +14,7 @@ using Azure.ResourceManager.ServiceFabric.Models;
 
 namespace Azure.ResourceManager.ServiceFabric
 {
-    internal partial class ClustersGetAllCollectionResultOfT : Pageable<ClusterData>
+    internal partial class ClustersGetAllCollectionResultOfT : Pageable<ServiceFabricClusterData>
     {
         private readonly Clusters _client;
         private readonly string _subscriptionId;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of ClustersGetAllCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<ClusterData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<ServiceFabricClusterData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ServiceFabric
                     yield break;
                 }
                 ClusterListResult result = ClusterListResult.FromResponse(response);
-                yield return Page<ClusterData>.FromValues((IReadOnlyList<ClusterData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<ServiceFabricClusterData>.FromValues((IReadOnlyList<ServiceFabricClusterData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

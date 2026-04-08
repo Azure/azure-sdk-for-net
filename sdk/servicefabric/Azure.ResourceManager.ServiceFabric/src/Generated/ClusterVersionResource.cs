@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ServiceFabric
     {
         private readonly ClientDiagnostics _clusterVersionsClientDiagnostics;
         private readonly ClusterVersions _clusterVersionsRestClient;
-        private readonly ClusterData _data;
+        private readonly ServiceFabricClusterData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ServiceFabric/locations/environments/clusterVersions";
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <summary> Initializes a new instance of <see cref="ClusterVersionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ClusterVersionResource(ArmClient client, ClusterData data) : this(client, data.Id)
+        internal ClusterVersionResource(ArmClient client, ServiceFabricClusterData data) : this(client, data.Id)
         {
             this.HasData = true;
             _data = data;
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ServiceFabric
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual ClusterData Data
+        public virtual ServiceFabricClusterData Data
         {
             get
             {

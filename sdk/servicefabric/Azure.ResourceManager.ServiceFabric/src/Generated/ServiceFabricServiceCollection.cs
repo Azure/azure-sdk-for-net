@@ -19,28 +19,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ServiceFabric
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ServiceResource"/> and their operations.
-    /// Each <see cref="ServiceResource"/> in the collection will belong to the same instance of <see cref="ApplicationResource"/>.
-    /// To get a <see cref="ServiceResourceCollection"/> instance call the GetServiceResources method from an instance of <see cref="ApplicationResource"/>.
+    /// A class representing a collection of <see cref="ServiceFabricServiceResource"/> and their operations.
+    /// Each <see cref="ServiceFabricServiceResource"/> in the collection will belong to the same instance of <see cref="ServiceFabricApplicationResource"/>.
+    /// To get a <see cref="ServiceFabricServiceCollection"/> instance call the GetServiceFabricServices method from an instance of <see cref="ServiceFabricApplicationResource"/>.
     /// </summary>
-    public partial class ServiceResourceCollection : ArmCollection, IEnumerable<ServiceResource>, IAsyncEnumerable<ServiceResource>
+    public partial class ServiceFabricServiceCollection : ArmCollection, IEnumerable<ServiceFabricServiceResource>, IAsyncEnumerable<ServiceFabricServiceResource>
     {
         private readonly ClientDiagnostics _servicesClientDiagnostics;
         private readonly Services _servicesRestClient;
 
-        /// <summary> Initializes a new instance of ServiceResourceCollection for mocking. </summary>
-        protected ServiceResourceCollection()
+        /// <summary> Initializes a new instance of ServiceFabricServiceCollection for mocking. </summary>
+        protected ServiceFabricServiceCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ServiceResourceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricServiceCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ServiceResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ServiceFabricServiceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ServiceResource.ResourceType, out string serviceResourceApiVersion);
-            _servicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceFabric", ServiceResource.ResourceType.Namespace, Diagnostics);
-            _servicesRestClient = new Services(_servicesClientDiagnostics, Pipeline, Endpoint, serviceResourceApiVersion ?? "2026-03-01-preview");
+            TryGetApiVersion(ServiceFabricServiceResource.ResourceType, out string serviceFabricServiceApiVersion);
+            _servicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceFabric", ServiceFabricServiceResource.ResourceType.Namespace, Diagnostics);
+            _servicesRestClient = new Services(_servicesClientDiagnostics, Pipeline, Endpoint, serviceFabricServiceApiVersion ?? "2026-03-01-preview");
             ValidateResourceId(id);
         }
 
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.ServiceFabric
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ApplicationResource.ResourceType)
+            if (id.ResourceType != ServiceFabricApplicationResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ApplicationResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ServiceFabricApplicationResource.ResourceType), id);
             }
         }
 
@@ -77,12 +77,12 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<ServiceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string serviceName, ServiceResourceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ServiceFabricServiceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string serviceName, ServiceFabricServiceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _servicesClientDiagnostics.CreateScope("ServiceResourceCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _servicesClientDiagnostics.CreateScope("ServiceFabricServiceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.ServiceFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _servicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, serviceName, ServiceResourceData.ToRequestContent(data), context);
+                HttpMessage message = _servicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, serviceName, ServiceFabricServiceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ServiceFabricArmOperation<ServiceResource> operation = new ServiceFabricArmOperation<ServiceResource>(
-                    new ServiceResourceOperationSource(Client),
+                ServiceFabricArmOperation<ServiceFabricServiceResource> operation = new ServiceFabricArmOperation<ServiceFabricServiceResource>(
+                    new ServiceFabricServiceOperationSource(Client),
                     _servicesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -135,12 +135,12 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<ServiceResource> CreateOrUpdate(WaitUntil waitUntil, string serviceName, ServiceResourceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ServiceFabricServiceResource> CreateOrUpdate(WaitUntil waitUntil, string serviceName, ServiceFabricServiceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _servicesClientDiagnostics.CreateScope("ServiceResourceCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _servicesClientDiagnostics.CreateScope("ServiceFabricServiceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -148,10 +148,10 @@ namespace Azure.ResourceManager.ServiceFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _servicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, serviceName, ServiceResourceData.ToRequestContent(data), context);
+                HttpMessage message = _servicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, serviceName, ServiceFabricServiceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ServiceFabricArmOperation<ServiceResource> operation = new ServiceFabricArmOperation<ServiceResource>(
-                    new ServiceResourceOperationSource(Client),
+                ServiceFabricArmOperation<ServiceFabricServiceResource> operation = new ServiceFabricArmOperation<ServiceFabricServiceResource>(
+                    new ServiceFabricServiceOperationSource(Client),
                     _servicesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -191,11 +191,11 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ServiceResource>> GetAsync(string serviceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceFabricServiceResource>> GetAsync(string serviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
 
-            using DiagnosticScope scope = _servicesClientDiagnostics.CreateScope("ServiceResourceCollection.Get");
+            using DiagnosticScope scope = _servicesClientDiagnostics.CreateScope("ServiceFabricServiceCollection.Get");
             scope.Start();
             try
             {
@@ -205,12 +205,12 @@ namespace Azure.ResourceManager.ServiceFabric
                 };
                 HttpMessage message = _servicesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, serviceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ServiceResourceData> response = Response.FromValue(ServiceResourceData.FromResponse(result), result);
+                Response<ServiceFabricServiceData> response = Response.FromValue(ServiceFabricServiceData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ServiceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceFabricServiceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -240,11 +240,11 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ServiceResource> Get(string serviceName, CancellationToken cancellationToken = default)
+        public virtual Response<ServiceFabricServiceResource> Get(string serviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
 
-            using DiagnosticScope scope = _servicesClientDiagnostics.CreateScope("ServiceResourceCollection.Get");
+            using DiagnosticScope scope = _servicesClientDiagnostics.CreateScope("ServiceFabricServiceCollection.Get");
             scope.Start();
             try
             {
@@ -254,12 +254,12 @@ namespace Azure.ResourceManager.ServiceFabric
                 };
                 HttpMessage message = _servicesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, serviceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ServiceResourceData> response = Response.FromValue(ServiceResourceData.FromResponse(result), result);
+                Response<ServiceFabricServiceData> response = Response.FromValue(ServiceFabricServiceData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ServiceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceFabricServiceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -286,20 +286,20 @@ namespace Azure.ResourceManager.ServiceFabric
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServiceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ServiceResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ServiceFabricServiceResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ServiceFabricServiceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ServiceResourceData, ServiceResource>(new ServicesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ServiceFabricServiceData, ServiceFabricServiceResource>(new ServicesGetAllAsyncCollectionResultOfT(
                 _servicesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new ServiceResource(Client, data));
+                context), data => new ServiceFabricServiceResource(Client, data));
         }
 
         /// <summary>
@@ -320,20 +320,20 @@ namespace Azure.ResourceManager.ServiceFabric
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServiceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ServiceResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ServiceFabricServiceResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ServiceFabricServiceResource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ServiceResourceData, ServiceResource>(new ServicesGetAllCollectionResultOfT(
+            return new PageableWrapper<ServiceFabricServiceData, ServiceFabricServiceResource>(new ServicesGetAllCollectionResultOfT(
                 _servicesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new ServiceResource(Client, data));
+                context), data => new ServiceFabricServiceResource(Client, data));
         }
 
         /// <summary>
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.ServiceFabric
         {
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
 
-            using DiagnosticScope scope = _servicesClientDiagnostics.CreateScope("ServiceResourceCollection.Exists");
+            using DiagnosticScope scope = _servicesClientDiagnostics.CreateScope("ServiceFabricServiceCollection.Exists");
             scope.Start();
             try
             {
@@ -372,14 +372,14 @@ namespace Azure.ResourceManager.ServiceFabric
                 HttpMessage message = _servicesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, serviceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<ServiceResourceData> response = default;
+                Response<ServiceFabricServiceData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ServiceResourceData.FromResponse(result), result);
+                        response = Response.FromValue(ServiceFabricServiceData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ServiceResourceData)null, result);
+                        response = Response.FromValue((ServiceFabricServiceData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.ServiceFabric
         {
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
 
-            using DiagnosticScope scope = _servicesClientDiagnostics.CreateScope("ServiceResourceCollection.Exists");
+            using DiagnosticScope scope = _servicesClientDiagnostics.CreateScope("ServiceFabricServiceCollection.Exists");
             scope.Start();
             try
             {
@@ -429,14 +429,14 @@ namespace Azure.ResourceManager.ServiceFabric
                 HttpMessage message = _servicesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, serviceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<ServiceResourceData> response = default;
+                Response<ServiceFabricServiceData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ServiceResourceData.FromResponse(result), result);
+                        response = Response.FromValue(ServiceFabricServiceData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ServiceResourceData)null, result);
+                        response = Response.FromValue((ServiceFabricServiceData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -471,11 +471,11 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<ServiceResource>> GetIfExistsAsync(string serviceName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<ServiceFabricServiceResource>> GetIfExistsAsync(string serviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
 
-            using DiagnosticScope scope = _servicesClientDiagnostics.CreateScope("ServiceResourceCollection.GetIfExists");
+            using DiagnosticScope scope = _servicesClientDiagnostics.CreateScope("ServiceFabricServiceCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -486,23 +486,23 @@ namespace Azure.ResourceManager.ServiceFabric
                 HttpMessage message = _servicesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, serviceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<ServiceResourceData> response = default;
+                Response<ServiceFabricServiceData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ServiceResourceData.FromResponse(result), result);
+                        response = Response.FromValue(ServiceFabricServiceData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ServiceResourceData)null, result);
+                        response = Response.FromValue((ServiceFabricServiceData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<ServiceResource>(response.GetRawResponse());
+                    return new NoValueResponse<ServiceFabricServiceResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new ServiceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceFabricServiceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -532,11 +532,11 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<ServiceResource> GetIfExists(string serviceName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<ServiceFabricServiceResource> GetIfExists(string serviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
 
-            using DiagnosticScope scope = _servicesClientDiagnostics.CreateScope("ServiceResourceCollection.GetIfExists");
+            using DiagnosticScope scope = _servicesClientDiagnostics.CreateScope("ServiceFabricServiceCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -547,23 +547,23 @@ namespace Azure.ResourceManager.ServiceFabric
                 HttpMessage message = _servicesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, serviceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<ServiceResourceData> response = default;
+                Response<ServiceFabricServiceData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ServiceResourceData.FromResponse(result), result);
+                        response = Response.FromValue(ServiceFabricServiceData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ServiceResourceData)null, result);
+                        response = Response.FromValue((ServiceFabricServiceData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<ServiceResource>(response.GetRawResponse());
+                    return new NoValueResponse<ServiceFabricServiceResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new ServiceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceFabricServiceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -572,7 +572,7 @@ namespace Azure.ResourceManager.ServiceFabric
             }
         }
 
-        IEnumerator<ServiceResource> IEnumerable<ServiceResource>.GetEnumerator()
+        IEnumerator<ServiceFabricServiceResource> IEnumerable<ServiceFabricServiceResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -583,7 +583,7 @@ namespace Azure.ResourceManager.ServiceFabric
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<ServiceResource> IAsyncEnumerable<ServiceResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<ServiceFabricServiceResource> IAsyncEnumerable<ServiceFabricServiceResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

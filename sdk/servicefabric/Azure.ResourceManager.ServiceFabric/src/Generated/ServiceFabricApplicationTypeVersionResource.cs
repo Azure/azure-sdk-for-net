@@ -19,9 +19,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.ServiceFabric
 {
     /// <summary>
-    /// A class representing a ServiceFabricApplicationTypeVersionResource along with the instance operations that can be performed on it.
+    /// A class representing a ServiceFabricApplicationTypeVersion along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ServiceFabricApplicationTypeVersionResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ServiceFabricApplicationTypeResource"/> using the GetApplicationTypeVersionResources method.
+    /// Otherwise you can get one from its parent resource <see cref="ServiceFabricApplicationTypeResource"/> using the GetServiceFabricApplicationTypeVersions method.
     /// </summary>
     public partial class ServiceFabricApplicationTypeVersionResource : ArmResource
     {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <summary> Initializes a new instance of <see cref="ServiceFabricApplicationTypeVersionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ServiceFabricApplicationTypeVersionResource(ArmClient client, ServiceFabricApplicationTypeVersionData data) : this(client, new ResourceIdentifier(data.Id))
+        internal ServiceFabricApplicationTypeVersionResource(ArmClient client, ServiceFabricApplicationTypeVersionData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -50,9 +50,9 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ServiceFabricApplicationTypeVersionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string applicationTypeVersionResourceApiVersion);
+            TryGetApiVersion(ResourceType, out string serviceFabricApplicationTypeVersionApiVersion);
             _applicationTypeVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceFabric", ResourceType.Namespace, Diagnostics);
-            _applicationTypeVersionsRestClient = new ApplicationTypeVersions(_applicationTypeVersionsClientDiagnostics, Pipeline, Endpoint, applicationTypeVersionResourceApiVersion ?? "2026-03-01-preview");
+            _applicationTypeVersionsRestClient = new ApplicationTypeVersions(_applicationTypeVersionsClientDiagnostics, Pipeline, Endpoint, serviceFabricApplicationTypeVersionApiVersion ?? "2026-03-01-preview");
             ValidateResourceId(id);
         }
 
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.ServiceFabric
         }
 
         /// <summary>
-        /// Update a ServiceFabricApplicationTypeVersionResource.
+        /// Update a ServiceFabricApplicationTypeVersion.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.ServiceFabric
         }
 
         /// <summary>
-        /// Update a ServiceFabricApplicationTypeVersionResource.
+        /// Update a ServiceFabricApplicationTypeVersion.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>

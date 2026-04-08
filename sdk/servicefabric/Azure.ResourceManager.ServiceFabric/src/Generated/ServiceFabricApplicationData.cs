@@ -13,14 +13,14 @@ using Azure.ResourceManager.ServiceFabric.Models;
 namespace Azure.ResourceManager.ServiceFabric
 {
     /// <summary> The application resource. </summary>
-    public partial class ApplicationResourceData : ServiceFabricProxyResource
+    public partial class ServiceFabricApplicationData : ServiceFabricProxyResource
     {
-        /// <summary> Initializes a new instance of <see cref="ApplicationResourceData"/>. </summary>
-        public ApplicationResourceData()
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricApplicationData"/>. </summary>
+        public ServiceFabricApplicationData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ApplicationResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricApplicationData"/>. </summary>
         /// <param name="id"> Azure resource identifier. </param>
         /// <param name="name"> Azure resource name. </param>
         /// <param name="type"> Azure resource type. </param>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The application resource properties. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        internal ApplicationResourceData(string id, string name, string @type, string location, IDictionary<string, string> tags, string eTag, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ApplicationResourceProperties properties, ManagedIdentity identity) : base(id, name, @type, location, tags, eTag, systemData, additionalBinaryDataProperties)
+        internal ServiceFabricApplicationData(string id, string name, string @type, string location, IDictionary<string, string> tags, string eTag, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ApplicationResourceProperties properties, ManagedIdentity identity) : base(id, name, @type, location, tags, eTag, systemData, additionalBinaryDataProperties)
         {
             Properties = properties;
             Identity = identity;

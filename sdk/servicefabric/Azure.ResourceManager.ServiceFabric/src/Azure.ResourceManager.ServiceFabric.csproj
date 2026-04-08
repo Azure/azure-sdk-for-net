@@ -13,13 +13,14 @@
     <Compile Remove="Generated/Extensions/MockableServiceFabricArmClient.cs" />
     <Compile Remove="Generated/Extensions/ServiceFabricExtensions.cs" />
     <!-- string id in Data constructors instead of ResourceIdentifier -->
+    <Compile Remove="Generated/ServiceFabricClusterData.cs" />
     <Compile Remove="Generated/ClusterData.cs" />
     <Compile Remove="Generated/VMSizeResourceData.cs" />
-    <!-- data.Id returns string from custom ProxyResource base -->
-    <Compile Remove="Generated/ApplicationResource.cs" />
-    <Compile Remove="Generated/ApplicationTypeResource.cs" />
-    <Compile Remove="Generated/ApplicationTypeVersionResource.cs" />
-    <Compile Remove="Generated/ServiceResource.cs" />
+    <!-- Empty stub Resource classes from custom ProxyResource base -->
+    <Compile Remove="Generated/ServiceFabricApplicationResource.cs" />
+    <Compile Remove="Generated/ServiceFabricApplicationTypeResource.cs" />
+    <Compile Remove="Generated/ServiceFabricApplicationTypeVersionResource.cs" />
+    <Compile Remove="Generated/ServiceFabricServiceResource.cs" />
     <!-- ClusterVersionCollection: type mismatches, IEnumerable, constructor -->
     <Compile Remove="Generated/ClusterVersionCollection.cs" />
     <Compile Remove="Generated/Extensions/MockableServiceFabricSubscriptionResource.cs" />

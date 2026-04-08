@@ -17,61 +17,61 @@ using Azure.ResourceManager.ServiceFabric;
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
     /// <summary> The application resource for patch operations. </summary>
-    public partial class ApplicationResourcePatch : ServiceFabricProxyResource, IJsonModel<ApplicationResourcePatch>
+    public partial class ServiceFabricApplicationPatch : ServiceFabricProxyResource, IJsonModel<ServiceFabricApplicationPatch>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ServiceFabricProxyResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApplicationResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceFabricApplicationPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeApplicationResourcePatch(document.RootElement, options);
+                        return DeserializeServiceFabricApplicationPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationResourcePatch)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceFabricApplicationPatch)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApplicationResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceFabricApplicationPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceFabricContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationResourcePatch)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceFabricApplicationPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ApplicationResourcePatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ServiceFabricApplicationPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ApplicationResourcePatch IPersistableModel<ApplicationResourcePatch>.Create(BinaryData data, ModelReaderWriterOptions options) => (ApplicationResourcePatch)PersistableModelCreateCore(data, options);
+        ServiceFabricApplicationPatch IPersistableModel<ServiceFabricApplicationPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => (ServiceFabricApplicationPatch)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ApplicationResourcePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ServiceFabricApplicationPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="applicationResourcePatch"> The <see cref="ApplicationResourcePatch"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(ApplicationResourcePatch applicationResourcePatch)
+        /// <param name="serviceFabricApplicationPatch"> The <see cref="ServiceFabricApplicationPatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ServiceFabricApplicationPatch serviceFabricApplicationPatch)
         {
-            if (applicationResourcePatch == null)
+            if (serviceFabricApplicationPatch == null)
             {
                 return null;
             }
-            return RequestContent.Create(applicationResourcePatch, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(serviceFabricApplicationPatch, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ApplicationResourcePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ServiceFabricApplicationPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -82,10 +82,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApplicationResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceFabricApplicationPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationResourcePatch)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceFabricApplicationPatch)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -97,24 +97,24 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ApplicationResourcePatch IJsonModel<ApplicationResourcePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ApplicationResourcePatch)JsonModelCreateCore(ref reader, options);
+        ServiceFabricApplicationPatch IJsonModel<ServiceFabricApplicationPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ServiceFabricApplicationPatch)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ServiceFabricProxyResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApplicationResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceFabricApplicationPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationResourcePatch)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceFabricApplicationPatch)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeApplicationResourcePatch(document.RootElement, options);
+            return DeserializeServiceFabricApplicationPatch(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ApplicationResourcePatch DeserializeApplicationResourcePatch(JsonElement element, ModelReaderWriterOptions options)
+        internal static ServiceFabricApplicationPatch DeserializeServiceFabricApplicationPatch(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ApplicationResourcePatch(
+            return new ServiceFabricApplicationPatch(
                 id,
                 name,
                 @type,

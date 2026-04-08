@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ServiceFabric
         ClusterResource IOperationSource<ClusterResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            ClusterData data = ClusterData.DeserializeClusterData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            ServiceFabricClusterData data = ServiceFabricClusterData.DeserializeServiceFabricClusterData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new ClusterResource(_client, data);
         }
 
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ServiceFabric
         async ValueTask<ClusterResource> IOperationSource<ClusterResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            ClusterData data = ClusterData.DeserializeClusterData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            ServiceFabricClusterData data = ServiceFabricClusterData.DeserializeServiceFabricClusterData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new ClusterResource(_client, data);
         }
     }

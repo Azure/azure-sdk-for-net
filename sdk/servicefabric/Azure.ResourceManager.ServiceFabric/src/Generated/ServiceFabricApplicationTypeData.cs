@@ -13,14 +13,14 @@ using Azure.ResourceManager.ServiceFabric.Models;
 namespace Azure.ResourceManager.ServiceFabric
 {
     /// <summary> The application type name resource. </summary>
-    public partial class ApplicationTypeResourceData : ServiceFabricProxyResource
+    public partial class ServiceFabricApplicationTypeData : ServiceFabricProxyResource
     {
-        /// <summary> Initializes a new instance of <see cref="ApplicationTypeResourceData"/>. </summary>
-        public ApplicationTypeResourceData()
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricApplicationTypeData"/>. </summary>
+        public ServiceFabricApplicationTypeData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ApplicationTypeResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricApplicationTypeData"/>. </summary>
         /// <param name="id"> Azure resource identifier. </param>
         /// <param name="name"> Azure resource name. </param>
         /// <param name="type"> Azure resource type. </param>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="systemData"> Metadata pertaining to creation and last modification of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The application type name properties. </param>
-        internal ApplicationTypeResourceData(string id, string name, string @type, string location, IDictionary<string, string> tags, string eTag, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ApplicationTypeResourceProperties properties) : base(id, name, @type, location, tags, eTag, systemData, additionalBinaryDataProperties)
+        internal ServiceFabricApplicationTypeData(string id, string name, string @type, string location, IDictionary<string, string> tags, string eTag, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ApplicationTypeResourceProperties properties) : base(id, name, @type, location, tags, eTag, systemData, additionalBinaryDataProperties)
         {
             Properties = properties;
         }

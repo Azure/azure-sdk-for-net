@@ -18,10 +18,10 @@ using Azure.ResourceManager.ServiceFabric.Models;
 namespace Azure.ResourceManager.ServiceFabric
 {
     /// <summary> The cluster resource. </summary>
-    public partial class ClusterData : TrackedResourceData, IJsonModel<ClusterData>
+    public partial class ServiceFabricClusterData : TrackedResourceData, IJsonModel<ServiceFabricClusterData>
     {
-        /// <summary> Initializes a new instance of <see cref="ClusterData"/> for deserialization. </summary>
-        internal ClusterData()
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricClusterData"/> for deserialization. </summary>
+        internal ServiceFabricClusterData()
         {
         }
 
@@ -29,62 +29,62 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ClusterData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceFabricClusterData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeClusterData(document.RootElement, options);
+                        return DeserializeServiceFabricClusterData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ClusterData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceFabricClusterData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ClusterData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceFabricClusterData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceFabricContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ClusterData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceFabricClusterData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ClusterData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ServiceFabricClusterData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ClusterData IPersistableModel<ClusterData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ClusterData)PersistableModelCreateCore(data, options);
+        ServiceFabricClusterData IPersistableModel<ServiceFabricClusterData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ServiceFabricClusterData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ClusterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ServiceFabricClusterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="clusterData"> The <see cref="ClusterData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(ClusterData clusterData)
+        /// <param name="serviceFabricClusterData"> The <see cref="ServiceFabricClusterData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ServiceFabricClusterData serviceFabricClusterData)
         {
-            if (clusterData == null)
+            if (serviceFabricClusterData == null)
             {
                 return null;
             }
-            return RequestContent.Create(clusterData, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(serviceFabricClusterData, ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ClusterData"/> from. </param>
-        internal static ClusterData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ServiceFabricClusterData"/> from. </param>
+        internal static ServiceFabricClusterData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeClusterData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeServiceFabricClusterData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ClusterData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ServiceFabricClusterData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -95,10 +95,10 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ClusterData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceFabricClusterData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceFabricClusterData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -106,28 +106,33 @@ namespace Azure.ResourceManager.ServiceFabric
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
+            if (options.Format != "W" && Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ClusterData IJsonModel<ClusterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ClusterData)JsonModelCreateCore(ref reader, options);
+        ServiceFabricClusterData IJsonModel<ServiceFabricClusterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ServiceFabricClusterData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ClusterData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceFabricClusterData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceFabricClusterData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeClusterData(document.RootElement, options);
+            return DeserializeServiceFabricClusterData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ClusterData DeserializeClusterData(JsonElement element, ModelReaderWriterOptions options)
+        internal static ServiceFabricClusterData DeserializeServiceFabricClusterData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -141,6 +146,7 @@ namespace Azure.ResourceManager.ServiceFabric
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ClusterProperties properties = default;
+            string eTag = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -206,12 +212,17 @@ namespace Azure.ResourceManager.ServiceFabric
                     properties = ClusterProperties.DeserializeClusterProperties(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("etag"u8))
+                {
+                    eTag = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ClusterData(
+            return new ServiceFabricClusterData(
                 id,
                 name,
                 resourceType,
@@ -219,7 +230,8 @@ namespace Azure.ResourceManager.ServiceFabric
                 additionalBinaryDataProperties,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                properties);
+                properties,
+                eTag);
         }
     }
 }

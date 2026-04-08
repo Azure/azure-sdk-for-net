@@ -5,12 +5,49 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ServiceFabric;
 
 namespace Azure.ResourceManager.ServiceFabric.Mocking
 {
     /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableServiceFabricArmClient : ArmResource
     {
+        /// <summary> Gets an object representing a <see cref="ServiceFabricApplicationTypeResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ServiceFabricApplicationTypeResource"/> object. </returns>
+        public virtual ServiceFabricApplicationTypeResource GetServiceFabricApplicationTypeResource(ResourceIdentifier id)
+        {
+            ServiceFabricApplicationTypeResource.ValidateResourceId(id);
+            return new ServiceFabricApplicationTypeResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ServiceFabricApplicationTypeVersionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ServiceFabricApplicationTypeVersionResource"/> object. </returns>
+        public virtual ServiceFabricApplicationTypeVersionResource GetServiceFabricApplicationTypeVersionResource(ResourceIdentifier id)
+        {
+            ServiceFabricApplicationTypeVersionResource.ValidateResourceId(id);
+            return new ServiceFabricApplicationTypeVersionResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ServiceFabricApplicationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ServiceFabricApplicationResource"/> object. </returns>
+        public virtual ServiceFabricApplicationResource GetServiceFabricApplicationResource(ResourceIdentifier id)
+        {
+            ServiceFabricApplicationResource.ValidateResourceId(id);
+            return new ServiceFabricApplicationResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ServiceFabricServiceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ServiceFabricServiceResource"/> object. </returns>
+        public virtual ServiceFabricServiceResource GetServiceFabricServiceResource(ResourceIdentifier id)
+        {
+            ServiceFabricServiceResource.ValidateResourceId(id);
+            return new ServiceFabricServiceResource(Client, id);
+        }
     }
 }

@@ -10,76 +10,68 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.ServiceFabric.Models;
+using Azure.ResourceManager.ServiceFabric;
 
-namespace Azure.ResourceManager.ServiceFabric
+namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    /// <summary> The application resource. </summary>
-    public partial class ApplicationResourceData : ServiceFabricProxyResource, IJsonModel<ApplicationResourceData>
+    /// <summary> The service resource for patch operations. </summary>
+    public partial class ServiceFabricServicePatch : ServiceFabricProxyResource, IJsonModel<ServiceFabricServicePatch>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ServiceFabricProxyResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApplicationResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceFabricServicePatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeApplicationResourceData(document.RootElement, options);
+                        return DeserializeServiceFabricServicePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationResourceData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceFabricServicePatch)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApplicationResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceFabricServicePatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceFabricContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationResourceData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceFabricServicePatch)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ApplicationResourceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ServiceFabricServicePatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ApplicationResourceData IPersistableModel<ApplicationResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ApplicationResourceData)PersistableModelCreateCore(data, options);
+        ServiceFabricServicePatch IPersistableModel<ServiceFabricServicePatch>.Create(BinaryData data, ModelReaderWriterOptions options) => (ServiceFabricServicePatch)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ApplicationResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ServiceFabricServicePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="applicationResourceData"> The <see cref="ApplicationResourceData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(ApplicationResourceData applicationResourceData)
+        /// <param name="serviceFabricServicePatch"> The <see cref="ServiceFabricServicePatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ServiceFabricServicePatch serviceFabricServicePatch)
         {
-            if (applicationResourceData == null)
+            if (serviceFabricServicePatch == null)
             {
                 return null;
             }
-            return RequestContent.Create(applicationResourceData, ModelSerializationExtensions.WireOptions);
-        }
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ApplicationResourceData"/> from. </param>
-        internal static ApplicationResourceData FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeApplicationResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(serviceFabricServicePatch, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ApplicationResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ServiceFabricServicePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -90,10 +82,10 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApplicationResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceFabricServicePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationResourceData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceFabricServicePatch)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -101,33 +93,28 @@ namespace Azure.ResourceManager.ServiceFabric
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
-            if (Optional.IsDefined(Identity))
-            {
-                writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ApplicationResourceData IJsonModel<ApplicationResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ApplicationResourceData)JsonModelCreateCore(ref reader, options);
+        ServiceFabricServicePatch IJsonModel<ServiceFabricServicePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ServiceFabricServicePatch)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ServiceFabricProxyResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApplicationResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceFabricServicePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationResourceData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceFabricServicePatch)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeApplicationResourceData(document.RootElement, options);
+            return DeserializeServiceFabricServicePatch(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ApplicationResourceData DeserializeApplicationResourceData(JsonElement element, ModelReaderWriterOptions options)
+        internal static ServiceFabricServicePatch DeserializeServiceFabricServicePatch(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -141,8 +128,7 @@ namespace Azure.ResourceManager.ServiceFabric
             string eTag = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            ApplicationResourceProperties properties = default;
-            ManagedIdentity identity = default;
+            ServiceResourceUpdateProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -206,16 +192,7 @@ namespace Azure.ResourceManager.ServiceFabric
                     {
                         continue;
                     }
-                    properties = ApplicationResourceProperties.DeserializeApplicationResourceProperties(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("identity"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    identity = ManagedIdentity.DeserializeManagedIdentity(prop.Value, options);
+                    properties = ServiceResourceUpdateProperties.DeserializeServiceResourceUpdateProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -223,7 +200,7 @@ namespace Azure.ResourceManager.ServiceFabric
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ApplicationResourceData(
+            return new ServiceFabricServicePatch(
                 id,
                 name,
                 @type,
@@ -232,8 +209,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 eTag,
                 systemData,
                 additionalBinaryDataProperties,
-                properties,
-                identity);
+                properties);
         }
     }
 }

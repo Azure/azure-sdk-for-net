@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (ApplicationResourceData item in Value)
+            foreach (ServiceFabricApplicationData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             {
                 return null;
             }
-            IList<ApplicationResourceData> value = default;
+            IList<ServiceFabricApplicationData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<ApplicationResourceData> array = new List<ApplicationResourceData>();
+                    List<ServiceFabricApplicationData> array = new List<ServiceFabricApplicationData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ApplicationResourceData.DeserializeApplicationResourceData(item, options));
+                        array.Add(ServiceFabricApplicationData.DeserializeServiceFabricApplicationData(item, options));
                     }
                     value = array;
                     continue;

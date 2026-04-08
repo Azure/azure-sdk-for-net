@@ -44,40 +44,40 @@ namespace Azure.ResourceManager.ServiceFabric.Mocking
             return new VMSizeResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="ApplicationTypeResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="ServiceFabricApplicationTypeResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApplicationTypeResource"/> object. </returns>
-        public virtual ApplicationTypeResource GetApplicationTypeResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServiceFabricApplicationTypeResource"/> object. </returns>
+        public virtual ServiceFabricApplicationTypeResource GetApplicationTypeResource(ResourceIdentifier id)
         {
-            ApplicationTypeResource.ValidateResourceId(id);
-            return new ApplicationTypeResource(Client, id);
+            ServiceFabricApplicationTypeResource.ValidateResourceId(id);
+            return new ServiceFabricApplicationTypeResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="ApplicationTypeVersionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="ServiceFabricApplicationTypeVersionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApplicationTypeVersionResource"/> object. </returns>
-        public virtual ApplicationTypeVersionResource GetApplicationTypeVersionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServiceFabricApplicationTypeVersionResource"/> object. </returns>
+        public virtual ServiceFabricApplicationTypeVersionResource GetApplicationTypeVersionResource(ResourceIdentifier id)
         {
-            ApplicationTypeVersionResource.ValidateResourceId(id);
-            return new ApplicationTypeVersionResource(Client, id);
+            ServiceFabricApplicationTypeVersionResource.ValidateResourceId(id);
+            return new ServiceFabricApplicationTypeVersionResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="ApplicationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="ServiceFabricApplicationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApplicationResource"/> object. </returns>
-        public virtual ApplicationResource GetApplicationResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServiceFabricApplicationResource"/> object. </returns>
+        public virtual ServiceFabricApplicationResource GetApplicationResource(ResourceIdentifier id)
         {
-            ApplicationResource.ValidateResourceId(id);
-            return new ApplicationResource(Client, id);
+            ServiceFabricApplicationResource.ValidateResourceId(id);
+            return new ServiceFabricApplicationResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="ServiceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="ServiceFabricServiceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServiceResource"/> object. </returns>
-        public virtual ServiceResource GetServiceResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServiceFabricServiceResource"/> object. </returns>
+        public virtual ServiceFabricServiceResource GetServiceResource(ResourceIdentifier id)
         {
-            ServiceResource.ValidateResourceId(id);
-            return new ServiceResource(Client, id);
+            ServiceFabricServiceResource.ValidateResourceId(id);
+            return new ServiceFabricServiceResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="ClusterVersionResource"/> along with the instance operations that can be performed on it but with no data. </summary>

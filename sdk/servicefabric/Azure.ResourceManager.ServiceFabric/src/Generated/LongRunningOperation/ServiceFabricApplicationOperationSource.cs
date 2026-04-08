@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ServiceFabric
 {
     /// <summary></summary>
-    internal partial class ServiceResourceOperationSource : IOperationSource<ServiceResource>
+    internal partial class ServiceFabricApplicationOperationSource : IOperationSource<ServiceFabricApplicationResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal ServiceResourceOperationSource(ArmClient client)
+        internal ServiceFabricApplicationOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        ServiceResource IOperationSource<ServiceResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ServiceFabricApplicationResource IOperationSource<ServiceFabricApplicationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            ServiceResourceData data = ServiceResourceData.DeserializeServiceResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new ServiceResource(_client, data);
+            ServiceFabricApplicationData data = ServiceFabricApplicationData.DeserializeServiceFabricApplicationData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ServiceFabricApplicationResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<ServiceResource> IOperationSource<ServiceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ServiceFabricApplicationResource> IOperationSource<ServiceFabricApplicationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            ServiceResourceData data = ServiceResourceData.DeserializeServiceResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new ServiceResource(_client, data);
+            ServiceFabricApplicationData data = ServiceFabricApplicationData.DeserializeServiceFabricApplicationData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ServiceFabricApplicationResource(_client, data);
         }
     }
 }

@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ServiceFabric
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ApplicationTypeResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="ServiceFabricApplicationTypeResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
         /// <description> To mock this method, please mock <see cref="MockableServiceFabricArmClient.GetApplicationTypeResource(ResourceIdentifier)"/> instead. </description>
@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ApplicationTypeResource"/> object. </returns>
-        public static ApplicationTypeResource GetApplicationTypeResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServiceFabricApplicationTypeResource"/> object. </returns>
+        public static ServiceFabricApplicationTypeResource GetApplicationTypeResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ServiceFabric
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ApplicationTypeVersionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="ServiceFabricApplicationTypeVersionResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
         /// <description> To mock this method, please mock <see cref="MockableServiceFabricArmClient.GetApplicationTypeVersionResource(ResourceIdentifier)"/> instead. </description>
@@ -102,8 +102,8 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ApplicationTypeVersionResource"/> object. </returns>
-        public static ApplicationTypeVersionResource GetApplicationTypeVersionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServiceFabricApplicationTypeVersionResource"/> object. </returns>
+        public static ServiceFabricApplicationTypeVersionResource GetApplicationTypeVersionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ServiceFabric
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ApplicationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="ServiceFabricApplicationResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
         /// <description> To mock this method, please mock <see cref="MockableServiceFabricArmClient.GetApplicationResource(ResourceIdentifier)"/> instead. </description>
@@ -120,8 +120,8 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ApplicationResource"/> object. </returns>
-        public static ApplicationResource GetApplicationResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServiceFabricApplicationResource"/> object. </returns>
+        public static ServiceFabricApplicationResource GetApplicationResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ServiceFabric
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ServiceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="ServiceFabricServiceResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
         /// <description> To mock this method, please mock <see cref="MockableServiceFabricArmClient.GetServiceResource(ResourceIdentifier)"/> instead. </description>
@@ -138,8 +138,8 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ServiceResource"/> object. </returns>
-        public static ServiceResource GetServiceResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServiceFabricServiceResource"/> object. </returns>
+        public static ServiceFabricServiceResource GetServiceResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 

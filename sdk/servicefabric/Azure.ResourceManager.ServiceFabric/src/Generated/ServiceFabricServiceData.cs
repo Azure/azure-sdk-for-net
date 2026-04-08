@@ -13,14 +13,14 @@ using Azure.ResourceManager.ServiceFabric.Models;
 namespace Azure.ResourceManager.ServiceFabric
 {
     /// <summary> The service resource. </summary>
-    public partial class ServiceResourceData : ServiceFabricProxyResource
+    public partial class ServiceFabricServiceData : ServiceFabricProxyResource
     {
-        /// <summary> Initializes a new instance of <see cref="ServiceResourceData"/>. </summary>
-        public ServiceResourceData()
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricServiceData"/>. </summary>
+        public ServiceFabricServiceData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ServiceResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricServiceData"/>. </summary>
         /// <param name="id"> Azure resource identifier. </param>
         /// <param name="name"> Azure resource name. </param>
         /// <param name="type"> Azure resource type. </param>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="systemData"> Metadata pertaining to creation and last modification of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The service resource properties. </param>
-        internal ServiceResourceData(string id, string name, string @type, string location, IDictionary<string, string> tags, string eTag, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ServiceResourceProperties properties) : base(id, name, @type, location, tags, eTag, systemData, additionalBinaryDataProperties)
+        internal ServiceFabricServiceData(string id, string name, string @type, string location, IDictionary<string, string> tags, string eTag, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ServiceResourceProperties properties) : base(id, name, @type, location, tags, eTag, systemData, additionalBinaryDataProperties)
         {
             Properties = properties;
         }
