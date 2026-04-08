@@ -7,26 +7,25 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Compute.Models;
 
-namespace Azure.ResourceManager.Compute
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies information about the gallery image definition that you want to create or update. </summary>
-    public partial class SharedGalleryImageData : PirSharedGalleryResource
+    public partial class SharedGalleryImage : PirSharedGalleryResource
     {
-        /// <summary> Initializes a new instance of <see cref="SharedGalleryImageData"/>. </summary>
-        internal SharedGalleryImageData()
+        /// <summary> Initializes a new instance of <see cref="SharedGalleryImage"/>. </summary>
+        internal SharedGalleryImage()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SharedGalleryImageData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SharedGalleryImage"/>. </summary>
         /// <param name="name"> Resource name. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="identifier"> The identifier information of shared gallery. </param>
         /// <param name="properties"> Describes the properties of a gallery image definition. </param>
         /// <param name="parentName"> The name of the parent resource. </param>
-        internal SharedGalleryImageData(string name, string location, IDictionary<string, BinaryData> additionalBinaryDataProperties, SharedGalleryIdentifier identifier, SharedGalleryImageProperties properties, string parentName) : base(name, location, additionalBinaryDataProperties, identifier)
+        internal SharedGalleryImage(string name, string location, IDictionary<string, BinaryData> additionalBinaryDataProperties, SharedGalleryIdentifier identifier, SharedGalleryImageProperties properties, string parentName) : base(name, location, additionalBinaryDataProperties, identifier)
         {
             Properties = properties;
             ParentName = parentName;

@@ -15,7 +15,7 @@ using Azure.ResourceManager.Compute.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    internal partial class CommunityGalleryImageVersionsGetAllAsyncCollectionResultOfT : AsyncPageable<CommunityGalleryImageVersionData>
+    internal partial class CommunityGalleryImageVersionsGetCommunityGalleryImageVersionsAsyncCollectionResultOfT : AsyncPageable<CommunityGalleryImageVersion>
     {
         private readonly CommunityGalleryImageVersions _client;
         private readonly string _subscriptionId;
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Compute
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of CommunityGalleryImageVersionsGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of CommunityGalleryImageVersionsGetCommunityGalleryImageVersionsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The CommunityGalleryImageVersions client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="location"> The name of the Azure region. </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryImageName"> The name of the community gallery image definition. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public CommunityGalleryImageVersionsGetAllAsyncCollectionResultOfT(CommunityGalleryImageVersions client, string subscriptionId, AzureLocation location, string publicGalleryName, string galleryImageName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public CommunityGalleryImageVersionsGetCommunityGalleryImageVersionsAsyncCollectionResultOfT(CommunityGalleryImageVersions client, string subscriptionId, AzureLocation location, string publicGalleryName, string galleryImageName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -44,11 +44,11 @@ namespace Azure.ResourceManager.Compute
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of CommunityGalleryImageVersionsGetAllAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of CommunityGalleryImageVersionsGetCommunityGalleryImageVersionsAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of CommunityGalleryImageVersionsGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<CommunityGalleryImageVersionData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of CommunityGalleryImageVersionsGetCommunityGalleryImageVersionsAsyncCollectionResultOfT as an enumerable collection. </returns>
+        public override async IAsyncEnumerable<Page<CommunityGalleryImageVersion>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Compute
                     yield break;
                 }
                 CommunityGalleryImageVersionList result = CommunityGalleryImageVersionList.FromResponse(response);
-                yield return Page<CommunityGalleryImageVersionData>.FromValues((IReadOnlyList<CommunityGalleryImageVersionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<CommunityGalleryImageVersion>.FromValues((IReadOnlyList<CommunityGalleryImageVersion>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _location, _publicGalleryName, _galleryImageName, _context) : _client.CreateGetAllRequest(_subscriptionId, _location, _publicGalleryName, _galleryImageName, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetCommunityGalleryImageVersionsRequest(nextLink, _subscriptionId, _location, _publicGalleryName, _galleryImageName, _context) : _client.CreateGetCommunityGalleryImageVersionsRequest(_subscriptionId, _location, _publicGalleryName, _galleryImageName, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

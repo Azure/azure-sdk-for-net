@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -15,7 +14,7 @@ using Azure.ResourceManager.Compute.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    internal partial class SharedGalleryImagesGetAllAsyncCollectionResultOfT : AsyncPageable<SharedGalleryImageData>
+    internal partial class SharedGalleryImagesGetSharedGalleryImagesCollectionResultOfT : Pageable<SharedGalleryImage>
     {
         private readonly SharedGalleryImages _client;
         private readonly string _subscriptionId;
@@ -25,7 +24,7 @@ namespace Azure.ResourceManager.Compute
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of SharedGalleryImagesGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of SharedGalleryImagesGetSharedGalleryImagesCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The SharedGalleryImages client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="location"> The name of the Azure region. </param>
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="sharedTo"> The query parameter to decide what shared galleries to fetch when doing listing operations. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public SharedGalleryImagesGetAllAsyncCollectionResultOfT(SharedGalleryImages client, string subscriptionId, AzureLocation location, string galleryUniqueName, string sharedTo, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public SharedGalleryImagesGetSharedGalleryImagesCollectionResultOfT(SharedGalleryImages client, string subscriptionId, AzureLocation location, string galleryUniqueName, string sharedTo, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -44,22 +43,22 @@ namespace Azure.ResourceManager.Compute
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of SharedGalleryImagesGetAllAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of SharedGalleryImagesGetSharedGalleryImagesCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of SharedGalleryImagesGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<SharedGalleryImageData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of SharedGalleryImagesGetSharedGalleryImagesCollectionResultOfT as an enumerable collection. </returns>
+        public override IEnumerable<Page<SharedGalleryImage>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
             {
-                Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
+                Response response = GetNextResponse(pageSizeHint, nextPage);
                 if (response is null)
                 {
                     yield break;
                 }
                 SharedGalleryImageList result = SharedGalleryImageList.FromResponse(response);
-                yield return Page<SharedGalleryImageData>.FromValues((IReadOnlyList<SharedGalleryImageData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<SharedGalleryImage>.FromValues((IReadOnlyList<SharedGalleryImage>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -71,14 +70,14 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
+        private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _location, _galleryUniqueName, _sharedTo, _context) : _client.CreateGetAllRequest(_subscriptionId, _location, _galleryUniqueName, _sharedTo, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetSharedGalleryImagesRequest(nextLink, _subscriptionId, _location, _galleryUniqueName, _sharedTo, _context) : _client.CreateGetSharedGalleryImagesRequest(_subscriptionId, _location, _galleryUniqueName, _sharedTo, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {
-                return await _client.Pipeline.ProcessMessageAsync(message, _context).ConfigureAwait(false);
+                return _client.Pipeline.ProcessMessage(message, _context);
             }
             catch (Exception e)
             {

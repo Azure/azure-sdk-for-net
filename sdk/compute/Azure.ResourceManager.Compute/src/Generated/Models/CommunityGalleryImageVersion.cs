@@ -7,19 +7,18 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Compute.Models;
 
-namespace Azure.ResourceManager.Compute
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies information about the gallery image version that you want to create or update. </summary>
-    public partial class CommunityGalleryImageVersionData : PirCommunityGalleryResource
+    public partial class CommunityGalleryImageVersion : PirCommunityGalleryResource
     {
-        /// <summary> Initializes a new instance of <see cref="CommunityGalleryImageVersionData"/>. </summary>
-        internal CommunityGalleryImageVersionData()
+        /// <summary> Initializes a new instance of <see cref="CommunityGalleryImageVersion"/>. </summary>
+        internal CommunityGalleryImageVersion()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="CommunityGalleryImageVersionData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommunityGalleryImageVersion"/>. </summary>
         /// <param name="name"> Resource name. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="type"> Resource type. </param>
@@ -27,7 +26,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Describes the properties of a gallery image version. </param>
         /// <param name="parentName"> The name of the parent resource. </param>
-        internal CommunityGalleryImageVersionData(string name, string location, string @type, CommunityGalleryIdentifier identifier, IDictionary<string, BinaryData> additionalBinaryDataProperties, CommunityGalleryImageVersionProperties properties, string parentName) : base(name, location, @type, identifier, additionalBinaryDataProperties)
+        internal CommunityGalleryImageVersion(string name, string location, string @type, CommunityGalleryIdentifier identifier, IDictionary<string, BinaryData> additionalBinaryDataProperties, CommunityGalleryImageVersionProperties properties, string parentName) : base(name, location, @type, identifier, additionalBinaryDataProperties)
         {
             Properties = properties;
             ParentName = parentName;

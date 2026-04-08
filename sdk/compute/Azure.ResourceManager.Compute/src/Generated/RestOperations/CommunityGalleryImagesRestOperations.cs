@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, AzureLocation location, string publicGalleryName, string galleryImageName, RequestContext context)
+        internal HttpMessage CreateGetCommunityGalleryImageRequest(string subscriptionId, AzureLocation location, string publicGalleryName, string galleryImageName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Compute
             return message;
         }
 
-        internal HttpMessage CreateGetAllRequest(string subscriptionId, AzureLocation location, string publicGalleryName, RequestContext context)
+        internal HttpMessage CreateGetCommunityGalleryImagesRequest(string subscriptionId, AzureLocation location, string publicGalleryName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Compute
             return message;
         }
 
-        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, string subscriptionId, AzureLocation location, string publicGalleryName, RequestContext context)
+        internal HttpMessage CreateNextGetCommunityGalleryImagesRequest(Uri nextPage, string subscriptionId, AzureLocation location, string publicGalleryName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

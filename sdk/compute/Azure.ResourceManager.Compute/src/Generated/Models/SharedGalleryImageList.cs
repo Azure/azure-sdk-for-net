@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -20,7 +19,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of <see cref="SharedGalleryImageList"/>. </summary>
         /// <param name="value"> A list of shared gallery images. </param>
-        internal SharedGalleryImageList(IEnumerable<SharedGalleryImageData> value)
+        internal SharedGalleryImageList(IEnumerable<SharedGalleryImage> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +28,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="value"> A list of shared gallery images. </param>
         /// <param name="nextLink"> The uri to fetch the next page of shared gallery images. Call ListNext() with this to fetch the next page of shared gallery images. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SharedGalleryImageList(IList<SharedGalleryImageData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SharedGalleryImageList(IList<SharedGalleryImage> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -37,7 +36,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> A list of shared gallery images. </summary>
-        public IList<SharedGalleryImageData> Value { get; }
+        public IList<SharedGalleryImage> Value { get; }
 
         /// <summary> The uri to fetch the next page of shared gallery images. Call ListNext() with this to fetch the next page of shared gallery images. </summary>
         public Uri NextLink { get; }

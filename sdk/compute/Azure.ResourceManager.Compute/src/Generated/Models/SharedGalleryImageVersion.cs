@@ -7,26 +7,25 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Compute.Models;
 
-namespace Azure.ResourceManager.Compute
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies information about the gallery image version that you want to create or update. </summary>
-    public partial class SharedGalleryImageVersionData : PirSharedGalleryResource
+    public partial class SharedGalleryImageVersion : PirSharedGalleryResource
     {
-        /// <summary> Initializes a new instance of <see cref="SharedGalleryImageVersionData"/>. </summary>
-        internal SharedGalleryImageVersionData()
+        /// <summary> Initializes a new instance of <see cref="SharedGalleryImageVersion"/>. </summary>
+        internal SharedGalleryImageVersion()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SharedGalleryImageVersionData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SharedGalleryImageVersion"/>. </summary>
         /// <param name="name"> Resource name. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="identifier"> The identifier information of shared gallery. </param>
         /// <param name="properties"> Describes the properties of a gallery image version. </param>
         /// <param name="parentName"> The name of the parent resource. </param>
-        internal SharedGalleryImageVersionData(string name, string location, IDictionary<string, BinaryData> additionalBinaryDataProperties, SharedGalleryIdentifier identifier, SharedGalleryImageVersionProperties properties, string parentName) : base(name, location, additionalBinaryDataProperties, identifier)
+        internal SharedGalleryImageVersion(string name, string location, IDictionary<string, BinaryData> additionalBinaryDataProperties, SharedGalleryIdentifier identifier, SharedGalleryImageVersionProperties properties, string parentName) : base(name, location, additionalBinaryDataProperties, identifier)
         {
             Properties = properties;
             ParentName = parentName;
