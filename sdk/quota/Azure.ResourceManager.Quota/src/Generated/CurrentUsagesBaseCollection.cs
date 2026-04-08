@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Quota
 {
     /// <summary>
     /// A class representing a collection of <see cref="CurrentUsagesBaseResource"/> and their operations.
-    /// Each <see cref="CurrentUsagesBaseResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
-    /// To get a <see cref="CurrentUsagesBaseCollection"/> instance call the GetCurrentUsagesBases method from an instance of <see cref="ArmResource"/>.
+    /// Each <see cref="CurrentUsagesBaseResource"/> in the collection will belong to the same instance of <see cref="CurrentUsagesBaseResource"/>.
+    /// To get a <see cref="CurrentUsagesBaseCollection"/> instance call the GetCurrentUsagesBases method from an instance of <see cref="CurrentUsagesBaseResource"/>.
     /// </summary>
     public partial class CurrentUsagesBaseCollection : ArmCollection, IEnumerable<CurrentUsagesBaseResource>, IAsyncEnumerable<CurrentUsagesBaseResource>
     {

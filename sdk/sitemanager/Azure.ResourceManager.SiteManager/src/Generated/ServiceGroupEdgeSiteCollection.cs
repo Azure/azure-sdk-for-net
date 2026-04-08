@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -19,8 +20,8 @@ namespace Azure.ResourceManager.SiteManager
 {
     /// <summary>
     /// A class representing a collection of <see cref="ServiceGroupEdgeSiteResource"/> and their operations.
-    /// Each <see cref="ServiceGroupEdgeSiteResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
-    /// To get a <see cref="ServiceGroupEdgeSiteCollection"/> instance call the GetServiceGroupEdgeSites method from an instance of <see cref="ArmResource"/>.
+    /// Each <see cref="ServiceGroupEdgeSiteResource"/> in the collection will belong to the same instance of <see cref="ServiceGroupEdgeSiteResource"/>.
+    /// To get a <see cref="ServiceGroupEdgeSiteCollection"/> instance call the GetServiceGroupEdgeSites method from an instance of <see cref="ServiceGroupEdgeSiteResource"/>.
     /// </summary>
     public partial class ServiceGroupEdgeSiteCollection : ArmCollection, IEnumerable<ServiceGroupEdgeSiteResource>, IAsyncEnumerable<ServiceGroupEdgeSiteResource>
     {
@@ -40,6 +41,17 @@ namespace Azure.ResourceManager.SiteManager
             TryGetApiVersion(ServiceGroupEdgeSiteResource.ResourceType, out string serviceGroupEdgeSiteApiVersion);
             _serviceGroupEdgeSiteClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SiteManager", ServiceGroupEdgeSiteResource.ResourceType.Namespace, Diagnostics);
             _serviceGroupEdgeSiteRestClient = new ServiceGroupEdgeSite(_serviceGroupEdgeSiteClientDiagnostics, Pipeline, Endpoint, serviceGroupEdgeSiteApiVersion ?? "2025-06-01");
+            ValidateResourceId(id);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != "Microsoft.Management/serviceGroups")
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, "Microsoft.Management/serviceGroups"), nameof(id));
+            }
         }
 
         /// <summary>

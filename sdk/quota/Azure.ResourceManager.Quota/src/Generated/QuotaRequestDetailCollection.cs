@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Quota
 {
     /// <summary>
     /// A class representing a collection of <see cref="QuotaRequestDetailResource"/> and their operations.
-    /// Each <see cref="QuotaRequestDetailResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
-    /// To get a <see cref="QuotaRequestDetailCollection"/> instance call the GetQuotaRequestDetails method from an instance of <see cref="ArmResource"/>.
+    /// Each <see cref="QuotaRequestDetailResource"/> in the collection will belong to the same instance of <see cref="QuotaRequestDetailResource"/>.
+    /// To get a <see cref="QuotaRequestDetailCollection"/> instance call the GetQuotaRequestDetails method from an instance of <see cref="QuotaRequestDetailResource"/>.
     /// </summary>
     public partial class QuotaRequestDetailCollection : ArmCollection, IEnumerable<QuotaRequestDetailResource>, IAsyncEnumerable<QuotaRequestDetailResource>
     {

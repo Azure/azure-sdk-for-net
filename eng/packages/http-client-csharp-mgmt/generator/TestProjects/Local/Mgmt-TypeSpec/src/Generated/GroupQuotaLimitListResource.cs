@@ -14,14 +14,14 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Generator.MgmtTypeSpec.Tests.Models;
 using Azure.ResourceManager;
-using Azure.ResourceManager.ManagementGroups;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary>
     /// A class representing a GroupQuotaLimitList along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="GroupQuotaLimitListResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ManagementGroupResource"/> using the GetGroupQuotaLimitLists method.
+    /// Otherwise you can get one from its parent resource <see cref="TenantResource"/> using the GetGroupQuotaLimitLists method.
     /// </summary>
     public partial class GroupQuotaLimitListResource : ArmResource
     {
