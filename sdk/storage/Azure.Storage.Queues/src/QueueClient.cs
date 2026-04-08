@@ -361,7 +361,7 @@ namespace Azure.Storage.Queues
         /// <summary> Initializes a new instance of QueueClient from a <see cref="QueueClientSettings"/>. </summary>
         /// <param name="settings"> The settings for QueueClient. </param>
         [Experimental("SCME0002")]
-        public QueueClient(QueueClientSettings settings) : this(settings?.Url, settings?.Options)
+        public QueueClient(QueueClientSettings settings) : this(settings.Url, settings.Options)
         {
         }
 

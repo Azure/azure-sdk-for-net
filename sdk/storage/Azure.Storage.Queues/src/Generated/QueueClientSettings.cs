@@ -19,12 +19,6 @@ namespace Azure.Storage.Queues
         /// <summary> Gets or sets the Url. </summary>
         public Uri Url { get; set; }
 
-        /// <summary> Gets or sets the ConnectionString. </summary>
-        public string ConnectionString { get; set; }
-
-        /// <summary> Gets or sets the QueueName. </summary>
-        public string QueueName { get; set; }
-
         /// <summary> Gets or sets the Options. </summary>
         public QueueClientOptions Options { get; set; }
 
