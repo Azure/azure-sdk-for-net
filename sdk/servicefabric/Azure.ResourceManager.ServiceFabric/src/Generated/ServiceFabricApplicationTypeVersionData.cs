@@ -7,36 +7,46 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.ServiceFabric.Models;
 
 namespace Azure.ResourceManager.ServiceFabric
 {
     /// <summary> An application type version resource for the specified application type name resource. </summary>
-    public partial class ServiceFabricApplicationTypeVersionData : ServiceFabricProxyResource
+    public partial class ServiceFabricApplicationTypeVersionData : TrackedResourceData
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="ServiceFabricApplicationTypeVersionData"/>. </summary>
-        public ServiceFabricApplicationTypeVersionData()
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        public ServiceFabricApplicationTypeVersionData(AzureLocation location) : base(location)
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceFabricApplicationTypeVersionData"/>. </summary>
-        /// <param name="id"> Azure resource identifier. </param>
-        /// <param name="name"> Azure resource name. </param>
-        /// <param name="type"> Azure resource type. </param>
-        /// <param name="location"> It will be deprecated in New API, resource location depends on the parent resource. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The properties of the application type version resource. </param>
         /// <param name="tags"> Azure resource tags. </param>
         /// <param name="eTag"> Azure resource etag. </param>
-        /// <param name="systemData"> Metadata pertaining to creation and last modification of the resource. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="properties"> The properties of the application type version resource. </param>
-        internal ServiceFabricApplicationTypeVersionData(string id, string name, string @type, string location, IDictionary<string, string> tags, string eTag, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ApplicationTypeVersionResourceProperties properties) : base(id, name, @type, location, tags, eTag, systemData, additionalBinaryDataProperties)
+        internal ServiceFabricApplicationTypeVersionData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation location, ApplicationTypeVersionResourceProperties properties, IDictionary<string, string> tags, string eTag) : base(id != null ? new ResourceIdentifier(id) : null, name, resourceType, systemData, tags, location)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
+            ETag = eTag;
         }
 
         /// <summary> The properties of the application type version resource. </summary>
         internal ApplicationTypeVersionResourceProperties Properties { get; set; }
+
+        /// <summary> Azure resource etag. </summary>
+        public string ETag { get; }
 
         /// <summary> The current deployment or provisioning state, which only appears in the response. </summary>
         public string ProvisioningState

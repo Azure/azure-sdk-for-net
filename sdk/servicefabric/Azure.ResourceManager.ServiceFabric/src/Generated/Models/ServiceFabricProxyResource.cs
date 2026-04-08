@@ -17,7 +17,6 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-        private protected string _name;
 
         /// <summary> Initializes a new instance of <see cref="ServiceFabricProxyResource"/>. </summary>
         public ServiceFabricProxyResource()

@@ -18,11 +18,16 @@ using Azure.ResourceManager.ServiceFabric.Models;
 namespace Azure.ResourceManager.ServiceFabric
 {
     /// <summary> An application type version resource for the specified application type name resource. </summary>
-    public partial class ServiceFabricApplicationTypeVersionData : ServiceFabricProxyResource, IJsonModel<ServiceFabricApplicationTypeVersionData>
+    public partial class ServiceFabricApplicationTypeVersionData : TrackedResourceData, IJsonModel<ServiceFabricApplicationTypeVersionData>
     {
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricApplicationTypeVersionData"/> for deserialization. </summary>
+        internal ServiceFabricApplicationTypeVersionData()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ServiceFabricProxyResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ServiceFabricApplicationTypeVersionData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -38,7 +43,7 @@ namespace Azure.ResourceManager.ServiceFabric
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ServiceFabricApplicationTypeVersionData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -101,6 +106,11 @@ namespace Azure.ResourceManager.ServiceFabric
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
+            if (options.Format != "W" && Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -109,7 +119,7 @@ namespace Azure.ResourceManager.ServiceFabric
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ServiceFabricProxyResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ServiceFabricApplicationTypeVersionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -130,13 +140,13 @@ namespace Azure.ResourceManager.ServiceFabric
             }
             string id = default;
             string name = default;
-            string @type = default;
-            string location = default;
-            IDictionary<string, string> tags = default;
-            string eTag = default;
+            ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            AzureLocation location = default;
             ApplicationTypeVersionResourceProperties properties = default;
+            IDictionary<string, string> tags = default;
+            string eTag = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -151,12 +161,34 @@ namespace Azure.ResourceManager.ServiceFabric
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceType = new ResourceType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("systemData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerServiceFabricContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("location"u8))
                 {
-                    location = prop.Value.GetString();
+                    location = new AzureLocation(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = ApplicationTypeVersionResourceProperties.DeserializeApplicationTypeVersionResourceProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("tags"u8))
@@ -185,24 +217,6 @@ namespace Azure.ResourceManager.ServiceFabric
                     eTag = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("systemData"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerServiceFabricContext.Default);
-                    continue;
-                }
-                if (prop.NameEquals("properties"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    properties = ApplicationTypeVersionResourceProperties.DeserializeApplicationTypeVersionResourceProperties(prop.Value, options);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -211,13 +225,13 @@ namespace Azure.ResourceManager.ServiceFabric
             return new ServiceFabricApplicationTypeVersionData(
                 id,
                 name,
-                @type,
-                location,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                eTag,
+                resourceType,
                 systemData,
                 additionalBinaryDataProperties,
-                properties);
+                location,
+                properties,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                eTag);
         }
     }
 }

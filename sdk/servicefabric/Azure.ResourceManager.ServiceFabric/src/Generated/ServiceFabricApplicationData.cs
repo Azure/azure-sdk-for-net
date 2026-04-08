@@ -7,38 +7,48 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.ServiceFabric.Models;
 
 namespace Azure.ResourceManager.ServiceFabric
 {
     /// <summary> The application resource. </summary>
-    public partial class ServiceFabricApplicationData : ServiceFabricProxyResource
+    public partial class ServiceFabricApplicationData : TrackedResourceData
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="ServiceFabricApplicationData"/>. </summary>
-        public ServiceFabricApplicationData()
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        public ServiceFabricApplicationData(AzureLocation location) : base(location)
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceFabricApplicationData"/>. </summary>
-        /// <param name="id"> Azure resource identifier. </param>
-        /// <param name="name"> Azure resource name. </param>
-        /// <param name="type"> Azure resource type. </param>
-        /// <param name="location"> It will be deprecated in New API, resource location depends on the parent resource. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The application resource properties. </param>
         /// <param name="tags"> Azure resource tags. </param>
         /// <param name="eTag"> Azure resource etag. </param>
-        /// <param name="systemData"> Metadata pertaining to creation and last modification of the resource. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="properties"> The application resource properties. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        internal ServiceFabricApplicationData(string id, string name, string @type, string location, IDictionary<string, string> tags, string eTag, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ApplicationResourceProperties properties, ManagedIdentity identity) : base(id, name, @type, location, tags, eTag, systemData, additionalBinaryDataProperties)
+        internal ServiceFabricApplicationData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation location, ApplicationResourceProperties properties, IDictionary<string, string> tags, string eTag, ManagedIdentity identity) : base(id != null ? new ResourceIdentifier(id) : null, name, resourceType, systemData, tags, location)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
+            ETag = eTag;
             Identity = identity;
         }
 
         /// <summary> The application resource properties. </summary>
         internal ApplicationResourceProperties Properties { get; set; }
+
+        /// <summary> Azure resource etag. </summary>
+        public string ETag { get; }
 
         /// <summary> The managed service identities assigned to this resource. </summary>
         public ManagedIdentity Identity { get; set; }
