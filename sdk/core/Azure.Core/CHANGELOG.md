@@ -10,7 +10,7 @@
 
 ### Other Changes
 
-- Azure.Identity credential types are now included in Azure.Core, enabling SDK libraries to provide configuration-driven DI extensions (e.g., `AddAzureSecretClient`) without requiring a direct dependency on Azure.Identity.
+- `Azure.Identity` credential types are now included in `Azure.Core`, enabling SDK libraries to provide configuration-driven DI extensions (e.g., `AddAzureSecretClient`) without requiring a direct dependency on `Azure.Identity`.
 
 ## 1.52.0 (2026-03-23)
 
