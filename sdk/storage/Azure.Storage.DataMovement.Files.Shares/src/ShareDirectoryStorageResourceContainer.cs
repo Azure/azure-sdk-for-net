@@ -29,8 +29,19 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         internal ShareDirectoryStorageResourceContainer(ShareDirectoryClient shareDirectoryClient, ShareFileStorageResourceOptions options)
         {
-            ShareDirectoryClient = shareDirectoryClient;
             ResourceOptions = options ?? new ShareFileStorageResourceOptions();
+
+            // If options specify a snapshot but the client doesn't have it, create a new client
+            if (!string.IsNullOrEmpty(ResourceOptions.Snapshot))
+            {
+                ShareUriBuilder uriBuilder = new ShareUriBuilder(shareDirectoryClient.Uri);
+                if (uriBuilder.Snapshot != ResourceOptions.Snapshot)
+                {
+                    shareDirectoryClient = shareDirectoryClient.WithSnapshot(ResourceOptions.Snapshot);
+                }
+            }
+
+            ShareDirectoryClient = shareDirectoryClient;
         }
 
         internal ShareDirectoryStorageResourceContainer(
