@@ -290,16 +290,12 @@ namespace Azure.Generator.Management.Providers
                 bodyStatements.Add(clientInfo.RestClientField.Assign(New.Instance(clientInfo.RestClientProvider.Type, clientInfo.DiagnosticsField, thisCollection.Pipeline(), thisCollection.Endpoint(), effectiveApiVersion)).Terminate());
             }
 
-            // Do not call ValidateResourceId for Extension resources
-            if (_resourceMetadata.ResourceScope != ResourceScope.Extension)
-            {
-                bodyStatements.Add(Static(Type).As<ArmCollection>().ValidateResourceId(idParameter).Terminate());
-            }
+            bodyStatements.Add(Static(Type).As<ArmCollection>().ValidateResourceId(idParameter).Terminate());
 
             return new ConstructorProvider(signature, bodyStatements, this);
         }
 
-        private static CSharpType GetParentResourceType(ArmResourceMetadata resourceMetadata, ResourceClientProvider resource)
+        private static CSharpType? GetParentResourceType(ArmResourceMetadata resourceMetadata, ResourceClientProvider resource)
         {
             // First check if the resource has a parent resource
             if (resourceMetadata.ParentResourceId is not null)
@@ -317,7 +313,7 @@ namespace Azure.Generator.Management.Providers
                 case ResourceScope.Tenant:
                     return typeof(TenantResource);
                 case ResourceScope.Extension:
-                    return typeof(ArmResource);
+                    return null; // we will use _resourceMetadata.ParentResourceType for extension resource
                 case ResourceScope.ManagementGroup:
                     return typeof(ManagementGroupResource);
                 default:
@@ -330,11 +326,12 @@ namespace Azure.Generator.Management.Providers
         {
             var methods = new List<MethodProvider>();
 
-            // Do not build ValidateResourceIdMethod for Extension resources
-            if (_resourceMetadata.ResourceScope != ResourceScope.Extension)
-            {
-                methods.Add(ResourceMethodSnippets.BuildValidateResourceIdMethod(this, Static(GetParentResourceType(_resourceMetadata, _resource)).As<ArmResource>().ResourceType()));
-            }
+            var parentResourceCsharpType = GetParentResourceType(_resourceMetadata, _resource);
+            methods.Add(ResourceMethodSnippets.BuildValidateResourceIdMethod(
+                this,
+                parentResourceCsharpType is not null
+                ? Static(parentResourceCsharpType).As<ArmResource>().ResourceType()
+                : Literal(_resourceMetadata.ParentResourceType)));
 
             methods.AddRange(BuildCreateOrUpdateMethods());
             methods.AddRange(BuildGetMethods());

@@ -8,7 +8,6 @@ using Azure.Generator.Management.Utilities;
 using Azure.ResourceManager;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
-using Microsoft.TypeSpec.Generator.Snippets;
 using Microsoft.TypeSpec.Generator.Statements;
 using System.Collections.Generic;
 using System.Linq;
@@ -107,27 +106,15 @@ namespace Azure.Generator.Management.Providers
                 resource.ResourceCollection!.Type,
                 $"Returns a collection of {resource.Type:C} objects.",
                 [scopeParameter]);
-            var bodyStatements = new List<MethodBodyStatement>();
-
-            // Add scope type validation for extension resources with specific parent types.
-            // When parentResourceType is null (e.g., variable parent segments like {parentProviderNamespace}/{parentResourceType}),
-            // we skip validation since the resource can extend any ARM resource type.
-            var expectedParentType = resource.ParentResourceType;
-            if (expectedParentType != null)
+            var body = new MethodBodyStatement[]
             {
-                bodyStatements.Add(
-                    new IfStatement(scopeParameter.As<ResourceIdentifier>().ResourceType().NotEqual(Literal(expectedParentType)))
-                    {
-                        Throw(New.ArgumentException(scopeParameter, StringSnippets.Format(Literal("Invalid resource type {0}, expected {1}"), scopeParameter.As<ResourceIdentifier>().ResourceType(), Literal(expectedParentType)), false))
-                    });
-            }
-
-            bodyStatements.Add(Return(New.Instance(resource.ResourceCollection!.Type,
-                [
-                    This.As<ArmResource>().Client(),
-                    scopeParameter
-                ])));
-            result.Add(new MethodProvider(signature, bodyStatements, this));
+                Return(New.Instance(resource.ResourceCollection!.Type,
+                    [
+                        This.As<ArmResource>().Client(),
+                        scopeParameter
+                    ]))
+            };
+            result.Add(new MethodProvider(signature, body, this));
 
             var collection = resource.ResourceCollection!;
             var getMethod = collection.Methods.FirstOrDefault(m => m.Signature.Name == "Get");
