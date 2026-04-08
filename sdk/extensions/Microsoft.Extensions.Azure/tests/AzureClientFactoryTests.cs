@@ -472,7 +472,10 @@ namespace Azure.Core.Extensions.Tests
             var client = factory.CreateClient(nameof(DisposableClient));
 
             provider.Dispose();
-            Assert.DoesNotThrowAsync(async () => await Task.WhenAny(tcs.Task, Task.Delay(TimeSpan.FromSeconds(5))));
+
+            using var cancellationSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
+
+            Assert.DoesNotThrowAsync(async () => await tcs.Task.AwaitWithCancellation(cancellationSource.Token));
             Assert.IsTrue(disposed);
         }
 
@@ -497,7 +500,10 @@ namespace Azure.Core.Extensions.Tests
             var client = factory.CreateClient(nameof(AsyncDisposableClient));
 
             provider.Dispose();
-            Assert.DoesNotThrowAsync(async () => await Task.WhenAny(tcs.Task, Task.Delay(TimeSpan.FromSeconds(5))));
+
+            using var cancellationSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
+
+            Assert.DoesNotThrowAsync(async () => await tcs.Task.AwaitWithCancellation(cancellationSource.Token));
             Assert.IsTrue(disposed);
         }
 
@@ -558,7 +564,10 @@ namespace Azure.Core.Extensions.Tests
             var bothDisposableClient = bothDisposableFactory.CreateClient(nameof(BothDisposableClient));
 
             Assert.DoesNotThrow(provider.Dispose);
-            Assert.DoesNotThrowAsync(async () => await Task.WhenAny(tcs.Task, Task.Delay(TimeSpan.FromSeconds(5))));
+
+            using var cancellationSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
+
+            Assert.DoesNotThrowAsync(async () => await tcs.Task.AwaitWithCancellation(cancellationSource.Token));
             Assert.AreEqual(disposeCount, 3);
         }
 
@@ -583,7 +592,10 @@ namespace Azure.Core.Extensions.Tests
             var client = factory.CreateClient(nameof(DisposableClient));
 
             await provider.DisposeAsync();
-            Assert.DoesNotThrowAsync(async () => await Task.WhenAny(tcs.Task, Task.Delay(TimeSpan.FromSeconds(5))));
+
+            using var cancellationSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
+
+            Assert.DoesNotThrowAsync(async () => await tcs.Task.AwaitWithCancellation(cancellationSource.Token));
             Assert.IsTrue(disposed);
         }
 
@@ -608,7 +620,10 @@ namespace Azure.Core.Extensions.Tests
             var client = factory.CreateClient(nameof(AsyncDisposableClient));
 
             await provider.DisposeAsync();
-            Assert.DoesNotThrowAsync(async () => await Task.WhenAny(tcs.Task, Task.Delay(TimeSpan.FromSeconds(5))));
+
+            using var cancellationSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
+
+            Assert.DoesNotThrowAsync(async () => await tcs.Task.AwaitWithCancellation(cancellationSource.Token));
             Assert.IsTrue(disposed);
         }
 
@@ -669,7 +684,10 @@ namespace Azure.Core.Extensions.Tests
             var bothDisposableClient = bothDisposableFactory.CreateClient(nameof(BothDisposableClient));
 
             await provider.DisposeAsync();
-            Assert.DoesNotThrowAsync(async () => await Task.WhenAny(tcs.Task, Task.Delay(TimeSpan.FromSeconds(5))));
+
+            using var cancellationSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
+
+            Assert.DoesNotThrowAsync(async () => await tcs.Task.AwaitWithCancellation(cancellationSource.Token));
             Assert.AreEqual(disposeCount, 3);
         }
 
