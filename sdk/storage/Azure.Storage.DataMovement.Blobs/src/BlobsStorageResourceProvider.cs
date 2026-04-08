@@ -323,6 +323,7 @@ namespace Azure.Storage.DataMovement.Blobs
             CancellationToken cancellationToken = default)
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
+            DataMovementBlobsExtensions.ValidateSnapshotAndVersionId(blobUri, options);
             BlobClientOptions clientOptions = GetUserAgentClientOptions();
             if (options is BlockBlobStorageResourceOptions)
             {
@@ -370,6 +371,7 @@ namespace Azure.Storage.DataMovement.Blobs
             };
             return new BlockBlobStorageResource(client, options as BlockBlobStorageResourceOptions);
         }
+
         #endregion
 
         #region From Client

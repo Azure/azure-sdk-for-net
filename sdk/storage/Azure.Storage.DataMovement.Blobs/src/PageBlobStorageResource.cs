@@ -63,27 +63,33 @@ namespace Azure.Storage.DataMovement.Blobs
         {
             _options = options;
 
-            // If options specify a snapshot but the client doesn't have it, create a new client
-            if (!string.IsNullOrEmpty(_options?.Snapshot))
-            {
-                BlobUriBuilder uriBuilder = new BlobUriBuilder(blobClient.Uri);
-                if (uriBuilder.Snapshot != _options.Snapshot)
-                {
-                    blobClient = blobClient.WithSnapshot(_options.Snapshot);
-                }
-            }
-
-            // If options specify a version but the client doesn't have it, create a new client
-            if (!string.IsNullOrEmpty(_options?.VersionId))
-            {
-                BlobUriBuilder uriBuilder = new BlobUriBuilder(blobClient.Uri);
-                if (uriBuilder.VersionId != _options.VersionId)
-                {
-                    blobClient = blobClient.WithVersion(_options.VersionId);
-                }
-            }
+            DataMovementBlobsExtensions.ValidateSnapshotAndVersionId(blobClient.Uri, _options);
+            blobClient = ApplySnapshotAndVersionId(blobClient);
 
             BlobClient = blobClient;
+        }
+
+        private PageBlobClient ApplySnapshotAndVersionId(PageBlobClient client)
+        {
+            if (!string.IsNullOrEmpty(_options?.Snapshot))
+            {
+                BlobUriBuilder uriBuilder = new BlobUriBuilder(client.Uri);
+                if (uriBuilder.Snapshot != _options.Snapshot)
+                {
+                    client = client.WithSnapshot(_options.Snapshot);
+                }
+            }
+
+            if (!string.IsNullOrEmpty(_options?.VersionId))
+            {
+                BlobUriBuilder uriBuilder = new BlobUriBuilder(client.Uri);
+                if (uriBuilder.VersionId != _options.VersionId)
+                {
+                    client = client.WithVersion(_options.VersionId);
+                }
+            }
+
+            return client;
         }
 
         /// <summary>

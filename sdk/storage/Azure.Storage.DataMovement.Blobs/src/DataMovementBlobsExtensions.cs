@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 using Tags = System.Collections.Generic.IDictionary<string, string>;
@@ -697,6 +698,34 @@ namespace Azure.Storage.DataMovement.Blobs
                 return new PremiumPageBlobAccessTier(accessTier.ToString());
             }
             return default;
+        }
+
+        internal static void ValidateSnapshotAndVersionId(
+            Uri clientUri,
+            BlobStorageResourceOptions options)
+        {
+            BlobUriBuilder uriBuilder = new BlobUriBuilder(clientUri);
+
+            if (options == null)
+            {
+                return;
+            }
+
+            if (!string.IsNullOrEmpty(options.Snapshot) &&
+                !string.IsNullOrEmpty(uriBuilder.Snapshot) &&
+                options.Snapshot != uriBuilder.Snapshot)
+            {
+                throw new ArgumentException(
+                    $"Snapshot mismatch between URI '{uriBuilder.Snapshot}' and options '{options.Snapshot}'.");
+            }
+
+            if (!string.IsNullOrEmpty(options.VersionId) &&
+                !string.IsNullOrEmpty(uriBuilder.VersionId) &&
+                options.VersionId != uriBuilder.VersionId)
+            {
+                throw new ArgumentException(
+                    $"VersionId mismatch between URI '{uriBuilder.VersionId}' and options '{options.VersionId}'.");
+            }
         }
     }
 }
