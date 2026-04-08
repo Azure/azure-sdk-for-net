@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Avs
         {
             if (id.ResourceType != AvsPrivateCloudResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AvsPrivateCloudResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AvsPrivateCloudResource.ResourceType), nameof(id));
             }
         }
 
@@ -287,7 +287,13 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HcxEnterpriseSiteData, HcxEnterpriseSiteResource>(new HcxEnterpriseSitesGetAllAsyncCollectionResultOfT(_hcxEnterpriseSitesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new HcxEnterpriseSiteResource(Client, data));
+            return new AsyncPageableWrapper<HcxEnterpriseSiteData, HcxEnterpriseSiteResource>(new HcxEnterpriseSitesGetAllAsyncCollectionResultOfT(
+                _hcxEnterpriseSitesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "HcxEnterpriseSiteCollection.GetAll"), data => new HcxEnterpriseSiteResource(Client, data));
         }
 
         /// <summary>
@@ -315,7 +321,13 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HcxEnterpriseSiteData, HcxEnterpriseSiteResource>(new HcxEnterpriseSitesGetAllCollectionResultOfT(_hcxEnterpriseSitesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new HcxEnterpriseSiteResource(Client, data));
+            return new PageableWrapper<HcxEnterpriseSiteData, HcxEnterpriseSiteResource>(new HcxEnterpriseSitesGetAllCollectionResultOfT(
+                _hcxEnterpriseSitesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "HcxEnterpriseSiteCollection.GetAll"), data => new HcxEnterpriseSiteResource(Client, data));
         }
 
         /// <summary>

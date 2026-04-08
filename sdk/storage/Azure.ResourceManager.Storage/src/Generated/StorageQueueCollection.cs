@@ -300,7 +300,8 @@ namespace Azure.ResourceManager.Storage
                 Id.Parent.Name,
                 maxpagesize,
                 filter,
-                context), data => new StorageQueueResource(Client, data));
+                context,
+                "StorageQueueCollection.GetAll"), data => new StorageQueueResource(Client, data));
         }
 
         /// <summary>
@@ -337,7 +338,8 @@ namespace Azure.ResourceManager.Storage
                 Id.Parent.Name,
                 maxpagesize,
                 filter,
-                context), data => new StorageQueueResource(Client, data));
+                context,
+                "StorageQueueCollection.GetAll"), data => new StorageQueueResource(Client, data));
         }
 
         /// <summary>

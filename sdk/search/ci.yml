@@ -21,4 +21,3 @@ extends:
     Artifacts:
     - name: Azure.Search.Documents
       safeName: AzureSearchDocuments
-    TestDependsOnDependency: Azure.Search.Documents

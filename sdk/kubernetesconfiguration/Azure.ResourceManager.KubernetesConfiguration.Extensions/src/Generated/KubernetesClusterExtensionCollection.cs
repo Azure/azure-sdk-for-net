@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Extensions
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -313,7 +313,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Extensions
                 _clusterRp,
                 _clusterResourceName,
                 _clusterName,
-                context), data => new KubernetesClusterExtensionResource(Client, data));
+                context,
+                "KubernetesClusterExtensionCollection.GetAll"), data => new KubernetesClusterExtensionResource(Client, data));
         }
 
         /// <summary>
@@ -348,7 +349,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Extensions
                 _clusterRp,
                 _clusterResourceName,
                 _clusterName,
-                context), data => new KubernetesClusterExtensionResource(Client, data));
+                context,
+                "KubernetesClusterExtensionCollection.GetAll"), data => new KubernetesClusterExtensionResource(Client, data));
         }
 
         /// <summary>

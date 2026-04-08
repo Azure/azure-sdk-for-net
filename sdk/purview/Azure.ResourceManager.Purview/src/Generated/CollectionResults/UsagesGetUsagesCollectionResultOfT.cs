@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.Purview
         private readonly AzureLocation _location;
         private readonly string _filter;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of UsagesGetUsagesCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Usages client used to send requests. </param>
@@ -28,13 +29,15 @@ namespace Azure.ResourceManager.Purview
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="filter"> The filter, currently unused. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public UsagesGetUsagesCollectionResultOfT(Usages client, string subscriptionId, AzureLocation location, string filter, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public UsagesGetUsagesCollectionResultOfT(Usages client, string subscriptionId, AzureLocation location, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _location = location;
             _filter = filter;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of UsagesGetUsagesCollectionResultOfT as an enumerable collection. </summary>
@@ -54,7 +57,7 @@ namespace Azure.ResourceManager.Purview
         private Response GetNextResponse(int? pageSizeHint, string continuationToken)
         {
             HttpMessage message = _client.CreateGetUsagesRequest(_subscriptionId, _location, _filter, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockablePurviewSubscriptionResource.GetUsages");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

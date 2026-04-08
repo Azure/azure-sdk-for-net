@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -291,7 +291,8 @@ namespace Azure.ResourceManager.NetworkCloud
                 Id.ResourceGroupName,
                 top,
                 skipToken,
-                context), data => new NetworkCloudAccessBridgeResource(Client, data));
+                context,
+                "NetworkCloudAccessBridgeCollection.GetAll"), data => new NetworkCloudAccessBridgeResource(Client, data));
         }
 
         /// <summary>
@@ -327,7 +328,8 @@ namespace Azure.ResourceManager.NetworkCloud
                 Id.ResourceGroupName,
                 top,
                 skipToken,
-                context), data => new NetworkCloudAccessBridgeResource(Client, data));
+                context,
+                "NetworkCloudAccessBridgeCollection.GetAll"), data => new NetworkCloudAccessBridgeResource(Client, data));
         }
 
         /// <summary>

@@ -189,7 +189,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 pageSize,
                 isDescending,
                 initialSkip,
-                context), data => new UserSessionResource(Client, data));
+                context,
+                "UserSessionCollection.GetAll"), data => new UserSessionResource(Client, data));
         }
 
         /// <summary>
@@ -229,7 +230,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 pageSize,
                 isDescending,
                 initialSkip,
-                context), data => new UserSessionResource(Client, data));
+                context,
+                "UserSessionCollection.GetAll"), data => new UserSessionResource(Client, data));
         }
 
         /// <summary>

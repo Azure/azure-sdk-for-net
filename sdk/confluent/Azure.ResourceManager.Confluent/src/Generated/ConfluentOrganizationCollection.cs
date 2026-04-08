@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Confluent
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.Confluent
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ConfluentOrganizationData, ConfluentOrganizationResource>(new ConfluentOrganizationGetByResourceGroupAsyncCollectionResultOfT(_confluentOrganizationRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new ConfluentOrganizationResource(Client, data));
+            return new AsyncPageableWrapper<ConfluentOrganizationData, ConfluentOrganizationResource>(new ConfluentOrganizationGetByResourceGroupAsyncCollectionResultOfT(_confluentOrganizationRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ConfluentOrganizationCollection.GetAll"), data => new ConfluentOrganizationResource(Client, data));
         }
 
         /// <summary>
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.Confluent
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ConfluentOrganizationData, ConfluentOrganizationResource>(new ConfluentOrganizationGetByResourceGroupCollectionResultOfT(_confluentOrganizationRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new ConfluentOrganizationResource(Client, data));
+            return new PageableWrapper<ConfluentOrganizationData, ConfluentOrganizationResource>(new ConfluentOrganizationGetByResourceGroupCollectionResultOfT(_confluentOrganizationRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ConfluentOrganizationCollection.GetAll"), data => new ConfluentOrganizationResource(Client, data));
         }
 
         /// <summary>

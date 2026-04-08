@@ -51,8 +51,12 @@ namespace Azure.AI.Projects.Agents
         /// <param name="description"> A human-readable description of the agent. </param>
         /// <param name="createdAt"> The Unix timestamp (seconds) when the agent was created. </param>
         /// <param name="definition"></param>
+        /// <param name="instanceIdentity"> The instance identity of the agent. </param>
+        /// <param name="blueprint"> The blueprint for the agent. </param>
+        /// <param name="blueprintReference"> The blueprint for the agent. </param>
+        /// <param name="agentGuid"> The unique GUID identifier of the agent. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProjectsAgentVersion(IDictionary<string, string> metadata, string @object, string id, string name, string version, string description, DateTimeOffset createdAt, ProjectsAgentDefinition definition, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProjectsAgentVersion(IDictionary<string, string> metadata, string @object, string id, string name, string version, string description, DateTimeOffset createdAt, ProjectsAgentDefinition definition, AgentIdentity instanceIdentity, AgentIdentity blueprint, AgentBlueprintReference blueprintReference, string agentGuid, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Metadata = metadata;
             Object = @object;
@@ -62,6 +66,10 @@ namespace Azure.AI.Projects.Agents
             Description = description;
             CreatedAt = createdAt;
             Definition = definition;
+            InstanceIdentity = instanceIdentity;
+            Blueprint = blueprint;
+            BlueprintReference = blueprintReference;
+            AgentGuid = agentGuid;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -91,5 +99,17 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Gets the Definition. </summary>
         public ProjectsAgentDefinition Definition { get; }
+
+        /// <summary> The instance identity of the agent. </summary>
+        public AgentIdentity InstanceIdentity { get; }
+
+        /// <summary> The blueprint for the agent. </summary>
+        public AgentIdentity Blueprint { get; }
+
+        /// <summary> The blueprint for the agent. </summary>
+        public AgentBlueprintReference BlueprintReference { get; }
+
+        /// <summary> The unique GUID identifier of the agent. </summary>
+        public string AgentGuid { get; }
     }
 }

@@ -190,7 +190,8 @@ namespace Azure.ResourceManager.OracleDatabase
                 _location,
                 zone,
                 shapeAttribute,
-                context), data => new OracleDBSystemShapeResource(Client, data));
+                context,
+                "OracleDBSystemShapeCollection.GetAll"), data => new OracleDBSystemShapeResource(Client, data));
         }
 
         /// <summary>
@@ -226,7 +227,8 @@ namespace Azure.ResourceManager.OracleDatabase
                 _location,
                 zone,
                 shapeAttribute,
-                context), data => new OracleDBSystemShapeResource(Client, data));
+                context,
+                "OracleDBSystemShapeCollection.GetAll"), data => new OracleDBSystemShapeResource(Client, data));
         }
 
         /// <summary>

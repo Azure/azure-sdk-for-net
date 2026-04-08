@@ -284,7 +284,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 Id.Name,
                 Id.ResourceType.Type,
                 continuationToken,
-                context), data => new TargetResource(Client, data));
+                context,
+                "TargetCollection.GetAll"), data => new TargetResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +322,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 Id.Name,
                 Id.ResourceType.Type,
                 continuationToken,
-                context), data => new TargetResource(Client, data));
+                context,
+                "TargetCollection.GetAll"), data => new TargetResource(Client, data));
         }
 
         /// <summary>

@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.AppNetwork
         private readonly AzureLocation _location;
         private readonly string _kubernetesVersion;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of AvailableVersionsGetAppLinkAvailableVersionsByLocationAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The AvailableVersions client used to send requests. </param>
@@ -29,13 +30,15 @@ namespace Azure.ResourceManager.AppNetwork
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="kubernetesVersion"> Kubernetes version to filter profiles. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public AvailableVersionsGetAppLinkAvailableVersionsByLocationAsyncCollectionResultOfT(AvailableVersions client, Guid subscriptionId, AzureLocation location, string kubernetesVersion, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public AvailableVersionsGetAppLinkAvailableVersionsByLocationAsyncCollectionResultOfT(AvailableVersions client, Guid subscriptionId, AzureLocation location, string kubernetesVersion, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _location = location;
             _kubernetesVersion = kubernetesVersion;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of AvailableVersionsGetAppLinkAvailableVersionsByLocationAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -68,7 +71,7 @@ namespace Azure.ResourceManager.AppNetwork
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAppLinkAvailableVersionsByLocationRequest(nextLink, _subscriptionId, _location, _kubernetesVersion, _context) : _client.CreateGetAppLinkAvailableVersionsByLocationRequest(_subscriptionId, _location, _kubernetesVersion, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableAppNetworkSubscriptionResource.GetAppLinkAvailableVersionsByLocation");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

@@ -287,7 +287,13 @@ namespace Azure.ResourceManager.NotificationHubs
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NotificationHubAuthorizationRuleData, NotificationHubNamespaceAuthorizationRuleResource>(new NamespacesGetAuthorizationRulesAsyncCollectionResultOfT(_namespacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new NotificationHubNamespaceAuthorizationRuleResource(Client, data));
+            return new AsyncPageableWrapper<NotificationHubAuthorizationRuleData, NotificationHubNamespaceAuthorizationRuleResource>(new NamespacesGetAuthorizationRulesAsyncCollectionResultOfT(
+                _namespacesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "NotificationHubNamespaceAuthorizationRuleCollection.GetAll"), data => new NotificationHubNamespaceAuthorizationRuleResource(Client, data));
         }
 
         /// <summary>
@@ -315,7 +321,13 @@ namespace Azure.ResourceManager.NotificationHubs
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NotificationHubAuthorizationRuleData, NotificationHubNamespaceAuthorizationRuleResource>(new NamespacesGetAuthorizationRulesCollectionResultOfT(_namespacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new NotificationHubNamespaceAuthorizationRuleResource(Client, data));
+            return new PageableWrapper<NotificationHubAuthorizationRuleData, NotificationHubNamespaceAuthorizationRuleResource>(new NamespacesGetAuthorizationRulesCollectionResultOfT(
+                _namespacesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "NotificationHubNamespaceAuthorizationRuleCollection.GetAll"), data => new NotificationHubNamespaceAuthorizationRuleResource(Client, data));
         }
 
         /// <summary>

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         {
             if (id.ResourceType != MySqlFlexibleServerResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, MySqlFlexibleServerResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, MySqlFlexibleServerResource.ResourceType), nameof(id));
             }
         }
 
@@ -295,7 +295,13 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MySqlFlexibleServerBackupV2Data, MySqlFlexibleServerBackupV2Resource>(new LongRunningBackupsGetAllAsyncCollectionResultOfT(_longRunningBackupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new MySqlFlexibleServerBackupV2Resource(Client, data));
+            return new AsyncPageableWrapper<MySqlFlexibleServerBackupV2Data, MySqlFlexibleServerBackupV2Resource>(new LongRunningBackupsGetAllAsyncCollectionResultOfT(
+                _longRunningBackupsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "MySqlFlexibleServerBackupV2Collection.GetAll"), data => new MySqlFlexibleServerBackupV2Resource(Client, data));
         }
 
         /// <summary>
@@ -323,7 +329,13 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MySqlFlexibleServerBackupV2Data, MySqlFlexibleServerBackupV2Resource>(new LongRunningBackupsGetAllCollectionResultOfT(_longRunningBackupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new MySqlFlexibleServerBackupV2Resource(Client, data));
+            return new PageableWrapper<MySqlFlexibleServerBackupV2Data, MySqlFlexibleServerBackupV2Resource>(new LongRunningBackupsGetAllCollectionResultOfT(
+                _longRunningBackupsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "MySqlFlexibleServerBackupV2Collection.GetAll"), data => new MySqlFlexibleServerBackupV2Resource(Client, data));
         }
 
         /// <summary>

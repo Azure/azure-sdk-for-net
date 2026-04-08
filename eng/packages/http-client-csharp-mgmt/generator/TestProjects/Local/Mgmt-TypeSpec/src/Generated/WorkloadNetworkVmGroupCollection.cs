@@ -302,7 +302,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<WorkloadNetworkVmGroupData, WorkloadNetworkVmGroupResource>(new WorkloadNetworkVmGroupsGetAllAsyncCollectionResultOfT(_workloadNetworkVmGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new WorkloadNetworkVmGroupResource(Client, data));
+            return new AsyncPageableWrapper<WorkloadNetworkVmGroupData, WorkloadNetworkVmGroupResource>(new WorkloadNetworkVmGroupsGetAllAsyncCollectionResultOfT(_workloadNetworkVmGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "WorkloadNetworkVmGroupCollection.GetAll"), data => new WorkloadNetworkVmGroupResource(Client, data));
         }
 
         /// <summary>
@@ -330,7 +330,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<WorkloadNetworkVmGroupData, WorkloadNetworkVmGroupResource>(new WorkloadNetworkVmGroupsGetAllCollectionResultOfT(_workloadNetworkVmGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new WorkloadNetworkVmGroupResource(Client, data));
+            return new PageableWrapper<WorkloadNetworkVmGroupData, WorkloadNetworkVmGroupResource>(new WorkloadNetworkVmGroupsGetAllCollectionResultOfT(_workloadNetworkVmGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "WorkloadNetworkVmGroupCollection.GetAll"), data => new WorkloadNetworkVmGroupResource(Client, data));
         }
 
         /// <summary>

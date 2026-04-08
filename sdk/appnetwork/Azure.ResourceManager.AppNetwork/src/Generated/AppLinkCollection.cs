@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppNetwork
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.AppNetwork
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AppLinkData, AppLinkResource>(new AppLinksGetByResourceGroupAsyncCollectionResultOfT(_appLinksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new AppLinkResource(Client, data));
+            return new AsyncPageableWrapper<AppLinkData, AppLinkResource>(new AppLinksGetByResourceGroupAsyncCollectionResultOfT(_appLinksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AppLinkCollection.GetAll"), data => new AppLinkResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.AppNetwork
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AppLinkData, AppLinkResource>(new AppLinksGetByResourceGroupCollectionResultOfT(_appLinksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new AppLinkResource(Client, data));
+            return new PageableWrapper<AppLinkData, AppLinkResource>(new AppLinksGetByResourceGroupCollectionResultOfT(_appLinksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AppLinkCollection.GetAll"), data => new AppLinkResource(Client, data));
         }
 
         /// <summary>

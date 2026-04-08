@@ -299,7 +299,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new ServiceFabricManagedApplicationTypeVersionResource(Client, data));
+                context,
+                "ServiceFabricManagedApplicationTypeVersionCollection.GetAll"), data => new ServiceFabricManagedApplicationTypeVersionResource(Client, data));
         }
 
         /// <summary>
@@ -333,7 +334,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new ServiceFabricManagedApplicationTypeVersionResource(Client, data));
+                context,
+                "ServiceFabricManagedApplicationTypeVersionCollection.GetAll"), data => new ServiceFabricManagedApplicationTypeVersionResource(Client, data));
         }
 
         /// <summary>

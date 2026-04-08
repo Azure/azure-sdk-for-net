@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.ContainerService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MeshRevisionProfileData, MeshRevisionProfileResource>(new MeshRevisionProfilesGetMeshRevisionProfilesAsyncCollectionResultOfT(_meshRevisionProfilesRestClient, Guid.Parse(Id.SubscriptionId), _location, context), data => new MeshRevisionProfileResource(Client, data));
+            return new AsyncPageableWrapper<MeshRevisionProfileData, MeshRevisionProfileResource>(new MeshRevisionProfilesGetMeshRevisionProfilesAsyncCollectionResultOfT(_meshRevisionProfilesRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "MeshRevisionProfileCollection.GetAll"), data => new MeshRevisionProfileResource(Client, data));
         }
 
         /// <summary>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.ContainerService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MeshRevisionProfileData, MeshRevisionProfileResource>(new MeshRevisionProfilesGetMeshRevisionProfilesCollectionResultOfT(_meshRevisionProfilesRestClient, Guid.Parse(Id.SubscriptionId), _location, context), data => new MeshRevisionProfileResource(Client, data));
+            return new PageableWrapper<MeshRevisionProfileData, MeshRevisionProfileResource>(new MeshRevisionProfilesGetMeshRevisionProfilesCollectionResultOfT(_meshRevisionProfilesRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "MeshRevisionProfileCollection.GetAll"), data => new MeshRevisionProfileResource(Client, data));
         }
 
         /// <summary>

@@ -305,7 +305,8 @@ namespace Azure.ResourceManager.Search
                 Id.ResourceGroupName,
                 Id.Name,
                 default,
-                context), data => new SharedSearchServicePrivateLinkResource(Client, data));
+                context,
+                "SharedSearchServicePrivateLinkResourceCollection.GetAll"), data => new SharedSearchServicePrivateLinkResource(Client, data));
         }
 
         /// <summary>
@@ -340,7 +341,8 @@ namespace Azure.ResourceManager.Search
                 Id.ResourceGroupName,
                 Id.Name,
                 default,
-                context), data => new SharedSearchServicePrivateLinkResource(Client, data));
+                context,
+                "SharedSearchServicePrivateLinkResourceCollection.GetAll"), data => new SharedSearchServicePrivateLinkResource(Client, data));
         }
 
         /// <summary>
