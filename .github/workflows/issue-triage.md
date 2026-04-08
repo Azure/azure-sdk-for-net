@@ -568,10 +568,10 @@ Use the following format exactly:
 <details>
 <summary>👥 Owner Routing</summary>
 
-- **Matched CODEOWNERS entry:** `%<labels>` (line <N>) — <why this entry matched>
+- **Matched CODEOWNERS entry:** `# ServiceLabel: %<Label1> %<Label2>` (line <N>) — <why this entry matched>
 - **AzureSdkOwners:** <owners or "none listed">
 - **ServiceOwners:** <owners or "none listed">
-- **Routing action:** <what was done — e.g., assigned @owner, added Service Attention, added needs-team-triage>
+- **Routing action:** <what was done — e.g., assigned `@owner`, added Service Attention, added needs-team-triage>
 - **Scan notes:** <entries considered during bottom-to-top scan that did not match and why>
 </details>
 ```
