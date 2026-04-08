@@ -50,7 +50,8 @@ import {
   assignNonResourceMethodsToResources,
   calculateResourceTypeFromPath,
   resolveResourceApiVersions,
-  extractRbacRoles
+  extractRbacRoles,
+  extractNameConstraintOverrides
 } from "./resource-metadata.js";
 import { CSharpEmitterContext } from "@typespec/http-client-csharp";
 import {
@@ -483,12 +484,24 @@ function convertResolvedResourceToMetadata(
   // API versions will be computed after post-processing when methods are finalized
   const apiVersions: string[] = [];
 
-  // Extract RBAC roles from @@clientOption decorator
+  // Extract RBAC roles and name constraint overrides from @@clientOption decorator
   const sdkModel = getClientType(
     sdkContext,
     resolvedResource.type
   ) as SdkModelType;
   const rbacRoles = extractRbacRoles(sdkModel);
+
+  // Override name constraints from @@clientOption decorator if present
+  const nameConstraintOverrides = extractNameConstraintOverrides(sdkModel);
+  const finalNameConstraints: NameConstraints = nameConstraintOverrides
+    ? {
+        pattern: nameConstraintOverrides.pattern ?? nameConstraints.pattern,
+        minLength:
+          nameConstraintOverrides.minLength ?? nameConstraints.minLength,
+        maxLength:
+          nameConstraintOverrides.maxLength ?? nameConstraints.maxLength
+      }
+    : nameConstraints;
 
   return {
     // we only assign resourceIdPattern when this resource has a read operation, otherwise this is empty
@@ -504,7 +517,7 @@ function convertResolvedResourceToMetadata(
       resolvedResource.resourceInstancePath
     ),
     resourceName: resourceName,
-    nameConstraints,
+    nameConstraints: finalNameConstraints,
     apiVersions,
     rbacRoles
   };

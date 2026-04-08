@@ -51,3 +51,13 @@ namespace Azure.ResourceManager.Models {
   ConfigStoreReader: "00000000-0000-0000-0000-000000000002",
   ConfigStoreDataOperator: "00000000-0000-0000-0000-000000000003",
 }, "csharp");
+
+// Define name constraints for testing GetResourceNameRequirements generation
+// when the spec does not have @pattern/@minLength/@maxLength on the name property
+#suppress "@azure-tools/typespec-client-generator-core/client-option" "Name constraints for provisioning"
+#suppress "@azure-tools/typespec-client-generator-core/client-option-requires-scope" "Name constraints for provisioning"
+@@clientOption(ProvisioningTypeSpec.ConfigurationStore, "resource-name-constraint", #{
+  minLength: 5,
+  maxLength: 50,
+  pattern: "^[a-zA-Z0-9_-]+$",
+}, "csharp");

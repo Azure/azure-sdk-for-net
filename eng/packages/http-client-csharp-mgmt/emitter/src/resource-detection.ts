@@ -21,7 +21,8 @@ import {
   ParentResourceLookupContext,
   assignNonResourceMethodsToResources,
   resolveResourceApiVersions,
-  extractRbacRoles
+  extractRbacRoles,
+  extractNameConstraintOverrides
 } from "./resource-metadata.js";
 import {
   DecoratorInfo,
@@ -544,6 +545,22 @@ export function buildArmProviderSchema(
         ? getMaxLength(sdkContext.program, nameProperty)
         : undefined
     };
+
+    // Override name constraints from @@clientOption decorator if present
+    const nameConstraintOverrides = extractNameConstraintOverrides(sdkModel);
+    if (nameConstraintOverrides) {
+      resource.metadata.nameConstraints = {
+        pattern:
+          nameConstraintOverrides.pattern ??
+          resource.metadata.nameConstraints.pattern,
+        minLength:
+          nameConstraintOverrides.minLength ??
+          resource.metadata.nameConstraints.minLength,
+        maxLength:
+          nameConstraintOverrides.maxLength ??
+          resource.metadata.nameConstraints.maxLength
+      };
+    }
 
     // Extract RBAC roles from @@clientOption decorator
     resource.metadata.rbacRoles = extractRbacRoles(sdkModel);
