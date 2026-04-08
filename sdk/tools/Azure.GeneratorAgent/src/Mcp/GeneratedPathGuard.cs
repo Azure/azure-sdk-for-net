@@ -37,7 +37,7 @@ internal static class GeneratedPathGuard
     internal static string? ValidateNotGenerated(string filePath)
     {
         return IsInGeneratedDirectory(filePath)
-            ? $"Refusing to modify file in Generated/ directory: {Path.GetFullPath(filePath)}. " +
+            ? $"Refusing to modify file in Generated/ directory: {filePath}. " +
               "Generated code must not be edited directly — fix the generator input or custom code instead."
             : null;
     }
