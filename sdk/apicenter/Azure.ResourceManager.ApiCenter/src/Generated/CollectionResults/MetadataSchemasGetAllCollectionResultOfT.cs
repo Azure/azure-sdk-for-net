@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.ApiCenter
         private readonly string _serviceName;
         private readonly string _filter;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of MetadataSchemasGetAllCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The MetadataSchemas client used to send requests. </param>
@@ -30,7 +31,8 @@ namespace Azure.ResourceManager.ApiCenter
         /// <param name="serviceName"> The name of Azure API Center service. </param>
         /// <param name="filter"> OData filter parameter. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public MetadataSchemasGetAllCollectionResultOfT(MetadataSchemas client, Guid subscriptionId, string resourceGroupName, string serviceName, string filter, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public MetadataSchemasGetAllCollectionResultOfT(MetadataSchemas client, Guid subscriptionId, string resourceGroupName, string serviceName, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -38,6 +40,7 @@ namespace Azure.ResourceManager.ApiCenter
             _serviceName = serviceName;
             _filter = filter;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of MetadataSchemasGetAllCollectionResultOfT as an enumerable collection. </summary>
@@ -70,7 +73,7 @@ namespace Azure.ResourceManager.ApiCenter
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _serviceName, _filter, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _serviceName, _filter, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ApiCenterMetadataSchemaCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

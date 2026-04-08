@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             if (id.ResourceType != DevCenterProjectResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DevCenterProjectResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DevCenterProjectResource.ResourceType), nameof(id));
             }
         }
 
@@ -294,7 +294,8 @@ namespace Azure.ResourceManager.DevCenter
                 Id.ResourceGroupName,
                 Id.Name,
                 top,
-                context), data => new DevCenterProjectEnvironmentResource(Client, data));
+                context,
+                "DevCenterProjectEnvironmentCollection.GetAll"), data => new DevCenterProjectEnvironmentResource(Client, data));
         }
 
         /// <summary>
@@ -329,7 +330,8 @@ namespace Azure.ResourceManager.DevCenter
                 Id.ResourceGroupName,
                 Id.Name,
                 top,
-                context), data => new DevCenterProjectEnvironmentResource(Client, data));
+                context,
+                "DevCenterProjectEnvironmentCollection.GetAll"), data => new DevCenterProjectEnvironmentResource(Client, data));
         }
 
         /// <summary>

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         {
             if (id.ResourceType != NewRelicMonitorResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, NewRelicMonitorResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, NewRelicMonitorResource.ResourceType), nameof(id));
             }
         }
 
@@ -276,7 +276,13 @@ namespace Azure.ResourceManager.NewRelicObservability
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NewRelicMonitoredSubscriptionData, NewRelicMonitoredSubscriptionResource>(new MonitoredSubscriptionsGetAllAsyncCollectionResultOfT(_monitoredSubscriptionsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new NewRelicMonitoredSubscriptionResource(Client, data));
+            return new AsyncPageableWrapper<NewRelicMonitoredSubscriptionData, NewRelicMonitoredSubscriptionResource>(new MonitoredSubscriptionsGetAllAsyncCollectionResultOfT(
+                _monitoredSubscriptionsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "NewRelicMonitoredSubscriptionCollection.GetAll"), data => new NewRelicMonitoredSubscriptionResource(Client, data));
         }
 
         /// <summary>
@@ -304,7 +310,13 @@ namespace Azure.ResourceManager.NewRelicObservability
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NewRelicMonitoredSubscriptionData, NewRelicMonitoredSubscriptionResource>(new MonitoredSubscriptionsGetAllCollectionResultOfT(_monitoredSubscriptionsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new NewRelicMonitoredSubscriptionResource(Client, data));
+            return new PageableWrapper<NewRelicMonitoredSubscriptionData, NewRelicMonitoredSubscriptionResource>(new MonitoredSubscriptionsGetAllCollectionResultOfT(
+                _monitoredSubscriptionsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "NewRelicMonitoredSubscriptionCollection.GetAll"), data => new NewRelicMonitoredSubscriptionResource(Client, data));
         }
 
         /// <summary>

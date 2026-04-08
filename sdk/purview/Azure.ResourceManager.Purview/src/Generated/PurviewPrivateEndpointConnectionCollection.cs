@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Purview
         {
             if (id.ResourceType != PurviewAccountResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, PurviewAccountResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, PurviewAccountResource.ResourceType), nameof(id));
             }
         }
 
@@ -300,7 +300,8 @@ namespace Azure.ResourceManager.Purview
                 Id.ResourceGroupName,
                 Id.Name,
                 skipToken,
-                context), data => new PurviewPrivateEndpointConnectionResource(Client, data));
+                context,
+                "PurviewPrivateEndpointConnectionCollection.GetAll"), data => new PurviewPrivateEndpointConnectionResource(Client, data));
         }
 
         /// <summary>
@@ -335,7 +336,8 @@ namespace Azure.ResourceManager.Purview
                 Id.ResourceGroupName,
                 Id.Name,
                 skipToken,
-                context), data => new PurviewPrivateEndpointConnectionResource(Client, data));
+                context,
+                "PurviewPrivateEndpointConnectionCollection.GetAll"), data => new PurviewPrivateEndpointConnectionResource(Client, data));
         }
 
         /// <summary>

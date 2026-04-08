@@ -6,30 +6,21 @@
 #nullable disable
 
 using System;
-using System.Threading;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.AI.Translation.Document
 {
-    // Data plane generated client.
-    /// <summary> The SingleDocumentTranslation service client. </summary>
+    /// <summary> The SingleDocumentTranslationClient. </summary>
     public partial class SingleDocumentTranslationClient
     {
-        private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
-        private readonly AzureKeyCredential _keyCredential;
-        private static readonly string[] AuthorizationScopes = new string[] { "https://cognitiveservices.azure.com/.default" };
-        private readonly TokenCredential _tokenCredential;
-        private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
+        private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
+        private static readonly string[] AuthorizationScopes = new string[] { "https://cognitiveservices.azure.com/.default" };
         private readonly string _apiVersion;
-
-        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
-        internal ClientDiagnostics ClientDiagnostics { get; }
-
-        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary> Initializes a new instance of SingleDocumentTranslationClient for mocking. </summary>
         protected SingleDocumentTranslationClient()
@@ -37,181 +28,121 @@ namespace Azure.AI.Translation.Document
         }
 
         /// <summary> Initializes a new instance of SingleDocumentTranslationClient. </summary>
-        /// <param name="endpoint"> Supported document Translation endpoint, protocol and hostname, for example: https://{TranslatorResourceName}.cognitiveservices.azure.com/translator. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public SingleDocumentTranslationClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new DocumentTranslationClientOptions())
         {
         }
 
         /// <summary> Initializes a new instance of SingleDocumentTranslationClient. </summary>
-        /// <param name="endpoint"> Supported document Translation endpoint, protocol and hostname, for example: https://{TranslatorResourceName}.cognitiveservices.azure.com/translator. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public SingleDocumentTranslationClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new DocumentTranslationClientOptions())
         {
         }
 
         /// <summary> Initializes a new instance of SingleDocumentTranslationClient. </summary>
-        /// <param name="endpoint"> Supported document Translation endpoint, protocol and hostname, for example: https://{TranslatorResourceName}.cognitiveservices.azure.com/translator. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public SingleDocumentTranslationClient(Uri endpoint, AzureKeyCredential credential, DocumentTranslationClientOptions options)
+        internal SingleDocumentTranslationClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, DocumentTranslationClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
+
             options ??= new DocumentTranslationClientOptions();
 
-            ClientDiagnostics = new ClientDiagnostics(options, true);
-            _keyCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader) }, new ResponseClassifier());
             _endpoint = endpoint;
+            if (authenticationPolicy != null)
+            {
+                Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
+            }
+            else
+            {
+                Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
+            }
             _apiVersion = options.Version;
+            ClientDiagnostics = new ClientDiagnostics(options, true);
         }
 
         /// <summary> Initializes a new instance of SingleDocumentTranslationClient. </summary>
-        /// <param name="endpoint"> Supported document Translation endpoint, protocol and hostname, for example: https://{TranslatorResourceName}.cognitiveservices.azure.com/translator. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public SingleDocumentTranslationClient(Uri endpoint, TokenCredential credential, DocumentTranslationClientOptions options)
+        public SingleDocumentTranslationClient(Uri endpoint, AzureKeyCredential credential, DocumentTranslationClientOptions options) : this(new AzureKeyCredentialPolicy(credential, AuthorizationHeader), endpoint, options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
-            options ??= new DocumentTranslationClientOptions();
-
-            ClientDiagnostics = new ClientDiagnostics(options, true);
-            _tokenCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
-            _endpoint = endpoint;
-            _apiVersion = options.Version;
         }
 
-        /// <summary> Submit a single document translation request to the Document Translation service. </summary>
-        /// <param name="targetLanguage">
-        /// Specifies the language of the output document.
-        /// The target language must be one of the supported languages included in the translation scope.
-        /// For example if you want to translate the document in German language, then use targetLanguage=de
-        /// </param>
-        /// <param name="documentTranslateContent"> Document Translate Request Content. </param>
-        /// <param name="sourceLanguage">
-        /// Specifies source language of the input document.
-        /// If this parameter isn't specified, automatic language detection is applied to determine the source language.
-        /// For example if the source document is written in English, then use sourceLanguage=en
-        /// </param>
-        /// <param name="category">
-        /// A string specifying the category (domain) of the translation. This parameter is used to get translations
-        /// from a customized system built with Custom Translator. Add the Category ID from your Custom Translator
-        /// project details to this parameter to use your deployed customized system. Default value is: general.
-        /// </param>
-        /// <param name="allowFallback">
-        /// Specifies that the service is allowed to fall back to a general system when a custom system doesn't exist.
-        /// Possible values are: true (default) or false.
-        /// </param>
-        /// <param name="translateTextWithinImage"> Optional boolean parameter to translate text within an image in the document. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetLanguage"/> or <paramref name="documentTranslateContent"/> is null. </exception>
-        /// <remarks> Use this API to submit a single translation request to the Document Translation Service. </remarks>
-        public virtual async Task<Response<BinaryData>> TranslateAsync(string targetLanguage, DocumentTranslateContent documentTranslateContent, string sourceLanguage = null, string category = null, bool? allowFallback = null, bool? translateTextWithinImage = null, CancellationToken cancellationToken = default)
+        /// <summary> Initializes a new instance of SingleDocumentTranslationClient. </summary>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public SingleDocumentTranslationClient(Uri endpoint, TokenCredential credential, DocumentTranslationClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, options)
         {
-            Argument.AssertNotNull(targetLanguage, nameof(targetLanguage));
-            Argument.AssertNotNull(documentTranslateContent, nameof(documentTranslateContent));
-
-            using MultipartFormDataRequestContent content = documentTranslateContent.ToMultipartRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await TranslateAsync(targetLanguage, content, content.ContentType, sourceLanguage, category, allowFallback, translateTextWithinImage, context).ConfigureAwait(false);
-            return Response.FromValue(response.Content, response);
         }
 
-        /// <summary> Submit a single document translation request to the Document Translation service. </summary>
-        /// <param name="targetLanguage">
-        /// Specifies the language of the output document.
-        /// The target language must be one of the supported languages included in the translation scope.
-        /// For example if you want to translate the document in German language, then use targetLanguage=de
-        /// </param>
-        /// <param name="documentTranslateContent"> Document Translate Request Content. </param>
-        /// <param name="sourceLanguage">
-        /// Specifies source language of the input document.
-        /// If this parameter isn't specified, automatic language detection is applied to determine the source language.
-        /// For example if the source document is written in English, then use sourceLanguage=en
-        /// </param>
-        /// <param name="category">
-        /// A string specifying the category (domain) of the translation. This parameter is used to get translations
-        /// from a customized system built with Custom Translator. Add the Category ID from your Custom Translator
-        /// project details to this parameter to use your deployed customized system. Default value is: general.
-        /// </param>
-        /// <param name="allowFallback">
-        /// Specifies that the service is allowed to fall back to a general system when a custom system doesn't exist.
-        /// Possible values are: true (default) or false.
-        /// </param>
-        /// <param name="translateTextWithinImage"> Optional boolean parameter to translate text within an image in the document. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetLanguage"/> or <paramref name="documentTranslateContent"/> is null. </exception>
-        /// <remarks> Use this API to submit a single translation request to the Document Translation Service. </remarks>
-        public virtual Response<BinaryData> Translate(string targetLanguage, DocumentTranslateContent documentTranslateContent, string sourceLanguage = null, string category = null, bool? allowFallback = null, bool? translateTextWithinImage = null, CancellationToken cancellationToken = default)
+        /// <summary> Initializes a new instance of SingleDocumentTranslationClient from a <see cref="SingleDocumentTranslationClientSettings"/>. </summary>
+        /// <param name="settings"> The settings for SingleDocumentTranslationClient. </param>
+        [Experimental("SCME0002")]
+        public SingleDocumentTranslationClient(SingleDocumentTranslationClientSettings settings) : this(settings?.Endpoint, settings?.CredentialProvider as TokenCredential, settings?.Options)
         {
-            Argument.AssertNotNull(targetLanguage, nameof(targetLanguage));
-            Argument.AssertNotNull(documentTranslateContent, nameof(documentTranslateContent));
-
-            using MultipartFormDataRequestContent content = documentTranslateContent.ToMultipartRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = Translate(targetLanguage, content, content.ContentType, sourceLanguage, category, allowFallback, translateTextWithinImage, context);
-            return Response.FromValue(response.Content, response);
         }
+
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary>
-        /// [Protocol Method] Submit a single document translation request to the Document Translation service
+        /// [Protocol Method] Use this API to submit a single translation request to the Document Translation Service.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="TranslateAsync(string,DocumentTranslateContent,string,string,bool?,bool?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="targetLanguage">
         /// Specifies the language of the output document.
         /// The target language must be one of the supported languages included in the translation scope.
-        /// For example if you want to translate the document in German language, then use targetLanguage=de
+        /// For example if you want to translate the document in German language, then use targetLanguage=de 
         /// </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="contentType"> Content Type as multipart/form-data. Allowed values: "multipart/form-data". </param>
+        /// <param name="contentType"> The contentType to use which has the multipart/form-data boundary. </param>
         /// <param name="sourceLanguage">
         /// Specifies source language of the input document.
         /// If this parameter isn't specified, automatic language detection is applied to determine the source language.
         /// For example if the source document is written in English, then use sourceLanguage=en
         /// </param>
         /// <param name="category">
-        /// A string specifying the category (domain) of the translation. This parameter is used to get translations
-        /// from a customized system built with Custom Translator. Add the Category ID from your Custom Translator
+        /// A string specifying the category (domain) of the translation. This parameter is used to get translations 
+        /// from a customized system built with Custom Translator. Add the Category ID from your Custom Translator 
         /// project details to this parameter to use your deployed customized system. Default value is: general.
         /// </param>
         /// <param name="allowFallback">
-        /// Specifies that the service is allowed to fall back to a general system when a custom system doesn't exist.
+        /// Specifies that the service is allowed to fall back to a general system when a custom system doesn't exist. 
         /// Possible values are: true (default) or false.
         /// </param>
         /// <param name="translateTextWithinImage"> Optional boolean parameter to translate text within an image in the document. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetLanguage"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="targetLanguage"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> TranslateAsync(string targetLanguage, RequestContent content, string contentType, string sourceLanguage = null, string category = null, bool? allowFallback = null, bool? translateTextWithinImage = null, RequestContext context = null)
+        public virtual Response Translate(string targetLanguage, RequestContent content, string contentType, string sourceLanguage = default, string category = default, bool? allowFallback = default, bool? translateTextWithinImage = default, RequestContext context = null)
         {
-            Argument.AssertNotNull(targetLanguage, nameof(targetLanguage));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("SingleDocumentTranslationClient.Translate");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SingleDocumentTranslationClient.Translate");
             scope.Start();
             try
             {
+                Argument.AssertNotNullOrEmpty(targetLanguage, nameof(targetLanguage));
+                Argument.AssertNotNull(content, nameof(content));
+
                 using HttpMessage message = CreateTranslateRequest(targetLanguage, content, contentType, sourceLanguage, category, allowFallback, translateTextWithinImage, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -221,57 +152,51 @@ namespace Azure.AI.Translation.Document
         }
 
         /// <summary>
-        /// [Protocol Method] Submit a single document translation request to the Document Translation service
+        /// [Protocol Method] Use this API to submit a single translation request to the Document Translation Service.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="Translate(string,DocumentTranslateContent,string,string,bool?,bool?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="targetLanguage">
         /// Specifies the language of the output document.
         /// The target language must be one of the supported languages included in the translation scope.
-        /// For example if you want to translate the document in German language, then use targetLanguage=de
+        /// For example if you want to translate the document in German language, then use targetLanguage=de 
         /// </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="contentType"> Content Type as multipart/form-data. Allowed values: "multipart/form-data". </param>
+        /// <param name="contentType"> The contentType to use which has the multipart/form-data boundary. </param>
         /// <param name="sourceLanguage">
         /// Specifies source language of the input document.
         /// If this parameter isn't specified, automatic language detection is applied to determine the source language.
         /// For example if the source document is written in English, then use sourceLanguage=en
         /// </param>
         /// <param name="category">
-        /// A string specifying the category (domain) of the translation. This parameter is used to get translations
-        /// from a customized system built with Custom Translator. Add the Category ID from your Custom Translator
+        /// A string specifying the category (domain) of the translation. This parameter is used to get translations 
+        /// from a customized system built with Custom Translator. Add the Category ID from your Custom Translator 
         /// project details to this parameter to use your deployed customized system. Default value is: general.
         /// </param>
         /// <param name="allowFallback">
-        /// Specifies that the service is allowed to fall back to a general system when a custom system doesn't exist.
+        /// Specifies that the service is allowed to fall back to a general system when a custom system doesn't exist. 
         /// Possible values are: true (default) or false.
         /// </param>
         /// <param name="translateTextWithinImage"> Optional boolean parameter to translate text within an image in the document. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetLanguage"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="targetLanguage"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response Translate(string targetLanguage, RequestContent content, string contentType, string sourceLanguage = null, string category = null, bool? allowFallback = null, bool? translateTextWithinImage = null, RequestContext context = null)
+        public virtual async Task<Response> TranslateAsync(string targetLanguage, RequestContent content, string contentType, string sourceLanguage = default, string category = default, bool? allowFallback = default, bool? translateTextWithinImage = default, RequestContext context = null)
         {
-            Argument.AssertNotNull(targetLanguage, nameof(targetLanguage));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("SingleDocumentTranslationClient.Translate");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SingleDocumentTranslationClient.Translate");
             scope.Start();
             try
             {
+                Argument.AssertNotNullOrEmpty(targetLanguage, nameof(targetLanguage));
+                Argument.AssertNotNull(content, nameof(content));
+
                 using HttpMessage message = CreateTranslateRequest(targetLanguage, content, contentType, sourceLanguage, category, allowFallback, translateTextWithinImage, context);
-                return _pipeline.ProcessMessage(message, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -279,53 +204,5 @@ namespace Azure.AI.Translation.Document
                 throw;
             }
         }
-
-        internal HttpMessage CreateTranslateRequest(string targetLanguage, RequestContent content, string contentType, string sourceLanguage, string category, bool? allowFallback, bool? translateTextWithinImage, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/translator", false);
-            uri.AppendPath("/document:translate", false);
-            uri.AppendQuery("targetLanguage", targetLanguage, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (sourceLanguage != null)
-            {
-                uri.AppendQuery("sourceLanguage", sourceLanguage, true);
-            }
-            if (category != null)
-            {
-                uri.AppendQuery("category", category, true);
-            }
-            if (allowFallback != null)
-            {
-                uri.AppendQuery("allowFallback", allowFallback.Value, true);
-            }
-            if (translateTextWithinImage != null)
-            {
-                uri.AppendQuery("translateTextWithinImage", translateTextWithinImage.Value, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/octet-stream");
-            request.Headers.Add("Content-Type", contentType);
-            request.Content = content;
-            return message;
-        }
-
-        private static RequestContext DefaultRequestContext = new RequestContext();
-        internal static RequestContext FromCancellationToken(CancellationToken cancellationToken = default)
-        {
-            if (!cancellationToken.CanBeCanceled)
-            {
-                return DefaultRequestContext;
-            }
-
-            return new RequestContext() { CancellationToken = cancellationToken };
-        }
-
-        private static ResponseClassifier _responseClassifier200;
-        private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
     }
 }

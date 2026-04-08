@@ -13,4 +13,3 @@ extends:
       safeName: AzureResourceManagerSql
     - name: Azure.Provisioning.Sql
       safeName: AzureProvisioningSql
-    TestDependsOnDependency: Azure.ResourceManager.Sql

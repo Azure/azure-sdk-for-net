@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ContainerService
         {
             if (id.ResourceType != ContainerServiceManagedClusterResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ContainerServiceManagedClusterResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ContainerServiceManagedClusterResource.ResourceType), nameof(id));
             }
         }
 
@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.ContainerService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ContainerServiceTrustedAccessRoleBindingData, ContainerServiceTrustedAccessRoleBindingResource>(new TrustedAccessRoleBindingsGetAllAsyncCollectionResultOfT(_trustedAccessRoleBindingsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ContainerServiceTrustedAccessRoleBindingResource(Client, data));
+            return new AsyncPageableWrapper<ContainerServiceTrustedAccessRoleBindingData, ContainerServiceTrustedAccessRoleBindingResource>(new TrustedAccessRoleBindingsGetAllAsyncCollectionResultOfT(
+                _trustedAccessRoleBindingsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ContainerServiceTrustedAccessRoleBindingCollection.GetAll"), data => new ContainerServiceTrustedAccessRoleBindingResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.ContainerService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ContainerServiceTrustedAccessRoleBindingData, ContainerServiceTrustedAccessRoleBindingResource>(new TrustedAccessRoleBindingsGetAllCollectionResultOfT(_trustedAccessRoleBindingsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ContainerServiceTrustedAccessRoleBindingResource(Client, data));
+            return new PageableWrapper<ContainerServiceTrustedAccessRoleBindingData, ContainerServiceTrustedAccessRoleBindingResource>(new TrustedAccessRoleBindingsGetAllCollectionResultOfT(
+                _trustedAccessRoleBindingsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ContainerServiceTrustedAccessRoleBindingCollection.GetAll"), data => new ContainerServiceTrustedAccessRoleBindingResource(Client, data));
         }
 
         /// <summary>
