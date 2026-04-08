@@ -81,6 +81,7 @@ export interface ResourceMetadata {
   singletonResourceName?: string;
   resourceName: string;
   /** The expected parent resource type for extension resources with specific parent types (e.g., "Microsoft.Compute/virtualMachines") */
+  // TODO: consider to calculate this in generator directly within RequestPathPattern instead of carrying it through emitter and post-processing
   parentResourceType?: string;
   /** The name constraints for the resource, from TypeSpec decorators */
   nameConstraints: NameConstraints;
