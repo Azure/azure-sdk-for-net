@@ -537,7 +537,7 @@ function EnableBlobDeletion($Blob, $Container, $StorageAccountName, $ResourceGro
 # immutability policies / legal holds and delete each version individually. Multiple passes handle
 # new non-current versions that surface after each round of deletions.
 function Remove-VlwContainerBlobs($Container, $StorageAccountName, $ResourceGroupName) {
-  Write-Host "Cleaning VLW container '$($Container.Name)' versions and soft-deleted blobs in account '$StorageAccountName'"
+  Write-Host "Cleaning VLW container '$($Container.Name)' versions and soft-deleted blobs in account '$StorageAccountName', group: $ResourceGroupName"
 
   for ($round = 0; $round -lt 5; $round++) {
     $found = $false
@@ -549,7 +549,7 @@ function Remove-VlwContainerBlobs($Container, $StorageAccountName, $ResourceGrou
       # Unconditionally clear legal holds and immutability policies. Errors are expected for
       # soft-deleted blobs or blobs that don't have these set.
       try { $blob | Set-AzStorageBlobLegalHold -DisableLegalHold | Out-Null } catch { }
-      try { $blob | Remove-AzStorageBlobImmutabilityPolicy } catch { }
+      try { $blob | Remove-AzStorageBlobImmutabilityPolicy | Out-Null } catch { }
       try {
         $blob | Remove-AzStorageBlob -Force
       } catch {
