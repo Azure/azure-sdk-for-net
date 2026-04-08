@@ -58,10 +58,12 @@ foreach ($file in $apiListingFiles) {
     }
 }
 
-# Also strip CCI artifacts from any other API listings that may have been regenerated
-# as transitive dependencies (e.g. Azure.Identity listings regenerated during other service exports)
-$allApiFiles = Get-ChildItem -Path "$PSScriptRoot/../../sdk/*/*/api/*.cs" -ErrorAction SilentlyContinue
-foreach ($file in $allApiFiles) {
+# Also strip CCI artifacts from Azure.Identity API listings that may have been regenerated
+# as transitive dependencies during other service directory exports. GenAPI's --follow-type-forwards
+# flag (used only by Azure.Identity) emits [Microsoft.Cci.DummyTypeReference] on netstandard2.0
+# async methods when resolving forwarded types.
+$identityApiFiles = Get-ChildItem -Path "$PSScriptRoot/../../sdk/identity/Azure.Identity/api/*.cs" -ErrorAction SilentlyContinue
+foreach ($file in $identityApiFiles) {
     $content = Get-Content -Path $file.FullName -Raw
     if ($content -and $content -match 'Microsoft\.Cci\.DummyTypeReference') {
         $content = $content -replace "`r`n", "`n"
