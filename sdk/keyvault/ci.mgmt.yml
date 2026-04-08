@@ -11,4 +11,3 @@ extends:
       safeName: AzureResourceManagerKeyVault
     - name: Azure.Provisioning.KeyVault
       safeName: AzureProvisioningKeyVault
-    TestDependsOnDependency: Azure.ResourceManager.KeyVault

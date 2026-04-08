@@ -11,7 +11,7 @@ namespace Azure.AI.AgentServer.Responses.Tests.Protocol;
 
 /// <summary>
 /// Protocol tests for User Story 5 — SSE Keep-Alive Disabled by Default.
-/// Verifies FR-020 (no keep-alive by default) and FR-021 (opt-in via env var).
+/// Verifies B28 (no keep-alive by default) and B28 opt-in via env var.
 /// </summary>
 public class SseKeepAliveTests : IDisposable
 {

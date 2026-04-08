@@ -12,17 +12,18 @@
 - [Server Registration](#server-registration)
 - [ResponseHandler](#responsehandler)
 - [ResponseEventStream](#responseeventstream)
+  - [Method Naming Conventions](#method-naming-conventions)
   - [Setting Custom Metadata](#setting-custom-metadata)
   - [Builder Pattern](#builder-pattern)
 - [ResponseContext](#responsecontext)
-- [Sequence Numbers](#sequence-numbers)
-- [Snapshot Semantics](#snapshot-semantics)
 - [Emitting Output](#emitting-output)
   - [Text Messages](#text-messages)
   - [Function Calls (Tool Use)](#function-calls-tool-use)
+  - [Function Call Output](#function-call-output)
   - [Reasoning Items](#reasoning-items)
   - [Multiple Output Items](#multiple-output-items)
   - [Other Tool Call Types](#other-tool-call-types)
+  - [MCP Terminal State](#mcp-terminal-state)
 - [Handling Input](#handling-input)
 - [Cancellation](#cancellation)
 - [Error Handling](#error-handling)
@@ -412,6 +413,37 @@ Each builder tracks its lifecycle state (`NotStarted` → `Added` → `Done`) an
 
 **Key rule**: Every builder that you start (`EmitAdded`) must be finished (`EmitDone`). Unfinished builders result in malformed responses.
 
+### Method Naming Conventions
+
+`ResponseEventStream` and its builders use a consistent naming scheme. Knowing the three prefixes tells you what any method does at a glance:
+
+#### Stream-level methods (`ResponseEventStream`)
+
+| Prefix | Example | Returns | Purpose |
+|--------|---------|---------|----------|
+| `Emit*` | `EmitCreated()`, `EmitCompleted()` | A single `ResponseStreamEvent` | Produce one response-lifecycle event |
+| `Add*` | `AddOutputItemMessage()`, `AddOutputItemFunctionCall(...)` | A **builder** object | Create a builder for step-by-step, fine-grained event emission |
+| `OutputItem*` | `OutputItemMessage(text)`, `OutputItemFunctionCall(...)` | `IEnumerable` or `IAsyncEnumerable` of events | **Convenience generator** — yields the complete output-item lifecycle in one call |
+
+#### Builder-level methods (e.g. `OutputItemMessageBuilder`)
+
+| Prefix | Example | Returns | Purpose |
+|--------|---------|---------|----------|
+| `Emit*` | `EmitAdded()`, `EmitDone()`, `EmitDelta(chunk)` | A single event | Produce one event in the builder's lifecycle |
+| `Add*` | `AddTextContent()`, `AddSummaryPart()` | A **child builder** | Create a nested content builder for sub-items |
+| *(content name)* | `TextContent(text)`, `Arguments(args)`, `SummaryPart(text)` | `IEnumerable` or `IAsyncEnumerable` of events | **Sub-item convenience** — yields the complete content-part lifecycle in one call |
+
+**Rule of thumb**: If a method returns a single event, it starts with `Emit`. If it returns a builder, it starts with `Add`. If it returns an enumerable of events, it's a convenience generator named after the content it produces.
+
+Every convenience generator has two overloads:
+
+| Overload | Signature pattern | Use when |
+|----------|-------------------|----------|
+| **Complete** | Takes a `string` → returns `IEnumerable<ResponseStreamEvent>` | You have the full value up-front |
+| **Streaming** | Takes an `IAsyncEnumerable<string>` → returns `IAsyncEnumerable<ResponseStreamEvent>` | You're receiving chunks from a model or service |
+
+> **Tip**: Start with convenience generators. Drop down to `Add*` builders only when you need fine-grained control (e.g., multiple content parts in one message, custom properties on the output item, or interleaving non-content work between events).
+
 ---
 
 ## ResponseContext
@@ -533,35 +565,54 @@ You typically don't need to call these directly — the builders handle ID gener
 
 ---
 
-## Sequence Numbers
-
-The server auto-assigns 0-based sequence numbers to every SSE event. Never set them manually — they are injected automatically by the library during event serialization.
-
-Clients use sequence numbers for stream resumption via the `starting_after` query parameter on SSE replay. See [Sequence Numbers (B9)](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/api-behaviour-contract.md#behavioural-rules-index) for the wire format.
-
----
-
-## Snapshot Semantics
-
-Each SSE event captures a point-in-time snapshot of the `Response`. It is safe to mutate response state between yields — each event reflects the state at emission time, not the current state.
-
-See [Snapshot Semantics (B23)](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/api-behaviour-contract.md#behavioural-rules-index) for the protocol-level behaviour and [Response Replacement Semantics (B37)](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/api-behaviour-contract.md#response-replacement-semantics-rule-b37) for how response state is tracked.
-
----
-
 ## Emitting Output
+
+Each output type can be emitted using either **convenience generators** (recommended — less code, correct by construction) or **builders** (when you need fine-grained control). The examples below show both, starting with the simpler approach.
+
+> **Tip**: For simple text-only responses, [`TextResponse`](#textresponse) is even simpler than `ResponseEventStream` — it handles the entire event lifecycle in a single line.
 
 ### Text Messages
 
-> **Tip**: For simple text-only responses, consider using [`TextResponse`](#textresponse) instead — it handles all the event lifecycle below in a single line. Use `ResponseEventStream` when you need fine-grained delta control or multiple content parts.
+#### Using conveniences
 
-The most common output — a message with text content:
+The simplest way to emit a text message — one call per output item:
 
 ```csharp
 var stream = new ResponseEventStream(context, request);
 yield return stream.EmitCreated();
 yield return stream.EmitInProgress();
 
+// Complete text — full value up-front
+foreach (var evt in stream.OutputItemMessage("Hello, world!"))
+    yield return evt;
+
+yield return stream.EmitCompleted();
+```
+
+Streaming from an LLM:
+
+```csharp
+await foreach (var evt in stream.OutputItemMessage(GetTokenStream(cancellationToken), cancellationToken))
+    yield return evt;
+```
+
+If you need the builder for other reasons (e.g., setting properties) but still want convenience for the content part:
+
+```csharp
+var message = stream.AddOutputItemMessage();
+yield return message.EmitAdded();
+
+foreach (var evt in message.TextContent("Hello, world!"))
+    yield return evt;
+
+yield return message.EmitDone();
+```
+
+#### Using builders (fine-grained control)
+
+When you need multiple content parts in one message (e.g., text + refusal), emit refusal content, set custom properties on the output item, or interleave non-event work between builder calls:
+
+```csharp
 var message = stream.AddOutputItemMessage();
 yield return message.EmitAdded();
 
@@ -577,20 +628,30 @@ yield return text.EmitDone("First chunk of text. Second chunk. ");
 
 yield return message.EmitContentDone(text);
 yield return message.EmitDone();
-
-yield return stream.EmitCompleted();
 ```
 
 **Tip**: For streaming, emit small deltas frequently for a responsive feel. For non-streaming mode, the library accumulates everything and delivers the final JSON — so delta granularity doesn't affect the JSON response, only SSE streaming UX.
 
 ### Function Calls (Tool Use)
 
-When your handler needs the client to execute a function (tool) and return the result:
+When your handler needs the client to execute a function (tool) and return the result.
+
+#### Using conveniences
 
 ```csharp
 yield return stream.EmitCreated();
 yield return stream.EmitInProgress();
 
+var args = JsonSerializer.Serialize(new { location = "Seattle" });
+foreach (var evt in stream.OutputItemFunctionCall("get_weather", "call_1", args))
+    yield return evt;
+
+yield return stream.EmitCompleted();
+```
+
+#### Using builders (fine-grained control)
+
+```csharp
 var funcCall = stream.AddOutputItemFunctionCall("get_weather", "call_weather_1");
 yield return funcCall.EmitAdded();
 
@@ -598,8 +659,6 @@ var arguments = JsonSerializer.Serialize(new { location = "Seattle", unit = "fah
 yield return funcCall.EmitArgumentsDelta(arguments);
 yield return funcCall.EmitArgumentsDone(arguments);
 yield return funcCall.EmitDone();
-
-yield return stream.EmitCompleted();
 ```
 
 The client receives the function call, executes it locally, and sends a new request with the function output as input. Your handler then processes the result on the next turn.
@@ -623,15 +682,10 @@ public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
         // Turn 2+: Process the function result and respond
         yield return stream.EmitCreated();
         yield return stream.EmitInProgress();
-        var message = stream.AddOutputItemMessage();
-        yield return message.EmitAdded();
-        var text = message.AddTextContent();
-        yield return text.EmitAdded();
-        var reply = $"The result is: {toolOutput.Output}";
-        yield return text.EmitDelta(reply);
-        yield return text.EmitDone(reply);
-        yield return message.EmitContentDone(text);
-        yield return message.EmitDone();
+
+        foreach (var evt in stream.OutputItemMessage($"The result is: {toolOutput.Output}"))
+            yield return evt;
+
         yield return stream.EmitCompleted();
     }
     else
@@ -639,26 +693,51 @@ public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
         // Turn 1: Request a function call
         yield return stream.EmitCreated();
         yield return stream.EmitInProgress();
-        var funcCall = stream.AddOutputItemFunctionCall("get_weather", "call_weather_1");
-        yield return funcCall.EmitAdded();
+
         var args = JsonSerializer.Serialize(new { location = "Seattle" });
-        yield return funcCall.EmitArgumentsDelta(args);
-        yield return funcCall.EmitArgumentsDone(args);
-        yield return funcCall.EmitDone();
+        foreach (var evt in stream.OutputItemFunctionCall("get_weather", "call_weather_1", args))
+            yield return evt;
+
         yield return stream.EmitCompleted();
     }
 }
 ```
 
+### Function Call Output
+
+When your handler itself executes a tool and includes the output in the response (no client round-trip):
+
+```csharp
+foreach (var evt in stream.OutputItemFunctionCallOutput("call_weather_1", BinaryData.FromString(weatherJson)))
+    yield return evt;
+```
+
+Function call outputs have no deltas — only `output_item.added` and `output_item.done`.
+
 ### Reasoning Items
 
-Emit reasoning (chain-of-thought) before the main response:
+Emit reasoning (chain-of-thought) before the main response.
+
+#### Using conveniences
 
 ```csharp
 yield return stream.EmitCreated();
 yield return stream.EmitInProgress();
 
 // Output 0: Reasoning
+foreach (var evt in stream.OutputItemReasoningItem("Let me think about this..."))
+    yield return evt;
+
+// Output 1: Message with the answer
+foreach (var evt in stream.OutputItemMessage("The answer is 42."))
+    yield return evt;
+
+yield return stream.EmitCompleted();
+```
+
+#### Using builders (fine-grained control)
+
+```csharp
 var reasoning = stream.AddOutputItemReasoningItem();
 yield return reasoning.EmitAdded();
 
@@ -669,14 +748,6 @@ yield return summary.EmitTextDone("Let me think about this...");
 yield return summary.EmitDone();
 reasoning.EmitSummaryPartDone(summary);
 yield return reasoning.EmitDone();
-
-// Output 1: Message with the answer
-var message = stream.AddOutputItemMessage();
-yield return message.EmitAdded();
-// ... text content ...
-yield return message.EmitDone();
-
-yield return stream.EmitCompleted();
 ```
 
 ### Multiple Output Items
@@ -688,34 +759,49 @@ yield return stream.EmitCreated();
 yield return stream.EmitInProgress();
 
 // Output 0
-var msg1 = stream.AddOutputItemMessage();
-yield return msg1.EmitAdded();
-// ... content ...
-yield return msg1.EmitDone();
+foreach (var evt in stream.OutputItemMessage("First message."))
+    yield return evt;
 
 // Output 1
-var msg2 = stream.AddOutputItemMessage();
-yield return msg2.EmitAdded();
-// ... content ...
-yield return msg2.EmitDone();
+foreach (var evt in stream.OutputItemMessage("Second message."))
+    yield return evt;
 
 yield return stream.EmitCompleted();
 ```
 
 ### Other Tool Call Types
 
-The library provides specialised builders for each tool call type:
+The library provides specialised builders for each tool call type. Each also has sub-item convenience generators (see [Method Naming Conventions](#method-naming-conventions)):
 
-| Builder | Factory Method | Key Methods |
-|---|---|---|
-| `OutputItemCodeInterpreterCallBuilder` | `AddOutputItemCodeInterpreterCall()` | `EmitAdded()` → `EmitInProgress()` → `EmitInterpreting()` → `EmitCodeDelta()` → `EmitCodeDone()` → `EmitCompleted()` → `EmitDone()` |
-| `OutputItemFileSearchCallBuilder` | `AddOutputItemFileSearchCall()` | `EmitAdded()` → `EmitInProgress()` → `EmitSearching()` → `EmitCompleted()` → `EmitDone()` |
-| `OutputItemWebSearchCallBuilder` | `AddOutputItemWebSearchCall()` | `EmitAdded()` → `EmitInProgress()` → `EmitSearching()` → `EmitCompleted()` → `EmitDone()` |
-| `OutputItemImageGenCallBuilder` | `AddOutputItemImageGenCall()` | `EmitAdded()` → `EmitInProgress()` → `EmitGenerating()` → `EmitPartialImage()` → `EmitCompleted()` → `EmitDone()` |
-| `OutputItemMcpCallBuilder` | `AddOutputItemMcpCall(serverLabel, name)` | `EmitAdded()` → `EmitInProgress()` → `EmitArgumentsDelta()` → `EmitArgumentsDone()` → `EmitCompleted()` / `EmitFailed()` → `EmitDone()` |
-| `OutputItemCustomToolCallBuilder` | `AddOutputItemCustomToolCall(callId, name)` | `EmitAdded()` → `EmitInputDelta()` → `EmitInputDone()` → `EmitDone()` |
+| Builder | Factory Method (`Add*`) | Builder Lifecycle | Sub-Item Convenience |
+|---|---|---|---|
+| `OutputItemCodeInterpreterCallBuilder` | `AddOutputItemCodeInterpreterCall()` | `EmitAdded()` → `EmitInProgress()` → `EmitInterpreting()` → `EmitCodeDelta()` → `EmitCodeDone()` → `EmitCompleted()` → `EmitDone()` | `Code(string\|IAsyncEnumerable<string>)` |
+| `OutputItemFileSearchCallBuilder` | `AddOutputItemFileSearchCall()` | `EmitAdded()` → `EmitInProgress()` → `EmitSearching()` → `EmitCompleted()` → `EmitDone()` | — |
+| `OutputItemWebSearchCallBuilder` | `AddOutputItemWebSearchCall()` | `EmitAdded()` → `EmitInProgress()` → `EmitSearching()` → `EmitCompleted()` → `EmitDone()` | — |
+| `OutputItemImageGenCallBuilder` | `AddOutputItemImageGenCall()` | `EmitAdded()` → `EmitInProgress()` → `EmitGenerating()` → `EmitPartialImage()` → `EmitCompleted()` → `EmitDone()` | — |
+| `OutputItemMcpCallBuilder` | `AddOutputItemMcpCall(serverLabel, name)` | `EmitAdded()` → `EmitInProgress()` → `EmitArgumentsDelta()` → `EmitArgumentsDone()` → `EmitCompleted()` / `EmitFailed()` → `EmitDone()` | `Arguments(string\|IAsyncEnumerable<string>)` |
+| `OutputItemCustomToolCallBuilder` | `AddOutputItemCustomToolCall(callId, name)` | `EmitAdded()` → `EmitInputDelta()` → `EmitInputDone()` → `EmitDone()` | `Input(string\|IAsyncEnumerable<string>)` |
 
 Each builder enforces its own lifecycle ordering — follow the method progression from left to right.
+
+### MCP Terminal State
+
+For MCP tool calls, `EmitCompleted()` and `EmitFailed()` on `OutputItemMcpCallBuilder` record the terminal status so that `EmitDone()` sets the correct `MCPToolCallStatus` on the output item. If neither is called, `EmitDone()` defaults to `Completed`.
+
+```csharp
+var mcp = stream.AddOutputItemMcpCall("my-server", "tool_name");
+yield return mcp.EmitAdded();
+yield return mcp.EmitInProgress();
+// ... arguments ...
+
+// Option A: Success
+yield return mcp.EmitCompleted();  // Records status = Completed
+yield return mcp.EmitDone();       // Output item has Status = Completed
+
+// Option B: Failure
+yield return mcp.EmitFailed();     // Records status = Failed
+yield return mcp.EmitDone();       // Output item has Status = Failed
+```
 
 ---
 
@@ -834,15 +920,19 @@ public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
 
 ### What the Library Does on Cancellation
 
-Let `OperationCanceledException` propagate — the server handles the winddown automatically. The 10-second grace period, output clearing, and terminal event emission are all automatic. You don't need to emit any terminal event on cancellation.
+Let `OperationCanceledException` propagate — the server handles the winddown automatically:
 
-See [Cancel Winddown (B11)](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/api-behaviour-contract.md#behavioural-rules-index) for the protocol-level behaviour.
+1. The library sets `CancelRequested = true` and fires the execution's `CancellationTokenSource`.
+2. It waits up to **10 seconds** for the handler to wind down. If the handler doesn't cooperate in time, the cancel endpoint returns the response in its current state — the execution task continues in the background until it completes.
+3. Once the handler finishes (within or beyond the grace period), the response transitions to `cancelled` status and a `response.failed` terminal event is emitted and persisted.
+
+You don't need to emit any terminal event on cancellation — just let `OperationCanceledException` propagate and the library handles the rest. Handlers should cooperate with `CancellationToken` and wind down promptly to ensure the cancel endpoint returns a fully resolved `cancelled` snapshot.
 
 ### Graceful Shutdown
 
 When the host shuts down (e.g., `SIGTERM`, `IHost.StopAsync()`), `context.IsShutdownRequested` is set to `true` and the handler's `CancellationToken` is cancelled.
 
-Use `context.IsShutdownRequested` to distinguish shutdown from explicit cancel or client disconnect and choose the appropriate terminal state for your scenario. See [Shutdown Signal (B24)](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/api-behaviour-contract.md#behavioural-rules-index) for the protocol-level behaviour.
+Use `context.IsShutdownRequested` to distinguish shutdown from explicit cancel or client disconnect and choose the appropriate terminal state for your scenario.
 
 **Option A — Emit `response.incomplete`** (clients can resume with `previous_response_id`):
 
@@ -919,8 +1009,6 @@ The library recognises specific exception types and maps them to structured erro
 
 **The `ResponseError` on the response object** (visible via `GET /responses/{id}` when `store=true`) contains only `code` and `message` — no `type` or `param`. This is a different (smaller) shape than the HTTP error envelope.
 
-> For the complete error-to-status mapping, see [Library Behavioural Specification — Error Handling Pipeline](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/library-behaviour-spec.md#error-handling-pipeline) (S-027–S-030).
-
 ### Explicit Failure
 
 To signal a specific failure with a custom error code and message:
@@ -954,7 +1042,7 @@ Bad client input returns HTTP 400 before your handler runs. Bad handler output r
 
 **Debugging**: If you see unexpected 500 errors during development, check your application logs for validation errors. The logged details include the JSON path and expected type, pointing you to the builder call that produced invalid output.
 
-See [Validation (B29, B30)](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/api-behaviour-contract.md#validation) for the protocol-level behaviour.
+
 
 ---
 
@@ -990,7 +1078,7 @@ throw new BadRequestException("Unsupported model", "model");
 - Lets you choose the right terminal status (`completed`, `failed`, or `incomplete`)
 - Makes handler intent unambiguous to readers of your code
 
-See [Terminal Event Guarantee (B32)](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/api-behaviour-contract.md#behavioural-rules-index) for the API-level guarantee.
+
 
 > **Note**: This section applies to `ResponseEventStream` handlers. `TextResponse` handles terminal events automatically.
 
@@ -1038,7 +1126,7 @@ yield return stream.EmitCompleted(usage);
 
 Handlers that proxy to an LLM and receive token counts should pass them through. Handlers that do not interact with an LLM typically omit usage.
 
-See [Token Usage (B33)](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/api-behaviour-contract.md#token-usage-reporting-rule-b33) for the protocol-level behaviour.
+
 
 ---
 
@@ -1139,7 +1227,7 @@ var app = builder.Build();
 app.Run();
 ```
 
-See [Server Identity Header (B19)](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/api-behaviour-contract.md#behavioural-rules-index) for the protocol-level behaviour.
+
 
 ### Distributed Tracing
 
@@ -1265,10 +1353,6 @@ builder.Services.AddOpenTelemetry()
 
 If your subclass uses a different source name (via the `protected` constructor), listen for that name instead.
 
-See [Library Behavioural Specification — Observability Requirements](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/library-behaviour-spec.md#observability-requirements) (S-043–S-045) for the full tracing contract.
-
-See [API Behaviour Contract — Distributed Tracing](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/api-behaviour-contract.md#distributed-tracing) for the full list of activity tags and baggage items.
-
 ### TTL Eviction
 
 The default in-memory response store retains response data indefinitely. Only event stream replay buffers are automatically evicted — each SSE event is retained for a configurable TTL from the time it was emitted (default: 10 minutes).
@@ -1282,7 +1366,7 @@ builder.Services.Configure<InMemoryProviderOptions>(opts =>
 
 If you register a custom `ResponsesProvider`, you manage your own retention strategy. `InMemoryProviderOptions` only affects the built-in in-memory provider.
 
-See [Event Stream Replay Availability (B35)](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/api-behaviour-contract.md#event-stream-replay-availability-rule-b35) for the protocol-level behaviour.
+
 
 ### SSE Keep-Alive
 
@@ -1298,7 +1382,7 @@ This is a platform-controlled setting read once at startup via `FoundryEnvironme
 
 The `X-Accel-Buffering: no` response header is automatically set on SSE streams to disable nginx buffering.
 
-See [SSE Keep-Alive (B28)](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/api-behaviour-contract.md#behavioural-rules-index) for the protocol-level behaviour.
+
 
 ---
 
@@ -1459,7 +1543,7 @@ yield return stream.EmitCompleted();
 
 ### Omitting Output Items from Terminal Response (Raw Events)
 
-When emitting raw events (without `ResponseEventStream` builders), each `response.*` event **fully replaces** the library's tracked `Response` with the event's embedded `Response` ([Rule B37](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/api-behaviour-contract.md#behavioural-rules-index)). If the terminal `response.completed` has empty output, accumulated `output_item.added/done` items are lost. Additionally, the handler **must** set the correct `Status` on the `Response` before yielding a terminal event — the library validates but never auto-sets terminal status.
+When emitting raw events (without `ResponseEventStream` builders), each `response.*` event **fully replaces** the library's tracked `Response` with the event's embedded `Response`. If the terminal `response.completed` has empty output, accumulated `output_item.added/done` items are lost. Additionally, the handler **must** set the correct `Status` on the `Response` before yielding a terminal event — the library validates but never auto-sets terminal status.
 
 ```csharp
 // ❌ Terminal response has empty output — items accumulated via output_item.added are lost

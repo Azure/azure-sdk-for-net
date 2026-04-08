@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         private readonly string _contextName;
         private readonly string _workflowName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of WorkflowVersionsGetByWorkflowCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The WorkflowVersions client used to send requests. </param>
@@ -30,7 +31,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="contextName"> The name of the Context. </param>
         /// <param name="workflowName"> Name of the workflow. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public WorkflowVersionsGetByWorkflowCollectionResultOfT(WorkflowVersions client, Guid subscriptionId, string resourceGroupName, string contextName, string workflowName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public WorkflowVersionsGetByWorkflowCollectionResultOfT(WorkflowVersions client, Guid subscriptionId, string resourceGroupName, string contextName, string workflowName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -38,6 +40,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             _contextName = contextName;
             _workflowName = workflowName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of WorkflowVersionsGetByWorkflowCollectionResultOfT as an enumerable collection. </summary>
@@ -70,7 +73,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByWorkflowRequest(nextLink, _subscriptionId, _resourceGroupName, _contextName, _workflowName, _context) : _client.CreateGetByWorkflowRequest(_subscriptionId, _resourceGroupName, _contextName, _workflowName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("EdgeWorkflowVersionCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

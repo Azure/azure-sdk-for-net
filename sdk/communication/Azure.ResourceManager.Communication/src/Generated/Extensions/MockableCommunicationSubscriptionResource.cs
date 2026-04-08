@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Communication.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CommunicationServiceResourceData, CommunicationServiceResource>(new CommunicationServicesGetBySubscriptionAsyncCollectionResultOfT(CommunicationServicesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new CommunicationServiceResource(Client, data));
+            return new AsyncPageableWrapper<CommunicationServiceResourceData, CommunicationServiceResource>(new CommunicationServicesGetBySubscriptionAsyncCollectionResultOfT(CommunicationServicesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCommunicationSubscriptionResource.GetCommunicationServiceResources"), data => new CommunicationServiceResource(Client, data));
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Communication.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CommunicationServiceResourceData, CommunicationServiceResource>(new CommunicationServicesGetBySubscriptionCollectionResultOfT(CommunicationServicesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new CommunicationServiceResource(Client, data));
+            return new PageableWrapper<CommunicationServiceResourceData, CommunicationServiceResource>(new CommunicationServicesGetBySubscriptionCollectionResultOfT(CommunicationServicesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCommunicationSubscriptionResource.GetCommunicationServiceResources"), data => new CommunicationServiceResource(Client, data));
         }
 
         /// <summary>
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Communication.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EmailServiceResourceData, EmailServiceResource>(new EmailServicesGetBySubscriptionAsyncCollectionResultOfT(EmailServicesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new EmailServiceResource(Client, data));
+            return new AsyncPageableWrapper<EmailServiceResourceData, EmailServiceResource>(new EmailServicesGetBySubscriptionAsyncCollectionResultOfT(EmailServicesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCommunicationSubscriptionResource.GetEmailServiceResources"), data => new EmailServiceResource(Client, data));
         }
 
         /// <summary>
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Communication.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EmailServiceResourceData, EmailServiceResource>(new EmailServicesGetBySubscriptionCollectionResultOfT(EmailServicesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new EmailServiceResource(Client, data));
+            return new PageableWrapper<EmailServiceResourceData, EmailServiceResource>(new EmailServicesGetBySubscriptionCollectionResultOfT(EmailServicesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCommunicationSubscriptionResource.GetEmailServiceResources"), data => new EmailServiceResource(Client, data));
         }
 
         /// <summary>
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.Communication.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new MockableCommunicationSubscriptionResourceGetVerifiedExchangeOnlineDomainsEmailServicesAsyncCollectionResultOfT(EmailServicesRestClient, Guid.Parse(Id.SubscriptionId), context);
+            return new MockableCommunicationSubscriptionResourceGetVerifiedExchangeOnlineDomainsEmailServicesAsyncCollectionResultOfT(EmailServicesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCommunicationSubscriptionResource.GetVerifiedExchangeOnlineDomainsEmailServices");
         }
 
         /// <summary>
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.Communication.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new MockableCommunicationSubscriptionResourceGetVerifiedExchangeOnlineDomainsEmailServicesCollectionResultOfT(EmailServicesRestClient, Guid.Parse(Id.SubscriptionId), context);
+            return new MockableCommunicationSubscriptionResourceGetVerifiedExchangeOnlineDomainsEmailServicesCollectionResultOfT(EmailServicesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCommunicationSubscriptionResource.GetVerifiedExchangeOnlineDomainsEmailServices");
         }
     }
 }

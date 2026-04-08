@@ -51,6 +51,14 @@ namespace Azure.ResourceManager.ContainerService
             get => VirtualMachinesScaleManual;
         }
 
+        /// <summary> Specifications on how to scale the VirtualMachines agent pool to a fixed size. </summary>
+        [WirePath("properties.virtualMachinesProfile.scale.manual")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public IList<ManualScaleProfile> VirtualMachinesScaleManual
+        {
+            get => VirtualMachinesScale?.Manual;
+        }
+
         /// <summary> The type of Agent Pool. </summary>
         [WirePath("properties.type")]
         [EditorBrowsable(EditorBrowsableState.Never)]

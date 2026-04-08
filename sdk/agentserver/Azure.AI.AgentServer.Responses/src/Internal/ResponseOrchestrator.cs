@@ -96,7 +96,11 @@ internal sealed class ResponseOrchestrator
         }
 
         // Non-streaming: consume all events, apply error recovery, finalize, return completed.
-        var publisher = await _streamProvider.CreateEventPublisherAsync(execution.ResponseId, ct);
+        // Non-streaming responses are never eligible for SSE replay (B2 requires both
+        // background=true AND stream=true), so a NullPublisher that assigns sequence
+        // numbers without buffering is sufficient — avoids allocating a full
+        // SeekableReplaySubject.
+        IAsyncObserver<ResponseStreamEvent> publisher = new NullPublisher();
         try
         {
             await foreach (var _ in ProcessEventsAsync(request, execution, context, publisher, ct)
@@ -133,7 +137,7 @@ internal sealed class ResponseOrchestrator
         // If the response is in-flight, apply in-flight guards and return a snapshot.
         if (_tracker.TryGet(responseId, out var execution) && execution is not null)
         {
-            // Guard: store=false responses are not retrievable (FR-014)
+            // Guard: store=false responses are not retrievable (B14)
             if (!execution.Store)
             {
                 throw new ResourceNotFoundException($"Response '{responseId}' not found.");
@@ -213,21 +217,36 @@ internal sealed class ResponseOrchestrator
                 return execution.Response!.Snapshot();
         }
 
-        // In-progress: execute winddown (B11)
+        // In-progress: signal cancellation (B11).
         execution.CancelRequested = true;
 
         await _cancellationProvider.CancelResponseAsync(responseId);
 
-        // Wait for handler to complete with grace period
-        if (execution.ExecutionTask is not null)
+        // Cancel the execution's CTS so the handler's CancellationToken fires.
+        execution.CancellationTokenSource.Cancel();
+
+        // Wait for FinalizeExecutionAsync to complete within a 10-second grace period (B11).
+        // FinalizedSignal fires at the end of FinalizeExecutionAsync — after error recovery
+        // (HandleExecutionExceptionAsync), terminal event emission, persistence, and tracker
+        // cleanup. This works uniformly for all modes:
+        //   - bg+non-streaming: ExecutionTask runs CreateAsync → FinalizeExecutionAsync
+        //   - bg+streaming: SseResult drives CreateStreamingAsync → FinalizeExecutionAsync
+        //   - non-bg disconnect: same pipeline, different CTS source
+        // By waiting on FinalizedSignal instead of mutating the response concurrently,
+        // we avoid race conditions between CancelAsync and the event processing pipeline.
+        try
         {
-            try
+            await execution.FinalizedSignal.Task.WaitAsync(TimeSpan.FromSeconds(10));
+        }
+        catch (TimeoutException)
+        {
+            // Handler didn't wind down in time — FinalizeExecutionAsync hasn't run yet.
+            // Force the cancelled state so the cancel endpoint can return immediately.
+            // FinalizeExecutionAsync will see the terminal status and persist it when
+            // it eventually runs (its step 3 B11 guarantee is idempotent).
+            if (execution.Response is not null && !IsTerminalStatus(execution.Response.Status))
             {
-                await execution.ExecutionTask.WaitAsync(TimeSpan.FromSeconds(10));
-            }
-            catch
-            {
-                // Handler may throw or timeout — already handled by the task itself
+                execution.Response.SetCancelled();
             }
         }
 
@@ -261,27 +280,27 @@ internal sealed class ResponseOrchestrator
 
                 if (evt is not ResponseCreatedEvent createdEvt)
                 {
-                    // FR-006: Wrong first event — bad handler
+                    // S-031: Wrong first event — bad handler
                     ThrowBadHandler(execution,
                         $"Handler did not yield response.created as its first event. Received: {evt.EventType}. Handler type: {_handler.GetType().Name}.");
                     yield break; // unreachable — satisfies compiler definite-assignment
                 }
 
-                // FR-006: Response.Id must match ResponseContext.ResponseId
+                // S-031: Response.Id must match ResponseContext.ResponseId
                 if (createdEvt.Response.Id != context.ResponseId)
                 {
                     ThrowBadHandler(execution,
                         $"Handler emitted response.created with id '{createdEvt.Response.Id}' but expected '{context.ResponseId}'. Handler type: {_handler.GetType().Name}.");
                 }
 
-                // FR-007: Response.Status must be non-terminal on response.created
+                // B6/B8: Response.Status must be non-terminal on response.created
                 if (IsTerminalStatus(createdEvt.Response.Status))
                 {
                     ThrowBadHandler(execution,
                         $"Handler emitted response.created with terminal status '{createdEvt.Response.Status}'. Expected a non-terminal status. Handler type: {_handler.GetType().Name}.");
                 }
 
-                // FR-008a: Output manipulation detection on response.created
+                // B30/S-033: Output manipulation detection on response.created
                 if (createdEvt.Response.Output.Count != 0)
                 {
                     ThrowBadHandler(execution,
@@ -292,13 +311,14 @@ internal sealed class ResponseOrchestrator
                 // handler omitted it so that GET never returns a statusless response.
                 createdEvt.Response.Status ??= ResponseStatus.InProgress;
 
-                // For bg=true: persist immediately when response.created is yielded (FR-003)
+                // For bg=true: persist immediately when response.created is yielded (S-035)
                 if (execution.IsBackground && execution.Store)
                 {
                     ResponseMutations.ApplyOutputItemAutoStamps(evt, execution.ResponseId, request.AgentReference);
                     ResponseMutations.ReplaceResponse(execution, evt);
                     ResponseMutations.StampAgentReference(execution, request);
                     ResponseMutations.StampAgentSessionId(execution, request);
+                    ResponseMutations.StampRequestEchoFields(execution, request);
                     evt.SnapshotEmbeddedResponse(execution.Response!);
                     await publisher.OnNextAsync(evt);
 
@@ -312,18 +332,24 @@ internal sealed class ResponseOrchestrator
                     // Passing a live reference would race with Snapshot() on the request thread.
                     execution.ResponseCreatedSignal.TrySetResult(execution.Response!.Snapshot());
 
+                    // Track highest emitted sequence number for SDK-synthesized terminal events (B9)
+                    if (evt.SequenceNumber > execution.LastEmittedSequenceNumber)
+                    {
+                        execution.LastEmittedSequenceNumber = evt.SequenceNumber;
+                    }
+
                     yield return evt;
                     continue;
                 }
             }
 
-            // Track output items for FR-008a output manipulation detection
+            // Track output items for B30/S-033 output manipulation detection
             if (evt is ResponseOutputItemAddedEvent)
             {
                 outputItemCount++;
             }
 
-            // FR-008a: Detect direct Output manipulation on response.* events (after response.created)
+            // B30/S-033: Detect direct Output manipulation on response.* events (after response.created)
             {
                 Models.ResponseObject? eventResponse = evt switch
                 {
@@ -357,8 +383,13 @@ internal sealed class ResponseOrchestrator
             // Stamp AgentReference — the only SDK-managed property on Response
             ResponseMutations.StampAgentReference(execution, request);
 
-            // Stamp AgentSessionId — resolved during request processing (S-048)
+            // Stamp AgentSessionId — resolved during request processing (B39)
             ResponseMutations.StampAgentSessionId(execution, request);
+
+            // S-040: Re-stamp request echo-through fields (background, previous_response_id,
+            // conversation) so they always reflect the original request regardless of how
+            // the handler constructed the response.
+            ResponseMutations.StampRequestEchoFields(execution, request);
 
             // Validate terminal event status consistency — handler must set the
             // correct Status on the Response before yielding a terminal event.
@@ -391,10 +422,16 @@ internal sealed class ResponseOrchestrator
             // Push to replay subject via provider publisher
             await publisher.OnNextAsync(evt);
 
+            // Track highest emitted sequence number for SDK-synthesized terminal events (B9)
+            if (evt.SequenceNumber > execution.LastEmittedSequenceNumber)
+            {
+                execution.LastEmittedSequenceNumber = evt.SequenceNumber;
+            }
+
             yield return evt;
         }
 
-        // FR-007: Empty enumerable — bad handler
+        // S-015: Empty enumerable — bad handler
         if (firstEvent)
         {
             ThrowBadHandler(execution,
@@ -417,7 +454,13 @@ internal sealed class ResponseOrchestrator
         ResponseContext context,
         [EnumeratorCancellation] CancellationToken ct)
     {
-        var publisher = await _streamProvider.CreateEventPublisherAsync(execution.ResponseId, ct);
+        // Only bg+streaming responses need a replay-capable publisher — these are
+        // the only mode eligible for SSE replay via GET ?stream=true (B2).
+        // For non-background streaming the SSE events are delivered directly from
+        // the yield return path; no second subscriber ever connects.
+        var publisher = execution.IsBackground
+            ? await _streamProvider.CreateEventPublisherAsync(execution.ResponseId, ct)
+            : (IAsyncObserver<ResponseStreamEvent>)new NullPublisher();
         var enumerator = ProcessEventsAsync(request, execution, context, publisher, ct)
             .GetAsyncEnumerator(ct);
         var terminalEventYielded = false;
@@ -452,14 +495,15 @@ internal sealed class ResponseOrchestrator
 
             await EnsureTerminalOrFailAsync(execution, publisher);
 
-            // Yield terminal event emitted by error recovery or FR-009 that wasn't
+            // Yield terminal event emitted by error recovery or S-015 that wasn't
             // yielded in the while loop (because C# disallows yield inside catch blocks).
             // The SDK only sets Failed or Cancelled (never Incomplete — that's handler-driven),
             // so this always emits ResponseFailedEvent.
             if (!terminalEventYielded && execution.Response is not null
                 && IsTerminalStatus(execution.Response.Status))
             {
-                yield return new ResponseFailedEvent(0, execution.Response.Snapshot());
+                yield return new ResponseFailedEvent(
+                    execution.LastEmittedSequenceNumber + 1, execution.Response.Snapshot());
             }
         }
         finally
@@ -498,7 +542,7 @@ internal sealed class ResponseOrchestrator
     }
 
     /// <summary>
-    /// FR-009: if the handler ended without a terminal event, emits
+    /// S-015: if the handler ended without a terminal event, emits
     /// <see cref="ResponseFailedEvent"/>.
     /// </summary>
     private async Task EnsureTerminalOrFailAsync(
@@ -538,7 +582,8 @@ internal sealed class ResponseOrchestrator
             execution.Response!.SetFailed();
         }
 
-        var failedEvent = new ResponseFailedEvent(0, execution.Response!.Snapshot());
+        var failedEvent = new ResponseFailedEvent(
+            execution.LastEmittedSequenceNumber + 1, execution.Response!.Snapshot());
         await publisher.OnNextAsync(failedEvent);
     }
 
@@ -552,7 +597,8 @@ internal sealed class ResponseOrchestrator
         IAsyncObserver<ResponseStreamEvent> publisher)
     {
         execution.Response!.SetCancelled();
-        var cancelledEvent = new ResponseFailedEvent(0, execution.Response!.Snapshot());
+        var cancelledEvent = new ResponseFailedEvent(
+            execution.LastEmittedSequenceNumber + 1, execution.Response!.Snapshot());
         await publisher.OnNextAsync(cancelledEvent);
     }
 
@@ -714,7 +760,17 @@ internal sealed class ResponseOrchestrator
                 ApiErrorFactory.ServerException());
         }
 
-        // 3. Persist — best effort. Provider failures must not prevent cleanup.
+        // 3. B11 final guarantee: if CancelRequested but the response is not cancelled
+        // (e.g. a race between CancelAsync and a handler terminal event), force cancelled.
+        // Cancellation always wins per spec.
+        if (execution.CancelRequested
+            && execution.Response is not null
+            && execution.Response.Status != ResponseStatus.Cancelled)
+        {
+            execution.Response.SetCancelled();
+        }
+
+        // 4. Persist — best effort. Provider failures must not prevent cleanup.
         try
         {
             if (execution.Store && execution.Response is not null)
@@ -738,8 +794,16 @@ internal sealed class ResponseOrchestrator
                 "Provider persistence failed for response {ResponseId}", execution.ResponseId);
         }
 
-        // 4. Always mark completed — prevents orphaned executions in the tracker.
+        // 5. Always mark completed — prevents orphaned executions in the tracker.
+        // Note: event streams are only created for bg+streaming responses (the only
+        // mode eligible for SSE replay per B2). Those streams are cleaned up by
+        // TTL-based eviction in the stream provider or by explicit DELETE calls.
+        // Non-replay modes use NullPublisher and never allocate a stream.
         _tracker.MarkCompleted(execution.ResponseId);
+
+        // 6. Signal FinalizedSignal — CancelAsync and StopAsync await this to know
+        // that the response is in its final state and has been persisted.
+        execution.FinalizedSignal.TrySetResult();
     }
 
     /// <summary>

@@ -31,9 +31,35 @@ public class CancelResponseProtocolTests : ProtocolTestBase
 
         using var doc = await ParseJsonAsync(cancelResponse);
         Assert.That(doc.RootElement.GetProperty("id").GetString(), Is.EqualTo(responseId));
+        Assert.That(doc.RootElement.GetProperty("status").GetString(), Is.EqualTo("cancelled"),
+            "Cancel endpoint must always return a cancelled snapshot");
 
         // Clean up — handler should eventually exit via cancellation
         tcs.TrySetResult();
+        await Task.Delay(200);
+    }
+
+    [Test]
+    public async Task Cancel_UncooperativeHandler_StillReturnsCancelledStatus()
+    {
+        // Handler that ignores CancellationToken — simulates a handler that
+        // doesn't cooperate within the grace period. The cancel endpoint must
+        // still return a cancelled snapshot, not in_progress.
+        var handlerCompleted = new TaskCompletionSource();
+        Handler.EventFactory = (req, ctx, ct) => UncooperativeStream(ctx, handlerCompleted);
+
+        var responseId = await CreateBackgroundResponseAsync();
+
+        var cancelResponse = await CancelResponseAsync(responseId);
+
+        Assert.That(cancelResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+
+        using var doc = await ParseJsonAsync(cancelResponse);
+        Assert.That(doc.RootElement.GetProperty("status").GetString(), Is.EqualTo("cancelled"),
+            "Cancel endpoint must return cancelled even when handler doesn't cooperate");
+
+        // Let the handler finish so background task cleans up
+        handlerCompleted.TrySetResult();
         await Task.Delay(200);
     }
 
@@ -107,6 +133,38 @@ public class CancelResponseProtocolTests : ProtocolTestBase
         await Task.Delay(200);
     }
 
+    [Test]
+    public async Task Cancel_PersistedState_IsCancelled_EvenWhenHandlerCompletesAfterTimeout()
+    {
+        // B11 race condition test: handler ignores CancellationToken and eventually
+        // yields response.completed AFTER the cancel endpoint returns. The durable
+        // store must still reflect "cancelled", not "completed".
+        var handlerCompleted = new TaskCompletionSource();
+        Handler.EventFactory = (req, ctx, ct) => UncooperativeStream(ctx, handlerCompleted);
+
+        var responseId = await CreateBackgroundResponseAsync();
+
+        // Cancel — this will force status to cancelled after 10s timeout
+        var cancelResponse = await CancelResponseAsync(responseId);
+        Assert.That(cancelResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        using var cancelDoc = await ParseJsonAsync(cancelResponse);
+        Assert.That(cancelDoc.RootElement.GetProperty("status").GetString(), Is.EqualTo("cancelled"));
+
+        // Now let the handler finish — it will try to yield response.completed
+        handlerCompleted.TrySetResult();
+
+        // Wait for the background task to fully finalize (FinalizeExecutionAsync → UpdateResponseAsync)
+        await Task.Delay(1000);
+
+        // GET the response from the durable store — must still be cancelled
+        var getResponse = await GetResponseAsync(responseId);
+        Assert.That(getResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        using var getDoc = await ParseJsonAsync(getResponse);
+        Assert.That(getDoc.RootElement.GetProperty("status").GetString(), Is.EqualTo("cancelled"),
+            "B11: Persisted state must be 'cancelled' — cancellation always wins, " +
+            "even when the handler yields response.completed after the cancel timeout");
+    }
+
     // ── Helper event factories ─────────────────────────────────
 
     private static async IAsyncEnumerable<ResponseStreamEvent> SimpleStream(
@@ -149,6 +207,21 @@ public class CancelResponseProtocolTests : ProtocolTestBase
             throw;
         }
 
+        yield return stream.EmitCompleted();
+    }
+
+    /// <summary>
+    /// Handler that does NOT observe CancellationToken — waits on an external
+    /// signal instead, simulating a handler that ignores cancellation.
+    /// </summary>
+    private static async IAsyncEnumerable<ResponseStreamEvent> UncooperativeStream(
+        ResponseContext ctx,
+        TaskCompletionSource handlerCompleted)
+    {
+        var stream = new ResponseEventStream(ctx, new CreateResponse { Model = "test" });
+        yield return stream.EmitCreated();
+        // Wait WITHOUT ct — handler ignores cancellation
+        await handlerCompleted.Task;
         yield return stream.EmitCompleted();
     }
 }

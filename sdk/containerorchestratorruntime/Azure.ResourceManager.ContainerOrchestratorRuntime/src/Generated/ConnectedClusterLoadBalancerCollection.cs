@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ConnectedClusterLoadBalancerData, ConnectedClusterLoadBalancerResource>(new LoadBalancersGetAllAsyncCollectionResultOfT(_loadBalancersRestClient, Id, context), data => new ConnectedClusterLoadBalancerResource(Client, data));
+            return new AsyncPageableWrapper<ConnectedClusterLoadBalancerData, ConnectedClusterLoadBalancerResource>(new LoadBalancersGetAllAsyncCollectionResultOfT(_loadBalancersRestClient, Id, context, "ConnectedClusterLoadBalancerCollection.GetAll"), data => new ConnectedClusterLoadBalancerResource(Client, data));
         }
 
         /// <summary>
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ConnectedClusterLoadBalancerData, ConnectedClusterLoadBalancerResource>(new LoadBalancersGetAllCollectionResultOfT(_loadBalancersRestClient, Id, context), data => new ConnectedClusterLoadBalancerResource(Client, data));
+            return new PageableWrapper<ConnectedClusterLoadBalancerData, ConnectedClusterLoadBalancerResource>(new LoadBalancersGetAllCollectionResultOfT(_loadBalancersRestClient, Id, context, "ConnectedClusterLoadBalancerCollection.GetAll"), data => new ConnectedClusterLoadBalancerResource(Client, data));
         }
 
         /// <summary>

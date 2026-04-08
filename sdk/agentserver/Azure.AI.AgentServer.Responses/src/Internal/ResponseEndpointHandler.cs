@@ -118,7 +118,7 @@ internal sealed class ResponseEndpointHandler
             "Creating response: Streaming={IsStreaming} Background={IsBackground} Model={Model}",
             isStreaming, isBackground, request.Model);
 
-        // S-047: Use x-agent-response-id header as the response ID if present,
+        // B38: Use x-agent-response-id header as the response ID if present,
         // giving platform/middletier services full control over ID generation.
         // Otherwise, generate one with partition key colocation.
         string responseId;
@@ -126,6 +126,13 @@ internal sealed class ResponseEndpointHandler
             && !string.IsNullOrEmpty(agentResponseIdValue.ToString()))
         {
             responseId = agentResponseIdValue.ToString();
+            if (!IdGenerator.IsValid(responseId, out var idError, allowedPrefixes: ["caresp"]))
+            {
+                throw new BadRequestException(
+                    $"x-agent-response-id header value is invalid: {idError}",
+                    code: "invalid_request",
+                    paramName: "x-agent-response-id");
+            }
         }
         else
         {
@@ -135,7 +142,7 @@ internal sealed class ResponseEndpointHandler
             responseId = IdGenerator.NewResponseId(partitionKeyHint);
         }
 
-        // S-048: Resolve session ID — request payload → environment variable → generated UUID.
+        // B39: Resolve session ID — request payload → environment variable → generated UUID.
         // Stamp on the request so the orchestrator can propagate it to the ResponseObject.
         if (string.IsNullOrEmpty(request.AgentSessionId))
         {
@@ -287,7 +294,7 @@ internal sealed class ResponseEndpointHandler
     {
         var isolation = IsolationContext.FromRequest(httpContext.Request);
 
-        // SSE replay trigger: ?stream=true query parameter (FR-005)
+        // SSE replay trigger: ?stream=true query parameter (B2)
         if (httpContext.Request.Query.TryGetValue("stream", out var streamValue)
             && string.Equals(streamValue, "true", StringComparison.OrdinalIgnoreCase))
         {
@@ -300,7 +307,7 @@ internal sealed class ResponseEndpointHandler
                     throw new ResourceNotFoundException($"Response '{responseId}' not found.");
                 }
 
-                // Guard: SSE replay requires background + streaming (B2, FR-013)
+                // Guard: SSE replay requires background + streaming (B2)
                 if (!execution.IsBackground || !execution.IsStreaming)
                 {
                     throw new BadRequestException(
@@ -315,12 +322,12 @@ internal sealed class ResponseEndpointHandler
                 // This also covers store=false (never persisted → 404).
                 await _provider.GetResponseAsync(responseId, isolation);
 
-                // TODO: B2 requires checking that the response was created with
-                // background=true AND stream=true. After the execution leaves the
-                // tracker, mode flags are not persisted on the Response model.
-                // The stream provider may still have events for non-bg responses
-                // within the EventStreamTtl window. A full fix requires storing
-                // mode flags in the provider or stream provider abstract class.
+                // B2: non-bg and non-streaming responses had their event stream
+                // deleted in FinalizeExecutionAsync (see ResponseOrchestrator).
+                // SubscribeToEventsAsync below will throw for missing streams,
+                // which maps to 400 for the caller. For custom stream providers
+                // backed by persistent storage, the provider must enforce B2
+                // mode-flag checks independently.
             }
 
             // In-flight and passed guards OR not-in-flight and exists in provider —
@@ -328,7 +335,7 @@ internal sealed class ResponseEndpointHandler
             // backed by persistent storage (Redis, Kafka, etc.) can replay events
             // even after the in-flight execution is gone.
 
-            // Parse starting_after query parameter (FR-016)
+            // Parse starting_after query parameter (B4)
             long? startingAfter = null;
             if (httpContext.Request.Query.TryGetValue("starting_after", out var startingAfterValue)
                 && long.TryParse(startingAfterValue, out var parsedValue))
@@ -391,6 +398,16 @@ internal sealed class ResponseEndpointHandler
         // This works whether or not the response was in the tracker — the provider
         // is the source of truth for persisted responses.
         await _provider.DeleteResponseAsync(responseId, isolation);
+
+        // Clean up event stream — deleted responses should not be replayable.
+        try
+        {
+            await _streamProvider.DeleteEventStreamAsync(responseId);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogWarning(ex, "DeleteEventStreamAsync failed during response deletion for {ResponseId}", responseId);
+        }
 
         var result = AzureAIAgentServerResponsesModelFactory.DeleteResponseResult(id: responseId);
         return Results.Json(result, SharedJsonOptions.Instance, statusCode: 200);

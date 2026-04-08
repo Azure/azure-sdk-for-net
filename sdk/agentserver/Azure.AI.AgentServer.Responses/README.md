@@ -141,7 +141,7 @@ The library emits OpenTelemetry traces via `Azure.AI.AgentServer.Responses` acti
 
 - [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Responses/samples) — Getting started, function calling, conversation history, multi-output
 - [Handler implementation guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/handler-implementation-guide.md) — Detailed reference for building handlers
-- [API behaviour contract](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/api-behaviour-contract.md) — Protocol-level specification
+
 
 ## Contributing
 

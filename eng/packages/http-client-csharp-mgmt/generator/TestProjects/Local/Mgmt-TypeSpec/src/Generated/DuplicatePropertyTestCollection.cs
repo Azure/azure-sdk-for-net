@@ -296,7 +296,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DuplicatePropertyTestData, DuplicatePropertyTestResource>(new DuplicatePropertyTestsGetAllAsyncCollectionResultOfT(_duplicatePropertyTestsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new DuplicatePropertyTestResource(Client, data));
+            return new AsyncPageableWrapper<DuplicatePropertyTestData, DuplicatePropertyTestResource>(new DuplicatePropertyTestsGetAllAsyncCollectionResultOfT(_duplicatePropertyTestsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DuplicatePropertyTestCollection.GetAll"), data => new DuplicatePropertyTestResource(Client, data));
         }
 
         /// <summary>
@@ -324,7 +324,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DuplicatePropertyTestData, DuplicatePropertyTestResource>(new DuplicatePropertyTestsGetAllCollectionResultOfT(_duplicatePropertyTestsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new DuplicatePropertyTestResource(Client, data));
+            return new PageableWrapper<DuplicatePropertyTestData, DuplicatePropertyTestResource>(new DuplicatePropertyTestsGetAllCollectionResultOfT(_duplicatePropertyTestsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DuplicatePropertyTestCollection.GetAll"), data => new DuplicatePropertyTestResource(Client, data));
         }
 
         /// <summary>

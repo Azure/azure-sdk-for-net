@@ -13,9 +13,9 @@ public abstract partial class ProjectsAgentDefinition
     public ContentFilterConfiguration ContentFilterConfiguration { get; set; }
 
     public static DeclarativeAgentDefinition CreatePromptAgentDefinition(string model)
-        => new DeclarativeAgentDefinition(model);
+        => new(model);
     public static WorkflowAgentDefinition CreateWorkflowAgentDefinitionFromYaml(string workflowYamlDocument)
         => WorkflowAgentDefinition.FromYaml(workflowYamlDocument);
     public static HostedAgentDefinition CreateHostedAgentDefinition(IEnumerable<ProtocolVersionRecord> containerProtocolVersions, string cpuConfiguration, string memoryConfiguration)
-        => new HostedAgentDefinition(containerProtocolVersions, cpuConfiguration, memoryConfiguration);
+        => new(containerProtocolVersions, cpuConfiguration, memoryConfiguration);
 }
