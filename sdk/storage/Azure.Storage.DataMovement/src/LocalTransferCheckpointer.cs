@@ -113,8 +113,8 @@ namespace Azure.Storage.DataMovement
                 isContainer,
                 false, /* enumerationComplete */
                 new TransferStatus(),
-                GetUriForCheckpoint(source.Uri),
-                GetUriForCheckpoint(destination.Uri),
+                source.Uri.AbsoluteUri,
+                destination.Uri.AbsoluteUri,
                 source.GetSourceCheckpointDetails(),
                 destination.GetDestinationCheckpointDetails());
 
@@ -129,51 +129,6 @@ namespace Azure.Storage.DataMovement
                     cancellationToken).ConfigureAwait(false);
                 AddToTransferStates(transferId, jobPlanFile);
             }
-        }
-
-        /// <summary>
-        /// Sanitizes a URI for checkpoint storage by preserving snapshot/version query parameters
-        /// but removing SAS tokens and other sensitive information.
-        /// </summary>
-        /// <param name="uri">The URI to sanitize.</param>
-        /// <returns>A string representation of the URI with SAS tokens removed but snapshot/version preserved.</returns>
-        private static string GetUriForCheckpoint(Uri uri)
-        {
-            if (uri == null)
-            {
-                return null;
-            }
-
-            // If there's no query string, just return the URI as-is
-            if (string.IsNullOrEmpty(uri.Query))
-            {
-                return uri.AbsoluteUri;
-            }
-
-            // Parse query parameters
-            var queryParams = uri.GetQueryParameters();
-
-            // Keep only safe query parameters: snapshot, versionid (for blobs), sharesnapshot (for files)
-            // Remove all others including SAS tokens (sig, se, sp, etc.)
-            var allowedParams = new[] { "snapshot", "versionid", "sharesnapshot" };
-            var filteredParams = queryParams
-                .Where(kvp => allowedParams.Contains(kvp.Key, StringComparer.OrdinalIgnoreCase))
-                .ToList();
-
-            // If no safe parameters remain, return URI without query string
-            if (filteredParams.Count == 0)
-            {
-                return uri.GetLeftPart(UriPartial.Path);
-            }
-
-            // Rebuild URI with only safe parameters
-            var builder = new UriBuilder(uri)
-            {
-                Query = string.Join("&", filteredParams.Select(kvp =>
-                    $"{Uri.EscapeDataString(kvp.Key)}={Uri.EscapeDataString(kvp.Value)}"))
-            };
-
-            return builder.Uri.AbsoluteUri;
         }
 
         public override async Task AddNewJobPartAsync(
