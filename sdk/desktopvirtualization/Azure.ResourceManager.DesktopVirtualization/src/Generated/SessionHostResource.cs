@@ -432,7 +432,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 Id.Parent.Name,
                 Id.Name,
                 ScopedRegistrationTokenProperties.ToRequestContent(body),
-                context);
+                context,
+                "SessionHostResource.GetSingleSessionHostRegistrationTokens");
         }
 
         /// <summary>
@@ -475,7 +476,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 Id.Parent.Name,
                 Id.Name,
                 ScopedRegistrationTokenProperties.ToRequestContent(body),
-                context);
+                context,
+                "SessionHostResource.GetSingleSessionHostRegistrationTokens");
         }
 
         /// <summary>

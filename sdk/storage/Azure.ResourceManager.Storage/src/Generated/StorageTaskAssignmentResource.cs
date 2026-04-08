@@ -443,7 +443,8 @@ namespace Azure.ResourceManager.Storage
                 Id.Name,
                 maxpagesize,
                 filter,
-                context);
+                context,
+                "StorageTaskAssignmentResource.GetStorageTaskAssignmentInstancesReports");
         }
 
         /// <summary>
@@ -485,7 +486,8 @@ namespace Azure.ResourceManager.Storage
                 Id.Name,
                 maxpagesize,
                 filter,
-                context);
+                context,
+                "StorageTaskAssignmentResource.GetStorageTaskAssignmentInstancesReports");
         }
     }
 }

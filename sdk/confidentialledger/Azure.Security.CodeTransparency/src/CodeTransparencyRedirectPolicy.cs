@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -22,6 +23,8 @@ namespace Azure.Security.CodeTransparency
     internal sealed class CodeTransparencyRedirectPolicy : HttpPipelinePolicy
     {
         private const int MaxRedirects = 5;
+        private readonly object _primaryNodeLock = new object();
+        private Uri _primaryNodeBaseUri;
 
         /// <inheritdoc/>
         public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
@@ -37,6 +40,8 @@ namespace Azure.Security.CodeTransparency
 
         private async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
         {
+            TryApplyCachedPrimaryNode(message.Request);
+
             if (async)
             {
                 await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
@@ -63,6 +68,8 @@ namespace Azure.Security.CodeTransparency
                 }
 
                 Uri redirectUri = BuildRedirectUri(message.Request.Uri.ToUri(), location);
+
+                CachePrimaryNode(redirectUri);
 
                 // Disallow redirect from HTTPS to HTTP.
                 if (string.Equals(message.Request.Uri.Scheme, "https", StringComparison.OrdinalIgnoreCase) &&
@@ -105,6 +112,58 @@ namespace Azure.Security.CodeTransparency
             }
 
             return redirectUri;
+        }
+
+        private void TryApplyCachedPrimaryNode(Request request)
+        {
+            if (request.Method == RequestMethod.Get)
+            {
+                return;
+            }
+
+            Uri primaryNodeBaseUri = Volatile.Read(ref _primaryNodeBaseUri);
+            if (primaryNodeBaseUri == null)
+            {
+                return;
+            }
+
+            request.Uri.Reset(BuildUriWithPrimaryHost(request.Uri.ToUri(), primaryNodeBaseUri));
+        }
+
+        private void CachePrimaryNode(Uri redirectUri)
+        {
+            Uri candidatePrimary = GetPrimaryNodeBaseUri(redirectUri);
+            if (candidatePrimary == null)
+            {
+                return;
+            }
+
+            lock (_primaryNodeLock)
+            {
+                _primaryNodeBaseUri = candidatePrimary;
+            }
+        }
+
+        private static Uri GetPrimaryNodeBaseUri(Uri uri)
+        {
+            if (uri == null || !uri.IsAbsoluteUri)
+            {
+                return null;
+            }
+
+            return new UriBuilder(uri.Scheme, uri.Host, uri.IsDefaultPort ? -1 : uri.Port).Uri;
+        }
+
+        private static Uri BuildUriWithPrimaryHost(Uri requestUri, Uri primaryNodeBaseUri)
+        {
+            var builder = new UriBuilder(requestUri)
+            {
+                Scheme = primaryNodeBaseUri.Scheme,
+                Host = primaryNodeBaseUri.Host,
+                Port = primaryNodeBaseUri.IsDefaultPort ? -1 : primaryNodeBaseUri.Port
+            };
+
+            return builder.Uri;
         }
     }
 }

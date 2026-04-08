@@ -287,7 +287,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataReplicationPrivateEndpointConnectionProxyData, DataReplicationPrivateEndpointConnectionProxyResource>(new PrivateEndpointConnectionProxiesGetAllAsyncCollectionResultOfT(_privateEndpointConnectionProxiesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new DataReplicationPrivateEndpointConnectionProxyResource(Client, data));
+            return new AsyncPageableWrapper<DataReplicationPrivateEndpointConnectionProxyData, DataReplicationPrivateEndpointConnectionProxyResource>(new PrivateEndpointConnectionProxiesGetAllAsyncCollectionResultOfT(
+                _privateEndpointConnectionProxiesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DataReplicationPrivateEndpointConnectionProxyCollection.GetAll"), data => new DataReplicationPrivateEndpointConnectionProxyResource(Client, data));
         }
 
         /// <summary>
@@ -315,7 +321,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataReplicationPrivateEndpointConnectionProxyData, DataReplicationPrivateEndpointConnectionProxyResource>(new PrivateEndpointConnectionProxiesGetAllCollectionResultOfT(_privateEndpointConnectionProxiesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new DataReplicationPrivateEndpointConnectionProxyResource(Client, data));
+            return new PageableWrapper<DataReplicationPrivateEndpointConnectionProxyData, DataReplicationPrivateEndpointConnectionProxyResource>(new PrivateEndpointConnectionProxiesGetAllCollectionResultOfT(
+                _privateEndpointConnectionProxiesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DataReplicationPrivateEndpointConnectionProxyCollection.GetAll"), data => new DataReplicationPrivateEndpointConnectionProxyResource(Client, data));
         }
 
         /// <summary>

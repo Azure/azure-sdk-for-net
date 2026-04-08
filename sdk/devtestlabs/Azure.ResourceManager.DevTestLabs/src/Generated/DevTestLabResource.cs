@@ -443,7 +443,8 @@ namespace Azure.ResourceManager.DevTestLabs
                 filter,
                 top,
                 @orderby,
-                context);
+                context,
+                "DevTestLabResource.GetGalleryImages");
         }
 
         /// <summary>
@@ -488,7 +489,8 @@ namespace Azure.ResourceManager.DevTestLabs
                 filter,
                 top,
                 @orderby,
-                context);
+                context,
+                "DevTestLabResource.GetGalleryImages");
         }
 
         /// <summary>
@@ -1040,7 +1042,13 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 CancellationToken = cancellationToken
             };
-            return new LabsGetDevTestLabVhdsAsyncCollectionResultOfT(_labsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+            return new LabsGetDevTestLabVhdsAsyncCollectionResultOfT(
+                _labsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DevTestLabResource.GetDevTestLabVhds");
         }
 
         /// <summary>
@@ -1072,7 +1080,13 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 CancellationToken = cancellationToken
             };
-            return new LabsGetDevTestLabVhdsCollectionResultOfT(_labsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+            return new LabsGetDevTestLabVhdsCollectionResultOfT(
+                _labsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DevTestLabResource.GetDevTestLabVhds");
         }
 
         /// <summary>

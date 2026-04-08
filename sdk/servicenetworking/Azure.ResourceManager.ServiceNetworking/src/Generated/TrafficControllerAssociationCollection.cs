@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.ServiceNetworking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<TrafficControllerAssociationData, TrafficControllerAssociationResource>(new AssociationsInterfaceGetByTrafficControllerAsyncCollectionResultOfT(_associationsInterfaceRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new TrafficControllerAssociationResource(Client, data));
+            return new AsyncPageableWrapper<TrafficControllerAssociationData, TrafficControllerAssociationResource>(new AssociationsInterfaceGetByTrafficControllerAsyncCollectionResultOfT(
+                _associationsInterfaceRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "TrafficControllerAssociationCollection.GetAll"), data => new TrafficControllerAssociationResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.ServiceNetworking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<TrafficControllerAssociationData, TrafficControllerAssociationResource>(new AssociationsInterfaceGetByTrafficControllerCollectionResultOfT(_associationsInterfaceRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new TrafficControllerAssociationResource(Client, data));
+            return new PageableWrapper<TrafficControllerAssociationData, TrafficControllerAssociationResource>(new AssociationsInterfaceGetByTrafficControllerCollectionResultOfT(
+                _associationsInterfaceRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "TrafficControllerAssociationCollection.GetAll"), data => new TrafficControllerAssociationResource(Client, data));
         }
 
         /// <summary>

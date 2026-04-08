@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ScheduledActionData, ScheduledActionResource>(new ScheduledActionsGetBySubscriptionAsyncCollectionResultOfT(ScheduledActionsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new ScheduledActionResource(Client, data));
+            return new AsyncPageableWrapper<ScheduledActionData, ScheduledActionResource>(new ScheduledActionsGetBySubscriptionAsyncCollectionResultOfT(ScheduledActionsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableComputeScheduleSubscriptionResource.GetScheduledActions"), data => new ScheduledActionResource(Client, data));
         }
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ScheduledActionData, ScheduledActionResource>(new ScheduledActionsGetBySubscriptionCollectionResultOfT(ScheduledActionsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new ScheduledActionResource(Client, data));
+            return new PageableWrapper<ScheduledActionData, ScheduledActionResource>(new ScheduledActionsGetBySubscriptionCollectionResultOfT(ScheduledActionsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableComputeScheduleSubscriptionResource.GetScheduledActions"), data => new ScheduledActionResource(Client, data));
         }
 
         /// <summary>

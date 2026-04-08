@@ -24,6 +24,7 @@ namespace Azure.ResourceManager.Storage
         private readonly string _filter;
         private readonly string _include;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of LocalUsersGetAllCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The LocalUsers client used to send requests. </param>
@@ -34,7 +35,8 @@ namespace Azure.ResourceManager.Storage
         /// <param name="filter"> Optional. When specified, only local user names starting with the filter will be listed. </param>
         /// <param name="include"> Optional, when specified, will list local users enabled for the specific protocol. Lists all users by default. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public LocalUsersGetAllCollectionResultOfT(LocalUsers client, Guid subscriptionId, string resourceGroupName, string accountName, int? maxpagesize, string filter, string include, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public LocalUsersGetAllCollectionResultOfT(LocalUsers client, Guid subscriptionId, string resourceGroupName, string accountName, int? maxpagesize, string filter, string include, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -44,6 +46,7 @@ namespace Azure.ResourceManager.Storage
             _filter = filter;
             _include = include;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of LocalUsersGetAllCollectionResultOfT as an enumerable collection. </summary>
@@ -76,7 +79,7 @@ namespace Azure.ResourceManager.Storage
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _accountName, _maxpagesize, _filter, _include, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _accountName, _maxpagesize, _filter, _include, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("StorageAccountLocalUserCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

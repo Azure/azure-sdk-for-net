@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -226,7 +226,8 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context);
+                context,
+                "CosmosDBForPostgreSqlClusterServerResource.GetConfigurations");
         }
 
         /// <summary>
@@ -264,7 +265,8 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context);
+                context,
+                "CosmosDBForPostgreSqlClusterServerResource.GetConfigurations");
         }
     }
 }

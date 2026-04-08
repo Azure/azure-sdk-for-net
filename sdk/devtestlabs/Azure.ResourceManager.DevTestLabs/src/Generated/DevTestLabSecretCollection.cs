@@ -309,7 +309,8 @@ namespace Azure.ResourceManager.DevTestLabs
                 filter,
                 top,
                 @orderby,
-                context), data => new DevTestLabSecretResource(Client, data));
+                context,
+                "DevTestLabSecretCollection.GetAll"), data => new DevTestLabSecretResource(Client, data));
         }
 
         /// <summary>
@@ -351,7 +352,8 @@ namespace Azure.ResourceManager.DevTestLabs
                 filter,
                 top,
                 @orderby,
-                context), data => new DevTestLabSecretResource(Client, data));
+                context,
+                "DevTestLabSecretCollection.GetAll"), data => new DevTestLabSecretResource(Client, data));
         }
 
         /// <summary>

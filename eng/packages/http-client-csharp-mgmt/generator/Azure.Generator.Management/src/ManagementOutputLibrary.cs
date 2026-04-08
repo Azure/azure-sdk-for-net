@@ -39,10 +39,6 @@ namespace Azure.Generator.Management
         private CSharpType? _modelReaderWriterContextType;
         internal CSharpType ModelReaderWriterContextType => _modelReaderWriterContextType ??= new ModelReaderWriterContextDefinition().Type;
 
-        // TODO -- this is really a bad practice that this map is not built in one place, but we are building it while generating stuff and in the meantime we might read it.
-        // but currently this is the best we could do right now.
-        internal Dictionary<string, string> PageableMethodScopes { get; } = new();
-
         private IReadOnlyDictionary<string, ResourceClientProvider>? _resourcesByIdDict;
         private IReadOnlyList<ResourceClientProvider>? _resources;
         private IReadOnlyList<ResourceCollectionClientProvider>? _resourceCollections;

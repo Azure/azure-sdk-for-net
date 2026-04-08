@@ -300,7 +300,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 isDescending,
                 initialSkip,
                 vmPath,
-                context), data => new SessionHostResource(Client, data));
+                context,
+                "SessionHostCollection.GetAll"), data => new SessionHostResource(Client, data));
         }
 
         /// <summary>
@@ -341,7 +342,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 isDescending,
                 initialSkip,
                 vmPath,
-                context), data => new SessionHostResource(Client, data));
+                context,
+                "SessionHostCollection.GetAll"), data => new SessionHostResource(Client, data));
         }
 
         /// <summary>

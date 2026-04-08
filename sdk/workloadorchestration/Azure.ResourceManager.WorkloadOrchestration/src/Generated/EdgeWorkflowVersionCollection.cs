@@ -299,7 +299,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new EdgeWorkflowVersionResource(Client, data));
+                context,
+                "EdgeWorkflowVersionCollection.GetAll"), data => new EdgeWorkflowVersionResource(Client, data));
         }
 
         /// <summary>
@@ -333,7 +334,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new EdgeWorkflowVersionResource(Client, data));
+                context,
+                "EdgeWorkflowVersionCollection.GetAll"), data => new EdgeWorkflowVersionResource(Client, data));
         }
 
         /// <summary>

@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ConfidentialLedgerData, ConfidentialLedgerResource>(new LedgerGetBySubscriptionAsyncCollectionResultOfT(LedgerRestClient, Id.SubscriptionId, filter, context), data => new ConfidentialLedgerResource(Client, data));
+            return new AsyncPageableWrapper<ConfidentialLedgerData, ConfidentialLedgerResource>(new LedgerGetBySubscriptionAsyncCollectionResultOfT(LedgerRestClient, Id.SubscriptionId, filter, context, "MockableConfidentialLedgerSubscriptionResource.GetConfidentialLedgers"), data => new ConfidentialLedgerResource(Client, data));
         }
 
         /// <summary>
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ConfidentialLedgerData, ConfidentialLedgerResource>(new LedgerGetBySubscriptionCollectionResultOfT(LedgerRestClient, Id.SubscriptionId, filter, context), data => new ConfidentialLedgerResource(Client, data));
+            return new PageableWrapper<ConfidentialLedgerData, ConfidentialLedgerResource>(new LedgerGetBySubscriptionCollectionResultOfT(LedgerRestClient, Id.SubscriptionId, filter, context, "MockableConfidentialLedgerSubscriptionResource.GetConfidentialLedgers"), data => new ConfidentialLedgerResource(Client, data));
         }
 
         /// <summary>

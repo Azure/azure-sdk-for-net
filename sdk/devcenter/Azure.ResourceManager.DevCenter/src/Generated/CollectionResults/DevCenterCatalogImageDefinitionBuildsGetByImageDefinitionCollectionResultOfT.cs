@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.DevCenter
         private readonly string _catalogName;
         private readonly string _imageDefinitionName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of DevCenterCatalogImageDefinitionBuildsGetByImageDefinitionCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The DevCenterCatalogImageDefinitionBuilds client used to send requests. </param>
@@ -32,7 +33,8 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="catalogName"> The name of the Catalog. </param>
         /// <param name="imageDefinitionName"> The name of the Image Definition. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public DevCenterCatalogImageDefinitionBuildsGetByImageDefinitionCollectionResultOfT(DevCenterCatalogImageDefinitionBuilds client, Guid subscriptionId, string resourceGroupName, string devCenterName, string catalogName, string imageDefinitionName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public DevCenterCatalogImageDefinitionBuildsGetByImageDefinitionCollectionResultOfT(DevCenterCatalogImageDefinitionBuilds client, Guid subscriptionId, string resourceGroupName, string devCenterName, string catalogName, string imageDefinitionName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -41,6 +43,7 @@ namespace Azure.ResourceManager.DevCenter
             _catalogName = catalogName;
             _imageDefinitionName = imageDefinitionName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of DevCenterCatalogImageDefinitionBuildsGetByImageDefinitionCollectionResultOfT as an enumerable collection. </summary>
@@ -73,7 +76,7 @@ namespace Azure.ResourceManager.DevCenter
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByImageDefinitionRequest(nextLink, _subscriptionId, _resourceGroupName, _devCenterName, _catalogName, _imageDefinitionName, _context) : _client.CreateGetByImageDefinitionRequest(_subscriptionId, _resourceGroupName, _devCenterName, _catalogName, _imageDefinitionName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("DevCenterCatalogImageDefinitionBuildCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

@@ -12,4 +12,3 @@ extends:
       directoryName: Azure.ResourceManager.CognitiveServices
     - name: Azure.Provisioning.CognitiveServices
       safeName: AzureProvisioningCognitiveServices
-    TestDependsOnDependency: Azure.Provisioning.CognitiveServices Azure.ResourceManager.CognitiveServices
