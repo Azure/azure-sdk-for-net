@@ -32,7 +32,7 @@ namespace Azure.Storage.Blobs.Test
 
         // The container is shared by all tests in this class
         private string _containerName;
-        private BlobContainerResource _container;
+        //private BlobContainerResource _container;
         //private StorageManagementClient _storageManagementClient;
 
         private BlobContainerClient _containerClient;
