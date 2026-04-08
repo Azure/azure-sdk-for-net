@@ -183,7 +183,8 @@ namespace Azure.ResourceManager.Compute
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new DiskRestorePointResource(Client, data));
+                context,
+                "DiskRestorePointCollection.GetAll"), data => new DiskRestorePointResource(Client, data));
         }
 
         /// <summary>
@@ -217,7 +218,8 @@ namespace Azure.ResourceManager.Compute
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new DiskRestorePointResource(Client, data));
+                context,
+                "DiskRestorePointCollection.GetAll"), data => new DiskRestorePointResource(Client, data));
         }
 
         /// <summary>

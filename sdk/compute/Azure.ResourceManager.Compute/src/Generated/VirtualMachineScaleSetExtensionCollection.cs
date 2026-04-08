@@ -295,7 +295,13 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VirtualMachineScaleSetExtensionData, VirtualMachineScaleSetExtensionResource>(new VirtualMachineScaleSetExtensionsGetAllAsyncCollectionResultOfT(_virtualMachineScaleSetExtensionsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new VirtualMachineScaleSetExtensionResource(Client, data));
+            return new AsyncPageableWrapper<VirtualMachineScaleSetExtensionData, VirtualMachineScaleSetExtensionResource>(new VirtualMachineScaleSetExtensionsGetAllAsyncCollectionResultOfT(
+                _virtualMachineScaleSetExtensionsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "VirtualMachineScaleSetExtensionCollection.GetAll"), data => new VirtualMachineScaleSetExtensionResource(Client, data));
         }
 
         /// <summary>
@@ -323,7 +329,13 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VirtualMachineScaleSetExtensionData, VirtualMachineScaleSetExtensionResource>(new VirtualMachineScaleSetExtensionsGetAllCollectionResultOfT(_virtualMachineScaleSetExtensionsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new VirtualMachineScaleSetExtensionResource(Client, data));
+            return new PageableWrapper<VirtualMachineScaleSetExtensionData, VirtualMachineScaleSetExtensionResource>(new VirtualMachineScaleSetExtensionsGetAllCollectionResultOfT(
+                _virtualMachineScaleSetExtensionsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "VirtualMachineScaleSetExtensionCollection.GetAll"), data => new VirtualMachineScaleSetExtensionResource(Client, data));
         }
 
         /// <summary>

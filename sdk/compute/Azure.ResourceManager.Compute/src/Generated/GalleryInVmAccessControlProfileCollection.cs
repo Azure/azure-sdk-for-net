@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<GalleryInVmAccessControlProfileData, GalleryInVmAccessControlProfileResource>(new GalleryInVMAccessControlProfilesGetByGalleryAsyncCollectionResultOfT(_galleryInVMAccessControlProfilesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new GalleryInVmAccessControlProfileResource(Client, data));
+            return new AsyncPageableWrapper<GalleryInVmAccessControlProfileData, GalleryInVmAccessControlProfileResource>(new GalleryInVMAccessControlProfilesGetByGalleryAsyncCollectionResultOfT(
+                _galleryInVMAccessControlProfilesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "GalleryInVmAccessControlProfileCollection.GetAll"), data => new GalleryInVmAccessControlProfileResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<GalleryInVmAccessControlProfileData, GalleryInVmAccessControlProfileResource>(new GalleryInVMAccessControlProfilesGetByGalleryCollectionResultOfT(_galleryInVMAccessControlProfilesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new GalleryInVmAccessControlProfileResource(Client, data));
+            return new PageableWrapper<GalleryInVmAccessControlProfileData, GalleryInVmAccessControlProfileResource>(new GalleryInVMAccessControlProfilesGetByGalleryCollectionResultOfT(
+                _galleryInVMAccessControlProfilesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "GalleryInVmAccessControlProfileCollection.GetAll"), data => new GalleryInVmAccessControlProfileResource(Client, data));
         }
 
         /// <summary>

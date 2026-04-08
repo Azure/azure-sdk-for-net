@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SshPublicKeyResourceData, SshPublicKeyResource>(new SshPublicKeyResourcesGetByResourceGroupAsyncCollectionResultOfT(_sshPublicKeyResourcesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new SshPublicKeyResource(Client, data));
+            return new AsyncPageableWrapper<SshPublicKeyResourceData, SshPublicKeyResource>(new SshPublicKeyResourcesGetByResourceGroupAsyncCollectionResultOfT(_sshPublicKeyResourcesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "SshPublicKeyResourceCollection.GetAll"), data => new SshPublicKeyResource(Client, data));
         }
 
         /// <summary>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SshPublicKeyResourceData, SshPublicKeyResource>(new SshPublicKeyResourcesGetByResourceGroupCollectionResultOfT(_sshPublicKeyResourcesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new SshPublicKeyResource(Client, data));
+            return new PageableWrapper<SshPublicKeyResourceData, SshPublicKeyResource>(new SshPublicKeyResourcesGetByResourceGroupCollectionResultOfT(_sshPublicKeyResourcesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "SshPublicKeyResourceCollection.GetAll"), data => new SshPublicKeyResource(Client, data));
         }
 
         /// <summary>

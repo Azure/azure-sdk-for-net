@@ -184,7 +184,13 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SharedGalleryData, SharedGalleryResource>(new SharedGalleriesGetAllAsyncCollectionResultOfT(_sharedGalleriesRestClient, Id.SubscriptionId, _location, sharedTo?.ToString(), context), data => new SharedGalleryResource(Client, data));
+            return new AsyncPageableWrapper<SharedGalleryData, SharedGalleryResource>(new SharedGalleriesGetAllAsyncCollectionResultOfT(
+                _sharedGalleriesRestClient,
+                Id.SubscriptionId,
+                _location,
+                sharedTo?.ToString(),
+                context,
+                "SharedGalleryCollection.GetAll"), data => new SharedGalleryResource(Client, data));
         }
 
         /// <summary>
@@ -213,7 +219,13 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SharedGalleryData, SharedGalleryResource>(new SharedGalleriesGetAllCollectionResultOfT(_sharedGalleriesRestClient, Id.SubscriptionId, _location, sharedTo?.ToString(), context), data => new SharedGalleryResource(Client, data));
+            return new PageableWrapper<SharedGalleryData, SharedGalleryResource>(new SharedGalleriesGetAllCollectionResultOfT(
+                _sharedGalleriesRestClient,
+                Id.SubscriptionId,
+                _location,
+                sharedTo?.ToString(),
+                context,
+                "SharedGalleryCollection.GetAll"), data => new SharedGalleryResource(Client, data));
         }
 
         /// <summary>

@@ -296,7 +296,13 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DedicatedHostData, DedicatedHostResource>(new DedicatedHostsGetByHostGroupAsyncCollectionResultOfT(_dedicatedHostsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new DedicatedHostResource(Client, data));
+            return new AsyncPageableWrapper<DedicatedHostData, DedicatedHostResource>(new DedicatedHostsGetByHostGroupAsyncCollectionResultOfT(
+                _dedicatedHostsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DedicatedHostCollection.GetAll"), data => new DedicatedHostResource(Client, data));
         }
 
         /// <summary>
@@ -324,7 +330,13 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DedicatedHostData, DedicatedHostResource>(new DedicatedHostsGetByHostGroupCollectionResultOfT(_dedicatedHostsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new DedicatedHostResource(Client, data));
+            return new PageableWrapper<DedicatedHostData, DedicatedHostResource>(new DedicatedHostsGetByHostGroupCollectionResultOfT(
+                _dedicatedHostsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DedicatedHostCollection.GetAll"), data => new DedicatedHostResource(Client, data));
         }
 
         /// <summary>

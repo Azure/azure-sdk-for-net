@@ -24,6 +24,7 @@ namespace Azure.ResourceManager.Compute
         private readonly string _select;
         private readonly string _expand;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of VirtualMachineScaleSetVMSGetAllCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The VirtualMachineScaleSetVMS client used to send requests. </param>
@@ -34,7 +35,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="select"> The list parameters. Allowed values are 'instanceView', 'instanceView/statuses'. </param>
         /// <param name="expand"> The expand expression to apply to the operation. Allowed values are 'instanceView'. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public VirtualMachineScaleSetVMSGetAllCollectionResultOfT(VirtualMachineScaleSetVMS client, string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName, string filter, string @select, string expand, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public VirtualMachineScaleSetVMSGetAllCollectionResultOfT(VirtualMachineScaleSetVMS client, string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName, string filter, string @select, string expand, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -44,6 +46,7 @@ namespace Azure.ResourceManager.Compute
             _select = @select;
             _expand = expand;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of VirtualMachineScaleSetVMSGetAllCollectionResultOfT as an enumerable collection. </summary>
@@ -76,7 +79,7 @@ namespace Azure.ResourceManager.Compute
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _virtualMachineScaleSetName, _filter, _select, _expand, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _virtualMachineScaleSetName, _filter, _select, _expand, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("VirtualMachineScaleSetVmCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

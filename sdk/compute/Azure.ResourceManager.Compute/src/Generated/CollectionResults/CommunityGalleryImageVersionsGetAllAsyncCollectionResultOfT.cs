@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.Compute
         private readonly string _publicGalleryName;
         private readonly string _galleryImageName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of CommunityGalleryImageVersionsGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The CommunityGalleryImageVersions client used to send requests. </param>
@@ -31,7 +32,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="publicGalleryName"> The public name of the community gallery. </param>
         /// <param name="galleryImageName"> The name of the community gallery image definition. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public CommunityGalleryImageVersionsGetAllAsyncCollectionResultOfT(CommunityGalleryImageVersions client, string subscriptionId, AzureLocation location, string publicGalleryName, string galleryImageName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public CommunityGalleryImageVersionsGetAllAsyncCollectionResultOfT(CommunityGalleryImageVersions client, string subscriptionId, AzureLocation location, string publicGalleryName, string galleryImageName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -39,6 +41,7 @@ namespace Azure.ResourceManager.Compute
             _publicGalleryName = publicGalleryName;
             _galleryImageName = galleryImageName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of CommunityGalleryImageVersionsGetAllAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -71,7 +74,7 @@ namespace Azure.ResourceManager.Compute
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _location, _publicGalleryName, _galleryImageName, _context) : _client.CreateGetAllRequest(_subscriptionId, _location, _publicGalleryName, _galleryImageName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("CommunityGalleryImageVersionCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

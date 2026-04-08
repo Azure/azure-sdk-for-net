@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<GalleryApplicationData, GalleryApplicationResource>(new GalleryApplicationsGetByGalleryAsyncCollectionResultOfT(_galleryApplicationsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new GalleryApplicationResource(Client, data));
+            return new AsyncPageableWrapper<GalleryApplicationData, GalleryApplicationResource>(new GalleryApplicationsGetByGalleryAsyncCollectionResultOfT(
+                _galleryApplicationsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "GalleryApplicationCollection.GetAll"), data => new GalleryApplicationResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<GalleryApplicationData, GalleryApplicationResource>(new GalleryApplicationsGetByGalleryCollectionResultOfT(_galleryApplicationsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new GalleryApplicationResource(Client, data));
+            return new PageableWrapper<GalleryApplicationData, GalleryApplicationResource>(new GalleryApplicationsGetByGalleryCollectionResultOfT(
+                _galleryApplicationsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "GalleryApplicationCollection.GetAll"), data => new GalleryApplicationResource(Client, data));
         }
 
         /// <summary>

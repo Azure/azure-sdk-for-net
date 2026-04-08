@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DiskEncryptionSetData, DiskEncryptionSetResource>(new DiskEncryptionSetsGetByResourceGroupAsyncCollectionResultOfT(_diskEncryptionSetsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new DiskEncryptionSetResource(Client, data));
+            return new AsyncPageableWrapper<DiskEncryptionSetData, DiskEncryptionSetResource>(new DiskEncryptionSetsGetByResourceGroupAsyncCollectionResultOfT(_diskEncryptionSetsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "DiskEncryptionSetCollection.GetAll"), data => new DiskEncryptionSetResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DiskEncryptionSetData, DiskEncryptionSetResource>(new DiskEncryptionSetsGetByResourceGroupCollectionResultOfT(_diskEncryptionSetsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new DiskEncryptionSetResource(Client, data));
+            return new PageableWrapper<DiskEncryptionSetData, DiskEncryptionSetResource>(new DiskEncryptionSetsGetByResourceGroupCollectionResultOfT(_diskEncryptionSetsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "DiskEncryptionSetCollection.GetAll"), data => new DiskEncryptionSetResource(Client, data));
         }
 
         /// <summary>

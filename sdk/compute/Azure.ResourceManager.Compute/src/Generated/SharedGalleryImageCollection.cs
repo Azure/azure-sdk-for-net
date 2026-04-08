@@ -185,7 +185,8 @@ namespace Azure.ResourceManager.Compute
                 Id.Parent.Name,
                 Id.Name,
                 sharedTo?.ToString(),
-                context), data => new SharedGalleryImageResource(Client, data));
+                context,
+                "SharedGalleryImageCollection.GetAll"), data => new SharedGalleryImageResource(Client, data));
         }
 
         /// <summary>
@@ -220,7 +221,8 @@ namespace Azure.ResourceManager.Compute
                 Id.Parent.Name,
                 Id.Name,
                 sharedTo?.ToString(),
-                context), data => new SharedGalleryImageResource(Client, data));
+                context,
+                "SharedGalleryImageCollection.GetAll"), data => new SharedGalleryImageResource(Client, data));
         }
 
         /// <summary>

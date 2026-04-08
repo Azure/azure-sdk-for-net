@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.Compute
         private readonly string _galleryName;
         private readonly string _inVMAccessControlProfileName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of GalleryInVMAccessControlProfileVersionsGetByGalleryInVMAccessControlProfileAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The GalleryInVMAccessControlProfileVersions client used to send requests. </param>
@@ -31,7 +32,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryName"> The name of the Shared Image Gallery. </param>
         /// <param name="inVMAccessControlProfileName"> The name of the gallery inVMAccessControlProfile to be retrieved. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public GalleryInVMAccessControlProfileVersionsGetByGalleryInVMAccessControlProfileAsyncCollectionResultOfT(GalleryInVMAccessControlProfileVersions client, string subscriptionId, string resourceGroupName, string galleryName, string inVMAccessControlProfileName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public GalleryInVMAccessControlProfileVersionsGetByGalleryInVMAccessControlProfileAsyncCollectionResultOfT(GalleryInVMAccessControlProfileVersions client, string subscriptionId, string resourceGroupName, string galleryName, string inVMAccessControlProfileName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -39,6 +41,7 @@ namespace Azure.ResourceManager.Compute
             _galleryName = galleryName;
             _inVMAccessControlProfileName = inVMAccessControlProfileName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of GalleryInVMAccessControlProfileVersionsGetByGalleryInVMAccessControlProfileAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -71,7 +74,7 @@ namespace Azure.ResourceManager.Compute
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByGalleryInVMAccessControlProfileRequest(nextLink, _subscriptionId, _resourceGroupName, _galleryName, _inVMAccessControlProfileName, _context) : _client.CreateGetByGalleryInVMAccessControlProfileRequest(_subscriptionId, _resourceGroupName, _galleryName, _inVMAccessControlProfileName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("GalleryInVmAccessControlProfileVersionCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

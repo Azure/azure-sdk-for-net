@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AvailabilitySetData, AvailabilitySetResource>(new AvailabilitySetsGetAllAsyncCollectionResultOfT(_availabilitySetsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new AvailabilitySetResource(Client, data));
+            return new AsyncPageableWrapper<AvailabilitySetData, AvailabilitySetResource>(new AvailabilitySetsGetAllAsyncCollectionResultOfT(_availabilitySetsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "AvailabilitySetCollection.GetAll"), data => new AvailabilitySetResource(Client, data));
         }
 
         /// <summary>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AvailabilitySetData, AvailabilitySetResource>(new AvailabilitySetsGetAllCollectionResultOfT(_availabilitySetsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new AvailabilitySetResource(Client, data));
+            return new PageableWrapper<AvailabilitySetData, AvailabilitySetResource>(new AvailabilitySetsGetAllCollectionResultOfT(_availabilitySetsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "AvailabilitySetCollection.GetAll"), data => new AvailabilitySetResource(Client, data));
         }
 
         /// <summary>

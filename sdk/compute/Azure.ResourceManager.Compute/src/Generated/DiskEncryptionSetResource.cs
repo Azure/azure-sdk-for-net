@@ -434,7 +434,13 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new DiskEncryptionSetsGetAssociatedResourcesAsyncCollectionResultOfT(_diskEncryptionSetsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+            return new DiskEncryptionSetsGetAssociatedResourcesAsyncCollectionResultOfT(
+                _diskEncryptionSetsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DiskEncryptionSetResource.GetAssociatedResources");
         }
 
         /// <summary>
@@ -466,7 +472,13 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new DiskEncryptionSetsGetAssociatedResourcesCollectionResultOfT(_diskEncryptionSetsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+            return new DiskEncryptionSetsGetAssociatedResourcesCollectionResultOfT(
+                _diskEncryptionSetsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DiskEncryptionSetResource.GetAssociatedResources");
         }
 
         /// <summary> Add a tag to the current resource. </summary>

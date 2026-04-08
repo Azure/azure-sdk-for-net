@@ -302,7 +302,8 @@ namespace Azure.ResourceManager.Compute
                 Id.ResourceGroupName,
                 Id.Name,
                 expand,
-                context), data => new VirtualMachineRunCommandResource(Client, data));
+                context,
+                "VirtualMachineRunCommandCollection.GetAll"), data => new VirtualMachineRunCommandResource(Client, data));
         }
 
         /// <summary>
@@ -337,7 +338,8 @@ namespace Azure.ResourceManager.Compute
                 Id.ResourceGroupName,
                 Id.Name,
                 expand,
-                context), data => new VirtualMachineRunCommandResource(Client, data));
+                context,
+                "VirtualMachineRunCommandCollection.GetAll"), data => new VirtualMachineRunCommandResource(Client, data));
         }
 
         /// <summary>

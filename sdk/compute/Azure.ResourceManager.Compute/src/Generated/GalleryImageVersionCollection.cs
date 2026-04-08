@@ -302,7 +302,8 @@ namespace Azure.ResourceManager.Compute
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new GalleryImageVersionResource(Client, data));
+                context,
+                "GalleryImageVersionCollection.GetAll"), data => new GalleryImageVersionResource(Client, data));
         }
 
         /// <summary>
@@ -336,7 +337,8 @@ namespace Azure.ResourceManager.Compute
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new GalleryImageVersionResource(Client, data));
+                context,
+                "GalleryImageVersionCollection.GetAll"), data => new GalleryImageVersionResource(Client, data));
         }
 
         /// <summary>

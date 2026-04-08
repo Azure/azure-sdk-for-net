@@ -1288,7 +1288,13 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new VirtualMachinesGetAvailableSizesAsyncCollectionResultOfT(_virtualMachinesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+            return new VirtualMachinesGetAvailableSizesAsyncCollectionResultOfT(
+                _virtualMachinesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "VirtualMachineResource.GetAvailableSizes");
         }
 
         /// <summary>
@@ -1320,7 +1326,13 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new VirtualMachinesGetAvailableSizesCollectionResultOfT(_virtualMachinesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+            return new VirtualMachinesGetAvailableSizesCollectionResultOfT(
+                _virtualMachinesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "VirtualMachineResource.GetAvailableSizes");
         }
 
         /// <summary>

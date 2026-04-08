@@ -299,7 +299,8 @@ namespace Azure.ResourceManager.Compute
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new GalleryInVmAccessControlProfileVersionResource(Client, data));
+                context,
+                "GalleryInVmAccessControlProfileVersionCollection.GetAll"), data => new GalleryInVmAccessControlProfileVersionResource(Client, data));
         }
 
         /// <summary>
@@ -333,7 +334,8 @@ namespace Azure.ResourceManager.Compute
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new GalleryInVmAccessControlProfileVersionResource(Client, data));
+                context,
+                "GalleryInVmAccessControlProfileVersionCollection.GetAll"), data => new GalleryInVmAccessControlProfileVersionResource(Client, data));
         }
 
         /// <summary>

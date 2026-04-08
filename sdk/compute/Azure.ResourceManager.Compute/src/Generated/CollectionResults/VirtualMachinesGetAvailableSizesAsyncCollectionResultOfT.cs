@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.Compute
         private readonly string _resourceGroupName;
         private readonly string _vmName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of VirtualMachinesGetAvailableSizesAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The VirtualMachines client used to send requests. </param>
@@ -29,13 +30,15 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="vmName"> The name of the virtual machine. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public VirtualMachinesGetAvailableSizesAsyncCollectionResultOfT(VirtualMachines client, string subscriptionId, string resourceGroupName, string vmName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public VirtualMachinesGetAvailableSizesAsyncCollectionResultOfT(VirtualMachines client, string subscriptionId, string resourceGroupName, string vmName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
             _vmName = vmName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of VirtualMachinesGetAvailableSizesAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -69,7 +72,7 @@ namespace Azure.ResourceManager.Compute
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAvailableSizesRequest(nextLink, _subscriptionId, _resourceGroupName, _vmName, _context) : _client.CreateGetAvailableSizesRequest(_subscriptionId, _resourceGroupName, _vmName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("VirtualMachineResource.GetAvailableSizes");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

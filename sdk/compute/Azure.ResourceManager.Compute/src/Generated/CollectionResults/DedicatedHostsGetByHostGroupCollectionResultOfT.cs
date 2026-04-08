@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.Compute
         private readonly string _resourceGroupName;
         private readonly string _hostGroupName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of DedicatedHostsGetByHostGroupCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The DedicatedHosts client used to send requests. </param>
@@ -28,13 +29,15 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="hostGroupName"> The name of the dedicated host group. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public DedicatedHostsGetByHostGroupCollectionResultOfT(DedicatedHosts client, string subscriptionId, string resourceGroupName, string hostGroupName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public DedicatedHostsGetByHostGroupCollectionResultOfT(DedicatedHosts client, string subscriptionId, string resourceGroupName, string hostGroupName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
             _hostGroupName = hostGroupName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of DedicatedHostsGetByHostGroupCollectionResultOfT as an enumerable collection. </summary>
@@ -67,7 +70,7 @@ namespace Azure.ResourceManager.Compute
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByHostGroupRequest(nextLink, _subscriptionId, _resourceGroupName, _hostGroupName, _context) : _client.CreateGetByHostGroupRequest(_subscriptionId, _resourceGroupName, _hostGroupName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("DedicatedHostCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

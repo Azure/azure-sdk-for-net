@@ -292,7 +292,13 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CapacityReservationGroupData, CapacityReservationGroupResource>(new CapacityReservationGroupsGetByResourceGroupAsyncCollectionResultOfT(_capacityReservationGroupsRestClient, Id.SubscriptionId, Id.ResourceGroupName, expand?.ToString(), context), data => new CapacityReservationGroupResource(Client, data));
+            return new AsyncPageableWrapper<CapacityReservationGroupData, CapacityReservationGroupResource>(new CapacityReservationGroupsGetByResourceGroupAsyncCollectionResultOfT(
+                _capacityReservationGroupsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                expand?.ToString(),
+                context,
+                "CapacityReservationGroupCollection.GetAll"), data => new CapacityReservationGroupResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CapacityReservationGroupData, CapacityReservationGroupResource>(new CapacityReservationGroupsGetByResourceGroupCollectionResultOfT(_capacityReservationGroupsRestClient, Id.SubscriptionId, Id.ResourceGroupName, expand?.ToString(), context), data => new CapacityReservationGroupResource(Client, data));
+            return new PageableWrapper<CapacityReservationGroupData, CapacityReservationGroupResource>(new CapacityReservationGroupsGetByResourceGroupCollectionResultOfT(
+                _capacityReservationGroupsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                expand?.ToString(),
+                context,
+                "CapacityReservationGroupCollection.GetAll"), data => new CapacityReservationGroupResource(Client, data));
         }
 
         /// <summary>

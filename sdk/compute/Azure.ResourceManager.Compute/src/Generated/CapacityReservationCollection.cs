@@ -303,7 +303,8 @@ namespace Azure.ResourceManager.Compute
                 Id.ResourceGroupName,
                 Id.Name,
                 expand?.ToString(),
-                context), data => new CapacityReservationResource(Client, data));
+                context,
+                "CapacityReservationCollection.GetAll"), data => new CapacityReservationResource(Client, data));
         }
 
         /// <summary>
@@ -338,7 +339,8 @@ namespace Azure.ResourceManager.Compute
                 Id.ResourceGroupName,
                 Id.Name,
                 expand?.ToString(),
-                context), data => new CapacityReservationResource(Client, data));
+                context,
+                "CapacityReservationCollection.GetAll"), data => new CapacityReservationResource(Client, data));
         }
 
         /// <summary>

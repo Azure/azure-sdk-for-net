@@ -24,6 +24,7 @@ namespace Azure.ResourceManager.Compute
         private readonly string _location;
         private readonly string _publisherName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of MockableComputeSubscriptionResourceGetVirtualMachineImageOffersCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The VirtualMachineImagesOperationGroup client used to send requests. </param>
@@ -31,13 +32,15 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The location name. </param>
         /// <param name="publisherName"> A valid image publisher. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public MockableComputeSubscriptionResourceGetVirtualMachineImageOffersCollectionResultOfT(VirtualMachineImagesOperationGroup client, string subscriptionId, string location, string publisherName, RequestContext context)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public MockableComputeSubscriptionResourceGetVirtualMachineImageOffersCollectionResultOfT(VirtualMachineImagesOperationGroup client, string subscriptionId, string location, string publisherName, RequestContext context, string diagnosticScope)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _location = location;
             _publisherName = publisherName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of MockableComputeSubscriptionResourceGetVirtualMachineImageOffersCollectionResultOfT as an enumerable collection. </summary>
@@ -61,7 +64,7 @@ namespace Azure.ResourceManager.Compute
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = _client.CreateGetVirtualMachineImageOffersRequest(_subscriptionId, _location, _publisherName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableComputeSubscriptionResource.GetVirtualMachineImageOffers");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

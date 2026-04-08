@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ProximityPlacementGroupData, ProximityPlacementGroupResource>(new ProximityPlacementGroupsGetByResourceGroupAsyncCollectionResultOfT(_proximityPlacementGroupsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new ProximityPlacementGroupResource(Client, data));
+            return new AsyncPageableWrapper<ProximityPlacementGroupData, ProximityPlacementGroupResource>(new ProximityPlacementGroupsGetByResourceGroupAsyncCollectionResultOfT(_proximityPlacementGroupsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "ProximityPlacementGroupCollection.GetAll"), data => new ProximityPlacementGroupResource(Client, data));
         }
 
         /// <summary>
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ProximityPlacementGroupData, ProximityPlacementGroupResource>(new ProximityPlacementGroupsGetByResourceGroupCollectionResultOfT(_proximityPlacementGroupsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new ProximityPlacementGroupResource(Client, data));
+            return new PageableWrapper<ProximityPlacementGroupData, ProximityPlacementGroupResource>(new ProximityPlacementGroupsGetByResourceGroupCollectionResultOfT(_proximityPlacementGroupsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "ProximityPlacementGroupCollection.GetAll"), data => new ProximityPlacementGroupResource(Client, data));
         }
 
         /// <summary>

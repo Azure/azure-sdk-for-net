@@ -26,6 +26,7 @@ namespace Azure.ResourceManager.Compute
         private readonly string _edgeZone;
         private readonly string _publisherName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of MockableComputeSubscriptionResourceGetOffersVirtualMachineImagesEdgeZonesAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The VirtualMachineImagesEdgeZoneOperationGroup client used to send requests. </param>
@@ -34,7 +35,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="edgeZone"> The name of the edge zone. </param>
         /// <param name="publisherName"> A valid image publisher. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public MockableComputeSubscriptionResourceGetOffersVirtualMachineImagesEdgeZonesAsyncCollectionResultOfT(VirtualMachineImagesEdgeZoneOperationGroup client, string subscriptionId, string location, string edgeZone, string publisherName, RequestContext context)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public MockableComputeSubscriptionResourceGetOffersVirtualMachineImagesEdgeZonesAsyncCollectionResultOfT(VirtualMachineImagesEdgeZoneOperationGroup client, string subscriptionId, string location, string edgeZone, string publisherName, RequestContext context, string diagnosticScope)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -42,6 +44,7 @@ namespace Azure.ResourceManager.Compute
             _edgeZone = edgeZone;
             _publisherName = publisherName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of MockableComputeSubscriptionResourceGetOffersVirtualMachineImagesEdgeZonesAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -65,7 +68,7 @@ namespace Azure.ResourceManager.Compute
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = _client.CreateGetOffersVirtualMachineImagesEdgeZonesRequest(_subscriptionId, _location, _edgeZone, _publisherName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableComputeSubscriptionResource.GetOffersVirtualMachineImagesEdgeZones");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

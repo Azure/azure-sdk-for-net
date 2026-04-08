@@ -202,7 +202,8 @@ namespace Azure.ResourceManager.Compute
                 filter,
                 top,
                 @orderby,
-                context), data => new VirtualMachineExtensionImageResource(Client, data));
+                context,
+                "VirtualMachineExtensionImageCollection.GetAll"), data => new VirtualMachineExtensionImageResource(Client, data));
         }
 
         /// <summary>
@@ -242,7 +243,8 @@ namespace Azure.ResourceManager.Compute
                 filter,
                 top,
                 @orderby,
-                context), data => new VirtualMachineExtensionImageResource(Client, data));
+                context,
+                "VirtualMachineExtensionImageCollection.GetAll"), data => new VirtualMachineExtensionImageResource(Client, data));
         }
 
         /// <summary>

@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ManagedDiskData, ManagedDiskResource>(new DisksGetByResourceGroupAsyncCollectionResultOfT(_disksRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new ManagedDiskResource(Client, data));
+            return new AsyncPageableWrapper<ManagedDiskData, ManagedDiskResource>(new DisksGetByResourceGroupAsyncCollectionResultOfT(_disksRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "ManagedDiskCollection.GetAll"), data => new ManagedDiskResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ManagedDiskData, ManagedDiskResource>(new DisksGetByResourceGroupCollectionResultOfT(_disksRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new ManagedDiskResource(Client, data));
+            return new PageableWrapper<ManagedDiskData, ManagedDiskResource>(new DisksGetByResourceGroupCollectionResultOfT(_disksRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "ManagedDiskCollection.GetAll"), data => new ManagedDiskResource(Client, data));
         }
 
         /// <summary>

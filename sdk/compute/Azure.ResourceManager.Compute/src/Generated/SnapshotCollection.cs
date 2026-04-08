@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SnapshotData, SnapshotResource>(new SnapshotsGetByResourceGroupAsyncCollectionResultOfT(_snapshotsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new SnapshotResource(Client, data));
+            return new AsyncPageableWrapper<SnapshotData, SnapshotResource>(new SnapshotsGetByResourceGroupAsyncCollectionResultOfT(_snapshotsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "SnapshotCollection.GetAll"), data => new SnapshotResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SnapshotData, SnapshotResource>(new SnapshotsGetByResourceGroupCollectionResultOfT(_snapshotsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new SnapshotResource(Client, data));
+            return new PageableWrapper<SnapshotData, SnapshotResource>(new SnapshotsGetByResourceGroupCollectionResultOfT(_snapshotsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "SnapshotCollection.GetAll"), data => new SnapshotResource(Client, data));
         }
 
         /// <summary>

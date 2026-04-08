@@ -26,6 +26,7 @@ namespace Azure.ResourceManager.Compute
         private readonly string _publisherName;
         private readonly string _offer;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of MockableComputeSubscriptionResourceGetVirtualMachineImageEdgeZoneSkusCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The VirtualMachineImagesEdgeZoneOperationGroup client used to send requests. </param>
@@ -35,7 +36,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="publisherName"> A valid image publisher. </param>
         /// <param name="offer"> A valid image publisher offer. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public MockableComputeSubscriptionResourceGetVirtualMachineImageEdgeZoneSkusCollectionResultOfT(VirtualMachineImagesEdgeZoneOperationGroup client, string subscriptionId, string location, string edgeZone, string publisherName, string offer, RequestContext context)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public MockableComputeSubscriptionResourceGetVirtualMachineImageEdgeZoneSkusCollectionResultOfT(VirtualMachineImagesEdgeZoneOperationGroup client, string subscriptionId, string location, string edgeZone, string publisherName, string offer, RequestContext context, string diagnosticScope)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -44,6 +46,7 @@ namespace Azure.ResourceManager.Compute
             _publisherName = publisherName;
             _offer = offer;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of MockableComputeSubscriptionResourceGetVirtualMachineImageEdgeZoneSkusCollectionResultOfT as an enumerable collection. </summary>
@@ -67,7 +70,7 @@ namespace Azure.ResourceManager.Compute
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = _client.CreateGetVirtualMachineImageEdgeZoneSkusRequest(_subscriptionId, _location, _edgeZone, _publisherName, _offer, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableComputeSubscriptionResource.GetVirtualMachineImageEdgeZoneSkus");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

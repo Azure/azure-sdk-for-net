@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.Compute
         private readonly string _location;
         private readonly string _edgeZone;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of MockableComputeSubscriptionResourceGetPublishersVirtualMachineImagesEdgeZonesAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The VirtualMachineImagesEdgeZoneOperationGroup client used to send requests. </param>
@@ -32,13 +33,15 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The location name. </param>
         /// <param name="edgeZone"> The name of the edge zone. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public MockableComputeSubscriptionResourceGetPublishersVirtualMachineImagesEdgeZonesAsyncCollectionResultOfT(VirtualMachineImagesEdgeZoneOperationGroup client, string subscriptionId, string location, string edgeZone, RequestContext context)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public MockableComputeSubscriptionResourceGetPublishersVirtualMachineImagesEdgeZonesAsyncCollectionResultOfT(VirtualMachineImagesEdgeZoneOperationGroup client, string subscriptionId, string location, string edgeZone, RequestContext context, string diagnosticScope)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _location = location;
             _edgeZone = edgeZone;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of MockableComputeSubscriptionResourceGetPublishersVirtualMachineImagesEdgeZonesAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -62,7 +65,7 @@ namespace Azure.ResourceManager.Compute
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = _client.CreateGetPublishersVirtualMachineImagesEdgeZonesRequest(_subscriptionId, _location, _edgeZone, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableComputeSubscriptionResource.GetPublishersVirtualMachineImagesEdgeZones");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

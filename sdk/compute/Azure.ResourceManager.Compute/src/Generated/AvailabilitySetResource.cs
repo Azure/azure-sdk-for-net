@@ -610,7 +610,13 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new AvailabilitySetsGetAvailableSizesAsyncCollectionResultOfT(_availabilitySetsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+            return new AvailabilitySetsGetAvailableSizesAsyncCollectionResultOfT(
+                _availabilitySetsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "AvailabilitySetResource.GetAvailableSizes");
         }
 
         /// <summary>
@@ -642,7 +648,13 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new AvailabilitySetsGetAvailableSizesCollectionResultOfT(_availabilitySetsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+            return new AvailabilitySetsGetAvailableSizesCollectionResultOfT(
+                _availabilitySetsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "AvailabilitySetResource.GetAvailableSizes");
         }
 
         /// <summary>

@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.Compute
         private readonly string _restorePointCollectionName;
         private readonly string _vmRestorePointName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of DiskRestorePointsGetByRestorePointCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The DiskRestorePoints client used to send requests. </param>
@@ -30,7 +31,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="restorePointCollectionName"> The name of the restore point collection that the disk restore point belongs. </param>
         /// <param name="vmRestorePointName"> The name of the vm restore point that the disk disk restore point belongs. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public DiskRestorePointsGetByRestorePointCollectionResultOfT(DiskRestorePoints client, string subscriptionId, string resourceGroupName, string restorePointCollectionName, string vmRestorePointName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public DiskRestorePointsGetByRestorePointCollectionResultOfT(DiskRestorePoints client, string subscriptionId, string resourceGroupName, string restorePointCollectionName, string vmRestorePointName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -38,6 +40,7 @@ namespace Azure.ResourceManager.Compute
             _restorePointCollectionName = restorePointCollectionName;
             _vmRestorePointName = vmRestorePointName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of DiskRestorePointsGetByRestorePointCollectionResultOfT as an enumerable collection. </summary>
@@ -70,7 +73,7 @@ namespace Azure.ResourceManager.Compute
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByRestorePointRequest(nextLink, _subscriptionId, _resourceGroupName, _restorePointCollectionName, _vmRestorePointName, _context) : _client.CreateGetByRestorePointRequest(_subscriptionId, _resourceGroupName, _restorePointCollectionName, _vmRestorePointName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("DiskRestorePointCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

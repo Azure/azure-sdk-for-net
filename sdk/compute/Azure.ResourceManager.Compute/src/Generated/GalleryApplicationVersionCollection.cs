@@ -302,7 +302,8 @@ namespace Azure.ResourceManager.Compute
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new GalleryApplicationVersionResource(Client, data));
+                context,
+                "GalleryApplicationVersionCollection.GetAll"), data => new GalleryApplicationVersionResource(Client, data));
         }
 
         /// <summary>
@@ -336,7 +337,8 @@ namespace Azure.ResourceManager.Compute
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new GalleryApplicationVersionResource(Client, data));
+                context,
+                "GalleryApplicationVersionCollection.GetAll"), data => new GalleryApplicationVersionResource(Client, data));
         }
 
         /// <summary>

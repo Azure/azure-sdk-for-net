@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.Compute
         private readonly string _instanceId;
         private readonly string _expand;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of VirtualMachineScaleSetVmRunCommandsGetAllCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The VirtualMachineScaleSetVmRunCommands client used to send requests. </param>
@@ -32,7 +33,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="instanceId"> The name of the VirtualMachineScaleSetVM. </param>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public VirtualMachineScaleSetVmRunCommandsGetAllCollectionResultOfT(VirtualMachineScaleSetVmRunCommands client, string subscriptionId, string resourceGroupName, string vmScaleSetName, string instanceId, string expand, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public VirtualMachineScaleSetVmRunCommandsGetAllCollectionResultOfT(VirtualMachineScaleSetVmRunCommands client, string subscriptionId, string resourceGroupName, string vmScaleSetName, string instanceId, string expand, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -41,6 +43,7 @@ namespace Azure.ResourceManager.Compute
             _instanceId = instanceId;
             _expand = expand;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of VirtualMachineScaleSetVmRunCommandsGetAllCollectionResultOfT as an enumerable collection. </summary>
@@ -73,7 +76,7 @@ namespace Azure.ResourceManager.Compute
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _vmScaleSetName, _instanceId, _expand, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _vmScaleSetName, _instanceId, _expand, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("VirtualMachineScaleSetVmRunCommandCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

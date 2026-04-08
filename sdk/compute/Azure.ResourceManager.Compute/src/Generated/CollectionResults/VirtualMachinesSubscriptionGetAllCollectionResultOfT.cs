@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.Compute
         private readonly string _filter;
         private readonly string _expand;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of VirtualMachinesSubscriptionGetAllCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The VirtualMachinesSubscription client used to send requests. </param>
@@ -30,7 +31,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="filter"> The system query option to filter VMs returned in the response. Allowed value is 'virtualMachineScaleSet/id' eq /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}'. </param>
         /// <param name="expand"> The expand expression to apply on operation. 'instanceView' enables fetching run time status of all Virtual Machines, this can only be specified if a valid $filter option is specified. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public VirtualMachinesSubscriptionGetAllCollectionResultOfT(VirtualMachinesSubscription client, string subscriptionId, string statusOnly, string filter, string expand, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public VirtualMachinesSubscriptionGetAllCollectionResultOfT(VirtualMachinesSubscription client, string subscriptionId, string statusOnly, string filter, string expand, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -38,6 +40,7 @@ namespace Azure.ResourceManager.Compute
             _filter = filter;
             _expand = expand;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of VirtualMachinesSubscriptionGetAllCollectionResultOfT as an enumerable collection. </summary>
@@ -70,7 +73,7 @@ namespace Azure.ResourceManager.Compute
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _statusOnly, _filter, _expand, _context) : _client.CreateGetAllRequest(_subscriptionId, _statusOnly, _filter, _expand, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableComputeSubscriptionResource.GetVirtualMachines");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

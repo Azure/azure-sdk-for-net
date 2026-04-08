@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VirtualMachineScaleSetData, VirtualMachineScaleSetResource>(new VirtualMachineScaleSetsSubscriptionGetAllAsyncCollectionResultOfT(VirtualMachineScaleSetsSubscriptionRestClient, Id.SubscriptionId, context), data => new VirtualMachineScaleSetResource(Client, data));
+            return new AsyncPageableWrapper<VirtualMachineScaleSetData, VirtualMachineScaleSetResource>(new VirtualMachineScaleSetsSubscriptionGetAllAsyncCollectionResultOfT(VirtualMachineScaleSetsSubscriptionRestClient, Id.SubscriptionId, context, "MockableComputeSubscriptionResource.GetVirtualMachineScaleSets"), data => new VirtualMachineScaleSetResource(Client, data));
         }
 
         /// <summary>
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VirtualMachineScaleSetData, VirtualMachineScaleSetResource>(new VirtualMachineScaleSetsSubscriptionGetAllCollectionResultOfT(VirtualMachineScaleSetsSubscriptionRestClient, Id.SubscriptionId, context), data => new VirtualMachineScaleSetResource(Client, data));
+            return new PageableWrapper<VirtualMachineScaleSetData, VirtualMachineScaleSetResource>(new VirtualMachineScaleSetsSubscriptionGetAllCollectionResultOfT(VirtualMachineScaleSetsSubscriptionRestClient, Id.SubscriptionId, context, "MockableComputeSubscriptionResource.GetVirtualMachineScaleSets"), data => new VirtualMachineScaleSetResource(Client, data));
         }
 
         /// <summary>
@@ -471,7 +471,8 @@ namespace Azure.ResourceManager.Compute.Mocking
                 statusOnly,
                 filter,
                 expand?.ToString(),
-                context), data => new VirtualMachineResource(Client, data));
+                context,
+                "MockableComputeSubscriptionResource.GetVirtualMachines"), data => new VirtualMachineResource(Client, data));
         }
 
         /// <summary>
@@ -508,7 +509,8 @@ namespace Azure.ResourceManager.Compute.Mocking
                 statusOnly,
                 filter,
                 expand?.ToString(),
-                context), data => new VirtualMachineResource(Client, data));
+                context,
+                "MockableComputeSubscriptionResource.GetVirtualMachines"), data => new VirtualMachineResource(Client, data));
         }
 
         /// <summary>
@@ -537,7 +539,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AvailabilitySetData, AvailabilitySetResource>(new AvailabilitySetsGetBySubscriptionAsyncCollectionResultOfT(AvailabilitySetsRestClient, Id.SubscriptionId, expand, context), data => new AvailabilitySetResource(Client, data));
+            return new AsyncPageableWrapper<AvailabilitySetData, AvailabilitySetResource>(new AvailabilitySetsGetBySubscriptionAsyncCollectionResultOfT(AvailabilitySetsRestClient, Id.SubscriptionId, expand, context, "MockableComputeSubscriptionResource.GetAvailabilitySets"), data => new AvailabilitySetResource(Client, data));
         }
 
         /// <summary>
@@ -566,7 +568,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AvailabilitySetData, AvailabilitySetResource>(new AvailabilitySetsGetBySubscriptionCollectionResultOfT(AvailabilitySetsRestClient, Id.SubscriptionId, expand, context), data => new AvailabilitySetResource(Client, data));
+            return new PageableWrapper<AvailabilitySetData, AvailabilitySetResource>(new AvailabilitySetsGetBySubscriptionCollectionResultOfT(AvailabilitySetsRestClient, Id.SubscriptionId, expand, context, "MockableComputeSubscriptionResource.GetAvailabilitySets"), data => new AvailabilitySetResource(Client, data));
         }
 
         /// <summary>
@@ -594,7 +596,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ProximityPlacementGroupData, ProximityPlacementGroupResource>(new ProximityPlacementGroupsGetBySubscriptionAsyncCollectionResultOfT(ProximityPlacementGroupsRestClient, Id.SubscriptionId, context), data => new ProximityPlacementGroupResource(Client, data));
+            return new AsyncPageableWrapper<ProximityPlacementGroupData, ProximityPlacementGroupResource>(new ProximityPlacementGroupsGetBySubscriptionAsyncCollectionResultOfT(ProximityPlacementGroupsRestClient, Id.SubscriptionId, context, "MockableComputeSubscriptionResource.GetProximityPlacementGroups"), data => new ProximityPlacementGroupResource(Client, data));
         }
 
         /// <summary>
@@ -622,7 +624,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ProximityPlacementGroupData, ProximityPlacementGroupResource>(new ProximityPlacementGroupsGetBySubscriptionCollectionResultOfT(ProximityPlacementGroupsRestClient, Id.SubscriptionId, context), data => new ProximityPlacementGroupResource(Client, data));
+            return new PageableWrapper<ProximityPlacementGroupData, ProximityPlacementGroupResource>(new ProximityPlacementGroupsGetBySubscriptionCollectionResultOfT(ProximityPlacementGroupsRestClient, Id.SubscriptionId, context, "MockableComputeSubscriptionResource.GetProximityPlacementGroups"), data => new ProximityPlacementGroupResource(Client, data));
         }
 
         /// <summary>
@@ -650,7 +652,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DedicatedHostGroupData, DedicatedHostGroupResource>(new DedicatedHostGroupsGetBySubscriptionAsyncCollectionResultOfT(DedicatedHostGroupsRestClient, Id.SubscriptionId, context), data => new DedicatedHostGroupResource(Client, data));
+            return new AsyncPageableWrapper<DedicatedHostGroupData, DedicatedHostGroupResource>(new DedicatedHostGroupsGetBySubscriptionAsyncCollectionResultOfT(DedicatedHostGroupsRestClient, Id.SubscriptionId, context, "MockableComputeSubscriptionResource.GetDedicatedHostGroups"), data => new DedicatedHostGroupResource(Client, data));
         }
 
         /// <summary>
@@ -678,7 +680,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DedicatedHostGroupData, DedicatedHostGroupResource>(new DedicatedHostGroupsGetBySubscriptionCollectionResultOfT(DedicatedHostGroupsRestClient, Id.SubscriptionId, context), data => new DedicatedHostGroupResource(Client, data));
+            return new PageableWrapper<DedicatedHostGroupData, DedicatedHostGroupResource>(new DedicatedHostGroupsGetBySubscriptionCollectionResultOfT(DedicatedHostGroupsRestClient, Id.SubscriptionId, context, "MockableComputeSubscriptionResource.GetDedicatedHostGroups"), data => new DedicatedHostGroupResource(Client, data));
         }
 
         /// <summary>
@@ -706,7 +708,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SshPublicKeyResourceData, SshPublicKeyResource>(new SshPublicKeyResourcesGetBySubscriptionAsyncCollectionResultOfT(SshPublicKeyResourcesRestClient, Id.SubscriptionId, context), data => new SshPublicKeyResource(Client, data));
+            return new AsyncPageableWrapper<SshPublicKeyResourceData, SshPublicKeyResource>(new SshPublicKeyResourcesGetBySubscriptionAsyncCollectionResultOfT(SshPublicKeyResourcesRestClient, Id.SubscriptionId, context, "MockableComputeSubscriptionResource.GetSshPublicKeyResources"), data => new SshPublicKeyResource(Client, data));
         }
 
         /// <summary>
@@ -734,7 +736,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SshPublicKeyResourceData, SshPublicKeyResource>(new SshPublicKeyResourcesGetBySubscriptionCollectionResultOfT(SshPublicKeyResourcesRestClient, Id.SubscriptionId, context), data => new SshPublicKeyResource(Client, data));
+            return new PageableWrapper<SshPublicKeyResourceData, SshPublicKeyResource>(new SshPublicKeyResourcesGetBySubscriptionCollectionResultOfT(SshPublicKeyResourcesRestClient, Id.SubscriptionId, context, "MockableComputeSubscriptionResource.GetSshPublicKeyResources"), data => new SshPublicKeyResource(Client, data));
         }
 
         /// <summary>
@@ -762,7 +764,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DiskImageData, DiskImageResource>(new ImagesGetAllAsyncCollectionResultOfT(ImagesRestClient, Id.SubscriptionId, context), data => new DiskImageResource(Client, data));
+            return new AsyncPageableWrapper<DiskImageData, DiskImageResource>(new ImagesGetAllAsyncCollectionResultOfT(ImagesRestClient, Id.SubscriptionId, context, "MockableComputeSubscriptionResource.GetDiskImages"), data => new DiskImageResource(Client, data));
         }
 
         /// <summary>
@@ -790,7 +792,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DiskImageData, DiskImageResource>(new ImagesGetAllCollectionResultOfT(ImagesRestClient, Id.SubscriptionId, context), data => new DiskImageResource(Client, data));
+            return new PageableWrapper<DiskImageData, DiskImageResource>(new ImagesGetAllCollectionResultOfT(ImagesRestClient, Id.SubscriptionId, context, "MockableComputeSubscriptionResource.GetDiskImages"), data => new DiskImageResource(Client, data));
         }
 
         /// <summary>
@@ -818,7 +820,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RestorePointGroupData, RestorePointGroupResource>(new RestorePointCollectionsSubscriptionGetAllAsyncCollectionResultOfT(RestorePointCollectionsSubscriptionRestClient, Id.SubscriptionId, context), data => new RestorePointGroupResource(Client, data));
+            return new AsyncPageableWrapper<RestorePointGroupData, RestorePointGroupResource>(new RestorePointCollectionsSubscriptionGetAllAsyncCollectionResultOfT(RestorePointCollectionsSubscriptionRestClient, Id.SubscriptionId, context, "MockableComputeSubscriptionResource.GetRestorePointGroups"), data => new RestorePointGroupResource(Client, data));
         }
 
         /// <summary>
@@ -846,7 +848,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RestorePointGroupData, RestorePointGroupResource>(new RestorePointCollectionsSubscriptionGetAllCollectionResultOfT(RestorePointCollectionsSubscriptionRestClient, Id.SubscriptionId, context), data => new RestorePointGroupResource(Client, data));
+            return new PageableWrapper<RestorePointGroupData, RestorePointGroupResource>(new RestorePointCollectionsSubscriptionGetAllCollectionResultOfT(RestorePointCollectionsSubscriptionRestClient, Id.SubscriptionId, context, "MockableComputeSubscriptionResource.GetRestorePointGroups"), data => new RestorePointGroupResource(Client, data));
         }
 
         /// <summary>
@@ -876,7 +878,13 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CapacityReservationGroupData, CapacityReservationGroupResource>(new CapacityReservationGroupsGetBySubscriptionAsyncCollectionResultOfT(CapacityReservationGroupsRestClient, Id.SubscriptionId, expand?.ToString(), resourceIdsOnly?.ToString(), context), data => new CapacityReservationGroupResource(Client, data));
+            return new AsyncPageableWrapper<CapacityReservationGroupData, CapacityReservationGroupResource>(new CapacityReservationGroupsGetBySubscriptionAsyncCollectionResultOfT(
+                CapacityReservationGroupsRestClient,
+                Id.SubscriptionId,
+                expand?.ToString(),
+                resourceIdsOnly?.ToString(),
+                context,
+                "MockableComputeSubscriptionResource.GetCapacityReservationGroups"), data => new CapacityReservationGroupResource(Client, data));
         }
 
         /// <summary>
@@ -906,7 +914,13 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CapacityReservationGroupData, CapacityReservationGroupResource>(new CapacityReservationGroupsGetBySubscriptionCollectionResultOfT(CapacityReservationGroupsRestClient, Id.SubscriptionId, expand?.ToString(), resourceIdsOnly?.ToString(), context), data => new CapacityReservationGroupResource(Client, data));
+            return new PageableWrapper<CapacityReservationGroupData, CapacityReservationGroupResource>(new CapacityReservationGroupsGetBySubscriptionCollectionResultOfT(
+                CapacityReservationGroupsRestClient,
+                Id.SubscriptionId,
+                expand?.ToString(),
+                resourceIdsOnly?.ToString(),
+                context,
+                "MockableComputeSubscriptionResource.GetCapacityReservationGroups"), data => new CapacityReservationGroupResource(Client, data));
         }
 
         /// <summary>
@@ -934,7 +948,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ManagedDiskData, ManagedDiskResource>(new DisksGetAllAsyncCollectionResultOfT(DisksRestClient, Id.SubscriptionId, context), data => new ManagedDiskResource(Client, data));
+            return new AsyncPageableWrapper<ManagedDiskData, ManagedDiskResource>(new DisksGetAllAsyncCollectionResultOfT(DisksRestClient, Id.SubscriptionId, context, "MockableComputeSubscriptionResource.GetManagedDisks"), data => new ManagedDiskResource(Client, data));
         }
 
         /// <summary>
@@ -962,7 +976,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ManagedDiskData, ManagedDiskResource>(new DisksGetAllCollectionResultOfT(DisksRestClient, Id.SubscriptionId, context), data => new ManagedDiskResource(Client, data));
+            return new PageableWrapper<ManagedDiskData, ManagedDiskResource>(new DisksGetAllCollectionResultOfT(DisksRestClient, Id.SubscriptionId, context, "MockableComputeSubscriptionResource.GetManagedDisks"), data => new ManagedDiskResource(Client, data));
         }
 
         /// <summary>
@@ -990,7 +1004,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DiskAccessData, DiskAccessResource>(new DiskAccessesGetAllAsyncCollectionResultOfT(DiskAccessesRestClient, Id.SubscriptionId, context), data => new DiskAccessResource(Client, data));
+            return new AsyncPageableWrapper<DiskAccessData, DiskAccessResource>(new DiskAccessesGetAllAsyncCollectionResultOfT(DiskAccessesRestClient, Id.SubscriptionId, context, "MockableComputeSubscriptionResource.GetDiskAccesses"), data => new DiskAccessResource(Client, data));
         }
 
         /// <summary>
@@ -1018,7 +1032,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DiskAccessData, DiskAccessResource>(new DiskAccessesGetAllCollectionResultOfT(DiskAccessesRestClient, Id.SubscriptionId, context), data => new DiskAccessResource(Client, data));
+            return new PageableWrapper<DiskAccessData, DiskAccessResource>(new DiskAccessesGetAllCollectionResultOfT(DiskAccessesRestClient, Id.SubscriptionId, context, "MockableComputeSubscriptionResource.GetDiskAccesses"), data => new DiskAccessResource(Client, data));
         }
 
         /// <summary>
@@ -1046,7 +1060,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DiskEncryptionSetData, DiskEncryptionSetResource>(new DiskEncryptionSetsGetAllAsyncCollectionResultOfT(DiskEncryptionSetsRestClient, Id.SubscriptionId, context), data => new DiskEncryptionSetResource(Client, data));
+            return new AsyncPageableWrapper<DiskEncryptionSetData, DiskEncryptionSetResource>(new DiskEncryptionSetsGetAllAsyncCollectionResultOfT(DiskEncryptionSetsRestClient, Id.SubscriptionId, context, "MockableComputeSubscriptionResource.GetDiskEncryptionSets"), data => new DiskEncryptionSetResource(Client, data));
         }
 
         /// <summary>
@@ -1074,7 +1088,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DiskEncryptionSetData, DiskEncryptionSetResource>(new DiskEncryptionSetsGetAllCollectionResultOfT(DiskEncryptionSetsRestClient, Id.SubscriptionId, context), data => new DiskEncryptionSetResource(Client, data));
+            return new PageableWrapper<DiskEncryptionSetData, DiskEncryptionSetResource>(new DiskEncryptionSetsGetAllCollectionResultOfT(DiskEncryptionSetsRestClient, Id.SubscriptionId, context, "MockableComputeSubscriptionResource.GetDiskEncryptionSets"), data => new DiskEncryptionSetResource(Client, data));
         }
 
         /// <summary>
@@ -1102,7 +1116,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SnapshotData, SnapshotResource>(new SnapshotsGetAllAsyncCollectionResultOfT(SnapshotsRestClient, Id.SubscriptionId, context), data => new SnapshotResource(Client, data));
+            return new AsyncPageableWrapper<SnapshotData, SnapshotResource>(new SnapshotsGetAllAsyncCollectionResultOfT(SnapshotsRestClient, Id.SubscriptionId, context, "MockableComputeSubscriptionResource.GetSnapshots"), data => new SnapshotResource(Client, data));
         }
 
         /// <summary>
@@ -1130,7 +1144,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SnapshotData, SnapshotResource>(new SnapshotsGetAllCollectionResultOfT(SnapshotsRestClient, Id.SubscriptionId, context), data => new SnapshotResource(Client, data));
+            return new PageableWrapper<SnapshotData, SnapshotResource>(new SnapshotsGetAllCollectionResultOfT(SnapshotsRestClient, Id.SubscriptionId, context, "MockableComputeSubscriptionResource.GetSnapshots"), data => new SnapshotResource(Client, data));
         }
 
         /// <summary>
@@ -1158,7 +1172,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<GalleryData, GalleryResource>(new GalleriesGetAllAsyncCollectionResultOfT(GalleriesRestClient, Id.SubscriptionId, context), data => new GalleryResource(Client, data));
+            return new AsyncPageableWrapper<GalleryData, GalleryResource>(new GalleriesGetAllAsyncCollectionResultOfT(GalleriesRestClient, Id.SubscriptionId, context, "MockableComputeSubscriptionResource.GetGalleries"), data => new GalleryResource(Client, data));
         }
 
         /// <summary>
@@ -1186,7 +1200,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<GalleryData, GalleryResource>(new GalleriesGetAllCollectionResultOfT(GalleriesRestClient, Id.SubscriptionId, context), data => new GalleryResource(Client, data));
+            return new PageableWrapper<GalleryData, GalleryResource>(new GalleriesGetAllCollectionResultOfT(GalleriesRestClient, Id.SubscriptionId, context, "MockableComputeSubscriptionResource.GetGalleries"), data => new GalleryResource(Client, data));
         }
 
         /// <summary>
@@ -1219,7 +1233,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new UsageOperationGroupGetUsagesAsyncCollectionResultOfT(UsageOperationGroupRestClient, Id.SubscriptionId, location, context);
+            return new UsageOperationGroupGetUsagesAsyncCollectionResultOfT(UsageOperationGroupRestClient, Id.SubscriptionId, location, context, "MockableComputeSubscriptionResource.GetUsages");
         }
 
         /// <summary>
@@ -1252,7 +1266,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new UsageOperationGroupGetUsagesCollectionResultOfT(UsageOperationGroupRestClient, Id.SubscriptionId, location, context);
+            return new UsageOperationGroupGetUsagesCollectionResultOfT(UsageOperationGroupRestClient, Id.SubscriptionId, location, context, "MockableComputeSubscriptionResource.GetUsages");
         }
 
         /// <summary>
@@ -1285,7 +1299,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new VirtualMachineSizesOperationGroupGetVirtualMachineSizesAsyncCollectionResultOfT(VirtualMachineSizesOperationGroupRestClient, Id.SubscriptionId, location, context);
+            return new VirtualMachineSizesOperationGroupGetVirtualMachineSizesAsyncCollectionResultOfT(VirtualMachineSizesOperationGroupRestClient, Id.SubscriptionId, location, context, "MockableComputeSubscriptionResource.GetVirtualMachineSizes");
         }
 
         /// <summary>
@@ -1318,7 +1332,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new VirtualMachineSizesOperationGroupGetVirtualMachineSizesCollectionResultOfT(VirtualMachineSizesOperationGroupRestClient, Id.SubscriptionId, location, context);
+            return new VirtualMachineSizesOperationGroupGetVirtualMachineSizesCollectionResultOfT(VirtualMachineSizesOperationGroupRestClient, Id.SubscriptionId, location, context, "MockableComputeSubscriptionResource.GetVirtualMachineSizes");
         }
 
         /// <summary>
@@ -1351,7 +1365,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VirtualMachineScaleSetData, VirtualMachineScaleSetResource>(new VirtualMachineScaleSetsOperationGroupGetVirtualMachineScaleSetsByLocationAsyncCollectionResultOfT(VirtualMachineScaleSetsOperationGroupRestClient, Id.SubscriptionId, location, context), data => new VirtualMachineScaleSetResource(Client, data));
+            return new AsyncPageableWrapper<VirtualMachineScaleSetData, VirtualMachineScaleSetResource>(new VirtualMachineScaleSetsOperationGroupGetVirtualMachineScaleSetsByLocationAsyncCollectionResultOfT(VirtualMachineScaleSetsOperationGroupRestClient, Id.SubscriptionId, location, context, "MockableComputeSubscriptionResource.GetVirtualMachineScaleSetsByLocation"), data => new VirtualMachineScaleSetResource(Client, data));
         }
 
         /// <summary>
@@ -1384,7 +1398,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VirtualMachineScaleSetData, VirtualMachineScaleSetResource>(new VirtualMachineScaleSetsOperationGroupGetVirtualMachineScaleSetsByLocationCollectionResultOfT(VirtualMachineScaleSetsOperationGroupRestClient, Id.SubscriptionId, location, context), data => new VirtualMachineScaleSetResource(Client, data));
+            return new PageableWrapper<VirtualMachineScaleSetData, VirtualMachineScaleSetResource>(new VirtualMachineScaleSetsOperationGroupGetVirtualMachineScaleSetsByLocationCollectionResultOfT(VirtualMachineScaleSetsOperationGroupRestClient, Id.SubscriptionId, location, context, "MockableComputeSubscriptionResource.GetVirtualMachineScaleSetsByLocation"), data => new VirtualMachineScaleSetResource(Client, data));
         }
 
         /// <summary>
@@ -1417,7 +1431,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VirtualMachineData, VirtualMachineResource>(new VirtualMachinesOperationGroupGetVirtualMachinesByLocationAsyncCollectionResultOfT(VirtualMachinesOperationGroupRestClient, Id.SubscriptionId, location, context), data => new VirtualMachineResource(Client, data));
+            return new AsyncPageableWrapper<VirtualMachineData, VirtualMachineResource>(new VirtualMachinesOperationGroupGetVirtualMachinesByLocationAsyncCollectionResultOfT(VirtualMachinesOperationGroupRestClient, Id.SubscriptionId, location, context, "MockableComputeSubscriptionResource.GetVirtualMachinesByLocation"), data => new VirtualMachineResource(Client, data));
         }
 
         /// <summary>
@@ -1450,7 +1464,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VirtualMachineData, VirtualMachineResource>(new VirtualMachinesOperationGroupGetVirtualMachinesByLocationCollectionResultOfT(VirtualMachinesOperationGroupRestClient, Id.SubscriptionId, location, context), data => new VirtualMachineResource(Client, data));
+            return new PageableWrapper<VirtualMachineData, VirtualMachineResource>(new VirtualMachinesOperationGroupGetVirtualMachinesByLocationCollectionResultOfT(VirtualMachinesOperationGroupRestClient, Id.SubscriptionId, location, context, "MockableComputeSubscriptionResource.GetVirtualMachinesByLocation"), data => new VirtualMachineResource(Client, data));
         }
 
         /// <summary>
@@ -1485,7 +1499,13 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new MockableComputeSubscriptionResourceGetPublishersVirtualMachineImagesEdgeZonesAsyncCollectionResultOfT(VirtualMachineImagesEdgeZoneOperationGroupRestClient, Id.SubscriptionId, location, edgeZone, context);
+            return new MockableComputeSubscriptionResourceGetPublishersVirtualMachineImagesEdgeZonesAsyncCollectionResultOfT(
+                VirtualMachineImagesEdgeZoneOperationGroupRestClient,
+                Id.SubscriptionId,
+                location,
+                edgeZone,
+                context,
+                "MockableComputeSubscriptionResource.GetPublishersVirtualMachineImagesEdgeZones");
         }
 
         /// <summary>
@@ -1520,7 +1540,13 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new MockableComputeSubscriptionResourceGetPublishersVirtualMachineImagesEdgeZonesCollectionResultOfT(VirtualMachineImagesEdgeZoneOperationGroupRestClient, Id.SubscriptionId, location, edgeZone, context);
+            return new MockableComputeSubscriptionResourceGetPublishersVirtualMachineImagesEdgeZonesCollectionResultOfT(
+                VirtualMachineImagesEdgeZoneOperationGroupRestClient,
+                Id.SubscriptionId,
+                location,
+                edgeZone,
+                context,
+                "MockableComputeSubscriptionResource.GetPublishersVirtualMachineImagesEdgeZones");
         }
 
         /// <summary>
@@ -1563,7 +1589,8 @@ namespace Azure.ResourceManager.Compute.Mocking
                 location,
                 edgeZone,
                 publisherName,
-                context);
+                context,
+                "MockableComputeSubscriptionResource.GetOffersVirtualMachineImagesEdgeZones");
         }
 
         /// <summary>
@@ -1606,7 +1633,8 @@ namespace Azure.ResourceManager.Compute.Mocking
                 location,
                 edgeZone,
                 publisherName,
-                context);
+                context,
+                "MockableComputeSubscriptionResource.GetOffersVirtualMachineImagesEdgeZones");
         }
 
         /// <summary>
@@ -1652,7 +1680,8 @@ namespace Azure.ResourceManager.Compute.Mocking
                 edgeZone,
                 publisherName,
                 offer,
-                context);
+                context,
+                "MockableComputeSubscriptionResource.GetVirtualMachineImageEdgeZoneSkus");
         }
 
         /// <summary>
@@ -1698,7 +1727,8 @@ namespace Azure.ResourceManager.Compute.Mocking
                 edgeZone,
                 publisherName,
                 offer,
-                context);
+                context,
+                "MockableComputeSubscriptionResource.GetVirtualMachineImageEdgeZoneSkus");
         }
 
         /// <summary>
@@ -1753,7 +1783,8 @@ namespace Azure.ResourceManager.Compute.Mocking
                 expand,
                 top,
                 @orderby,
-                context);
+                context,
+                "MockableComputeSubscriptionResource.GetVirtualMachineImagesEdgeZones");
         }
 
         /// <summary>
@@ -1808,7 +1839,8 @@ namespace Azure.ResourceManager.Compute.Mocking
                 expand,
                 top,
                 @orderby,
-                context);
+                context,
+                "MockableComputeSubscriptionResource.GetVirtualMachineImagesEdgeZones");
         }
 
         /// <summary>
@@ -2059,7 +2091,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new MockableComputeSubscriptionResourceGetVirtualMachineImagePublishersAsyncCollectionResultOfT(VirtualMachineImagesOperationGroupRestClient, Id.SubscriptionId, location, context);
+            return new MockableComputeSubscriptionResourceGetVirtualMachineImagePublishersAsyncCollectionResultOfT(VirtualMachineImagesOperationGroupRestClient, Id.SubscriptionId, location, context, "MockableComputeSubscriptionResource.GetVirtualMachineImagePublishers");
         }
 
         /// <summary>
@@ -2092,7 +2124,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new MockableComputeSubscriptionResourceGetVirtualMachineImagePublishersCollectionResultOfT(VirtualMachineImagesOperationGroupRestClient, Id.SubscriptionId, location, context);
+            return new MockableComputeSubscriptionResourceGetVirtualMachineImagePublishersCollectionResultOfT(VirtualMachineImagesOperationGroupRestClient, Id.SubscriptionId, location, context, "MockableComputeSubscriptionResource.GetVirtualMachineImagePublishers");
         }
 
         /// <summary>
@@ -2127,7 +2159,13 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new MockableComputeSubscriptionResourceGetVirtualMachineImageOffersAsyncCollectionResultOfT(VirtualMachineImagesOperationGroupRestClient, Id.SubscriptionId, location, publisherName, context);
+            return new MockableComputeSubscriptionResourceGetVirtualMachineImageOffersAsyncCollectionResultOfT(
+                VirtualMachineImagesOperationGroupRestClient,
+                Id.SubscriptionId,
+                location,
+                publisherName,
+                context,
+                "MockableComputeSubscriptionResource.GetVirtualMachineImageOffers");
         }
 
         /// <summary>
@@ -2162,7 +2200,13 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new MockableComputeSubscriptionResourceGetVirtualMachineImageOffersCollectionResultOfT(VirtualMachineImagesOperationGroupRestClient, Id.SubscriptionId, location, publisherName, context);
+            return new MockableComputeSubscriptionResourceGetVirtualMachineImageOffersCollectionResultOfT(
+                VirtualMachineImagesOperationGroupRestClient,
+                Id.SubscriptionId,
+                location,
+                publisherName,
+                context,
+                "MockableComputeSubscriptionResource.GetVirtualMachineImageOffers");
         }
 
         /// <summary>
@@ -2205,7 +2249,8 @@ namespace Azure.ResourceManager.Compute.Mocking
                 location,
                 publisherName,
                 offer,
-                context);
+                context,
+                "MockableComputeSubscriptionResource.GetVirtualMachineImageSkus");
         }
 
         /// <summary>
@@ -2248,7 +2293,8 @@ namespace Azure.ResourceManager.Compute.Mocking
                 location,
                 publisherName,
                 offer,
-                context);
+                context,
+                "MockableComputeSubscriptionResource.GetVirtualMachineImageSkus");
         }
 
         /// <summary>
@@ -2300,7 +2346,8 @@ namespace Azure.ResourceManager.Compute.Mocking
                 expand,
                 top,
                 @orderby,
-                context);
+                context,
+                "MockableComputeSubscriptionResource.GetVirtualMachineImages");
         }
 
         /// <summary>
@@ -2352,7 +2399,8 @@ namespace Azure.ResourceManager.Compute.Mocking
                 expand,
                 top,
                 @orderby,
-                context);
+                context,
+                "MockableComputeSubscriptionResource.GetVirtualMachineImages");
         }
 
         /// <summary>
@@ -2405,7 +2453,8 @@ namespace Azure.ResourceManager.Compute.Mocking
                 expand,
                 top,
                 @orderby,
-                context);
+                context,
+                "MockableComputeSubscriptionResource.GetVirtualMachineImagesWithProperties");
         }
 
         /// <summary>
@@ -2458,7 +2507,8 @@ namespace Azure.ResourceManager.Compute.Mocking
                 expand,
                 top,
                 @orderby,
-                context);
+                context,
+                "MockableComputeSubscriptionResource.GetVirtualMachineImagesWithProperties");
         }
 
         /// <summary>
@@ -2835,7 +2885,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new VirtualMachineRunCommandsOperationGroupGetVirtualMachineRunCommandsAsyncCollectionResultOfT(VirtualMachineRunCommandsOperationGroupRestClient, Id.SubscriptionId, location, context);
+            return new VirtualMachineRunCommandsOperationGroupGetVirtualMachineRunCommandsAsyncCollectionResultOfT(VirtualMachineRunCommandsOperationGroupRestClient, Id.SubscriptionId, location, context, "MockableComputeSubscriptionResource.GetVirtualMachineRunCommands");
         }
 
         /// <summary>
@@ -2868,7 +2918,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new VirtualMachineRunCommandsOperationGroupGetVirtualMachineRunCommandsCollectionResultOfT(VirtualMachineRunCommandsOperationGroupRestClient, Id.SubscriptionId, location, context);
+            return new VirtualMachineRunCommandsOperationGroupGetVirtualMachineRunCommandsCollectionResultOfT(VirtualMachineRunCommandsOperationGroupRestClient, Id.SubscriptionId, location, context, "MockableComputeSubscriptionResource.GetVirtualMachineRunCommands");
         }
 
         /// <summary>
@@ -2998,7 +3048,13 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ResourceSkusGetAllAsyncCollectionResultOfT(ResourceSkusRestClient, Id.SubscriptionId, filter, includeExtendedLocations, context);
+            return new ResourceSkusGetAllAsyncCollectionResultOfT(
+                ResourceSkusRestClient,
+                Id.SubscriptionId,
+                filter,
+                includeExtendedLocations,
+                context,
+                "MockableComputeSubscriptionResource.GetAll");
         }
 
         /// <summary>
@@ -3028,7 +3084,13 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ResourceSkusGetAllCollectionResultOfT(ResourceSkusRestClient, Id.SubscriptionId, filter, includeExtendedLocations, context);
+            return new ResourceSkusGetAllCollectionResultOfT(
+                ResourceSkusRestClient,
+                Id.SubscriptionId,
+                filter,
+                includeExtendedLocations,
+                context,
+                "MockableComputeSubscriptionResource.GetAll");
         }
     }
 }

@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.Compute
         private readonly string _resourceGroupName;
         private readonly string _diskEncryptionSetName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of DiskEncryptionSetsGetAssociatedResourcesCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The DiskEncryptionSets client used to send requests. </param>
@@ -28,13 +29,15 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="diskEncryptionSetName"> The name of the disk encryption set that is being created. The name can't be changed after the disk encryption set is created. Supported characters for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80 characters. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public DiskEncryptionSetsGetAssociatedResourcesCollectionResultOfT(DiskEncryptionSets client, string subscriptionId, string resourceGroupName, string diskEncryptionSetName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public DiskEncryptionSetsGetAssociatedResourcesCollectionResultOfT(DiskEncryptionSets client, string subscriptionId, string resourceGroupName, string diskEncryptionSetName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
             _diskEncryptionSetName = diskEncryptionSetName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of DiskEncryptionSetsGetAssociatedResourcesCollectionResultOfT as an enumerable collection. </summary>
@@ -67,7 +70,7 @@ namespace Azure.ResourceManager.Compute
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAssociatedResourcesRequest(nextLink, _subscriptionId, _resourceGroupName, _diskEncryptionSetName, _context) : _client.CreateGetAssociatedResourcesRequest(_subscriptionId, _resourceGroupName, _diskEncryptionSetName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("DiskEncryptionSetResource.GetAssociatedResources");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

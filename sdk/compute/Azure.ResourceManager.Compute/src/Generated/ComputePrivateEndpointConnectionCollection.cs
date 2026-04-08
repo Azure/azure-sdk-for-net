@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ComputePrivateEndpointConnectionData, ComputePrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetPrivateEndpointConnectionsAsyncCollectionResultOfT(_privateEndpointConnectionsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new ComputePrivateEndpointConnectionResource(Client, data));
+            return new AsyncPageableWrapper<ComputePrivateEndpointConnectionData, ComputePrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetPrivateEndpointConnectionsAsyncCollectionResultOfT(
+                _privateEndpointConnectionsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ComputePrivateEndpointConnectionCollection.GetAll"), data => new ComputePrivateEndpointConnectionResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ComputePrivateEndpointConnectionData, ComputePrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetPrivateEndpointConnectionsCollectionResultOfT(_privateEndpointConnectionsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new ComputePrivateEndpointConnectionResource(Client, data));
+            return new PageableWrapper<ComputePrivateEndpointConnectionData, ComputePrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetPrivateEndpointConnectionsCollectionResultOfT(
+                _privateEndpointConnectionsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ComputePrivateEndpointConnectionCollection.GetAll"), data => new ComputePrivateEndpointConnectionResource(Client, data));
         }
 
         /// <summary>

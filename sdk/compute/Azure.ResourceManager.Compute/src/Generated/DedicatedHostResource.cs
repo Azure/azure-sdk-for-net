@@ -443,7 +443,8 @@ namespace Azure.ResourceManager.Compute
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context);
+                context,
+                "DedicatedHostResource.GetAvailableSizes");
         }
 
         /// <summary>
@@ -481,7 +482,8 @@ namespace Azure.ResourceManager.Compute
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context);
+                context,
+                "DedicatedHostResource.GetAvailableSizes");
         }
 
         /// <summary>

@@ -570,7 +570,8 @@ namespace Azure.ResourceManager.Compute
                 Id.Name,
                 artifactType,
                 artifactName,
-                context);
+                context,
+                "GalleryResource.GetByArtifactName");
         }
 
         /// <summary>
@@ -616,7 +617,8 @@ namespace Azure.ResourceManager.Compute
                 Id.Name,
                 artifactType,
                 artifactName,
-                context);
+                context,
+                "GalleryResource.GetByArtifactName");
         }
 
         /// <summary> Add a tag to the current resource. </summary>

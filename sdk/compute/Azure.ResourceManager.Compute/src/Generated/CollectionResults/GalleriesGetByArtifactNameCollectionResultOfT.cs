@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.Compute
         private readonly string _artifactType;
         private readonly string _artifactName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of GalleriesGetByArtifactNameCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Galleries client used to send requests. </param>
@@ -32,7 +33,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="artifactType"> The type of the artifact to be listed, such as gallery image version. </param>
         /// <param name="artifactName"> The artifact name to be listed. If artifact type is Images, then the artifact name should be the gallery image name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public GalleriesGetByArtifactNameCollectionResultOfT(Galleries client, string subscriptionId, string resourceGroupName, string galleryName, string artifactType, string artifactName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public GalleriesGetByArtifactNameCollectionResultOfT(Galleries client, string subscriptionId, string resourceGroupName, string galleryName, string artifactType, string artifactName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -41,6 +43,7 @@ namespace Azure.ResourceManager.Compute
             _artifactType = artifactType;
             _artifactName = artifactName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of GalleriesGetByArtifactNameCollectionResultOfT as an enumerable collection. </summary>
@@ -73,7 +76,7 @@ namespace Azure.ResourceManager.Compute
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByArtifactNameRequest(nextLink, _subscriptionId, _resourceGroupName, _galleryName, _artifactType, _artifactName, _context) : _client.CreateGetByArtifactNameRequest(_subscriptionId, _resourceGroupName, _galleryName, _artifactType, _artifactName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("GalleryResource.GetByArtifactName");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

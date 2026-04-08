@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RestorePointGroupData, RestorePointGroupResource>(new RestorePointCollectionsGetAllAsyncCollectionResultOfT(_restorePointCollectionsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new RestorePointGroupResource(Client, data));
+            return new AsyncPageableWrapper<RestorePointGroupData, RestorePointGroupResource>(new RestorePointCollectionsGetAllAsyncCollectionResultOfT(_restorePointCollectionsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "RestorePointGroupCollection.GetAll"), data => new RestorePointGroupResource(Client, data));
         }
 
         /// <summary>
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RestorePointGroupData, RestorePointGroupResource>(new RestorePointCollectionsGetAllCollectionResultOfT(_restorePointCollectionsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new RestorePointGroupResource(Client, data));
+            return new PageableWrapper<RestorePointGroupData, RestorePointGroupResource>(new RestorePointCollectionsGetAllCollectionResultOfT(_restorePointCollectionsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "RestorePointGroupCollection.GetAll"), data => new RestorePointGroupResource(Client, data));
         }
 
         /// <summary>

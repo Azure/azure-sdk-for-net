@@ -309,7 +309,8 @@ namespace Azure.ResourceManager.Compute
                 filter,
                 @select,
                 expand,
-                context), data => new VirtualMachineScaleSetVmResource(Client, data));
+                context,
+                "VirtualMachineScaleSetVmCollection.GetAll"), data => new VirtualMachineScaleSetVmResource(Client, data));
         }
 
         /// <summary>
@@ -348,7 +349,8 @@ namespace Azure.ResourceManager.Compute
                 filter,
                 @select,
                 expand,
-                context), data => new VirtualMachineScaleSetVmResource(Client, data));
+                context,
+                "VirtualMachineScaleSetVmCollection.GetAll"), data => new VirtualMachineScaleSetVmResource(Client, data));
         }
 
         /// <summary>

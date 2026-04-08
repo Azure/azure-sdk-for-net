@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.Compute
         private readonly string _vmName;
         private readonly string _expand;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of VirtualMachineRunCommandsGetByVirtualMachineCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The VirtualMachineRunCommands client used to send requests. </param>
@@ -30,7 +31,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="vmName"> The name of the VirtualMachine. </param>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public VirtualMachineRunCommandsGetByVirtualMachineCollectionResultOfT(VirtualMachineRunCommands client, string subscriptionId, string resourceGroupName, string vmName, string expand, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public VirtualMachineRunCommandsGetByVirtualMachineCollectionResultOfT(VirtualMachineRunCommands client, string subscriptionId, string resourceGroupName, string vmName, string expand, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -38,6 +40,7 @@ namespace Azure.ResourceManager.Compute
             _vmName = vmName;
             _expand = expand;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of VirtualMachineRunCommandsGetByVirtualMachineCollectionResultOfT as an enumerable collection. </summary>
@@ -70,7 +73,7 @@ namespace Azure.ResourceManager.Compute
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByVirtualMachineRequest(nextLink, _subscriptionId, _resourceGroupName, _vmName, _expand, _context) : _client.CreateGetByVirtualMachineRequest(_subscriptionId, _resourceGroupName, _vmName, _expand, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("VirtualMachineRunCommandCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

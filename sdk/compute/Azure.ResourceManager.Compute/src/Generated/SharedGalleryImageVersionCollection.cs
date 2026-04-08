@@ -186,7 +186,8 @@ namespace Azure.ResourceManager.Compute
                 Id.Parent.Name,
                 Id.Name,
                 sharedTo?.ToString(),
-                context), data => new SharedGalleryImageVersionResource(Client, data));
+                context,
+                "SharedGalleryImageVersionCollection.GetAll"), data => new SharedGalleryImageVersionResource(Client, data));
         }
 
         /// <summary>
@@ -222,7 +223,8 @@ namespace Azure.ResourceManager.Compute
                 Id.Parent.Name,
                 Id.Name,
                 sharedTo?.ToString(),
-                context), data => new SharedGalleryImageVersionResource(Client, data));
+                context,
+                "SharedGalleryImageVersionCollection.GetAll"), data => new SharedGalleryImageVersionResource(Client, data));
         }
 
         /// <summary>

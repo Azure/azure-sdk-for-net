@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VirtualMachineScaleSetData, VirtualMachineScaleSetResource>(new VirtualMachineScaleSetsGetAllAsyncCollectionResultOfT(_virtualMachineScaleSetsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new VirtualMachineScaleSetResource(Client, data));
+            return new AsyncPageableWrapper<VirtualMachineScaleSetData, VirtualMachineScaleSetResource>(new VirtualMachineScaleSetsGetAllAsyncCollectionResultOfT(_virtualMachineScaleSetsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "VirtualMachineScaleSetCollection.GetAll"), data => new VirtualMachineScaleSetResource(Client, data));
         }
 
         /// <summary>
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VirtualMachineScaleSetData, VirtualMachineScaleSetResource>(new VirtualMachineScaleSetsGetAllCollectionResultOfT(_virtualMachineScaleSetsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new VirtualMachineScaleSetResource(Client, data));
+            return new PageableWrapper<VirtualMachineScaleSetData, VirtualMachineScaleSetResource>(new VirtualMachineScaleSetsGetAllCollectionResultOfT(_virtualMachineScaleSetsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "VirtualMachineScaleSetCollection.GetAll"), data => new VirtualMachineScaleSetResource(Client, data));
         }
 
         /// <summary>

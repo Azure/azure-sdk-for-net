@@ -183,7 +183,8 @@ namespace Azure.ResourceManager.Compute
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new CommunityGalleryImageVersionResource(Client, data));
+                context,
+                "CommunityGalleryImageVersionCollection.GetAll"), data => new CommunityGalleryImageVersionResource(Client, data));
         }
 
         /// <summary>
@@ -217,7 +218,8 @@ namespace Azure.ResourceManager.Compute
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new CommunityGalleryImageVersionResource(Client, data));
+                context,
+                "CommunityGalleryImageVersionCollection.GetAll"), data => new CommunityGalleryImageVersionResource(Client, data));
         }
 
         /// <summary>

@@ -299,7 +299,8 @@ namespace Azure.ResourceManager.Compute
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new GalleryScriptVersionResource(Client, data));
+                context,
+                "GalleryScriptVersionCollection.GetAll"), data => new GalleryScriptVersionResource(Client, data));
         }
 
         /// <summary>
@@ -333,7 +334,8 @@ namespace Azure.ResourceManager.Compute
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new GalleryScriptVersionResource(Client, data));
+                context,
+                "GalleryScriptVersionCollection.GetAll"), data => new GalleryScriptVersionResource(Client, data));
         }
 
         /// <summary>

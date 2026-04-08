@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.Compute
         private readonly string _resourceGroupName;
         private readonly string _vmScaleSetName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of VirtualMachineScaleSetsGetOSUpgradeHistoryCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The VirtualMachineScaleSets client used to send requests. </param>
@@ -28,13 +29,15 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="vmScaleSetName"> The name of the VM scale set. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public VirtualMachineScaleSetsGetOSUpgradeHistoryCollectionResultOfT(VirtualMachineScaleSets client, string subscriptionId, string resourceGroupName, string vmScaleSetName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public VirtualMachineScaleSetsGetOSUpgradeHistoryCollectionResultOfT(VirtualMachineScaleSets client, string subscriptionId, string resourceGroupName, string vmScaleSetName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
             _vmScaleSetName = vmScaleSetName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of VirtualMachineScaleSetsGetOSUpgradeHistoryCollectionResultOfT as an enumerable collection. </summary>
@@ -67,7 +70,7 @@ namespace Azure.ResourceManager.Compute
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetOSUpgradeHistoryRequest(nextLink, _subscriptionId, _resourceGroupName, _vmScaleSetName, _context) : _client.CreateGetOSUpgradeHistoryRequest(_subscriptionId, _resourceGroupName, _vmScaleSetName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("VirtualMachineScaleSetResource.GetOSUpgradeHistory");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

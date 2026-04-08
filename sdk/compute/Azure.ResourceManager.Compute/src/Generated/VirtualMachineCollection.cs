@@ -311,7 +311,8 @@ namespace Azure.ResourceManager.Compute
                 Id.ResourceGroupName,
                 filter,
                 expand?.ToString(),
-                context), data => new VirtualMachineResource(Client, data));
+                context,
+                "VirtualMachineCollection.GetAll"), data => new VirtualMachineResource(Client, data));
         }
 
         /// <summary>
@@ -347,7 +348,8 @@ namespace Azure.ResourceManager.Compute
                 Id.ResourceGroupName,
                 filter,
                 expand?.ToString(),
-                context), data => new VirtualMachineResource(Client, data));
+                context,
+                "VirtualMachineCollection.GetAll"), data => new VirtualMachineResource(Client, data));
         }
 
         /// <summary>

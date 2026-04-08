@@ -1144,7 +1144,13 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new VirtualMachineScaleSetsGetOSUpgradeHistoryAsyncCollectionResultOfT(_virtualMachineScaleSetsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+            return new VirtualMachineScaleSetsGetOSUpgradeHistoryAsyncCollectionResultOfT(
+                _virtualMachineScaleSetsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "VirtualMachineScaleSetResource.GetOSUpgradeHistory");
         }
 
         /// <summary>
@@ -1176,7 +1182,13 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new VirtualMachineScaleSetsGetOSUpgradeHistoryCollectionResultOfT(_virtualMachineScaleSetsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+            return new VirtualMachineScaleSetsGetOSUpgradeHistoryCollectionResultOfT(
+                _virtualMachineScaleSetsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "VirtualMachineScaleSetResource.GetOSUpgradeHistory");
         }
 
         /// <summary>
@@ -1208,7 +1220,13 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new VirtualMachineScaleSetsGetSkusAsyncCollectionResultOfT(_virtualMachineScaleSetsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+            return new VirtualMachineScaleSetsGetSkusAsyncCollectionResultOfT(
+                _virtualMachineScaleSetsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "VirtualMachineScaleSetResource.GetSkus");
         }
 
         /// <summary>
@@ -1240,7 +1258,13 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new VirtualMachineScaleSetsGetSkusCollectionResultOfT(_virtualMachineScaleSetsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+            return new VirtualMachineScaleSetsGetSkusCollectionResultOfT(
+                _virtualMachineScaleSetsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "VirtualMachineScaleSetResource.GetSkus");
         }
 
         /// <summary>

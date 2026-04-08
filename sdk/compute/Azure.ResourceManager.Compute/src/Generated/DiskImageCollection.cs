@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DiskImageData, DiskImageResource>(new ImagesGetByResourceGroupAsyncCollectionResultOfT(_imagesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new DiskImageResource(Client, data));
+            return new AsyncPageableWrapper<DiskImageData, DiskImageResource>(new ImagesGetByResourceGroupAsyncCollectionResultOfT(_imagesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "DiskImageCollection.GetAll"), data => new DiskImageResource(Client, data));
         }
 
         /// <summary>
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DiskImageData, DiskImageResource>(new ImagesGetByResourceGroupCollectionResultOfT(_imagesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new DiskImageResource(Client, data));
+            return new PageableWrapper<DiskImageData, DiskImageResource>(new ImagesGetByResourceGroupCollectionResultOfT(_imagesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "DiskImageCollection.GetAll"), data => new DiskImageResource(Client, data));
         }
 
         /// <summary>

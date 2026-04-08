@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DiskAccessData, DiskAccessResource>(new DiskAccessesGetByResourceGroupAsyncCollectionResultOfT(_diskAccessesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new DiskAccessResource(Client, data));
+            return new AsyncPageableWrapper<DiskAccessData, DiskAccessResource>(new DiskAccessesGetByResourceGroupAsyncCollectionResultOfT(_diskAccessesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "DiskAccessCollection.GetAll"), data => new DiskAccessResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DiskAccessData, DiskAccessResource>(new DiskAccessesGetByResourceGroupCollectionResultOfT(_diskAccessesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new DiskAccessResource(Client, data));
+            return new PageableWrapper<DiskAccessData, DiskAccessResource>(new DiskAccessesGetByResourceGroupCollectionResultOfT(_diskAccessesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "DiskAccessCollection.GetAll"), data => new DiskAccessResource(Client, data));
         }
 
         /// <summary>

@@ -177,7 +177,13 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CommunityGalleryImageData, CommunityGalleryImageResource>(new CommunityGalleryImagesGetAllAsyncCollectionResultOfT(_communityGalleryImagesRestClient, Id.SubscriptionId, Id.Parent.Name, Id.Name, context), data => new CommunityGalleryImageResource(Client, data));
+            return new AsyncPageableWrapper<CommunityGalleryImageData, CommunityGalleryImageResource>(new CommunityGalleryImagesGetAllAsyncCollectionResultOfT(
+                _communityGalleryImagesRestClient,
+                Id.SubscriptionId,
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "CommunityGalleryImageCollection.GetAll"), data => new CommunityGalleryImageResource(Client, data));
         }
 
         /// <summary>
@@ -205,7 +211,13 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CommunityGalleryImageData, CommunityGalleryImageResource>(new CommunityGalleryImagesGetAllCollectionResultOfT(_communityGalleryImagesRestClient, Id.SubscriptionId, Id.Parent.Name, Id.Name, context), data => new CommunityGalleryImageResource(Client, data));
+            return new PageableWrapper<CommunityGalleryImageData, CommunityGalleryImageResource>(new CommunityGalleryImagesGetAllCollectionResultOfT(
+                _communityGalleryImagesRestClient,
+                Id.SubscriptionId,
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "CommunityGalleryImageCollection.GetAll"), data => new CommunityGalleryImageResource(Client, data));
         }
 
         /// <summary>
