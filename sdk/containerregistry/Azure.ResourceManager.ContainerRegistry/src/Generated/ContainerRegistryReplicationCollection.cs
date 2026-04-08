@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         {
             if (id.ResourceType != ContainerRegistryResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ContainerRegistryResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ContainerRegistryResource.ResourceType), nameof(id));
             }
         }
 
@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.ContainerRegistry
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ContainerRegistryReplicationData, ContainerRegistryReplicationResource>(new ReplicationsGetAllAsyncCollectionResultOfT(_replicationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ContainerRegistryReplicationResource(Client, data));
+            return new AsyncPageableWrapper<ContainerRegistryReplicationData, ContainerRegistryReplicationResource>(new ReplicationsGetAllAsyncCollectionResultOfT(
+                _replicationsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ContainerRegistryReplicationCollection.GetAll"), data => new ContainerRegistryReplicationResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.ContainerRegistry
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ContainerRegistryReplicationData, ContainerRegistryReplicationResource>(new ReplicationsGetAllCollectionResultOfT(_replicationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ContainerRegistryReplicationResource(Client, data));
+            return new PageableWrapper<ContainerRegistryReplicationData, ContainerRegistryReplicationResource>(new ReplicationsGetAllCollectionResultOfT(
+                _replicationsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ContainerRegistryReplicationCollection.GetAll"), data => new ContainerRegistryReplicationResource(Client, data));
         }
 
         /// <summary>

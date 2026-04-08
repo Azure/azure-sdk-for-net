@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.FileShares.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<FileShareData, FileShareResource>(new FileSharesInterfaceGetBySubscriptionAsyncCollectionResultOfT(FileSharesInterfaceRestClient, Guid.Parse(Id.SubscriptionId), context), data => new FileShareResource(Client, data));
+            return new AsyncPageableWrapper<FileShareData, FileShareResource>(new FileSharesInterfaceGetBySubscriptionAsyncCollectionResultOfT(FileSharesInterfaceRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableFileSharesSubscriptionResource.GetFileShares"), data => new FileShareResource(Client, data));
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.FileShares.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<FileShareData, FileShareResource>(new FileSharesInterfaceGetBySubscriptionCollectionResultOfT(FileSharesInterfaceRestClient, Guid.Parse(Id.SubscriptionId), context), data => new FileShareResource(Client, data));
+            return new PageableWrapper<FileShareData, FileShareResource>(new FileSharesInterfaceGetBySubscriptionCollectionResultOfT(FileSharesInterfaceRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableFileSharesSubscriptionResource.GetFileShares"), data => new FileShareResource(Client, data));
         }
 
         /// <summary>

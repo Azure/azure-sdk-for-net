@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DeploymentStackData, DeploymentStackResource>(new DeploymentStacksAtScopeGetAllAsyncCollectionResultOfT(_deploymentStacksAtScopeRestClient, Id, context), data => new DeploymentStackResource(Client, data));
+            return new AsyncPageableWrapper<DeploymentStackData, DeploymentStackResource>(new DeploymentStacksAtScopeGetAllAsyncCollectionResultOfT(_deploymentStacksAtScopeRestClient, Id, context, "DeploymentStackCollection.GetAll"), data => new DeploymentStackResource(Client, data));
         }
 
         /// <summary>
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DeploymentStackData, DeploymentStackResource>(new DeploymentStacksAtScopeGetAllCollectionResultOfT(_deploymentStacksAtScopeRestClient, Id, context), data => new DeploymentStackResource(Client, data));
+            return new PageableWrapper<DeploymentStackData, DeploymentStackResource>(new DeploymentStacksAtScopeGetAllCollectionResultOfT(_deploymentStacksAtScopeRestClient, Id, context, "DeploymentStackCollection.GetAll"), data => new DeploymentStackResource(Client, data));
         }
 
         /// <summary>

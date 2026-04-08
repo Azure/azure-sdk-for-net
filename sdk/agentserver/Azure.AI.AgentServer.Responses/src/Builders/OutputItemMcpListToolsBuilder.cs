@@ -58,7 +58,8 @@ public class OutputItemMcpListToolsBuilder : OutputItemBuilder<OutputItemMcpList
     }
 
     /// <summary>
-    /// Produces a <c>response.mcp_list_tools.completed</c> event.
+    /// Produces a <c>response.mcp_list_tools.completed</c> event and records the terminal
+    /// state so that <see cref="EmitDone"/> knows the operation succeeded (S-060).
     /// </summary>
     /// <returns>A <see cref="ResponseMCPListToolsCompletedEvent"/>.</returns>
     public virtual ResponseMCPListToolsCompletedEvent EmitCompleted()
@@ -68,7 +69,8 @@ public class OutputItemMcpListToolsBuilder : OutputItemBuilder<OutputItemMcpList
     }
 
     /// <summary>
-    /// Produces a <c>response.mcp_list_tools.failed</c> event.
+    /// Produces a <c>response.mcp_list_tools.failed</c> event and records the terminal
+    /// state so that <see cref="EmitDone"/> knows the operation failed (S-060).
     /// </summary>
     /// <returns>A <see cref="ResponseMCPListToolsFailedEvent"/>.</returns>
     public virtual ResponseMCPListToolsFailedEvent EmitFailed()
@@ -79,6 +81,8 @@ public class OutputItemMcpListToolsBuilder : OutputItemBuilder<OutputItemMcpList
 
     /// <summary>
     /// Produces a <c>response.output_item.done</c> event with the MCP list tools item.
+    /// The <see cref="OutputItemMcpListTools.Error"/> property is not populated by this
+    /// builder; callers should set it on the item if <see cref="EmitFailed"/> was called (S-060).
     /// </summary>
     /// <returns>A <see cref="ResponseOutputItemDoneEvent"/> for this MCP list tools item.</returns>
     public virtual ResponseOutputItemDoneEvent EmitDone()

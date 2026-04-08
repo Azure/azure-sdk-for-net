@@ -12,8 +12,8 @@ namespace Azure.AI.AgentServer.Responses.Tests.Protocol;
 
 /// <summary>
 /// Protocol tests for User Story 2 — Non-Background Responses Are Ephemeral.
-/// Verifies FR-004 (non-bg cancelled/disconnected → no persistence, GET 404),
-/// FR-005 (non-bg terminal → persisted, GET 200).
+/// Verifies B14/B16/B17 (non-bg cancelled/disconnected → no persistence, GET 404),
+/// B5/B16 (non-bg terminal → persisted, GET 200).
 /// </summary>
 public class EphemeralNonBgResponseTests : ProtocolTestBase
 {

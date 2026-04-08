@@ -12,4 +12,3 @@ extends:
       safeName: AzureResourceManagerPrivateDns
     - name: Azure.Provisioning.PrivateDns
       safeName: AzureProvisioningPrivateDns
-    TestDependsOnDependency: Azure.ResourceManager.PrivateDns

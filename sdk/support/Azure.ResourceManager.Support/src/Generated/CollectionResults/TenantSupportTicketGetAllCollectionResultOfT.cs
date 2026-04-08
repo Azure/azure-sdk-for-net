@@ -20,18 +20,21 @@ namespace Azure.ResourceManager.Support
         private readonly int? _top;
         private readonly string _filter;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of TenantSupportTicketGetAllCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The TenantSupportTicket client used to send requests. </param>
         /// <param name="top"> The number of values to return in the collection. Default is 25 and max is 100. </param>
         /// <param name="filter"> The filter to apply on the operation. We support 'odata v4.0' filter semantics. &lt;a target='_blank' href='https://docs.microsoft.com/odata/concepts/queryoptions-overview'&gt;Learn more&lt;/a&gt; &lt;br/&gt;<i>Status</i> , <i>ServiceId</i>, and <i>ProblemClassificationId</i> filters can only be used with 'eq' operator. For <i>CreatedDate</i> filter, the supported operators are 'gt' and 'ge'. When using both filters, combine them using the logical 'AND'. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public TenantSupportTicketGetAllCollectionResultOfT(TenantSupportTicket client, int? top, string filter, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public TenantSupportTicketGetAllCollectionResultOfT(TenantSupportTicket client, int? top, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _top = top;
             _filter = filter;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of TenantSupportTicketGetAllCollectionResultOfT as an enumerable collection. </summary>
@@ -65,7 +68,7 @@ namespace Azure.ResourceManager.Support
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _top, _filter, _context) : _client.CreateGetAllRequest(_top, _filter, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("TenantSupportTicketCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

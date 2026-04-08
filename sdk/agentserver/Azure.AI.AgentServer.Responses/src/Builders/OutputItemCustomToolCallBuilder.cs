@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Text;
 using Azure.AI.AgentServer.Responses.Models;
 
 namespace Azure.AI.AgentServer.Responses;
@@ -76,6 +77,37 @@ public class OutputItemCustomToolCallBuilder : OutputItemBuilder<OutputItemCusto
         _finalInput = input;
         return new ResponseCustomToolCallInputDoneEvent(
             _stream.NextSequenceNumber(), _outputIndex, _itemId, input);
+    }
+
+    /// <summary>
+    /// Convenience generator that emits a complete input as delta → done events.
+    /// </summary>
+    /// <param name="input">The complete input text.</param>
+    /// <returns>An enumerable of <see cref="ResponseStreamEvent"/> for the input.</returns>
+    public IEnumerable<ResponseStreamEvent> Input(string input)
+    {
+        yield return EmitInputDelta(input);
+        yield return EmitInputDone(input);
+    }
+
+    /// <summary>
+    /// Convenience generator that streams input chunks as real-time delta events
+    /// followed by a done event with the accumulated input.
+    /// </summary>
+    /// <param name="chunks">An async sequence of input text chunks.</param>
+    /// <param name="cancellationToken">A token to cancel the operation.</param>
+    /// <returns>An async enumerable of <see cref="ResponseStreamEvent"/> for the input.</returns>
+    public async IAsyncEnumerable<ResponseStreamEvent> Input(
+        IAsyncEnumerable<string> chunks,
+        [System.Runtime.CompilerServices.EnumeratorCancellation] CancellationToken cancellationToken = default)
+    {
+        var accumulated = new StringBuilder();
+        await foreach (var chunk in chunks.WithCancellation(cancellationToken).ConfigureAwait(false))
+        {
+            accumulated.Append(chunk);
+            yield return EmitInputDelta(chunk);
+        }
+        yield return EmitInputDone(accumulated.ToString());
     }
 
     /// <summary>

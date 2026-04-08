@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Maps.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MapsAccountData, MapsAccountResource>(new AccountsGetBySubscriptionAsyncCollectionResultOfT(AccountsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new MapsAccountResource(Client, data));
+            return new AsyncPageableWrapper<MapsAccountData, MapsAccountResource>(new AccountsGetBySubscriptionAsyncCollectionResultOfT(AccountsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMapsSubscriptionResource.GetMapsAccounts"), data => new MapsAccountResource(Client, data));
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Maps.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MapsAccountData, MapsAccountResource>(new AccountsGetBySubscriptionCollectionResultOfT(AccountsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new MapsAccountResource(Client, data));
+            return new PageableWrapper<MapsAccountData, MapsAccountResource>(new AccountsGetBySubscriptionCollectionResultOfT(AccountsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMapsSubscriptionResource.GetMapsAccounts"), data => new MapsAccountResource(Client, data));
         }
     }
 }

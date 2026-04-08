@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         {
             if (id.ResourceType != DataProtectionBackupVaultResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DataProtectionBackupVaultResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DataProtectionBackupVaultResource.ResourceType), nameof(id));
             }
         }
 
@@ -299,7 +299,13 @@ namespace Azure.ResourceManager.DataProtectionBackup
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataProtectionBackupInstanceData, DataProtectionBackupInstanceResource>(new BackupInstancesGetAllAsyncCollectionResultOfT(_backupInstancesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new DataProtectionBackupInstanceResource(Client, data));
+            return new AsyncPageableWrapper<DataProtectionBackupInstanceData, DataProtectionBackupInstanceResource>(new BackupInstancesGetAllAsyncCollectionResultOfT(
+                _backupInstancesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DataProtectionBackupInstanceCollection.GetAll"), data => new DataProtectionBackupInstanceResource(Client, data));
         }
 
         /// <summary>
@@ -327,7 +333,13 @@ namespace Azure.ResourceManager.DataProtectionBackup
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataProtectionBackupInstanceData, DataProtectionBackupInstanceResource>(new BackupInstancesGetAllCollectionResultOfT(_backupInstancesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new DataProtectionBackupInstanceResource(Client, data));
+            return new PageableWrapper<DataProtectionBackupInstanceData, DataProtectionBackupInstanceResource>(new BackupInstancesGetAllCollectionResultOfT(
+                _backupInstancesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DataProtectionBackupInstanceCollection.GetAll"), data => new DataProtectionBackupInstanceResource(Client, data));
         }
 
         /// <summary>

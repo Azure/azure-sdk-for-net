@@ -24,4 +24,3 @@ extends:
       - /sdk/storage/Azure.Storage.Queues/
     TestSetupSteps:
     - template: /sdk/storage/tests-install-azurite.yml
-    TestDependsOnDependency: Microsoft.Azure.WebJobs.Extensions.Storage

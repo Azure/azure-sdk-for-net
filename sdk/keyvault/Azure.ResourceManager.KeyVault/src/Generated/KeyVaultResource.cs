@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.KeyVault
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -424,7 +424,13 @@ namespace Azure.ResourceManager.KeyVault
             {
                 CancellationToken = cancellationToken
             };
-            return new VaultsGetPrivateLinkResourcesAsyncCollectionResultOfT(_vaultsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new VaultsGetPrivateLinkResourcesAsyncCollectionResultOfT(
+                _vaultsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "KeyVaultResource.GetPrivateLinkResources");
         }
 
         /// <summary>
@@ -456,7 +462,13 @@ namespace Azure.ResourceManager.KeyVault
             {
                 CancellationToken = cancellationToken
             };
-            return new VaultsGetPrivateLinkResourcesCollectionResultOfT(_vaultsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new VaultsGetPrivateLinkResourcesCollectionResultOfT(
+                _vaultsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "KeyVaultResource.GetPrivateLinkResources");
         }
 
         /// <summary>
