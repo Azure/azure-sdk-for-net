@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.Resources.Policy
 {
     /// <summary>
     /// A class representing a collection of <see cref="PolicyExemptionResource"/> and their operations.
-    /// Each <see cref="PolicyExemptionResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
-    /// To get a <see cref="PolicyExemptionCollection"/> instance call the GetPolicyExemptions method from an instance of <see cref="ArmResource"/>.
+    /// Each <see cref="PolicyExemptionResource"/> in the collection will belong to the same instance of <see cref="PolicyExemptionResource"/>.
+    /// To get a <see cref="PolicyExemptionCollection"/> instance call the GetPolicyExemptions method from an instance of <see cref="PolicyExemptionResource"/>.
     /// </summary>
     public partial class PolicyExemptionCollection : ArmCollection
     {

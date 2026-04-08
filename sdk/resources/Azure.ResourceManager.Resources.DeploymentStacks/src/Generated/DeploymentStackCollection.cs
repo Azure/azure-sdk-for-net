@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
 {
     /// <summary>
     /// A class representing a collection of <see cref="DeploymentStackResource"/> and their operations.
-    /// Each <see cref="DeploymentStackResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
-    /// To get a <see cref="DeploymentStackCollection"/> instance call the GetDeploymentStacks method from an instance of <see cref="ArmResource"/>.
+    /// Each <see cref="DeploymentStackResource"/> in the collection will belong to the same instance of <see cref="DeploymentStackResource"/>.
+    /// To get a <see cref="DeploymentStackCollection"/> instance call the GetDeploymentStacks method from an instance of <see cref="DeploymentStackResource"/>.
     /// </summary>
     public partial class DeploymentStackCollection : ArmCollection, IEnumerable<DeploymentStackResource>, IAsyncEnumerable<DeploymentStackResource>
     {

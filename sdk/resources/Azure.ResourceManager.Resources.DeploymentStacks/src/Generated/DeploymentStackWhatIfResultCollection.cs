@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
 {
     /// <summary>
     /// A class representing a collection of <see cref="DeploymentStackWhatIfResultResource"/> and their operations.
-    /// Each <see cref="DeploymentStackWhatIfResultResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
-    /// To get a <see cref="DeploymentStackWhatIfResultCollection"/> instance call the GetDeploymentStackWhatIfResults method from an instance of <see cref="ArmResource"/>.
+    /// Each <see cref="DeploymentStackWhatIfResultResource"/> in the collection will belong to the same instance of <see cref="DeploymentStackWhatIfResultResource"/>.
+    /// To get a <see cref="DeploymentStackWhatIfResultCollection"/> instance call the GetDeploymentStackWhatIfResults method from an instance of <see cref="DeploymentStackWhatIfResultResource"/>.
     /// </summary>
     public partial class DeploymentStackWhatIfResultCollection : ArmCollection, IEnumerable<DeploymentStackWhatIfResultResource>, IAsyncEnumerable<DeploymentStackWhatIfResultResource>
     {

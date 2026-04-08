@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.Resources.Policy
 {
     /// <summary>
     /// A class representing a collection of <see cref="PolicyAssignmentResource"/> and their operations.
-    /// Each <see cref="PolicyAssignmentResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
-    /// To get a <see cref="PolicyAssignmentCollection"/> instance call the GetPolicyAssignments method from an instance of <see cref="ArmResource"/>.
+    /// Each <see cref="PolicyAssignmentResource"/> in the collection will belong to the same instance of <see cref="PolicyAssignmentResource"/>.
+    /// To get a <see cref="PolicyAssignmentCollection"/> instance call the GetPolicyAssignments method from an instance of <see cref="PolicyAssignmentResource"/>.
     /// </summary>
     public partial class PolicyAssignmentCollection : ArmCollection
     {
