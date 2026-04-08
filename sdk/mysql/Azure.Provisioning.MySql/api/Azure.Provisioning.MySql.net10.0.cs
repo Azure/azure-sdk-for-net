@@ -14,8 +14,6 @@ namespace Azure.Provisioning.MySql
         public static Azure.Provisioning.MySql.AdvancedThreatProtection FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
-            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
-            public static readonly string V2024_12_01_PREVIEW;
             public static readonly string V2024_12_30;
         }
     }
@@ -81,8 +79,6 @@ namespace Azure.Provisioning.MySql
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
-            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
-            public static readonly string V2024_12_01_PREVIEW;
             public static readonly string V2024_12_30;
         }
     }
@@ -102,8 +98,6 @@ namespace Azure.Provisioning.MySql
         public static Azure.Provisioning.MySql.MySqlFlexibleServerAadAdministrator FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
-            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
-            public static readonly string V2024_12_01_PREVIEW;
             public static readonly string V2024_12_30;
         }
     }
@@ -126,8 +120,6 @@ namespace Azure.Provisioning.MySql
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
-            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
-            public static readonly string V2024_12_01_PREVIEW;
             public static readonly string V2024_12_30;
         }
     }
@@ -170,8 +162,6 @@ namespace Azure.Provisioning.MySql
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
-            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
-            public static readonly string V2024_12_01_PREVIEW;
             public static readonly string V2024_12_30;
         }
     }
@@ -218,8 +208,6 @@ namespace Azure.Provisioning.MySql
         public static Azure.Provisioning.MySql.MySqlFlexibleServerConfiguration FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
-            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
-            public static readonly string V2024_12_01_PREVIEW;
             public static readonly string V2024_12_30;
         }
     }
@@ -250,8 +238,6 @@ namespace Azure.Provisioning.MySql
         public static Azure.Provisioning.MySql.MySqlFlexibleServerDatabase FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
-            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
-            public static readonly string V2024_12_01_PREVIEW;
             public static readonly string V2024_12_30;
         }
     }
@@ -296,8 +282,6 @@ namespace Azure.Provisioning.MySql
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
-            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
-            public static readonly string V2024_12_01_PREVIEW;
             public static readonly string V2024_12_30;
         }
     }
@@ -346,8 +330,6 @@ namespace Azure.Provisioning.MySql
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
-            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
-            public static readonly string V2024_12_01_PREVIEW;
             public static readonly string V2024_12_30;
         }
     }
@@ -418,8 +400,6 @@ namespace Azure.Provisioning.MySql
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
-            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
-            public static readonly string V2024_12_01_PREVIEW;
             public static readonly string V2024_12_30;
         }
     }
@@ -451,8 +431,6 @@ namespace Azure.Provisioning.MySql
         public static Azure.Provisioning.MySql.MySqlFlexibleServersPrivateEndpointConnection FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
-            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
-            public static readonly string V2024_12_01_PREVIEW;
             public static readonly string V2024_12_30;
         }
     }
