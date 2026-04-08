@@ -185,7 +185,8 @@ namespace Azure.ResourceManager.DevCenter
                 Id.Parent.Name,
                 Id.Name,
                 top,
-                context), data => new DevCenterCatalogTaskResource(Client, data));
+                context,
+                "DevCenterCatalogTaskCollection.GetAll"), data => new DevCenterCatalogTaskResource(Client, data));
         }
 
         /// <summary>
@@ -221,7 +222,8 @@ namespace Azure.ResourceManager.DevCenter
                 Id.Parent.Name,
                 Id.Name,
                 top,
-                context), data => new DevCenterCatalogTaskResource(Client, data));
+                context,
+                "DevCenterCatalogTaskCollection.GetAll"), data => new DevCenterCatalogTaskResource(Client, data));
         }
 
         /// <summary>

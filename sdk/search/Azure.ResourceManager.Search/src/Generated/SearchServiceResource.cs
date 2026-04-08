@@ -657,7 +657,8 @@ namespace Azure.ResourceManager.Search
                 Id.ResourceGroupName,
                 Id.Name,
                 default,
-                context);
+                context,
+                "SearchServiceResource.GetQueryKeysBySearchService");
         }
 
         /// <summary>
@@ -696,7 +697,8 @@ namespace Azure.ResourceManager.Search
                 Id.ResourceGroupName,
                 Id.Name,
                 default,
-                context);
+                context,
+                "SearchServiceResource.GetQueryKeysBySearchService");
         }
 
         /// <summary>
@@ -735,7 +737,8 @@ namespace Azure.ResourceManager.Search
                 Id.ResourceGroupName,
                 Id.Name,
                 default,
-                context);
+                context,
+                "SearchServiceResource.GetSupportedPrivateLinkResources");
         }
 
         /// <summary>
@@ -774,7 +777,8 @@ namespace Azure.ResourceManager.Search
                 Id.ResourceGroupName,
                 Id.Name,
                 default,
-                context);
+                context,
+                "SearchServiceResource.GetSupportedPrivateLinkResources");
         }
 
         /// <summary>

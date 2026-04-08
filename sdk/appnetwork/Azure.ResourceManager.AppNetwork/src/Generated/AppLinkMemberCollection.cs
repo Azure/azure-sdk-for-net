@@ -297,7 +297,13 @@ namespace Azure.ResourceManager.AppNetwork
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AppLinkMemberData, AppLinkMemberResource>(new AppLinkMembersGetByAppLinkAsyncCollectionResultOfT(_appLinkMembersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new AppLinkMemberResource(Client, data));
+            return new AsyncPageableWrapper<AppLinkMemberData, AppLinkMemberResource>(new AppLinkMembersGetByAppLinkAsyncCollectionResultOfT(
+                _appLinkMembersRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "AppLinkMemberCollection.GetAll"), data => new AppLinkMemberResource(Client, data));
         }
 
         /// <summary>
@@ -325,7 +331,13 @@ namespace Azure.ResourceManager.AppNetwork
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AppLinkMemberData, AppLinkMemberResource>(new AppLinkMembersGetByAppLinkCollectionResultOfT(_appLinkMembersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new AppLinkMemberResource(Client, data));
+            return new PageableWrapper<AppLinkMemberData, AppLinkMemberResource>(new AppLinkMembersGetByAppLinkCollectionResultOfT(
+                _appLinkMembersRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "AppLinkMemberCollection.GetAll"), data => new AppLinkMemberResource(Client, data));
         }
 
         /// <summary>

@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Maps
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MapsAccountData, MapsAccountResource>(new AccountsGetByResourceGroupAsyncCollectionResultOfT(_accountsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new MapsAccountResource(Client, data));
+            return new AsyncPageableWrapper<MapsAccountData, MapsAccountResource>(new AccountsGetByResourceGroupAsyncCollectionResultOfT(_accountsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MapsAccountCollection.GetAll"), data => new MapsAccountResource(Client, data));
         }
 
         /// <summary>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.Maps
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MapsAccountData, MapsAccountResource>(new AccountsGetByResourceGroupCollectionResultOfT(_accountsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new MapsAccountResource(Client, data));
+            return new PageableWrapper<MapsAccountData, MapsAccountResource>(new AccountsGetByResourceGroupCollectionResultOfT(_accountsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MapsAccountCollection.GetAll"), data => new MapsAccountResource(Client, data));
         }
 
         /// <summary>

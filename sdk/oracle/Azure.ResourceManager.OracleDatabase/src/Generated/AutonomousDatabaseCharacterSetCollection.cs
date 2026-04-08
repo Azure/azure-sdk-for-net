@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AutonomousDatabaseCharacterSetData, AutonomousDatabaseCharacterSetResource>(new AutonomousDatabaseCharacterSetsGetByLocationAsyncCollectionResultOfT(_autonomousDatabaseCharacterSetsRestClient, Guid.Parse(Id.SubscriptionId), _location, context), data => new AutonomousDatabaseCharacterSetResource(Client, data));
+            return new AsyncPageableWrapper<AutonomousDatabaseCharacterSetData, AutonomousDatabaseCharacterSetResource>(new AutonomousDatabaseCharacterSetsGetByLocationAsyncCollectionResultOfT(_autonomousDatabaseCharacterSetsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "AutonomousDatabaseCharacterSetCollection.GetAll"), data => new AutonomousDatabaseCharacterSetResource(Client, data));
         }
 
         /// <summary>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AutonomousDatabaseCharacterSetData, AutonomousDatabaseCharacterSetResource>(new AutonomousDatabaseCharacterSetsGetByLocationCollectionResultOfT(_autonomousDatabaseCharacterSetsRestClient, Guid.Parse(Id.SubscriptionId), _location, context), data => new AutonomousDatabaseCharacterSetResource(Client, data));
+            return new PageableWrapper<AutonomousDatabaseCharacterSetData, AutonomousDatabaseCharacterSetResource>(new AutonomousDatabaseCharacterSetsGetByLocationCollectionResultOfT(_autonomousDatabaseCharacterSetsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "AutonomousDatabaseCharacterSetCollection.GetAll"), data => new AutonomousDatabaseCharacterSetResource(Client, data));
         }
 
         /// <summary>

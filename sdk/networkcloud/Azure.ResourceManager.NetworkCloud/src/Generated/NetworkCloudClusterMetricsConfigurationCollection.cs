@@ -304,7 +304,8 @@ namespace Azure.ResourceManager.NetworkCloud
                 Id.Name,
                 top,
                 skipToken,
-                context), data => new NetworkCloudClusterMetricsConfigurationResource(Client, data));
+                context,
+                "NetworkCloudClusterMetricsConfigurationCollection.GetAll"), data => new NetworkCloudClusterMetricsConfigurationResource(Client, data));
         }
 
         /// <summary>
@@ -341,7 +342,8 @@ namespace Azure.ResourceManager.NetworkCloud
                 Id.Name,
                 top,
                 skipToken,
-                context), data => new NetworkCloudClusterMetricsConfigurationResource(Client, data));
+                context,
+                "NetworkCloudClusterMetricsConfigurationCollection.GetAll"), data => new NetworkCloudClusterMetricsConfigurationResource(Client, data));
         }
 
         /// <summary>

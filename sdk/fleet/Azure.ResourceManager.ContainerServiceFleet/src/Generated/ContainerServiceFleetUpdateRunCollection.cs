@@ -306,7 +306,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 Id.Name,
                 maxCount,
                 skipToken,
-                context), data => new ContainerServiceFleetUpdateRunResource(Client, data));
+                context,
+                "ContainerServiceFleetUpdateRunCollection.GetAll"), data => new ContainerServiceFleetUpdateRunResource(Client, data));
         }
 
         /// <summary>
@@ -343,7 +344,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 Id.Name,
                 maxCount,
                 skipToken,
-                context), data => new ContainerServiceFleetUpdateRunResource(Client, data));
+                context,
+                "ContainerServiceFleetUpdateRunCollection.GetAll"), data => new ContainerServiceFleetUpdateRunResource(Client, data));
         }
 
         /// <summary>

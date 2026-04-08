@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DependencyMap.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DependencyMapData, DependencyMapResource>(new MapsGetBySubscriptionAsyncCollectionResultOfT(MapsRestClient, Id.SubscriptionId, context), data => new DependencyMapResource(Client, data));
+            return new AsyncPageableWrapper<DependencyMapData, DependencyMapResource>(new MapsGetBySubscriptionAsyncCollectionResultOfT(MapsRestClient, Id.SubscriptionId, context, "MockableDependencyMapSubscriptionResource.GetDependencyMaps"), data => new DependencyMapResource(Client, data));
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DependencyMap.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DependencyMapData, DependencyMapResource>(new MapsGetBySubscriptionCollectionResultOfT(MapsRestClient, Id.SubscriptionId, context), data => new DependencyMapResource(Client, data));
+            return new PageableWrapper<DependencyMapData, DependencyMapResource>(new MapsGetBySubscriptionCollectionResultOfT(MapsRestClient, Id.SubscriptionId, context, "MockableDependencyMapSubscriptionResource.GetDependencyMaps"), data => new DependencyMapResource(Client, data));
         }
     }
 }

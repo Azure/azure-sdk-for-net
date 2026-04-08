@@ -297,7 +297,8 @@ namespace Azure.ResourceManager.Chaos
                 Id.Parent.ResourceType.Type,
                 Id.Name,
                 continuationToken,
-                context), data => new ChaosCapabilityResource(Client, data));
+                context,
+                "ChaosCapabilityCollection.GetAll"), data => new ChaosCapabilityResource(Client, data));
         }
 
         /// <summary>
@@ -335,7 +336,8 @@ namespace Azure.ResourceManager.Chaos
                 Id.Parent.ResourceType.Type,
                 Id.Name,
                 continuationToken,
-                context), data => new ChaosCapabilityResource(Client, data));
+                context,
+                "ChaosCapabilityCollection.GetAll"), data => new ChaosCapabilityResource(Client, data));
         }
 
         /// <summary>

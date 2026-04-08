@@ -177,7 +177,13 @@ namespace Azure.ResourceManager.ContainerRegistry
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ContainerRegistryPrivateLinkResourceData, ContainerRegistryPrivateLinkResource>(new RegistriesGetPrivateLinkResourcesAsyncCollectionResultOfT(_registriesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ContainerRegistryPrivateLinkResource(Client, data));
+            return new AsyncPageableWrapper<ContainerRegistryPrivateLinkResourceData, ContainerRegistryPrivateLinkResource>(new RegistriesGetPrivateLinkResourcesAsyncCollectionResultOfT(
+                _registriesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ContainerRegistryPrivateLinkResourceCollection.GetAll"), data => new ContainerRegistryPrivateLinkResource(Client, data));
         }
 
         /// <summary>
@@ -205,7 +211,13 @@ namespace Azure.ResourceManager.ContainerRegistry
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ContainerRegistryPrivateLinkResourceData, ContainerRegistryPrivateLinkResource>(new RegistriesGetPrivateLinkResourcesCollectionResultOfT(_registriesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ContainerRegistryPrivateLinkResource(Client, data));
+            return new PageableWrapper<ContainerRegistryPrivateLinkResourceData, ContainerRegistryPrivateLinkResource>(new RegistriesGetPrivateLinkResourcesCollectionResultOfT(
+                _registriesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ContainerRegistryPrivateLinkResourceCollection.GetAll"), data => new ContainerRegistryPrivateLinkResource(Client, data));
         }
 
         /// <summary>

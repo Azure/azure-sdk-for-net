@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ServiceBusNamespaceData, ServiceBusNamespaceResource>(new NamespacesGetByResourceGroupAsyncCollectionResultOfT(_namespacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new ServiceBusNamespaceResource(Client, data));
+            return new AsyncPageableWrapper<ServiceBusNamespaceData, ServiceBusNamespaceResource>(new NamespacesGetByResourceGroupAsyncCollectionResultOfT(_namespacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ServiceBusNamespaceCollection.GetAll"), data => new ServiceBusNamespaceResource(Client, data));
         }
 
         /// <summary>
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ServiceBusNamespaceData, ServiceBusNamespaceResource>(new NamespacesGetByResourceGroupCollectionResultOfT(_namespacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new ServiceBusNamespaceResource(Client, data));
+            return new PageableWrapper<ServiceBusNamespaceData, ServiceBusNamespaceResource>(new NamespacesGetByResourceGroupCollectionResultOfT(_namespacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ServiceBusNamespaceCollection.GetAll"), data => new ServiceBusNamespaceResource(Client, data));
         }
 
         /// <summary>

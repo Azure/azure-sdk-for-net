@@ -185,7 +185,8 @@ namespace Azure.ResourceManager.Advisor
                 Id.Name,
                 top,
                 skip,
-                context), data => new AdvisorTriageRecommendationResource(Client, data));
+                context,
+                "AdvisorTriageRecommendationCollection.GetAll"), data => new AdvisorTriageRecommendationResource(Client, data));
         }
 
         /// <summary>
@@ -221,7 +222,8 @@ namespace Azure.ResourceManager.Advisor
                 Id.Name,
                 top,
                 skip,
-                context), data => new AdvisorTriageRecommendationResource(Client, data));
+                context,
+                "AdvisorTriageRecommendationCollection.GetAll"), data => new AdvisorTriageRecommendationResource(Client, data));
         }
 
         /// <summary>

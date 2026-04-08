@@ -24,6 +24,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         private readonly string _skipToken;
         private readonly string _filter;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of FleetMembersGetByFleetCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The FleetMembers client used to send requests. </param>
@@ -34,7 +35,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <param name="skipToken"> The page-continuation token to use with a paged version of this API. </param>
         /// <param name="filter"> Filter the result list using the given expression. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public FleetMembersGetByFleetCollectionResultOfT(FleetMembers client, Guid subscriptionId, string resourceGroupName, string fleetName, int? maxCount, string skipToken, string filter, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public FleetMembersGetByFleetCollectionResultOfT(FleetMembers client, Guid subscriptionId, string resourceGroupName, string fleetName, int? maxCount, string skipToken, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -44,6 +46,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             _skipToken = skipToken;
             _filter = filter;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of FleetMembersGetByFleetCollectionResultOfT as an enumerable collection. </summary>
@@ -76,7 +79,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByFleetRequest(nextLink, _subscriptionId, _resourceGroupName, _fleetName, _maxCount, _skipToken, _filter, _context) : _client.CreateGetByFleetRequest(_subscriptionId, _resourceGroupName, _fleetName, _maxCount, _skipToken, _filter, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ContainerServiceFleetMemberCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

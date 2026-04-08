@@ -293,7 +293,8 @@ namespace Azure.ResourceManager.Communication
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new EmailSuppressionListResource(Client, data));
+                context,
+                "EmailSuppressionListCollection.GetAll"), data => new EmailSuppressionListResource(Client, data));
         }
 
         /// <summary>
@@ -327,7 +328,8 @@ namespace Azure.ResourceManager.Communication
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new EmailSuppressionListResource(Client, data));
+                context,
+                "EmailSuppressionListCollection.GetAll"), data => new EmailSuppressionListResource(Client, data));
         }
 
         /// <summary>

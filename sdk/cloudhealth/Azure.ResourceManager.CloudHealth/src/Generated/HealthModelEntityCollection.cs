@@ -294,7 +294,8 @@ namespace Azure.ResourceManager.CloudHealth
                 Id.ResourceGroupName,
                 Id.Name,
                 timestamp,
-                context), data => new HealthModelEntityResource(Client, data));
+                context,
+                "HealthModelEntityCollection.GetAll"), data => new HealthModelEntityResource(Client, data));
         }
 
         /// <summary>
@@ -329,7 +330,8 @@ namespace Azure.ResourceManager.CloudHealth
                 Id.ResourceGroupName,
                 Id.Name,
                 timestamp,
-                context), data => new HealthModelEntityResource(Client, data));
+                context,
+                "HealthModelEntityCollection.GetAll"), data => new HealthModelEntityResource(Client, data));
         }
 
         /// <summary>

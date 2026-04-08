@@ -310,7 +310,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 Id.ResourceGroupName,
                 _vaultName,
                 filter,
-                context), data => new BackupProtectionPolicyResource(Client, data));
+                context,
+                "BackupProtectionPolicyCollection.GetAll"), data => new BackupProtectionPolicyResource(Client, data));
         }
 
         /// <summary>
@@ -346,7 +347,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 Id.ResourceGroupName,
                 _vaultName,
                 filter,
-                context), data => new BackupProtectionPolicyResource(Client, data));
+                context,
+                "BackupProtectionPolicyCollection.GetAll"), data => new BackupProtectionPolicyResource(Client, data));
         }
 
         /// <summary>

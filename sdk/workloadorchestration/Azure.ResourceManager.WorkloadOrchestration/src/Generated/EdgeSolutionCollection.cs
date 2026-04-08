@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EdgeSolutionData, EdgeSolutionResource>(new SolutionsGetByTargetAsyncCollectionResultOfT(_solutionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new EdgeSolutionResource(Client, data));
+            return new AsyncPageableWrapper<EdgeSolutionData, EdgeSolutionResource>(new SolutionsGetByTargetAsyncCollectionResultOfT(
+                _solutionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "EdgeSolutionCollection.GetAll"), data => new EdgeSolutionResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EdgeSolutionData, EdgeSolutionResource>(new SolutionsGetByTargetCollectionResultOfT(_solutionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new EdgeSolutionResource(Client, data));
+            return new PageableWrapper<EdgeSolutionData, EdgeSolutionResource>(new SolutionsGetByTargetCollectionResultOfT(
+                _solutionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "EdgeSolutionCollection.GetAll"), data => new EdgeSolutionResource(Client, data));
         }
 
         /// <summary>

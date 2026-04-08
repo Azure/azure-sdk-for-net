@@ -296,7 +296,13 @@ namespace Azure.ResourceManager.GuestConfiguration
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<GuestConfigurationAssignmentData, GuestConfigurationVmAssignmentResource>(new GuestConfigurationAssignmentsGetAllForVirtualMachineAsyncCollectionResultOfT(_guestConfigurationAssignmentsRestClient, Id.SubscriptionId, Id.ResourceGroupName, _vmName, context), data => new GuestConfigurationVmAssignmentResource(Client, data));
+            return new AsyncPageableWrapper<GuestConfigurationAssignmentData, GuestConfigurationVmAssignmentResource>(new GuestConfigurationAssignmentsGetAllForVirtualMachineAsyncCollectionResultOfT(
+                _guestConfigurationAssignmentsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                _vmName,
+                context,
+                "GuestConfigurationVmAssignmentCollection.GetAll"), data => new GuestConfigurationVmAssignmentResource(Client, data));
         }
 
         /// <summary>
@@ -324,7 +330,13 @@ namespace Azure.ResourceManager.GuestConfiguration
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<GuestConfigurationAssignmentData, GuestConfigurationVmAssignmentResource>(new GuestConfigurationAssignmentsGetAllForVirtualMachineCollectionResultOfT(_guestConfigurationAssignmentsRestClient, Id.SubscriptionId, Id.ResourceGroupName, _vmName, context), data => new GuestConfigurationVmAssignmentResource(Client, data));
+            return new PageableWrapper<GuestConfigurationAssignmentData, GuestConfigurationVmAssignmentResource>(new GuestConfigurationAssignmentsGetAllForVirtualMachineCollectionResultOfT(
+                _guestConfigurationAssignmentsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                _vmName,
+                context,
+                "GuestConfigurationVmAssignmentCollection.GetAll"), data => new GuestConfigurationVmAssignmentResource(Client, data));
         }
 
         /// <summary>

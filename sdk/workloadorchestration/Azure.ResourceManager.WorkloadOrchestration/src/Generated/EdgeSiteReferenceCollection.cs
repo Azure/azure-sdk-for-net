@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EdgeSiteReferenceData, EdgeSiteReferenceResource>(new SiteReferencesGetByContextAsyncCollectionResultOfT(_siteReferencesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new EdgeSiteReferenceResource(Client, data));
+            return new AsyncPageableWrapper<EdgeSiteReferenceData, EdgeSiteReferenceResource>(new SiteReferencesGetByContextAsyncCollectionResultOfT(
+                _siteReferencesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "EdgeSiteReferenceCollection.GetAll"), data => new EdgeSiteReferenceResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EdgeSiteReferenceData, EdgeSiteReferenceResource>(new SiteReferencesGetByContextCollectionResultOfT(_siteReferencesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new EdgeSiteReferenceResource(Client, data));
+            return new PageableWrapper<EdgeSiteReferenceData, EdgeSiteReferenceResource>(new SiteReferencesGetByContextCollectionResultOfT(
+                _siteReferencesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "EdgeSiteReferenceCollection.GetAll"), data => new EdgeSiteReferenceResource(Client, data));
         }
 
         /// <summary>

@@ -287,7 +287,13 @@ namespace Azure.ResourceManager.Relay
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RelayHybridConnectionData, RelayHybridConnectionResource>(new HybridConnectionsGetByNamespaceAsyncCollectionResultOfT(_hybridConnectionsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new RelayHybridConnectionResource(Client, data));
+            return new AsyncPageableWrapper<RelayHybridConnectionData, RelayHybridConnectionResource>(new HybridConnectionsGetByNamespaceAsyncCollectionResultOfT(
+                _hybridConnectionsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "RelayHybridConnectionCollection.GetAll"), data => new RelayHybridConnectionResource(Client, data));
         }
 
         /// <summary>
@@ -315,7 +321,13 @@ namespace Azure.ResourceManager.Relay
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RelayHybridConnectionData, RelayHybridConnectionResource>(new HybridConnectionsGetByNamespaceCollectionResultOfT(_hybridConnectionsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new RelayHybridConnectionResource(Client, data));
+            return new PageableWrapper<RelayHybridConnectionData, RelayHybridConnectionResource>(new HybridConnectionsGetByNamespaceCollectionResultOfT(
+                _hybridConnectionsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "RelayHybridConnectionCollection.GetAll"), data => new RelayHybridConnectionResource(Client, data));
         }
 
         /// <summary>

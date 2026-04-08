@@ -294,7 +294,8 @@ namespace Azure.ResourceManager.CloudHealth
                 Id.ResourceGroupName,
                 Id.Name,
                 timestamp,
-                context), data => new HealthModelDiscoveryRuleResource(Client, data));
+                context,
+                "HealthModelDiscoveryRuleCollection.GetAll"), data => new HealthModelDiscoveryRuleResource(Client, data));
         }
 
         /// <summary>
@@ -329,7 +330,8 @@ namespace Azure.ResourceManager.CloudHealth
                 Id.ResourceGroupName,
                 Id.Name,
                 timestamp,
-                context), data => new HealthModelDiscoveryRuleResource(Client, data));
+                context,
+                "HealthModelDiscoveryRuleCollection.GetAll"), data => new HealthModelDiscoveryRuleResource(Client, data));
         }
 
         /// <summary>

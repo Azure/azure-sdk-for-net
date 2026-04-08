@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.RedisEnterprise
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RedisEnterprisePrivateEndpointConnectionData, RedisEnterprisePrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetAllAsyncCollectionResultOfT(_privateEndpointConnectionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new RedisEnterprisePrivateEndpointConnectionResource(Client, data));
+            return new AsyncPageableWrapper<RedisEnterprisePrivateEndpointConnectionData, RedisEnterprisePrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetAllAsyncCollectionResultOfT(
+                _privateEndpointConnectionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "RedisEnterprisePrivateEndpointConnectionCollection.GetAll"), data => new RedisEnterprisePrivateEndpointConnectionResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.RedisEnterprise
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RedisEnterprisePrivateEndpointConnectionData, RedisEnterprisePrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetAllCollectionResultOfT(_privateEndpointConnectionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new RedisEnterprisePrivateEndpointConnectionResource(Client, data));
+            return new PageableWrapper<RedisEnterprisePrivateEndpointConnectionData, RedisEnterprisePrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetAllCollectionResultOfT(
+                _privateEndpointConnectionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "RedisEnterprisePrivateEndpointConnectionCollection.GetAll"), data => new RedisEnterprisePrivateEndpointConnectionResource(Client, data));
         }
 
         /// <summary>

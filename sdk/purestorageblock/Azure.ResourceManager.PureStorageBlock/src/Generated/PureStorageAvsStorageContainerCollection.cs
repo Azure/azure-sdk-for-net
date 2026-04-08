@@ -177,7 +177,13 @@ namespace Azure.ResourceManager.PureStorageBlock
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PureStorageAvsStorageContainerData, PureStorageAvsStorageContainerResource>(new AvsStorageContainersGetByStoragePoolAsyncCollectionResultOfT(_avsStorageContainersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new PureStorageAvsStorageContainerResource(Client, data));
+            return new AsyncPageableWrapper<PureStorageAvsStorageContainerData, PureStorageAvsStorageContainerResource>(new AvsStorageContainersGetByStoragePoolAsyncCollectionResultOfT(
+                _avsStorageContainersRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "PureStorageAvsStorageContainerCollection.GetAll"), data => new PureStorageAvsStorageContainerResource(Client, data));
         }
 
         /// <summary>
@@ -205,7 +211,13 @@ namespace Azure.ResourceManager.PureStorageBlock
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PureStorageAvsStorageContainerData, PureStorageAvsStorageContainerResource>(new AvsStorageContainersGetByStoragePoolCollectionResultOfT(_avsStorageContainersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new PureStorageAvsStorageContainerResource(Client, data));
+            return new PageableWrapper<PureStorageAvsStorageContainerData, PureStorageAvsStorageContainerResource>(new AvsStorageContainersGetByStoragePoolCollectionResultOfT(
+                _avsStorageContainersRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "PureStorageAvsStorageContainerCollection.GetAll"), data => new PureStorageAvsStorageContainerResource(Client, data));
         }
 
         /// <summary>

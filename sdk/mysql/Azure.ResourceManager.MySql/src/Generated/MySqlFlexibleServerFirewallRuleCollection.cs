@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MySqlFlexibleServerFirewallRuleData, MySqlFlexibleServerFirewallRuleResource>(new FirewallRulesGetByServerAsyncCollectionResultOfT(_firewallRulesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new MySqlFlexibleServerFirewallRuleResource(Client, data));
+            return new AsyncPageableWrapper<MySqlFlexibleServerFirewallRuleData, MySqlFlexibleServerFirewallRuleResource>(new FirewallRulesGetByServerAsyncCollectionResultOfT(
+                _firewallRulesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "MySqlFlexibleServerFirewallRuleCollection.GetAll"), data => new MySqlFlexibleServerFirewallRuleResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MySqlFlexibleServerFirewallRuleData, MySqlFlexibleServerFirewallRuleResource>(new FirewallRulesGetByServerCollectionResultOfT(_firewallRulesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new MySqlFlexibleServerFirewallRuleResource(Client, data));
+            return new PageableWrapper<MySqlFlexibleServerFirewallRuleData, MySqlFlexibleServerFirewallRuleResource>(new FirewallRulesGetByServerCollectionResultOfT(
+                _firewallRulesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "MySqlFlexibleServerFirewallRuleCollection.GetAll"), data => new MySqlFlexibleServerFirewallRuleResource(Client, data));
         }
 
         /// <summary>
