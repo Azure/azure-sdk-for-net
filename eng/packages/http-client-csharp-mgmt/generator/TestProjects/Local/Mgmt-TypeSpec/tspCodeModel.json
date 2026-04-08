@@ -23510,6 +23510,7 @@
                   }
                 ],
                 "resourceScope": "Extension",
+                "parentResourceType": "MgmtTypeSpec/groupQuotas/resourceProviders",
                 "resourceName": "SubscriptionQuotaAllocationsList",
                 "nameConstraints": {},
                 "apiVersions": [
