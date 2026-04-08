@@ -3,6 +3,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.Core.Foundations;
 using OpenAI;
 
 namespace Azure.AI.Projects.Agents
@@ -22,6 +23,7 @@ namespace Azure.AI.Projects.Agents
     [ModelReaderWriterBuildable(typeof(AgentObjectVersions))]
     [ModelReaderWriterBuildable(typeof(AgentSessionResource))]
     [ModelReaderWriterBuildable(typeof(AgentsPagedResultAgentSessionResource))]
+    [ModelReaderWriterBuildable(typeof(AgentsPagedResultSkillObject))]
     [ModelReaderWriterBuildable(typeof(AgentsPagedResultToolboxObject))]
     [ModelReaderWriterBuildable(typeof(AgentsPagedResultToolboxVersionObject))]
     [ModelReaderWriterBuildable(typeof(AzureAISearchTool))]
@@ -55,12 +57,15 @@ namespace Azure.AI.Projects.Agents
     [ModelReaderWriterBuildable(typeof(ContentFilterConfiguration))]
     [ModelReaderWriterBuildable(typeof(CreateAgentVersionFromManifestRequest))]
     [ModelReaderWriterBuildable(typeof(CreateAgentVersionRequest1))]
+    [ModelReaderWriterBuildable(typeof(CreateOrUpdateManagedAgentIdentityBlueprintRequest))]
     [ModelReaderWriterBuildable(typeof(CreateSessionRequest))]
+    [ModelReaderWriterBuildable(typeof(CreateSkillRequest))]
     [ModelReaderWriterBuildable(typeof(CreateToolboxVersionRequest))]
     [ModelReaderWriterBuildable(typeof(CustomGrammarFormatParam))]
     [ModelReaderWriterBuildable(typeof(CustomTextFormatParam))]
     [ModelReaderWriterBuildable(typeof(CustomToolParamFormat))]
     [ModelReaderWriterBuildable(typeof(DeclarativeAgentDefinition))]
+    [ModelReaderWriterBuildable(typeof(DeleteSkillResponse))]
     [ModelReaderWriterBuildable(typeof(EntraAuthorizationScheme))]
     [ModelReaderWriterBuildable(typeof(EntraIsolationKeySource))]
     [ModelReaderWriterBuildable(typeof(FabricDataAgentToolOptions))]
@@ -101,6 +106,7 @@ namespace Azure.AI.Projects.Agents
     [ModelReaderWriterBuildable(typeof(InternalWebSearchTool))]
     [ModelReaderWriterBuildable(typeof(IsolationKeySource))]
     [ModelReaderWriterBuildable(typeof(LocalSkillParam))]
+    [ModelReaderWriterBuildable(typeof(ManagedAgentIdentityBlueprint))]
     [ModelReaderWriterBuildable(typeof(ManagedAgentIdentityBlueprintReference))]
     [ModelReaderWriterBuildable(typeof(MemorySearchPreviewTool))]
     [ModelReaderWriterBuildable(typeof(MemorySearchToolOptions))]
@@ -114,6 +120,7 @@ namespace Azure.AI.Projects.Agents
     [ModelReaderWriterBuildable(typeof(OpenApiProjectConnectionAuthenticationDetails))]
     [ModelReaderWriterBuildable(typeof(OpenApiProjectConnectionSecurityScheme))]
     [ModelReaderWriterBuildable(typeof(OpenAPITool))]
+    [ModelReaderWriterBuildable(typeof(PagedManagedAgentIdentityBlueprint))]
     [ModelReaderWriterBuildable(typeof(ProjectsAgentDefinition))]
     [ModelReaderWriterBuildable(typeof(ProjectsAgentRecord))]
     [ModelReaderWriterBuildable(typeof(ProjectsAgentTool))]
@@ -121,8 +128,12 @@ namespace Azure.AI.Projects.Agents
     [ModelReaderWriterBuildable(typeof(ProjectsAgentVersionCreationOptions))]
     [ModelReaderWriterBuildable(typeof(ProjectWebSearchConfiguration))]
     [ModelReaderWriterBuildable(typeof(ProtocolVersionRecord))]
+    [ModelReaderWriterBuildable(typeof(SessionDirectoryEntry))]
+    [ModelReaderWriterBuildable(typeof(SessionDirectoryListResponse))]
+    [ModelReaderWriterBuildable(typeof(SessionFileWriteResponse))]
     [ModelReaderWriterBuildable(typeof(SharePointGroundingToolOptions))]
     [ModelReaderWriterBuildable(typeof(SharepointPreviewTool))]
+    [ModelReaderWriterBuildable(typeof(SkillObject))]
     [ModelReaderWriterBuildable(typeof(SkillReferenceParam))]
     [ModelReaderWriterBuildable(typeof(SpecificApplyPatchParam))]
     [ModelReaderWriterBuildable(typeof(SpecificFunctionShellParam))]
@@ -155,6 +166,7 @@ namespace Azure.AI.Projects.Agents
     [ModelReaderWriterBuildable(typeof(UnknownTool))]
     [ModelReaderWriterBuildable(typeof(UnknownVersionIndicator))]
     [ModelReaderWriterBuildable(typeof(UnknownVersionSelectionRule))]
+    [ModelReaderWriterBuildable(typeof(UpdateSkillRequest))]
     [ModelReaderWriterBuildable(typeof(UpdateToolboxRequest))]
     [ModelReaderWriterBuildable(typeof(VersionIndicator))]
     [ModelReaderWriterBuildable(typeof(VersionRefIndicator))]

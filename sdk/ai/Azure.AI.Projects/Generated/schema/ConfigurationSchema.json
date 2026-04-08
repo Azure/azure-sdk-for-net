@@ -1,7 +1,7 @@
 {
   "type": "object",
   "properties": {
-    "AzureClients": {
+    "Clients": {
       "type": "object",
       "properties": {
         "AIProjectClient": {
@@ -32,7 +32,7 @@
     "aIProjectClientOptions": {
       "allOf": [
         {
-          "$ref": "#/definitions/azureOptions"
+          "$ref": "#/definitions/options"
         },
         {
           "type": "object",

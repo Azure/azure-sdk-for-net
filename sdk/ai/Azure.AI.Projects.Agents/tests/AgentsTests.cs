@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.ClientModel.TestFramework;
-using Microsoft.Testing.Platform.OutputDevice;
 using NUnit.Framework;
 using OpenAI.Responses;
 

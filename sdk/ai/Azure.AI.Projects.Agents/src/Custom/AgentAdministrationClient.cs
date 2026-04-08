@@ -33,6 +33,9 @@ namespace Azure.AI.Projects.Agents;
 public partial class AgentAdministrationClient
 {
     private AgentToolboxes _cachedAgentsToolboxes;
+    private AgentSkills _cachedAgentSkills;
+    private ManagedAgentIdentityBlueprints _cachedManagedAgentIdentityBlueprints;
+    private AgentSessionFiles _cachedAgentSessionFiles;
 
     public AgentAdministrationClient(Uri endpoint, AuthenticationTokenProvider tokenProvider, AgentAdministrationClientOptions options =null)
     {
@@ -394,5 +397,20 @@ public partial class AgentAdministrationClient
     public virtual AgentToolboxes GetAgentToolboxes()
     {
         return Volatile.Read(ref _cachedAgentsToolboxes) ?? Interlocked.CompareExchange(ref _cachedAgentsToolboxes, new AgentToolboxes(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentsToolboxes;
+    }
+
+    public virtual AgentSkills GetAgentSkills()
+    {
+        return Volatile.Read(ref _cachedAgentSkills) ?? Interlocked.CompareExchange(ref _cachedAgentSkills, new AgentSkills(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentSkills;
+    }
+
+    public virtual ManagedAgentIdentityBlueprints GetManagedAgentIdentityBlueprints()
+    {
+        return Volatile.Read(ref _cachedManagedAgentIdentityBlueprints) ?? Interlocked.CompareExchange(ref _cachedManagedAgentIdentityBlueprints, new ManagedAgentIdentityBlueprints(Pipeline, _endpoint, _apiVersion), null) ?? _cachedManagedAgentIdentityBlueprints;
+    }
+
+    public virtual AgentSessionFiles GetAgentSessionFiles()
+    {
+        return Volatile.Read(ref _cachedAgentSessionFiles) ?? Interlocked.CompareExchange(ref _cachedAgentSessionFiles, new AgentSessionFiles(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentSessionFiles;
     }
 }

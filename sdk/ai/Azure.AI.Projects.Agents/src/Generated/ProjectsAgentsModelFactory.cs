@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using Azure.Core.Foundations;
 using OpenAI;
 using OpenAI.Responses;
 
@@ -921,6 +922,91 @@ namespace Azure.AI.Projects.Agents
         public static ToolboxRecord ToolboxRecord(string id = default, string name = default, string defaultVersion = default)
         {
             return new ToolboxRecord(id, name, defaultVersion, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A skill object. </summary>
+        /// <param name="skillId"> The unique identifier of the skill. </param>
+        /// <param name="hasBlob"> Whether the skill was created from a gzip blob package. </param>
+        /// <param name="name"> The unique name of the skill. </param>
+        /// <param name="description"> A human-readable description of the skill. </param>
+        /// <param name="metadata">
+        /// Set of 16 key-value pairs that can be attached to an object. This can be
+        /// useful for storing additional information about the object in a structured
+        /// format, and querying for objects via API or the dashboard.
+        /// Keys are strings with a maximum length of 64 characters. Values are strings
+        /// with a maximum length of 512 characters.
+        /// </param>
+        /// <returns> A new <see cref="Agents.SkillObject"/> instance for mocking. </returns>
+        public static SkillObject SkillObject(string skillId = default, bool hasBlob = default, string name = default, string description = default, IDictionary<string, string> metadata = default)
+        {
+            metadata ??= new ChangeTrackingDictionary<string, string>();
+
+            return new SkillObject(
+                skillId,
+                hasBlob,
+                name,
+                description,
+                metadata,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A deleted skill Object. </summary>
+        /// <param name="name"> The unique name of the skill. </param>
+        /// <param name="deleted"> Whether the skill was successfully deleted. </param>
+        /// <returns> A new <see cref="Agents.DeleteSkillResponse"/> instance for mocking. </returns>
+        public static DeleteSkillResponse DeleteSkillResponse(string name = default, bool deleted = default)
+        {
+            return new DeleteSkillResponse(name, deleted, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Response from uploading a file to a session sandbox. </summary>
+        /// <param name="path"> The path where the file was written, relative to the session home directory. </param>
+        /// <param name="bytesWritten"> Number of bytes written. </param>
+        /// <returns> A new <see cref="Agents.SessionFileWriteResponse"/> instance for mocking. </returns>
+        public static SessionFileWriteResponse SessionFileWriteResponse(string path = default, long bytesWritten = default)
+        {
+            return new SessionFileWriteResponse(path, bytesWritten, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Response from listing a directory in a session sandbox. </summary>
+        /// <param name="path"> The path that was listed, relative to the session home directory. </param>
+        /// <param name="entries"> The directory entries. </param>
+        /// <returns> A new <see cref="Agents.SessionDirectoryListResponse"/> instance for mocking. </returns>
+        public static SessionDirectoryListResponse SessionDirectoryListResponse(string path = default, IEnumerable<SessionDirectoryEntry> entries = default)
+        {
+            entries ??= new ChangeTrackingList<SessionDirectoryEntry>();
+
+            return new SessionDirectoryListResponse(path, entries.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A single entry in a directory listing. </summary>
+        /// <param name="name"> The name of the file or directory. </param>
+        /// <param name="size"> The size in bytes (0 for directories). </param>
+        /// <param name="isDirectory"> Whether this entry is a directory. </param>
+        /// <param name="modifiedTime"> The last modification time in UTC (ISO 8601). </param>
+        /// <returns> A new <see cref="Agents.SessionDirectoryEntry"/> instance for mocking. </returns>
+        public static SessionDirectoryEntry SessionDirectoryEntry(string name = default, long size = default, bool isDirectory = default, DateTimeOffset modifiedTime = default)
+        {
+            return new SessionDirectoryEntry(name, size, isDirectory, modifiedTime, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The ManagedAgentIdentityBlueprint. </summary>
+        /// <param name="name"></param>
+        /// <returns> A new <see cref="Agents.ManagedAgentIdentityBlueprint"/> instance for mocking. </returns>
+        public static ManagedAgentIdentityBlueprint ManagedAgentIdentityBlueprint(string name = default)
+        {
+            return new ManagedAgentIdentityBlueprint(name, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Paged collection of ManagedAgentIdentityBlueprint items. </summary>
+        /// <param name="value"> The ManagedAgentIdentityBlueprint items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <returns> A new <see cref="Core.Foundations.PagedManagedAgentIdentityBlueprint"/> instance for mocking. </returns>
+        public static PagedManagedAgentIdentityBlueprint PagedManagedAgentIdentityBlueprint(IEnumerable<ManagedAgentIdentityBlueprint> value = default, Uri nextLink = default)
+        {
+            value ??= new ChangeTrackingList<ManagedAgentIdentityBlueprint>();
+
+            return new PagedManagedAgentIdentityBlueprint(value.ToList(), nextLink, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The ProjectsAgentVersionCreationOptions. </summary>

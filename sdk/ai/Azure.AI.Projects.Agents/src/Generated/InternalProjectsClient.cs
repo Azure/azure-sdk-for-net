@@ -25,6 +25,9 @@ namespace Azure.AI.Projects.Agents
         private readonly string _apiVersion;
         private AgentAdministrationClient _cachedAgentAdministrationClient;
         private AgentToolboxes _cachedAgentToolboxes;
+        private AgentSkills _cachedAgentSkills;
+        private AgentSessionFiles _cachedAgentSessionFiles;
+        private ManagedAgentIdentityBlueprints _cachedManagedAgentIdentityBlueprints;
 
         /// <summary> Initializes a new instance of InternalProjectsClient for mocking. </summary>
         protected InternalProjectsClient()
@@ -81,6 +84,24 @@ namespace Azure.AI.Projects.Agents
         public virtual AgentToolboxes GetAgentToolboxesClient()
         {
             return Volatile.Read(ref _cachedAgentToolboxes) ?? Interlocked.CompareExchange(ref _cachedAgentToolboxes, new AgentToolboxes(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentToolboxes;
+        }
+
+        /// <summary> Initializes a new instance of AgentSkills. </summary>
+        public virtual AgentSkills GetAgentSkillsClient()
+        {
+            return Volatile.Read(ref _cachedAgentSkills) ?? Interlocked.CompareExchange(ref _cachedAgentSkills, new AgentSkills(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentSkills;
+        }
+
+        /// <summary> Initializes a new instance of AgentSessionFiles. </summary>
+        public virtual AgentSessionFiles GetAgentSessionFilesClient()
+        {
+            return Volatile.Read(ref _cachedAgentSessionFiles) ?? Interlocked.CompareExchange(ref _cachedAgentSessionFiles, new AgentSessionFiles(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentSessionFiles;
+        }
+
+        /// <summary> Initializes a new instance of ManagedAgentIdentityBlueprints. </summary>
+        public virtual ManagedAgentIdentityBlueprints GetManagedAgentIdentityBlueprintsClient()
+        {
+            return Volatile.Read(ref _cachedManagedAgentIdentityBlueprints) ?? Interlocked.CompareExchange(ref _cachedManagedAgentIdentityBlueprints, new ManagedAgentIdentityBlueprints(Pipeline, _endpoint, _apiVersion), null) ?? _cachedManagedAgentIdentityBlueprints;
         }
     }
 }

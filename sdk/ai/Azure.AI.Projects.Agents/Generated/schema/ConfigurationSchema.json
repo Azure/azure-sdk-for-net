@@ -1,7 +1,7 @@
 {
   "type": "object",
   "properties": {
-    "AzureClients": {
+    "Clients": {
       "type": "object",
       "properties": {
         "AgentAdministrationClient": {
@@ -32,7 +32,7 @@
     "agentAdministrationClientOptions": {
       "allOf": [
         {
-          "$ref": "#/definitions/azureOptions"
+          "$ref": "#/definitions/options"
         }
       ]
     }
