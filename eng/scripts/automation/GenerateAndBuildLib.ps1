@@ -880,15 +880,15 @@ function New-MgmtPackageScaffolding()
         }
     }
 
-    # --- Fix .sln to include test project ---
-    $slnPath = Join-Path $sdkProjectFolder "$packageName.sln"
-    if (Test-Path $slnPath) {
-        $slnContent = Get-Content $slnPath -Raw
+    # --- Fix .sln/.slnx to include test project ---
+    $slnFile = Get-ChildItem -Path $sdkProjectFolder -Filter "$packageName.sln*" -File | Where-Object { $_.Extension -in '.sln', '.slnx' } | Select-Object -First 1
+    if ($slnFile) {
+        $slnContent = Get-Content $slnFile.FullName -Raw
         if ($slnContent -notmatch [regex]::Escape("$packageName.Tests")) {
-            Write-Host "Adding test project to solution"
+            Write-Host "Adding test project to solution ($($slnFile.Name))"
             Push-Location $sdkProjectFolder
             try {
-                dotnet sln "$packageName.sln" add "tests/$packageName.Tests.csproj" 2>&1 | Out-Null
+                dotnet sln $slnFile.Name add "tests/$packageName.Tests.csproj" 2>&1 | Out-Null
                 if (!$?) {
                     Write-Warning "Failed to add test project to solution via dotnet sln. The test project may need to be added manually."
                 }

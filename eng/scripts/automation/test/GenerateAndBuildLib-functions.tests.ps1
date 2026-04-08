@@ -681,6 +681,40 @@ EndGlobal
         Test-Path $testBasePath | Should -Be $true
     }
 
+    It "should find .slnx solution file when .sln does not exist" {
+        # Remove the .sln and create a .slnx instead
+        $slnPath = Join-Path $script:testProjectDir "$($script:testPackageName).sln"
+        $slnxPath = Join-Path $script:testProjectDir "$($script:testPackageName).slnx"
+        if (Test-Path $slnPath) { Remove-Item $slnPath }
+        # Create a minimal .slnx (XML-based solution format)
+        $slnxContent = @"
+<Solution>
+  <Project Path="src\$($script:testPackageName).csproj" />
+</Solution>
+"@
+        Set-Content -Path $slnxPath -Value $slnxContent
+
+        New-MgmtPackageScaffolding `
+            -sdkProjectFolder $script:testProjectDir `
+            -packageName $script:testPackageName `
+            -sdkRootPath $script:testSdkRoot
+
+        # Verify the .slnx still exists (wasn't replaced with .sln)
+        Test-Path $slnxPath | Should -Be $true
+        Test-Path $slnPath | Should -Be $false
+
+        # Restore the .sln for other tests
+        Remove-Item $slnxPath
+        $slnContent = @"
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "$($script:testPackageName)", "src\$($script:testPackageName).csproj", "{00000000-0000-0000-0000-000000000001}"
+EndProject
+Global
+EndGlobal
+"@
+        Set-Content -Path $slnPath -Value $slnContent
+    }
+
     It "should update existing ci.mgmt.yml when it already exists" {
         # Create a second package in same service directory to test ci.mgmt.yml update path
         $secondPkg = "Azure.ResourceManager.HorizonDb.SecondPkg"
