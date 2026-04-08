@@ -660,7 +660,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 // Read the batch size limit from the vendor property if available;
                 // fall back to the default for older service versions.
                 long maxBatchSize = DefaultMaxBatchSize;
-                if (link.Settings?.Properties.TryGetValue<long>(AmqpClientConstants.MaxMessageBatchSizeName, out var vendorBatchSize) == true
+                if (link.Settings?.Properties?.TryGetValue<long>(AmqpClientConstants.MaxMessageBatchSizeName, out var vendorBatchSize) == true
                     && vendorBatchSize > 0)
                 {
                     maxBatchSize = vendorBatchSize;

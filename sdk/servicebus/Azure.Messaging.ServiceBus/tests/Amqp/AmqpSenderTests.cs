@@ -124,7 +124,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
         ///   <see cref="AmqpSender.CreateLinkAndEnsureSenderStateAsync" />.
         /// </summary>
         ///
-        private static void SetLinkLimits(AmqpSender target, long value, long? maxBatchSize = null)
+        private static void SetLinkLimits(AmqpSender target, long maxMessageSize, long? maxBatchSize = null)
         {
             var defaultMaxBatchSize = (long)typeof(AmqpSender)
                 .GetField("DefaultMaxBatchSize", BindingFlags.Static | BindingFlags.NonPublic)
@@ -134,7 +134,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
 
             typeof(AmqpSender)
                 .GetField("_linkLimits", BindingFlags.Instance | BindingFlags.NonPublic)
-                .SetValue(target, (value, Math.Min(value, effectiveBatchSize)));
+                .SetValue(target, (maxMessageSize, Math.Min(maxMessageSize, effectiveBatchSize)));
         }
 
         /// <summary>
