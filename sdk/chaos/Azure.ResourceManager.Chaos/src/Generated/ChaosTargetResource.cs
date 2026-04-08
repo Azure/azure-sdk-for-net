@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.Chaos
             }
         }
 
-        /// <summary> Gets a collection of ChaosCapabilities in the <see cref="ArmResource"/>. </summary>
+        /// <summary> Gets a collection of ChaosCapabilities in the <see cref="ChaosTargetResource"/>. </summary>
         /// <returns> An object representing collection of ChaosCapabilities and their operations over a ChaosCapabilityResource. </returns>
         public virtual ChaosCapabilityCollection GetChaosCapabilities()
         {
