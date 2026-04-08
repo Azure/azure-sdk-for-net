@@ -126,6 +126,13 @@ internal sealed class ResponseEndpointHandler
             && !string.IsNullOrEmpty(agentResponseIdValue.ToString()))
         {
             responseId = agentResponseIdValue.ToString();
+            if (!IdGenerator.IsValid(responseId, out var idError, allowedPrefixes: ["caresp"]))
+            {
+                throw new BadRequestException(
+                    $"x-agent-response-id header value is invalid: {idError}",
+                    code: "invalid_request",
+                    paramName: "x-agent-response-id");
+            }
         }
         else
         {
