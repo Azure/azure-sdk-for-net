@@ -465,14 +465,15 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
                 CallBase = true
             };
 
-            // Use a large enough batch size to hold many small messages.
-            SetLinkLimits(sender.Object, 1_048_576);
+            // Use a large batch size (10 MB) to ensure we can fit well over 4500
+            // tiny messages regardless of envelope overhead variations.
+            SetLinkLimitsWithBatchSize(sender.Object, 10L * 1024 * 1024, 10L * 1024 * 1024);
 
             using TransportMessageBatch batch = await sender.Object.CreateMessageBatchAsync(
                 new CreateMessageBatchOptions(), default);
 
-            // Add many messages — previously capped at 4500. Verify that
-            // the limit is now purely byte-based by adding 5000+ messages.
+            // Add 6000 tiny messages. Previously capped at 4500. With a 10 MB batch,
+            // all 6000 should fit easily (each ~200 bytes = ~1.2 MB total).
             int added = 0;
             for (int i = 0; i < 6000; i++)
             {
@@ -481,11 +482,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
                 added++;
             }
 
-            // The batch should accept as many as fit within the 1 MB byte limit.
-            // With ~200 bytes per message (including AMQP envelope overhead), ~5000
-            // should fit. The test verifies count exceeds the old 4500 cap.
-            Assert.That(added, Is.GreaterThan(4500),
-                "Batch should accept more than 4500 messages now that the count cap is removed.");
+            Assert.That(added, Is.EqualTo(6000),
+                "All 6000 messages should be accepted now that the count cap is removed.");
         }
     }
 }
