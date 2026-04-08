@@ -9,7 +9,7 @@ namespace Azure.GeneratorAgent.Mcp;
 /// </summary>
 internal static class GeneratedPathGuard
 {
-    private static readonly char[] s_separators = [Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar];
+    private static readonly char[] s_separators = ['/', '\\'];
 
     /// <summary>
     /// Checks whether <paramref name="filePath"/> resides inside a directory named "Generated".
@@ -17,8 +17,7 @@ internal static class GeneratedPathGuard
     /// </summary>
     internal static bool IsInGeneratedDirectory(string filePath)
     {
-        var normalized = Path.GetFullPath(filePath);
-        var segments = normalized.Split(s_separators, StringSplitOptions.RemoveEmptyEntries);
+        var segments = filePath.Split(s_separators, StringSplitOptions.RemoveEmptyEntries);
 
         for (var i = 0; i < segments.Length - 1; i++) // -1: last segment is the filename
         {
