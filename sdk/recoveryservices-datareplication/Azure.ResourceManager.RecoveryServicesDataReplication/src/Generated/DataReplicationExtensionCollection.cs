@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataReplicationExtensionData, DataReplicationExtensionResource>(new ReplicationExtensionGetAllAsyncCollectionResultOfT(_replicationExtensionRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new DataReplicationExtensionResource(Client, data));
+            return new AsyncPageableWrapper<DataReplicationExtensionData, DataReplicationExtensionResource>(new ReplicationExtensionGetAllAsyncCollectionResultOfT(
+                _replicationExtensionRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DataReplicationExtensionCollection.GetAll"), data => new DataReplicationExtensionResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataReplicationExtensionData, DataReplicationExtensionResource>(new ReplicationExtensionGetAllCollectionResultOfT(_replicationExtensionRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new DataReplicationExtensionResource(Client, data));
+            return new PageableWrapper<DataReplicationExtensionData, DataReplicationExtensionResource>(new ReplicationExtensionGetAllCollectionResultOfT(
+                _replicationExtensionRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DataReplicationExtensionCollection.GetAll"), data => new DataReplicationExtensionResource(Client, data));
         }
 
         /// <summary>

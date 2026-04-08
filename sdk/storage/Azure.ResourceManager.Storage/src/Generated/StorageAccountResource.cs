@@ -1339,7 +1339,8 @@ namespace Azure.ResourceManager.Storage
                 Id.Name,
                 maxpagesize,
                 filter,
-                context);
+                context,
+                "StorageAccountResource.GetStorageTaskAssignmentsInstancesReports");
         }
 
         /// <summary>
@@ -1380,7 +1381,8 @@ namespace Azure.ResourceManager.Storage
                 Id.Name,
                 maxpagesize,
                 filter,
-                context);
+                context,
+                "StorageAccountResource.GetStorageTaskAssignmentsInstancesReports");
         }
 
         /// <summary> Add a tag to the current resource. </summary>

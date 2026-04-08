@@ -313,7 +313,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Extensions
                 _clusterRp,
                 _clusterResourceName,
                 _clusterName,
-                context), data => new KubernetesClusterExtensionResource(Client, data));
+                context,
+                "KubernetesClusterExtensionCollection.GetAll"), data => new KubernetesClusterExtensionResource(Client, data));
         }
 
         /// <summary>
@@ -348,7 +349,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Extensions
                 _clusterRp,
                 _clusterResourceName,
                 _clusterName,
-                context), data => new KubernetesClusterExtensionResource(Client, data));
+                context,
+                "KubernetesClusterExtensionCollection.GetAll"), data => new KubernetesClusterExtensionResource(Client, data));
         }
 
         /// <summary>

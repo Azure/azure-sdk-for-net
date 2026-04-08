@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.ComputeSchedule
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ScheduledActionData, ScheduledActionResource>(new ScheduledActionsGetByResourceGroupAsyncCollectionResultOfT(_scheduledActionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new ScheduledActionResource(Client, data));
+            return new AsyncPageableWrapper<ScheduledActionData, ScheduledActionResource>(new ScheduledActionsGetByResourceGroupAsyncCollectionResultOfT(_scheduledActionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ScheduledActionCollection.GetAll"), data => new ScheduledActionResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.ComputeSchedule
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ScheduledActionData, ScheduledActionResource>(new ScheduledActionsGetByResourceGroupCollectionResultOfT(_scheduledActionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new ScheduledActionResource(Client, data));
+            return new PageableWrapper<ScheduledActionData, ScheduledActionResource>(new ScheduledActionsGetByResourceGroupCollectionResultOfT(_scheduledActionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ScheduledActionCollection.GetAll"), data => new ScheduledActionResource(Client, data));
         }
 
         /// <summary>

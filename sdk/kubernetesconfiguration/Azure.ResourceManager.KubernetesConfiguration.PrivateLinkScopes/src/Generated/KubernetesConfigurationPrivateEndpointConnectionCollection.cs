@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<KubernetesConfigurationPrivateEndpointConnectionData, KubernetesConfigurationPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByPrivateLinkScopeAsyncCollectionResultOfT(_privateEndpointConnectionsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new KubernetesConfigurationPrivateEndpointConnectionResource(Client, data));
+            return new AsyncPageableWrapper<KubernetesConfigurationPrivateEndpointConnectionData, KubernetesConfigurationPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByPrivateLinkScopeAsyncCollectionResultOfT(
+                _privateEndpointConnectionsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "KubernetesConfigurationPrivateEndpointConnectionCollection.GetAll"), data => new KubernetesConfigurationPrivateEndpointConnectionResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<KubernetesConfigurationPrivateEndpointConnectionData, KubernetesConfigurationPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByPrivateLinkScopeCollectionResultOfT(_privateEndpointConnectionsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new KubernetesConfigurationPrivateEndpointConnectionResource(Client, data));
+            return new PageableWrapper<KubernetesConfigurationPrivateEndpointConnectionData, KubernetesConfigurationPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByPrivateLinkScopeCollectionResultOfT(
+                _privateEndpointConnectionsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "KubernetesConfigurationPrivateEndpointConnectionCollection.GetAll"), data => new KubernetesConfigurationPrivateEndpointConnectionResource(Client, data));
         }
 
         /// <summary>

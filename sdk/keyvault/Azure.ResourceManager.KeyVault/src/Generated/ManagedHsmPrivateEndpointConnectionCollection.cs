@@ -287,7 +287,13 @@ namespace Azure.ResourceManager.KeyVault
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ManagedHsmPrivateEndpointConnectionData, ManagedHsmPrivateEndpointConnectionResource>(new MhsmPrivateEndpointConnectionsGetByResourceAsyncCollectionResultOfT(_mhsmPrivateEndpointConnectionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ManagedHsmPrivateEndpointConnectionResource(Client, data));
+            return new AsyncPageableWrapper<ManagedHsmPrivateEndpointConnectionData, ManagedHsmPrivateEndpointConnectionResource>(new MhsmPrivateEndpointConnectionsGetByResourceAsyncCollectionResultOfT(
+                _mhsmPrivateEndpointConnectionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ManagedHsmPrivateEndpointConnectionCollection.GetAll"), data => new ManagedHsmPrivateEndpointConnectionResource(Client, data));
         }
 
         /// <summary>
@@ -315,7 +321,13 @@ namespace Azure.ResourceManager.KeyVault
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ManagedHsmPrivateEndpointConnectionData, ManagedHsmPrivateEndpointConnectionResource>(new MhsmPrivateEndpointConnectionsGetByResourceCollectionResultOfT(_mhsmPrivateEndpointConnectionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ManagedHsmPrivateEndpointConnectionResource(Client, data));
+            return new PageableWrapper<ManagedHsmPrivateEndpointConnectionData, ManagedHsmPrivateEndpointConnectionResource>(new MhsmPrivateEndpointConnectionsGetByResourceCollectionResultOfT(
+                _mhsmPrivateEndpointConnectionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ManagedHsmPrivateEndpointConnectionCollection.GetAll"), data => new ManagedHsmPrivateEndpointConnectionResource(Client, data));
         }
 
         /// <summary>

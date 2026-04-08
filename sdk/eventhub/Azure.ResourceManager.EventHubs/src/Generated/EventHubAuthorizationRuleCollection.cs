@@ -293,7 +293,8 @@ namespace Azure.ResourceManager.EventHubs
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new EventHubAuthorizationRuleResource(Client, data));
+                context,
+                "EventHubAuthorizationRuleCollection.GetAll"), data => new EventHubAuthorizationRuleResource(Client, data));
         }
 
         /// <summary>
@@ -327,7 +328,8 @@ namespace Azure.ResourceManager.EventHubs
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new EventHubAuthorizationRuleResource(Client, data));
+                context,
+                "EventHubAuthorizationRuleCollection.GetAll"), data => new EventHubAuthorizationRuleResource(Client, data));
         }
 
         /// <summary>

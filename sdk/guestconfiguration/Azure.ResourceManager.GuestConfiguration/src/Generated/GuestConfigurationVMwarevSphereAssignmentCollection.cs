@@ -296,7 +296,13 @@ namespace Azure.ResourceManager.GuestConfiguration
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<GuestConfigurationAssignmentData, GuestConfigurationVMwarevSphereAssignmentResource>(new GuestConfigurationConnectedVMwarevSphereAssignmentsGetAllForConnectedVMwarevSphereAsyncCollectionResultOfT(_guestConfigurationConnectedVMwarevSphereAssignmentsRestClient, Id.SubscriptionId, Id.ResourceGroupName, _vmName, context), data => new GuestConfigurationVMwarevSphereAssignmentResource(Client, data));
+            return new AsyncPageableWrapper<GuestConfigurationAssignmentData, GuestConfigurationVMwarevSphereAssignmentResource>(new GuestConfigurationConnectedVMwarevSphereAssignmentsGetAllForConnectedVMwarevSphereAsyncCollectionResultOfT(
+                _guestConfigurationConnectedVMwarevSphereAssignmentsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                _vmName,
+                context,
+                "GuestConfigurationVMwarevSphereAssignmentCollection.GetAll"), data => new GuestConfigurationVMwarevSphereAssignmentResource(Client, data));
         }
 
         /// <summary>
@@ -324,7 +330,13 @@ namespace Azure.ResourceManager.GuestConfiguration
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<GuestConfigurationAssignmentData, GuestConfigurationVMwarevSphereAssignmentResource>(new GuestConfigurationConnectedVMwarevSphereAssignmentsGetAllForConnectedVMwarevSphereCollectionResultOfT(_guestConfigurationConnectedVMwarevSphereAssignmentsRestClient, Id.SubscriptionId, Id.ResourceGroupName, _vmName, context), data => new GuestConfigurationVMwarevSphereAssignmentResource(Client, data));
+            return new PageableWrapper<GuestConfigurationAssignmentData, GuestConfigurationVMwarevSphereAssignmentResource>(new GuestConfigurationConnectedVMwarevSphereAssignmentsGetAllForConnectedVMwarevSphereCollectionResultOfT(
+                _guestConfigurationConnectedVMwarevSphereAssignmentsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                _vmName,
+                context,
+                "GuestConfigurationVMwarevSphereAssignmentCollection.GetAll"), data => new GuestConfigurationVMwarevSphereAssignmentResource(Client, data));
         }
 
         /// <summary>

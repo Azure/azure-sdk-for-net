@@ -197,7 +197,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 Id.Parent.Name,
                 Id.Name,
                 filter,
-                context), data => new BackupRecoveryPointResource(Client, data));
+                context,
+                "BackupRecoveryPointCollection.GetAll"), data => new BackupRecoveryPointResource(Client, data));
         }
 
         /// <summary>
@@ -235,7 +236,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 Id.Parent.Name,
                 Id.Name,
                 filter,
-                context), data => new BackupRecoveryPointResource(Client, data));
+                context,
+                "BackupRecoveryPointCollection.GetAll"), data => new BackupRecoveryPointResource(Client, data));
         }
 
         /// <summary>

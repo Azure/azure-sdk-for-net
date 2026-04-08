@@ -177,7 +177,13 @@ namespace Azure.ResourceManager.ComputeSchedule
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ScheduledActionOccurrenceData, ScheduledActionOccurrenceResource>(new OccurrencesGetByScheduledActionAsyncCollectionResultOfT(_occurrencesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ScheduledActionOccurrenceResource(Client, data));
+            return new AsyncPageableWrapper<ScheduledActionOccurrenceData, ScheduledActionOccurrenceResource>(new OccurrencesGetByScheduledActionAsyncCollectionResultOfT(
+                _occurrencesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ScheduledActionOccurrenceCollection.GetAll"), data => new ScheduledActionOccurrenceResource(Client, data));
         }
 
         /// <summary>
@@ -205,7 +211,13 @@ namespace Azure.ResourceManager.ComputeSchedule
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ScheduledActionOccurrenceData, ScheduledActionOccurrenceResource>(new OccurrencesGetByScheduledActionCollectionResultOfT(_occurrencesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ScheduledActionOccurrenceResource(Client, data));
+            return new PageableWrapper<ScheduledActionOccurrenceData, ScheduledActionOccurrenceResource>(new OccurrencesGetByScheduledActionCollectionResultOfT(
+                _occurrencesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ScheduledActionOccurrenceCollection.GetAll"), data => new ScheduledActionOccurrenceResource(Client, data));
         }
 
         /// <summary>

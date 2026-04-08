@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         private readonly string _vaultName;
         private readonly string _protectedItemName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of RecoveryPointGetAllCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The RecoveryPoint client used to send requests. </param>
@@ -30,7 +31,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="vaultName"> The vault name. </param>
         /// <param name="protectedItemName"> The protected item name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public RecoveryPointGetAllCollectionResultOfT(RecoveryPoint client, Guid subscriptionId, string resourceGroupName, string vaultName, string protectedItemName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public RecoveryPointGetAllCollectionResultOfT(RecoveryPoint client, Guid subscriptionId, string resourceGroupName, string vaultName, string protectedItemName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -38,6 +40,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             _vaultName = vaultName;
             _protectedItemName = protectedItemName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of RecoveryPointGetAllCollectionResultOfT as an enumerable collection. </summary>
@@ -70,7 +73,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _vaultName, _protectedItemName, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _vaultName, _protectedItemName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("DataReplicationRecoveryPointCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

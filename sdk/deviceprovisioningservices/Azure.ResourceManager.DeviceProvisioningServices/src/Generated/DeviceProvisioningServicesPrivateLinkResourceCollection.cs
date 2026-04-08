@@ -177,7 +177,13 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DeviceProvisioningServicesPrivateLinkResourceData, DeviceProvisioningServicesPrivateLinkResource>(new GroupIdInformationsGetPrivateLinkResourcesAsyncCollectionResultOfT(_groupIdInformationsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new DeviceProvisioningServicesPrivateLinkResource(Client, data));
+            return new AsyncPageableWrapper<DeviceProvisioningServicesPrivateLinkResourceData, DeviceProvisioningServicesPrivateLinkResource>(new GroupIdInformationsGetPrivateLinkResourcesAsyncCollectionResultOfT(
+                _groupIdInformationsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DeviceProvisioningServicesPrivateLinkResourceCollection.GetAll"), data => new DeviceProvisioningServicesPrivateLinkResource(Client, data));
         }
 
         /// <summary>
@@ -205,7 +211,13 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DeviceProvisioningServicesPrivateLinkResourceData, DeviceProvisioningServicesPrivateLinkResource>(new GroupIdInformationsGetPrivateLinkResourcesCollectionResultOfT(_groupIdInformationsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new DeviceProvisioningServicesPrivateLinkResource(Client, data));
+            return new PageableWrapper<DeviceProvisioningServicesPrivateLinkResourceData, DeviceProvisioningServicesPrivateLinkResource>(new GroupIdInformationsGetPrivateLinkResourcesCollectionResultOfT(
+                _groupIdInformationsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DeviceProvisioningServicesPrivateLinkResourceCollection.GetAll"), data => new DeviceProvisioningServicesPrivateLinkResource(Client, data));
         }
 
         /// <summary>

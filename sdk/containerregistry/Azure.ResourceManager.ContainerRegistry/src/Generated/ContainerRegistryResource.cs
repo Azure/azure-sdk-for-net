@@ -754,7 +754,13 @@ namespace Azure.ResourceManager.ContainerRegistry
             {
                 CancellationToken = cancellationToken
             };
-            return new RegistriesGetUsagesAsyncCollectionResultOfT(_registriesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new RegistriesGetUsagesAsyncCollectionResultOfT(
+                _registriesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ContainerRegistryResource.GetUsages");
         }
 
         /// <summary>
@@ -786,7 +792,13 @@ namespace Azure.ResourceManager.ContainerRegistry
             {
                 CancellationToken = cancellationToken
             };
-            return new RegistriesGetUsagesCollectionResultOfT(_registriesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new RegistriesGetUsagesCollectionResultOfT(
+                _registriesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ContainerRegistryResource.GetUsages");
         }
 
         /// <summary>

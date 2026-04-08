@@ -308,7 +308,8 @@ namespace Azure.ResourceManager.Storage
                 maxpagesize,
                 filter,
                 expand,
-                context), data => new FileShareResource(Client, data));
+                context,
+                "FileShareCollection.GetAll"), data => new FileShareResource(Client, data));
         }
 
         /// <summary>
@@ -347,7 +348,8 @@ namespace Azure.ResourceManager.Storage
                 maxpagesize,
                 filter,
                 expand,
-                context), data => new FileShareResource(Client, data));
+                context,
+                "FileShareCollection.GetAll"), data => new FileShareResource(Client, data));
         }
 
         /// <summary>

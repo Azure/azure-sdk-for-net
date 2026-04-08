@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.ElasticSan
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ElasticSanPrivateEndpointConnectionData, ElasticSanPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetAllAsyncCollectionResultOfT(_privateEndpointConnectionsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new ElasticSanPrivateEndpointConnectionResource(Client, data));
+            return new AsyncPageableWrapper<ElasticSanPrivateEndpointConnectionData, ElasticSanPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetAllAsyncCollectionResultOfT(
+                _privateEndpointConnectionsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ElasticSanPrivateEndpointConnectionCollection.GetAll"), data => new ElasticSanPrivateEndpointConnectionResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.ElasticSan
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ElasticSanPrivateEndpointConnectionData, ElasticSanPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetAllCollectionResultOfT(_privateEndpointConnectionsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new ElasticSanPrivateEndpointConnectionResource(Client, data));
+            return new PageableWrapper<ElasticSanPrivateEndpointConnectionData, ElasticSanPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetAllCollectionResultOfT(
+                _privateEndpointConnectionsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ElasticSanPrivateEndpointConnectionCollection.GetAll"), data => new ElasticSanPrivateEndpointConnectionResource(Client, data));
         }
 
         /// <summary>

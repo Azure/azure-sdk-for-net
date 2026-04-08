@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.ContainerRegistry
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ContainerRegistryCredentialSetData, ContainerRegistryCredentialSetResource>(new CredentialSetsGetAllAsyncCollectionResultOfT(_credentialSetsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ContainerRegistryCredentialSetResource(Client, data));
+            return new AsyncPageableWrapper<ContainerRegistryCredentialSetData, ContainerRegistryCredentialSetResource>(new CredentialSetsGetAllAsyncCollectionResultOfT(
+                _credentialSetsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ContainerRegistryCredentialSetCollection.GetAll"), data => new ContainerRegistryCredentialSetResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.ContainerRegistry
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ContainerRegistryCredentialSetData, ContainerRegistryCredentialSetResource>(new CredentialSetsGetAllCollectionResultOfT(_credentialSetsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ContainerRegistryCredentialSetResource(Client, data));
+            return new PageableWrapper<ContainerRegistryCredentialSetData, ContainerRegistryCredentialSetResource>(new CredentialSetsGetAllCollectionResultOfT(
+                _credentialSetsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ContainerRegistryCredentialSetCollection.GetAll"), data => new ContainerRegistryCredentialSetResource(Client, data));
         }
 
         /// <summary>

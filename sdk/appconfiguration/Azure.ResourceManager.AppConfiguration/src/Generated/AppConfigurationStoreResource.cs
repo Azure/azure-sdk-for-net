@@ -441,7 +441,8 @@ namespace Azure.ResourceManager.AppConfiguration
                 Id.ResourceGroupName,
                 Id.Name,
                 skipToken,
-                context);
+                context,
+                "AppConfigurationStoreResource.GetKeys");
         }
 
         /// <summary>
@@ -480,7 +481,8 @@ namespace Azure.ResourceManager.AppConfiguration
                 Id.ResourceGroupName,
                 Id.Name,
                 skipToken,
-                context);
+                context,
+                "AppConfigurationStoreResource.GetKeys");
         }
 
         /// <summary>

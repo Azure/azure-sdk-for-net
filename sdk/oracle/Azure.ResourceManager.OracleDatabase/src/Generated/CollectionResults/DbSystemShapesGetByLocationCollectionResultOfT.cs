@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.OracleDatabase
         private readonly string _zone;
         private readonly string _shapeAttribute;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of DbSystemShapesGetByLocationCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The DbSystemShapes client used to send requests. </param>
@@ -30,7 +31,8 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="zone"> Filters the result for the given Azure Availability Zone. </param>
         /// <param name="shapeAttribute"> Filters the result for the given Shape Attribute, such as BLOCK_STORAGE or SMART_STORAGE. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public DbSystemShapesGetByLocationCollectionResultOfT(DbSystemShapes client, Guid subscriptionId, AzureLocation location, string zone, string shapeAttribute, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public DbSystemShapesGetByLocationCollectionResultOfT(DbSystemShapes client, Guid subscriptionId, AzureLocation location, string zone, string shapeAttribute, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -38,6 +40,7 @@ namespace Azure.ResourceManager.OracleDatabase
             _zone = zone;
             _shapeAttribute = shapeAttribute;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of DbSystemShapesGetByLocationCollectionResultOfT as an enumerable collection. </summary>
@@ -70,7 +73,7 @@ namespace Azure.ResourceManager.OracleDatabase
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByLocationRequest(nextLink, _subscriptionId, _location, _zone, _shapeAttribute, _context) : _client.CreateGetByLocationRequest(_subscriptionId, _location, _zone, _shapeAttribute, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("OracleDBSystemShapeCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

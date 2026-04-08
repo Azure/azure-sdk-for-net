@@ -300,7 +300,8 @@ namespace Azure.ResourceManager.DevCenter
                 Id.ResourceGroupName,
                 Id.Name,
                 top,
-                context), data => new DevCenterGalleryResource(Client, data));
+                context,
+                "DevCenterGalleryCollection.GetAll"), data => new DevCenterGalleryResource(Client, data));
         }
 
         /// <summary>
@@ -335,7 +336,8 @@ namespace Azure.ResourceManager.DevCenter
                 Id.ResourceGroupName,
                 Id.Name,
                 top,
-                context), data => new DevCenterGalleryResource(Client, data));
+                context,
+                "DevCenterGalleryCollection.GetAll"), data => new DevCenterGalleryResource(Client, data));
         }
 
         /// <summary>

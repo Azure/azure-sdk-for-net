@@ -191,7 +191,8 @@ namespace Azure.ResourceManager.Avs
                 status?.ToString(),
                 @from,
                 to,
-                context), data => new AvsMaintenanceResource(Client, data));
+                context,
+                "AvsMaintenanceCollection.GetAll"), data => new AvsMaintenanceResource(Client, data));
         }
 
         /// <summary>
@@ -232,7 +233,8 @@ namespace Azure.ResourceManager.Avs
                 status?.ToString(),
                 @from,
                 to,
-                context), data => new AvsMaintenanceResource(Client, data));
+                context,
+                "AvsMaintenanceCollection.GetAll"), data => new AvsMaintenanceResource(Client, data));
         }
 
         /// <summary>

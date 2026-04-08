@@ -445,7 +445,8 @@ namespace Azure.ResourceManager.ComputeSchedule
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context);
+                context,
+                "ScheduledActionOccurrenceResource.GetAttachedResources");
         }
 
         /// <summary>
@@ -483,7 +484,8 @@ namespace Azure.ResourceManager.ComputeSchedule
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context);
+                context,
+                "ScheduledActionOccurrenceResource.GetAttachedResources");
         }
     }
 }

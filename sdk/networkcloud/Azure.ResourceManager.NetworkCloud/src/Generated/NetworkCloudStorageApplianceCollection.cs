@@ -186,7 +186,8 @@ namespace Azure.ResourceManager.NetworkCloud
                 Id.ResourceGroupName,
                 top,
                 skipToken,
-                context), data => new NetworkCloudStorageApplianceResource(Client, data));
+                context,
+                "NetworkCloudStorageApplianceCollection.GetAll"), data => new NetworkCloudStorageApplianceResource(Client, data));
         }
 
         /// <summary>
@@ -222,7 +223,8 @@ namespace Azure.ResourceManager.NetworkCloud
                 Id.ResourceGroupName,
                 top,
                 skipToken,
-                context), data => new NetworkCloudStorageApplianceResource(Client, data));
+                context,
+                "NetworkCloudStorageApplianceCollection.GetAll"), data => new NetworkCloudStorageApplianceResource(Client, data));
         }
 
         /// <summary>

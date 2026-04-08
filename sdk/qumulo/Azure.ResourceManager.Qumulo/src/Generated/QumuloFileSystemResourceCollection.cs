@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Qumulo
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<QumuloFileSystemResourceData, QumuloFileSystemResource>(new FileSystemsGetByResourceGroupAsyncCollectionResultOfT(_fileSystemsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new QumuloFileSystemResource(Client, data));
+            return new AsyncPageableWrapper<QumuloFileSystemResourceData, QumuloFileSystemResource>(new FileSystemsGetByResourceGroupAsyncCollectionResultOfT(_fileSystemsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "QumuloFileSystemResourceCollection.GetAll"), data => new QumuloFileSystemResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Qumulo
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<QumuloFileSystemResourceData, QumuloFileSystemResource>(new FileSystemsGetByResourceGroupCollectionResultOfT(_fileSystemsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new QumuloFileSystemResource(Client, data));
+            return new PageableWrapper<QumuloFileSystemResourceData, QumuloFileSystemResource>(new FileSystemsGetByResourceGroupCollectionResultOfT(_fileSystemsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "QumuloFileSystemResourceCollection.GetAll"), data => new QumuloFileSystemResource(Client, data));
         }
 
         /// <summary>

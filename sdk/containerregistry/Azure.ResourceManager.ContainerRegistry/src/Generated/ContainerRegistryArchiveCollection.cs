@@ -303,7 +303,8 @@ namespace Azure.ResourceManager.ContainerRegistry
                 Id.ResourceGroupName,
                 Id.Name,
                 _packageType,
-                context), data => new ContainerRegistryArchiveResource(Client, data));
+                context,
+                "ContainerRegistryArchiveCollection.GetAll"), data => new ContainerRegistryArchiveResource(Client, data));
         }
 
         /// <summary>
@@ -337,7 +338,8 @@ namespace Azure.ResourceManager.ContainerRegistry
                 Id.ResourceGroupName,
                 Id.Name,
                 _packageType,
-                context), data => new ContainerRegistryArchiveResource(Client, data));
+                context,
+                "ContainerRegistryArchiveCollection.GetAll"), data => new ContainerRegistryArchiveResource(Client, data));
         }
 
         /// <summary>

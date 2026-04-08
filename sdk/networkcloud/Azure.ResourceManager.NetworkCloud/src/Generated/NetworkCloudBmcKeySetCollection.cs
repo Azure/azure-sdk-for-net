@@ -304,7 +304,8 @@ namespace Azure.ResourceManager.NetworkCloud
                 Id.Name,
                 top,
                 skipToken,
-                context), data => new NetworkCloudBmcKeySetResource(Client, data));
+                context,
+                "NetworkCloudBmcKeySetCollection.GetAll"), data => new NetworkCloudBmcKeySetResource(Client, data));
         }
 
         /// <summary>
@@ -341,7 +342,8 @@ namespace Azure.ResourceManager.NetworkCloud
                 Id.Name,
                 top,
                 skipToken,
-                context), data => new NetworkCloudBmcKeySetResource(Client, data));
+                context,
+                "NetworkCloudBmcKeySetCollection.GetAll"), data => new NetworkCloudBmcKeySetResource(Client, data));
         }
 
         /// <summary>

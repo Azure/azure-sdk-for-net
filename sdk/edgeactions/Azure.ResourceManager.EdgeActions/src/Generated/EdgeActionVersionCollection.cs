@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.EdgeActions
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EdgeActionVersionData, EdgeActionVersionResource>(new EdgeActionVersionsGetByEdgeActionAsyncCollectionResultOfT(_edgeActionVersionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new EdgeActionVersionResource(Client, data));
+            return new AsyncPageableWrapper<EdgeActionVersionData, EdgeActionVersionResource>(new EdgeActionVersionsGetByEdgeActionAsyncCollectionResultOfT(
+                _edgeActionVersionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "EdgeActionVersionCollection.GetAll"), data => new EdgeActionVersionResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.EdgeActions
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EdgeActionVersionData, EdgeActionVersionResource>(new EdgeActionVersionsGetByEdgeActionCollectionResultOfT(_edgeActionVersionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new EdgeActionVersionResource(Client, data));
+            return new PageableWrapper<EdgeActionVersionData, EdgeActionVersionResource>(new EdgeActionVersionsGetByEdgeActionCollectionResultOfT(
+                _edgeActionVersionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "EdgeActionVersionCollection.GetAll"), data => new EdgeActionVersionResource(Client, data));
         }
 
         /// <summary>

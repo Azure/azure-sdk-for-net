@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.CloudHealth.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HealthModelData, HealthModelResource>(new HealthModelsGetBySubscriptionAsyncCollectionResultOfT(HealthModelsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new HealthModelResource(Client, data));
+            return new AsyncPageableWrapper<HealthModelData, HealthModelResource>(new HealthModelsGetBySubscriptionAsyncCollectionResultOfT(HealthModelsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCloudHealthSubscriptionResource.GetHealthModels"), data => new HealthModelResource(Client, data));
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.CloudHealth.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HealthModelData, HealthModelResource>(new HealthModelsGetBySubscriptionCollectionResultOfT(HealthModelsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new HealthModelResource(Client, data));
+            return new PageableWrapper<HealthModelData, HealthModelResource>(new HealthModelsGetBySubscriptionCollectionResultOfT(HealthModelsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCloudHealthSubscriptionResource.GetHealthModels"), data => new HealthModelResource(Client, data));
         }
     }
 }
