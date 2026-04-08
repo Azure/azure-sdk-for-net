@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="privateBlob"> The base64 encoded certificate private blob. </param>
         /// <param name="certPassword"> The certificate password. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TdeCertificate(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string privateBlob, string certPassword, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal TdeCertificate(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string privateBlob, string certPassword, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             PrivateBlob = privateBlob;
             CertPassword = certPassword;

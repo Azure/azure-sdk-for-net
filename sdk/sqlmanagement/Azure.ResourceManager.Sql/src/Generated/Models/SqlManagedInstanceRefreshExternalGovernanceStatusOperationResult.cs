@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="status"> Operation status. </param>
         /// <param name="errorMessage"> Error message. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SqlManagedInstanceRefreshExternalGovernanceStatusOperationResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? requestId, string requestType, string queuedTime, string managedInstanceName, string status, string errorMessage, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SqlManagedInstanceRefreshExternalGovernanceStatusOperationResult(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, Guid? requestId, string requestType, string queuedTime, string managedInstanceName, string status, string errorMessage, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             RequestId = requestId;
             RequestType = requestType;

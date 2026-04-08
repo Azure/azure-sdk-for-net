@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="tenantId"> Tenant ID of the administrator. </param>
         /// <param name="isAzureADOnlyAuthenticationEnabled"> Azure Active Directory only Authentication enabled. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SqlServerAzureADAdministratorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SqlAdministratorType? administratorType, string login, Guid? sid, Guid? tenantId, bool? isAzureADOnlyAuthenticationEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SqlServerAzureADAdministratorData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, SqlAdministratorType? administratorType, string login, Guid? sid, Guid? tenantId, bool? isAzureADOnlyAuthenticationEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             AdministratorType = administratorType;
             Login = login;

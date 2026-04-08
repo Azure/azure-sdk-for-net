@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="temporalType"> The table temporal type. </param>
         /// <param name="isMemoryOptimized"> Whether or not the table is memory optimized. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DatabaseTableData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TableTemporalType? temporalType, bool? isMemoryOptimized, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal DatabaseTableData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, TableTemporalType? temporalType, bool? isMemoryOptimized, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             TemporalType = temporalType;
             IsMemoryOptimized = isMemoryOptimized;

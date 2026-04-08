@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="digestStorageEndpoint"> The digest storage endpoint, which must be either an Azure blob storage endpoint or an URI for Azure Confidential Ledger. </param>
         /// <param name="state"> Specifies the state of ledger digest upload. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LedgerDigestUploadData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string digestStorageEndpoint, LedgerDigestUploadsState? state, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal LedgerDigestUploadData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string digestStorageEndpoint, LedgerDigestUploadsState? state, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             DigestStorageEndpoint = digestStorageEndpoint;
             State = state;

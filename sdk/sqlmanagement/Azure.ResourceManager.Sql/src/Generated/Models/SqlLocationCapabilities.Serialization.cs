@@ -71,11 +71,6 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(IsZoneResilientProvisioningAllowed))
-            {
-                writer.WritePropertyName("isZoneResilientProvisioningAllowed"u8);
-                writer.WriteBooleanValue(IsZoneResilientProvisioningAllowed.Value);
-            }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
@@ -127,7 +122,6 @@ namespace Azure.ResourceManager.Sql.Models
             IReadOnlyList<SqlServerVersionCapability> supportedServerVersions = default;
             IReadOnlyList<ManagedInstanceVersionCapability> supportedManagedInstanceVersions = default;
             IReadOnlyList<JobAgentVersionCapability> supportedJobAgentVersions = default;
-            bool? isZoneResilientProvisioningAllowed = default;
             SqlCapabilityStatus? status = default;
             string reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -181,15 +175,6 @@ namespace Azure.ResourceManager.Sql.Models
                     supportedJobAgentVersions = array;
                     continue;
                 }
-                if (property.NameEquals("isZoneResilientProvisioningAllowed"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    isZoneResilientProvisioningAllowed = property.Value.GetBoolean();
-                    continue;
-                }
                 if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -215,7 +200,6 @@ namespace Azure.ResourceManager.Sql.Models
                 supportedServerVersions ?? new ChangeTrackingList<SqlServerVersionCapability>(),
                 supportedManagedInstanceVersions ?? new ChangeTrackingList<ManagedInstanceVersionCapability>(),
                 supportedJobAgentVersions ?? new ChangeTrackingList<JobAgentVersionCapability>(),
-                isZoneResilientProvisioningAllowed,
                 status,
                 reason,
                 serializedAdditionalRawData);
@@ -321,22 +305,6 @@ namespace Azure.ResourceManager.Sql.Models
                         }
                         builder.AppendLine("  ]");
                     }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsZoneResilientProvisioningAllowed), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  isZoneResilientProvisioningAllowed: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsZoneResilientProvisioningAllowed))
-                {
-                    builder.Append("  isZoneResilientProvisioningAllowed: ");
-                    var boolValue = IsZoneResilientProvisioningAllowed.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
                 }
             }
 

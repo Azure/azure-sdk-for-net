@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="backupStorageRedundancy"> The storage account type used to store backups for this database. </param>
         /// <param name="keys"> The resource ids of the user assigned identities to use. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RestorableDroppedDatabaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SqlSku sku, string databaseName, long? maxSizeBytes, DateTimeOffset? createdOn, DateTimeOffset? deletedOn, DateTimeOffset? earliestRestoreOn, SqlBackupStorageRedundancy? backupStorageRedundancy, IDictionary<string, SqlDatabaseKey> keys, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal RestorableDroppedDatabaseData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SqlSku sku, string databaseName, long? maxSizeBytes, DateTimeOffset? createdOn, DateTimeOffset? deletedOn, DateTimeOffset? earliestRestoreOn, SqlBackupStorageRedundancy? backupStorageRedundancy, IDictionary<string, SqlDatabaseKey> keys, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             DatabaseName = databaseName;

@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="errorMessage"> Error message. </param>
         /// <param name="privateEndpointConnections"> Gets the status of private endpoints associated with this request. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ImportExportOperationResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? requestId, string requestType, string queuedTime, string lastModifiedTime, Uri blobUri, string serverName, string databaseName, string status, string errorMessage, IReadOnlyList<PrivateEndpointConnectionRequestStatus> privateEndpointConnections, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ImportExportOperationResult(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, Guid? requestId, string requestType, string queuedTime, string lastModifiedTime, Uri blobUri, string serverName, string databaseName, string status, string errorMessage, IReadOnlyList<PrivateEndpointConnectionRequestStatus> privateEndpointConnections, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             RequestId = requestId;
             RequestType = requestType;

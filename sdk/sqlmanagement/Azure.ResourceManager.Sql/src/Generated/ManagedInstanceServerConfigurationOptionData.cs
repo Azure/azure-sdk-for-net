@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="serverConfigurationOptionValue"> Value of the server configuration option. </param>
         /// <param name="provisioningState"> Provisioning state of server configuration option. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedInstanceServerConfigurationOptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? serverConfigurationOptionValue, JobExecutionProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ManagedInstanceServerConfigurationOptionData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, int? serverConfigurationOptionValue, JobExecutionProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ServerConfigurationOptionValue = serverConfigurationOptionValue;
             ProvisioningState = provisioningState;

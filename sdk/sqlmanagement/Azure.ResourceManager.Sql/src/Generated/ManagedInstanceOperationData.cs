@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="operationParameters"> The operation parameters. </param>
         /// <param name="operationSteps"> The operation steps. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedInstanceOperationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string managedInstanceName, string operation, string operationFriendlyName, int? percentComplete, DateTimeOffset? startOn, ManagementOperationState? state, int? errorCode, string errorDescription, int? errorSeverity, bool? isUserError, DateTimeOffset? estimatedCompleteOn, string description, bool? isCancellable, ManagedInstanceOperationParametersPair operationParameters, ManagedInstanceOperationSteps operationSteps, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ManagedInstanceOperationData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string managedInstanceName, string operation, string operationFriendlyName, int? percentComplete, DateTimeOffset? startOn, ManagementOperationState? state, int? errorCode, string errorDescription, int? errorSeverity, bool? isUserError, DateTimeOffset? estimatedCompleteOn, string description, bool? isCancellable, ManagedInstanceOperationParametersPair operationParameters, ManagedInstanceOperationSteps operationSteps, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ManagedInstanceName = managedInstanceName;
             Operation = operation;

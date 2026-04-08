@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="systemData"> The systemData. </param>
         /// <param name="members"> Members of the target group. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SqlServerJobTargetGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<JobTarget> members, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SqlServerJobTargetGroupData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, IList<JobTarget> members, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Members = members;
             _serializedAdditionalRawData = serializedAdditionalRawData;

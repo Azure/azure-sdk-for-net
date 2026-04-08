@@ -1,6 +1,6 @@
 # Release History
 
-## 1.4.0-beta.4 (Unreleased)
+## 1.3.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,8 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+- Regenerated from the same API version as 1.3.0 (tag: `package-2023-08`) with AOT compatibility improvements.
 
 ## 1.4.0-beta.3 (2025-07-31)
 

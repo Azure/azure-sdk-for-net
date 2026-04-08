@@ -181,11 +181,11 @@ namespace Azure.ResourceManager.Sql
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ActionDetails))
+            if (options.Format != "W" && Optional.IsCollectionDefined(AdditionalDetails))
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteStartObject();
-                foreach (var item in ActionDetails)
+                foreach (var item in AdditionalDetails)
                 {
                     writer.WritePropertyName(item.Key);
                     writer.WriteStringValue(item.Value);
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            ResourceManager.Models.SystemData systemData = default;
             string recommendationReason = default;
             DateTimeOffset? validSince = default;
             DateTimeOffset? lastRefresh = default;
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.Sql
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerSqlContext.Default);
+                    systemData = ModelReaderWriter.Read<ResourceManager.Models.SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerSqlContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -1063,7 +1063,7 @@ namespace Azure.ResourceManager.Sql
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ActionDetails), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AdditionalDetails), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("    details: ");
@@ -1071,13 +1071,13 @@ namespace Azure.ResourceManager.Sql
             }
             else
             {
-                if (Optional.IsCollectionDefined(ActionDetails))
+                if (Optional.IsCollectionDefined(AdditionalDetails))
                 {
-                    if (ActionDetails.Any())
+                    if (AdditionalDetails.Any())
                     {
                         builder.Append("    details: ");
                         builder.AppendLine("{");
-                        foreach (var item in ActionDetails)
+                        foreach (var item in AdditionalDetails)
                         {
                             builder.Append($"        '{item.Key}': ");
                             if (item.Value == null)

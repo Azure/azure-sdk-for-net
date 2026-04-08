@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="groupMembers"> Group members information for the server trust group. </param>
         /// <param name="trustScopes"> Trust scope of the server trust group. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SqlServerTrustGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<ServerTrustGroupServerInfo> groupMembers, IList<ServerTrustGroupPropertiesTrustScopesItem> trustScopes, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SqlServerTrustGroupData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, IList<ServerTrustGroupServerInfo> groupMembers, IList<ServerTrustGroupPropertiesTrustScopesItem> trustScopes, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             GroupMembers = groupMembers;
             TrustScopes = trustScopes;

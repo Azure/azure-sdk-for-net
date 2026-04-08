@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="yearlyRetention"> The yearly retention policy for an LTR backup in an ISO 8601 format. </param>
         /// <param name="weekOfYear"> The week of year to take the yearly backup in an ISO 8601 format. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedInstanceLongTermRetentionPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SqlBackupStorageAccessTier? backupStorageAccessTier, string weeklyRetention, string monthlyRetention, string yearlyRetention, int? weekOfYear, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ManagedInstanceLongTermRetentionPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, SqlBackupStorageAccessTier? backupStorageAccessTier, string weeklyRetention, string monthlyRetention, string yearlyRetention, int? weekOfYear, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             BackupStorageAccessTier = backupStorageAccessTier;
             WeeklyRetention = weeklyRetention;

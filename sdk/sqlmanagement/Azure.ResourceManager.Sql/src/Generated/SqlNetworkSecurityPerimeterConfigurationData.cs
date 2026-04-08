@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="profile"></param>
         /// <param name="provisioningIssues"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SqlNetworkSecurityPerimeterConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string provisioningState, SqlNetworkSecurityPerimeterConfigPerimeter networkSecurityPerimeter, SqlNetworkSecurityPerimeterConfigAssociation resourceAssociation, SqlNetworkSecurityPerimeterConfigProfile profile, IList<SqlNetworkSecurityPerimeterProvisioningIssue> provisioningIssues, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SqlNetworkSecurityPerimeterConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string provisioningState, SqlNetworkSecurityPerimeterConfigPerimeter networkSecurityPerimeter, SqlNetworkSecurityPerimeterConfigAssociation resourceAssociation, SqlNetworkSecurityPerimeterConfigProfile profile, IList<SqlNetworkSecurityPerimeterProvisioningIssue> provisioningIssues, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             NetworkSecurityPerimeter = networkSecurityPerimeter;

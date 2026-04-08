@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="resourceName"> The name of the resource. </param>
         /// <param name="nextResetOn"> The next reset time for the metric (ISO8601 format). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SqlServerUsage(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, double? currentValue, double? limit, string unit, string resourceName, DateTimeOffset? nextResetOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SqlServerUsage(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string displayName, double? currentValue, double? limit, string unit, string resourceName, DateTimeOffset? nextResetOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             DisplayName = displayName;
             CurrentValue = currentValue;

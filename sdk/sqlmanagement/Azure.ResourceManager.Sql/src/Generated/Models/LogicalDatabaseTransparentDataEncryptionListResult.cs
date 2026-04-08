@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> A list of transparent data encryption scan objects. </summary>
+    /// <summary> A list of transparent data encryptions. </summary>
     internal partial class LogicalDatabaseTransparentDataEncryptionListResult
     {
         /// <summary>

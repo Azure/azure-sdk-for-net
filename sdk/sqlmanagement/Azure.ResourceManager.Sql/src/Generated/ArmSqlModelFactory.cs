@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Net;
 using Azure.Core;
@@ -26,7 +25,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="retentionDays"> The backup retention period in days. This is how many days Point-in-Time Restore will be supported. </param>
         /// <param name="diffBackupIntervalInHours"> The differential backup interval in hours. This is how many interval hours between each differential backup will be supported. This is only applicable to live databases but not dropped databases. </param>
         /// <returns> A new <see cref="Sql.BackupShortTermRetentionPolicyData"/> instance for mocking. </returns>
-        public static BackupShortTermRetentionPolicyData BackupShortTermRetentionPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, int? retentionDays = null, DiffBackupIntervalInHours? diffBackupIntervalInHours = null)
+        public static BackupShortTermRetentionPolicyData BackupShortTermRetentionPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, int? retentionDays = null, DiffBackupIntervalInHours? diffBackupIntervalInHours = null)
         {
             return new BackupShortTermRetentionPolicyData(
                 id,
@@ -152,7 +151,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// </param>
         /// <param name="storageAccountSubscriptionId"> Specifies the blob storage subscription Id. </param>
         /// <returns> A new <see cref="Sql.SqlServerBlobAuditingPolicyData"/> instance for mocking. </returns>
-        public static SqlServerBlobAuditingPolicyData SqlServerBlobAuditingPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, bool? isDevopsAuditEnabled = null, int? retentionDays = null, IEnumerable<string> auditActionsAndGroups = null, bool? isStorageSecondaryKeyInUse = null, bool? isAzureMonitorTargetEnabled = null, int? queueDelayMs = null, bool? isManagedIdentityInUse = null, BlobAuditingPolicyState? state = null, string storageEndpoint = null, string storageAccountAccessKey = null, Guid? storageAccountSubscriptionId = null)
+        public static SqlServerBlobAuditingPolicyData SqlServerBlobAuditingPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, bool? isDevopsAuditEnabled = null, int? retentionDays = null, IEnumerable<string> auditActionsAndGroups = null, bool? isStorageSecondaryKeyInUse = null, bool? isAzureMonitorTargetEnabled = null, int? queueDelayMs = null, bool? isManagedIdentityInUse = null, BlobAuditingPolicyState? state = null, string storageEndpoint = null, string storageAccountAccessKey = null, Guid? storageAccountSubscriptionId = null)
         {
             auditActionsAndGroups ??= new List<string>();
 
@@ -277,7 +276,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// </param>
         /// <param name="storageAccountSubscriptionId"> Specifies the blob storage subscription Id. </param>
         /// <returns> A new <see cref="Sql.SqlDatabaseBlobAuditingPolicyData"/> instance for mocking. </returns>
-        public static SqlDatabaseBlobAuditingPolicyData SqlDatabaseBlobAuditingPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, int? retentionDays = null, IEnumerable<string> auditActionsAndGroups = null, bool? isStorageSecondaryKeyInUse = null, bool? isAzureMonitorTargetEnabled = null, int? queueDelayMs = null, bool? isManagedIdentityInUse = null, BlobAuditingPolicyState? state = null, string storageEndpoint = null, string storageAccountAccessKey = null, Guid? storageAccountSubscriptionId = null)
+        public static SqlDatabaseBlobAuditingPolicyData SqlDatabaseBlobAuditingPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string kind = null, int? retentionDays = null, IEnumerable<string> auditActionsAndGroups = null, bool? isStorageSecondaryKeyInUse = null, bool? isAzureMonitorTargetEnabled = null, int? queueDelayMs = null, bool? isManagedIdentityInUse = null, BlobAuditingPolicyState? state = null, string storageEndpoint = null, string storageAccountAccessKey = null, Guid? storageAccountSubscriptionId = null)
         {
             auditActionsAndGroups ??= new List<string>();
 
@@ -402,7 +401,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// </param>
         /// <param name="storageAccountSubscriptionId"> Specifies the blob storage subscription Id. </param>
         /// <returns> A new <see cref="Sql.ExtendedDatabaseBlobAuditingPolicyData"/> instance for mocking. </returns>
-        public static ExtendedDatabaseBlobAuditingPolicyData ExtendedDatabaseBlobAuditingPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string predicateExpression = null, int? retentionDays = null, IEnumerable<string> auditActionsAndGroups = null, bool? isStorageSecondaryKeyInUse = null, bool? isAzureMonitorTargetEnabled = null, int? queueDelayMs = null, bool? isManagedIdentityInUse = null, BlobAuditingPolicyState? state = null, string storageEndpoint = null, string storageAccountAccessKey = null, Guid? storageAccountSubscriptionId = null)
+        public static ExtendedDatabaseBlobAuditingPolicyData ExtendedDatabaseBlobAuditingPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string predicateExpression = null, int? retentionDays = null, IEnumerable<string> auditActionsAndGroups = null, bool? isStorageSecondaryKeyInUse = null, bool? isAzureMonitorTargetEnabled = null, int? queueDelayMs = null, bool? isManagedIdentityInUse = null, BlobAuditingPolicyState? state = null, string storageEndpoint = null, string storageAccountAccessKey = null, Guid? storageAccountSubscriptionId = null)
         {
             auditActionsAndGroups ??= new List<string>();
 
@@ -540,7 +539,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// </param>
         /// <param name="storageAccountSubscriptionId"> Specifies the blob storage subscription Id. </param>
         /// <returns> A new <see cref="Sql.ExtendedServerBlobAuditingPolicyData"/> instance for mocking. </returns>
-        public static ExtendedServerBlobAuditingPolicyData ExtendedServerBlobAuditingPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, bool? isDevopsAuditEnabled = null, string predicateExpression = null, int? retentionDays = null, IEnumerable<string> auditActionsAndGroups = null, bool? isStorageSecondaryKeyInUse = null, bool? isAzureMonitorTargetEnabled = null, int? queueDelayMs = null, bool? isManagedIdentityInUse = null, BlobAuditingPolicyState? state = null, string storageEndpoint = null, string storageAccountAccessKey = null, Guid? storageAccountSubscriptionId = null)
+        public static ExtendedServerBlobAuditingPolicyData ExtendedServerBlobAuditingPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, bool? isDevopsAuditEnabled = null, string predicateExpression = null, int? retentionDays = null, IEnumerable<string> auditActionsAndGroups = null, bool? isStorageSecondaryKeyInUse = null, bool? isAzureMonitorTargetEnabled = null, int? queueDelayMs = null, bool? isManagedIdentityInUse = null, BlobAuditingPolicyState? state = null, string storageEndpoint = null, string storageAccountAccessKey = null, Guid? storageAccountSubscriptionId = null)
         {
             auditActionsAndGroups ??= new List<string>();
 
@@ -564,6 +563,96 @@ namespace Azure.ResourceManager.Sql.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Sql.DataMaskingPolicyData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="location"> The location of the data masking policy. </param>
+        /// <param name="kind"> The kind of Data Masking Policy. Metadata, used for Azure portal. </param>
+        /// <param name="dataMaskingState"> The state of the data masking policy. </param>
+        /// <param name="exemptPrincipals"> The list of the exempt principals. Specifies the semicolon-separated list of database users for which the data masking policy does not apply. The specified users receive data results without masking for all of the database queries. </param>
+        /// <param name="applicationPrincipals"> The list of the application principals. This is a legacy parameter and is no longer used. </param>
+        /// <param name="maskingLevel"> The masking level. This is a legacy parameter and is no longer used. </param>
+        /// <returns> A new <see cref="Sql.DataMaskingPolicyData"/> instance for mocking. </returns>
+        public static DataMaskingPolicyData DataMaskingPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, AzureLocation? location = null, string kind = null, DataMaskingState? dataMaskingState = null, string exemptPrincipals = null, string applicationPrincipals = null, string maskingLevel = null)
+        {
+            return new DataMaskingPolicyData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                location,
+                kind,
+                dataMaskingState,
+                exemptPrincipals,
+                applicationPrincipals,
+                maskingLevel,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DataMaskingRule"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="location"> The location of the data masking rule. </param>
+        /// <param name="kind"> The kind of Data Masking Rule. Metadata, used for Azure portal. </param>
+        /// <param name="ruleId"> The rule Id. </param>
+        /// <param name="ruleState"> The rule state. Used to delete a rule. To delete an existing rule, specify the schemaName, tableName, columnName, maskingFunction, and specify ruleState as disabled. However, if the rule doesn't already exist, the rule will be created with ruleState set to enabled, regardless of the provided value of ruleState. </param>
+        /// <param name="schemaName"> The schema name on which the data masking rule is applied. </param>
+        /// <param name="tableName"> The table name on which the data masking rule is applied. </param>
+        /// <param name="columnName"> The column name on which the data masking rule is applied. </param>
+        /// <param name="aliasName"> The alias name. This is a legacy parameter and is no longer used. </param>
+        /// <param name="maskingFunction"> The masking function that is used for the data masking rule. </param>
+        /// <param name="numberFrom"> The numberFrom property of the masking rule. Required if maskingFunction is set to Number, otherwise this parameter will be ignored. </param>
+        /// <param name="numberTo"> The numberTo property of the data masking rule. Required if maskingFunction is set to Number, otherwise this parameter will be ignored. </param>
+        /// <param name="prefixSize"> If maskingFunction is set to Text, the number of characters to show unmasked in the beginning of the string. Otherwise, this parameter will be ignored. </param>
+        /// <param name="suffixSize"> If maskingFunction is set to Text, the number of characters to show unmasked at the end of the string. Otherwise, this parameter will be ignored. </param>
+        /// <param name="replacementString"> If maskingFunction is set to Text, the character to use for masking the unexposed part of the string. Otherwise, this parameter will be ignored. </param>
+        /// <returns> A new <see cref="Models.DataMaskingRule"/> instance for mocking. </returns>
+        public static DataMaskingRule DataMaskingRule(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, AzureLocation? location = null, string kind = null, string ruleId = null, DataMaskingRuleState? ruleState = null, string schemaName = null, string tableName = null, string columnName = null, string aliasName = null, DataMaskingFunction? maskingFunction = null, string numberFrom = null, string numberTo = null, string prefixSize = null, string suffixSize = null, string replacementString = null)
+        {
+            return new DataMaskingRule(
+                id,
+                name,
+                resourceType,
+                systemData,
+                location,
+                kind,
+                ruleId,
+                ruleState,
+                schemaName,
+                tableName,
+                columnName,
+                aliasName,
+                maskingFunction,
+                numberFrom,
+                numberTo,
+                prefixSize,
+                suffixSize,
+                replacementString,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Sql.DataWarehouseUserActivityData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="activeQueriesCount"> Count of running and suspended queries. </param>
+        /// <returns> A new <see cref="Sql.DataWarehouseUserActivityData"/> instance for mocking. </returns>
+        public static DataWarehouseUserActivityData DataWarehouseUserActivityData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, int? activeQueriesCount = null)
+        {
+            return new DataWarehouseUserActivityData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                activeQueriesCount,
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Sql.DatabaseAdvancedThreatProtectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -572,7 +661,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="state"> Specifies the state of the Advanced Threat Protection, whether it is enabled or disabled or a state has not been applied yet on the specific database or server. </param>
         /// <param name="createdOn"> Specifies the UTC creation time of the policy. </param>
         /// <returns> A new <see cref="Sql.DatabaseAdvancedThreatProtectionData"/> instance for mocking. </returns>
-        public static DatabaseAdvancedThreatProtectionData DatabaseAdvancedThreatProtectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AdvancedThreatProtectionState? state = null, DateTimeOffset? createdOn = null)
+        public static DatabaseAdvancedThreatProtectionData DatabaseAdvancedThreatProtectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, AdvancedThreatProtectionState? state = null, DateTimeOffset? createdOn = null)
         {
             return new DatabaseAdvancedThreatProtectionData(
                 id,
@@ -598,7 +687,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="lastCheckedOn"> Gets the time when the current resource was analyzed for recommendations by this advisor. </param>
         /// <param name="recommendedActions"> Gets the recommended actions for this advisor. </param>
         /// <returns> A new <see cref="Sql.SqlAdvisorData"/> instance for mocking. </returns>
-        public static SqlAdvisorData SqlAdvisorData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, AzureLocation? location = null, SqlAdvisorStatus? advisorStatus = null, AutoExecuteStatus? autoExecuteStatus = null, AutoExecuteStatusInheritedFrom? autoExecuteStatusInheritedFrom = null, string recommendationsStatus = null, DateTimeOffset? lastCheckedOn = null, IEnumerable<RecommendedActionData> recommendedActions = null)
+        public static SqlAdvisorData SqlAdvisorData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string kind = null, AzureLocation? location = null, SqlAdvisorStatus? advisorStatus = null, AutoExecuteStatus? autoExecuteStatus = null, AutoExecuteStatusInheritedFrom? autoExecuteStatusInheritedFrom = null, string recommendationsStatus = null, DateTimeOffset? lastCheckedOn = null, IEnumerable<RecommendedActionData> recommendedActions = null)
         {
             recommendedActions ??= new List<RecommendedActionData>();
 
@@ -615,6 +704,78 @@ namespace Azure.ResourceManager.Sql.Models
                 recommendationsStatus,
                 lastCheckedOn,
                 recommendedActions?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Sql.RecommendedActionData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="kind"> Resource kind. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="recommendationReason"> Gets the reason for recommending this action. e.g., DuplicateIndex. </param>
+        /// <param name="validSince"> Gets the time since when this recommended action is valid. </param>
+        /// <param name="lastRefresh"> Gets time when this recommended action was last refreshed. </param>
+        /// <param name="state"> Gets the info of the current state the recommended action is in. </param>
+        /// <param name="isExecutableAction"> Gets if this recommended action is actionable by user. </param>
+        /// <param name="isRevertableAction"> Gets if changes applied by this recommended action can be reverted by user. </param>
+        /// <param name="isArchivedAction"> Gets if this recommended action was suggested some time ago but user chose to ignore this and system added a new recommended action again. </param>
+        /// <param name="executeActionStartOn"> Gets the time when system started applying this recommended action on the user resource. e.g., index creation start time. </param>
+        /// <param name="executeActionDuration"> Gets the time taken for applying this recommended action on user resource. e.g., time taken for index creation. </param>
+        /// <param name="revertActionStartOn"> Gets the time when system started reverting changes of this recommended action on user resource. e.g., time when index drop is executed. </param>
+        /// <param name="revertActionDuration"> Gets the time taken for reverting changes of this recommended action on user resource. e.g., time taken for dropping the created index. </param>
+        /// <param name="executeActionInitiatedBy"> Gets if approval for applying this recommended action was given by user/system. </param>
+        /// <param name="executeActionInitiatedOn"> Gets the time when this recommended action was approved for execution. </param>
+        /// <param name="revertActionInitiatedBy"> Gets if approval for reverting this recommended action was given by user/system. </param>
+        /// <param name="revertActionInitiatedOn"> Gets the time when this recommended action was approved for revert. </param>
+        /// <param name="score"> Gets the impact of this recommended action. Possible values are 1 - Low impact, 2 - Medium Impact and 3 - High Impact. </param>
+        /// <param name="implementationDetails"> Gets the implementation details of this recommended action for user to apply it manually. </param>
+        /// <param name="errorDetails"> Gets the error details if and why this recommended action is put to error state. </param>
+        /// <param name="estimatedImpact"> Gets the estimated impact info for this recommended action e.g., Estimated CPU gain, Estimated Disk Space change. </param>
+        /// <param name="observedImpact"> Gets the observed/actual impact info for this recommended action e.g., Actual CPU gain, Actual Disk Space change. </param>
+        /// <param name="timeSeries"> Gets the time series info of metrics for this recommended action e.g., CPU consumption time series. </param>
+        /// <param name="linkedObjects"> Gets the linked objects, if any. </param>
+        /// <param name="additionalDetails"> Gets additional details specific to this recommended action. </param>
+        /// <returns> A new <see cref="Sql.RecommendedActionData"/> instance for mocking. </returns>
+        public static RecommendedActionData RecommendedActionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string kind = null, AzureLocation? location = null, string recommendationReason = null, DateTimeOffset? validSince = null, DateTimeOffset? lastRefresh = null, RecommendedActionStateInfo state = null, bool? isExecutableAction = null, bool? isRevertableAction = null, bool? isArchivedAction = null, DateTimeOffset? executeActionStartOn = null, TimeSpan? executeActionDuration = null, DateTimeOffset? revertActionStartOn = null, TimeSpan? revertActionDuration = null, RecommendedActionInitiatedBy? executeActionInitiatedBy = null, DateTimeOffset? executeActionInitiatedOn = null, RecommendedActionInitiatedBy? revertActionInitiatedBy = null, DateTimeOffset? revertActionInitiatedOn = null, int? score = null, RecommendedActionImplementationInfo implementationDetails = null, RecommendedActionErrorInfo errorDetails = null, IEnumerable<RecommendedActionImpactRecord> estimatedImpact = null, IEnumerable<RecommendedActionImpactRecord> observedImpact = null, IEnumerable<RecommendedActionMetricInfo> timeSeries = null, IEnumerable<string> linkedObjects = null, IReadOnlyDictionary<string, string> additionalDetails = null)
+        {
+            estimatedImpact ??= new List<RecommendedActionImpactRecord>();
+            observedImpact ??= new List<RecommendedActionImpactRecord>();
+            timeSeries ??= new List<RecommendedActionMetricInfo>();
+            linkedObjects ??= new List<string>();
+            additionalDetails ??= new Dictionary<string, string>();
+
+            return new RecommendedActionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                kind,
+                location,
+                recommendationReason,
+                validSince,
+                lastRefresh,
+                state,
+                isExecutableAction,
+                isRevertableAction,
+                isArchivedAction,
+                executeActionStartOn,
+                executeActionDuration,
+                revertActionStartOn,
+                revertActionDuration,
+                executeActionInitiatedBy,
+                executeActionInitiatedOn,
+                revertActionInitiatedBy,
+                revertActionInitiatedOn,
+                score,
+                implementationDetails,
+                errorDetails,
+                estimatedImpact?.ToList(),
+                observedImpact?.ToList(),
+                timeSeries?.ToList(),
+                linkedObjects?.ToList(),
+                additionalDetails,
                 serializedAdditionalRawData: null);
         }
 
@@ -691,7 +852,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="actualState"> Automatic tuning actual state. </param>
         /// <param name="options"> Automatic tuning options definition. </param>
         /// <returns> A new <see cref="Sql.SqlDatabaseAutomaticTuningData"/> instance for mocking. </returns>
-        public static SqlDatabaseAutomaticTuningData SqlDatabaseAutomaticTuningData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AutomaticTuningMode? desiredState = null, AutomaticTuningMode? actualState = null, IDictionary<string, AutomaticTuningOptions> options = null)
+        public static SqlDatabaseAutomaticTuningData SqlDatabaseAutomaticTuningData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, AutomaticTuningMode? desiredState = null, AutomaticTuningMode? actualState = null, IDictionary<string, AutomaticTuningOptions> options = null)
         {
             options ??= new Dictionary<string, AutomaticTuningOptions>();
 
@@ -727,7 +888,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="isMemoryOptimized"> Whether or not the column belongs to a memory optimized table. </param>
         /// <param name="isComputed"> Whether or not the column is computed. </param>
         /// <returns> A new <see cref="Sql.DatabaseColumnData"/> instance for mocking. </returns>
-        public static DatabaseColumnData DatabaseColumnData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SqlColumnDataType? columnType = null, TableTemporalType? temporalType = null, bool? isMemoryOptimized = null, bool? isComputed = null)
+        public static DatabaseColumnData DatabaseColumnData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, SqlColumnDataType? columnType = null, TableTemporalType? temporalType = null, bool? isMemoryOptimized = null, bool? isComputed = null)
         {
             return new DatabaseColumnData(
                 id,
@@ -757,7 +918,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="blobUri"> Blob URI. </param>
         /// <param name="privateEndpointConnections"> Gets the status of private endpoints associated with this request. </param>
         /// <returns> A new <see cref="Models.ImportExportExtensionsOperationResult"/> instance for mocking. </returns>
-        public static ImportExportExtensionsOperationResult ImportExportExtensionsOperationResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? requestId = null, string requestType = null, string lastModifiedTime = null, string serverName = null, string databaseName = null, string status = null, string errorMessage = null, string queuedTime = null, Uri blobUri = null, IEnumerable<PrivateEndpointConnectionRequestStatus> privateEndpointConnections = null)
+        public static ImportExportExtensionsOperationResult ImportExportExtensionsOperationResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, Guid? requestId = null, string requestType = null, string lastModifiedTime = null, string serverName = null, string databaseName = null, string status = null, string errorMessage = null, string queuedTime = null, Uri blobUri = null, IEnumerable<PrivateEndpointConnectionRequestStatus> privateEndpointConnections = null)
         {
             privateEndpointConnections ??= new List<PrivateEndpointConnectionRequestStatus>();
 
@@ -795,18 +956,18 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="operationMode"> Operation mode of the operation: Import, Export, or PolybaseImport. </param>
-        /// <param name="storageKeyType"> Storage key type: StorageAccessKey, SharedAccessKey or ManagedIdentity. </param>
-        /// <param name="storageKey"> Storage key for the storage account. If StorageKeyType is ManagedIdentity, this field should specify the Managed Identity's resource ID. </param>
+        /// <param name="storageKeyType"> Storage key type: StorageAccessKey or SharedAccessKey. </param>
+        /// <param name="storageKey"> Storage key for the storage account. </param>
         /// <param name="storageUri"> Storage Uri for the storage account. </param>
-        /// <param name="administratorLogin"> Administrator login name. If AuthenticationType is ManagedIdentity, this field should specify the Managed Identity's resource ID. </param>
-        /// <param name="administratorLoginPassword"> Administrator login password. If AuthenticationType is ManagedIdentity, this field should not be specified. </param>
-        /// <param name="authenticationType"> Authentication type used to access the SQL: Sql, ADPassword or ManagedIdentity. </param>
+        /// <param name="administratorLogin"> Administrator login name. </param>
+        /// <param name="administratorLoginPassword"> Administrator login password. </param>
+        /// <param name="authenticationType"> Authentication type: SQL authentication or AD password. </param>
         /// <param name="databaseEdition"> Database edition for the newly created database in the case of an import operation. </param>
         /// <param name="serviceObjectiveName"> Database service level objective for the newly created database in the case of an import operation. </param>
         /// <param name="maxSizeBytes"> Database max size in bytes for the newly created database in the case of an import operation. </param>
         /// <param name="networkIsolation"> Optional resource information to enable network isolation for request. </param>
         /// <returns> A new <see cref="Models.SqlDatabaseExtension"/> instance for mocking. </returns>
-        public static SqlDatabaseExtension SqlDatabaseExtension(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DatabaseExtensionOperationMode? operationMode = null, StorageKeyType? storageKeyType = null, string storageKey = null, Uri storageUri = null, string administratorLogin = null, string administratorLoginPassword = null, string authenticationType = null, string databaseEdition = null, string serviceObjectiveName = null, string maxSizeBytes = null, NetworkIsolationSettings networkIsolation = null)
+        public static SqlDatabaseExtension SqlDatabaseExtension(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, DatabaseExtensionOperationMode? operationMode = null, StorageKeyType? storageKeyType = null, string storageKey = null, Uri storageUri = null, string administratorLogin = null, string administratorLoginPassword = null, string authenticationType = null, string databaseEdition = null, string serviceObjectiveName = null, string maxSizeBytes = null, NetworkIsolationSettings networkIsolation = null)
         {
             return new SqlDatabaseExtension(
                 id,
@@ -848,7 +1009,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="isCancellable"> Whether the operation can be cancelled. </param>
         /// <param name="operationPhaseDetails"> The operation phase details. </param>
         /// <returns> A new <see cref="Models.DatabaseOperationData"/> instance for mocking. </returns>
-        public static DatabaseOperationData DatabaseOperationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string databaseName = null, string operation = null, string operationFriendlyName = null, int? percentComplete = null, string serverName = null, DateTimeOffset? startOn = null, ManagementOperationState? state = null, int? errorCode = null, string errorDescription = null, int? errorSeverity = null, bool? isUserError = null, DateTimeOffset? estimatedCompleteOn = null, string description = null, bool? isCancellable = null, DatabaseOperationPhaseDetails operationPhaseDetails = null)
+        public static DatabaseOperationData DatabaseOperationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string databaseName = null, string operation = null, string operationFriendlyName = null, int? percentComplete = null, string serverName = null, DateTimeOffset? startOn = null, ManagementOperationState? state = null, int? errorCode = null, string errorDescription = null, int? errorSeverity = null, bool? isUserError = null, DateTimeOffset? estimatedCompleteOn = null, string description = null, bool? isCancellable = null, DatabaseOperationPhaseDetails operationPhaseDetails = null)
         {
             return new DatabaseOperationData(
                 id,
@@ -882,6 +1043,486 @@ namespace Azure.ResourceManager.Sql.Models
             phaseInformation ??= new Dictionary<string, string>();
 
             return new DatabaseOperationPhaseDetails(phase, phaseInformation, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Sql.DatabaseSchemaData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <returns> A new <see cref="Sql.DatabaseSchemaData"/> instance for mocking. </returns>
+        public static DatabaseSchemaData DatabaseSchemaData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null)
+        {
+            return new DatabaseSchemaData(id, name, resourceType, systemData, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Sql.SqlDatabaseSecurityAlertPolicyData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="state"> Specifies the state of the policy, whether it is enabled or disabled or a policy has not been applied yet on the specific database. </param>
+        /// <param name="disabledAlerts"> Specifies an array of alerts that are disabled. Allowed values are: Sql_Injection, Sql_Injection_Vulnerability, Access_Anomaly, Data_Exfiltration, Unsafe_Action, Brute_Force. </param>
+        /// <param name="emailAddresses"> Specifies an array of e-mail addresses to which the alert is sent. </param>
+        /// <param name="sendToEmailAccountAdmins"> Specifies that the alert is sent to the account administrators. </param>
+        /// <param name="storageEndpoint"> Specifies the blob storage endpoint (e.g. https://MyAccount.blob.core.windows.net). This blob storage will hold all Threat Detection audit logs. </param>
+        /// <param name="storageAccountAccessKey"> Specifies the identifier key of the Threat Detection audit storage account. </param>
+        /// <param name="retentionDays"> Specifies the number of days to keep in the Threat Detection audit logs. </param>
+        /// <param name="createdOn"> Specifies the UTC creation time of the policy. </param>
+        /// <returns> A new <see cref="Sql.SqlDatabaseSecurityAlertPolicyData"/> instance for mocking. </returns>
+        public static SqlDatabaseSecurityAlertPolicyData SqlDatabaseSecurityAlertPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, SecurityAlertsPolicyState? state = null, IEnumerable<string> disabledAlerts = null, IEnumerable<string> emailAddresses = null, bool? sendToEmailAccountAdmins = null, string storageEndpoint = null, string storageAccountAccessKey = null, int? retentionDays = null, DateTimeOffset? createdOn = null)
+        {
+            disabledAlerts ??= new List<string>();
+            emailAddresses ??= new List<string>();
+
+            return new SqlDatabaseSecurityAlertPolicyData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                state,
+                disabledAlerts?.ToList(),
+                emailAddresses?.ToList(),
+                sendToEmailAccountAdmins,
+                storageEndpoint,
+                storageAccountAccessKey,
+                retentionDays,
+                createdOn,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Sql.SqlVulnerabilityAssessmentBaselineData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="results"> The baseline set result. </param>
+        /// <returns> A new <see cref="Sql.SqlVulnerabilityAssessmentBaselineData"/> instance for mocking. </returns>
+        public static SqlVulnerabilityAssessmentBaselineData SqlVulnerabilityAssessmentBaselineData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, IDictionary<string, IList<IList<string>>> results = null)
+        {
+            results ??= new Dictionary<string, IList<IList<string>>>();
+
+            return new SqlVulnerabilityAssessmentBaselineData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                results,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SqlVulnerabilityAssessmentBaselineCreateOrUpdateContent"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="isLatestScan"> The latest scan flag. </param>
+        /// <param name="results"> The rule baseline result list. </param>
+        /// <returns> A new <see cref="Models.SqlVulnerabilityAssessmentBaselineCreateOrUpdateContent"/> instance for mocking. </returns>
+        public static SqlVulnerabilityAssessmentBaselineCreateOrUpdateContent SqlVulnerabilityAssessmentBaselineCreateOrUpdateContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, bool? isLatestScan = null, IDictionary<string, IList<IList<string>>> results = null)
+        {
+            results ??= new Dictionary<string, IList<IList<string>>>();
+
+            return new SqlVulnerabilityAssessmentBaselineCreateOrUpdateContent(
+                id,
+                name,
+                resourceType,
+                systemData,
+                isLatestScan,
+                results,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Sql.SqlVulnerabilityAssessmentBaselineRuleData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="results"> The rule baseline result. </param>
+        /// <returns> A new <see cref="Sql.SqlVulnerabilityAssessmentBaselineRuleData"/> instance for mocking. </returns>
+        public static SqlVulnerabilityAssessmentBaselineRuleData SqlVulnerabilityAssessmentBaselineRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, IEnumerable<IList<string>> results = null)
+        {
+            results ??= new List<IList<string>>();
+
+            return new SqlVulnerabilityAssessmentBaselineRuleData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                results?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SqlVulnerabilityAssessmentBaselineRuleCreateOrUpdateContent"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="isLatestScan"> The latest scan flag. </param>
+        /// <param name="results"> The rule baseline result. </param>
+        /// <returns> A new <see cref="Models.SqlVulnerabilityAssessmentBaselineRuleCreateOrUpdateContent"/> instance for mocking. </returns>
+        public static SqlVulnerabilityAssessmentBaselineRuleCreateOrUpdateContent SqlVulnerabilityAssessmentBaselineRuleCreateOrUpdateContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, bool? isLatestScan = null, IEnumerable<IList<string>> results = null)
+        {
+            results ??= new List<IList<string>>();
+
+            return new SqlVulnerabilityAssessmentBaselineRuleCreateOrUpdateContent(
+                id,
+                name,
+                resourceType,
+                systemData,
+                isLatestScan,
+                results?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Sql.SqlVulnerabilityAssessmentScanResultData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="ruleId"> SQL Vulnerability Assessment rule Id. </param>
+        /// <param name="status"> SQL Vulnerability Assessment rule result status. </param>
+        /// <param name="errorMessage"> SQL Vulnerability Assessment error message. </param>
+        /// <param name="isTrimmed"> SQL Vulnerability Assessment is the query results trimmed. </param>
+        /// <param name="queryResults"> SQL Vulnerability Assessment query results that was run. </param>
+        /// <param name="remediation"> SQL Vulnerability Assessment the remediation details. </param>
+        /// <param name="baselineAdjustedResult"> SQL Vulnerability Assessment rule result adjusted with baseline. </param>
+        /// <param name="ruleMetadata"> SQL Vulnerability Assessment rule metadata. </param>
+        /// <returns> A new <see cref="Sql.SqlVulnerabilityAssessmentScanResultData"/> instance for mocking. </returns>
+        public static SqlVulnerabilityAssessmentScanResultData SqlVulnerabilityAssessmentScanResultData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string ruleId = null, SqlVulnerabilityAssessmentRuleStatus? status = null, string errorMessage = null, bool? isTrimmed = null, IEnumerable<IList<string>> queryResults = null, SqlVulnerabilityAssessmentRemediation remediation = null, SqlVulnerabilityAssessmentBaselineAdjustedResult baselineAdjustedResult = null, SqlVulnerabilityAssessmentRuleMetadata ruleMetadata = null)
+        {
+            queryResults ??= new List<IList<string>>();
+
+            return new SqlVulnerabilityAssessmentScanResultData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                ruleId,
+                status,
+                errorMessage,
+                isTrimmed,
+                queryResults?.ToList(),
+                remediation,
+                baselineAdjustedResult,
+                ruleMetadata,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SqlVulnerabilityAssessmentRemediation"/>. </summary>
+        /// <param name="description"> SQL Vulnerability Assessment remediation description. </param>
+        /// <param name="scripts"> SQL Vulnerability Assessment remediation script. </param>
+        /// <param name="isAutomated"> SQL Vulnerability Assessment is remediation automated. </param>
+        /// <param name="portalLink"> SQL Vulnerability Assessment optional link to remediate in Azure Portal. </param>
+        /// <returns> A new <see cref="Models.SqlVulnerabilityAssessmentRemediation"/> instance for mocking. </returns>
+        public static SqlVulnerabilityAssessmentRemediation SqlVulnerabilityAssessmentRemediation(string description = null, IEnumerable<string> scripts = null, bool? isAutomated = null, string portalLink = null)
+        {
+            scripts ??= new List<string>();
+
+            return new SqlVulnerabilityAssessmentRemediation(description, scripts?.ToList(), isAutomated, portalLink, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SqlVulnerabilityAssessmentBaselineAdjustedResult"/>. </summary>
+        /// <param name="baseline"> SQL Vulnerability Assessment baseline details. </param>
+        /// <param name="status"> SQL Vulnerability Assessment baseline status. </param>
+        /// <param name="resultsNotInBaseline"> SQL Vulnerability Assessment results that are not in baseline. </param>
+        /// <param name="resultsOnlyInBaseline"> SQL Vulnerability Assessment results that are in baseline. </param>
+        /// <returns> A new <see cref="Models.SqlVulnerabilityAssessmentBaselineAdjustedResult"/> instance for mocking. </returns>
+        public static SqlVulnerabilityAssessmentBaselineAdjustedResult SqlVulnerabilityAssessmentBaselineAdjustedResult(SqlVulnerabilityAssessmentBaselineDetails baseline = null, SqlVulnerabilityAssessmentRuleStatus? status = null, IEnumerable<IList<string>> resultsNotInBaseline = null, IEnumerable<IList<string>> resultsOnlyInBaseline = null)
+        {
+            resultsNotInBaseline ??= new List<IList<string>>();
+            resultsOnlyInBaseline ??= new List<IList<string>>();
+
+            return new SqlVulnerabilityAssessmentBaselineAdjustedResult(baseline, status, resultsNotInBaseline?.ToList(), resultsOnlyInBaseline?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SqlVulnerabilityAssessmentBaselineDetails"/>. </summary>
+        /// <param name="expectedResults"> SQL Vulnerability Assessment baseline expected results. </param>
+        /// <param name="updatedOn"> SQL Vulnerability Assessment baseline update time (UTC). </param>
+        /// <returns> A new <see cref="Models.SqlVulnerabilityAssessmentBaselineDetails"/> instance for mocking. </returns>
+        public static SqlVulnerabilityAssessmentBaselineDetails SqlVulnerabilityAssessmentBaselineDetails(IEnumerable<IList<string>> expectedResults = null, DateTimeOffset? updatedOn = null)
+        {
+            expectedResults ??= new List<IList<string>>();
+
+            return new SqlVulnerabilityAssessmentBaselineDetails(expectedResults?.ToList(), updatedOn, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SqlVulnerabilityAssessmentRuleMetadata"/>. </summary>
+        /// <param name="ruleId"> SQL Vulnerability Assessment rule Id. </param>
+        /// <param name="severity"> SQL Vulnerability Assessment rule severity. </param>
+        /// <param name="category"> SQL Vulnerability Assessment rule category. </param>
+        /// <param name="ruleType"> SQL Vulnerability Assessment rule type. </param>
+        /// <param name="title"> SQL Vulnerability Assessment rule title. </param>
+        /// <param name="description"> SQL Vulnerability Assessment rule description. </param>
+        /// <param name="rationale"> SQL Vulnerability Assessment rule rationale. </param>
+        /// <param name="queryCheck"> SQL Vulnerability Assessment rule query details. </param>
+        /// <param name="benchmarkReferences"> SQL Vulnerability Assessment benchmark references. </param>
+        /// <returns> A new <see cref="Models.SqlVulnerabilityAssessmentRuleMetadata"/> instance for mocking. </returns>
+        public static SqlVulnerabilityAssessmentRuleMetadata SqlVulnerabilityAssessmentRuleMetadata(string ruleId = null, SqlVulnerabilityAssessmentRuleSeverity? severity = null, string category = null, SqlVulnerabilityAssessmentRuleType? ruleType = null, string title = null, string description = null, string rationale = null, SqlVulnerabilityAssessmentQueryCheck queryCheck = null, IEnumerable<SqlVulnerabilityAssessmentBenchmarkReference> benchmarkReferences = null)
+        {
+            benchmarkReferences ??= new List<SqlVulnerabilityAssessmentBenchmarkReference>();
+
+            return new SqlVulnerabilityAssessmentRuleMetadata(
+                ruleId,
+                severity,
+                category,
+                ruleType,
+                title,
+                description,
+                rationale,
+                queryCheck,
+                benchmarkReferences?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SqlVulnerabilityAssessmentQueryCheck"/>. </summary>
+        /// <param name="query"> SQL Vulnerability Assessment rule query. </param>
+        /// <param name="expectedResult"> SQL Vulnerability Assessment query expected result. </param>
+        /// <param name="columnNames"> SQL Vulnerability Assessment column names of query expected result. </param>
+        /// <returns> A new <see cref="Models.SqlVulnerabilityAssessmentQueryCheck"/> instance for mocking. </returns>
+        public static SqlVulnerabilityAssessmentQueryCheck SqlVulnerabilityAssessmentQueryCheck(string query = null, IEnumerable<IList<string>> expectedResult = null, IEnumerable<string> columnNames = null)
+        {
+            expectedResult ??= new List<IList<string>>();
+            columnNames ??= new List<string>();
+
+            return new SqlVulnerabilityAssessmentQueryCheck(query, expectedResult?.ToList(), columnNames?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SqlVulnerabilityAssessmentBenchmarkReference"/>. </summary>
+        /// <param name="benchmark"> SQL Vulnerability Assessment benchmark name. </param>
+        /// <param name="reference"> SQL Vulnerability Assessment benchmark reference. </param>
+        /// <returns> A new <see cref="Models.SqlVulnerabilityAssessmentBenchmarkReference"/> instance for mocking. </returns>
+        public static SqlVulnerabilityAssessmentBenchmarkReference SqlVulnerabilityAssessmentBenchmarkReference(string benchmark = null, string reference = null)
+        {
+            return new SqlVulnerabilityAssessmentBenchmarkReference(benchmark, reference, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Sql.SqlVulnerabilityAssessmentScanData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="scanId"> The scan ID. </param>
+        /// <param name="triggerType"> The scan trigger type. </param>
+        /// <param name="state"> The scan status. </param>
+        /// <param name="startOn"> The scan start time (UTC). </param>
+        /// <param name="endOn"> The scan end time (UTC). </param>
+        /// <param name="errors"> The scan errors. </param>
+        /// <param name="server"> The server name. </param>
+        /// <param name="database"> The database name. </param>
+        /// <param name="sqlVersion"> The SQL version. </param>
+        /// <param name="highSeverityFailedRulesCount"> The number of failed rules with high severity. </param>
+        /// <param name="mediumSeverityFailedRulesCount"> The number of failed rules with medium severity. </param>
+        /// <param name="lowSeverityFailedRulesCount"> The number of failed rules with low severity. </param>
+        /// <param name="totalPassedRulesCount"> The number of total passed rules. </param>
+        /// <param name="totalFailedRulesCount"> The number of total failed rules. </param>
+        /// <param name="totalRulesCount"> The number of total rules assessed. </param>
+        /// <param name="isBaselineApplied"> Baseline created for this database, and has one or more rules. </param>
+        /// <param name="lastScanOn"> The last scan time. </param>
+        /// <returns> A new <see cref="Sql.SqlVulnerabilityAssessmentScanData"/> instance for mocking. </returns>
+        public static SqlVulnerabilityAssessmentScanData SqlVulnerabilityAssessmentScanData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string scanId = null, VulnerabilityAssessmentScanTriggerType? triggerType = null, VulnerabilityAssessmentScanState? state = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<SqlVulnerabilityAssessmentScanError> errors = null, string server = null, string database = null, string sqlVersion = null, int? highSeverityFailedRulesCount = null, int? mediumSeverityFailedRulesCount = null, int? lowSeverityFailedRulesCount = null, int? totalPassedRulesCount = null, int? totalFailedRulesCount = null, int? totalRulesCount = null, bool? isBaselineApplied = null, DateTimeOffset? lastScanOn = null)
+        {
+            errors ??= new List<SqlVulnerabilityAssessmentScanError>();
+
+            return new SqlVulnerabilityAssessmentScanData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                scanId,
+                triggerType,
+                state,
+                startOn,
+                endOn,
+                errors?.ToList(),
+                server,
+                database,
+                sqlVersion,
+                highSeverityFailedRulesCount,
+                mediumSeverityFailedRulesCount,
+                lowSeverityFailedRulesCount,
+                totalPassedRulesCount,
+                totalFailedRulesCount,
+                totalRulesCount,
+                isBaselineApplied,
+                lastScanOn,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SqlVulnerabilityAssessmentScanError"/>. </summary>
+        /// <param name="code"> The error code. </param>
+        /// <param name="message"> The error message. </param>
+        /// <returns> A new <see cref="Models.SqlVulnerabilityAssessmentScanError"/> instance for mocking. </returns>
+        public static SqlVulnerabilityAssessmentScanError SqlVulnerabilityAssessmentScanError(string code = null, string message = null)
+        {
+            return new SqlVulnerabilityAssessmentScanError(code, message, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Sql.SqlVulnerabilityAssessmentData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="state"> Specifies the state of the SQL Vulnerability Assessment, whether it is enabled or disabled or a state has not been applied yet on the specific database or server. </param>
+        /// <returns> A new <see cref="Sql.SqlVulnerabilityAssessmentData"/> instance for mocking. </returns>
+        public static SqlVulnerabilityAssessmentData SqlVulnerabilityAssessmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, SqlVulnerabilityAssessmentState? state = null)
+        {
+            return new SqlVulnerabilityAssessmentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                state,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Sql.DatabaseTableData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="temporalType"> The table temporal type. </param>
+        /// <param name="isMemoryOptimized"> Whether or not the table is memory optimized. </param>
+        /// <returns> A new <see cref="Sql.DatabaseTableData"/> instance for mocking. </returns>
+        public static DatabaseTableData DatabaseTableData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, TableTemporalType? temporalType = null, bool? isMemoryOptimized = null)
+        {
+            return new DatabaseTableData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                temporalType,
+                isMemoryOptimized,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DatabaseUsage"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="displayName"> User-readable name of the metric. </param>
+        /// <param name="currentValue"> Current value of the metric. </param>
+        /// <param name="limit"> Boundary value of the metric. </param>
+        /// <param name="unit"> Unit of the metric. </param>
+        /// <returns> A new <see cref="Models.DatabaseUsage"/> instance for mocking. </returns>
+        public static DatabaseUsage DatabaseUsage(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string displayName = null, double? currentValue = null, double? limit = null, string unit = null)
+        {
+            return new DatabaseUsage(
+                id,
+                name,
+                resourceType,
+                systemData,
+                displayName,
+                currentValue,
+                limit,
+                unit,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Sql.DatabaseVulnerabilityAssessmentRuleBaselineData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="baselineResults"> The rule baseline result. </param>
+        /// <returns> A new <see cref="Sql.DatabaseVulnerabilityAssessmentRuleBaselineData"/> instance for mocking. </returns>
+        public static DatabaseVulnerabilityAssessmentRuleBaselineData DatabaseVulnerabilityAssessmentRuleBaselineData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, IEnumerable<DatabaseVulnerabilityAssessmentRuleBaselineItem> baselineResults = null)
+        {
+            baselineResults ??= new List<DatabaseVulnerabilityAssessmentRuleBaselineItem>();
+
+            return new DatabaseVulnerabilityAssessmentRuleBaselineData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                baselineResults?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Sql.VulnerabilityAssessmentScanRecordData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="scanId"> The scan ID. </param>
+        /// <param name="triggerType"> The scan trigger type. </param>
+        /// <param name="state"> The scan status. </param>
+        /// <param name="startOn"> The scan start time (UTC). </param>
+        /// <param name="endOn"> The scan end time (UTC). </param>
+        /// <param name="errors"> The scan errors. </param>
+        /// <param name="storageContainerPath"> The scan results storage container path. </param>
+        /// <param name="numberOfFailedSecurityChecks"> The number of failed security checks. </param>
+        /// <returns> A new <see cref="Sql.VulnerabilityAssessmentScanRecordData"/> instance for mocking. </returns>
+        public static VulnerabilityAssessmentScanRecordData VulnerabilityAssessmentScanRecordData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string scanId = null, VulnerabilityAssessmentScanTriggerType? triggerType = null, VulnerabilityAssessmentScanState? state = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<VulnerabilityAssessmentScanError> errors = null, string storageContainerPath = null, int? numberOfFailedSecurityChecks = null)
+        {
+            errors ??= new List<VulnerabilityAssessmentScanError>();
+
+            return new VulnerabilityAssessmentScanRecordData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                scanId,
+                triggerType,
+                state,
+                startOn,
+                endOn,
+                errors?.ToList(),
+                storageContainerPath,
+                numberOfFailedSecurityChecks,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.VulnerabilityAssessmentScanError"/>. </summary>
+        /// <param name="code"> The error code. </param>
+        /// <param name="message"> The error message. </param>
+        /// <returns> A new <see cref="Models.VulnerabilityAssessmentScanError"/> instance for mocking. </returns>
+        public static VulnerabilityAssessmentScanError VulnerabilityAssessmentScanError(string code = null, string message = null)
+        {
+            return new VulnerabilityAssessmentScanError(code, message, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DatabaseVulnerabilityAssessmentScansExport"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="exportedReportLocation"> Location of the exported report (e.g. https://myStorage.blob.core.windows.net/VaScans/scans/serverName/databaseName/scan_scanId.xlsx). </param>
+        /// <returns> A new <see cref="Models.DatabaseVulnerabilityAssessmentScansExport"/> instance for mocking. </returns>
+        public static DatabaseVulnerabilityAssessmentScansExport DatabaseVulnerabilityAssessmentScansExport(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string exportedReportLocation = null)
+        {
+            return new DatabaseVulnerabilityAssessmentScansExport(
+                id,
+                name,
+                resourceType,
+                systemData,
+                exportedReportLocation,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Sql.DatabaseVulnerabilityAssessmentData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="storageContainerPath"> A blob storage container path to hold the scan results (e.g. https://myStorage.blob.core.windows.net/VaScans/).  It is required if server level vulnerability assessment policy doesn't set. </param>
+        /// <param name="storageContainerSasKey"> A shared access signature (SAS Key) that has write access to the blob container specified in 'storageContainerPath' parameter. If 'storageAccountAccessKey' isn't specified, StorageContainerSasKey is required. Applies only if the storage account is not behind a Vnet or a firewall. </param>
+        /// <param name="storageAccountAccessKey"> Specifies the identifier key of the storage account for vulnerability assessment scan results. If 'StorageContainerSasKey' isn't specified, storageAccountAccessKey is required. Applies only if the storage account is not behind a Vnet or a firewall. </param>
+        /// <param name="recurringScans"> The recurring scans settings. </param>
+        /// <returns> A new <see cref="Sql.DatabaseVulnerabilityAssessmentData"/> instance for mocking. </returns>
+        public static DatabaseVulnerabilityAssessmentData DatabaseVulnerabilityAssessmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string storageContainerPath = null, string storageContainerSasKey = null, string storageAccountAccessKey = null, VulnerabilityAssessmentRecurringScansProperties recurringScans = null)
+        {
+            return new DatabaseVulnerabilityAssessmentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                storageContainerPath,
+                storageContainerSasKey,
+                storageAccountAccessKey,
+                recurringScans,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Sql.SqlDatabaseData"/>. </summary>
@@ -1011,7 +1652,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="availabilityZone"> Specifies the availability zone the database is pinned to. </param>
         /// <param name="encryptionProtectorAutoRotation"> The flag to enable or disable auto rotation of database encryption protector AKV key. </param>
         /// <returns> A new <see cref="Sql.SqlDatabaseData"/> instance for mocking. </returns>
-        public static SqlDatabaseData SqlDatabaseData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, SqlSku sku = null, string kind = null, string managedBy = null, DatabaseIdentity identity = null, SqlDatabaseCreateMode? createMode = null, string collation = null, long? maxSizeBytes = null, SampleSchemaName? sampleName = null, ResourceIdentifier elasticPoolId = null, ResourceIdentifier sourceDatabaseId = null, SqlDatabaseStatus? status = null, Guid? databaseId = null, DateTimeOffset? createdOn = null, string currentServiceObjectiveName = null, string requestedServiceObjectiveName = null, AzureLocation? defaultSecondaryLocation = null, ResourceIdentifier failoverGroupId = null, DateTimeOffset? restorePointInTime = null, DateTimeOffset? sourceDatabaseDeletedOn = null, ResourceIdentifier recoveryServicesRecoveryPointId = null, ResourceIdentifier longTermRetentionBackupResourceId = null, ResourceIdentifier recoverableDatabaseId = null, ResourceIdentifier restorableDroppedDatabaseId = null, CatalogCollationType? catalogCollation = null, bool? isZoneRedundant = null, DatabaseLicenseType? licenseType = null, long? maxLogSizeBytes = null, DateTimeOffset? earliestRestoreOn = null, DatabaseReadScale? readScale = null, int? highAvailabilityReplicaCount = null, SecondaryType? secondaryType = null, SqlSku currentSku = null, int? autoPauseDelay = null, SqlBackupStorageRedundancy? currentBackupStorageRedundancy = null, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy = null, double? minCapacity = null, DateTimeOffset? pausedOn = null, DateTimeOffset? resumedOn = null, ResourceIdentifier maintenanceConfigurationId = null, bool? isLedgerOn = null, bool? isInfraEncryptionEnabled = null, Guid? federatedClientId = null, IDictionary<string, SqlDatabaseKey> keys = null, string encryptionProtector = null, SqlAlwaysEncryptedEnclaveType? preferredEnclaveType = null, bool? useFreeLimit = null, FreeLimitExhaustionBehavior? freeLimitExhaustionBehavior = null, ResourceIdentifier sourceResourceId = null, bool? manualCutover = null, bool? performCutover = null, SqlAvailabilityZoneType? availabilityZone = null, bool? encryptionProtectorAutoRotation = null)
+        public static SqlDatabaseData SqlDatabaseData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, SqlSku sku = null, string kind = null, string managedBy = null, DatabaseIdentity identity = null, SqlDatabaseCreateMode? createMode = null, string collation = null, long? maxSizeBytes = null, SampleSchemaName? sampleName = null, ResourceIdentifier elasticPoolId = null, ResourceIdentifier sourceDatabaseId = null, SqlDatabaseStatus? status = null, Guid? databaseId = null, DateTimeOffset? createdOn = null, string currentServiceObjectiveName = null, string requestedServiceObjectiveName = null, AzureLocation? defaultSecondaryLocation = null, ResourceIdentifier failoverGroupId = null, DateTimeOffset? restorePointInTime = null, DateTimeOffset? sourceDatabaseDeletedOn = null, ResourceIdentifier recoveryServicesRecoveryPointId = null, ResourceIdentifier longTermRetentionBackupResourceId = null, ResourceIdentifier recoverableDatabaseId = null, ResourceIdentifier restorableDroppedDatabaseId = null, CatalogCollationType? catalogCollation = null, bool? isZoneRedundant = null, DatabaseLicenseType? licenseType = null, long? maxLogSizeBytes = null, DateTimeOffset? earliestRestoreOn = null, DatabaseReadScale? readScale = null, int? highAvailabilityReplicaCount = null, SecondaryType? secondaryType = null, SqlSku currentSku = null, int? autoPauseDelay = null, SqlBackupStorageRedundancy? currentBackupStorageRedundancy = null, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy = null, double? minCapacity = null, DateTimeOffset? pausedOn = null, DateTimeOffset? resumedOn = null, ResourceIdentifier maintenanceConfigurationId = null, bool? isLedgerOn = null, bool? isInfraEncryptionEnabled = null, Guid? federatedClientId = null, IDictionary<string, SqlDatabaseKey> keys = null, string encryptionProtector = null, SqlAlwaysEncryptedEnclaveType? preferredEnclaveType = null, bool? useFreeLimit = null, FreeLimitExhaustionBehavior? freeLimitExhaustionBehavior = null, ResourceIdentifier sourceResourceId = null, bool? manualCutover = null, bool? performCutover = null, SqlAvailabilityZoneType? availabilityZone = null, bool? encryptionProtectorAutoRotation = null)
         {
             tags ??= new Dictionary<string, string>();
             keys ??= new Dictionary<string, SqlDatabaseKey>();
@@ -1095,17 +1736,10 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="thumbprint"> Thumbprint of the database key. </param>
         /// <param name="createdOn"> The database key creation date. </param>
         /// <param name="subregion"> Subregion of the server key. </param>
-        /// <param name="keyVersion"> The database key's version. </param>
         /// <returns> A new <see cref="Models.SqlDatabaseKey"/> instance for mocking. </returns>
-        public static SqlDatabaseKey SqlDatabaseKey(SqlDatabaseKeyType? keyType = null, string thumbprint = null, DateTimeOffset? createdOn = null, string subregion = null, string keyVersion = null)
+        public static SqlDatabaseKey SqlDatabaseKey(SqlDatabaseKeyType? keyType = null, string thumbprint = null, DateTimeOffset? createdOn = null, string subregion = null)
         {
-            return new SqlDatabaseKey(
-                keyType,
-                thumbprint,
-                createdOn,
-                subregion,
-                keyVersion,
-                serializedAdditionalRawData: null);
+            return new SqlDatabaseKey(keyType, thumbprint, createdOn, subregion, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SqlDatabasePatch"/>. </summary>
@@ -1258,12 +1892,12 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DatabaseExportDefinition"/>. </summary>
-        /// <param name="storageKeyType"> Storage key type: StorageAccessKey, SharedAccessKey, or ManagedIdentity. </param>
-        /// <param name="storageKey"> Storage key for the storage account. If StorageKeyType is ManagedIdentity, this field should specify the Managed Identity's resource ID. </param>
+        /// <param name="storageKeyType"> Storage key type. </param>
+        /// <param name="storageKey"> Storage key. </param>
         /// <param name="storageUri"> Storage Uri. </param>
-        /// <param name="administratorLogin"> Administrator login name. If AuthenticationType is ManagedIdentity, this field should specify the Managed Identity's resource ID. </param>
-        /// <param name="administratorLoginPassword"> Administrator login password. If AuthenticationType is ManagedIdentity, this field should not be specified. </param>
-        /// <param name="authenticationType"> Type of credentials provided for access to the target SQL server: SQL, ADPassword or ManagedIdentity. </param>
+        /// <param name="administratorLogin"> Administrator login name. </param>
+        /// <param name="administratorLoginPassword"> Administrator login password. </param>
+        /// <param name="authenticationType"> Authentication type. </param>
         /// <param name="networkIsolation"> Optional resource information to enable network isolation for request. </param>
         /// <returns> A new <see cref="Models.DatabaseExportDefinition"/> instance for mocking. </returns>
         public static DatabaseExportDefinition DatabaseExportDefinition(StorageKeyType storageKeyType = default, string storageKey = null, Uri storageUri = null, string administratorLogin = null, string administratorLoginPassword = null, string authenticationType = null, NetworkIsolationSettings networkIsolation = null)
@@ -1295,7 +1929,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="errorMessage"> Error message. </param>
         /// <param name="privateEndpointConnections"> Gets the status of private endpoints associated with this request. </param>
         /// <returns> A new <see cref="Models.ImportExportOperationResult"/> instance for mocking. </returns>
-        public static ImportExportOperationResult ImportExportOperationResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? requestId = null, string requestType = null, string queuedTime = null, string lastModifiedTime = null, Uri blobUri = null, string serverName = null, string databaseName = null, string status = null, string errorMessage = null, IEnumerable<PrivateEndpointConnectionRequestStatus> privateEndpointConnections = null)
+        public static ImportExportOperationResult ImportExportOperationResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, Guid? requestId = null, string requestType = null, string queuedTime = null, string lastModifiedTime = null, Uri blobUri = null, string serverName = null, string databaseName = null, string status = null, string errorMessage = null, IEnumerable<PrivateEndpointConnectionRequestStatus> privateEndpointConnections = null)
         {
             privateEndpointConnections ??= new List<PrivateEndpointConnectionRequestStatus>();
 
@@ -1318,12 +1952,12 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ImportExistingDatabaseDefinition"/>. </summary>
-        /// <param name="storageKeyType"> Storage key type: StorageAccessKey, SharedAccessKey, or ManagedIdentity. </param>
-        /// <param name="storageKey"> Storage key for the storage account. If StorageKeyType is ManagedIdentity, this field should specify the Managed Identity's resource ID. </param>
+        /// <param name="storageKeyType"> Storage key type. </param>
+        /// <param name="storageKey"> Storage key. </param>
         /// <param name="storageUri"> Storage Uri. </param>
-        /// <param name="administratorLogin"> Administrator login name. If AuthenticationType is ManagedIdentity, this field should specify the Managed Identity's resource ID. </param>
-        /// <param name="administratorLoginPassword"> Administrator login password. If AuthenticationType is ManagedIdentity, this field should not be specified. </param>
-        /// <param name="authenticationType"> Type of credentials provided for access to the target SQL server: SQL, ADPassword or ManagedIdentity. </param>
+        /// <param name="administratorLogin"> Administrator login name. </param>
+        /// <param name="administratorLoginPassword"> Administrator login password. </param>
+        /// <param name="authenticationType"> Authentication type. </param>
         /// <param name="networkIsolation"> Optional resource information to enable network isolation for request. </param>
         /// <returns> A new <see cref="Models.ImportExistingDatabaseDefinition"/> instance for mocking. </returns>
         public static ImportExistingDatabaseDefinition ImportExistingDatabaseDefinition(StorageKeyType storageKeyType = default, string storageKey = null, Uri storageUri = null, string administratorLogin = null, string administratorLoginPassword = null, string authenticationType = null, NetworkIsolationSettings networkIsolation = null)
@@ -1339,576 +1973,6 @@ namespace Azure.ResourceManager.Sql.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Sql.DatabaseSchemaData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <returns> A new <see cref="Sql.DatabaseSchemaData"/> instance for mocking. </returns>
-        public static DatabaseSchemaData DatabaseSchemaData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null)
-        {
-            return new DatabaseSchemaData(id, name, resourceType, systemData, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Sql.SqlDatabaseSecurityAlertPolicyData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="state"> Specifies the state of the policy, whether it is enabled or disabled or a policy has not been applied yet on the specific database. </param>
-        /// <param name="disabledAlerts"> Specifies an array of alerts that are disabled. Allowed values are: Sql_Injection, Sql_Injection_Vulnerability, Access_Anomaly, Data_Exfiltration, Unsafe_Action, Brute_Force. </param>
-        /// <param name="emailAddresses"> Specifies an array of e-mail addresses to which the alert is sent. </param>
-        /// <param name="sendToEmailAccountAdmins"> Specifies that the alert is sent to the account administrators. </param>
-        /// <param name="storageEndpoint"> Specifies the blob storage endpoint (e.g. https://MyAccount.blob.core.windows.net). This blob storage will hold all Threat Detection audit logs. </param>
-        /// <param name="storageAccountAccessKey"> Specifies the identifier key of the Threat Detection audit storage account. </param>
-        /// <param name="retentionDays"> Specifies the number of days to keep in the Threat Detection audit logs. </param>
-        /// <param name="createdOn"> Specifies the UTC creation time of the policy. </param>
-        /// <returns> A new <see cref="Sql.SqlDatabaseSecurityAlertPolicyData"/> instance for mocking. </returns>
-        public static SqlDatabaseSecurityAlertPolicyData SqlDatabaseSecurityAlertPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SecurityAlertsPolicyState? state = null, IEnumerable<string> disabledAlerts = null, IEnumerable<string> emailAddresses = null, bool? sendToEmailAccountAdmins = null, string storageEndpoint = null, string storageAccountAccessKey = null, int? retentionDays = null, DateTimeOffset? createdOn = null)
-        {
-            disabledAlerts ??= new List<string>();
-            emailAddresses ??= new List<string>();
-
-            return new SqlDatabaseSecurityAlertPolicyData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                state,
-                disabledAlerts?.ToList(),
-                emailAddresses?.ToList(),
-                sendToEmailAccountAdmins,
-                storageEndpoint,
-                storageAccountAccessKey,
-                retentionDays,
-                createdOn,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Sql.SqlVulnerabilityAssessmentBaselineData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="results"> The baseline set result. </param>
-        /// <returns> A new <see cref="Sql.SqlVulnerabilityAssessmentBaselineData"/> instance for mocking. </returns>
-        public static SqlVulnerabilityAssessmentBaselineData SqlVulnerabilityAssessmentBaselineData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, IList<IList<string>>> results = null)
-        {
-            results ??= new Dictionary<string, IList<IList<string>>>();
-
-            return new SqlVulnerabilityAssessmentBaselineData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                results,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.SqlVulnerabilityAssessmentBaselineCreateOrUpdateContent"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="isLatestScan"> The latest scan flag. </param>
-        /// <param name="results"> The rule baseline result list. </param>
-        /// <returns> A new <see cref="Models.SqlVulnerabilityAssessmentBaselineCreateOrUpdateContent"/> instance for mocking. </returns>
-        public static SqlVulnerabilityAssessmentBaselineCreateOrUpdateContent SqlVulnerabilityAssessmentBaselineCreateOrUpdateContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, bool? isLatestScan = null, IDictionary<string, IList<IList<string>>> results = null)
-        {
-            results ??= new Dictionary<string, IList<IList<string>>>();
-
-            return new SqlVulnerabilityAssessmentBaselineCreateOrUpdateContent(
-                id,
-                name,
-                resourceType,
-                systemData,
-                isLatestScan,
-                results,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Sql.SqlVulnerabilityAssessmentBaselineRuleData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="results"> The rule baseline result. </param>
-        /// <returns> A new <see cref="Sql.SqlVulnerabilityAssessmentBaselineRuleData"/> instance for mocking. </returns>
-        public static SqlVulnerabilityAssessmentBaselineRuleData SqlVulnerabilityAssessmentBaselineRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<IList<string>> results = null)
-        {
-            results ??= new List<IList<string>>();
-
-            return new SqlVulnerabilityAssessmentBaselineRuleData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                results?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.SqlVulnerabilityAssessmentBaselineRuleCreateOrUpdateContent"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="isLatestScan"> The latest scan flag. </param>
-        /// <param name="results"> The rule baseline result. </param>
-        /// <returns> A new <see cref="Models.SqlVulnerabilityAssessmentBaselineRuleCreateOrUpdateContent"/> instance for mocking. </returns>
-        public static SqlVulnerabilityAssessmentBaselineRuleCreateOrUpdateContent SqlVulnerabilityAssessmentBaselineRuleCreateOrUpdateContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, bool? isLatestScan = null, IEnumerable<IList<string>> results = null)
-        {
-            results ??= new List<IList<string>>();
-
-            return new SqlVulnerabilityAssessmentBaselineRuleCreateOrUpdateContent(
-                id,
-                name,
-                resourceType,
-                systemData,
-                isLatestScan,
-                results?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Sql.SqlVulnerabilityAssessmentScanResultData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="ruleId"> SQL Vulnerability Assessment rule Id. </param>
-        /// <param name="status"> SQL Vulnerability Assessment rule result status. </param>
-        /// <param name="errorMessage"> SQL Vulnerability Assessment error message. </param>
-        /// <param name="isTrimmed"> SQL Vulnerability Assessment is the query results trimmed. </param>
-        /// <param name="queryResults"> SQL Vulnerability Assessment query results that was run. </param>
-        /// <param name="remediation"> SQL Vulnerability Assessment the remediation details. </param>
-        /// <param name="baselineAdjustedResult"> SQL Vulnerability Assessment rule result adjusted with baseline. </param>
-        /// <param name="ruleMetadata"> SQL Vulnerability Assessment rule metadata. </param>
-        /// <returns> A new <see cref="Sql.SqlVulnerabilityAssessmentScanResultData"/> instance for mocking. </returns>
-        public static SqlVulnerabilityAssessmentScanResultData SqlVulnerabilityAssessmentScanResultData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string ruleId = null, SqlVulnerabilityAssessmentRuleStatus? status = null, string errorMessage = null, bool? isTrimmed = null, IEnumerable<IList<string>> queryResults = null, SqlVulnerabilityAssessmentRemediation remediation = null, SqlVulnerabilityAssessmentBaselineAdjustedResult baselineAdjustedResult = null, SqlVulnerabilityAssessmentRuleMetadata ruleMetadata = null)
-        {
-            queryResults ??= new List<IList<string>>();
-
-            return new SqlVulnerabilityAssessmentScanResultData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                ruleId,
-                status,
-                errorMessage,
-                isTrimmed,
-                queryResults?.ToList(),
-                remediation,
-                baselineAdjustedResult,
-                ruleMetadata,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.SqlVulnerabilityAssessmentRemediation"/>. </summary>
-        /// <param name="description"> SQL Vulnerability Assessment remediation description. </param>
-        /// <param name="scripts"> SQL Vulnerability Assessment remediation script. </param>
-        /// <param name="isAutomated"> SQL Vulnerability Assessment is remediation automated. </param>
-        /// <param name="portalLink"> SQL Vulnerability Assessment optional link to remediate in Azure Portal. </param>
-        /// <returns> A new <see cref="Models.SqlVulnerabilityAssessmentRemediation"/> instance for mocking. </returns>
-        public static SqlVulnerabilityAssessmentRemediation SqlVulnerabilityAssessmentRemediation(string description = null, IEnumerable<string> scripts = null, bool? isAutomated = null, string portalLink = null)
-        {
-            scripts ??= new List<string>();
-
-            return new SqlVulnerabilityAssessmentRemediation(description, scripts?.ToList(), isAutomated, portalLink, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.SqlVulnerabilityAssessmentBaselineAdjustedResult"/>. </summary>
-        /// <param name="baseline"> SQL Vulnerability Assessment baseline details. </param>
-        /// <param name="status"> SQL Vulnerability Assessment baseline status. </param>
-        /// <param name="resultsNotInBaseline"> SQL Vulnerability Assessment results that are not in baseline. </param>
-        /// <param name="resultsOnlyInBaseline"> SQL Vulnerability Assessment results that are in baseline. </param>
-        /// <returns> A new <see cref="Models.SqlVulnerabilityAssessmentBaselineAdjustedResult"/> instance for mocking. </returns>
-        public static SqlVulnerabilityAssessmentBaselineAdjustedResult SqlVulnerabilityAssessmentBaselineAdjustedResult(SqlVulnerabilityAssessmentBaselineDetails baseline = null, SqlVulnerabilityAssessmentRuleStatus? status = null, IEnumerable<IList<string>> resultsNotInBaseline = null, IEnumerable<IList<string>> resultsOnlyInBaseline = null)
-        {
-            resultsNotInBaseline ??= new List<IList<string>>();
-            resultsOnlyInBaseline ??= new List<IList<string>>();
-
-            return new SqlVulnerabilityAssessmentBaselineAdjustedResult(baseline, status, resultsNotInBaseline?.ToList(), resultsOnlyInBaseline?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.SqlVulnerabilityAssessmentBaselineDetails"/>. </summary>
-        /// <param name="expectedResults"> SQL Vulnerability Assessment baseline expected results. </param>
-        /// <param name="updatedOn"> SQL Vulnerability Assessment baseline update time (UTC). </param>
-        /// <returns> A new <see cref="Models.SqlVulnerabilityAssessmentBaselineDetails"/> instance for mocking. </returns>
-        public static SqlVulnerabilityAssessmentBaselineDetails SqlVulnerabilityAssessmentBaselineDetails(IEnumerable<IList<string>> expectedResults = null, DateTimeOffset? updatedOn = null)
-        {
-            expectedResults ??= new List<IList<string>>();
-
-            return new SqlVulnerabilityAssessmentBaselineDetails(expectedResults?.ToList(), updatedOn, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.SqlVulnerabilityAssessmentRuleMetadata"/>. </summary>
-        /// <param name="ruleId"> SQL Vulnerability Assessment rule Id. </param>
-        /// <param name="severity"> SQL Vulnerability Assessment rule severity. </param>
-        /// <param name="category"> SQL Vulnerability Assessment rule category. </param>
-        /// <param name="ruleType"> SQL Vulnerability Assessment rule type. </param>
-        /// <param name="title"> SQL Vulnerability Assessment rule title. </param>
-        /// <param name="description"> SQL Vulnerability Assessment rule description. </param>
-        /// <param name="rationale"> SQL Vulnerability Assessment rule rationale. </param>
-        /// <param name="queryCheck"> SQL Vulnerability Assessment rule query details. </param>
-        /// <param name="benchmarkReferences"> SQL Vulnerability Assessment benchmark references. </param>
-        /// <returns> A new <see cref="Models.SqlVulnerabilityAssessmentRuleMetadata"/> instance for mocking. </returns>
-        public static SqlVulnerabilityAssessmentRuleMetadata SqlVulnerabilityAssessmentRuleMetadata(string ruleId = null, SqlVulnerabilityAssessmentRuleSeverity? severity = null, string category = null, SqlVulnerabilityAssessmentRuleType? ruleType = null, string title = null, string description = null, string rationale = null, SqlVulnerabilityAssessmentQueryCheck queryCheck = null, IEnumerable<SqlVulnerabilityAssessmentBenchmarkReference> benchmarkReferences = null)
-        {
-            benchmarkReferences ??= new List<SqlVulnerabilityAssessmentBenchmarkReference>();
-
-            return new SqlVulnerabilityAssessmentRuleMetadata(
-                ruleId,
-                severity,
-                category,
-                ruleType,
-                title,
-                description,
-                rationale,
-                queryCheck,
-                benchmarkReferences?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.SqlVulnerabilityAssessmentQueryCheck"/>. </summary>
-        /// <param name="query"> SQL Vulnerability Assessment rule query. </param>
-        /// <param name="expectedResult"> SQL Vulnerability Assessment query expected result. </param>
-        /// <param name="columnNames"> SQL Vulnerability Assessment column names of query expected result. </param>
-        /// <returns> A new <see cref="Models.SqlVulnerabilityAssessmentQueryCheck"/> instance for mocking. </returns>
-        public static SqlVulnerabilityAssessmentQueryCheck SqlVulnerabilityAssessmentQueryCheck(string query = null, IEnumerable<IList<string>> expectedResult = null, IEnumerable<string> columnNames = null)
-        {
-            expectedResult ??= new List<IList<string>>();
-            columnNames ??= new List<string>();
-
-            return new SqlVulnerabilityAssessmentQueryCheck(query, expectedResult?.ToList(), columnNames?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.SqlVulnerabilityAssessmentBenchmarkReference"/>. </summary>
-        /// <param name="benchmark"> SQL Vulnerability Assessment benchmark name. </param>
-        /// <param name="reference"> SQL Vulnerability Assessment benchmark reference. </param>
-        /// <returns> A new <see cref="Models.SqlVulnerabilityAssessmentBenchmarkReference"/> instance for mocking. </returns>
-        public static SqlVulnerabilityAssessmentBenchmarkReference SqlVulnerabilityAssessmentBenchmarkReference(string benchmark = null, string reference = null)
-        {
-            return new SqlVulnerabilityAssessmentBenchmarkReference(benchmark, reference, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Sql.SqlVulnerabilityAssessmentScanData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="scanId"> The scan ID. </param>
-        /// <param name="triggerType"> The scan trigger type. </param>
-        /// <param name="state"> The scan status. </param>
-        /// <param name="startOn"> The scan start time (UTC). </param>
-        /// <param name="endOn"> The scan end time (UTC). </param>
-        /// <param name="errors"> The scan errors. </param>
-        /// <param name="server"> The server name. </param>
-        /// <param name="database"> The database name. </param>
-        /// <param name="sqlVersion"> The SQL version. </param>
-        /// <param name="highSeverityFailedRulesCount"> The number of failed rules with high severity. </param>
-        /// <param name="mediumSeverityFailedRulesCount"> The number of failed rules with medium severity. </param>
-        /// <param name="lowSeverityFailedRulesCount"> The number of failed rules with low severity. </param>
-        /// <param name="totalPassedRulesCount"> The number of total passed rules. </param>
-        /// <param name="totalFailedRulesCount"> The number of total failed rules. </param>
-        /// <param name="totalRulesCount"> The number of total rules assessed. </param>
-        /// <param name="isBaselineApplied"> Baseline created for this database, and has one or more rules. </param>
-        /// <param name="lastScanOn"> The last scan time. </param>
-        /// <returns> A new <see cref="Sql.SqlVulnerabilityAssessmentScanData"/> instance for mocking. </returns>
-        public static SqlVulnerabilityAssessmentScanData SqlVulnerabilityAssessmentScanData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string scanId = null, VulnerabilityAssessmentScanTriggerType? triggerType = null, VulnerabilityAssessmentScanState? state = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<SqlVulnerabilityAssessmentScanError> errors = null, string server = null, string database = null, string sqlVersion = null, int? highSeverityFailedRulesCount = null, int? mediumSeverityFailedRulesCount = null, int? lowSeverityFailedRulesCount = null, int? totalPassedRulesCount = null, int? totalFailedRulesCount = null, int? totalRulesCount = null, bool? isBaselineApplied = null, DateTimeOffset? lastScanOn = null)
-        {
-            errors ??= new List<SqlVulnerabilityAssessmentScanError>();
-
-            return new SqlVulnerabilityAssessmentScanData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                scanId,
-                triggerType,
-                state,
-                startOn,
-                endOn,
-                errors?.ToList(),
-                server,
-                database,
-                sqlVersion,
-                highSeverityFailedRulesCount,
-                mediumSeverityFailedRulesCount,
-                lowSeverityFailedRulesCount,
-                totalPassedRulesCount,
-                totalFailedRulesCount,
-                totalRulesCount,
-                isBaselineApplied,
-                lastScanOn,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.SqlVulnerabilityAssessmentScanError"/>. </summary>
-        /// <param name="code"> The error code. </param>
-        /// <param name="message"> The error message. </param>
-        /// <returns> A new <see cref="Models.SqlVulnerabilityAssessmentScanError"/> instance for mocking. </returns>
-        public static SqlVulnerabilityAssessmentScanError SqlVulnerabilityAssessmentScanError(string code = null, string message = null)
-        {
-            return new SqlVulnerabilityAssessmentScanError(code, message, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Sql.SqlVulnerabilityAssessmentData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="state"> Specifies the state of the SQL Vulnerability Assessment, whether it is enabled or disabled or a state has not been applied yet on the specific database or server. </param>
-        /// <returns> A new <see cref="Sql.SqlVulnerabilityAssessmentData"/> instance for mocking. </returns>
-        public static SqlVulnerabilityAssessmentData SqlVulnerabilityAssessmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SqlVulnerabilityAssessmentState? state = null)
-        {
-            return new SqlVulnerabilityAssessmentData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                state,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Sql.DatabaseTableData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="temporalType"> The table temporal type. </param>
-        /// <param name="isMemoryOptimized"> Whether or not the table is memory optimized. </param>
-        /// <returns> A new <see cref="Sql.DatabaseTableData"/> instance for mocking. </returns>
-        public static DatabaseTableData DatabaseTableData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, TableTemporalType? temporalType = null, bool? isMemoryOptimized = null)
-        {
-            return new DatabaseTableData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                temporalType,
-                isMemoryOptimized,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DatabaseUsage"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="displayName"> User-readable name of the metric. </param>
-        /// <param name="currentValue"> Current value of the metric. </param>
-        /// <param name="limit"> Boundary value of the metric. </param>
-        /// <param name="unit"> Unit of the metric. </param>
-        /// <returns> A new <see cref="Models.DatabaseUsage"/> instance for mocking. </returns>
-        public static DatabaseUsage DatabaseUsage(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null, double? currentValue = null, double? limit = null, string unit = null)
-        {
-            return new DatabaseUsage(
-                id,
-                name,
-                resourceType,
-                systemData,
-                displayName,
-                currentValue,
-                limit,
-                unit,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Sql.DatabaseVulnerabilityAssessmentRuleBaselineData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="baselineResults"> The rule baseline result. </param>
-        /// <returns> A new <see cref="Sql.DatabaseVulnerabilityAssessmentRuleBaselineData"/> instance for mocking. </returns>
-        public static DatabaseVulnerabilityAssessmentRuleBaselineData DatabaseVulnerabilityAssessmentRuleBaselineData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<DatabaseVulnerabilityAssessmentRuleBaselineItem> baselineResults = null)
-        {
-            baselineResults ??= new List<DatabaseVulnerabilityAssessmentRuleBaselineItem>();
-
-            return new DatabaseVulnerabilityAssessmentRuleBaselineData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                baselineResults?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Sql.DatabaseVulnerabilityAssessmentData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="storageContainerPath"> A blob storage container path to hold the scan results (e.g. https://myStorage.blob.core.windows.net/VaScans/).  It is required if server level vulnerability assessment policy doesn't set. </param>
-        /// <param name="storageContainerSasKey"> A shared access signature (SAS Key) that has write access to the blob container specified in 'storageContainerPath' parameter. If 'storageAccountAccessKey' isn't specified, StorageContainerSasKey is required. Applies only if the storage account is not behind a Vnet or a firewall. </param>
-        /// <param name="storageAccountAccessKey"> Specifies the identifier key of the storage account for vulnerability assessment scan results. If 'StorageContainerSasKey' isn't specified, storageAccountAccessKey is required. Applies only if the storage account is not behind a Vnet or a firewall. </param>
-        /// <param name="recurringScans"> The recurring scans settings. </param>
-        /// <returns> A new <see cref="Sql.DatabaseVulnerabilityAssessmentData"/> instance for mocking. </returns>
-        public static DatabaseVulnerabilityAssessmentData DatabaseVulnerabilityAssessmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string storageContainerPath = null, string storageContainerSasKey = null, string storageAccountAccessKey = null, VulnerabilityAssessmentRecurringScansProperties recurringScans = null)
-        {
-            return new DatabaseVulnerabilityAssessmentData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                storageContainerPath,
-                storageContainerSasKey,
-                storageAccountAccessKey,
-                recurringScans,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Sql.VulnerabilityAssessmentScanRecordData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="scanId"> The scan ID. </param>
-        /// <param name="triggerType"> The scan trigger type. </param>
-        /// <param name="state"> The scan status. </param>
-        /// <param name="startOn"> The scan start time (UTC). </param>
-        /// <param name="endOn"> The scan end time (UTC). </param>
-        /// <param name="errors"> The scan errors. </param>
-        /// <param name="storageContainerPath"> The scan results storage container path. </param>
-        /// <param name="numberOfFailedSecurityChecks"> The number of failed security checks. </param>
-        /// <returns> A new <see cref="Sql.VulnerabilityAssessmentScanRecordData"/> instance for mocking. </returns>
-        public static VulnerabilityAssessmentScanRecordData VulnerabilityAssessmentScanRecordData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string scanId = null, VulnerabilityAssessmentScanTriggerType? triggerType = null, VulnerabilityAssessmentScanState? state = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<VulnerabilityAssessmentScanError> errors = null, string storageContainerPath = null, int? numberOfFailedSecurityChecks = null)
-        {
-            errors ??= new List<VulnerabilityAssessmentScanError>();
-
-            return new VulnerabilityAssessmentScanRecordData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                scanId,
-                triggerType,
-                state,
-                startOn,
-                endOn,
-                errors?.ToList(),
-                storageContainerPath,
-                numberOfFailedSecurityChecks,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.VulnerabilityAssessmentScanError"/>. </summary>
-        /// <param name="code"> The error code. </param>
-        /// <param name="message"> The error message. </param>
-        /// <returns> A new <see cref="Models.VulnerabilityAssessmentScanError"/> instance for mocking. </returns>
-        public static VulnerabilityAssessmentScanError VulnerabilityAssessmentScanError(string code = null, string message = null)
-        {
-            return new VulnerabilityAssessmentScanError(code, message, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DatabaseVulnerabilityAssessmentScansExport"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="exportedReportLocation"> Location of the exported report (e.g. https://myStorage.blob.core.windows.net/VaScans/scans/serverName/databaseName/scan_scanId.xlsx). </param>
-        /// <returns> A new <see cref="Models.DatabaseVulnerabilityAssessmentScansExport"/> instance for mocking. </returns>
-        public static DatabaseVulnerabilityAssessmentScansExport DatabaseVulnerabilityAssessmentScansExport(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string exportedReportLocation = null)
-        {
-            return new DatabaseVulnerabilityAssessmentScansExport(
-                id,
-                name,
-                resourceType,
-                systemData,
-                exportedReportLocation,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Sql.DataMaskingPolicyData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="location"> The location of the data masking policy. </param>
-        /// <param name="kind"> The kind of Data Masking Policy. Metadata, used for Azure portal. </param>
-        /// <param name="dataMaskingState"> The state of the data masking policy. </param>
-        /// <param name="exemptPrincipals"> The list of the exempt principals. Specifies the semicolon-separated list of database users for which the data masking policy does not apply. The specified users receive data results without masking for all of the database queries. </param>
-        /// <param name="applicationPrincipals"> The list of the application principals. This is a legacy parameter and is no longer used. </param>
-        /// <param name="maskingLevel"> The masking level. This is a legacy parameter and is no longer used. </param>
-        /// <returns> A new <see cref="Sql.DataMaskingPolicyData"/> instance for mocking. </returns>
-        public static DataMaskingPolicyData DataMaskingPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, string kind = null, DataMaskingState? dataMaskingState = null, string exemptPrincipals = null, string applicationPrincipals = null, string maskingLevel = null)
-        {
-            return new DataMaskingPolicyData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                location,
-                kind,
-                dataMaskingState,
-                exemptPrincipals,
-                applicationPrincipals,
-                maskingLevel,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DataMaskingRule"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="location"> The location of the data masking rule. </param>
-        /// <param name="kind"> The kind of Data Masking Rule. Metadata, used for Azure portal. </param>
-        /// <param name="ruleId"> The rule Id. </param>
-        /// <param name="ruleState"> The rule state. Used to delete a rule. To delete an existing rule, specify the schemaName, tableName, columnName, maskingFunction, and specify ruleState as disabled. However, if the rule doesn't already exist, the rule will be created with ruleState set to enabled, regardless of the provided value of ruleState. </param>
-        /// <param name="schemaName"> The schema name on which the data masking rule is applied. </param>
-        /// <param name="tableName"> The table name on which the data masking rule is applied. </param>
-        /// <param name="columnName"> The column name on which the data masking rule is applied. </param>
-        /// <param name="aliasName"> The alias name. This is a legacy parameter and is no longer used. </param>
-        /// <param name="maskingFunction"> The masking function that is used for the data masking rule. </param>
-        /// <param name="numberFrom"> The numberFrom property of the masking rule. Required if maskingFunction is set to Number, otherwise this parameter will be ignored. </param>
-        /// <param name="numberTo"> The numberTo property of the data masking rule. Required if maskingFunction is set to Number, otherwise this parameter will be ignored. </param>
-        /// <param name="prefixSize"> If maskingFunction is set to Text, the number of characters to show unmasked in the beginning of the string. Otherwise, this parameter will be ignored. </param>
-        /// <param name="suffixSize"> If maskingFunction is set to Text, the number of characters to show unmasked at the end of the string. Otherwise, this parameter will be ignored. </param>
-        /// <param name="replacementString"> If maskingFunction is set to Text, the character to use for masking the unexposed part of the string. Otherwise, this parameter will be ignored. </param>
-        /// <returns> A new <see cref="Models.DataMaskingRule"/> instance for mocking. </returns>
-        public static DataMaskingRule DataMaskingRule(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, string kind = null, string ruleId = null, DataMaskingRuleState? ruleState = null, string schemaName = null, string tableName = null, string columnName = null, string aliasName = null, DataMaskingFunction? maskingFunction = null, string numberFrom = null, string numberTo = null, string prefixSize = null, string suffixSize = null, string replacementString = null)
-        {
-            return new DataMaskingRule(
-                id,
-                name,
-                resourceType,
-                systemData,
-                location,
-                kind,
-                ruleId,
-                ruleState,
-                schemaName,
-                tableName,
-                columnName,
-                aliasName,
-                maskingFunction,
-                numberFrom,
-                numberTo,
-                prefixSize,
-                suffixSize,
-                replacementString,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Sql.DataWarehouseUserActivityData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="activeQueriesCount"> Count of running and suspended queries. </param>
-        /// <returns> A new <see cref="Sql.DataWarehouseUserActivityData"/> instance for mocking. </returns>
-        public static DataWarehouseUserActivityData DataWarehouseUserActivityData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, int? activeQueriesCount = null)
-        {
-            return new DataWarehouseUserActivityData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                activeQueriesCount,
-                serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Sql.DeletedServerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -1919,7 +1983,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="originalId"> The original ID of the server before deletion. </param>
         /// <param name="fullyQualifiedDomainName"> The fully qualified domain name of the server. </param>
         /// <returns> A new <see cref="Sql.DeletedServerData"/> instance for mocking. </returns>
-        public static DeletedServerData DeletedServerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string version = null, DateTimeOffset? deletedOn = null, ResourceIdentifier originalId = null, string fullyQualifiedDomainName = null)
+        public static DeletedServerData DeletedServerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string version = null, DateTimeOffset? deletedOn = null, ResourceIdentifier originalId = null, string fullyQualifiedDomainName = null)
         {
             return new DeletedServerData(
                 id,
@@ -1950,7 +2014,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="seedingMode"> Database seeding mode – can be Automatic (default), or Manual for supported scenarios. </param>
         /// <param name="databases"> Databases in the distributed availability group. </param>
         /// <returns> A new <see cref="Sql.SqlDistributedAvailabilityGroupData"/> instance for mocking. </returns>
-        public static SqlDistributedAvailabilityGroupData SqlDistributedAvailabilityGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string distributedAvailabilityGroupName = null, Guid? distributedAvailabilityGroupId = null, SqlReplicationModeType? replicationMode = null, SqlServerSideLinkRole? partnerLinkRole = null, string partnerAvailabilityGroupName = null, string partnerEndpoint = null, SqlServerSideLinkRole? instanceLinkRole = null, string instanceAvailabilityGroupName = null, SqlServerFailoverModeType? failoverMode = null, SeedingModeType? seedingMode = null, IEnumerable<DistributedAvailabilityGroupDatabase> databases = null)
+        public static SqlDistributedAvailabilityGroupData SqlDistributedAvailabilityGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string distributedAvailabilityGroupName = null, Guid? distributedAvailabilityGroupId = null, SqlReplicationModeType? replicationMode = null, SqlServerSideLinkRole? partnerLinkRole = null, string partnerAvailabilityGroupName = null, string partnerEndpoint = null, SqlServerSideLinkRole? instanceLinkRole = null, string instanceAvailabilityGroupName = null, SqlServerFailoverModeType? failoverMode = null, SeedingModeType? seedingMode = null, IEnumerable<DistributedAvailabilityGroupDatabase> databases = null)
         {
             databases ??= new List<DistributedAvailabilityGroupDatabase>();
 
@@ -2052,7 +2116,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="description"> The operation description. </param>
         /// <param name="isCancellable"> Whether the operation can be cancelled. </param>
         /// <returns> A new <see cref="Models.ElasticPoolOperationData"/> instance for mocking. </returns>
-        public static ElasticPoolOperationData ElasticPoolOperationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string elasticPoolName = null, string operation = null, string operationFriendlyName = null, int? percentComplete = null, string serverName = null, DateTimeOffset? startOn = null, string state = null, int? errorCode = null, string errorDescription = null, int? errorSeverity = null, bool? isUserError = null, DateTimeOffset? estimatedCompleteOn = null, string description = null, bool? isCancellable = null)
+        public static ElasticPoolOperationData ElasticPoolOperationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string elasticPoolName = null, string operation = null, string operationFriendlyName = null, int? percentComplete = null, string serverName = null, DateTimeOffset? startOn = null, string state = null, int? errorCode = null, string errorDescription = null, int? errorSeverity = null, bool? isUserError = null, DateTimeOffset? estimatedCompleteOn = null, string description = null, bool? isCancellable = null)
         {
             return new ElasticPoolOperationData(
                 id,
@@ -2107,7 +2171,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="preferredEnclaveType"> Type of enclave requested on the elastic pool. </param>
         /// <param name="availabilityZone"> Specifies the availability zone the pool's primary replica is pinned to. </param>
         /// <returns> A new <see cref="Sql.ElasticPoolData"/> instance for mocking. </returns>
-        public static ElasticPoolData ElasticPoolData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, SqlSku sku = null, string kind = null, ElasticPoolState? state = null, DateTimeOffset? createdOn = null, long? maxSizeBytes = null, double? minCapacity = null, ElasticPoolPerDatabaseSettings perDatabaseSettings = null, bool? isZoneRedundant = null, ElasticPoolLicenseType? licenseType = null, ResourceIdentifier maintenanceConfigurationId = null, int? highAvailabilityReplicaCount = null, int? autoPauseDelay = null, SqlAlwaysEncryptedEnclaveType? preferredEnclaveType = null, SqlAvailabilityZoneType? availabilityZone = null)
+        public static ElasticPoolData ElasticPoolData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, SqlSku sku = null, string kind = null, ElasticPoolState? state = null, DateTimeOffset? createdOn = null, long? maxSizeBytes = null, double? minCapacity = null, ElasticPoolPerDatabaseSettings perDatabaseSettings = null, bool? isZoneRedundant = null, ElasticPoolLicenseType? licenseType = null, ResourceIdentifier maintenanceConfigurationId = null, int? highAvailabilityReplicaCount = null, int? autoPauseDelay = null, SqlAlwaysEncryptedEnclaveType? preferredEnclaveType = null, SqlAvailabilityZoneType? availabilityZone = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -2148,9 +2212,8 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="uri"> The URI of the server key. </param>
         /// <param name="thumbprint"> Thumbprint of the server key. </param>
         /// <param name="isAutoRotationEnabled"> Key auto rotation opt-in flag. Either true or false. </param>
-        /// <param name="keyVersion"> The version of the server key being used as encryption protector. </param>
         /// <returns> A new <see cref="Sql.EncryptionProtectorData"/> instance for mocking. </returns>
-        public static EncryptionProtectorData EncryptionProtectorData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, AzureLocation? location = null, string subregion = null, string serverKeyName = null, SqlServerKeyType? serverKeyType = null, Uri uri = null, string thumbprint = null, bool? isAutoRotationEnabled = null, string keyVersion = null)
+        public static EncryptionProtectorData EncryptionProtectorData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string kind = null, AzureLocation? location = null, string subregion = null, string serverKeyName = null, SqlServerKeyType? serverKeyType = null, Uri uri = null, string thumbprint = null, bool? isAutoRotationEnabled = null)
         {
             return new EncryptionProtectorData(
                 id,
@@ -2165,7 +2228,6 @@ namespace Azure.ResourceManager.Sql.Models
                 uri,
                 thumbprint,
                 isAutoRotationEnabled,
-                keyVersion,
                 serializedAdditionalRawData: null);
         }
 
@@ -2176,7 +2238,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="publicBlob"> The certificate public blob. </param>
         /// <returns> A new <see cref="Sql.EndpointCertificateData"/> instance for mocking. </returns>
-        public static EndpointCertificateData EndpointCertificateData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string publicBlob = null)
+        public static EndpointCertificateData EndpointCertificateData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string publicBlob = null)
         {
             return new EndpointCertificateData(
                 id,
@@ -2202,7 +2264,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="failoverDatabases"> List of databases in the failover group. </param>
         /// <param name="secondaryType"> Databases secondary type on partner server. </param>
         /// <returns> A new <see cref="Sql.FailoverGroupData"/> instance for mocking. </returns>
-        public static FailoverGroupData FailoverGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, IDictionary<string, string> tags = null, FailoverGroupReadWriteEndpoint readWriteEndpoint = null, FailoverGroupReadOnlyEndpoint readOnlyEndpoint = null, FailoverGroupReplicationRole? replicationRole = null, string replicationState = null, IEnumerable<PartnerServerInfo> partnerServers = null, IEnumerable<ResourceIdentifier> failoverDatabases = null, FailoverGroupDatabasesSecondaryType? secondaryType = null)
+        public static FailoverGroupData FailoverGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, AzureLocation? location = null, IDictionary<string, string> tags = null, FailoverGroupReadWriteEndpoint readWriteEndpoint = null, FailoverGroupReadOnlyEndpoint readOnlyEndpoint = null, FailoverGroupReplicationRole? replicationRole = null, string replicationState = null, IEnumerable<PartnerServerInfo> partnerServers = null, IEnumerable<ResourceIdentifier> failoverDatabases = null, FailoverGroupDatabasesSecondaryType? secondaryType = null)
         {
             tags ??= new Dictionary<string, string>();
             partnerServers ??= new List<PartnerServerInfo>();
@@ -2283,7 +2345,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="geoBackupPolicyState"> The state of the geo backup policy. </param>
         /// <param name="storageType"> The storage type of the geo backup policy. </param>
         /// <returns> A new <see cref="Sql.GeoBackupPolicyData"/> instance for mocking. </returns>
-        public static GeoBackupPolicyData GeoBackupPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, string kind = null, GeoBackupPolicyState? geoBackupPolicyState = null, string storageType = null)
+        public static GeoBackupPolicyData GeoBackupPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, AzureLocation? location = null, string kind = null, GeoBackupPolicyState? geoBackupPolicyState = null, string storageType = null)
         {
             return new GeoBackupPolicyData(
                 id,
@@ -2295,6 +2357,24 @@ namespace Azure.ResourceManager.Sql.Models
                 geoBackupPolicyState,
                 storageType,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Sql.IPv6FirewallRuleData"/>. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="startIPv6Address"> The start IP address of the firewall rule. Must be IPv6 format. </param>
+        /// <param name="endIPv6Address"> The end IP address of the firewall rule. Must be IPv6 format. Must be greater than or equal to startIpv6Address. </param>
+        /// <returns> A new <see cref="Sql.IPv6FirewallRuleData"/> instance for mocking. </returns>
+        public static IPv6FirewallRuleData IPv6FirewallRuleData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, string startIPv6Address = null, string endIPv6Address = null)
+        {
+            return new IPv6FirewallRuleData(
+                id,
+                name,
+                resourceType,
+                serializedAdditionalRawData: null,
+                startIPv6Address,
+                endIPv6Address);
         }
 
         /// <summary> Initializes a new instance of <see cref="Sql.InstanceFailoverGroupData"/>. </summary>
@@ -2310,7 +2390,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="partnerRegions"> Partner region information for the failover group. </param>
         /// <param name="managedInstancePairs"> List of managed instance pairs in the failover group. </param>
         /// <returns> A new <see cref="Sql.InstanceFailoverGroupData"/> instance for mocking. </returns>
-        public static InstanceFailoverGroupData InstanceFailoverGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, GeoSecondaryInstanceType? secondaryType = null, InstanceFailoverGroupReadWriteEndpoint readWriteEndpoint = null, ReadOnlyEndpointFailoverPolicy? readOnlyEndpointFailoverPolicy = null, InstanceFailoverGroupReplicationRole? replicationRole = null, string replicationState = null, IEnumerable<PartnerRegionInfo> partnerRegions = null, IEnumerable<ManagedInstancePairInfo> managedInstancePairs = null)
+        public static InstanceFailoverGroupData InstanceFailoverGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, GeoSecondaryInstanceType? secondaryType = null, InstanceFailoverGroupReadWriteEndpoint readWriteEndpoint = null, ReadOnlyEndpointFailoverPolicy? readOnlyEndpointFailoverPolicy = null, InstanceFailoverGroupReplicationRole? replicationRole = null, string replicationState = null, IEnumerable<PartnerRegionInfo> partnerRegions = null, IEnumerable<ManagedInstancePairInfo> managedInstancePairs = null)
         {
             partnerRegions ??= new List<PartnerRegionInfo>();
             managedInstancePairs ??= new List<ManagedInstancePairInfo>();
@@ -2339,48 +2419,6 @@ namespace Azure.ResourceManager.Sql.Models
             return new PartnerRegionInfo(location, replicationRole, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Sql.SqlInstancePoolOperationData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="instancePoolName"> The name of the instance pool the operation is being performed on. </param>
-        /// <param name="operation"> The name of operation. </param>
-        /// <param name="operationFriendlyName"> The friendly name of operation. </param>
-        /// <param name="percentComplete"> The percentage of the operation completed. </param>
-        /// <param name="startOn"> The operation start time. </param>
-        /// <param name="state"> The operation state. </param>
-        /// <param name="errorCode"> The operation error code. </param>
-        /// <param name="errorDescription"> The operation error description. </param>
-        /// <param name="errorSeverity"> The operation error severity. </param>
-        /// <param name="errorType"> Error type (e.g. None, User). </param>
-        /// <param name="estimatedCompleteOn"> The estimated completion time of the operation. </param>
-        /// <param name="description"> The operation description. </param>
-        /// <param name="isCancellable"> Whether the operation can be cancelled. </param>
-        /// <returns> A new <see cref="Sql.SqlInstancePoolOperationData"/> instance for mocking. </returns>
-        public static SqlInstancePoolOperationData SqlInstancePoolOperationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string instancePoolName = null, string operation = null, string operationFriendlyName = null, int? percentComplete = null, DateTimeOffset? startOn = null, ManagementOperationState? state = null, int? errorCode = null, string errorDescription = null, int? errorSeverity = null, SqlInstancePoolOperationErrorType? errorType = null, DateTimeOffset? estimatedCompleteOn = null, string description = null, bool? isCancellable = null)
-        {
-            return new SqlInstancePoolOperationData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                instancePoolName,
-                operation,
-                operationFriendlyName,
-                percentComplete,
-                startOn,
-                state,
-                errorCode,
-                errorDescription,
-                errorSeverity,
-                errorType,
-                estimatedCompleteOn,
-                description,
-                isCancellable,
-                serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Sql.InstancePoolData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -2395,7 +2433,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="dnsZone"> The Dns Zone that the managed instance pool is in. </param>
         /// <param name="maintenanceConfigurationId"> Specifies maintenance configuration id to apply to this managed instance. </param>
         /// <returns> A new <see cref="Sql.InstancePoolData"/> instance for mocking. </returns>
-        public static InstancePoolData InstancePoolData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, SqlSku sku = null, ResourceIdentifier subnetId = null, int? vCores = null, InstancePoolLicenseType? licenseType = null, string dnsZone = null, ResourceIdentifier maintenanceConfigurationId = null)
+        public static InstancePoolData InstancePoolData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, SqlSku sku = null, ResourceIdentifier subnetId = null, int? vCores = null, InstancePoolLicenseType? licenseType = null, string dnsZone = null, ResourceIdentifier maintenanceConfigurationId = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -2439,24 +2477,6 @@ namespace Azure.ResourceManager.Sql.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Sql.IPv6FirewallRuleData"/>. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="startIPv6Address"> The start IP address of the firewall rule. Must be IPv6 format. </param>
-        /// <param name="endIPv6Address"> The end IP address of the firewall rule. Must be IPv6 format. Must be greater than or equal to startIpv6Address. </param>
-        /// <returns> A new <see cref="Sql.IPv6FirewallRuleData"/> instance for mocking. </returns>
-        public static IPv6FirewallRuleData IPv6FirewallRuleData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, string startIPv6Address = null, string endIPv6Address = null)
-        {
-            return new IPv6FirewallRuleData(
-                id,
-                name,
-                resourceType,
-                serializedAdditionalRawData: null,
-                startIPv6Address,
-                endIPv6Address);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Sql.SqlServerJobAgentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -2469,7 +2489,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="databaseId"> Resource ID of the database to store job metadata in. </param>
         /// <param name="state"> The state of the job agent. </param>
         /// <returns> A new <see cref="Sql.SqlServerJobAgentData"/> instance for mocking. </returns>
-        public static SqlServerJobAgentData SqlServerJobAgentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, SqlSku sku = null, JobAgentIdentity identity = null, ResourceIdentifier databaseId = null, JobAgentState? state = null)
+        public static SqlServerJobAgentData SqlServerJobAgentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, SqlSku sku = null, JobAgentIdentity identity = null, ResourceIdentifier databaseId = null, JobAgentState? state = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -2495,7 +2515,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="username"> The credential user name. </param>
         /// <param name="password"> The credential password. </param>
         /// <returns> A new <see cref="Sql.SqlServerJobCredentialData"/> instance for mocking. </returns>
-        public static SqlServerJobCredentialData SqlServerJobCredentialData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string username = null, string password = null)
+        public static SqlServerJobCredentialData SqlServerJobCredentialData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string username = null, string password = null)
         {
             return new SqlServerJobCredentialData(
                 id,
@@ -2526,7 +2546,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="lastMessage"> The last status or error message. </param>
         /// <param name="target"> The target that this execution is executed on. </param>
         /// <returns> A new <see cref="Sql.SqlServerJobExecutionData"/> instance for mocking. </returns>
-        public static SqlServerJobExecutionData SqlServerJobExecutionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, int? jobVersion = null, string stepName = null, int? stepId = null, Guid? jobExecutionId = null, JobExecutionLifecycle? lifecycle = null, JobExecutionProvisioningState? provisioningState = null, DateTimeOffset? createOn = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, int? currentAttempts = null, DateTimeOffset? currentAttemptStartOn = null, string lastMessage = null, JobExecutionTarget target = null)
+        public static SqlServerJobExecutionData SqlServerJobExecutionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, int? jobVersion = null, string stepName = null, int? stepId = null, Guid? jobExecutionId = null, JobExecutionLifecycle? lifecycle = null, JobExecutionProvisioningState? provisioningState = null, DateTimeOffset? createOn = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, int? currentAttempts = null, DateTimeOffset? currentAttemptStartOn = null, string lastMessage = null, JobExecutionTarget target = null)
         {
             return new SqlServerJobExecutionData(
                 id,
@@ -2559,28 +2579,6 @@ namespace Azure.ResourceManager.Sql.Models
             return new JobExecutionTarget(targetType, serverName, databaseName, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Sql.SqlServerJobData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="description"> User-defined description of the job. </param>
-        /// <param name="version"> The job version number. </param>
-        /// <param name="schedule"> Schedule properties of the job. </param>
-        /// <returns> A new <see cref="Sql.SqlServerJobData"/> instance for mocking. </returns>
-        public static SqlServerJobData SqlServerJobData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, int? version = null, SqlServerJobSchedule schedule = null)
-        {
-            return new SqlServerJobData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                description,
-                version,
-                schedule,
-                serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Sql.SqlServerJobStepData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -2593,7 +2591,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="output"> Output destination properties of the job step. </param>
         /// <param name="executionOptions"> Execution options for the job step. </param>
         /// <returns> A new <see cref="Sql.SqlServerJobStepData"/> instance for mocking. </returns>
-        public static SqlServerJobStepData SqlServerJobStepData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, int? stepId = null, string targetGroup = null, string credential = null, JobStepAction action = null, JobStepOutput output = null, JobStepExecutionOptions executionOptions = null)
+        public static SqlServerJobStepData SqlServerJobStepData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, int? stepId = null, string targetGroup = null, string credential = null, JobStepAction action = null, JobStepOutput output = null, JobStepExecutionOptions executionOptions = null)
         {
             return new SqlServerJobStepData(
                 id,
@@ -2616,7 +2614,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="members"> Members of the target group. </param>
         /// <returns> A new <see cref="Sql.SqlServerJobTargetGroupData"/> instance for mocking. </returns>
-        public static SqlServerJobTargetGroupData SqlServerJobTargetGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<JobTarget> members = null)
+        public static SqlServerJobTargetGroupData SqlServerJobTargetGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, IEnumerable<JobTarget> members = null)
         {
             members ??= new List<JobTarget>();
 
@@ -2635,9 +2633,31 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <returns> A new <see cref="Sql.SqlServerJobVersionData"/> instance for mocking. </returns>
-        public static SqlServerJobVersionData SqlServerJobVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null)
+        public static SqlServerJobVersionData SqlServerJobVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null)
         {
             return new SqlServerJobVersionData(id, name, resourceType, systemData, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Sql.SqlServerJobData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="description"> User-defined description of the job. </param>
+        /// <param name="version"> The job version number. </param>
+        /// <param name="schedule"> Schedule properties of the job. </param>
+        /// <returns> A new <see cref="Sql.SqlServerJobData"/> instance for mocking. </returns>
+        public static SqlServerJobData SqlServerJobData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string description = null, int? version = null, SqlServerJobSchedule schedule = null)
+        {
+            return new SqlServerJobData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                description,
+                version,
+                schedule,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Sql.LedgerDigestUploadData"/>. </summary>
@@ -2648,7 +2668,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="digestStorageEndpoint"> The digest storage endpoint, which must be either an Azure blob storage endpoint or an URI for Azure Confidential Ledger. </param>
         /// <param name="state"> Specifies the state of ledger digest upload. </param>
         /// <returns> A new <see cref="Sql.LedgerDigestUploadData"/> instance for mocking. </returns>
-        public static LedgerDigestUploadData LedgerDigestUploadData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string digestStorageEndpoint = null, LedgerDigestUploadsState? state = null)
+        public static LedgerDigestUploadData LedgerDigestUploadData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string digestStorageEndpoint = null, LedgerDigestUploadsState? state = null)
         {
             return new LedgerDigestUploadData(
                 id,
@@ -2665,11 +2685,10 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="supportedServerVersions"> The list of supported server versions. </param>
         /// <param name="supportedManagedInstanceVersions"> The list of supported managed instance versions. </param>
         /// <param name="supportedJobAgentVersions"> The list of supported job agent versions. </param>
-        /// <param name="isZoneResilientProvisioningAllowed"> Whether or not the subscription is allowed to provision zone resilient resources. </param>
         /// <param name="status"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
         /// <returns> A new <see cref="Models.SqlLocationCapabilities"/> instance for mocking. </returns>
-        public static SqlLocationCapabilities SqlLocationCapabilities(string name = null, IEnumerable<SqlServerVersionCapability> supportedServerVersions = null, IEnumerable<ManagedInstanceVersionCapability> supportedManagedInstanceVersions = null, IEnumerable<JobAgentVersionCapability> supportedJobAgentVersions = null, bool? isZoneResilientProvisioningAllowed = null, SqlCapabilityStatus? status = null, string reason = null)
+        public static SqlLocationCapabilities SqlLocationCapabilities(string name = null, IEnumerable<SqlServerVersionCapability> supportedServerVersions = null, IEnumerable<ManagedInstanceVersionCapability> supportedManagedInstanceVersions = null, IEnumerable<JobAgentVersionCapability> supportedJobAgentVersions = null, SqlCapabilityStatus? status = null, string reason = null)
         {
             supportedServerVersions ??= new List<SqlServerVersionCapability>();
             supportedManagedInstanceVersions ??= new List<ManagedInstanceVersionCapability>();
@@ -2680,7 +2699,6 @@ namespace Azure.ResourceManager.Sql.Models
                 supportedServerVersions?.ToList(),
                 supportedManagedInstanceVersions?.ToList(),
                 supportedJobAgentVersions?.ToList(),
-                isZoneResilientProvisioningAllowed,
                 status,
                 reason,
                 serializedAdditionalRawData: null);
@@ -3113,7 +3131,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of <see cref="Models.ManagedInstanceVcoresCapability"/>. </summary>
         /// <param name="name"> The virtual cores identifier. </param>
         /// <param name="value"> The virtual cores value. </param>
-        /// <param name="supportedMemorySizesInGB"> Supported memory sizes in GB. </param>
+        /// <param name="supportedMemoryLimitsMB"> Memory limit MB ranges. </param>
         /// <param name="includedMaxSize"> Included size. </param>
         /// <param name="supportedStorageSizes"> Storage size ranges. </param>
         /// <param name="includedStorageIOps"> Included storage IOps. </param>
@@ -3130,7 +3148,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="status"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
         /// <returns> A new <see cref="Models.ManagedInstanceVcoresCapability"/> instance for mocking. </returns>
-        public static ManagedInstanceVcoresCapability ManagedInstanceVcoresCapability(string name = null, int? value = null, MaxLimitRangeCapability supportedMemorySizesInGB = null, MaxSizeCapability includedMaxSize = null, IEnumerable<MaxSizeRangeCapability> supportedStorageSizes = null, long? includedStorageIOps = null, MaxLimitRangeCapability supportedStorageIOps = null, double? iopsMinValueOverrideFactorPerSelectedStorageGB = null, double? iopsIncludedValueOverrideFactorPerSelectedStorageGB = null, long? includedStorageThroughputMBps = null, MaxLimitRangeCapability supportedStorageThroughputMBps = null, double? throughputMBpsMinValueOverrideFactorPerSelectedStorageGB = null, double? throughputMBpsIncludedValueOverrideFactorPerSelectedStorageGB = null, bool? isInstancePoolSupported = null, bool? isStandaloneSupported = null, IEnumerable<ManagedInstanceMaintenanceConfigurationCapability> supportedMaintenanceConfigurations = null, SqlCapabilityStatus? status = null, string reason = null)
+        public static ManagedInstanceVcoresCapability ManagedInstanceVcoresCapability(string name = null, int? value = null, MaxLimitRangeCapability supportedMemoryLimitsMB = null, MaxSizeCapability includedMaxSize = null, IEnumerable<MaxSizeRangeCapability> supportedStorageSizes = null, long? includedStorageIOps = null, MaxLimitRangeCapability supportedStorageIOps = null, double? iopsMinValueOverrideFactorPerSelectedStorageGB = null, double? iopsIncludedValueOverrideFactorPerSelectedStorageGB = null, long? includedStorageThroughputMBps = null, MaxLimitRangeCapability supportedStorageThroughputMBps = null, double? throughputMBpsMinValueOverrideFactorPerSelectedStorageGB = null, double? throughputMBpsIncludedValueOverrideFactorPerSelectedStorageGB = null, bool? isInstancePoolSupported = null, bool? isStandaloneSupported = null, IEnumerable<ManagedInstanceMaintenanceConfigurationCapability> supportedMaintenanceConfigurations = null, SqlCapabilityStatus? status = null, string reason = null)
         {
             supportedStorageSizes ??= new List<MaxSizeRangeCapability>();
             supportedMaintenanceConfigurations ??= new List<ManagedInstanceMaintenanceConfigurationCapability>();
@@ -3138,7 +3156,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new ManagedInstanceVcoresCapability(
                 name,
                 value,
-                supportedMemorySizesInGB,
+                supportedMemoryLimitsMB,
                 includedMaxSize,
                 supportedStorageSizes?.ToList(),
                 includedStorageIOps,
@@ -3288,12 +3306,9 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="backupStorageRedundancy"> The storage redundancy type of the backup. </param>
         /// <param name="requestedBackupStorageRedundancy"> The storage redundancy type of the backup. </param>
         /// <param name="isBackupImmutable"> The setting whether the LTR backup is immutable. </param>
-        /// <param name="timeBasedImmutability"> The setting for whether or not time-based immutability is enabled for the LTR backup. When time-based immutability is enabled and locked, the backup cannot be deleted until BackupExpirationTime. </param>
-        /// <param name="timeBasedImmutabilityMode"> The time-based immutability mode. Only applicable if time-based immutability is enabled. </param>
-        /// <param name="legalHoldImmutability"> The setting for whether LegalHold is enabled or disabled on the LTR backup. When LegalHold is enabled, the backup cannot be deleted until the LegalHold is removed. </param>
         /// <param name="backupStorageAccessTier"> The BackupStorageAccessTier for the LTR backup. </param>
         /// <returns> A new <see cref="Sql.LongTermRetentionBackupData"/> instance for mocking. </returns>
-        public static LongTermRetentionBackupData LongTermRetentionBackupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string serverName = null, DateTimeOffset? serverCreateOn = null, string databaseName = null, DateTimeOffset? databaseDeletedOn = null, DateTimeOffset? backupOn = null, DateTimeOffset? backupExpireOn = null, SqlBackupStorageRedundancy? backupStorageRedundancy = null, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy = null, bool? isBackupImmutable = null, TimeBasedImmutability? timeBasedImmutability = null, TimeBasedImmutabilityMode? timeBasedImmutabilityMode = null, SetLegalHoldImmutability? legalHoldImmutability = null, SqlBackupStorageAccessTier? backupStorageAccessTier = null)
+        public static LongTermRetentionBackupData LongTermRetentionBackupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string serverName = null, DateTimeOffset? serverCreateOn = null, string databaseName = null, DateTimeOffset? databaseDeletedOn = null, DateTimeOffset? backupOn = null, DateTimeOffset? backupExpireOn = null, SqlBackupStorageRedundancy? backupStorageRedundancy = null, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy = null, bool? isBackupImmutable = null, SqlBackupStorageAccessTier? backupStorageAccessTier = null)
         {
             return new LongTermRetentionBackupData(
                 id,
@@ -3309,9 +3324,6 @@ namespace Azure.ResourceManager.Sql.Models
                 backupStorageRedundancy,
                 requestedBackupStorageRedundancy,
                 isBackupImmutable,
-                timeBasedImmutability,
-                timeBasedImmutabilityMode,
-                legalHoldImmutability,
                 backupStorageAccessTier,
                 serializedAdditionalRawData: null);
         }
@@ -3329,7 +3341,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="status"> Operation status. </param>
         /// <param name="message"> Progress message. </param>
         /// <returns> A new <see cref="Models.LongTermRetentionBackupOperationResult"/> instance for mocking. </returns>
-        public static LongTermRetentionBackupOperationResult LongTermRetentionBackupOperationResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? requestId = null, string operationType = null, ResourceIdentifier fromBackupResourceId = null, ResourceIdentifier toBackupResourceId = null, SqlBackupStorageRedundancy? targetBackupStorageRedundancy = null, string status = null, string message = null)
+        public static LongTermRetentionBackupOperationResult LongTermRetentionBackupOperationResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, Guid? requestId = null, string operationType = null, ResourceIdentifier fromBackupResourceId = null, ResourceIdentifier toBackupResourceId = null, SqlBackupStorageRedundancy? targetBackupStorageRedundancy = null, string status = null, string message = null)
         {
             return new LongTermRetentionBackupOperationResult(
                 id,
@@ -3360,7 +3372,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="backupStorageRedundancy"> The storage redundancy type of the backup. </param>
         /// <param name="backupStorageAccessTier"> The BackupStorageAccessTier for the LTR backup. </param>
         /// <returns> A new <see cref="Sql.ManagedInstanceLongTermRetentionBackupData"/> instance for mocking. </returns>
-        public static ManagedInstanceLongTermRetentionBackupData ManagedInstanceLongTermRetentionBackupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string managedInstanceName = null, DateTimeOffset? managedInstanceCreateOn = null, string databaseName = null, DateTimeOffset? databaseDeletedOn = null, DateTimeOffset? backupOn = null, DateTimeOffset? backupExpireOn = null, SqlBackupStorageRedundancy? backupStorageRedundancy = null, SqlBackupStorageAccessTier? backupStorageAccessTier = null)
+        public static ManagedInstanceLongTermRetentionBackupData ManagedInstanceLongTermRetentionBackupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string managedInstanceName = null, DateTimeOffset? managedInstanceCreateOn = null, string databaseName = null, DateTimeOffset? databaseDeletedOn = null, DateTimeOffset? backupOn = null, DateTimeOffset? backupExpireOn = null, SqlBackupStorageRedundancy? backupStorageRedundancy = null, SqlBackupStorageAccessTier? backupStorageAccessTier = null)
         {
             return new ManagedInstanceLongTermRetentionBackupData(
                 id,
@@ -3383,22 +3395,18 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="timeBasedImmutability"> The setting for whether to enable time-based immutability for future backups. When set, future backups will have TimeBasedImmutability enabled. </param>
-        /// <param name="timeBasedImmutabilityMode"> The setting for time-based immutability mode for future backup (Value can be either Locked or UnLocked. Only effective if TimeBasedImmutability is enabled). Caution: Immutability of LTR backup cannot be removed if TimeBasedImmutabilityMode is Locked. </param>
         /// <param name="weeklyRetention"> The weekly retention policy for an LTR backup in an ISO 8601 format. </param>
         /// <param name="monthlyRetention"> The monthly retention policy for an LTR backup in an ISO 8601 format. </param>
         /// <param name="yearlyRetention"> The yearly retention policy for an LTR backup in an ISO 8601 format. </param>
         /// <param name="weekOfYear"> The week of year to take the yearly backup in an ISO 8601 format. </param>
         /// <returns> A new <see cref="Sql.LongTermRetentionPolicyData"/> instance for mocking. </returns>
-        public static LongTermRetentionPolicyData LongTermRetentionPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, TimeBasedImmutability? timeBasedImmutability = null, TimeBasedImmutabilityMode? timeBasedImmutabilityMode = null, string weeklyRetention = null, string monthlyRetention = null, string yearlyRetention = null, int? weekOfYear = null)
+        public static LongTermRetentionPolicyData LongTermRetentionPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string weeklyRetention = null, string monthlyRetention = null, string yearlyRetention = null, int? weekOfYear = null)
         {
             return new LongTermRetentionPolicyData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                timeBasedImmutability,
-                timeBasedImmutabilityMode,
                 weeklyRetention,
                 monthlyRetention,
                 yearlyRetention,
@@ -3419,7 +3427,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="timeGranularityInMinutes"> Time granularity in minutes for maintenance windows. </param>
         /// <param name="allowMultipleMaintenanceWindowsPerCycle"> Whether we allow multiple maintenance windows per cycle. </param>
         /// <returns> A new <see cref="Sql.MaintenanceWindowOptionData"/> instance for mocking. </returns>
-        public static MaintenanceWindowOptionData MaintenanceWindowOptionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, bool? isEnabled = null, IEnumerable<MaintenanceWindowTimeRange> maintenanceWindowCycles = null, int? minDurationInMinutes = null, int? defaultDurationInMinutes = null, int? minCycles = null, int? timeGranularityInMinutes = null, bool? allowMultipleMaintenanceWindowsPerCycle = null)
+        public static MaintenanceWindowOptionData MaintenanceWindowOptionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, bool? isEnabled = null, IEnumerable<MaintenanceWindowTimeRange> maintenanceWindowCycles = null, int? minDurationInMinutes = null, int? defaultDurationInMinutes = null, int? minCycles = null, int? timeGranularityInMinutes = null, bool? allowMultipleMaintenanceWindowsPerCycle = null)
         {
             maintenanceWindowCycles ??= new List<MaintenanceWindowTimeRange>();
 
@@ -3445,7 +3453,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="timeRanges"></param>
         /// <returns> A new <see cref="Sql.MaintenanceWindowsData"/> instance for mocking. </returns>
-        public static MaintenanceWindowsData MaintenanceWindowsData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<MaintenanceWindowTimeRange> timeRanges = null)
+        public static MaintenanceWindowsData MaintenanceWindowsData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, IEnumerable<MaintenanceWindowTimeRange> timeRanges = null)
         {
             timeRanges ??= new List<MaintenanceWindowTimeRange>();
 
@@ -3465,7 +3473,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="retentionDays"> The backup retention period in days. This is how many days Point-in-Time Restore will be supported. </param>
         /// <returns> A new <see cref="Sql.ManagedBackupShortTermRetentionPolicyData"/> instance for mocking. </returns>
-        public static ManagedBackupShortTermRetentionPolicyData ManagedBackupShortTermRetentionPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, int? retentionDays = null)
+        public static ManagedBackupShortTermRetentionPolicyData ManagedBackupShortTermRetentionPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, int? retentionDays = null)
         {
             return new ManagedBackupShortTermRetentionPolicyData(
                 id,
@@ -3484,7 +3492,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="state"> Specifies the state of the Advanced Threat Protection, whether it is enabled or disabled or a state has not been applied yet on the specific database or server. </param>
         /// <param name="createdOn"> Specifies the UTC creation time of the policy. </param>
         /// <returns> A new <see cref="Sql.ManagedDatabaseAdvancedThreatProtectionData"/> instance for mocking. </returns>
-        public static ManagedDatabaseAdvancedThreatProtectionData ManagedDatabaseAdvancedThreatProtectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AdvancedThreatProtectionState? state = null, DateTimeOffset? createdOn = null)
+        public static ManagedDatabaseAdvancedThreatProtectionData ManagedDatabaseAdvancedThreatProtectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, AdvancedThreatProtectionState? state = null, DateTimeOffset? createdOn = null)
         {
             return new ManagedDatabaseAdvancedThreatProtectionData(
                 id,
@@ -3503,7 +3511,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="queryText"> Query text. </param>
         /// <returns> A new <see cref="Models.ManagedInstanceQuery"/> instance for mocking. </returns>
-        public static ManagedInstanceQuery ManagedInstanceQuery(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string queryText = null)
+        public static ManagedInstanceQuery ManagedInstanceQuery(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string queryText = null)
         {
             return new ManagedInstanceQuery(
                 id,
@@ -3525,7 +3533,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="endTime"> The end time for the metric (ISO-8601 format). </param>
         /// <param name="intervals"> List of intervals with appropriate metric data. </param>
         /// <returns> A new <see cref="Models.QueryStatistics"/> instance for mocking. </returns>
-        public static QueryStatistics QueryStatistics(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string databaseName = null, string queryId = null, string startTime = null, string endTime = null, IEnumerable<QueryMetricInterval> intervals = null)
+        public static QueryStatistics QueryStatistics(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string databaseName = null, string queryId = null, string startTime = null, string endTime = null, IEnumerable<QueryMetricInterval> intervals = null)
         {
             intervals ??= new List<QueryMetricInterval>();
 
@@ -3629,7 +3637,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="logBackupSets"> Log backup sets. </param>
         /// <param name="unrestorableFileList"> Unrestorable files. </param>
         /// <returns> A new <see cref="Sql.ManagedDatabaseRestoreDetailData"/> instance for mocking. </returns>
-        public static ManagedDatabaseRestoreDetailData ManagedDatabaseRestoreDetailData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string restoreType = null, string status = null, string blockReason = null, string lastUploadedFileName = null, DateTimeOffset? lastUploadedFileOn = null, string lastRestoredFileName = null, DateTimeOffset? lastRestoredFileOn = null, int? completedPercent = null, int? currentRestoredSizeInMB = null, int? currentRestorePlanSizeInMB = null, string currentBackupType = null, string currentRestoringFileName = null, int? numberOfFilesFound = null, int? numberOfFilesQueued = null, int? numberOfFilesSkipped = null, int? numberOfFilesRestoring = null, int? numberOfFilesRestored = null, int? numberOfFilesUnrestorable = null, IEnumerable<ManagedDatabaseRestoreDetailBackupSetProperties> fullBackupSets = null, IEnumerable<ManagedDatabaseRestoreDetailBackupSetProperties> diffBackupSets = null, IEnumerable<ManagedDatabaseRestoreDetailBackupSetProperties> logBackupSets = null, IEnumerable<ManagedDatabaseRestoreDetailUnrestorableFileProperties> unrestorableFileList = null)
+        public static ManagedDatabaseRestoreDetailData ManagedDatabaseRestoreDetailData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string restoreType = null, string status = null, string blockReason = null, string lastUploadedFileName = null, DateTimeOffset? lastUploadedFileOn = null, string lastRestoredFileName = null, DateTimeOffset? lastRestoredFileOn = null, int? completedPercent = null, int? currentRestoredSizeInMB = null, int? currentRestorePlanSizeInMB = null, string currentBackupType = null, string currentRestoringFileName = null, int? numberOfFilesFound = null, int? numberOfFilesQueued = null, int? numberOfFilesSkipped = null, int? numberOfFilesRestoring = null, int? numberOfFilesRestored = null, int? numberOfFilesUnrestorable = null, IEnumerable<ManagedDatabaseRestoreDetailBackupSetProperties> fullBackupSets = null, IEnumerable<ManagedDatabaseRestoreDetailBackupSetProperties> diffBackupSets = null, IEnumerable<ManagedDatabaseRestoreDetailBackupSetProperties> logBackupSets = null, IEnumerable<ManagedDatabaseRestoreDetailUnrestorableFileProperties> unrestorableFileList = null)
         {
             fullBackupSets ??= new List<ManagedDatabaseRestoreDetailBackupSetProperties>();
             diffBackupSets ??= new List<ManagedDatabaseRestoreDetailBackupSetProperties>();
@@ -3694,152 +3702,6 @@ namespace Azure.ResourceManager.Sql.Models
             return new ManagedDatabaseRestoreDetailUnrestorableFileProperties(name, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Sql.ManagedDatabaseData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="collation"> Collation of the managed database. </param>
-        /// <param name="status"> Status of the database. </param>
-        /// <param name="createdOn"> Creation date of the database. </param>
-        /// <param name="earliestRestorePoint"> Earliest restore point in time for point in time restore. </param>
-        /// <param name="restorePointInTime"> Conditional. If createMode is PointInTimeRestore, this value is required. Specifies the point in time (ISO8601 format) of the source database that will be restored to create the new database. </param>
-        /// <param name="defaultSecondaryLocation"> Geo paired region. </param>
-        /// <param name="catalogCollation"> Collation of the metadata catalog. </param>
-        /// <param name="createMode"> Managed database create mode. PointInTimeRestore: Create a database by restoring a point in time backup of an existing database. SourceDatabaseName, SourceManagedInstanceName and PointInTime must be specified. RestoreExternalBackup: Create a database by restoring from external backup files. Collation, StorageContainerUri and StorageContainerSasToken must be specified. Recovery: Creates a database by restoring a geo-replicated backup. RecoverableDatabaseId must be specified as the recoverable database resource ID to restore. RestoreLongTermRetentionBackup: Create a database by restoring from a long term retention backup (longTermRetentionBackupResourceId required). </param>
-        /// <param name="storageContainerUri"> Conditional. If createMode is RestoreExternalBackup, this value is required. Specifies the uri of the storage container where backups for this restore are stored. </param>
-        /// <param name="sourceDatabaseId"> The resource identifier of the source database associated with create operation of this database. </param>
-        /// <param name="crossSubscriptionSourceDatabaseId"> The resource identifier of the cross-subscription source database associated with create operation of this database. </param>
-        /// <param name="restorableDroppedDatabaseId"> The restorable dropped database resource id to restore when creating this database. </param>
-        /// <param name="crossSubscriptionRestorableDroppedDatabaseId"> The restorable cross-subscription dropped database resource id to restore when creating this database. </param>
-        /// <param name="storageContainerIdentity"> Conditional. If createMode is RestoreExternalBackup, this value is used. Specifies the identity used for storage container authentication. Can be 'SharedAccessSignature' or 'ManagedIdentity'; if not specified 'SharedAccessSignature' is assumed. </param>
-        /// <param name="storageContainerSasToken"> Conditional. If createMode is RestoreExternalBackup and storageContainerIdentity is not ManagedIdentity, this value is required. Specifies the storage container sas token. </param>
-        /// <param name="failoverGroupId"> Instance Failover Group resource identifier that this managed database belongs to. </param>
-        /// <param name="recoverableDatabaseId"> The resource identifier of the recoverable database associated with create operation of this database. </param>
-        /// <param name="longTermRetentionBackupResourceId"> The name of the Long Term Retention backup to be used for restore of this managed database. </param>
-        /// <param name="allowAutoCompleteRestore"> Whether to auto complete restore of this managed database. </param>
-        /// <param name="lastBackupName"> Last backup file name for restore of this managed database. </param>
-        /// <param name="crossSubscriptionTargetManagedInstanceId"> Target managed instance id used in cross-subscription restore. </param>
-        /// <param name="isLedgerOn"> Whether or not this database is a ledger database, which means all tables in the database are ledger tables. Note: the value of this property cannot be changed after the database has been created. </param>
-        /// <param name="extendedAccessibilityInfo"> Additional observability and troubleshooting information for databases in ‘Inaccessible’ state. </param>
-        /// <returns> A new <see cref="Sql.ManagedDatabaseData"/> instance for mocking. </returns>
-        public static ManagedDatabaseData ManagedDatabaseData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string collation = null, ManagedDatabaseStatus? status = null, DateTimeOffset? createdOn = null, DateTimeOffset? earliestRestorePoint = null, DateTimeOffset? restorePointInTime = null, AzureLocation? defaultSecondaryLocation = null, CatalogCollationType? catalogCollation = null, ManagedDatabaseCreateMode? createMode = null, Uri storageContainerUri = null, ResourceIdentifier sourceDatabaseId = null, ResourceIdentifier crossSubscriptionSourceDatabaseId = null, ResourceIdentifier restorableDroppedDatabaseId = null, ResourceIdentifier crossSubscriptionRestorableDroppedDatabaseId = null, string storageContainerIdentity = null, string storageContainerSasToken = null, ResourceIdentifier failoverGroupId = null, ResourceIdentifier recoverableDatabaseId = null, ResourceIdentifier longTermRetentionBackupResourceId = null, bool? allowAutoCompleteRestore = null, string lastBackupName = null, ResourceIdentifier crossSubscriptionTargetManagedInstanceId = null, bool? isLedgerOn = null, ManagedDatabaseExtendedAccessibilityInfo extendedAccessibilityInfo = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new ManagedDatabaseData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags,
-                location,
-                collation,
-                status,
-                createdOn,
-                earliestRestorePoint,
-                restorePointInTime,
-                defaultSecondaryLocation,
-                catalogCollation,
-                createMode,
-                storageContainerUri,
-                sourceDatabaseId,
-                crossSubscriptionSourceDatabaseId,
-                restorableDroppedDatabaseId,
-                crossSubscriptionRestorableDroppedDatabaseId,
-                storageContainerIdentity,
-                storageContainerSasToken,
-                failoverGroupId,
-                recoverableDatabaseId,
-                longTermRetentionBackupResourceId,
-                allowAutoCompleteRestore,
-                lastBackupName,
-                crossSubscriptionTargetManagedInstanceId,
-                isLedgerOn,
-                extendedAccessibilityInfo,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ManagedDatabaseExtendedAccessibilityInfo"/>. </summary>
-        /// <param name="inaccessibilityReasonErrorCode"> SQL Server error code connected to the inaccessibility root cause. </param>
-        /// <param name="inaccessibilityReasonDescription"> Root cause explanation and mitigation action. </param>
-        /// <param name="inaccessibilityReasonKind"> Root cause kind. Allowed values are “TransparentDataEncryption”, “DatabaseReplication”, and “Unknown”. </param>
-        /// <param name="inaccessibilityReasonTdeKeyUri"> For the root cause kind “TransparentDataEncryption”, the CMK URI. </param>
-        /// <returns> A new <see cref="Models.ManagedDatabaseExtendedAccessibilityInfo"/> instance for mocking. </returns>
-        public static ManagedDatabaseExtendedAccessibilityInfo ManagedDatabaseExtendedAccessibilityInfo(string inaccessibilityReasonErrorCode = null, string inaccessibilityReasonDescription = null, ManagedDatabaseInaccessibilityReason inaccessibilityReasonKind = default, Uri inaccessibilityReasonTdeKeyUri = null)
-        {
-            return new ManagedDatabaseExtendedAccessibilityInfo(inaccessibilityReasonErrorCode, inaccessibilityReasonDescription, inaccessibilityReasonKind, inaccessibilityReasonTdeKeyUri, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ManagedDatabasePatch"/>. </summary>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="collation"> Collation of the managed database. </param>
-        /// <param name="status"> Status of the database. </param>
-        /// <param name="createdOn"> Creation date of the database. </param>
-        /// <param name="earliestRestorePoint"> Earliest restore point in time for point in time restore. </param>
-        /// <param name="restorePointInTime"> Conditional. If createMode is PointInTimeRestore, this value is required. Specifies the point in time (ISO8601 format) of the source database that will be restored to create the new database. </param>
-        /// <param name="defaultSecondaryLocation"> Geo paired region. </param>
-        /// <param name="catalogCollation"> Collation of the metadata catalog. </param>
-        /// <param name="createMode"> Managed database create mode. PointInTimeRestore: Create a database by restoring a point in time backup of an existing database. SourceDatabaseName, SourceManagedInstanceName and PointInTime must be specified. RestoreExternalBackup: Create a database by restoring from external backup files. Collation, StorageContainerUri and StorageContainerSasToken must be specified. Recovery: Creates a database by restoring a geo-replicated backup. RecoverableDatabaseId must be specified as the recoverable database resource ID to restore. RestoreLongTermRetentionBackup: Create a database by restoring from a long term retention backup (longTermRetentionBackupResourceId required). </param>
-        /// <param name="storageContainerUri"> Conditional. If createMode is RestoreExternalBackup, this value is required. Specifies the uri of the storage container where backups for this restore are stored. </param>
-        /// <param name="sourceDatabaseId"> The resource identifier of the source database associated with create operation of this database. </param>
-        /// <param name="crossSubscriptionSourceDatabaseId"> The resource identifier of the cross-subscription source database associated with create operation of this database. </param>
-        /// <param name="restorableDroppedDatabaseId"> The restorable dropped database resource id to restore when creating this database. </param>
-        /// <param name="crossSubscriptionRestorableDroppedDatabaseId"> The restorable cross-subscription dropped database resource id to restore when creating this database. </param>
-        /// <param name="storageContainerIdentity"> Conditional. If createMode is RestoreExternalBackup, this value is used. Specifies the identity used for storage container authentication. Can be 'SharedAccessSignature' or 'ManagedIdentity'; if not specified 'SharedAccessSignature' is assumed. </param>
-        /// <param name="storageContainerSasToken"> Conditional. If createMode is RestoreExternalBackup and storageContainerIdentity is not ManagedIdentity, this value is required. Specifies the storage container sas token. </param>
-        /// <param name="failoverGroupId"> Instance Failover Group resource identifier that this managed database belongs to. </param>
-        /// <param name="recoverableDatabaseId"> The resource identifier of the recoverable database associated with create operation of this database. </param>
-        /// <param name="longTermRetentionBackupResourceId"> The name of the Long Term Retention backup to be used for restore of this managed database. </param>
-        /// <param name="allowAutoCompleteRestore"> Whether to auto complete restore of this managed database. </param>
-        /// <param name="lastBackupName"> Last backup file name for restore of this managed database. </param>
-        /// <param name="crossSubscriptionTargetManagedInstanceId"> Target managed instance id used in cross-subscription restore. </param>
-        /// <param name="isLedgerOn"> Whether or not this database is a ledger database, which means all tables in the database are ledger tables. Note: the value of this property cannot be changed after the database has been created. </param>
-        /// <param name="extendedAccessibilityInfo"> Additional observability and troubleshooting information for databases in ‘Inaccessible’ state. </param>
-        /// <returns> A new <see cref="Models.ManagedDatabasePatch"/> instance for mocking. </returns>
-        public static ManagedDatabasePatch ManagedDatabasePatch(IDictionary<string, string> tags = null, string collation = null, ManagedDatabaseStatus? status = null, DateTimeOffset? createdOn = null, DateTimeOffset? earliestRestorePoint = null, DateTimeOffset? restorePointInTime = null, AzureLocation? defaultSecondaryLocation = null, CatalogCollationType? catalogCollation = null, ManagedDatabaseCreateMode? createMode = null, Uri storageContainerUri = null, ResourceIdentifier sourceDatabaseId = null, ResourceIdentifier crossSubscriptionSourceDatabaseId = null, ResourceIdentifier restorableDroppedDatabaseId = null, ResourceIdentifier crossSubscriptionRestorableDroppedDatabaseId = null, string storageContainerIdentity = null, string storageContainerSasToken = null, ResourceIdentifier failoverGroupId = null, ResourceIdentifier recoverableDatabaseId = null, ResourceIdentifier longTermRetentionBackupResourceId = null, bool? allowAutoCompleteRestore = null, string lastBackupName = null, ResourceIdentifier crossSubscriptionTargetManagedInstanceId = null, bool? isLedgerOn = null, ManagedDatabaseExtendedAccessibilityInfo extendedAccessibilityInfo = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new ManagedDatabasePatch(
-                tags,
-                collation,
-                status,
-                createdOn,
-                earliestRestorePoint,
-                restorePointInTime,
-                defaultSecondaryLocation,
-                catalogCollation,
-                createMode,
-                storageContainerUri,
-                sourceDatabaseId,
-                crossSubscriptionSourceDatabaseId,
-                restorableDroppedDatabaseId,
-                crossSubscriptionRestorableDroppedDatabaseId,
-                storageContainerIdentity,
-                storageContainerSasToken,
-                failoverGroupId,
-                recoverableDatabaseId,
-                longTermRetentionBackupResourceId,
-                allowAutoCompleteRestore,
-                lastBackupName,
-                crossSubscriptionTargetManagedInstanceId,
-                isLedgerOn,
-                extendedAccessibilityInfo,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ManagedDatabaseStartMoveDefinition"/>. </summary>
-        /// <param name="destinationManagedDatabaseId"> The destination managed database ID. </param>
-        /// <param name="operationMode"> The move operation mode. </param>
-        /// <returns> A new <see cref="Models.ManagedDatabaseStartMoveDefinition"/> instance for mocking. </returns>
-        public static ManagedDatabaseStartMoveDefinition ManagedDatabaseStartMoveDefinition(ResourceIdentifier destinationManagedDatabaseId = null, ManagedDatabaseMoveOperationMode? operationMode = null)
-        {
-            return new ManagedDatabaseStartMoveDefinition(destinationManagedDatabaseId, operationMode, serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Sql.ManagedDatabaseSecurityAlertPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -3854,7 +3716,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="retentionDays"> Specifies the number of days to keep in the Threat Detection audit logs. </param>
         /// <param name="createdOn"> Specifies the UTC creation time of the policy. </param>
         /// <returns> A new <see cref="Sql.ManagedDatabaseSecurityAlertPolicyData"/> instance for mocking. </returns>
-        public static ManagedDatabaseSecurityAlertPolicyData ManagedDatabaseSecurityAlertPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SecurityAlertPolicyState? state = null, IEnumerable<string> disabledAlerts = null, IEnumerable<string> emailAddresses = null, bool? sendToEmailAccountAdmins = null, string storageEndpoint = null, string storageAccountAccessKey = null, int? retentionDays = null, DateTimeOffset? createdOn = null)
+        public static ManagedDatabaseSecurityAlertPolicyData ManagedDatabaseSecurityAlertPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, SecurityAlertPolicyState? state = null, IEnumerable<string> disabledAlerts = null, IEnumerable<string> emailAddresses = null, bool? sendToEmailAccountAdmins = null, string storageEndpoint = null, string storageAccountAccessKey = null, int? retentionDays = null, DateTimeOffset? createdOn = null)
         {
             disabledAlerts ??= new List<string>();
             emailAddresses ??= new List<string>();
@@ -3890,7 +3752,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="principalName"> The principal user who executed the statement. </param>
         /// <param name="securityEventSqlInjectionAdditionalProperties"> The sql injection additional properties, populated only if the type of the security event is sql injection. </param>
         /// <returns> A new <see cref="Models.SecurityEvent"/> instance for mocking. </returns>
-        public static SecurityEvent SecurityEvent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? eventOn = null, SecurityEventType? securityEventType = null, string subscription = null, string server = null, string database = null, IPAddress clientIP = null, string applicationName = null, string principalName = null, SecurityEventSqlInjectionAdditionalProperties securityEventSqlInjectionAdditionalProperties = null)
+        public static SecurityEvent SecurityEvent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, DateTimeOffset? eventOn = null, SecurityEventType? securityEventType = null, string subscription = null, string server = null, string database = null, IPAddress clientIP = null, string applicationName = null, string principalName = null, SecurityEventSqlInjectionAdditionalProperties securityEventSqlInjectionAdditionalProperties = null)
         {
             return new SecurityEvent(
                 id,
@@ -3948,7 +3810,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="rank"></param>
         /// <param name="clientClassificationSource"></param>
         /// <returns> A new <see cref="Sql.SensitivityLabelData"/> instance for mocking. </returns>
-        public static SensitivityLabelData SensitivityLabelData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string managedBy = null, string schemaName = null, string tableName = null, string columnName = null, string labelName = null, string labelId = null, string informationType = null, string informationTypeId = null, bool? isDisabled = null, SensitivityLabelRank? rank = null, ClientClassificationSource? clientClassificationSource = null)
+        public static SensitivityLabelData SensitivityLabelData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string managedBy = null, string schemaName = null, string tableName = null, string columnName = null, string labelName = null, string labelId = null, string informationType = null, string informationTypeId = null, bool? isDisabled = null, SensitivityLabelRank? rank = null, ClientClassificationSource? clientClassificationSource = null)
         {
             return new SensitivityLabelData(
                 id,
@@ -3980,7 +3842,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="column"> Column name to update. </param>
         /// <param name="sensitivityLabel"> The sensitivity label information to apply on a column. </param>
         /// <returns> A new <see cref="Models.SensitivityLabelUpdate"/> instance for mocking. </returns>
-        public static SensitivityLabelUpdate SensitivityLabelUpdate(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SensitivityLabelUpdateKind? op = null, string schema = null, string table = null, string column = null, SensitivityLabelData sensitivityLabel = null)
+        public static SensitivityLabelUpdate SensitivityLabelUpdate(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, SensitivityLabelUpdateKind? op = null, string schema = null, string table = null, string column = null, SensitivityLabelData sensitivityLabel = null)
         {
             return new SensitivityLabelUpdate(
                 id,
@@ -4005,7 +3867,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="table"> Table name of the column to update. </param>
         /// <param name="column"> Column name to update. </param>
         /// <returns> A new <see cref="Models.RecommendedSensitivityLabelUpdate"/> instance for mocking. </returns>
-        public static RecommendedSensitivityLabelUpdate RecommendedSensitivityLabelUpdate(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, RecommendedSensitivityLabelUpdateKind? op = null, string schema = null, string table = null, string column = null)
+        public static RecommendedSensitivityLabelUpdate RecommendedSensitivityLabelUpdate(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, RecommendedSensitivityLabelUpdateKind? op = null, string schema = null, string table = null, string column = null)
         {
             return new RecommendedSensitivityLabelUpdate(
                 id,
@@ -4026,7 +3888,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="state"> Specifies the state of the transparent data encryption. </param>
         /// <returns> A new <see cref="Sql.ManagedTransparentDataEncryptionData"/> instance for mocking. </returns>
-        public static ManagedTransparentDataEncryptionData ManagedTransparentDataEncryptionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, TransparentDataEncryptionState? state = null)
+        public static ManagedTransparentDataEncryptionData ManagedTransparentDataEncryptionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, TransparentDataEncryptionState? state = null)
         {
             return new ManagedTransparentDataEncryptionData(
                 id,
@@ -4035,6 +3897,137 @@ namespace Azure.ResourceManager.Sql.Models
                 systemData,
                 state,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Sql.ManagedDatabaseData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="collation"> Collation of the managed database. </param>
+        /// <param name="status"> Status of the database. </param>
+        /// <param name="createdOn"> Creation date of the database. </param>
+        /// <param name="earliestRestorePoint"> Earliest restore point in time for point in time restore. </param>
+        /// <param name="restorePointInTime"> Conditional. If createMode is PointInTimeRestore, this value is required. Specifies the point in time (ISO8601 format) of the source database that will be restored to create the new database. </param>
+        /// <param name="defaultSecondaryLocation"> Geo paired region. </param>
+        /// <param name="catalogCollation"> Collation of the metadata catalog. </param>
+        /// <param name="createMode"> Managed database create mode. PointInTimeRestore: Create a database by restoring a point in time backup of an existing database. SourceDatabaseName, SourceManagedInstanceName and PointInTime must be specified. RestoreExternalBackup: Create a database by restoring from external backup files. Collation, StorageContainerUri and StorageContainerSasToken must be specified. Recovery: Creates a database by restoring a geo-replicated backup. RecoverableDatabaseId must be specified as the recoverable database resource ID to restore. RestoreLongTermRetentionBackup: Create a database by restoring from a long term retention backup (longTermRetentionBackupResourceId required). </param>
+        /// <param name="storageContainerUri"> Conditional. If createMode is RestoreExternalBackup, this value is required. Specifies the uri of the storage container where backups for this restore are stored. </param>
+        /// <param name="sourceDatabaseId"> The resource identifier of the source database associated with create operation of this database. </param>
+        /// <param name="crossSubscriptionSourceDatabaseId"> The resource identifier of the cross-subscription source database associated with create operation of this database. </param>
+        /// <param name="restorableDroppedDatabaseId"> The restorable dropped database resource id to restore when creating this database. </param>
+        /// <param name="crossSubscriptionRestorableDroppedDatabaseId"> The restorable cross-subscription dropped database resource id to restore when creating this database. </param>
+        /// <param name="storageContainerIdentity"> Conditional. If createMode is RestoreExternalBackup, this value is used. Specifies the identity used for storage container authentication. Can be 'SharedAccessSignature' or 'ManagedIdentity'; if not specified 'SharedAccessSignature' is assumed. </param>
+        /// <param name="storageContainerSasToken"> Conditional. If createMode is RestoreExternalBackup and storageContainerIdentity is not ManagedIdentity, this value is required. Specifies the storage container sas token. </param>
+        /// <param name="failoverGroupId"> Instance Failover Group resource identifier that this managed database belongs to. </param>
+        /// <param name="recoverableDatabaseId"> The resource identifier of the recoverable database associated with create operation of this database. </param>
+        /// <param name="longTermRetentionBackupResourceId"> The name of the Long Term Retention backup to be used for restore of this managed database. </param>
+        /// <param name="allowAutoCompleteRestore"> Whether to auto complete restore of this managed database. </param>
+        /// <param name="lastBackupName"> Last backup file name for restore of this managed database. </param>
+        /// <param name="crossSubscriptionTargetManagedInstanceId"> Target managed instance id used in cross-subscription restore. </param>
+        /// <param name="isLedgerOn"> Whether or not this database is a ledger database, which means all tables in the database are ledger tables. Note: the value of this property cannot be changed after the database has been created. </param>
+        /// <returns> A new <see cref="Sql.ManagedDatabaseData"/> instance for mocking. </returns>
+        public static ManagedDatabaseData ManagedDatabaseData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string collation = null, ManagedDatabaseStatus? status = null, DateTimeOffset? createdOn = null, DateTimeOffset? earliestRestorePoint = null, DateTimeOffset? restorePointInTime = null, AzureLocation? defaultSecondaryLocation = null, CatalogCollationType? catalogCollation = null, ManagedDatabaseCreateMode? createMode = null, Uri storageContainerUri = null, ResourceIdentifier sourceDatabaseId = null, ResourceIdentifier crossSubscriptionSourceDatabaseId = null, ResourceIdentifier restorableDroppedDatabaseId = null, ResourceIdentifier crossSubscriptionRestorableDroppedDatabaseId = null, string storageContainerIdentity = null, string storageContainerSasToken = null, ResourceIdentifier failoverGroupId = null, ResourceIdentifier recoverableDatabaseId = null, ResourceIdentifier longTermRetentionBackupResourceId = null, bool? allowAutoCompleteRestore = null, string lastBackupName = null, ResourceIdentifier crossSubscriptionTargetManagedInstanceId = null, bool? isLedgerOn = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new ManagedDatabaseData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                collation,
+                status,
+                createdOn,
+                earliestRestorePoint,
+                restorePointInTime,
+                defaultSecondaryLocation,
+                catalogCollation,
+                createMode,
+                storageContainerUri,
+                sourceDatabaseId,
+                crossSubscriptionSourceDatabaseId,
+                restorableDroppedDatabaseId,
+                crossSubscriptionRestorableDroppedDatabaseId,
+                storageContainerIdentity,
+                storageContainerSasToken,
+                failoverGroupId,
+                recoverableDatabaseId,
+                longTermRetentionBackupResourceId,
+                allowAutoCompleteRestore,
+                lastBackupName,
+                crossSubscriptionTargetManagedInstanceId,
+                isLedgerOn,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ManagedDatabasePatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="collation"> Collation of the managed database. </param>
+        /// <param name="status"> Status of the database. </param>
+        /// <param name="createdOn"> Creation date of the database. </param>
+        /// <param name="earliestRestorePoint"> Earliest restore point in time for point in time restore. </param>
+        /// <param name="restorePointInTime"> Conditional. If createMode is PointInTimeRestore, this value is required. Specifies the point in time (ISO8601 format) of the source database that will be restored to create the new database. </param>
+        /// <param name="defaultSecondaryLocation"> Geo paired region. </param>
+        /// <param name="catalogCollation"> Collation of the metadata catalog. </param>
+        /// <param name="createMode"> Managed database create mode. PointInTimeRestore: Create a database by restoring a point in time backup of an existing database. SourceDatabaseName, SourceManagedInstanceName and PointInTime must be specified. RestoreExternalBackup: Create a database by restoring from external backup files. Collation, StorageContainerUri and StorageContainerSasToken must be specified. Recovery: Creates a database by restoring a geo-replicated backup. RecoverableDatabaseId must be specified as the recoverable database resource ID to restore. RestoreLongTermRetentionBackup: Create a database by restoring from a long term retention backup (longTermRetentionBackupResourceId required). </param>
+        /// <param name="storageContainerUri"> Conditional. If createMode is RestoreExternalBackup, this value is required. Specifies the uri of the storage container where backups for this restore are stored. </param>
+        /// <param name="sourceDatabaseId"> The resource identifier of the source database associated with create operation of this database. </param>
+        /// <param name="crossSubscriptionSourceDatabaseId"> The resource identifier of the cross-subscription source database associated with create operation of this database. </param>
+        /// <param name="restorableDroppedDatabaseId"> The restorable dropped database resource id to restore when creating this database. </param>
+        /// <param name="crossSubscriptionRestorableDroppedDatabaseId"> The restorable cross-subscription dropped database resource id to restore when creating this database. </param>
+        /// <param name="storageContainerIdentity"> Conditional. If createMode is RestoreExternalBackup, this value is used. Specifies the identity used for storage container authentication. Can be 'SharedAccessSignature' or 'ManagedIdentity'; if not specified 'SharedAccessSignature' is assumed. </param>
+        /// <param name="storageContainerSasToken"> Conditional. If createMode is RestoreExternalBackup and storageContainerIdentity is not ManagedIdentity, this value is required. Specifies the storage container sas token. </param>
+        /// <param name="failoverGroupId"> Instance Failover Group resource identifier that this managed database belongs to. </param>
+        /// <param name="recoverableDatabaseId"> The resource identifier of the recoverable database associated with create operation of this database. </param>
+        /// <param name="longTermRetentionBackupResourceId"> The name of the Long Term Retention backup to be used for restore of this managed database. </param>
+        /// <param name="allowAutoCompleteRestore"> Whether to auto complete restore of this managed database. </param>
+        /// <param name="lastBackupName"> Last backup file name for restore of this managed database. </param>
+        /// <param name="crossSubscriptionTargetManagedInstanceId"> Target managed instance id used in cross-subscription restore. </param>
+        /// <param name="isLedgerOn"> Whether or not this database is a ledger database, which means all tables in the database are ledger tables. Note: the value of this property cannot be changed after the database has been created. </param>
+        /// <returns> A new <see cref="Models.ManagedDatabasePatch"/> instance for mocking. </returns>
+        public static ManagedDatabasePatch ManagedDatabasePatch(IDictionary<string, string> tags = null, string collation = null, ManagedDatabaseStatus? status = null, DateTimeOffset? createdOn = null, DateTimeOffset? earliestRestorePoint = null, DateTimeOffset? restorePointInTime = null, AzureLocation? defaultSecondaryLocation = null, CatalogCollationType? catalogCollation = null, ManagedDatabaseCreateMode? createMode = null, Uri storageContainerUri = null, ResourceIdentifier sourceDatabaseId = null, ResourceIdentifier crossSubscriptionSourceDatabaseId = null, ResourceIdentifier restorableDroppedDatabaseId = null, ResourceIdentifier crossSubscriptionRestorableDroppedDatabaseId = null, string storageContainerIdentity = null, string storageContainerSasToken = null, ResourceIdentifier failoverGroupId = null, ResourceIdentifier recoverableDatabaseId = null, ResourceIdentifier longTermRetentionBackupResourceId = null, bool? allowAutoCompleteRestore = null, string lastBackupName = null, ResourceIdentifier crossSubscriptionTargetManagedInstanceId = null, bool? isLedgerOn = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new ManagedDatabasePatch(
+                tags,
+                collation,
+                status,
+                createdOn,
+                earliestRestorePoint,
+                restorePointInTime,
+                defaultSecondaryLocation,
+                catalogCollation,
+                createMode,
+                storageContainerUri,
+                sourceDatabaseId,
+                crossSubscriptionSourceDatabaseId,
+                restorableDroppedDatabaseId,
+                crossSubscriptionRestorableDroppedDatabaseId,
+                storageContainerIdentity,
+                storageContainerSasToken,
+                failoverGroupId,
+                recoverableDatabaseId,
+                longTermRetentionBackupResourceId,
+                allowAutoCompleteRestore,
+                lastBackupName,
+                crossSubscriptionTargetManagedInstanceId,
+                isLedgerOn,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ManagedDatabaseStartMoveDefinition"/>. </summary>
+        /// <param name="destinationManagedDatabaseId"> The destination managed database ID. </param>
+        /// <param name="operationMode"> The move operation mode. </param>
+        /// <returns> A new <see cref="Models.ManagedDatabaseStartMoveDefinition"/> instance for mocking. </returns>
+        public static ManagedDatabaseStartMoveDefinition ManagedDatabaseStartMoveDefinition(ResourceIdentifier destinationManagedDatabaseId = null, ManagedDatabaseMoveOperationMode? operationMode = null)
+        {
+            return new ManagedDatabaseStartMoveDefinition(destinationManagedDatabaseId, operationMode, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Sql.ManagedInstanceAdministratorData"/>. </summary>
@@ -4047,7 +4040,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="sid"> SID (object ID) of the managed instance administrator. </param>
         /// <param name="tenantId"> Tenant ID of the managed instance administrator. </param>
         /// <returns> A new <see cref="Sql.ManagedInstanceAdministratorData"/> instance for mocking. </returns>
-        public static ManagedInstanceAdministratorData ManagedInstanceAdministratorData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ManagedInstanceAdministratorType? administratorType = null, string login = null, Guid? sid = null, Guid? tenantId = null)
+        public static ManagedInstanceAdministratorData ManagedInstanceAdministratorData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, ManagedInstanceAdministratorType? administratorType = null, string login = null, Guid? sid = null, Guid? tenantId = null)
         {
             return new ManagedInstanceAdministratorData(
                 id,
@@ -4069,7 +4062,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="state"> Specifies the state of the Advanced Threat Protection, whether it is enabled or disabled or a state has not been applied yet on the specific database or server. </param>
         /// <param name="createdOn"> Specifies the UTC creation time of the policy. </param>
         /// <returns> A new <see cref="Sql.ManagedInstanceAdvancedThreatProtectionData"/> instance for mocking. </returns>
-        public static ManagedInstanceAdvancedThreatProtectionData ManagedInstanceAdvancedThreatProtectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AdvancedThreatProtectionState? state = null, DateTimeOffset? createdOn = null)
+        public static ManagedInstanceAdvancedThreatProtectionData ManagedInstanceAdvancedThreatProtectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, AdvancedThreatProtectionState? state = null, DateTimeOffset? createdOn = null)
         {
             return new ManagedInstanceAdvancedThreatProtectionData(
                 id,
@@ -4088,7 +4081,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="isAzureADOnlyAuthenticationEnabled"> Azure Active Directory only Authentication enabled. </param>
         /// <returns> A new <see cref="Sql.ManagedInstanceAzureADOnlyAuthenticationData"/> instance for mocking. </returns>
-        public static ManagedInstanceAzureADOnlyAuthenticationData ManagedInstanceAzureADOnlyAuthenticationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, bool? isAzureADOnlyAuthenticationEnabled = null)
+        public static ManagedInstanceAzureADOnlyAuthenticationData ManagedInstanceAzureADOnlyAuthenticationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, bool? isAzureADOnlyAuthenticationEnabled = null)
         {
             return new ManagedInstanceAzureADOnlyAuthenticationData(
                 id,
@@ -4110,7 +4103,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="dtcHostNameDnsSuffix"> Host name dns suffix of managed instance DTC. </param>
         /// <param name="provisioningState"> Provisioning state of managed instance DTC. </param>
         /// <returns> A new <see cref="Sql.ManagedInstanceDtcData"/> instance for mocking. </returns>
-        public static ManagedInstanceDtcData ManagedInstanceDtcData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, bool? dtcEnabled = null, ManagedInstanceDtcSecuritySettings securitySettings = null, IEnumerable<string> externalDnsSuffixSearchList = null, string dtcHostNameDnsSuffix = null, JobExecutionProvisioningState? provisioningState = null)
+        public static ManagedInstanceDtcData ManagedInstanceDtcData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, bool? dtcEnabled = null, ManagedInstanceDtcSecuritySettings securitySettings = null, IEnumerable<string> externalDnsSuffixSearchList = null, string dtcHostNameDnsSuffix = null, JobExecutionProvisioningState? provisioningState = null)
         {
             externalDnsSuffixSearchList ??= new List<string>();
 
@@ -4139,7 +4132,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="thumbprint"> Thumbprint of the server key. </param>
         /// <param name="isAutoRotationEnabled"> Key auto rotation opt-in flag. Either true or false. </param>
         /// <returns> A new <see cref="Sql.ManagedInstanceEncryptionProtectorData"/> instance for mocking. </returns>
-        public static ManagedInstanceEncryptionProtectorData ManagedInstanceEncryptionProtectorData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, string serverKeyName = null, SqlServerKeyType? serverKeyType = null, Uri uri = null, string thumbprint = null, bool? isAutoRotationEnabled = null)
+        public static ManagedInstanceEncryptionProtectorData ManagedInstanceEncryptionProtectorData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string kind = null, string serverKeyName = null, SqlServerKeyType? serverKeyType = null, Uri uri = null, string thumbprint = null, bool? isAutoRotationEnabled = null)
         {
             return new ManagedInstanceEncryptionProtectorData(
                 id,
@@ -4167,7 +4160,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="createdOn"> The key creation date. </param>
         /// <param name="isAutoRotationEnabled"> Key auto rotation opt-in flag. Either true or false. </param>
         /// <returns> A new <see cref="Sql.ManagedInstanceKeyData"/> instance for mocking. </returns>
-        public static ManagedInstanceKeyData ManagedInstanceKeyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, SqlServerKeyType? serverKeyType = null, Uri uri = null, string thumbprint = null, DateTimeOffset? createdOn = null, bool? isAutoRotationEnabled = null)
+        public static ManagedInstanceKeyData ManagedInstanceKeyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string kind = null, SqlServerKeyType? serverKeyType = null, Uri uri = null, string thumbprint = null, DateTimeOffset? createdOn = null, bool? isAutoRotationEnabled = null)
         {
             return new ManagedInstanceKeyData(
                 id,
@@ -4194,7 +4187,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="yearlyRetention"> The yearly retention policy for an LTR backup in an ISO 8601 format. </param>
         /// <param name="weekOfYear"> The week of year to take the yearly backup in an ISO 8601 format. </param>
         /// <returns> A new <see cref="Sql.ManagedInstanceLongTermRetentionPolicyData"/> instance for mocking. </returns>
-        public static ManagedInstanceLongTermRetentionPolicyData ManagedInstanceLongTermRetentionPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SqlBackupStorageAccessTier? backupStorageAccessTier = null, string weeklyRetention = null, string monthlyRetention = null, string yearlyRetention = null, int? weekOfYear = null)
+        public static ManagedInstanceLongTermRetentionPolicyData ManagedInstanceLongTermRetentionPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, SqlBackupStorageAccessTier? backupStorageAccessTier = null, string weeklyRetention = null, string monthlyRetention = null, string yearlyRetention = null, int? weekOfYear = null)
         {
             return new ManagedInstanceLongTermRetentionPolicyData(
                 id,
@@ -4230,7 +4223,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="operationParameters"> The operation parameters. </param>
         /// <param name="operationSteps"> The operation steps. </param>
         /// <returns> A new <see cref="Sql.ManagedInstanceOperationData"/> instance for mocking. </returns>
-        public static ManagedInstanceOperationData ManagedInstanceOperationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string managedInstanceName = null, string operation = null, string operationFriendlyName = null, int? percentComplete = null, DateTimeOffset? startOn = null, ManagementOperationState? state = null, int? errorCode = null, string errorDescription = null, int? errorSeverity = null, bool? isUserError = null, DateTimeOffset? estimatedCompleteOn = null, string description = null, bool? isCancellable = null, ManagedInstanceOperationParametersPair operationParameters = null, ManagedInstanceOperationSteps operationSteps = null)
+        public static ManagedInstanceOperationData ManagedInstanceOperationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string managedInstanceName = null, string operation = null, string operationFriendlyName = null, int? percentComplete = null, DateTimeOffset? startOn = null, ManagementOperationState? state = null, int? errorCode = null, string errorDescription = null, int? errorSeverity = null, bool? isUserError = null, DateTimeOffset? estimatedCompleteOn = null, string description = null, bool? isCancellable = null, ManagedInstanceOperationParametersPair operationParameters = null, ManagedInstanceOperationSteps operationSteps = null)
         {
             return new ManagedInstanceOperationData(
                 id,
@@ -4316,7 +4309,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="connectionState"> Connection State of the Private Endpoint Connection. </param>
         /// <param name="provisioningState"> State of the Private Endpoint Connection. </param>
         /// <returns> A new <see cref="Sql.ManagedInstancePrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static ManagedInstancePrivateEndpointConnectionData ManagedInstancePrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier privateEndpointId = null, ManagedInstancePrivateLinkServiceConnectionStateProperty connectionState = null, string provisioningState = null)
+        public static ManagedInstancePrivateEndpointConnectionData ManagedInstancePrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, ResourceIdentifier privateEndpointId = null, ManagedInstancePrivateLinkServiceConnectionStateProperty connectionState = null, string provisioningState = null)
         {
             return new ManagedInstancePrivateEndpointConnectionData(
                 id,
@@ -4356,7 +4349,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The private link resource group id. </param>
         /// <returns> A new <see cref="Sql.ManagedInstancePrivateLinkData"/> instance for mocking. </returns>
-        public static ManagedInstancePrivateLinkData ManagedInstancePrivateLinkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ManagedInstancePrivateLinkProperties properties = null)
+        public static ManagedInstancePrivateLinkData ManagedInstancePrivateLinkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, ManagedInstancePrivateLinkProperties properties = null)
         {
             return new ManagedInstancePrivateLinkData(
                 id,
@@ -4380,6 +4373,50 @@ namespace Azure.ResourceManager.Sql.Models
             return new ManagedInstancePrivateLinkProperties(groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList(), serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.TdeCertificate"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="privateBlob"> The base64 encoded certificate private blob. </param>
+        /// <param name="certPassword"> The certificate password. </param>
+        /// <returns> A new <see cref="Models.TdeCertificate"/> instance for mocking. </returns>
+        public static TdeCertificate TdeCertificate(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string privateBlob = null, string certPassword = null)
+        {
+            return new TdeCertificate(
+                id,
+                name,
+                resourceType,
+                systemData,
+                privateBlob,
+                certPassword,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Sql.ManagedInstanceVulnerabilityAssessmentData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="storageContainerPath"> A blob storage container path to hold the scan results (e.g. https://myStorage.blob.core.windows.net/VaScans/). </param>
+        /// <param name="storageContainerSasKey"> A shared access signature (SAS Key) that has write access to the blob container specified in 'storageContainerPath' parameter. If 'storageAccountAccessKey' isn't specified, StorageContainerSasKey is required. Applies only if the storage account is not behind a Vnet or a firewall. </param>
+        /// <param name="storageAccountAccessKey"> Specifies the identifier key of the storage account for vulnerability assessment scan results. If 'StorageContainerSasKey' isn't specified, storageAccountAccessKey is required. Applies only if the storage account is not behind a Vnet or a firewall. </param>
+        /// <param name="recurringScans"> The recurring scans settings. </param>
+        /// <returns> A new <see cref="Sql.ManagedInstanceVulnerabilityAssessmentData"/> instance for mocking. </returns>
+        public static ManagedInstanceVulnerabilityAssessmentData ManagedInstanceVulnerabilityAssessmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string storageContainerPath = null, string storageContainerSasKey = null, string storageAccountAccessKey = null, VulnerabilityAssessmentRecurringScansProperties recurringScans = null)
+        {
+            return new ManagedInstanceVulnerabilityAssessmentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                storageContainerPath,
+                storageContainerSasKey,
+                storageAccountAccessKey,
+                recurringScans,
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Sql.ManagedInstanceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -4388,7 +4425,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="identity"> The Azure Active Directory identity of the managed instance. </param>
-        /// <param name="sku"> Managed instance SKU. Allowed values for sku.name: GP_Gen5 (General Purpose, Standard-series); GP_G8IM (General Purpose, Premium-series); GP_G8IH (General Purpose, Premium-series memory optimized); BC_Gen5 (Business Critical, Standard-Series); BC_G8IM (Business Critical, Premium-series); BC_G8IH (Business Critical, Premium-series memory optimized). </param>
+        /// <param name="sku"> Managed instance SKU. Allowed values for sku.name: GP_Gen5, GP_G8IM, GP_G8IH, BC_Gen5, BC_G8IM, BC_G8IH. </param>
         /// <param name="provisioningState"> Provisioning state of managed instance. </param>
         /// <param name="managedInstanceCreateMode">
         /// Specifies the mode of database creation.
@@ -4406,11 +4443,10 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="licenseType"> The license type. Possible values are 'LicenseIncluded' (regular price inclusive of a new SQL license) and 'BasePrice' (discounted AHB price for bringing your own SQL licenses). </param>
         /// <param name="hybridSecondaryUsage"> Hybrid secondary usage. Possible values are 'Active' (default value) and 'Passive' (customer uses the secondary as Passive DR). </param>
         /// <param name="hybridSecondaryUsageDetected"> Hybrid secondary usage detected. Possible values are 'Active' (customer does not meet the requirements to use the secondary as Passive DR) and 'Passive' (customer meets the requirements to use the secondary as Passive DR). </param>
-        /// <param name="vCores"> The number of vCores. Allowed values: 4, 6, 8, 10, 12, 16, 20, 24, 32, 40, 48, 56, 64, 80, 96, 128. Supported vCores depends on the selected hardware family and service tier. </param>
-        /// <param name="storageSizeInGB"> Storage size in GB. Minimum value: 32. Maximum value: 32768. Increments of 32 GB allowed only. Maximum value depends on the selected hardware family and number of vCores. </param>
+        /// <param name="vCores"> The number of vCores. Allowed values: 8, 16, 24, 32, 40, 64, 80. </param>
+        /// <param name="storageSizeInGB"> Storage size in GB. Minimum value: 32. Maximum value: 16384. Increments of 32 GB allowed only. Maximum value depends on the selected hardware family and number of vCores. </param>
         /// <param name="storageIOps"> Storage IOps. Minimum value: 300. Maximum value: 80000. Increments of 1 IOps allowed only. Maximum value depends on the selected hardware family and number of vCores. </param>
         /// <param name="storageThroughputMBps"> Storage throughput MBps parameter is not supported in the instance create/update operation. </param>
-        /// <param name="memorySizeInGB"> Memory size in GB. Minimum value: 28. Maximum value: 870. Minimum and maximum value depend on the number of vCores and service tier. Read more about resource limits: https://aka.ms/mi-resource-limits-api. </param>
         /// <param name="collation"> Collation of the managed instance. </param>
         /// <param name="dnsZone"> The Dns Zone that the managed instance is in. </param>
         /// <param name="managedDnsZonePartner"> The resource id of another managed instance whose DNS zone this managed instance will share after creation. </param>
@@ -4432,10 +4468,10 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="minimalTlsVersion"> Minimal TLS version. Allowed values: 'None', '1.0', '1.1', '1.2'. </param>
         /// <param name="currentBackupStorageRedundancy"> The storage account type used to store backups for this instance. The options are Local (LocallyRedundantStorage), Zone (ZoneRedundantStorage), Geo (GeoRedundantStorage) and GeoZone(GeoZoneRedundantStorage). </param>
         /// <param name="requestedBackupStorageRedundancy"> The storage account type to be used to store backups for this instance. The options are Local (LocallyRedundantStorage), Zone (ZoneRedundantStorage), Geo (GeoRedundantStorage) and GeoZone(GeoZoneRedundantStorage). </param>
-        /// <param name="isZoneRedundant"> Whether or not the zone-redundancy is enabled. </param>
+        /// <param name="isZoneRedundant"> Whether or not the multi-az is enabled. </param>
         /// <param name="primaryUserAssignedIdentityId"> The resource id of a user assigned identity to be used by default. </param>
         /// <param name="keyId"> A CMK URI of the key to use for encryption. </param>
-        /// <param name="administrators"> The Azure Active Directory administrator can be utilized during instance creation and for instance updates, except for the azureADOnlyAuthentication property. To update the azureADOnlyAuthentication property, individual API must be used. </param>
+        /// <param name="administrators"> The Azure Active Directory administrator of the instance. This can only be used at instance create time. If used for instance update, it will be ignored or it will result in an error. For updates individual APIs will need to be used. </param>
         /// <param name="servicePrincipal"> The managed instance's service principal. </param>
         /// <param name="virtualClusterId"> Virtual cluster resource id for the Managed Instance. </param>
         /// <param name="externalGovernanceStatus"> Status of external governance. </param>
@@ -4443,9 +4479,8 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="createOn"> Specifies the point in time (ISO8601 format) of the Managed Instance creation. </param>
         /// <param name="authenticationMetadata"> The managed instance's authentication metadata lookup mode. </param>
         /// <param name="databaseFormat"> Specifies the internal format of instance databases specific to the SQL engine version. </param>
-        /// <param name="requestedLogicalAvailabilityZone"> Specifies the logical availability zone Managed Instance is pinned to. </param>
         /// <returns> A new <see cref="Sql.ManagedInstanceData"/> instance for mocking. </returns>
-        public static ManagedInstanceData ManagedInstanceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, SqlSku sku = null, ManagedInstancePropertiesProvisioningState? provisioningState = null, ManagedServerCreateMode? managedInstanceCreateMode = null, string fullyQualifiedDomainName = null, bool? isGeneralPurposeV2 = null, string administratorLogin = null, string administratorLoginPassword = null, ResourceIdentifier subnetId = null, string state = null, ManagedInstanceLicenseType? licenseType = null, HybridSecondaryUsage? hybridSecondaryUsage = null, HybridSecondaryUsageDetected? hybridSecondaryUsageDetected = null, int? vCores = null, int? storageSizeInGB = null, int? storageIOps = null, int? storageThroughputMBps = null, int? memorySizeInGB = null, string collation = null, string dnsZone = null, ResourceIdentifier managedDnsZonePartner = null, bool? isPublicDataEndpointEnabled = null, ResourceIdentifier sourceManagedInstanceId = null, DateTimeOffset? restorePointInTime = null, ManagedInstanceProxyOverride? proxyOverride = null, string timezoneId = null, ResourceIdentifier instancePoolId = null, ResourceIdentifier maintenanceConfigurationId = null, IEnumerable<ManagedInstancePecProperty> privateEndpointConnections = null, string minimalTlsVersion = null, SqlBackupStorageRedundancy? currentBackupStorageRedundancy = null, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy = null, bool? isZoneRedundant = null, ResourceIdentifier primaryUserAssignedIdentityId = null, Uri keyId = null, ManagedInstanceExternalAdministrator administrators = null, SqlServicePrincipal servicePrincipal = null, ResourceIdentifier virtualClusterId = null, ExternalGovernanceStatus? externalGovernanceStatus = null, SqlManagedInstancePricingModel? pricingModel = null, DateTimeOffset? createOn = null, AuthMetadataLookupMode? authenticationMetadata = null, ManagedInstanceDatabaseFormat? databaseFormat = null, SqlAvailabilityZoneType? requestedLogicalAvailabilityZone = null)
+        public static ManagedInstanceData ManagedInstanceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, SqlSku sku = null, ManagedInstancePropertiesProvisioningState? provisioningState = null, ManagedServerCreateMode? managedInstanceCreateMode = null, string fullyQualifiedDomainName = null, bool? isGeneralPurposeV2 = null, string administratorLogin = null, string administratorLoginPassword = null, ResourceIdentifier subnetId = null, string state = null, ManagedInstanceLicenseType? licenseType = null, HybridSecondaryUsage? hybridSecondaryUsage = null, HybridSecondaryUsageDetected? hybridSecondaryUsageDetected = null, int? vCores = null, int? storageSizeInGB = null, int? storageIOps = null, int? storageThroughputMBps = null, string collation = null, string dnsZone = null, ResourceIdentifier managedDnsZonePartner = null, bool? isPublicDataEndpointEnabled = null, ResourceIdentifier sourceManagedInstanceId = null, DateTimeOffset? restorePointInTime = null, ManagedInstanceProxyOverride? proxyOverride = null, string timezoneId = null, ResourceIdentifier instancePoolId = null, ResourceIdentifier maintenanceConfigurationId = null, IEnumerable<ManagedInstancePecProperty> privateEndpointConnections = null, string minimalTlsVersion = null, SqlBackupStorageRedundancy? currentBackupStorageRedundancy = null, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy = null, bool? isZoneRedundant = null, ResourceIdentifier primaryUserAssignedIdentityId = null, Uri keyId = null, ManagedInstanceExternalAdministrator administrators = null, SqlServicePrincipal servicePrincipal = null, ResourceIdentifier virtualClusterId = null, ExternalGovernanceStatus? externalGovernanceStatus = null, SqlManagedInstancePricingModel? pricingModel = null, DateTimeOffset? createOn = null, AuthMetadataLookupMode? authenticationMetadata = null, ManagedInstanceDatabaseFormat? databaseFormat = null)
         {
             tags ??= new Dictionary<string, string>();
             privateEndpointConnections ??= new List<ManagedInstancePecProperty>();
@@ -4474,7 +4509,6 @@ namespace Azure.ResourceManager.Sql.Models
                 storageSizeInGB,
                 storageIOps,
                 storageThroughputMBps,
-                memorySizeInGB,
                 collation,
                 dnsZone,
                 managedDnsZonePartner,
@@ -4500,7 +4534,6 @@ namespace Azure.ResourceManager.Sql.Models
                 createOn,
                 authenticationMetadata,
                 databaseFormat,
-                requestedLogicalAvailabilityZone,
                 serializedAdditionalRawData: null);
         }
 
@@ -4545,11 +4578,10 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="licenseType"> The license type. Possible values are 'LicenseIncluded' (regular price inclusive of a new SQL license) and 'BasePrice' (discounted AHB price for bringing your own SQL licenses). </param>
         /// <param name="hybridSecondaryUsage"> Hybrid secondary usage. Possible values are 'Active' (default value) and 'Passive' (customer uses the secondary as Passive DR). </param>
         /// <param name="hybridSecondaryUsageDetected"> Hybrid secondary usage detected. Possible values are 'Active' (customer does not meet the requirements to use the secondary as Passive DR) and 'Passive' (customer meets the requirements to use the secondary as Passive DR). </param>
-        /// <param name="vCores"> The number of vCores. Allowed values: 4, 6, 8, 10, 12, 16, 20, 24, 32, 40, 48, 56, 64, 80, 96, 128. Supported vCores depends on the selected hardware family and service tier. </param>
-        /// <param name="storageSizeInGB"> Storage size in GB. Minimum value: 32. Maximum value: 32768. Increments of 32 GB allowed only. Maximum value depends on the selected hardware family and number of vCores. </param>
+        /// <param name="vCores"> The number of vCores. Allowed values: 8, 16, 24, 32, 40, 64, 80. </param>
+        /// <param name="storageSizeInGB"> Storage size in GB. Minimum value: 32. Maximum value: 16384. Increments of 32 GB allowed only. Maximum value depends on the selected hardware family and number of vCores. </param>
         /// <param name="storageIOps"> Storage IOps. Minimum value: 300. Maximum value: 80000. Increments of 1 IOps allowed only. Maximum value depends on the selected hardware family and number of vCores. </param>
         /// <param name="storageThroughputMBps"> Storage throughput MBps parameter is not supported in the instance create/update operation. </param>
-        /// <param name="memorySizeInGB"> Memory size in GB. Minimum value: 28. Maximum value: 870. Minimum and maximum value depend on the number of vCores and service tier. Read more about resource limits: https://aka.ms/mi-resource-limits-api. </param>
         /// <param name="collation"> Collation of the managed instance. </param>
         /// <param name="dnsZone"> The Dns Zone that the managed instance is in. </param>
         /// <param name="managedDnsZonePartner"> The resource id of another managed instance whose DNS zone this managed instance will share after creation. </param>
@@ -4571,10 +4603,10 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="minimalTlsVersion"> Minimal TLS version. Allowed values: 'None', '1.0', '1.1', '1.2'. </param>
         /// <param name="currentBackupStorageRedundancy"> The storage account type used to store backups for this instance. The options are Local (LocallyRedundantStorage), Zone (ZoneRedundantStorage), Geo (GeoRedundantStorage) and GeoZone(GeoZoneRedundantStorage). </param>
         /// <param name="requestedBackupStorageRedundancy"> The storage account type to be used to store backups for this instance. The options are Local (LocallyRedundantStorage), Zone (ZoneRedundantStorage), Geo (GeoRedundantStorage) and GeoZone(GeoZoneRedundantStorage). </param>
-        /// <param name="isZoneRedundant"> Whether or not the zone-redundancy is enabled. </param>
+        /// <param name="isZoneRedundant"> Whether or not the multi-az is enabled. </param>
         /// <param name="primaryUserAssignedIdentityId"> The resource id of a user assigned identity to be used by default. </param>
         /// <param name="keyId"> A CMK URI of the key to use for encryption. </param>
-        /// <param name="administrators"> The Azure Active Directory administrator can be utilized during instance creation and for instance updates, except for the azureADOnlyAuthentication property. To update the azureADOnlyAuthentication property, individual API must be used. </param>
+        /// <param name="administrators"> The Azure Active Directory administrator of the instance. This can only be used at instance create time. If used for instance update, it will be ignored or it will result in an error. For updates individual APIs will need to be used. </param>
         /// <param name="servicePrincipal"> The managed instance's service principal. </param>
         /// <param name="virtualClusterId"> Virtual cluster resource id for the Managed Instance. </param>
         /// <param name="externalGovernanceStatus"> Status of external governance. </param>
@@ -4582,9 +4614,8 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="createOn"> Specifies the point in time (ISO8601 format) of the Managed Instance creation. </param>
         /// <param name="authenticationMetadata"> The managed instance's authentication metadata lookup mode. </param>
         /// <param name="databaseFormat"> Specifies the internal format of instance databases specific to the SQL engine version. </param>
-        /// <param name="requestedLogicalAvailabilityZone"> Specifies the logical availability zone Managed Instance is pinned to. </param>
         /// <returns> A new <see cref="Models.ManagedInstancePatch"/> instance for mocking. </returns>
-        public static ManagedInstancePatch ManagedInstancePatch(SqlSku sku = null, ManagedServiceIdentity identity = null, IDictionary<string, string> tags = null, ManagedInstancePropertiesProvisioningState? provisioningState = null, ManagedServerCreateMode? managedInstanceCreateMode = null, string fullyQualifiedDomainName = null, bool? isGeneralPurposeV2 = null, string administratorLogin = null, string administratorLoginPassword = null, ResourceIdentifier subnetId = null, string state = null, ManagedInstanceLicenseType? licenseType = null, HybridSecondaryUsage? hybridSecondaryUsage = null, HybridSecondaryUsageDetected? hybridSecondaryUsageDetected = null, int? vCores = null, int? storageSizeInGB = null, int? storageIOps = null, int? storageThroughputMBps = null, int? memorySizeInGB = null, string collation = null, string dnsZone = null, ResourceIdentifier managedDnsZonePartner = null, bool? isPublicDataEndpointEnabled = null, ResourceIdentifier sourceManagedInstanceId = null, DateTimeOffset? restorePointInTime = null, ManagedInstanceProxyOverride? proxyOverride = null, string timezoneId = null, ResourceIdentifier instancePoolId = null, ResourceIdentifier maintenanceConfigurationId = null, IEnumerable<ManagedInstancePecProperty> privateEndpointConnections = null, string minimalTlsVersion = null, SqlBackupStorageRedundancy? currentBackupStorageRedundancy = null, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy = null, bool? isZoneRedundant = null, ResourceIdentifier primaryUserAssignedIdentityId = null, Uri keyId = null, ManagedInstanceExternalAdministrator administrators = null, SqlServicePrincipal servicePrincipal = null, ResourceIdentifier virtualClusterId = null, ExternalGovernanceStatus? externalGovernanceStatus = null, SqlManagedInstancePricingModel? pricingModel = null, DateTimeOffset? createOn = null, AuthMetadataLookupMode? authenticationMetadata = null, ManagedInstanceDatabaseFormat? databaseFormat = null, SqlAvailabilityZoneType? requestedLogicalAvailabilityZone = null)
+        public static ManagedInstancePatch ManagedInstancePatch(SqlSku sku = null, ManagedServiceIdentity identity = null, IDictionary<string, string> tags = null, ManagedInstancePropertiesProvisioningState? provisioningState = null, ManagedServerCreateMode? managedInstanceCreateMode = null, string fullyQualifiedDomainName = null, bool? isGeneralPurposeV2 = null, string administratorLogin = null, string administratorLoginPassword = null, ResourceIdentifier subnetId = null, string state = null, ManagedInstanceLicenseType? licenseType = null, HybridSecondaryUsage? hybridSecondaryUsage = null, HybridSecondaryUsageDetected? hybridSecondaryUsageDetected = null, int? vCores = null, int? storageSizeInGB = null, int? storageIOps = null, int? storageThroughputMBps = null, string collation = null, string dnsZone = null, ResourceIdentifier managedDnsZonePartner = null, bool? isPublicDataEndpointEnabled = null, ResourceIdentifier sourceManagedInstanceId = null, DateTimeOffset? restorePointInTime = null, ManagedInstanceProxyOverride? proxyOverride = null, string timezoneId = null, ResourceIdentifier instancePoolId = null, ResourceIdentifier maintenanceConfigurationId = null, IEnumerable<ManagedInstancePecProperty> privateEndpointConnections = null, string minimalTlsVersion = null, SqlBackupStorageRedundancy? currentBackupStorageRedundancy = null, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy = null, bool? isZoneRedundant = null, ResourceIdentifier primaryUserAssignedIdentityId = null, Uri keyId = null, ManagedInstanceExternalAdministrator administrators = null, SqlServicePrincipal servicePrincipal = null, ResourceIdentifier virtualClusterId = null, ExternalGovernanceStatus? externalGovernanceStatus = null, SqlManagedInstancePricingModel? pricingModel = null, DateTimeOffset? createOn = null, AuthMetadataLookupMode? authenticationMetadata = null, ManagedInstanceDatabaseFormat? databaseFormat = null)
         {
             tags ??= new Dictionary<string, string>();
             privateEndpointConnections ??= new List<ManagedInstancePecProperty>();
@@ -4608,7 +4639,6 @@ namespace Azure.ResourceManager.Sql.Models
                 storageSizeInGB,
                 storageIOps,
                 storageThroughputMBps,
-                memorySizeInGB,
                 collation,
                 dnsZone,
                 managedDnsZonePartner,
@@ -4634,7 +4664,6 @@ namespace Azure.ResourceManager.Sql.Models
                 createOn,
                 authenticationMetadata,
                 databaseFormat,
-                requestedLogicalAvailabilityZone,
                 serializedAdditionalRawData: null);
         }
 
@@ -4680,7 +4709,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="status"> Operation status. </param>
         /// <param name="errorMessage"> Error message. </param>
         /// <returns> A new <see cref="Models.SqlManagedInstanceRefreshExternalGovernanceStatusOperationResult"/> instance for mocking. </returns>
-        public static SqlManagedInstanceRefreshExternalGovernanceStatusOperationResult SqlManagedInstanceRefreshExternalGovernanceStatusOperationResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? requestId = null, string requestType = null, string queuedTime = null, string managedInstanceName = null, string status = null, string errorMessage = null)
+        public static SqlManagedInstanceRefreshExternalGovernanceStatusOperationResult SqlManagedInstanceRefreshExternalGovernanceStatusOperationResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, Guid? requestId = null, string requestType = null, string queuedTime = null, string managedInstanceName = null, string status = null, string errorMessage = null)
         {
             return new SqlManagedInstanceRefreshExternalGovernanceStatusOperationResult(
                 id,
@@ -4720,50 +4749,6 @@ namespace Azure.ResourceManager.Sql.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.TdeCertificate"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="privateBlob"> The base64 encoded certificate private blob. </param>
-        /// <param name="certPassword"> The certificate password. </param>
-        /// <returns> A new <see cref="Models.TdeCertificate"/> instance for mocking. </returns>
-        public static TdeCertificate TdeCertificate(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string privateBlob = null, string certPassword = null)
-        {
-            return new TdeCertificate(
-                id,
-                name,
-                resourceType,
-                systemData,
-                privateBlob,
-                certPassword,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Sql.ManagedInstanceVulnerabilityAssessmentData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="storageContainerPath"> A blob storage container path to hold the scan results (e.g. https://myStorage.blob.core.windows.net/VaScans/). </param>
-        /// <param name="storageContainerSasKey"> A shared access signature (SAS Key) that has write access to the blob container specified in 'storageContainerPath' parameter. If 'storageAccountAccessKey' isn't specified, StorageContainerSasKey is required. Applies only if the storage account is not behind a Vnet or a firewall. </param>
-        /// <param name="storageAccountAccessKey"> Specifies the identifier key of the storage account for vulnerability assessment scan results. If 'StorageContainerSasKey' isn't specified, storageAccountAccessKey is required. Applies only if the storage account is not behind a Vnet or a firewall. </param>
-        /// <param name="recurringScans"> The recurring scans settings. </param>
-        /// <returns> A new <see cref="Sql.ManagedInstanceVulnerabilityAssessmentData"/> instance for mocking. </returns>
-        public static ManagedInstanceVulnerabilityAssessmentData ManagedInstanceVulnerabilityAssessmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string storageContainerPath = null, string storageContainerSasKey = null, string storageAccountAccessKey = null, VulnerabilityAssessmentRecurringScansProperties recurringScans = null)
-        {
-            return new ManagedInstanceVulnerabilityAssessmentData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                storageContainerPath,
-                storageContainerSasKey,
-                storageAccountAccessKey,
-                recurringScans,
-                serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Sql.ManagedLedgerDigestUploadData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -4772,7 +4757,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="digestStorageEndpoint"> The digest storage endpoint, which must be either an Azure blob storage endpoint or an URI for Azure Confidential Ledger. </param>
         /// <param name="state"> Specifies the state of ledger digest upload. </param>
         /// <returns> A new <see cref="Sql.ManagedLedgerDigestUploadData"/> instance for mocking. </returns>
-        public static ManagedLedgerDigestUploadData ManagedLedgerDigestUploadData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string digestStorageEndpoint = null, ManagedLedgerDigestUploadsState? state = null)
+        public static ManagedLedgerDigestUploadData ManagedLedgerDigestUploadData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string digestStorageEndpoint = null, ManagedLedgerDigestUploadsState? state = null)
         {
             return new ManagedLedgerDigestUploadData(
                 id,
@@ -4792,7 +4777,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="azureDnsRecord"> The fully qualified DNS record for managed server alias. </param>
         /// <param name="publicAzureDnsRecord"> The fully qualified public DNS record for managed server alias. </param>
         /// <returns> A new <see cref="Sql.ManagedServerDnsAliasData"/> instance for mocking. </returns>
-        public static ManagedServerDnsAliasData ManagedServerDnsAliasData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string azureDnsRecord = null, string publicAzureDnsRecord = null)
+        public static ManagedServerDnsAliasData ManagedServerDnsAliasData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string azureDnsRecord = null, string publicAzureDnsRecord = null)
         {
             return new ManagedServerDnsAliasData(
                 id,
@@ -4818,7 +4803,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="retentionDays"> Specifies the number of days to keep in the Threat Detection audit logs. </param>
         /// <param name="createdOn"> Specifies the UTC creation time of the policy. </param>
         /// <returns> A new <see cref="Sql.ManagedServerSecurityAlertPolicyData"/> instance for mocking. </returns>
-        public static ManagedServerSecurityAlertPolicyData ManagedServerSecurityAlertPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SecurityAlertsPolicyState? state = null, IEnumerable<string> disabledAlerts = null, IEnumerable<string> emailAddresses = null, bool? sendToEmailAccountAdmins = null, string storageEndpoint = null, string storageAccountAccessKey = null, int? retentionDays = null, DateTimeOffset? createdOn = null)
+        public static ManagedServerSecurityAlertPolicyData ManagedServerSecurityAlertPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, SecurityAlertsPolicyState? state = null, IEnumerable<string> disabledAlerts = null, IEnumerable<string> emailAddresses = null, bool? sendToEmailAccountAdmins = null, string storageEndpoint = null, string storageAccountAccessKey = null, int? retentionDays = null, DateTimeOffset? createdOn = null)
         {
             disabledAlerts ??= new List<string>();
             emailAddresses ??= new List<string>();
@@ -4850,7 +4835,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="profile"></param>
         /// <param name="provisioningIssues"></param>
         /// <returns> A new <see cref="Sql.SqlNetworkSecurityPerimeterConfigurationData"/> instance for mocking. </returns>
-        public static SqlNetworkSecurityPerimeterConfigurationData SqlNetworkSecurityPerimeterConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string provisioningState = null, SqlNetworkSecurityPerimeterConfigPerimeter networkSecurityPerimeter = null, SqlNetworkSecurityPerimeterConfigAssociation resourceAssociation = null, SqlNetworkSecurityPerimeterConfigProfile profile = null, IEnumerable<SqlNetworkSecurityPerimeterProvisioningIssue> provisioningIssues = null)
+        public static SqlNetworkSecurityPerimeterConfigurationData SqlNetworkSecurityPerimeterConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string provisioningState = null, SqlNetworkSecurityPerimeterConfigPerimeter networkSecurityPerimeter = null, SqlNetworkSecurityPerimeterConfigAssociation resourceAssociation = null, SqlNetworkSecurityPerimeterConfigProfile profile = null, IEnumerable<SqlNetworkSecurityPerimeterProvisioningIssue> provisioningIssues = null)
         {
             provisioningIssues ??= new List<SqlNetworkSecurityPerimeterProvisioningIssue>();
 
@@ -4874,7 +4859,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="provisioningState"> The state of the outbound rule. </param>
         /// <returns> A new <see cref="Sql.OutboundFirewallRuleData"/> instance for mocking. </returns>
-        public static OutboundFirewallRuleData OutboundFirewallRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string provisioningState = null)
+        public static OutboundFirewallRuleData OutboundFirewallRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string provisioningState = null)
         {
             return new OutboundFirewallRuleData(
                 id,
@@ -4895,7 +4880,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="connectionState"> Connection state of the private endpoint connection. </param>
         /// <param name="provisioningState"> State of the private endpoint connection. </param>
         /// <returns> A new <see cref="Sql.SqlPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static SqlPrivateEndpointConnectionData SqlPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier privateEndpointId = null, IEnumerable<string> groupIds = null, SqlPrivateLinkServiceConnectionStateProperty connectionState = null, SqlPrivateEndpointProvisioningState? provisioningState = null)
+        public static SqlPrivateEndpointConnectionData SqlPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, ResourceIdentifier privateEndpointId = null, IEnumerable<string> groupIds = null, SqlPrivateLinkServiceConnectionStateProperty connectionState = null, SqlPrivateEndpointProvisioningState? provisioningState = null)
         {
             groupIds ??= new List<string>();
 
@@ -4941,7 +4926,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The private link resource group id. </param>
         /// <returns> A new <see cref="Sql.SqlPrivateLinkResourceData"/> instance for mocking. </returns>
-        public static SqlPrivateLinkResourceData SqlPrivateLinkResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SqlPrivateLinkResourceProperties properties = null)
+        public static SqlPrivateLinkResourceData SqlPrivateLinkResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, SqlPrivateLinkResourceProperties properties = null)
         {
             return new SqlPrivateLinkResourceData(
                 id,
@@ -4976,7 +4961,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="lastAvailableBackupOn"> The last available backup date. </param>
         /// <param name="keys"> The resource ids of the user assigned identities to use. </param>
         /// <returns> A new <see cref="Sql.RecoverableDatabaseData"/> instance for mocking. </returns>
-        public static RecoverableDatabaseData RecoverableDatabaseData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string edition = null, string serviceLevelObjective = null, string elasticPoolName = null, DateTimeOffset? lastAvailableBackupOn = null, IDictionary<string, SqlDatabaseKey> keys = null)
+        public static RecoverableDatabaseData RecoverableDatabaseData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string edition = null, string serviceLevelObjective = null, string elasticPoolName = null, DateTimeOffset? lastAvailableBackupOn = null, IDictionary<string, SqlDatabaseKey> keys = null)
         {
             keys ??= new Dictionary<string, SqlDatabaseKey>();
 
@@ -5000,7 +4985,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="lastAvailableBackupDate"> The last available backup date. </param>
         /// <returns> A new <see cref="Sql.RecoverableManagedDatabaseData"/> instance for mocking. </returns>
-        public static RecoverableManagedDatabaseData RecoverableManagedDatabaseData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string lastAvailableBackupDate = null)
+        public static RecoverableManagedDatabaseData RecoverableManagedDatabaseData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string lastAvailableBackupDate = null)
         {
             return new RecoverableManagedDatabaseData(
                 id,
@@ -5029,7 +5014,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="isTerminationAllowed"> Whether the user is currently allowed to terminate the link. </param>
         /// <param name="linkType"> Link type (GEO, NAMED, STANDBY). Update operation does not support NAMED. </param>
         /// <returns> A new <see cref="Sql.SqlServerDatabaseReplicationLinkData"/> instance for mocking. </returns>
-        public static SqlServerDatabaseReplicationLinkData SqlServerDatabaseReplicationLinkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string partnerServer = null, string partnerDatabase = null, string partnerDatabaseId = null, AzureLocation? partnerLocation = null, SqlServerDatabaseReplicationRole? role = null, SqlServerDatabaseReplicationRole? partnerRole = null, string replicationMode = null, DateTimeOffset? startOn = null, int? percentComplete = null, ReplicationLinkState? replicationState = null, bool? isTerminationAllowed = null, ReplicationLinkType? linkType = null)
+        public static SqlServerDatabaseReplicationLinkData SqlServerDatabaseReplicationLinkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string partnerServer = null, string partnerDatabase = null, string partnerDatabaseId = null, AzureLocation? partnerLocation = null, SqlServerDatabaseReplicationRole? role = null, SqlServerDatabaseReplicationRole? partnerRole = null, string replicationMode = null, DateTimeOffset? startOn = null, int? percentComplete = null, ReplicationLinkState? replicationState = null, bool? isTerminationAllowed = null, ReplicationLinkType? linkType = null)
         {
             return new SqlServerDatabaseReplicationLinkData(
                 id,
@@ -5058,7 +5043,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="linkType"> Link type (GEO, NAMED, STANDBY). Update operation does not support NAMED. </param>
         /// <returns> A new <see cref="Models.SqlServerDatabaseReplicationLinkPatch"/> instance for mocking. </returns>
-        public static SqlServerDatabaseReplicationLinkPatch SqlServerDatabaseReplicationLinkPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ReplicationLinkType? linkType = null)
+        public static SqlServerDatabaseReplicationLinkPatch SqlServerDatabaseReplicationLinkPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, ReplicationLinkType? linkType = null)
         {
             return new SqlServerDatabaseReplicationLinkPatch(
                 id,
@@ -5085,7 +5070,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="backupStorageRedundancy"> The storage account type used to store backups for this database. </param>
         /// <param name="keys"> The resource ids of the user assigned identities to use. </param>
         /// <returns> A new <see cref="Sql.RestorableDroppedDatabaseData"/> instance for mocking. </returns>
-        public static RestorableDroppedDatabaseData RestorableDroppedDatabaseData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, SqlSku sku = null, string databaseName = null, long? maxSizeBytes = null, DateTimeOffset? createdOn = null, DateTimeOffset? deletedOn = null, DateTimeOffset? earliestRestoreOn = null, SqlBackupStorageRedundancy? backupStorageRedundancy = null, IDictionary<string, SqlDatabaseKey> keys = null)
+        public static RestorableDroppedDatabaseData RestorableDroppedDatabaseData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, SqlSku sku = null, string databaseName = null, long? maxSizeBytes = null, DateTimeOffset? createdOn = null, DateTimeOffset? deletedOn = null, DateTimeOffset? earliestRestoreOn = null, SqlBackupStorageRedundancy? backupStorageRedundancy = null, IDictionary<string, SqlDatabaseKey> keys = null)
         {
             tags ??= new Dictionary<string, string>();
             keys ??= new Dictionary<string, SqlDatabaseKey>();
@@ -5120,7 +5105,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="deletedOn"> The deletion date of the database (ISO8601 format). </param>
         /// <param name="earliestRestoreOn"> The earliest restore date of the database (ISO8601 format). </param>
         /// <returns> A new <see cref="Sql.RestorableDroppedManagedDatabaseData"/> instance for mocking. </returns>
-        public static RestorableDroppedManagedDatabaseData RestorableDroppedManagedDatabaseData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string databaseName = null, DateTimeOffset? createdOn = null, DateTimeOffset? deletedOn = null, DateTimeOffset? earliestRestoreOn = null)
+        public static RestorableDroppedManagedDatabaseData RestorableDroppedManagedDatabaseData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string databaseName = null, DateTimeOffset? createdOn = null, DateTimeOffset? deletedOn = null, DateTimeOffset? earliestRestoreOn = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -5149,7 +5134,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="restorePointCreatedOn"> The time the backup was taken. </param>
         /// <param name="restorePointLabel"> The label of restore point for backup request by user. </param>
         /// <returns> A new <see cref="Sql.SqlServerDatabaseRestorePointData"/> instance for mocking. </returns>
-        public static SqlServerDatabaseRestorePointData SqlServerDatabaseRestorePointData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, RestorePointType? restorePointType = null, DateTimeOffset? earliestRestoreOn = null, DateTimeOffset? restorePointCreatedOn = null, string restorePointLabel = null)
+        public static SqlServerDatabaseRestorePointData SqlServerDatabaseRestorePointData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, AzureLocation? location = null, RestorePointType? restorePointType = null, DateTimeOffset? earliestRestoreOn = null, DateTimeOffset? restorePointCreatedOn = null, string restorePointLabel = null)
         {
             return new SqlServerDatabaseRestorePointData(
                 id,
@@ -5172,7 +5157,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="state"> Specifies the state of the Advanced Threat Protection, whether it is enabled or disabled or a state has not been applied yet on the specific database or server. </param>
         /// <param name="createdOn"> Specifies the UTC creation time of the policy. </param>
         /// <returns> A new <see cref="Sql.ServerAdvancedThreatProtectionData"/> instance for mocking. </returns>
-        public static ServerAdvancedThreatProtectionData ServerAdvancedThreatProtectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AdvancedThreatProtectionState? state = null, DateTimeOffset? createdOn = null)
+        public static ServerAdvancedThreatProtectionData ServerAdvancedThreatProtectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, AdvancedThreatProtectionState? state = null, DateTimeOffset? createdOn = null)
         {
             return new ServerAdvancedThreatProtectionData(
                 id,
@@ -5193,7 +5178,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="actualState"> Automatic tuning actual state. </param>
         /// <param name="options"> Automatic tuning options definition. </param>
         /// <returns> A new <see cref="Sql.SqlServerAutomaticTuningData"/> instance for mocking. </returns>
-        public static SqlServerAutomaticTuningData SqlServerAutomaticTuningData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AutomaticTuningServerMode? desiredState = null, AutomaticTuningServerMode? actualState = null, IDictionary<string, AutomaticTuningServerOptions> options = null)
+        public static SqlServerAutomaticTuningData SqlServerAutomaticTuningData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, AutomaticTuningServerMode? desiredState = null, AutomaticTuningServerMode? actualState = null, IDictionary<string, AutomaticTuningServerOptions> options = null)
         {
             options ??= new Dictionary<string, AutomaticTuningServerOptions>();
 
@@ -5230,7 +5215,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="tenantId"> Tenant ID of the administrator. </param>
         /// <param name="isAzureADOnlyAuthenticationEnabled"> Azure Active Directory only Authentication enabled. </param>
         /// <returns> A new <see cref="Sql.SqlServerAzureADAdministratorData"/> instance for mocking. </returns>
-        public static SqlServerAzureADAdministratorData SqlServerAzureADAdministratorData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SqlAdministratorType? administratorType = null, string login = null, Guid? sid = null, Guid? tenantId = null, bool? isAzureADOnlyAuthenticationEnabled = null)
+        public static SqlServerAzureADAdministratorData SqlServerAzureADAdministratorData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, SqlAdministratorType? administratorType = null, string login = null, Guid? sid = null, Guid? tenantId = null, bool? isAzureADOnlyAuthenticationEnabled = null)
         {
             return new SqlServerAzureADAdministratorData(
                 id,
@@ -5252,7 +5237,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="isAzureADOnlyAuthenticationEnabled"> Azure Active Directory only Authentication enabled. </param>
         /// <returns> A new <see cref="Sql.SqlServerAzureADOnlyAuthenticationData"/> instance for mocking. </returns>
-        public static SqlServerAzureADOnlyAuthenticationData SqlServerAzureADOnlyAuthenticationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, bool? isAzureADOnlyAuthenticationEnabled = null)
+        public static SqlServerAzureADOnlyAuthenticationData SqlServerAzureADOnlyAuthenticationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, bool? isAzureADOnlyAuthenticationEnabled = null)
         {
             return new SqlServerAzureADOnlyAuthenticationData(
                 id,
@@ -5271,7 +5256,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="serverConfigurationOptionValue"> Value of the server configuration option. </param>
         /// <param name="provisioningState"> Provisioning state of server configuration option. </param>
         /// <returns> A new <see cref="Sql.ManagedInstanceServerConfigurationOptionData"/> instance for mocking. </returns>
-        public static ManagedInstanceServerConfigurationOptionData ManagedInstanceServerConfigurationOptionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, int? serverConfigurationOptionValue = null, JobExecutionProvisioningState? provisioningState = null)
+        public static ManagedInstanceServerConfigurationOptionData ManagedInstanceServerConfigurationOptionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, int? serverConfigurationOptionValue = null, JobExecutionProvisioningState? provisioningState = null)
         {
             return new ManagedInstanceServerConfigurationOptionData(
                 id,
@@ -5292,7 +5277,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="kind"> Metadata used for the Azure portal experience. </param>
         /// <param name="connectionType"> The server connection type. </param>
         /// <returns> A new <see cref="Sql.SqlServerConnectionPolicyData"/> instance for mocking. </returns>
-        public static SqlServerConnectionPolicyData SqlServerConnectionPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, string kind = null, ServerConnectionType? connectionType = null)
+        public static SqlServerConnectionPolicyData SqlServerConnectionPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, AzureLocation? location = null, string kind = null, ServerConnectionType? connectionType = null)
         {
             return new SqlServerConnectionPolicyData(
                 id,
@@ -5336,7 +5321,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// </param>
         /// <param name="storageAccountSubscriptionId"> Specifies the blob storage subscription Id. </param>
         /// <returns> A new <see cref="Sql.SqlServerDevOpsAuditingSettingData"/> instance for mocking. </returns>
-        public static SqlServerDevOpsAuditingSettingData SqlServerDevOpsAuditingSettingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, bool? isAzureMonitorTargetEnabled = null, bool? isManagedIdentityInUse = null, BlobAuditingPolicyState? state = null, string storageEndpoint = null, string storageAccountAccessKey = null, Guid? storageAccountSubscriptionId = null)
+        public static SqlServerDevOpsAuditingSettingData SqlServerDevOpsAuditingSettingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, bool? isAzureMonitorTargetEnabled = null, bool? isManagedIdentityInUse = null, BlobAuditingPolicyState? state = null, string storageEndpoint = null, string storageAccountAccessKey = null, Guid? storageAccountSubscriptionId = null)
         {
             return new SqlServerDevOpsAuditingSettingData(
                 id,
@@ -5359,7 +5344,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="azureDnsRecord"> The fully qualified DNS record for alias. </param>
         /// <returns> A new <see cref="Sql.SqlServerDnsAliasData"/> instance for mocking. </returns>
-        public static SqlServerDnsAliasData SqlServerDnsAliasData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string azureDnsRecord = null)
+        public static SqlServerDnsAliasData SqlServerDnsAliasData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string azureDnsRecord = null)
         {
             return new SqlServerDnsAliasData(
                 id,
@@ -5379,13 +5364,12 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="location"> Resource location. </param>
         /// <param name="subregion"> Subregion of the server key. </param>
         /// <param name="serverKeyType"> The server key type like 'ServiceManaged', 'AzureKeyVault'. </param>
-        /// <param name="uri"> The URI of the server key. If the ServerKeyType is AzureKeyVault, then the URI is required. The AKV URI is required to be in this format: 'https://YourVaultName.vault.azure.net/keys/YourKeyName/YourKeyVersion' or can be 'https://YourVaultName.vault.azure.net/keys/YourKeyName'. </param>
+        /// <param name="uri"> The URI of the server key. If the ServerKeyType is AzureKeyVault, then the URI is required. The AKV URI is required to be in this format: 'https://YourVaultName.vault.azure.net/keys/YourKeyName/YourKeyVersion'. </param>
         /// <param name="thumbprint"> Thumbprint of the server key. </param>
         /// <param name="createdOn"> The server key creation date. </param>
         /// <param name="isAutoRotationEnabled"> Key auto rotation opt-in flag. Either true or false. </param>
-        /// <param name="keyVersion"> The version of the server key. </param>
         /// <returns> A new <see cref="Sql.SqlServerKeyData"/> instance for mocking. </returns>
-        public static SqlServerKeyData SqlServerKeyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, AzureLocation? location = null, string subregion = null, SqlServerKeyType? serverKeyType = null, Uri uri = null, string thumbprint = null, DateTimeOffset? createdOn = null, bool? isAutoRotationEnabled = null, string keyVersion = null)
+        public static SqlServerKeyData SqlServerKeyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string kind = null, AzureLocation? location = null, string subregion = null, SqlServerKeyType? serverKeyType = null, Uri uri = null, string thumbprint = null, DateTimeOffset? createdOn = null, bool? isAutoRotationEnabled = null)
         {
             return new SqlServerKeyData(
                 id,
@@ -5400,7 +5384,6 @@ namespace Azure.ResourceManager.Sql.Models
                 thumbprint,
                 createdOn,
                 isAutoRotationEnabled,
-                keyVersion,
                 serializedAdditionalRawData: null);
         }
 
@@ -5423,7 +5406,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="description"> The operation description. </param>
         /// <param name="isCancellable"> Whether the operation can be cancelled. </param>
         /// <returns> A new <see cref="Models.ServerOperationData"/> instance for mocking. </returns>
-        public static ServerOperationData ServerOperationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string operation = null, string operationFriendlyName = null, int? percentComplete = null, string serverName = null, DateTimeOffset? startOn = null, ManagementOperationState? state = null, int? errorCode = null, string errorDescription = null, int? errorSeverity = null, bool? isUserError = null, DateTimeOffset? estimatedCompleteOn = null, string description = null, bool? isCancellable = null)
+        public static ServerOperationData ServerOperationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string operation = null, string operationFriendlyName = null, int? percentComplete = null, string serverName = null, DateTimeOffset? startOn = null, ManagementOperationState? state = null, int? errorCode = null, string errorDescription = null, int? errorSeverity = null, bool? isUserError = null, DateTimeOffset? estimatedCompleteOn = null, string description = null, bool? isCancellable = null)
         {
             return new ServerOperationData(
                 id,
@@ -5443,6 +5426,138 @@ namespace Azure.ResourceManager.Sql.Models
                 estimatedCompleteOn,
                 description,
                 isCancellable,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Sql.SqlServerSecurityAlertPolicyData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="state"> Specifies the state of the policy, whether it is enabled or disabled or a policy has not been applied yet on the specific database. </param>
+        /// <param name="disabledAlerts"> Specifies an array of alerts that are disabled. Allowed values are: Sql_Injection, Sql_Injection_Vulnerability, Access_Anomaly, Data_Exfiltration, Unsafe_Action, Brute_Force. </param>
+        /// <param name="emailAddresses"> Specifies an array of e-mail addresses to which the alert is sent. </param>
+        /// <param name="sendToEmailAccountAdmins"> Specifies that the alert is sent to the account administrators. </param>
+        /// <param name="storageEndpoint"> Specifies the blob storage endpoint (e.g. https://MyAccount.blob.core.windows.net). This blob storage will hold all Threat Detection audit logs. </param>
+        /// <param name="storageAccountAccessKey"> Specifies the identifier key of the Threat Detection audit storage account. </param>
+        /// <param name="retentionDays"> Specifies the number of days to keep in the Threat Detection audit logs. </param>
+        /// <param name="createdOn"> Specifies the UTC creation time of the policy. </param>
+        /// <returns> A new <see cref="Sql.SqlServerSecurityAlertPolicyData"/> instance for mocking. </returns>
+        public static SqlServerSecurityAlertPolicyData SqlServerSecurityAlertPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, SecurityAlertsPolicyState? state = null, IEnumerable<string> disabledAlerts = null, IEnumerable<string> emailAddresses = null, bool? sendToEmailAccountAdmins = null, string storageEndpoint = null, string storageAccountAccessKey = null, int? retentionDays = null, DateTimeOffset? createdOn = null)
+        {
+            disabledAlerts ??= new List<string>();
+            emailAddresses ??= new List<string>();
+
+            return new SqlServerSecurityAlertPolicyData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                state,
+                disabledAlerts?.ToList(),
+                emailAddresses?.ToList(),
+                sendToEmailAccountAdmins,
+                storageEndpoint,
+                storageAccountAccessKey,
+                retentionDays,
+                createdOn,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Sql.ServerTrustCertificateData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="publicBlob"> The certificate public blob. </param>
+        /// <param name="thumbprint"> The certificate thumbprint. </param>
+        /// <param name="certificateName"> The certificate name. </param>
+        /// <returns> A new <see cref="Sql.ServerTrustCertificateData"/> instance for mocking. </returns>
+        public static ServerTrustCertificateData ServerTrustCertificateData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string publicBlob = null, string thumbprint = null, string certificateName = null)
+        {
+            return new ServerTrustCertificateData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                publicBlob,
+                thumbprint,
+                certificateName,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Sql.SqlServerTrustGroupData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="groupMembers"> Group members information for the server trust group. </param>
+        /// <param name="trustScopes"> Trust scope of the server trust group. </param>
+        /// <returns> A new <see cref="Sql.SqlServerTrustGroupData"/> instance for mocking. </returns>
+        public static SqlServerTrustGroupData SqlServerTrustGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, IEnumerable<ServerTrustGroupServerInfo> groupMembers = null, IEnumerable<ServerTrustGroupPropertiesTrustScopesItem> trustScopes = null)
+        {
+            groupMembers ??= new List<ServerTrustGroupServerInfo>();
+            trustScopes ??= new List<ServerTrustGroupPropertiesTrustScopesItem>();
+
+            return new SqlServerTrustGroupData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                groupMembers?.ToList(),
+                trustScopes?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SqlServerUsage"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="displayName"> User-readable name of the metric. </param>
+        /// <param name="currentValue"> Current value of the metric. </param>
+        /// <param name="limit"> Boundary value of the metric. </param>
+        /// <param name="unit"> Unit of the metric. </param>
+        /// <param name="resourceName"> The name of the resource. </param>
+        /// <param name="nextResetOn"> The next reset time for the metric (ISO8601 format). </param>
+        /// <returns> A new <see cref="Models.SqlServerUsage"/> instance for mocking. </returns>
+        public static SqlServerUsage SqlServerUsage(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string displayName = null, double? currentValue = null, double? limit = null, string unit = null, string resourceName = null, DateTimeOffset? nextResetOn = null)
+        {
+            return new SqlServerUsage(
+                id,
+                name,
+                resourceType,
+                systemData,
+                displayName,
+                currentValue,
+                limit,
+                unit,
+                resourceName,
+                nextResetOn,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Sql.SqlServerVulnerabilityAssessmentData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="storageContainerPath"> A blob storage container path to hold the scan results (e.g. https://myStorage.blob.core.windows.net/VaScans/). </param>
+        /// <param name="storageContainerSasKey"> A shared access signature (SAS Key) that has write access to the blob container specified in 'storageContainerPath' parameter. If 'storageAccountAccessKey' isn't specified, StorageContainerSasKey is required. Applies only if the storage account is not behind a Vnet or a firewall. </param>
+        /// <param name="storageAccountAccessKey"> Specifies the identifier key of the storage account for vulnerability assessment scan results. If 'StorageContainerSasKey' isn't specified, storageAccountAccessKey is required. Applies only if the storage account is not behind a Vnet or a firewall. </param>
+        /// <param name="recurringScans"> The recurring scans settings. </param>
+        /// <returns> A new <see cref="Sql.SqlServerVulnerabilityAssessmentData"/> instance for mocking. </returns>
+        public static SqlServerVulnerabilityAssessmentData SqlServerVulnerabilityAssessmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string storageContainerPath = null, string storageContainerSasKey = null, string storageAccountAccessKey = null, VulnerabilityAssessmentRecurringScansProperties recurringScans = null)
+        {
+            return new SqlServerVulnerabilityAssessmentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                storageContainerPath,
+                storageContainerSasKey,
+                storageAccountAccessKey,
+                recurringScans,
                 serializedAdditionalRawData: null);
         }
 
@@ -5487,14 +5602,12 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="primaryUserAssignedIdentityId"> The resource id of a user assigned identity to be used by default. </param>
         /// <param name="federatedClientId"> The Client id used for cross tenant CMK scenario. </param>
         /// <param name="keyId"> A CMK URI of the key to use for encryption. </param>
-        /// <param name="administrators"> The Azure Active Directory administrator can be utilized during server creation and for server updates, except for the azureADOnlyAuthentication property. To update the azureADOnlyAuthentication property, individual API must be used. </param>
+        /// <param name="administrators"> The Azure Active Directory administrator of the server. This can only be used at server create time. If used for server update, it will be ignored or it will result in an error. For updates individual APIs will need to be used. </param>
         /// <param name="restrictOutboundNetworkAccess"> Whether or not to restrict outbound network access for this server.  Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </param>
         /// <param name="isIPv6Enabled"> Whether or not to enable IPv6 support for this server.  Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </param>
         /// <param name="externalGovernanceStatus"> Status of external governance. </param>
-        /// <param name="retentionDays"> Number of days this server will stay soft-deleted. </param>
-        /// <param name="createMode"> Create mode for server, only valid values for this are Normal and Restore. </param>
         /// <returns> A new <see cref="Sql.SqlServerData"/> instance for mocking. </returns>
-        public static SqlServerData SqlServerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, string kind = null, string administratorLogin = null, string administratorLoginPassword = null, string version = null, string state = null, string fullyQualifiedDomainName = null, IEnumerable<SqlServerPrivateEndpointConnection> privateEndpointConnections = null, SqlMinimalTlsVersion? minTlsVersion = null, ServerNetworkAccessFlag? publicNetworkAccess = null, ServerWorkspaceFeature? workspaceFeature = null, ResourceIdentifier primaryUserAssignedIdentityId = null, Guid? federatedClientId = null, Uri keyId = null, ServerExternalAdministrator administrators = null, ServerNetworkAccessFlag? restrictOutboundNetworkAccess = null, ServerNetworkAccessFlag? isIPv6Enabled = null, ExternalGovernanceStatus? externalGovernanceStatus = null, int? retentionDays = null, SqlServerCreateMode? createMode = null)
+        public static SqlServerData SqlServerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, string kind = null, string administratorLogin = null, string administratorLoginPassword = null, string version = null, string state = null, string fullyQualifiedDomainName = null, IEnumerable<SqlServerPrivateEndpointConnection> privateEndpointConnections = null, SqlMinimalTlsVersion? minTlsVersion = null, ServerNetworkAccessFlag? publicNetworkAccess = null, ServerWorkspaceFeature? workspaceFeature = null, ResourceIdentifier primaryUserAssignedIdentityId = null, Guid? federatedClientId = null, Uri keyId = null, ServerExternalAdministrator administrators = null, ServerNetworkAccessFlag? restrictOutboundNetworkAccess = null, ServerNetworkAccessFlag? isIPv6Enabled = null, ExternalGovernanceStatus? externalGovernanceStatus = null)
         {
             tags ??= new Dictionary<string, string>();
             privateEndpointConnections ??= new List<SqlServerPrivateEndpointConnection>();
@@ -5524,8 +5637,6 @@ namespace Azure.ResourceManager.Sql.Models
                 restrictOutboundNetworkAccess,
                 isIPv6Enabled,
                 externalGovernanceStatus,
-                retentionDays,
-                createMode,
                 serializedAdditionalRawData: null);
         }
 
@@ -5553,14 +5664,12 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="primaryUserAssignedIdentityId"> The resource id of a user assigned identity to be used by default. </param>
         /// <param name="federatedClientId"> The Client id used for cross tenant CMK scenario. </param>
         /// <param name="keyId"> A CMK URI of the key to use for encryption. </param>
-        /// <param name="administrators"> The Azure Active Directory administrator can be utilized during server creation and for server updates, except for the azureADOnlyAuthentication property. To update the azureADOnlyAuthentication property, individual API must be used. </param>
+        /// <param name="administrators"> The Azure Active Directory administrator of the server. This can only be used at server create time. If used for server update, it will be ignored or it will result in an error. For updates individual APIs will need to be used. </param>
         /// <param name="restrictOutboundNetworkAccess"> Whether or not to restrict outbound network access for this server.  Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </param>
         /// <param name="isIPv6Enabled"> Whether or not to enable IPv6 support for this server.  Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </param>
         /// <param name="externalGovernanceStatus"> Status of external governance. </param>
-        /// <param name="retentionDays"> Number of days this server will stay soft-deleted. </param>
-        /// <param name="createMode"> Create mode for server, only valid values for this are Normal and Restore. </param>
         /// <returns> A new <see cref="Models.SqlServerPatch"/> instance for mocking. </returns>
-        public static SqlServerPatch SqlServerPatch(ManagedServiceIdentity identity = null, IDictionary<string, string> tags = null, string administratorLogin = null, string administratorLoginPassword = null, string version = null, string state = null, string fullyQualifiedDomainName = null, IEnumerable<SqlServerPrivateEndpointConnection> privateEndpointConnections = null, SqlMinimalTlsVersion? minTlsVersion = null, ServerNetworkAccessFlag? publicNetworkAccess = null, ServerWorkspaceFeature? workspaceFeature = null, ResourceIdentifier primaryUserAssignedIdentityId = null, Guid? federatedClientId = null, Uri keyId = null, ServerExternalAdministrator administrators = null, ServerNetworkAccessFlag? restrictOutboundNetworkAccess = null, ServerNetworkAccessFlag? isIPv6Enabled = null, ExternalGovernanceStatus? externalGovernanceStatus = null, int? retentionDays = null, SqlServerCreateMode? createMode = null)
+        public static SqlServerPatch SqlServerPatch(ManagedServiceIdentity identity = null, IDictionary<string, string> tags = null, string administratorLogin = null, string administratorLoginPassword = null, string version = null, string state = null, string fullyQualifiedDomainName = null, IEnumerable<SqlServerPrivateEndpointConnection> privateEndpointConnections = null, SqlMinimalTlsVersion? minTlsVersion = null, ServerNetworkAccessFlag? publicNetworkAccess = null, ServerWorkspaceFeature? workspaceFeature = null, ResourceIdentifier primaryUserAssignedIdentityId = null, Guid? federatedClientId = null, Uri keyId = null, ServerExternalAdministrator administrators = null, ServerNetworkAccessFlag? restrictOutboundNetworkAccess = null, ServerNetworkAccessFlag? isIPv6Enabled = null, ExternalGovernanceStatus? externalGovernanceStatus = null)
         {
             tags ??= new Dictionary<string, string>();
             privateEndpointConnections ??= new List<SqlServerPrivateEndpointConnection>();
@@ -5584,8 +5693,6 @@ namespace Azure.ResourceManager.Sql.Models
                 restrictOutboundNetworkAccess,
                 isIPv6Enabled,
                 externalGovernanceStatus,
-                retentionDays,
-                createMode,
                 serializedAdditionalRawData: null);
         }
 
@@ -5594,12 +5701,12 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="edition"> Edition of the import database. </param>
         /// <param name="serviceObjectiveName"> Service level objective name of the import database. </param>
         /// <param name="maxSizeBytes"> Max size in bytes for the import database. </param>
-        /// <param name="storageKeyType"> Storage key type: StorageAccessKey, SharedAccessKey, or ManagedIdentity. </param>
-        /// <param name="storageKey"> Storage key for the storage account. If StorageKeyType is ManagedIdentity, this field should specify the Managed Identity's resource ID. </param>
+        /// <param name="storageKeyType"> Storage key type. </param>
+        /// <param name="storageKey"> Storage key. </param>
         /// <param name="storageUri"> Storage Uri. </param>
-        /// <param name="administratorLogin"> Administrator login name. If AuthenticationType is ManagedIdentity, this field should specify the Managed Identity's resource ID. </param>
-        /// <param name="administratorLoginPassword"> Administrator login password. If AuthenticationType is ManagedIdentity, this field should not be specified. </param>
-        /// <param name="authenticationType"> Type of credentials provided for access to the target SQL server: SQL, ADPassword or ManagedIdentity. </param>
+        /// <param name="administratorLogin"> Administrator login name. </param>
+        /// <param name="administratorLoginPassword"> Administrator login password. </param>
+        /// <param name="authenticationType"> Authentication type. </param>
         /// <param name="networkIsolation"> Optional resource information to enable network isolation for request. </param>
         /// <returns> A new <see cref="Models.DatabaseImportDefinition"/> instance for mocking. </returns>
         public static DatabaseImportDefinition DatabaseImportDefinition(string databaseName = null, string edition = null, string serviceObjectiveName = null, string maxSizeBytes = null, StorageKeyType storageKeyType = default, string storageKey = null, Uri storageUri = null, string administratorLogin = null, string administratorLoginPassword = null, string authenticationType = null, NetworkIsolationSettings networkIsolation = null)
@@ -5631,7 +5738,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="status"> Operation status. </param>
         /// <param name="errorMessage"> Error message. </param>
         /// <returns> A new <see cref="Models.RefreshExternalGovernanceStatusOperationResult"/> instance for mocking. </returns>
-        public static RefreshExternalGovernanceStatusOperationResult RefreshExternalGovernanceStatusOperationResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? requestId = null, string requestType = null, string queuedTime = null, string serverName = null, string status = null, string errorMessage = null)
+        public static RefreshExternalGovernanceStatusOperationResult RefreshExternalGovernanceStatusOperationResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, Guid? requestId = null, string requestType = null, string queuedTime = null, string serverName = null, string status = null, string errorMessage = null)
         {
             return new RefreshExternalGovernanceStatusOperationResult(
                 id,
@@ -5647,138 +5754,6 @@ namespace Azure.ResourceManager.Sql.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Sql.SqlServerSecurityAlertPolicyData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="state"> Specifies the state of the policy, whether it is enabled or disabled or a policy has not been applied yet on the specific database. </param>
-        /// <param name="disabledAlerts"> Specifies an array of alerts that are disabled. Allowed values are: Sql_Injection, Sql_Injection_Vulnerability, Access_Anomaly, Data_Exfiltration, Unsafe_Action, Brute_Force. </param>
-        /// <param name="emailAddresses"> Specifies an array of e-mail addresses to which the alert is sent. </param>
-        /// <param name="sendToEmailAccountAdmins"> Specifies that the alert is sent to the account administrators. </param>
-        /// <param name="storageEndpoint"> Specifies the blob storage endpoint (e.g. https://MyAccount.blob.core.windows.net). This blob storage will hold all Threat Detection audit logs. </param>
-        /// <param name="storageAccountAccessKey"> Specifies the identifier key of the Threat Detection audit storage account. </param>
-        /// <param name="retentionDays"> Specifies the number of days to keep in the Threat Detection audit logs. </param>
-        /// <param name="createdOn"> Specifies the UTC creation time of the policy. </param>
-        /// <returns> A new <see cref="Sql.SqlServerSecurityAlertPolicyData"/> instance for mocking. </returns>
-        public static SqlServerSecurityAlertPolicyData SqlServerSecurityAlertPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SecurityAlertsPolicyState? state = null, IEnumerable<string> disabledAlerts = null, IEnumerable<string> emailAddresses = null, bool? sendToEmailAccountAdmins = null, string storageEndpoint = null, string storageAccountAccessKey = null, int? retentionDays = null, DateTimeOffset? createdOn = null)
-        {
-            disabledAlerts ??= new List<string>();
-            emailAddresses ??= new List<string>();
-
-            return new SqlServerSecurityAlertPolicyData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                state,
-                disabledAlerts?.ToList(),
-                emailAddresses?.ToList(),
-                sendToEmailAccountAdmins,
-                storageEndpoint,
-                storageAccountAccessKey,
-                retentionDays,
-                createdOn,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Sql.ServerTrustCertificateData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="publicBlob"> The certificate public blob. </param>
-        /// <param name="thumbprint"> The certificate thumbprint. </param>
-        /// <param name="certificateName"> The certificate name. </param>
-        /// <returns> A new <see cref="Sql.ServerTrustCertificateData"/> instance for mocking. </returns>
-        public static ServerTrustCertificateData ServerTrustCertificateData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string publicBlob = null, string thumbprint = null, string certificateName = null)
-        {
-            return new ServerTrustCertificateData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                publicBlob,
-                thumbprint,
-                certificateName,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Sql.SqlServerTrustGroupData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="groupMembers"> Group members information for the server trust group. </param>
-        /// <param name="trustScopes"> Trust scope of the server trust group. </param>
-        /// <returns> A new <see cref="Sql.SqlServerTrustGroupData"/> instance for mocking. </returns>
-        public static SqlServerTrustGroupData SqlServerTrustGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<ServerTrustGroupServerInfo> groupMembers = null, IEnumerable<ServerTrustGroupPropertiesTrustScopesItem> trustScopes = null)
-        {
-            groupMembers ??= new List<ServerTrustGroupServerInfo>();
-            trustScopes ??= new List<ServerTrustGroupPropertiesTrustScopesItem>();
-
-            return new SqlServerTrustGroupData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                groupMembers?.ToList(),
-                trustScopes?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.SqlServerUsage"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="displayName"> User-readable name of the metric. </param>
-        /// <param name="currentValue"> Current value of the metric. </param>
-        /// <param name="limit"> Boundary value of the metric. </param>
-        /// <param name="unit"> Unit of the metric. </param>
-        /// <param name="resourceName"> The name of the resource. </param>
-        /// <param name="nextResetOn"> The next reset time for the metric (ISO8601 format). </param>
-        /// <returns> A new <see cref="Models.SqlServerUsage"/> instance for mocking. </returns>
-        public static SqlServerUsage SqlServerUsage(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null, double? currentValue = null, double? limit = null, string unit = null, string resourceName = null, DateTimeOffset? nextResetOn = null)
-        {
-            return new SqlServerUsage(
-                id,
-                name,
-                resourceType,
-                systemData,
-                displayName,
-                currentValue,
-                limit,
-                unit,
-                resourceName,
-                nextResetOn,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Sql.SqlServerVulnerabilityAssessmentData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="storageContainerPath"> A blob storage container path to hold the scan results (e.g. https://myStorage.blob.core.windows.net/VaScans/). </param>
-        /// <param name="storageContainerSasKey"> A shared access signature (SAS Key) that has write access to the blob container specified in 'storageContainerPath' parameter. If 'storageAccountAccessKey' isn't specified, StorageContainerSasKey is required. Applies only if the storage account is not behind a Vnet or a firewall. </param>
-        /// <param name="storageAccountAccessKey"> Specifies the identifier key of the storage account for vulnerability assessment scan results. If 'StorageContainerSasKey' isn't specified, storageAccountAccessKey is required. Applies only if the storage account is not behind a Vnet or a firewall. </param>
-        /// <param name="recurringScans"> The recurring scans settings. </param>
-        /// <returns> A new <see cref="Sql.SqlServerVulnerabilityAssessmentData"/> instance for mocking. </returns>
-        public static SqlServerVulnerabilityAssessmentData SqlServerVulnerabilityAssessmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string storageContainerPath = null, string storageContainerSasKey = null, string storageAccountAccessKey = null, VulnerabilityAssessmentRecurringScansProperties recurringScans = null)
-        {
-            return new SqlServerVulnerabilityAssessmentData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                storageContainerPath,
-                storageContainerSasKey,
-                storageAccountAccessKey,
-                recurringScans,
-                serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Sql.SqlAgentConfigurationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -5786,7 +5761,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="state"> The state of Sql Agent. </param>
         /// <returns> A new <see cref="Sql.SqlAgentConfigurationData"/> instance for mocking. </returns>
-        public static SqlAgentConfigurationData SqlAgentConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SqlAgentConfigurationPropertiesState? state = null)
+        public static SqlAgentConfigurationData SqlAgentConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, SqlAgentConfigurationPropertiesState? state = null)
         {
             return new SqlAgentConfigurationData(
                 id,
@@ -5808,7 +5783,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="nextRunAction"> Next action to be executed (Start or Stop). </param>
         /// <param name="nextExecutionTime"> Timestamp when the next action will be executed in the corresponding schedule time zone. </param>
         /// <returns> A new <see cref="Sql.ManagedInstanceStartStopScheduleData"/> instance for mocking. </returns>
-        public static ManagedInstanceStartStopScheduleData ManagedInstanceStartStopScheduleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, string timeZoneId = null, IEnumerable<SqlScheduleItem> scheduleList = null, string nextRunAction = null, string nextExecutionTime = null)
+        public static ManagedInstanceStartStopScheduleData ManagedInstanceStartStopScheduleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string description = null, string timeZoneId = null, IEnumerable<SqlScheduleItem> scheduleList = null, string nextRunAction = null, string nextExecutionTime = null)
         {
             scheduleList ??= new List<SqlScheduleItem>();
 
@@ -5835,7 +5810,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="limit"> Boundary value of the metric. </param>
         /// <param name="unit"> Unit of the metric. </param>
         /// <returns> A new <see cref="Sql.SubscriptionUsageData"/> instance for mocking. </returns>
-        public static SubscriptionUsageData SubscriptionUsageData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null, double? currentValue = null, double? limit = null, string unit = null)
+        public static SubscriptionUsageData SubscriptionUsageData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string displayName = null, double? currentValue = null, double? limit = null, string unit = null)
         {
             return new SubscriptionUsageData(
                 id,
@@ -5856,7 +5831,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="workspaces"> List of all synapselink workspaces. </param>
         /// <returns> A new <see cref="Models.SqlSynapseLinkWorkspace"/> instance for mocking. </returns>
-        public static SqlSynapseLinkWorkspace SqlSynapseLinkWorkspace(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<SqlSynapseLinkWorkspaceInfo> workspaces = null)
+        public static SqlSynapseLinkWorkspace SqlSynapseLinkWorkspace(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, IEnumerable<SqlSynapseLinkWorkspaceInfo> workspaces = null)
         {
             workspaces ??= new List<SqlSynapseLinkWorkspaceInfo>();
 
@@ -5881,7 +5856,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="expireOn"> Expiration time of the sync agent version. </param>
         /// <param name="version"> Version of the sync agent. </param>
         /// <returns> A new <see cref="Sql.SyncAgentData"/> instance for mocking. </returns>
-        public static SyncAgentData SyncAgentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier syncDatabaseId = null, DateTimeOffset? lastAliveOn = null, SyncAgentState? state = null, bool? isUpToDate = null, DateTimeOffset? expireOn = null, string version = null)
+        public static SyncAgentData SyncAgentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, ResourceIdentifier syncDatabaseId = null, DateTimeOffset? lastAliveOn = null, SyncAgentState? state = null, bool? isUpToDate = null, DateTimeOffset? expireOn = null, string version = null)
         {
             return new SyncAgentData(
                 id,
@@ -5917,7 +5892,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="databaseName"> Database name of the sync agent linked database. </param>
         /// <param name="userName"> User name of the sync agent linked database. </param>
         /// <returns> A new <see cref="Models.SyncAgentLinkedDatabase"/> instance for mocking. </returns>
-        public static SyncAgentLinkedDatabase SyncAgentLinkedDatabase(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SyncMemberDbType? databaseType = null, Guid? databaseId = null, string description = null, string serverName = null, string databaseName = null, string userName = null)
+        public static SyncAgentLinkedDatabase SyncAgentLinkedDatabase(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, SyncMemberDbType? databaseType = null, Guid? databaseId = null, string description = null, string serverName = null, string databaseName = null, string userName = null)
         {
             return new SyncAgentLinkedDatabase(
                 id,
@@ -5952,7 +5927,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="usePrivateLinkConnection"> If use private link connection is enabled. </param>
         /// <param name="privateEndpointName"> Private endpoint name of the sync group if use private link connection is enabled. </param>
         /// <returns> A new <see cref="Sql.SyncGroupData"/> instance for mocking. </returns>
-        public static SyncGroupData SyncGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SqlSku sku = null, int? interval = null, DateTimeOffset? lastSyncOn = null, SyncConflictResolutionPolicy? conflictResolutionPolicy = null, ResourceIdentifier syncDatabaseId = null, string hubDatabaseUserName = null, string hubDatabasePassword = null, SyncGroupState? syncState = null, SyncGroupSchema schema = null, bool? isConflictLoggingEnabled = null, int? conflictLoggingRetentionInDays = null, bool? usePrivateLinkConnection = null, string privateEndpointName = null)
+        public static SyncGroupData SyncGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, SqlSku sku = null, int? interval = null, DateTimeOffset? lastSyncOn = null, SyncConflictResolutionPolicy? conflictResolutionPolicy = null, ResourceIdentifier syncDatabaseId = null, string hubDatabaseUserName = null, string hubDatabasePassword = null, SyncGroupState? syncState = null, SyncGroupSchema schema = null, bool? isConflictLoggingEnabled = null, int? conflictLoggingRetentionInDays = null, bool? usePrivateLinkConnection = null, string privateEndpointName = null)
         {
             return new SyncGroupData(
                 id,
@@ -6066,7 +6041,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="syncDirection"> Sync direction of the sync member. </param>
         /// <param name="syncState"> Sync state of the sync member. </param>
         /// <returns> A new <see cref="Sql.SyncMemberData"/> instance for mocking. </returns>
-        public static SyncMemberData SyncMemberData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SyncMemberDbType? databaseType = null, ResourceIdentifier syncAgentId = null, Guid? sqlServerDatabaseId = null, ResourceIdentifier syncMemberAzureDatabaseResourceId = null, bool? usePrivateLinkConnection = null, string privateEndpointName = null, string serverName = null, string databaseName = null, string userName = null, string password = null, SyncDirection? syncDirection = null, SyncMemberState? syncState = null)
+        public static SyncMemberData SyncMemberData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, SyncMemberDbType? databaseType = null, ResourceIdentifier syncAgentId = null, Guid? sqlServerDatabaseId = null, ResourceIdentifier syncMemberAzureDatabaseResourceId = null, bool? usePrivateLinkConnection = null, string privateEndpointName = null, string serverName = null, string databaseName = null, string userName = null, string password = null, SyncDirection? syncDirection = null, SyncMemberState? syncState = null)
         {
             return new SyncMemberData(
                 id,
@@ -6096,7 +6071,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="timeZoneId"> The time zone id. </param>
         /// <param name="displayName"> The time zone display name. </param>
         /// <returns> A new <see cref="Sql.SqlTimeZoneData"/> instance for mocking. </returns>
-        public static SqlTimeZoneData SqlTimeZoneData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string timeZoneId = null, string displayName = null)
+        public static SqlTimeZoneData SqlTimeZoneData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string timeZoneId = null, string displayName = null)
         {
             return new SqlTimeZoneData(
                 id,
@@ -6114,9 +6089,8 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="state"> Specifies the state of the transparent data encryption. </param>
-        /// <param name="scanState"> Specifies the encryption scan state of the transparent data encryption. </param>
         /// <returns> A new <see cref="Sql.LogicalDatabaseTransparentDataEncryptionData"/> instance for mocking. </returns>
-        public static LogicalDatabaseTransparentDataEncryptionData LogicalDatabaseTransparentDataEncryptionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, TransparentDataEncryptionState? state = null, TransparentDataEncryptionScanState? scanState = null)
+        public static LogicalDatabaseTransparentDataEncryptionData LogicalDatabaseTransparentDataEncryptionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, TransparentDataEncryptionState? state = null)
         {
             return new LogicalDatabaseTransparentDataEncryptionData(
                 id,
@@ -6124,7 +6098,6 @@ namespace Azure.ResourceManager.Sql.Models
                 resourceType,
                 systemData,
                 state,
-                scanState,
                 serializedAdditionalRawData: null);
         }
 
@@ -6170,7 +6143,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="version"> Virtual cluster version. </param>
         /// <param name="childResources"> List of resources in this virtual cluster. </param>
         /// <returns> A new <see cref="Sql.VirtualClusterData"/> instance for mocking. </returns>
-        public static VirtualClusterData VirtualClusterData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ResourceIdentifier subnetId = null, string version = null, IEnumerable<string> childResources = null)
+        public static VirtualClusterData VirtualClusterData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ResourceIdentifier subnetId = null, string version = null, IEnumerable<string> childResources = null)
         {
             tags ??= new Dictionary<string, string>();
             childResources ??= new List<string>();
@@ -6209,7 +6182,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="status"> The status of the DNS refresh operation. </param>
         /// <returns> A new <see cref="Models.ManagedInstanceUpdateDnsServersOperationData"/> instance for mocking. </returns>
-        public static ManagedInstanceUpdateDnsServersOperationData ManagedInstanceUpdateDnsServersOperationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DnsRefreshConfigurationPropertiesStatus? status = null)
+        public static ManagedInstanceUpdateDnsServersOperationData ManagedInstanceUpdateDnsServersOperationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, DnsRefreshConfigurationPropertiesStatus? status = null)
         {
             return new ManagedInstanceUpdateDnsServersOperationData(
                 id,
@@ -6229,7 +6202,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="ignoreMissingVnetServiceEndpoint"> Create firewall rule before the virtual network has vnet service endpoint enabled. </param>
         /// <param name="state"> Virtual Network Rule State. </param>
         /// <returns> A new <see cref="Sql.SqlServerVirtualNetworkRuleData"/> instance for mocking. </returns>
-        public static SqlServerVirtualNetworkRuleData SqlServerVirtualNetworkRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier virtualNetworkSubnetId = null, bool? ignoreMissingVnetServiceEndpoint = null, SqlServerVirtualNetworkRuleState? state = null)
+        public static SqlServerVirtualNetworkRuleData SqlServerVirtualNetworkRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, ResourceIdentifier virtualNetworkSubnetId = null, bool? ignoreMissingVnetServiceEndpoint = null, SqlServerVirtualNetworkRuleState? state = null)
         {
             return new SqlServerVirtualNetworkRuleData(
                 id,
@@ -6254,7 +6227,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="endTime"> The workload classifier end time for classification. </param>
         /// <param name="importance"> The workload classifier importance. </param>
         /// <returns> A new <see cref="Sql.WorkloadClassifierData"/> instance for mocking. </returns>
-        public static WorkloadClassifierData WorkloadClassifierData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string memberName = null, string label = null, string context = null, string startTime = null, string endTime = null, string importance = null)
+        public static WorkloadClassifierData WorkloadClassifierData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string memberName = null, string label = null, string context = null, string startTime = null, string endTime = null, string importance = null)
         {
             return new WorkloadClassifierData(
                 id,
@@ -6282,7 +6255,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="importance"> The workload group importance level. </param>
         /// <param name="queryExecutionTimeout"> The workload group query execution timeout. </param>
         /// <returns> A new <see cref="Sql.WorkloadGroupData"/> instance for mocking. </returns>
-        public static WorkloadGroupData WorkloadGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, int? minResourcePercent = null, int? maxResourcePercent = null, double? minResourcePercentPerRequest = null, double? maxResourcePercentPerRequest = null, string importance = null, int? queryExecutionTimeout = null)
+        public static WorkloadGroupData WorkloadGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, int? minResourcePercent = null, int? maxResourcePercent = null, double? minResourcePercentPerRequest = null, double? maxResourcePercentPerRequest = null, string importance = null, int? queryExecutionTimeout = null)
         {
             return new WorkloadGroupData(
                 id,
@@ -6296,377 +6269,6 @@ namespace Azure.ResourceManager.Sql.Models
                 importance,
                 queryExecutionTimeout,
                 serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Sql.Models.SqlDatabaseKey" />. </summary>
-        /// <param name="keyType"> The database key type. Only supported value is 'AzureKeyVault'. </param>
-        /// <param name="thumbprint"> Thumbprint of the database key. </param>
-        /// <param name="createdOn"> The database key creation date. </param>
-        /// <param name="subregion"> Subregion of the server key. </param>
-        /// <returns> A new <see cref="T:Azure.ResourceManager.Sql.Models.SqlDatabaseKey" /> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SqlDatabaseKey SqlDatabaseKey(SqlDatabaseKeyType? keyType, string thumbprint, DateTimeOffset? createdOn, string subregion)
-        {
-            return SqlDatabaseKey(keyType: keyType, thumbprint: thumbprint, createdOn: createdOn, subregion: subregion, keyVersion: default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Sql.EncryptionProtectorData" />. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of encryption protector. This is metadata used for the Azure portal experience. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="subregion"> Subregion of the encryption protector. </param>
-        /// <param name="serverKeyName"> The name of the server key. </param>
-        /// <param name="serverKeyType"> The encryption protector type like 'ServiceManaged', 'AzureKeyVault'. </param>
-        /// <param name="uri"> The URI of the server key. </param>
-        /// <param name="thumbprint"> Thumbprint of the server key. </param>
-        /// <param name="isAutoRotationEnabled"> Key auto rotation opt-in flag. Either true or false. </param>
-        /// <returns> A new <see cref="T:Azure.ResourceManager.Sql.EncryptionProtectorData" /> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static EncryptionProtectorData EncryptionProtectorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, AzureLocation? location, string subregion, string serverKeyName, SqlServerKeyType? serverKeyType, Uri uri, string thumbprint, bool? isAutoRotationEnabled)
-        {
-            return EncryptionProtectorData(id: id, name: name, resourceType: resourceType, systemData: systemData, kind: kind, location: location, subregion: subregion, serverKeyName: serverKeyName, serverKeyType: serverKeyType, uri: uri, thumbprint: thumbprint, isAutoRotationEnabled: isAutoRotationEnabled, keyVersion: default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Sql.Models.SqlLocationCapabilities" />. </summary>
-        /// <param name="name"> The location name. </param>
-        /// <param name="supportedServerVersions"> The list of supported server versions. </param>
-        /// <param name="supportedManagedInstanceVersions"> The list of supported managed instance versions. </param>
-        /// <param name="supportedJobAgentVersions"> The list of supported job agent versions. </param>
-        /// <param name="status"> The status of the capability. </param>
-        /// <param name="reason"> The reason for the capability not being available. </param>
-        /// <returns> A new <see cref="T:Azure.ResourceManager.Sql.Models.SqlLocationCapabilities" /> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SqlLocationCapabilities SqlLocationCapabilities(string name, IEnumerable<SqlServerVersionCapability> supportedServerVersions, IEnumerable<ManagedInstanceVersionCapability> supportedManagedInstanceVersions, IEnumerable<JobAgentVersionCapability> supportedJobAgentVersions, SqlCapabilityStatus? status, string reason)
-        {
-            return SqlLocationCapabilities(name: name, supportedServerVersions: supportedServerVersions, supportedManagedInstanceVersions: supportedManagedInstanceVersions, supportedJobAgentVersions: supportedJobAgentVersions, isZoneResilientProvisioningAllowed: default, status: status, reason: reason);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Sql.LongTermRetentionBackupData" />. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="serverName"> The server name that the backup database belong to. </param>
-        /// <param name="serverCreateOn"> The create time of the server. </param>
-        /// <param name="databaseName"> The name of the database the backup belong to. </param>
-        /// <param name="databaseDeletedOn"> The delete time of the database. </param>
-        /// <param name="backupOn"> The time the backup was taken. </param>
-        /// <param name="backupExpireOn"> The time the long term retention backup will expire. </param>
-        /// <param name="backupStorageRedundancy"> The storage redundancy type of the backup. </param>
-        /// <param name="requestedBackupStorageRedundancy"> The storage redundancy type of the backup. </param>
-        /// <param name="isBackupImmutable"> The setting whether the LTR backup is immutable. </param>
-        /// <param name="backupStorageAccessTier"> The BackupStorageAccessTier for the LTR backup. </param>
-        /// <returns> A new <see cref="T:Azure.ResourceManager.Sql.LongTermRetentionBackupData" /> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static LongTermRetentionBackupData LongTermRetentionBackupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string serverName, DateTimeOffset? serverCreateOn, string databaseName, DateTimeOffset? databaseDeletedOn, DateTimeOffset? backupOn, DateTimeOffset? backupExpireOn, SqlBackupStorageRedundancy? backupStorageRedundancy, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy, bool? isBackupImmutable, SqlBackupStorageAccessTier? backupStorageAccessTier)
-        {
-            return LongTermRetentionBackupData(id: id, name: name, resourceType: resourceType, systemData: systemData, serverName: serverName, serverCreateOn: serverCreateOn, databaseName: databaseName, databaseDeletedOn: databaseDeletedOn, backupOn: backupOn, backupExpireOn: backupExpireOn, backupStorageRedundancy: backupStorageRedundancy, requestedBackupStorageRedundancy: requestedBackupStorageRedundancy, isBackupImmutable: isBackupImmutable, timeBasedImmutability: default, timeBasedImmutabilityMode: default, legalHoldImmutability: default, backupStorageAccessTier: backupStorageAccessTier);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Sql.LongTermRetentionPolicyData" />. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="weeklyRetention"> The weekly retention policy for an LTR backup in an ISO 8601 format. </param>
-        /// <param name="monthlyRetention"> The monthly retention policy for an LTR backup in an ISO 8601 format. </param>
-        /// <param name="yearlyRetention"> The yearly retention policy for an LTR backup in an ISO 8601 format. </param>
-        /// <param name="weekOfYear"> The week of year to take the yearly backup in an ISO 8601 format. </param>
-        /// <returns> A new <see cref="T:Azure.ResourceManager.Sql.LongTermRetentionPolicyData" /> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static LongTermRetentionPolicyData LongTermRetentionPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string weeklyRetention, string monthlyRetention, string yearlyRetention, int? weekOfYear)
-        {
-            return LongTermRetentionPolicyData(id: id, name: name, resourceType: resourceType, systemData: systemData, timeBasedImmutability: default, timeBasedImmutabilityMode: default, weeklyRetention: weeklyRetention, monthlyRetention: monthlyRetention, yearlyRetention: yearlyRetention, weekOfYear: weekOfYear);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Sql.ManagedDatabaseData" />. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="collation"> Collation of the managed database. </param>
-        /// <param name="status"> Status of the database. </param>
-        /// <param name="createdOn"> Creation date of the database. </param>
-        /// <param name="earliestRestorePoint"> Earliest restore point in time for point in time restore. </param>
-        /// <param name="restorePointInTime"> Conditional. If createMode is PointInTimeRestore, this value is required. Specifies the point in time (ISO8601 format) of the source database that will be restored to create the new database. </param>
-        /// <param name="defaultSecondaryLocation"> Geo paired region. </param>
-        /// <param name="catalogCollation"> Collation of the metadata catalog. </param>
-        /// <param name="createMode"> Managed database create mode. PointInTimeRestore: Create a database by restoring a point in time backup of an existing database. SourceDatabaseName, SourceManagedInstanceName and PointInTime must be specified. RestoreExternalBackup: Create a database by restoring from external backup files. Collation, StorageContainerUri and StorageContainerSasToken must be specified. Recovery: Creates a database by restoring a geo-replicated backup. RecoverableDatabaseId must be specified as the recoverable database resource ID to restore. RestoreLongTermRetentionBackup: Create a database by restoring from a long term retention backup (longTermRetentionBackupResourceId required). </param>
-        /// <param name="storageContainerUri"> Conditional. If createMode is RestoreExternalBackup, this value is required. Specifies the uri of the storage container where backups for this restore are stored. </param>
-        /// <param name="sourceDatabaseId"> The resource identifier of the source database associated with create operation of this database. </param>
-        /// <param name="crossSubscriptionSourceDatabaseId"> The resource identifier of the cross-subscription source database associated with create operation of this database. </param>
-        /// <param name="restorableDroppedDatabaseId"> The restorable dropped database resource id to restore when creating this database. </param>
-        /// <param name="crossSubscriptionRestorableDroppedDatabaseId"> The restorable cross-subscription dropped database resource id to restore when creating this database. </param>
-        /// <param name="storageContainerIdentity"> Conditional. If createMode is RestoreExternalBackup, this value is used. Specifies the identity used for storage container authentication. Can be 'SharedAccessSignature' or 'ManagedIdentity'; if not specified 'SharedAccessSignature' is assumed. </param>
-        /// <param name="storageContainerSasToken"> Conditional. If createMode is RestoreExternalBackup and storageContainerIdentity is not ManagedIdentity, this value is required. Specifies the storage container sas token. </param>
-        /// <param name="failoverGroupId"> Instance Failover Group resource identifier that this managed database belongs to. </param>
-        /// <param name="recoverableDatabaseId"> The resource identifier of the recoverable database associated with create operation of this database. </param>
-        /// <param name="longTermRetentionBackupResourceId"> The name of the Long Term Retention backup to be used for restore of this managed database. </param>
-        /// <param name="allowAutoCompleteRestore"> Whether to auto complete restore of this managed database. </param>
-        /// <param name="lastBackupName"> Last backup file name for restore of this managed database. </param>
-        /// <param name="crossSubscriptionTargetManagedInstanceId"> Target managed instance id used in cross-subscription restore. </param>
-        /// <param name="isLedgerOn"> Whether or not this database is a ledger database, which means all tables in the database are ledger tables. Note: the value of this property cannot be changed after the database has been created. </param>
-        /// <returns> A new <see cref="T:Azure.ResourceManager.Sql.ManagedDatabaseData" /> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ManagedDatabaseData ManagedDatabaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string collation, ManagedDatabaseStatus? status, DateTimeOffset? createdOn, DateTimeOffset? earliestRestorePoint, DateTimeOffset? restorePointInTime, AzureLocation? defaultSecondaryLocation, CatalogCollationType? catalogCollation, ManagedDatabaseCreateMode? createMode, Uri storageContainerUri, ResourceIdentifier sourceDatabaseId, ResourceIdentifier crossSubscriptionSourceDatabaseId, ResourceIdentifier restorableDroppedDatabaseId, ResourceIdentifier crossSubscriptionRestorableDroppedDatabaseId, string storageContainerIdentity, string storageContainerSasToken, ResourceIdentifier failoverGroupId, ResourceIdentifier recoverableDatabaseId, ResourceIdentifier longTermRetentionBackupResourceId, bool? allowAutoCompleteRestore, string lastBackupName, ResourceIdentifier crossSubscriptionTargetManagedInstanceId, bool? isLedgerOn)
-        {
-            return ManagedDatabaseData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, collation: collation, status: status, createdOn: createdOn, earliestRestorePoint: earliestRestorePoint, restorePointInTime: restorePointInTime, defaultSecondaryLocation: defaultSecondaryLocation, catalogCollation: catalogCollation, createMode: createMode, storageContainerUri: storageContainerUri, sourceDatabaseId: sourceDatabaseId, crossSubscriptionSourceDatabaseId: crossSubscriptionSourceDatabaseId, restorableDroppedDatabaseId: restorableDroppedDatabaseId, crossSubscriptionRestorableDroppedDatabaseId: crossSubscriptionRestorableDroppedDatabaseId, storageContainerIdentity: storageContainerIdentity, storageContainerSasToken: storageContainerSasToken, failoverGroupId: failoverGroupId, recoverableDatabaseId: recoverableDatabaseId, longTermRetentionBackupResourceId: longTermRetentionBackupResourceId, allowAutoCompleteRestore: allowAutoCompleteRestore, lastBackupName: lastBackupName, crossSubscriptionTargetManagedInstanceId: crossSubscriptionTargetManagedInstanceId, isLedgerOn: isLedgerOn, extendedAccessibilityInfo: default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Sql.Models.ManagedDatabasePatch" />. </summary>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="collation"> Collation of the managed database. </param>
-        /// <param name="status"> Status of the database. </param>
-        /// <param name="createdOn"> Creation date of the database. </param>
-        /// <param name="earliestRestorePoint"> Earliest restore point in time for point in time restore. </param>
-        /// <param name="restorePointInTime"> Conditional. If createMode is PointInTimeRestore, this value is required. Specifies the point in time (ISO8601 format) of the source database that will be restored to create the new database. </param>
-        /// <param name="defaultSecondaryLocation"> Geo paired region. </param>
-        /// <param name="catalogCollation"> Collation of the metadata catalog. </param>
-        /// <param name="createMode"> Managed database create mode. PointInTimeRestore: Create a database by restoring a point in time backup of an existing database. SourceDatabaseName, SourceManagedInstanceName and PointInTime must be specified. RestoreExternalBackup: Create a database by restoring from external backup files. Collation, StorageContainerUri and StorageContainerSasToken must be specified. Recovery: Creates a database by restoring a geo-replicated backup. RecoverableDatabaseId must be specified as the recoverable database resource ID to restore. RestoreLongTermRetentionBackup: Create a database by restoring from a long term retention backup (longTermRetentionBackupResourceId required). </param>
-        /// <param name="storageContainerUri"> Conditional. If createMode is RestoreExternalBackup, this value is required. Specifies the uri of the storage container where backups for this restore are stored. </param>
-        /// <param name="sourceDatabaseId"> The resource identifier of the source database associated with create operation of this database. </param>
-        /// <param name="crossSubscriptionSourceDatabaseId"> The resource identifier of the cross-subscription source database associated with create operation of this database. </param>
-        /// <param name="restorableDroppedDatabaseId"> The restorable dropped database resource id to restore when creating this database. </param>
-        /// <param name="crossSubscriptionRestorableDroppedDatabaseId"> The restorable cross-subscription dropped database resource id to restore when creating this database. </param>
-        /// <param name="storageContainerIdentity"> Conditional. If createMode is RestoreExternalBackup, this value is used. Specifies the identity used for storage container authentication. Can be 'SharedAccessSignature' or 'ManagedIdentity'; if not specified 'SharedAccessSignature' is assumed. </param>
-        /// <param name="storageContainerSasToken"> Conditional. If createMode is RestoreExternalBackup and storageContainerIdentity is not ManagedIdentity, this value is required. Specifies the storage container sas token. </param>
-        /// <param name="failoverGroupId"> Instance Failover Group resource identifier that this managed database belongs to. </param>
-        /// <param name="recoverableDatabaseId"> The resource identifier of the recoverable database associated with create operation of this database. </param>
-        /// <param name="longTermRetentionBackupResourceId"> The name of the Long Term Retention backup to be used for restore of this managed database. </param>
-        /// <param name="allowAutoCompleteRestore"> Whether to auto complete restore of this managed database. </param>
-        /// <param name="lastBackupName"> Last backup file name for restore of this managed database. </param>
-        /// <param name="crossSubscriptionTargetManagedInstanceId"> Target managed instance id used in cross-subscription restore. </param>
-        /// <param name="isLedgerOn"> Whether or not this database is a ledger database, which means all tables in the database are ledger tables. Note: the value of this property cannot be changed after the database has been created. </param>
-        /// <returns> A new <see cref="T:Azure.ResourceManager.Sql.Models.ManagedDatabasePatch" /> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ManagedDatabasePatch ManagedDatabasePatch(IDictionary<string, string> tags, string collation, ManagedDatabaseStatus? status, DateTimeOffset? createdOn, DateTimeOffset? earliestRestorePoint, DateTimeOffset? restorePointInTime, AzureLocation? defaultSecondaryLocation, CatalogCollationType? catalogCollation, ManagedDatabaseCreateMode? createMode, Uri storageContainerUri, ResourceIdentifier sourceDatabaseId, ResourceIdentifier crossSubscriptionSourceDatabaseId, ResourceIdentifier restorableDroppedDatabaseId, ResourceIdentifier crossSubscriptionRestorableDroppedDatabaseId, string storageContainerIdentity, string storageContainerSasToken, ResourceIdentifier failoverGroupId, ResourceIdentifier recoverableDatabaseId, ResourceIdentifier longTermRetentionBackupResourceId, bool? allowAutoCompleteRestore, string lastBackupName, ResourceIdentifier crossSubscriptionTargetManagedInstanceId, bool? isLedgerOn)
-        {
-            return ManagedDatabasePatch(tags: tags, collation: collation, status: status, createdOn: createdOn, earliestRestorePoint: earliestRestorePoint, restorePointInTime: restorePointInTime, defaultSecondaryLocation: defaultSecondaryLocation, catalogCollation: catalogCollation, createMode: createMode, storageContainerUri: storageContainerUri, sourceDatabaseId: sourceDatabaseId, crossSubscriptionSourceDatabaseId: crossSubscriptionSourceDatabaseId, restorableDroppedDatabaseId: restorableDroppedDatabaseId, crossSubscriptionRestorableDroppedDatabaseId: crossSubscriptionRestorableDroppedDatabaseId, storageContainerIdentity: storageContainerIdentity, storageContainerSasToken: storageContainerSasToken, failoverGroupId: failoverGroupId, recoverableDatabaseId: recoverableDatabaseId, longTermRetentionBackupResourceId: longTermRetentionBackupResourceId, allowAutoCompleteRestore: allowAutoCompleteRestore, lastBackupName: lastBackupName, crossSubscriptionTargetManagedInstanceId: crossSubscriptionTargetManagedInstanceId, isLedgerOn: isLedgerOn, extendedAccessibilityInfo: default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Sql.ManagedInstanceData" />. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="identity"> The Azure Active Directory identity of the managed instance. </param>
-        /// <param name="sku"> Managed instance SKU. Allowed values for sku.name: GP_Gen5, GP_G8IM, GP_G8IH, BC_Gen5, BC_G8IM, BC_G8IH. </param>
-        /// <param name="provisioningState"> Provisioning state of managed instance. </param>
-        /// <param name="managedInstanceCreateMode">
-        /// Specifies the mode of database creation.
-        /// Default: Regular instance creation.
-        /// Restore: Creates an instance by restoring a set of backups to specific point in time. RestorePointInTime and SourceManagedInstanceId must be specified.
-        /// </param>
-        /// <param name="fullyQualifiedDomainName"> The fully qualified domain name of the managed instance. </param>
-        /// <param name="isGeneralPurposeV2"> Whether or not this is a GPv2 variant of General Purpose edition. </param>
-        /// <param name="administratorLogin"> Administrator username for the managed instance. Can only be specified when the managed instance is being created (and is required for creation). </param>
-        /// <param name="administratorLoginPassword"> The administrator login password (required for managed instance creation). </param>
-        /// <param name="subnetId"> Subnet resource ID for the managed instance. </param>
-        /// <param name="state"> The state of the managed instance. </param>
-        /// <param name="licenseType"> The license type. Possible values are 'LicenseIncluded' (regular price inclusive of a new SQL license) and 'BasePrice' (discounted AHB price for bringing your own SQL licenses). </param>
-        /// <param name="hybridSecondaryUsage"> Hybrid secondary usage. Possible values are 'Active' (default value) and 'Passive' (customer uses the secondary as Passive DR). </param>
-        /// <param name="hybridSecondaryUsageDetected"> Hybrid secondary usage detected. Possible values are 'Active' (customer does not meet the requirements to use the secondary as Passive DR) and 'Passive' (customer meets the requirements to use the secondary as Passive DR). </param>
-        /// <param name="vCores"> The number of vCores. Allowed values: 8, 16, 24, 32, 40, 64, 80. </param>
-        /// <param name="storageSizeInGB"> Storage size in GB. Minimum value: 32. Maximum value: 16384. Increments of 32 GB allowed only. Maximum value depends on the selected hardware family and number of vCores. </param>
-        /// <param name="storageIOps"> Storage IOps. Minimum value: 300. Maximum value: 80000. Increments of 1 IOps allowed only. Maximum value depends on the selected hardware family and number of vCores. </param>
-        /// <param name="storageThroughputMBps"> Storage throughput MBps parameter is not supported in the instance create/update operation. </param>
-        /// <param name="collation"> Collation of the managed instance. </param>
-        /// <param name="dnsZone"> The Dns Zone that the managed instance is in. </param>
-        /// <param name="managedDnsZonePartner"> The resource id of another managed instance whose DNS zone this managed instance will share after creation. </param>
-        /// <param name="isPublicDataEndpointEnabled"> Whether or not the public data endpoint is enabled. </param>
-        /// <param name="sourceManagedInstanceId"> The resource identifier of the source managed instance associated with create operation of this instance. </param>
-        /// <param name="restorePointInTime"> Specifies the point in time (ISO8601 format) of the source database that will be restored to create the new database. </param>
-        /// <param name="proxyOverride"> Connection type used for connecting to the instance. </param>
-        /// <param name="timezoneId">
-        /// Id of the timezone. Allowed values are timezones supported by Windows.
-        /// Windows keeps details on supported timezones, including the id, in registry under
-        /// KEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Time Zones.
-        /// You can get those registry values via SQL Server by querying SELECT name AS timezone_id FROM sys.time_zone_info.
-        /// List of Ids can also be obtained by executing [System.TimeZoneInfo]::GetSystemTimeZones() in PowerShell.
-        /// An example of valid timezone id is "Pacific Standard Time" or "W. Europe Standard Time".
-        /// </param>
-        /// <param name="instancePoolId"> The Id of the instance pool this managed server belongs to. </param>
-        /// <param name="maintenanceConfigurationId"> Specifies maintenance configuration id to apply to this managed instance. </param>
-        /// <param name="privateEndpointConnections"> List of private endpoint connections on a managed instance. </param>
-        /// <param name="minimalTlsVersion"> Minimal TLS version. Allowed values: 'None', '1.0', '1.1', '1.2'. </param>
-        /// <param name="currentBackupStorageRedundancy"> The storage account type used to store backups for this instance. The options are Local (LocallyRedundantStorage), Zone (ZoneRedundantStorage), Geo (GeoRedundantStorage) and GeoZone(GeoZoneRedundantStorage). </param>
-        /// <param name="requestedBackupStorageRedundancy"> The storage account type to be used to store backups for this instance. The options are Local (LocallyRedundantStorage), Zone (ZoneRedundantStorage), Geo (GeoRedundantStorage) and GeoZone(GeoZoneRedundantStorage). </param>
-        /// <param name="isZoneRedundant"> Whether or not the multi-az is enabled. </param>
-        /// <param name="primaryUserAssignedIdentityId"> The resource id of a user assigned identity to be used by default. </param>
-        /// <param name="keyId"> A CMK URI of the key to use for encryption. </param>
-        /// <param name="administrators"> The Azure Active Directory administrator of the instance. This can only be used at instance create time. If used for instance update, it will be ignored or it will result in an error. For updates individual APIs will need to be used. </param>
-        /// <param name="servicePrincipal"> The managed instance's service principal. </param>
-        /// <param name="virtualClusterId"> Virtual cluster resource id for the Managed Instance. </param>
-        /// <param name="externalGovernanceStatus"> Status of external governance. </param>
-        /// <param name="pricingModel"> Pricing model of Managed Instance. </param>
-        /// <param name="createOn"> Specifies the point in time (ISO8601 format) of the Managed Instance creation. </param>
-        /// <param name="authenticationMetadata"> The managed instance's authentication metadata lookup mode. </param>
-        /// <param name="databaseFormat"> Specifies the internal format of instance databases specific to the SQL engine version. </param>
-        /// <returns> A new <see cref="T:Azure.ResourceManager.Sql.ManagedInstanceData" /> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ManagedInstanceData ManagedInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, SqlSku sku, ManagedInstancePropertiesProvisioningState? provisioningState, ManagedServerCreateMode? managedInstanceCreateMode, string fullyQualifiedDomainName, bool? isGeneralPurposeV2, string administratorLogin, string administratorLoginPassword, ResourceIdentifier subnetId, string state, ManagedInstanceLicenseType? licenseType, HybridSecondaryUsage? hybridSecondaryUsage, HybridSecondaryUsageDetected? hybridSecondaryUsageDetected, int? vCores, int? storageSizeInGB, int? storageIOps, int? storageThroughputMBps, string collation, string dnsZone, ResourceIdentifier managedDnsZonePartner, bool? isPublicDataEndpointEnabled, ResourceIdentifier sourceManagedInstanceId, DateTimeOffset? restorePointInTime, ManagedInstanceProxyOverride? proxyOverride, string timezoneId, ResourceIdentifier instancePoolId, ResourceIdentifier maintenanceConfigurationId, IEnumerable<ManagedInstancePecProperty> privateEndpointConnections, string minimalTlsVersion, SqlBackupStorageRedundancy? currentBackupStorageRedundancy, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy, bool? isZoneRedundant, ResourceIdentifier primaryUserAssignedIdentityId, Uri keyId, ManagedInstanceExternalAdministrator administrators, SqlServicePrincipal servicePrincipal, ResourceIdentifier virtualClusterId, ExternalGovernanceStatus? externalGovernanceStatus, SqlManagedInstancePricingModel? pricingModel, DateTimeOffset? createOn, AuthMetadataLookupMode? authenticationMetadata, ManagedInstanceDatabaseFormat? databaseFormat)
-        {
-            return ManagedInstanceData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, identity: identity, sku: sku, provisioningState: provisioningState, managedInstanceCreateMode: managedInstanceCreateMode, fullyQualifiedDomainName: fullyQualifiedDomainName, isGeneralPurposeV2: isGeneralPurposeV2, administratorLogin: administratorLogin, administratorLoginPassword: administratorLoginPassword, subnetId: subnetId, state: state, licenseType: licenseType, hybridSecondaryUsage: hybridSecondaryUsage, hybridSecondaryUsageDetected: hybridSecondaryUsageDetected, vCores: vCores, storageSizeInGB: storageSizeInGB, storageIOps: storageIOps, storageThroughputMBps: storageThroughputMBps, memorySizeInGB: default, collation: collation, dnsZone: dnsZone, managedDnsZonePartner: managedDnsZonePartner, isPublicDataEndpointEnabled: isPublicDataEndpointEnabled, sourceManagedInstanceId: sourceManagedInstanceId, restorePointInTime: restorePointInTime, proxyOverride: proxyOverride, timezoneId: timezoneId, instancePoolId: instancePoolId, maintenanceConfigurationId: maintenanceConfigurationId, privateEndpointConnections: privateEndpointConnections, minimalTlsVersion: minimalTlsVersion, currentBackupStorageRedundancy: currentBackupStorageRedundancy, requestedBackupStorageRedundancy: requestedBackupStorageRedundancy, isZoneRedundant: isZoneRedundant, primaryUserAssignedIdentityId: primaryUserAssignedIdentityId, keyId: keyId, administrators: administrators, servicePrincipal: servicePrincipal, virtualClusterId: virtualClusterId, externalGovernanceStatus: externalGovernanceStatus, pricingModel: pricingModel, createOn: createOn, authenticationMetadata: authenticationMetadata, databaseFormat: databaseFormat, requestedLogicalAvailabilityZone: default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Sql.Models.ManagedInstancePatch" />. </summary>
-        /// <param name="sku"> Managed instance sku. </param>
-        /// <param name="identity"> Managed instance identity. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="provisioningState"> Provisioning state of managed instance. </param>
-        /// <param name="managedInstanceCreateMode">
-        /// Specifies the mode of database creation.
-        /// Default: Regular instance creation.
-        /// Restore: Creates an instance by restoring a set of backups to specific point in time. RestorePointInTime and SourceManagedInstanceId must be specified.
-        /// </param>
-        /// <param name="fullyQualifiedDomainName"> The fully qualified domain name of the managed instance. </param>
-        /// <param name="isGeneralPurposeV2"> Whether or not this is a GPv2 variant of General Purpose edition. </param>
-        /// <param name="administratorLogin"> Administrator username for the managed instance. Can only be specified when the managed instance is being created (and is required for creation). </param>
-        /// <param name="administratorLoginPassword"> The administrator login password (required for managed instance creation). </param>
-        /// <param name="subnetId"> Subnet resource ID for the managed instance. </param>
-        /// <param name="state"> The state of the managed instance. </param>
-        /// <param name="licenseType"> The license type. Possible values are 'LicenseIncluded' (regular price inclusive of a new SQL license) and 'BasePrice' (discounted AHB price for bringing your own SQL licenses). </param>
-        /// <param name="hybridSecondaryUsage"> Hybrid secondary usage. Possible values are 'Active' (default value) and 'Passive' (customer uses the secondary as Passive DR). </param>
-        /// <param name="hybridSecondaryUsageDetected"> Hybrid secondary usage detected. Possible values are 'Active' (customer does not meet the requirements to use the secondary as Passive DR) and 'Passive' (customer meets the requirements to use the secondary as Passive DR). </param>
-        /// <param name="vCores"> The number of vCores. Allowed values: 8, 16, 24, 32, 40, 64, 80. </param>
-        /// <param name="storageSizeInGB"> Storage size in GB. Minimum value: 32. Maximum value: 16384. Increments of 32 GB allowed only. Maximum value depends on the selected hardware family and number of vCores. </param>
-        /// <param name="storageIOps"> Storage IOps. Minimum value: 300. Maximum value: 80000. Increments of 1 IOps allowed only. Maximum value depends on the selected hardware family and number of vCores. </param>
-        /// <param name="storageThroughputMBps"> Storage throughput MBps parameter is not supported in the instance create/update operation. </param>
-        /// <param name="collation"> Collation of the managed instance. </param>
-        /// <param name="dnsZone"> The Dns Zone that the managed instance is in. </param>
-        /// <param name="managedDnsZonePartner"> The resource id of another managed instance whose DNS zone this managed instance will share after creation. </param>
-        /// <param name="isPublicDataEndpointEnabled"> Whether or not the public data endpoint is enabled. </param>
-        /// <param name="sourceManagedInstanceId"> The resource identifier of the source managed instance associated with create operation of this instance. </param>
-        /// <param name="restorePointInTime"> Specifies the point in time (ISO8601 format) of the source database that will be restored to create the new database. </param>
-        /// <param name="proxyOverride"> Connection type used for connecting to the instance. </param>
-        /// <param name="timezoneId">
-        /// Id of the timezone. Allowed values are timezones supported by Windows.
-        /// Windows keeps details on supported timezones, including the id, in registry under
-        /// KEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Time Zones.
-        /// You can get those registry values via SQL Server by querying SELECT name AS timezone_id FROM sys.time_zone_info.
-        /// List of Ids can also be obtained by executing [System.TimeZoneInfo]::GetSystemTimeZones() in PowerShell.
-        /// An example of valid timezone id is "Pacific Standard Time" or "W. Europe Standard Time".
-        /// </param>
-        /// <param name="instancePoolId"> The Id of the instance pool this managed server belongs to. </param>
-        /// <param name="maintenanceConfigurationId"> Specifies maintenance configuration id to apply to this managed instance. </param>
-        /// <param name="privateEndpointConnections"> List of private endpoint connections on a managed instance. </param>
-        /// <param name="minimalTlsVersion"> Minimal TLS version. Allowed values: 'None', '1.0', '1.1', '1.2'. </param>
-        /// <param name="currentBackupStorageRedundancy"> The storage account type used to store backups for this instance. The options are Local (LocallyRedundantStorage), Zone (ZoneRedundantStorage), Geo (GeoRedundantStorage) and GeoZone(GeoZoneRedundantStorage). </param>
-        /// <param name="requestedBackupStorageRedundancy"> The storage account type to be used to store backups for this instance. The options are Local (LocallyRedundantStorage), Zone (ZoneRedundantStorage), Geo (GeoRedundantStorage) and GeoZone(GeoZoneRedundantStorage). </param>
-        /// <param name="isZoneRedundant"> Whether or not the multi-az is enabled. </param>
-        /// <param name="primaryUserAssignedIdentityId"> The resource id of a user assigned identity to be used by default. </param>
-        /// <param name="keyId"> A CMK URI of the key to use for encryption. </param>
-        /// <param name="administrators"> The Azure Active Directory administrator of the instance. This can only be used at instance create time. If used for instance update, it will be ignored or it will result in an error. For updates individual APIs will need to be used. </param>
-        /// <param name="servicePrincipal"> The managed instance's service principal. </param>
-        /// <param name="virtualClusterId"> Virtual cluster resource id for the Managed Instance. </param>
-        /// <param name="externalGovernanceStatus"> Status of external governance. </param>
-        /// <param name="pricingModel"> Pricing model of Managed Instance. </param>
-        /// <param name="createOn"> Specifies the point in time (ISO8601 format) of the Managed Instance creation. </param>
-        /// <param name="authenticationMetadata"> The managed instance's authentication metadata lookup mode. </param>
-        /// <param name="databaseFormat"> Specifies the internal format of instance databases specific to the SQL engine version. </param>
-        /// <returns> A new <see cref="T:Azure.ResourceManager.Sql.Models.ManagedInstancePatch" /> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ManagedInstancePatch ManagedInstancePatch(SqlSku sku, ManagedServiceIdentity identity, IDictionary<string, string> tags, ManagedInstancePropertiesProvisioningState? provisioningState, ManagedServerCreateMode? managedInstanceCreateMode, string fullyQualifiedDomainName, bool? isGeneralPurposeV2, string administratorLogin, string administratorLoginPassword, ResourceIdentifier subnetId, string state, ManagedInstanceLicenseType? licenseType, HybridSecondaryUsage? hybridSecondaryUsage, HybridSecondaryUsageDetected? hybridSecondaryUsageDetected, int? vCores, int? storageSizeInGB, int? storageIOps, int? storageThroughputMBps, string collation, string dnsZone, ResourceIdentifier managedDnsZonePartner, bool? isPublicDataEndpointEnabled, ResourceIdentifier sourceManagedInstanceId, DateTimeOffset? restorePointInTime, ManagedInstanceProxyOverride? proxyOverride, string timezoneId, ResourceIdentifier instancePoolId, ResourceIdentifier maintenanceConfigurationId, IEnumerable<ManagedInstancePecProperty> privateEndpointConnections, string minimalTlsVersion, SqlBackupStorageRedundancy? currentBackupStorageRedundancy, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy, bool? isZoneRedundant, ResourceIdentifier primaryUserAssignedIdentityId, Uri keyId, ManagedInstanceExternalAdministrator administrators, SqlServicePrincipal servicePrincipal, ResourceIdentifier virtualClusterId, ExternalGovernanceStatus? externalGovernanceStatus, SqlManagedInstancePricingModel? pricingModel, DateTimeOffset? createOn, AuthMetadataLookupMode? authenticationMetadata, ManagedInstanceDatabaseFormat? databaseFormat)
-        {
-            return ManagedInstancePatch(sku: sku, identity: identity, tags: tags, provisioningState: provisioningState, managedInstanceCreateMode: managedInstanceCreateMode, fullyQualifiedDomainName: fullyQualifiedDomainName, isGeneralPurposeV2: isGeneralPurposeV2, administratorLogin: administratorLogin, administratorLoginPassword: administratorLoginPassword, subnetId: subnetId, state: state, licenseType: licenseType, hybridSecondaryUsage: hybridSecondaryUsage, hybridSecondaryUsageDetected: hybridSecondaryUsageDetected, vCores: vCores, storageSizeInGB: storageSizeInGB, storageIOps: storageIOps, storageThroughputMBps: storageThroughputMBps, memorySizeInGB: default, collation: collation, dnsZone: dnsZone, managedDnsZonePartner: managedDnsZonePartner, isPublicDataEndpointEnabled: isPublicDataEndpointEnabled, sourceManagedInstanceId: sourceManagedInstanceId, restorePointInTime: restorePointInTime, proxyOverride: proxyOverride, timezoneId: timezoneId, instancePoolId: instancePoolId, maintenanceConfigurationId: maintenanceConfigurationId, privateEndpointConnections: privateEndpointConnections, minimalTlsVersion: minimalTlsVersion, currentBackupStorageRedundancy: currentBackupStorageRedundancy, requestedBackupStorageRedundancy: requestedBackupStorageRedundancy, isZoneRedundant: isZoneRedundant, primaryUserAssignedIdentityId: primaryUserAssignedIdentityId, keyId: keyId, administrators: administrators, servicePrincipal: servicePrincipal, virtualClusterId: virtualClusterId, externalGovernanceStatus: externalGovernanceStatus, pricingModel: pricingModel, createOn: createOn, authenticationMetadata: authenticationMetadata, databaseFormat: databaseFormat, requestedLogicalAvailabilityZone: default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Sql.SqlServerKeyData" />. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of encryption protector. This is metadata used for the Azure portal experience. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="subregion"> Subregion of the server key. </param>
-        /// <param name="serverKeyType"> The server key type like 'ServiceManaged', 'AzureKeyVault'. </param>
-        /// <param name="uri"> The URI of the server key. If the ServerKeyType is AzureKeyVault, then the URI is required. The AKV URI is required to be in this format: 'https://YourVaultName.vault.azure.net/keys/YourKeyName/YourKeyVersion'. </param>
-        /// <param name="thumbprint"> Thumbprint of the server key. </param>
-        /// <param name="createdOn"> The server key creation date. </param>
-        /// <param name="isAutoRotationEnabled"> Key auto rotation opt-in flag. Either true or false. </param>
-        /// <returns> A new <see cref="T:Azure.ResourceManager.Sql.SqlServerKeyData" /> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SqlServerKeyData SqlServerKeyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, AzureLocation? location, string subregion, SqlServerKeyType? serverKeyType, Uri uri, string thumbprint, DateTimeOffset? createdOn, bool? isAutoRotationEnabled)
-        {
-            return SqlServerKeyData(id: id, name: name, resourceType: resourceType, systemData: systemData, kind: kind, location: location, subregion: subregion, serverKeyType: serverKeyType, uri: uri, thumbprint: thumbprint, createdOn: createdOn, isAutoRotationEnabled: isAutoRotationEnabled, keyVersion: default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Sql.SqlServerData" />. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="identity"> The Azure Active Directory identity of the server. </param>
-        /// <param name="kind"> Kind of sql server. This is metadata used for the Azure portal experience. </param>
-        /// <param name="administratorLogin"> Administrator username for the server. Once created it cannot be changed. </param>
-        /// <param name="administratorLoginPassword"> The administrator login password (required for server creation). </param>
-        /// <param name="version"> The version of the server. </param>
-        /// <param name="state"> The state of the server. </param>
-        /// <param name="fullyQualifiedDomainName"> The fully qualified domain name of the server. </param>
-        /// <param name="privateEndpointConnections"> List of private endpoint connections on a server. </param>
-        /// <param name="minTlsVersion"> Minimal TLS version. Allowed values: 'None', 1.0', '1.1', '1.2', '1.3'. </param>
-        /// <param name="publicNetworkAccess"> Whether or not public endpoint access is allowed for this server.  Value is optional but if passed in, must be 'Enabled' or 'Disabled' or 'SecuredByPerimeter'. </param>
-        /// <param name="workspaceFeature"> Whether or not existing server has a workspace created and if it allows connection from workspace. </param>
-        /// <param name="primaryUserAssignedIdentityId"> The resource id of a user assigned identity to be used by default. </param>
-        /// <param name="federatedClientId"> The Client id used for cross tenant CMK scenario. </param>
-        /// <param name="keyId"> A CMK URI of the key to use for encryption. </param>
-        /// <param name="administrators"> The Azure Active Directory administrator of the server. This can only be used at server create time. If used for server update, it will be ignored or it will result in an error. For updates individual APIs will need to be used. </param>
-        /// <param name="restrictOutboundNetworkAccess"> Whether or not to restrict outbound network access for this server.  Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </param>
-        /// <param name="isIPv6Enabled"> Whether or not to enable IPv6 support for this server.  Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </param>
-        /// <param name="externalGovernanceStatus"> Status of external governance. </param>
-        /// <returns> A new <see cref="T:Azure.ResourceManager.Sql.SqlServerData" /> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SqlServerData SqlServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string kind, string administratorLogin, string administratorLoginPassword, string version, string state, string fullyQualifiedDomainName, IEnumerable<SqlServerPrivateEndpointConnection> privateEndpointConnections, SqlMinimalTlsVersion? minTlsVersion, ServerNetworkAccessFlag? publicNetworkAccess, ServerWorkspaceFeature? workspaceFeature, ResourceIdentifier primaryUserAssignedIdentityId, Guid? federatedClientId, Uri keyId, ServerExternalAdministrator administrators, ServerNetworkAccessFlag? restrictOutboundNetworkAccess, ServerNetworkAccessFlag? isIPv6Enabled, ExternalGovernanceStatus? externalGovernanceStatus)
-        {
-            return SqlServerData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, identity: identity, kind: kind, administratorLogin: administratorLogin, administratorLoginPassword: administratorLoginPassword, version: version, state: state, fullyQualifiedDomainName: fullyQualifiedDomainName, privateEndpointConnections: privateEndpointConnections, minTlsVersion: minTlsVersion, publicNetworkAccess: publicNetworkAccess, workspaceFeature: workspaceFeature, primaryUserAssignedIdentityId: primaryUserAssignedIdentityId, federatedClientId: federatedClientId, keyId: keyId, administrators: administrators, restrictOutboundNetworkAccess: restrictOutboundNetworkAccess, isIPv6Enabled: isIPv6Enabled, externalGovernanceStatus: externalGovernanceStatus, retentionDays: default, createMode: default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Sql.Models.SqlServerPatch" />. </summary>
-        /// <param name="identity"> Server identity. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="administratorLogin"> Administrator username for the server. Once created it cannot be changed. </param>
-        /// <param name="administratorLoginPassword"> The administrator login password (required for server creation). </param>
-        /// <param name="version"> The version of the server. </param>
-        /// <param name="state"> The state of the server. </param>
-        /// <param name="fullyQualifiedDomainName"> The fully qualified domain name of the server. </param>
-        /// <param name="privateEndpointConnections"> List of private endpoint connections on a server. </param>
-        /// <param name="minTlsVersion"> Minimal TLS version. Allowed values: 'None', 1.0', '1.1', '1.2', '1.3'. </param>
-        /// <param name="publicNetworkAccess"> Whether or not public endpoint access is allowed for this server.  Value is optional but if passed in, must be 'Enabled' or 'Disabled' or 'SecuredByPerimeter'. </param>
-        /// <param name="workspaceFeature"> Whether or not existing server has a workspace created and if it allows connection from workspace. </param>
-        /// <param name="primaryUserAssignedIdentityId"> The resource id of a user assigned identity to be used by default. </param>
-        /// <param name="federatedClientId"> The Client id used for cross tenant CMK scenario. </param>
-        /// <param name="keyId"> A CMK URI of the key to use for encryption. </param>
-        /// <param name="administrators"> The Azure Active Directory administrator of the server. This can only be used at server create time. If used for server update, it will be ignored or it will result in an error. For updates individual APIs will need to be used. </param>
-        /// <param name="restrictOutboundNetworkAccess"> Whether or not to restrict outbound network access for this server.  Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </param>
-        /// <param name="isIPv6Enabled"> Whether or not to enable IPv6 support for this server.  Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </param>
-        /// <param name="externalGovernanceStatus"> Status of external governance. </param>
-        /// <returns> A new <see cref="T:Azure.ResourceManager.Sql.Models.SqlServerPatch" /> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SqlServerPatch SqlServerPatch(ManagedServiceIdentity identity, IDictionary<string, string> tags, string administratorLogin, string administratorLoginPassword, string version, string state, string fullyQualifiedDomainName, IEnumerable<SqlServerPrivateEndpointConnection> privateEndpointConnections, SqlMinimalTlsVersion? minTlsVersion, ServerNetworkAccessFlag? publicNetworkAccess, ServerWorkspaceFeature? workspaceFeature, ResourceIdentifier primaryUserAssignedIdentityId, Guid? federatedClientId, Uri keyId, ServerExternalAdministrator administrators, ServerNetworkAccessFlag? restrictOutboundNetworkAccess, ServerNetworkAccessFlag? isIPv6Enabled, ExternalGovernanceStatus? externalGovernanceStatus)
-        {
-            return SqlServerPatch(identity: identity, tags: tags, administratorLogin: administratorLogin, administratorLoginPassword: administratorLoginPassword, version: version, state: state, fullyQualifiedDomainName: fullyQualifiedDomainName, privateEndpointConnections: privateEndpointConnections, minTlsVersion: minTlsVersion, publicNetworkAccess: publicNetworkAccess, workspaceFeature: workspaceFeature, primaryUserAssignedIdentityId: primaryUserAssignedIdentityId, federatedClientId: federatedClientId, keyId: keyId, administrators: administrators, restrictOutboundNetworkAccess: restrictOutboundNetworkAccess, isIPv6Enabled: isIPv6Enabled, externalGovernanceStatus: externalGovernanceStatus, retentionDays: default, createMode: default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Sql.LogicalDatabaseTransparentDataEncryptionData" />. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="state"> Specifies the state of the transparent data encryption. </param>
-        /// <returns> A new <see cref="T:Azure.ResourceManager.Sql.LogicalDatabaseTransparentDataEncryptionData" /> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static LogicalDatabaseTransparentDataEncryptionData LogicalDatabaseTransparentDataEncryptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TransparentDataEncryptionState? state)
-        {
-            return LogicalDatabaseTransparentDataEncryptionData(id: id, name: name, resourceType: resourceType, systemData: systemData, state: state, scanState: default);
         }
     }
 }

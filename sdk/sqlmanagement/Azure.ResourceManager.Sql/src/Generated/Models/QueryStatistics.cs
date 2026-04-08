@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="endTime"> The end time for the metric (ISO-8601 format). </param>
         /// <param name="intervals"> List of intervals with appropriate metric data. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal QueryStatistics(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string databaseName, string queryId, string startTime, string endTime, IList<QueryMetricInterval> intervals, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal QueryStatistics(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string databaseName, string queryId, string startTime, string endTime, IList<QueryMetricInterval> intervals, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             DatabaseName = databaseName;
             QueryId = queryId;

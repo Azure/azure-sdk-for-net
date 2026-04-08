@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="version"> The job version number. </param>
         /// <param name="schedule"> Schedule properties of the job. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SqlServerJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, int? version, SqlServerJobSchedule schedule, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SqlServerJobData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string description, int? version, SqlServerJobSchedule schedule, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Description = description;
             Version = version;

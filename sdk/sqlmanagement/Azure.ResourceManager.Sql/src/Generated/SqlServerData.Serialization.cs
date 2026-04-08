@@ -136,16 +136,6 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("externalGovernanceStatus"u8);
                 writer.WriteStringValue(ExternalGovernanceStatus.Value.ToString());
             }
-            if (Optional.IsDefined(RetentionDays))
-            {
-                writer.WritePropertyName("retentionDays"u8);
-                writer.WriteNumberValue(RetentionDays.Value);
-            }
-            if (Optional.IsDefined(CreateMode))
-            {
-                writer.WritePropertyName("createMode"u8);
-                writer.WriteStringValue(CreateMode.Value.ToString());
-            }
             writer.WriteEndObject();
         }
 
@@ -176,7 +166,7 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            ResourceManager.Models.SystemData systemData = default;
             string administratorLogin = default;
             string administratorLoginPassword = default;
             string version = default;
@@ -193,8 +183,6 @@ namespace Azure.ResourceManager.Sql
             ServerNetworkAccessFlag? restrictOutboundNetworkAccess = default;
             ServerNetworkAccessFlag? isIPv6Enabled = default;
             ExternalGovernanceStatus? externalGovernanceStatus = default;
-            int? retentionDays = default;
-            SqlServerCreateMode? createMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -253,7 +241,7 @@ namespace Azure.ResourceManager.Sql
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerSqlContext.Default);
+                    systemData = ModelReaderWriter.Read<ResourceManager.Models.SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerSqlContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -394,24 +382,6 @@ namespace Azure.ResourceManager.Sql
                             externalGovernanceStatus = new ExternalGovernanceStatus(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("retentionDays"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            retentionDays = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("createMode"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            createMode = new SqlServerCreateMode(property0.Value.GetString());
-                            continue;
-                        }
                     }
                     continue;
                 }
@@ -446,8 +416,6 @@ namespace Azure.ResourceManager.Sql
                 restrictOutboundNetworkAccess,
                 isIPv6Enabled,
                 externalGovernanceStatus,
-                retentionDays,
-                createMode,
                 serializedAdditionalRawData);
         }
 
@@ -889,36 +857,6 @@ namespace Azure.ResourceManager.Sql
                 {
                     builder.Append("    externalGovernanceStatus: ");
                     builder.AppendLine($"'{ExternalGovernanceStatus.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RetentionDays), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    retentionDays: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(RetentionDays))
-                {
-                    builder.Append("    retentionDays: ");
-                    builder.AppendLine($"{RetentionDays.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CreateMode), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    createMode: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CreateMode))
-                {
-                    builder.Append("    createMode: ");
-                    builder.AppendLine($"'{CreateMode.Value.ToString()}'");
                 }
             }
 
