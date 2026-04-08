@@ -80,6 +80,9 @@ export interface ResourceMetadata {
   parentResourceModelId?: string;
   singletonResourceName?: string;
   resourceName: string;
+  /** The expected parent resource type for extension resources with specific parent types (e.g., "Microsoft.Compute/virtualMachines") */
+  // TODO: consider to calculate this in generator directly within RequestPathPattern instead of carrying it through emitter and post-processing
+  parentResourceType?: string;
   /** The name constraints for the resource, from TypeSpec decorators */
   nameConstraints: NameConstraints;
   /** The API versions that this resource is available in */
@@ -286,6 +289,7 @@ export function convertArmProviderSchemaToArguments(
       })),
       resourceScope: r.metadata.resourceScope,
       parentResourceId: r.metadata.parentResourceId,
+      parentResourceType: r.metadata.parentResourceType,
       singletonResourceName: r.metadata.singletonResourceName,
       resourceName: r.metadata.resourceName,
       nameConstraints: r.metadata.nameConstraints,
@@ -523,6 +527,15 @@ export function postProcessArmResources(
   // Re-sort methods in resources that may have received additional methods from filtered resources
   for (const resource of filteredResources) {
     sortResourceMethods(resource.metadata.methods);
+  }
+
+  // Step 8: Compute parentResourceType for extension resources with specific parent types
+  for (const resource of filteredResources) {
+    if (countProviderSegments(resource.metadata.resourceIdPattern) > 1) {
+      resource.metadata.parentResourceType = getExpectedParentResourceType(
+        resource.metadata.resourceIdPattern
+      );
+    }
   }
 
   return filteredResources;
@@ -766,4 +779,58 @@ function relocateCrossResourceListActions(
     // Add to target (already classified as List)
     targetResource.metadata.methods.push(method);
   }
+}
+
+/**
+ * Extracts the expected parent resource type from a resource ID pattern that is
+ * already known to have multiple /providers/ segments. Returns undefined if the
+ * parent segment is not a simple `<namespace>/<type>/{name}` pattern (e.g., for
+ * complex paths with nested types or mixed scopes).
+ *
+ * For example, for a pattern like:
+ * /subscriptions/{sub}/resourceGroups/{rg}/providers/Microsoft.Compute/virtualMachines/{vm}/providers/MyService/resources/{name}
+ * This returns "Microsoft.Compute/virtualMachines".
+ */
+function getExpectedParentResourceType(
+  resourceIdPattern: string
+): string | undefined {
+  // Find the last /providers/ segment (the extension resource's own provider)
+  const lastProvidersIndex = resourceIdPattern.lastIndexOf("/providers/");
+
+  // Find the second-to-last /providers/ segment (the parent resource's provider)
+  const parentProvidersIndex = resourceIdPattern.lastIndexOf(
+    "/providers/",
+    lastProvidersIndex - 1
+  );
+
+  if (parentProvidersIndex === -1) {
+    return undefined;
+  }
+
+  // Extract the parent segment between the two /providers/ markers
+  const parentSegment = resourceIdPattern.substring(
+    parentProvidersIndex + "/providers/".length,
+    lastProvidersIndex
+  );
+
+  // Only accept simple parent segments: "<namespace>/<type>/{name}"
+  // Reject complex paths (nested types, mixed scopes) to avoid false positives
+  const segments = parentSegment.split("/");
+  if (segments.length !== 3) {
+    return undefined;
+  }
+
+  const [providerNamespace, resourceType, nameSegment] = segments;
+
+  // All three segments must be well-formed: constants for namespace/type, variable for name
+  if (
+    providerNamespace.includes("{") ||
+    resourceType.includes("{") ||
+    !nameSegment.startsWith("{") ||
+    !nameSegment.endsWith("}")
+  ) {
+    return undefined;
+  }
+
+  return `${providerNamespace}/${resourceType}`;
 }
