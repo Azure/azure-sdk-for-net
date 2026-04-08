@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="cacheBehavior"> Caching behavior for the requests. </param>
         /// <param name="cacheDuration"> The duration for which the content needs to be cached. Allowed format is [d.]hh:mm:ss. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CacheConfiguration(RuleQueryStringCachingBehavior? queryStringCachingBehavior, string queryParameters, RuleIsCompressionEnabled? isCompressionEnabled, RuleCacheBehavior? cacheBehavior, string cacheDuration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CacheConfiguration(RuleQueryStringCachingBehavior? queryStringCachingBehavior, string queryParameters, RuleIsCompressionEnabled? isCompressionEnabled, RuleCacheBehavior? cacheBehavior, TimeSpan? cacheDuration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             QueryStringCachingBehavior = queryStringCachingBehavior;
             QueryParameters = queryParameters;
@@ -57,6 +57,6 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> The duration for which the content needs to be cached. Allowed format is [d.]hh:mm:ss. </summary>
         [WirePath("cacheDuration")]
-        public string CacheDuration { get; set; }
+        public TimeSpan? CacheDuration { get; set; }
     }
 }

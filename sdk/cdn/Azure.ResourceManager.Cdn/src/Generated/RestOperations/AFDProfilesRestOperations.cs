@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateCheckEndpointNameAvailabilityRequest(Guid subscriptionId, string resourceGroupName, string profileName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCheckEndpointNameAvailabilityFrontDoorProfileRequest(Guid subscriptionId, string resourceGroupName, string profileName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Cdn
             return message;
         }
 
-        internal HttpMessage CreateGetResourceUsageRequest(Guid subscriptionId, string resourceGroupName, string profileName, RequestContext context)
+        internal HttpMessage CreateGetFrontDoorProfileResourceUsagesRequest(Guid subscriptionId, string resourceGroupName, string profileName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Cdn
             return message;
         }
 
-        internal HttpMessage CreateNextGetResourceUsageRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string profileName, RequestContext context)
+        internal HttpMessage CreateNextGetFrontDoorProfileResourceUsagesRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string profileName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Cdn
             return message;
         }
 
-        internal HttpMessage CreateCheckHostNameAvailabilityRequest(Guid subscriptionId, string resourceGroupName, string profileName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCheckFrontDoorProfileHostNameAvailabilityRequest(Guid subscriptionId, string resourceGroupName, string profileName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Cdn
             return message;
         }
 
-        internal HttpMessage CreateValidateSecretRequest(Guid subscriptionId, string resourceGroupName, string profileName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateValidateSecretFrontDoorProfileRequest(Guid subscriptionId, string resourceGroupName, string profileName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Cdn
             return message;
         }
 
-        internal HttpMessage CreateUpgradeRequest(Guid subscriptionId, string resourceGroupName, string profileName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateUpgradeFrontDoorProfileRequest(Guid subscriptionId, string resourceGroupName, string profileName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

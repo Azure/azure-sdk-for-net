@@ -4,6 +4,8 @@
 #nullable disable
 
 using System;
+using System.ComponentModel;
+using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
@@ -25,6 +27,14 @@ namespace Azure.ResourceManager.Cdn.Models
             ClassicResourceReference = classicResourceReference;
             ProfileName = profileName;
             MigrationWebApplicationFirewallMappings = new ChangeTrackingList<MigrationWebApplicationFirewallMapping>();
+        }
+
+        /// <summary> Gets or sets Id. </summary>
+        [WirePath("classicResourceReference.id")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public ResourceIdentifier ClassicResourceReferenceId
+        {
+            get => ClassicResourceReference?.Id;
         }
     }
 }

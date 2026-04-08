@@ -16,14 +16,9 @@ namespace Azure.ResourceManager.Cdn.Models
     /// Defines the parameters for delivery rule match conditions
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RemoteAddressMatchCondition"/>, <see cref="RequestMethodMatchCondition"/>, <see cref="QueryStringMatchCondition"/>, <see cref="PostArgsMatchCondition"/>, <see cref="RequestUriMatchCondition"/>, <see cref="RequestHeaderMatchCondition"/>, <see cref="RequestBodyMatchCondition"/>, <see cref="RequestSchemeMatchCondition"/>, <see cref="UriPathMatchCondition"/>, <see cref="UriFileExtensionMatchCondition"/>, <see cref="UriFileNameMatchCondition"/>, <see cref="HttpVersionMatchCondition"/>, <see cref="CookiesMatchCondition"/>, <see cref="IsDeviceMatchCondition"/>, <see cref="SocketAddressMatchCondition"/>, <see cref="ClientPortMatchCondition"/>, <see cref="ServerPortMatchCondition"/>, <see cref="HostNameMatchCondition"/>, and <see cref="DeliveryRuleSslProtocolMatchCondition"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownDeliveryRuleConditionProperties))]
+    [PersistableModelProxy(typeof(UnknownDeliveryRuleConditionParameters))]
     public abstract partial class DeliveryRuleConditionProperties : IJsonModel<DeliveryRuleConditionProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="DeliveryRuleConditionProperties"/> for deserialization. </summary>
-        internal DeliveryRuleConditionProperties()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual DeliveryRuleConditionProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -170,7 +165,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         return DeliveryRuleSslProtocolMatchCondition.DeserializeDeliveryRuleSslProtocolMatchCondition(element, options);
                 }
             }
-            return UnknownDeliveryRuleConditionProperties.DeserializeUnknownDeliveryRuleConditionProperties(element, options);
+            return UnknownDeliveryRuleConditionParameters.DeserializeUnknownDeliveryRuleConditionParameters(element, options);
         }
     }
 }

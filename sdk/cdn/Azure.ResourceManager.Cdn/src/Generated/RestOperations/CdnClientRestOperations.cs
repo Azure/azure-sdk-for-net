@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Cdn
             return message;
         }
 
-        internal HttpMessage CreateCheckNameAvailabilityRequest(RequestContent content, RequestContext context)
+        internal HttpMessage CreateCheckCdnNameAvailabilityRequest(RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Cdn
             return message;
         }
 
-        internal HttpMessage CreateCheckNameAvailabilityWithSubscriptionRequest(Guid subscriptionId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCheckCdnNameAvailabilityWithSubscriptionRequest(Guid subscriptionId, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

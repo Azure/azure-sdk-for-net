@@ -8,8 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.ResourceManager.Cdn;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -83,7 +85,7 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WritePropertyName("keyId"u8);
             writer.WriteStringValue(KeyId);
             writer.WritePropertyName("secretSource"u8);
-            writer.WriteObjectValue(SecretSource, options);
+            ((IJsonModel<WritableSubResource>)SecretSource).Write(writer, options);
             writer.WritePropertyName("secretVersion"u8);
             writer.WriteStringValue(SecretVersion);
         }
@@ -116,7 +118,7 @@ namespace Azure.ResourceManager.Cdn.Models
             SecretType secretType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string keyId = default;
-            ResourceReference secretSource = default;
+            WritableSubResource secretSource = default;
             string secretVersion = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -132,7 +134,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (prop.NameEquals("secretSource"u8))
                 {
-                    secretSource = ResourceReference.DeserializeResourceReference(prop.Value, options);
+                    secretSource = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerCdnContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("secretVersion"u8))

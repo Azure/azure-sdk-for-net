@@ -11,7 +11,6 @@ using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The CanMigrateProperties. </summary>
     internal partial class CanMigrateProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -28,7 +27,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="defaultSku"> Recommended sku for the migration. </param>
         /// <param name="errors"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CanMigrateProperties(bool? canMigrate, CanMigrateDefaultSku? defaultSku, IList<MigrationErrorType> errors, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CanMigrateProperties(bool? canMigrate, CanMigrateDefaultSku? defaultSku, IReadOnlyList<MigrationErrorType> errors, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CanMigrate = canMigrate;
             DefaultSku = defaultSku;
@@ -43,9 +42,5 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Recommended sku for the migration. </summary>
         [WirePath("defaultSku")]
         public CanMigrateDefaultSku? DefaultSku { get; }
-
-        /// <summary> Gets the Errors. </summary>
-        [WirePath("errors")]
-        public IList<MigrationErrorType> Errors { get; } = new ChangeTrackingList<MigrationErrorType>();
     }
 }

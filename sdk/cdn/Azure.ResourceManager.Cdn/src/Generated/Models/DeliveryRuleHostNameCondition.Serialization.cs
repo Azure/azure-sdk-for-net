@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("parameters"u8);
-            writer.WriteObjectValue(Parameters, options);
+            writer.WriteObjectValue(Properties, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             MatchVariable name = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            HostNameMatchCondition parameters = default;
+            HostNameMatchCondition properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("name"u8))
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (prop.NameEquals("parameters"u8))
                 {
-                    parameters = HostNameMatchCondition.DeserializeHostNameMatchCondition(prop.Value, options);
+                    properties = HostNameMatchCondition.DeserializeHostNameMatchCondition(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DeliveryRuleHostNameCondition(name, additionalBinaryDataProperties, parameters);
+            return new DeliveryRuleHostNameCondition(name, additionalBinaryDataProperties, properties);
         }
     }
 }

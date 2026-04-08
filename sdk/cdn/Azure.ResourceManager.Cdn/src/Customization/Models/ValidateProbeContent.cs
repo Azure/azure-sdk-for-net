@@ -11,12 +11,9 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class ValidateProbeContent
     {
         // Backward compatibility: old API used Uri ProbeUri property and ctor(Uri)
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public ValidateProbeContent(Uri probeUri) : this(probeUri?.AbsoluteUri)
-        {
-        }
-
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public Uri ProbeUri => ProbeURL != null ? new Uri(ProbeURL) : null;
+        //[EditorBrowsable(EditorBrowsableState.Never)]
+        //public ValidateProbeContent(Uri probeUri) : this(probeUri?.AbsoluteUri)
+        //{
+        //}
     }
 }

@@ -12,16 +12,12 @@ using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The JSON object that contains the properties required to create an endpoint. </summary>
     internal partial class EndpointProperties : EndpointPropertiesUpdateParameters
     {
         /// <summary> Initializes a new instance of <see cref="EndpointProperties"/>. </summary>
         /// <param name="origins"> The source of the content being delivered via CDN. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="origins"/> is null. </exception>
         public EndpointProperties(IEnumerable<DeepCreatedOrigin> origins)
         {
-            Argument.AssertNotNull(origins, nameof(origins));
-
             Origins = origins.ToList();
             OriginGroups = new ChangeTrackingList<DeepCreatedOriginGroup>();
             DeepCreatedCustomDomains = new ChangeTrackingList<DeepCreatedCustomDomain>();
@@ -49,7 +45,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="deepCreatedCustomDomains"> The custom domains under the endpoint. </param>
         /// <param name="resourceState"> Resource status of the endpoint. </param>
         /// <param name="provisioningState"> Provisioning status of the endpoint. </param>
-        internal EndpointProperties(string originPath, IList<string> contentTypesToCompress, string originHostHeader, bool? isCompressionEnabled, bool? isHttpAllowed, bool? isHttpsAllowed, QueryStringCachingBehavior? queryStringCachingBehavior, OptimizationType? optimizationType, string probePath, IList<GeoFilter> geoFilters, ResourceReference defaultOriginGroup, IList<UriSigningKey> uriSigningKeys, EndpointDeliveryPolicy deliveryPolicy, EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink webApplicationFirewallPolicyLink, IDictionary<string, BinaryData> additionalBinaryDataProperties, string hostName, IList<DeepCreatedOrigin> origins, IList<DeepCreatedOriginGroup> originGroups, IList<DeepCreatedCustomDomain> deepCreatedCustomDomains, EndpointResourceState? resourceState, CdnEndpointProvisioningState? provisioningState) : base(originPath, contentTypesToCompress, originHostHeader, isCompressionEnabled, isHttpAllowed, isHttpsAllowed, queryStringCachingBehavior, optimizationType, probePath, geoFilters, defaultOriginGroup, uriSigningKeys, deliveryPolicy, webApplicationFirewallPolicyLink, additionalBinaryDataProperties)
+        internal EndpointProperties(string originPath, IList<string> contentTypesToCompress, string originHostHeader, bool? isCompressionEnabled, bool? isHttpAllowed, bool? isHttpsAllowed, QueryStringCachingBehavior? queryStringCachingBehavior, OptimizationType? optimizationType, string probePath, IList<GeoFilter> geoFilters, ResourceReference defaultOriginGroup, IReadOnlyList<UriSigningKey> uriSigningKeys, EndpointDeliveryPolicy deliveryPolicy, EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink webApplicationFirewallPolicyLink, IDictionary<string, BinaryData> additionalBinaryDataProperties, string hostName, IList<DeepCreatedOrigin> origins, IList<DeepCreatedOriginGroup> originGroups, IReadOnlyList<DeepCreatedCustomDomain> deepCreatedCustomDomains, EndpointResourceState? resourceState, CdnEndpointProvisioningState? provisioningState) : base(originPath, contentTypesToCompress, originHostHeader, isCompressionEnabled, isHttpAllowed, isHttpsAllowed, queryStringCachingBehavior, optimizationType, probePath, geoFilters, defaultOriginGroup, uriSigningKeys, deliveryPolicy, webApplicationFirewallPolicyLink, additionalBinaryDataProperties)
         {
             HostName = hostName;
             Origins = origins;
@@ -70,10 +66,6 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> The origin groups comprising of origins that are used for load balancing the traffic based on availability. </summary>
         [WirePath("originGroups")]
         public IList<DeepCreatedOriginGroup> OriginGroups { get; } = new ChangeTrackingList<DeepCreatedOriginGroup>();
-
-        /// <summary> The custom domains under the endpoint. </summary>
-        [WirePath("customDomains")]
-        public IList<DeepCreatedCustomDomain> DeepCreatedCustomDomains { get; } = new ChangeTrackingList<DeepCreatedCustomDomain>();
 
         /// <summary> Resource status of the endpoint. </summary>
         [WirePath("resourceState")]

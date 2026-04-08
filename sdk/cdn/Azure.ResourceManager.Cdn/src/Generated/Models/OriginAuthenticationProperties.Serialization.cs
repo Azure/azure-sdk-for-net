@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 throw new FormatException($"The model {nameof(OriginAuthenticationProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(AuthenticationType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(AuthenticationType.Value.ToString());
             }
             if (Optional.IsDefined(UserAssignedIdentity))
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            OriginAuthenticationType? @type = default;
+            OriginAuthenticationType? authenticationType = default;
             ResourceReference userAssignedIdentity = default;
             Uri scope = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    @type = new OriginAuthenticationType(prop.Value.GetString());
+                    authenticationType = new OriginAuthenticationType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("userAssignedIdentity"u8))
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new OriginAuthenticationProperties(@type, userAssignedIdentity, scope, additionalBinaryDataProperties);
+            return new OriginAuthenticationProperties(authenticationType, userAssignedIdentity, scope, additionalBinaryDataProperties);
         }
     }
 }

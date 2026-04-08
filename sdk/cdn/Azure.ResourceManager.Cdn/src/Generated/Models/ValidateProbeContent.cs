@@ -18,26 +18,26 @@ namespace Azure.ResourceManager.Cdn.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ValidateProbeContent"/>. </summary>
-        /// <param name="probeURL"> The probe URL to validate. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="probeURL"/> is null. </exception>
-        public ValidateProbeContent(string probeURL)
+        /// <param name="probeUri"> The probe URL to validate. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="probeUri"/> is null. </exception>
+        public ValidateProbeContent(Uri probeUri)
         {
-            Argument.AssertNotNull(probeURL, nameof(probeURL));
+            Argument.AssertNotNull(probeUri, nameof(probeUri));
 
-            ProbeURL = probeURL;
+            ProbeUri = probeUri;
         }
 
         /// <summary> Initializes a new instance of <see cref="ValidateProbeContent"/>. </summary>
-        /// <param name="probeURL"> The probe URL to validate. </param>
+        /// <param name="probeUri"> The probe URL to validate. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ValidateProbeContent(string probeURL, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ValidateProbeContent(Uri probeUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ProbeURL = probeURL;
+            ProbeUri = probeUri;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The probe URL to validate. </summary>
         [WirePath("probeURL")]
-        public string ProbeURL { get; }
+        public Uri ProbeUri { get; }
     }
 }

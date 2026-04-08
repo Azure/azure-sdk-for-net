@@ -436,9 +436,9 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<CanMigrateResult>> CdnCanMigrateToAfdAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<CanMigrateResult>> CheckCdnMigrationCompatibilityAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _profilesClientDiagnostics.CreateScope("ProfileResource.CdnCanMigrateToAfd");
+            using DiagnosticScope scope = _profilesClientDiagnostics.CreateScope("ProfileResource.CheckCdnMigrationCompatibility");
             scope.Start();
             try
             {
@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _profilesRestClient.CreateCdnCanMigrateToAfdRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _profilesRestClient.CreateCheckCdnMigrationCompatibilityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CdnArmOperation<CanMigrateResult> operation = new CdnArmOperation<CanMigrateResult>(
                     new CanMigrateResultOperationSource(),
@@ -491,9 +491,9 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<CanMigrateResult> CdnCanMigrateToAfd(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<CanMigrateResult> CheckCdnMigrationCompatibility(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _profilesClientDiagnostics.CreateScope("ProfileResource.CdnCanMigrateToAfd");
+            using DiagnosticScope scope = _profilesClientDiagnostics.CreateScope("ProfileResource.CheckCdnMigrationCompatibility");
             scope.Start();
             try
             {
@@ -501,7 +501,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _profilesRestClient.CreateCdnCanMigrateToAfdRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _profilesRestClient.CreateCheckCdnMigrationCompatibilityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CdnArmOperation<CanMigrateResult> operation = new CdnArmOperation<CanMigrateResult>(
                     new CanMigrateResultOperationSource(),
@@ -548,11 +548,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="content"> Properties needed to migrate the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<MigrateResult>> CdnMigrateToAfdAsync(WaitUntil waitUntil, CdnMigrationToAfdContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<MigrateResult>> MigrateCdnToAfdAsync(WaitUntil waitUntil, CdnMigrationToAfdContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _profilesClientDiagnostics.CreateScope("ProfileResource.CdnMigrateToAfd");
+            using DiagnosticScope scope = _profilesClientDiagnostics.CreateScope("ProfileResource.MigrateCdnToAfd");
             scope.Start();
             try
             {
@@ -560,7 +560,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _profilesRestClient.CreateCdnMigrateToAfdRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CdnMigrationToAfdContent.ToRequestContent(content), context);
+                HttpMessage message = _profilesRestClient.CreateMigrateCdnToAfdRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CdnMigrationToAfdContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CdnArmOperation<MigrateResult> operation = new CdnArmOperation<MigrateResult>(
                     new MigrateResultOperationSource(),
@@ -607,11 +607,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="content"> Properties needed to migrate the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<MigrateResult> CdnMigrateToAfd(WaitUntil waitUntil, CdnMigrationToAfdContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<MigrateResult> MigrateCdnToAfd(WaitUntil waitUntil, CdnMigrationToAfdContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _profilesClientDiagnostics.CreateScope("ProfileResource.CdnMigrateToAfd");
+            using DiagnosticScope scope = _profilesClientDiagnostics.CreateScope("ProfileResource.MigrateCdnToAfd");
             scope.Start();
             try
             {
@@ -619,7 +619,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _profilesRestClient.CreateCdnMigrateToAfdRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CdnMigrationToAfdContent.ToRequestContent(content), context);
+                HttpMessage message = _profilesRestClient.CreateMigrateCdnToAfdRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CdnMigrationToAfdContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CdnArmOperation<MigrateResult> operation = new CdnArmOperation<MigrateResult>(
                     new MigrateResultOperationSource(),
@@ -665,11 +665,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<EndpointNameAvailabilityResult>> CheckEndpointNameAvailabilityAsync(EndpointNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EndpointNameAvailabilityResult>> CheckEndpointNameAvailabilityFrontDoorProfileAsync(EndpointNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _afdProfilesClientDiagnostics.CreateScope("ProfileResource.CheckEndpointNameAvailability");
+            using DiagnosticScope scope = _afdProfilesClientDiagnostics.CreateScope("ProfileResource.CheckEndpointNameAvailabilityFrontDoorProfile");
             scope.Start();
             try
             {
@@ -677,7 +677,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _afdProfilesRestClient.CreateCheckEndpointNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, EndpointNameAvailabilityContent.ToRequestContent(content), context);
+                HttpMessage message = _afdProfilesRestClient.CreateCheckEndpointNameAvailabilityFrontDoorProfileRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, EndpointNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EndpointNameAvailabilityResult> response = Response.FromValue(EndpointNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -717,11 +717,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<EndpointNameAvailabilityResult> CheckEndpointNameAvailability(EndpointNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<EndpointNameAvailabilityResult> CheckEndpointNameAvailabilityFrontDoorProfile(EndpointNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _afdProfilesClientDiagnostics.CreateScope("ProfileResource.CheckEndpointNameAvailability");
+            using DiagnosticScope scope = _afdProfilesClientDiagnostics.CreateScope("ProfileResource.CheckEndpointNameAvailabilityFrontDoorProfile");
             scope.Start();
             try
             {
@@ -729,7 +729,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _afdProfilesRestClient.CreateCheckEndpointNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, EndpointNameAvailabilityContent.ToRequestContent(content), context);
+                HttpMessage message = _afdProfilesRestClient.CreateCheckEndpointNameAvailabilityFrontDoorProfileRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, EndpointNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EndpointNameAvailabilityResult> response = Response.FromValue(EndpointNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -769,11 +769,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="content"> Custom domain to be validated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<CdnNameAvailabilityResult>> CheckHostNameAvailabilityAsync(HostNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CdnNameAvailabilityResult>> CheckFrontDoorProfileHostNameAvailabilityAsync(HostNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _afdProfilesClientDiagnostics.CreateScope("ProfileResource.CheckHostNameAvailability");
+            using DiagnosticScope scope = _afdProfilesClientDiagnostics.CreateScope("ProfileResource.CheckFrontDoorProfileHostNameAvailability");
             scope.Start();
             try
             {
@@ -781,7 +781,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _afdProfilesRestClient.CreateCheckHostNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HostNameAvailabilityContent.ToRequestContent(content), context);
+                HttpMessage message = _afdProfilesRestClient.CreateCheckFrontDoorProfileHostNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HostNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CdnNameAvailabilityResult> response = Response.FromValue(CdnNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -821,11 +821,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="content"> Custom domain to be validated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<CdnNameAvailabilityResult> CheckHostNameAvailability(HostNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<CdnNameAvailabilityResult> CheckFrontDoorProfileHostNameAvailability(HostNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _afdProfilesClientDiagnostics.CreateScope("ProfileResource.CheckHostNameAvailability");
+            using DiagnosticScope scope = _afdProfilesClientDiagnostics.CreateScope("ProfileResource.CheckFrontDoorProfileHostNameAvailability");
             scope.Start();
             try
             {
@@ -833,7 +833,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _afdProfilesRestClient.CreateCheckHostNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HostNameAvailabilityContent.ToRequestContent(content), context);
+                HttpMessage message = _afdProfilesRestClient.CreateCheckFrontDoorProfileHostNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HostNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CdnNameAvailabilityResult> response = Response.FromValue(CdnNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1062,22 +1062,12 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="metrics"></param>
-        /// <param name="dateTimeBegin"></param>
-        /// <param name="dateTimeEnd"></param>
-        /// <param name="granularity"></param>
-        /// <param name="customDomains"></param>
-        /// <param name="protocols"></param>
-        /// <param name="groupBy"></param>
-        /// <param name="continents"></param>
-        /// <param name="countryOrRegions"></param>
+        /// <param name="options"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="metrics"/>, <paramref name="customDomains"/> or <paramref name="protocols"/> is null. </exception>
-        public virtual async Task<Response<MetricsResponse>> GetLogAnalyticsMetricsAsync(IEnumerable<LogMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, LogMetricsGranularity granularity, IEnumerable<string> customDomains, IEnumerable<string> protocols, IEnumerable<LogMetricsGroupBy> groupBy = default, IEnumerable<string> continents = default, IEnumerable<string> countryOrRegions = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual async Task<Response<MetricsResponse>> GetLogAnalyticsMetricsAsync(ProfileResourceGetLogAnalyticsMetricsOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(metrics, nameof(metrics));
-            Argument.AssertNotNull(customDomains, nameof(customDomains));
-            Argument.AssertNotNull(protocols, nameof(protocols));
+            Argument.AssertNotNull(options, nameof(options));
 
             using DiagnosticScope scope = _logAnalyticsClientDiagnostics.CreateScope("ProfileResource.GetLogAnalyticsMetrics");
             scope.Start();
@@ -1087,7 +1077,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _logAnalyticsRestClient.CreateGetLogAnalyticsMetricsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, metrics, dateTimeBegin, dateTimeEnd, granularity.ToString(), customDomains, protocols, groupBy, continents, countryOrRegions, context);
+                HttpMessage message = _logAnalyticsRestClient.CreateGetLogAnalyticsMetricsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, default, default, default, default, default, default, default, default, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MetricsResponse> response = Response.FromValue(MetricsResponse.FromResponse(result), result);
                 if (response.Value == null)
@@ -1124,22 +1114,12 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="metrics"></param>
-        /// <param name="dateTimeBegin"></param>
-        /// <param name="dateTimeEnd"></param>
-        /// <param name="granularity"></param>
-        /// <param name="customDomains"></param>
-        /// <param name="protocols"></param>
-        /// <param name="groupBy"></param>
-        /// <param name="continents"></param>
-        /// <param name="countryOrRegions"></param>
+        /// <param name="options"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="metrics"/>, <paramref name="customDomains"/> or <paramref name="protocols"/> is null. </exception>
-        public virtual Response<MetricsResponse> GetLogAnalyticsMetrics(IEnumerable<LogMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, LogMetricsGranularity granularity, IEnumerable<string> customDomains, IEnumerable<string> protocols, IEnumerable<LogMetricsGroupBy> groupBy = default, IEnumerable<string> continents = default, IEnumerable<string> countryOrRegions = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual Response<MetricsResponse> GetLogAnalyticsMetrics(ProfileResourceGetLogAnalyticsMetricsOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(metrics, nameof(metrics));
-            Argument.AssertNotNull(customDomains, nameof(customDomains));
-            Argument.AssertNotNull(protocols, nameof(protocols));
+            Argument.AssertNotNull(options, nameof(options));
 
             using DiagnosticScope scope = _logAnalyticsClientDiagnostics.CreateScope("ProfileResource.GetLogAnalyticsMetrics");
             scope.Start();
@@ -1149,7 +1129,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _logAnalyticsRestClient.CreateGetLogAnalyticsMetricsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, metrics, dateTimeBegin, dateTimeEnd, granularity.ToString(), customDomains, protocols, groupBy, continents, countryOrRegions, context);
+                HttpMessage message = _logAnalyticsRestClient.CreateGetLogAnalyticsMetricsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, default, default, default, default, default, default, default, default, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MetricsResponse> response = Response.FromValue(MetricsResponse.FromResponse(result), result);
                 if (response.Value == null)
@@ -1186,18 +1166,12 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="rankings"></param>
-        /// <param name="metrics"></param>
-        /// <param name="maxRanking"></param>
-        /// <param name="dateTimeBegin"></param>
-        /// <param name="dateTimeEnd"></param>
-        /// <param name="customDomains"></param>
+        /// <param name="options"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="rankings"/> or <paramref name="metrics"/> is null. </exception>
-        public virtual async Task<Response<RankingsResponse>> GetLogAnalyticsRankingsAsync(IEnumerable<LogRanking> rankings, IEnumerable<LogRankingMetric> metrics, int maxRanking, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, IEnumerable<string> customDomains = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual async Task<Response<RankingsResponse>> GetLogAnalyticsRankingsAsync(ProfileResourceGetLogAnalyticsRankingsOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(rankings, nameof(rankings));
-            Argument.AssertNotNull(metrics, nameof(metrics));
+            Argument.AssertNotNull(options, nameof(options));
 
             using DiagnosticScope scope = _logAnalyticsClientDiagnostics.CreateScope("ProfileResource.GetLogAnalyticsRankings");
             scope.Start();
@@ -1207,7 +1181,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _logAnalyticsRestClient.CreateGetLogAnalyticsRankingsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, rankings, metrics, maxRanking, dateTimeBegin, dateTimeEnd, customDomains, context);
+                HttpMessage message = _logAnalyticsRestClient.CreateGetLogAnalyticsRankingsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, default, default, default, default, default, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RankingsResponse> response = Response.FromValue(RankingsResponse.FromResponse(result), result);
                 if (response.Value == null)
@@ -1244,18 +1218,12 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="rankings"></param>
-        /// <param name="metrics"></param>
-        /// <param name="maxRanking"></param>
-        /// <param name="dateTimeBegin"></param>
-        /// <param name="dateTimeEnd"></param>
-        /// <param name="customDomains"></param>
+        /// <param name="options"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="rankings"/> or <paramref name="metrics"/> is null. </exception>
-        public virtual Response<RankingsResponse> GetLogAnalyticsRankings(IEnumerable<LogRanking> rankings, IEnumerable<LogRankingMetric> metrics, int maxRanking, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, IEnumerable<string> customDomains = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual Response<RankingsResponse> GetLogAnalyticsRankings(ProfileResourceGetLogAnalyticsRankingsOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(rankings, nameof(rankings));
-            Argument.AssertNotNull(metrics, nameof(metrics));
+            Argument.AssertNotNull(options, nameof(options));
 
             using DiagnosticScope scope = _logAnalyticsClientDiagnostics.CreateScope("ProfileResource.GetLogAnalyticsRankings");
             scope.Start();
@@ -1265,7 +1233,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _logAnalyticsRestClient.CreateGetLogAnalyticsRankingsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, rankings, metrics, maxRanking, dateTimeBegin, dateTimeEnd, customDomains, context);
+                HttpMessage message = _logAnalyticsRestClient.CreateGetLogAnalyticsRankingsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, default, default, default, default, default, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RankingsResponse> response = Response.FromValue(RankingsResponse.FromResponse(result), result);
                 if (response.Value == null)
@@ -1398,18 +1366,12 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="metrics"></param>
-        /// <param name="dateTimeBegin"></param>
-        /// <param name="dateTimeEnd"></param>
-        /// <param name="granularity"></param>
-        /// <param name="actions"></param>
-        /// <param name="groupBy"></param>
-        /// <param name="ruleTypes"></param>
+        /// <param name="options"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="metrics"/> is null. </exception>
-        public virtual async Task<Response<WafMetricsResponse>> GetWafLogAnalyticsMetricsAsync(IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, WafGranularity granularity, IEnumerable<WafAction> actions = default, IEnumerable<WafRankingGroupBy> groupBy = default, IEnumerable<WafRuleType> ruleTypes = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual async Task<Response<WafMetricsResponse>> GetWafLogAnalyticsMetricsAsync(ProfileResourceGetWafLogAnalyticsMetricsOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(metrics, nameof(metrics));
+            Argument.AssertNotNull(options, nameof(options));
 
             using DiagnosticScope scope = _logAnalyticsClientDiagnostics.CreateScope("ProfileResource.GetWafLogAnalyticsMetrics");
             scope.Start();
@@ -1419,7 +1381,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _logAnalyticsRestClient.CreateGetWafLogAnalyticsMetricsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, metrics, dateTimeBegin, dateTimeEnd, granularity.ToString(), actions, groupBy, ruleTypes, context);
+                HttpMessage message = _logAnalyticsRestClient.CreateGetWafLogAnalyticsMetricsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, default, default, default, default, default, default, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<WafMetricsResponse> response = Response.FromValue(WafMetricsResponse.FromResponse(result), result);
                 if (response.Value == null)
@@ -1456,18 +1418,12 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="metrics"></param>
-        /// <param name="dateTimeBegin"></param>
-        /// <param name="dateTimeEnd"></param>
-        /// <param name="granularity"></param>
-        /// <param name="actions"></param>
-        /// <param name="groupBy"></param>
-        /// <param name="ruleTypes"></param>
+        /// <param name="options"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="metrics"/> is null. </exception>
-        public virtual Response<WafMetricsResponse> GetWafLogAnalyticsMetrics(IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, WafGranularity granularity, IEnumerable<WafAction> actions = default, IEnumerable<WafRankingGroupBy> groupBy = default, IEnumerable<WafRuleType> ruleTypes = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual Response<WafMetricsResponse> GetWafLogAnalyticsMetrics(ProfileResourceGetWafLogAnalyticsMetricsOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(metrics, nameof(metrics));
+            Argument.AssertNotNull(options, nameof(options));
 
             using DiagnosticScope scope = _logAnalyticsClientDiagnostics.CreateScope("ProfileResource.GetWafLogAnalyticsMetrics");
             scope.Start();
@@ -1477,7 +1433,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _logAnalyticsRestClient.CreateGetWafLogAnalyticsMetricsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, metrics, dateTimeBegin, dateTimeEnd, granularity.ToString(), actions, groupBy, ruleTypes, context);
+                HttpMessage message = _logAnalyticsRestClient.CreateGetWafLogAnalyticsMetricsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, default, default, default, default, default, default, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<WafMetricsResponse> response = Response.FromValue(WafMetricsResponse.FromResponse(result), result);
                 if (response.Value == null)
@@ -1514,19 +1470,12 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="metrics"></param>
-        /// <param name="dateTimeBegin"></param>
-        /// <param name="dateTimeEnd"></param>
-        /// <param name="maxRanking"></param>
-        /// <param name="rankings"></param>
-        /// <param name="actions"></param>
-        /// <param name="ruleTypes"></param>
+        /// <param name="options"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="metrics"/> or <paramref name="rankings"/> is null. </exception>
-        public virtual async Task<Response<WafRankingsResponse>> GetWafLogAnalyticsRankingsAsync(IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, int maxRanking, IEnumerable<WafRankingType> rankings, IEnumerable<WafAction> actions = default, IEnumerable<WafRuleType> ruleTypes = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual async Task<Response<WafRankingsResponse>> GetWafLogAnalyticsRankingsAsync(ProfileResourceGetWafLogAnalyticsRankingsOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(metrics, nameof(metrics));
-            Argument.AssertNotNull(rankings, nameof(rankings));
+            Argument.AssertNotNull(options, nameof(options));
 
             using DiagnosticScope scope = _logAnalyticsClientDiagnostics.CreateScope("ProfileResource.GetWafLogAnalyticsRankings");
             scope.Start();
@@ -1536,7 +1485,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _logAnalyticsRestClient.CreateGetWafLogAnalyticsRankingsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, metrics, dateTimeBegin, dateTimeEnd, maxRanking, rankings, actions, ruleTypes, context);
+                HttpMessage message = _logAnalyticsRestClient.CreateGetWafLogAnalyticsRankingsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, default, default, default, default, default, default, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<WafRankingsResponse> response = Response.FromValue(WafRankingsResponse.FromResponse(result), result);
                 if (response.Value == null)
@@ -1573,19 +1522,12 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="metrics"></param>
-        /// <param name="dateTimeBegin"></param>
-        /// <param name="dateTimeEnd"></param>
-        /// <param name="maxRanking"></param>
-        /// <param name="rankings"></param>
-        /// <param name="actions"></param>
-        /// <param name="ruleTypes"></param>
+        /// <param name="options"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="metrics"/> or <paramref name="rankings"/> is null. </exception>
-        public virtual Response<WafRankingsResponse> GetWafLogAnalyticsRankings(IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, int maxRanking, IEnumerable<WafRankingType> rankings, IEnumerable<WafAction> actions = default, IEnumerable<WafRuleType> ruleTypes = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual Response<WafRankingsResponse> GetWafLogAnalyticsRankings(ProfileResourceGetWafLogAnalyticsRankingsOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(metrics, nameof(metrics));
-            Argument.AssertNotNull(rankings, nameof(rankings));
+            Argument.AssertNotNull(options, nameof(options));
 
             using DiagnosticScope scope = _logAnalyticsClientDiagnostics.CreateScope("ProfileResource.GetWafLogAnalyticsRankings");
             scope.Start();
@@ -1595,7 +1537,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _logAnalyticsRestClient.CreateGetWafLogAnalyticsRankingsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, metrics, dateTimeBegin, dateTimeEnd, maxRanking, rankings, actions, ruleTypes, context);
+                HttpMessage message = _logAnalyticsRestClient.CreateGetWafLogAnalyticsRankingsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, default, default, default, default, default, default, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<WafRankingsResponse> response = Response.FromValue(WafRankingsResponse.FromResponse(result), result);
                 if (response.Value == null)
@@ -1634,13 +1576,13 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="FrontDoorUsage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<FrontDoorUsage> GetResourceUsageAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<FrontDoorUsage> GetFrontDoorProfileResourceUsagesAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AFDProfilesGetResourceUsageAsyncCollectionResultOfT(_afdProfilesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new AFDProfilesGetFrontDoorProfileResourceUsagesAsyncCollectionResultOfT(_afdProfilesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
         }
 
         /// <summary>
@@ -1666,13 +1608,13 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="FrontDoorUsage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<FrontDoorUsage> GetResourceUsage(CancellationToken cancellationToken = default)
+        public virtual Pageable<FrontDoorUsage> GetFrontDoorProfileResourceUsages(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AFDProfilesGetResourceUsageCollectionResultOfT(_afdProfilesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new AFDProfilesGetFrontDoorProfileResourceUsagesCollectionResultOfT(_afdProfilesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
         }
 
         /// <summary>
@@ -1794,9 +1736,9 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> MigrationAbortAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> AbortMigrationAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _profilesClientDiagnostics.CreateScope("ProfileResource.MigrationAbort");
+            using DiagnosticScope scope = _profilesClientDiagnostics.CreateScope("ProfileResource.AbortMigration");
             scope.Start();
             try
             {
@@ -1804,7 +1746,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _profilesRestClient.CreateMigrationAbortRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _profilesRestClient.CreateAbortMigrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CdnArmOperation operation = new CdnArmOperation(_profilesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1843,9 +1785,9 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation MigrationAbort(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation AbortMigration(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _profilesClientDiagnostics.CreateScope("ProfileResource.MigrationAbort");
+            using DiagnosticScope scope = _profilesClientDiagnostics.CreateScope("ProfileResource.AbortMigration");
             scope.Start();
             try
             {
@@ -1853,7 +1795,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _profilesRestClient.CreateMigrationAbortRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _profilesRestClient.CreateAbortMigrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CdnArmOperation operation = new CdnArmOperation(_profilesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1990,13 +1932,13 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CdnUsage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CdnUsage> GetCdnProfileResourceUsagesAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<CdnUsage> GetResourceUsagesAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new ProfilesGetCdnProfileResourceUsagesAsyncCollectionResultOfT(_profilesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new ProfilesGetResourceUsagesAsyncCollectionResultOfT(_profilesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
         }
 
         /// <summary>
@@ -2022,13 +1964,13 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CdnUsage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CdnUsage> GetCdnProfileResourceUsages(CancellationToken cancellationToken = default)
+        public virtual Pageable<CdnUsage> GetResourceUsages(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new ProfilesGetCdnProfileResourceUsagesCollectionResultOfT(_profilesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new ProfilesGetResourceUsagesCollectionResultOfT(_profilesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
         }
 
         /// <summary>
@@ -2056,11 +1998,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="content"> Profile upgrade input parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<ProfileResource>> UpgradeAsync(WaitUntil waitUntil, ProfileUpgradeContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ProfileResource>> UpgradeFrontDoorProfileAsync(WaitUntil waitUntil, ProfileUpgradeContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _afdProfilesClientDiagnostics.CreateScope("ProfileResource.Upgrade");
+            using DiagnosticScope scope = _afdProfilesClientDiagnostics.CreateScope("ProfileResource.UpgradeFrontDoorProfile");
             scope.Start();
             try
             {
@@ -2068,7 +2010,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _afdProfilesRestClient.CreateUpgradeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ProfileUpgradeContent.ToRequestContent(content), context);
+                HttpMessage message = _afdProfilesRestClient.CreateUpgradeFrontDoorProfileRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ProfileUpgradeContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CdnArmOperation<ProfileResource> operation = new CdnArmOperation<ProfileResource>(
                     new ProfileOperationSource(Client),
@@ -2115,11 +2057,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="content"> Profile upgrade input parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<ProfileResource> Upgrade(WaitUntil waitUntil, ProfileUpgradeContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ProfileResource> UpgradeFrontDoorProfile(WaitUntil waitUntil, ProfileUpgradeContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _afdProfilesClientDiagnostics.CreateScope("ProfileResource.Upgrade");
+            using DiagnosticScope scope = _afdProfilesClientDiagnostics.CreateScope("ProfileResource.UpgradeFrontDoorProfile");
             scope.Start();
             try
             {
@@ -2127,7 +2069,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _afdProfilesRestClient.CreateUpgradeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ProfileUpgradeContent.ToRequestContent(content), context);
+                HttpMessage message = _afdProfilesRestClient.CreateUpgradeFrontDoorProfileRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ProfileUpgradeContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CdnArmOperation<ProfileResource> operation = new CdnArmOperation<ProfileResource>(
                     new ProfileOperationSource(Client),
@@ -2173,11 +2115,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="content"> The Secret source. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<ValidateSecretResult>> ValidateSecretAsync(ValidateSecretContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ValidateSecretResult>> ValidateSecretFrontDoorProfileAsync(ValidateSecretContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _afdProfilesClientDiagnostics.CreateScope("ProfileResource.ValidateSecret");
+            using DiagnosticScope scope = _afdProfilesClientDiagnostics.CreateScope("ProfileResource.ValidateSecretFrontDoorProfile");
             scope.Start();
             try
             {
@@ -2185,7 +2127,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _afdProfilesRestClient.CreateValidateSecretRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ValidateSecretContent.ToRequestContent(content), context);
+                HttpMessage message = _afdProfilesRestClient.CreateValidateSecretFrontDoorProfileRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ValidateSecretContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ValidateSecretResult> response = Response.FromValue(ValidateSecretResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -2225,11 +2167,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="content"> The Secret source. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<ValidateSecretResult> ValidateSecret(ValidateSecretContent content, CancellationToken cancellationToken = default)
+        public virtual Response<ValidateSecretResult> ValidateSecretFrontDoorProfile(ValidateSecretContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _afdProfilesClientDiagnostics.CreateScope("ProfileResource.ValidateSecret");
+            using DiagnosticScope scope = _afdProfilesClientDiagnostics.CreateScope("ProfileResource.ValidateSecretFrontDoorProfile");
             scope.Start();
             try
             {
@@ -2237,7 +2179,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _afdProfilesRestClient.CreateValidateSecretRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ValidateSecretContent.ToRequestContent(content), context);
+                HttpMessage message = _afdProfilesRestClient.CreateValidateSecretFrontDoorProfileRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ValidateSecretContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ValidateSecretResult> response = Response.FromValue(ValidateSecretResult.FromResponse(result), result);
                 if (response.Value == null)

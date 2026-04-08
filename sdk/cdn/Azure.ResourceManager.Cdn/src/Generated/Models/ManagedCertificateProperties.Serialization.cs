@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WritePropertyName("subject"u8);
                 writer.WriteStringValue(Subject);
             }
-            if (options.Format != "W" && Optional.IsDefined(ExpirationDate))
+            if (options.Format != "W" && Optional.IsDefined(ExpiresOn))
             {
                 writer.WritePropertyName("expirationDate"u8);
-                writer.WriteStringValue(ExpirationDate);
+                writer.WriteStringValue(ExpiresOn.Value, "O");
             }
         }
 
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Cdn.Models
             SecretType secretType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string subject = default;
-            string expirationDate = default;
+            DateTimeOffset? expiresOn = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -130,7 +130,11 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (prop.NameEquals("expirationDate"u8))
                 {
-                    expirationDate = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    expiresOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -138,7 +142,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ManagedCertificateProperties(secretType, additionalBinaryDataProperties, subject, expirationDate);
+            return new ManagedCertificateProperties(secretType, additionalBinaryDataProperties, subject, expiresOn);
         }
     }
 }

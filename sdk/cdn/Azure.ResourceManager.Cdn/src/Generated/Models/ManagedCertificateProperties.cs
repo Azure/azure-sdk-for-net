@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="secretType"> The type of the secret resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="subject"> Subject name in the certificate. </param>
-        /// <param name="expirationDate"> Certificate expiration date. </param>
-        internal ManagedCertificateProperties(SecretType secretType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string subject, string expirationDate) : base(secretType, additionalBinaryDataProperties)
+        /// <param name="expiresOn"> Certificate expiration date. </param>
+        internal ManagedCertificateProperties(SecretType secretType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string subject, DateTimeOffset? expiresOn) : base(secretType, additionalBinaryDataProperties)
         {
             Subject = subject;
-            ExpirationDate = expirationDate;
+            ExpiresOn = expiresOn;
         }
 
         /// <summary> Subject name in the certificate. </summary>
@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Certificate expiration date. </summary>
         [WirePath("expirationDate")]
-        public string ExpirationDate { get; }
+        public DateTimeOffset? ExpiresOn { get; }
     }
 }

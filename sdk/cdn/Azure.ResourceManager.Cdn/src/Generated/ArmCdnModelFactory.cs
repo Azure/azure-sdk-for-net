@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Input of the validate probe API. </summary>
-        /// <param name="probeURL"> The probe URL to validate. </param>
+        /// <param name="probeUri"> The probe URL to validate. </param>
         /// <returns> A new <see cref="Models.ValidateProbeContent"/> instance for mocking. </returns>
-        public static ValidateProbeContent ValidateProbeContent(string probeURL = default)
+        public static ValidateProbeContent ValidateProbeContent(Uri probeUri = default)
         {
-            return new ValidateProbeContent(probeURL, additionalBinaryDataProperties: null);
+            return new ValidateProbeContent(probeUri, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Output of the validate probe API. </summary>
@@ -102,11 +102,11 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> The URI required to login to the supplemental portal from the Azure portal. </summary>
-        /// <param name="ssoUriValue"> The URI used to login to the supplemental portal. </param>
+        /// <param name="availableSsoUri"> The URI used to login to the supplemental portal. </param>
         /// <returns> A new <see cref="Models.SsoUri"/> instance for mocking. </returns>
-        public static SsoUri SsoUri(string ssoUriValue = default)
+        public static SsoUri SsoUri(Uri availableSsoUri = default)
         {
-            return new SsoUri(ssoUriValue, additionalBinaryDataProperties: null);
+            return new SsoUri(availableSsoUri, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The result of the GetSupportedOptimizationTypes API. </summary>
@@ -130,15 +130,15 @@ namespace Azure.ResourceManager.Cdn.Models
             return new CdnUsage(resourceType, unit, currentValue, limit, additionalBinaryDataProperties: null);
         }
 
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceId"> Resource ID. </param>
+        /// <param name="canMigrateResultType"> Resource type. </param>
         /// <param name="canMigrate"> Flag that says if the profile can be migrated. </param>
         /// <param name="defaultSku"> Recommended sku for the migration. </param>
         /// <param name="errors"> Gets the Errors. </param>
         /// <returns> A new <see cref="Models.CanMigrateResult"/> instance for mocking. </returns>
-        public static CanMigrateResult CanMigrateResult(ResourceIdentifier id = default, string @type = default, bool? canMigrate = default, CanMigrateDefaultSku? defaultSku = default, IEnumerable<MigrationErrorType> errors = default)
+        public static CanMigrateResult CanMigrateResult(ResourceIdentifier resourceId = default, string canMigrateResultType = default, bool? canMigrate = default, CanMigrateDefaultSku? defaultSku = default, IEnumerable<MigrationErrorType> errors = default)
         {
-            return new CanMigrateResult(id, @type, canMigrate is null && defaultSku is null && errors is null ? default : new CanMigrateProperties(canMigrate, defaultSku, (errors ?? new ChangeTrackingList<MigrationErrorType>()).ToList(), null), additionalBinaryDataProperties: null);
+            return new CanMigrateResult(resourceId, canMigrateResultType, canMigrate is null && defaultSku is null && errors is null ? default : new CanMigrateProperties(canMigrate, defaultSku, (errors ?? new ChangeTrackingList<MigrationErrorType>()).ToList(), null), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Error response indicates CDN service is not able to process the incoming request. The reason is provided in the error message. </summary>
@@ -1052,9 +1052,9 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="provisioningState"> Provisioning status. </param>
         /// <param name="deploymentStatus"> Gets the DeploymentStatus. </param>
         /// <param name="profileName"> The name of the profile which holds the security policy. </param>
-        /// <param name="securityPolicyParameters"> object which contains security policy parameters. </param>
+        /// <param name="properties"> object which contains security policy parameters. </param>
         /// <returns> A new <see cref="Cdn.FrontDoorSecurityPolicyData"/> instance for mocking. </returns>
-        public static FrontDoorSecurityPolicyData FrontDoorSecurityPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, FrontDoorProvisioningState? provisioningState = default, FrontDoorDeploymentStatus? deploymentStatus = default, string profileName = default, SecurityPolicyProperties securityPolicyParameters = default)
+        public static FrontDoorSecurityPolicyData FrontDoorSecurityPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, FrontDoorProvisioningState? provisioningState = default, FrontDoorDeploymentStatus? deploymentStatus = default, string profileName = default, SecurityPolicyProperties properties = default)
         {
             return new FrontDoorSecurityPolicyData(
                 id,
@@ -1062,18 +1062,18 @@ namespace Azure.ResourceManager.Cdn.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                provisioningState is null && deploymentStatus is null && profileName is null && securityPolicyParameters is null ? default : new SecurityPolicyDetails(provisioningState, deploymentStatus, null, profileName, securityPolicyParameters));
+                provisioningState is null && deploymentStatus is null && profileName is null && properties is null ? default : new SecurityPolicyDetails(provisioningState, deploymentStatus, null, profileName, properties));
         }
 
         /// <summary> The json object that contains properties required to create a security policy. </summary>
         /// <param name="provisioningState"> Provisioning status. </param>
         /// <param name="deploymentStatus"></param>
         /// <param name="profileName"> The name of the profile which holds the security policy. </param>
-        /// <param name="securityPolicyParameters"> object which contains security policy parameters. </param>
+        /// <param name="properties"> object which contains security policy parameters. </param>
         /// <returns> A new <see cref="Models.SecurityPolicyDetails"/> instance for mocking. </returns>
-        public static SecurityPolicyDetails SecurityPolicyDetails(FrontDoorProvisioningState? provisioningState = default, FrontDoorDeploymentStatus? deploymentStatus = default, string profileName = default, SecurityPolicyProperties securityPolicyParameters = default)
+        public static SecurityPolicyDetails SecurityPolicyDetails(FrontDoorProvisioningState? provisioningState = default, FrontDoorDeploymentStatus? deploymentStatus = default, string profileName = default, SecurityPolicyProperties properties = default)
         {
-            return new SecurityPolicyDetails(provisioningState, deploymentStatus, additionalBinaryDataProperties: null, profileName, securityPolicyParameters);
+            return new SecurityPolicyDetails(provisioningState, deploymentStatus, additionalBinaryDataProperties: null, profileName, properties);
         }
 
         /// <summary> Contains security policy waf parameters. </summary>
@@ -1276,9 +1276,9 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="provisioningState"> Provisioning status. </param>
         /// <param name="deploymentStatus"> Gets the DeploymentStatus. </param>
         /// <param name="profileName"> The name of the profile which holds the secret. </param>
-        /// <param name="parameters"> object which contains secret parameters. </param>
+        /// <param name="properties"> object which contains secret parameters. </param>
         /// <returns> A new <see cref="Cdn.FrontDoorSecretData"/> instance for mocking. </returns>
-        public static FrontDoorSecretData FrontDoorSecretData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, FrontDoorProvisioningState? provisioningState = default, FrontDoorDeploymentStatus? deploymentStatus = default, string profileName = default, FrontDoorSecretProperties parameters = default)
+        public static FrontDoorSecretData FrontDoorSecretData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, FrontDoorProvisioningState? provisioningState = default, FrontDoorDeploymentStatus? deploymentStatus = default, string profileName = default, FrontDoorSecretProperties properties = default)
         {
             return new FrontDoorSecretData(
                 id,
@@ -1286,39 +1286,39 @@ namespace Azure.ResourceManager.Cdn.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                provisioningState is null && deploymentStatus is null && profileName is null && parameters is null ? default : new SecretDetails(provisioningState, deploymentStatus, null, profileName, parameters));
+                provisioningState is null && deploymentStatus is null && profileName is null && properties is null ? default : new SecretDetails(provisioningState, deploymentStatus, null, profileName, properties));
         }
 
         /// <summary> The JSON object that contains the properties of the Secret to create. </summary>
         /// <param name="provisioningState"> Provisioning status. </param>
         /// <param name="deploymentStatus"></param>
         /// <param name="profileName"> The name of the profile which holds the secret. </param>
-        /// <param name="parameters"> object which contains secret parameters. </param>
+        /// <param name="properties"> object which contains secret parameters. </param>
         /// <returns> A new <see cref="Models.SecretDetails"/> instance for mocking. </returns>
-        public static SecretDetails SecretDetails(FrontDoorProvisioningState? provisioningState = default, FrontDoorDeploymentStatus? deploymentStatus = default, string profileName = default, FrontDoorSecretProperties parameters = default)
+        public static SecretDetails SecretDetails(FrontDoorProvisioningState? provisioningState = default, FrontDoorDeploymentStatus? deploymentStatus = default, string profileName = default, FrontDoorSecretProperties properties = default)
         {
-            return new SecretDetails(provisioningState, deploymentStatus, additionalBinaryDataProperties: null, profileName, parameters);
+            return new SecretDetails(provisioningState, deploymentStatus, additionalBinaryDataProperties: null, profileName, properties);
         }
 
         /// <summary> Managed Certificate used for https. </summary>
         /// <param name="subject"> Subject name in the certificate. </param>
-        /// <param name="expirationDate"> Certificate expiration date. </param>
+        /// <param name="expiresOn"> Certificate expiration date. </param>
         /// <returns> A new <see cref="Models.ManagedCertificateProperties"/> instance for mocking. </returns>
-        public static ManagedCertificateProperties ManagedCertificateProperties(string subject = default, string expirationDate = default)
+        public static ManagedCertificateProperties ManagedCertificateProperties(string subject = default, DateTimeOffset? expiresOn = default)
         {
-            return new ManagedCertificateProperties(SecretType.ManagedCertificate, additionalBinaryDataProperties: null, subject, expirationDate);
+            return new ManagedCertificateProperties(SecretType.ManagedCertificate, additionalBinaryDataProperties: null, subject, expiresOn);
         }
 
         /// <param name="secretSourceId"> Resource ID. </param>
         /// <param name="secretVersion"> Version of the secret to be used. </param>
         /// <param name="useLatestVersion"> Whether to use the latest version for the certificate. </param>
         /// <param name="subject"> Subject name in the certificate. </param>
-        /// <param name="expirationDate"> Certificate expiration date. </param>
+        /// <param name="expiresOn"> Certificate expiration date. </param>
         /// <param name="certificateAuthority"> Certificate issuing authority. </param>
         /// <param name="subjectAlternativeNames"> The list of SANs. </param>
         /// <param name="thumbprint"> Certificate thumbprint. </param>
         /// <returns> A new <see cref="Models.CustomerCertificateProperties"/> instance for mocking. </returns>
-        public static CustomerCertificateProperties CustomerCertificateProperties(ResourceIdentifier secretSourceId = default, string secretVersion = default, bool? useLatestVersion = default, string subject = default, string expirationDate = default, string certificateAuthority = default, IEnumerable<string> subjectAlternativeNames = default, string thumbprint = default)
+        public static CustomerCertificateProperties CustomerCertificateProperties(ResourceIdentifier secretSourceId = default, string secretVersion = default, bool? useLatestVersion = default, string subject = default, DateTimeOffset? expiresOn = default, string certificateAuthority = default, IEnumerable<string> subjectAlternativeNames = default, string thumbprint = default)
         {
             subjectAlternativeNames ??= new ChangeTrackingList<string>();
 
@@ -1329,7 +1329,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 secretVersion,
                 useLatestVersion,
                 subject,
-                expirationDate,
+                expiresOn,
                 certificateAuthority,
                 subjectAlternativeNames.ToList(),
                 thumbprint);
@@ -1639,16 +1639,16 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="optimizationType"> Specifies what scenario the customer wants this CDN endpoint to optimize for, e.g. Download, Media services. With this information, CDN can apply scenario driven optimization. </param>
         /// <param name="probePath"> Path to a file hosted on the origin which helps accelerate delivery of the dynamic content and calculate the most optimal routes for the CDN. This is relative to the origin path. This property is only relevant when using a single origin. </param>
         /// <param name="geoFilters"> List of rules defining the user's geo access within a CDN endpoint. Each geo filter defines an access rule to a specified path or content, e.g. block APAC for path /pictures/. </param>
-        /// <param name="uriSigningKeys"> List of keys used to validate the signed URL hashes. </param>
         /// <param name="deliveryPolicy"> A policy that specifies the delivery rules to be used for an endpoint. </param>
         /// <param name="defaultOriginGroupId"> Resource ID. </param>
         /// <param name="webApplicationFirewallPolicyLinkId"> Resource ID. </param>
+        /// <param name="uriSigningKeys"> List of keys used to validate the signed URL hashes. </param>
         /// <returns> A new <see cref="Models.CdnEndpointPatch"/> instance for mocking. </returns>
-        public static CdnEndpointPatch CdnEndpointPatch(IDictionary<string, string> tags = default, string originPath = default, IEnumerable<string> contentTypesToCompress = default, string originHostHeader = default, bool? isCompressionEnabled = default, bool? isHttpAllowed = default, bool? isHttpsAllowed = default, QueryStringCachingBehavior? queryStringCachingBehavior = default, OptimizationType? optimizationType = default, string probePath = default, IEnumerable<GeoFilter> geoFilters = default, IEnumerable<UriSigningKey> uriSigningKeys = default, EndpointDeliveryPolicy deliveryPolicy = default, ResourceIdentifier defaultOriginGroupId = default, ResourceIdentifier webApplicationFirewallPolicyLinkId = default)
+        public static CdnEndpointPatch CdnEndpointPatch(IDictionary<string, string> tags = default, string originPath = default, IEnumerable<string> contentTypesToCompress = default, string originHostHeader = default, bool? isCompressionEnabled = default, bool? isHttpAllowed = default, bool? isHttpsAllowed = default, QueryStringCachingBehavior? queryStringCachingBehavior = default, OptimizationType? optimizationType = default, string probePath = default, IEnumerable<GeoFilter> geoFilters = default, EndpointDeliveryPolicy deliveryPolicy = default, ResourceIdentifier defaultOriginGroupId = default, ResourceIdentifier webApplicationFirewallPolicyLinkId = default, IEnumerable<UriSigningKey> uriSigningKeys = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new CdnEndpointPatch(tags, originPath is null && contentTypesToCompress is null && originHostHeader is null && isCompressionEnabled is null && isHttpAllowed is null && isHttpsAllowed is null && queryStringCachingBehavior is null && optimizationType is null && probePath is null && geoFilters is null && uriSigningKeys is null && deliveryPolicy is null && defaultOriginGroupId is null && webApplicationFirewallPolicyLinkId is null ? default : new EndpointPropertiesUpdateParameters(
+            return new CdnEndpointPatch(tags, originPath is null && contentTypesToCompress is null && originHostHeader is null && isCompressionEnabled is null && isHttpAllowed is null && isHttpsAllowed is null && queryStringCachingBehavior is null && optimizationType is null && probePath is null && geoFilters is null && deliveryPolicy is null && defaultOriginGroupId is null && webApplicationFirewallPolicyLinkId is null && uriSigningKeys is null ? default : new EndpointPropertiesUpdateParameters(
                 originPath,
                 (contentTypesToCompress ?? new ChangeTrackingList<string>()).ToList(),
                 originHostHeader,
@@ -1737,12 +1737,12 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="healthProbeSettings"> Health probe settings to the origin that is used to determine the health of the origin. </param>
         /// <param name="origins"> The source of the content being delivered via CDN within given origin group. </param>
-        /// <param name="trafficRestorationTimeInMinutes"> Time in minutes to shift the traffic to the endpoint gradually when an unhealthy endpoint comes healthy or a new endpoint is added. Default is 10 mins. This property is currently not supported. </param>
+        /// <param name="trafficRestorationTimeToHealedOrNewEndpointsInMinutes"> Time in minutes to shift the traffic to the endpoint gradually when an unhealthy endpoint comes healthy or a new endpoint is added. Default is 10 mins. This property is currently not supported. </param>
         /// <param name="responseBasedOriginErrorDetectionSettings"> The JSON object that contains the properties to determine origin health using real requests/responses. This property is currently not supported. </param>
         /// <param name="resourceState"> Resource status of the origin group. </param>
         /// <param name="provisioningState"> Provisioning status of the origin group. </param>
         /// <returns> A new <see cref="Cdn.CdnOriginGroupData"/> instance for mocking. </returns>
-        public static CdnOriginGroupData CdnOriginGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HealthProbeSettings healthProbeSettings = default, IEnumerable<WritableSubResource> origins = default, int? trafficRestorationTimeInMinutes = default, ResponseBasedOriginErrorDetectionSettings responseBasedOriginErrorDetectionSettings = default, OriginGroupResourceState? resourceState = default, OriginGroupProvisioningState? provisioningState = default)
+        public static CdnOriginGroupData CdnOriginGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HealthProbeSettings healthProbeSettings = default, IEnumerable<WritableSubResource> origins = default, int? trafficRestorationTimeToHealedOrNewEndpointsInMinutes = default, ResponseBasedOriginErrorDetectionSettings responseBasedOriginErrorDetectionSettings = default, OriginGroupResourceState? resourceState = default, OriginGroupProvisioningState? provisioningState = default)
         {
             return new CdnOriginGroupData(
                 id,
@@ -1750,10 +1750,10 @@ namespace Azure.ResourceManager.Cdn.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                healthProbeSettings is null && origins is null && trafficRestorationTimeInMinutes is null && responseBasedOriginErrorDetectionSettings is null && resourceState is null && provisioningState is null ? default : new OriginGroupProperties(
+                healthProbeSettings is null && origins is null && trafficRestorationTimeToHealedOrNewEndpointsInMinutes is null && responseBasedOriginErrorDetectionSettings is null && resourceState is null && provisioningState is null ? default : new OriginGroupProperties(
                     healthProbeSettings,
                     (origins ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
-                    trafficRestorationTimeInMinutes,
+                    trafficRestorationTimeToHealedOrNewEndpointsInMinutes,
                     responseBasedOriginErrorDetectionSettings,
                     null,
                     resourceState,
@@ -1963,11 +1963,11 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> The JSON object that contains the properties to validate a domain. </summary>
         /// <param name="validationToken"> Challenge used for DNS TXT record or file based validation. </param>
-        /// <param name="expirationDate"> The date time that the token expires. </param>
+        /// <param name="expiresOn"> The date time that the token expires. </param>
         /// <returns> A new <see cref="Models.DomainValidationProperties"/> instance for mocking. </returns>
-        public static DomainValidationProperties DomainValidationProperties(string validationToken = default, string expirationDate = default)
+        public static DomainValidationProperties DomainValidationProperties(string validationToken = default, DateTimeOffset? expiresOn = default)
         {
-            return new DomainValidationProperties(validationToken, expirationDate, additionalBinaryDataProperties: null);
+            return new DomainValidationProperties(validationToken, expiresOn, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Input of CheckHostNameAvailability API. </summary>
@@ -2014,6 +2014,39 @@ namespace Azure.ResourceManager.Cdn.Models
             return new ProfileChangeSkuWafMapping(securityPolicyName, changeToWafPolicyId is null ? default : new ResourceReference(changeToWafPolicyId, null), additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Options for the GetLogAnalyticsMetrics operation. </summary>
+        /// <param name="metrics"></param>
+        /// <param name="dateTimeBegin"></param>
+        /// <param name="dateTimeEnd"></param>
+        /// <param name="granularity"></param>
+        /// <param name="groupBy"></param>
+        /// <param name="continents"></param>
+        /// <param name="countryOrRegions"></param>
+        /// <param name="customDomains"></param>
+        /// <param name="protocols"></param>
+        /// <returns> A new <see cref="Models.ProfileResourceGetLogAnalyticsMetricsOptions"/> instance for mocking. </returns>
+        public static ProfileResourceGetLogAnalyticsMetricsOptions ProfileResourceGetLogAnalyticsMetricsOptions(IEnumerable<LogMetric> metrics = default, DateTimeOffset dateTimeBegin = default, DateTimeOffset dateTimeEnd = default, LogMetricsGranularity granularity = default, IEnumerable<LogMetricsGroupBy> groupBy = default, IEnumerable<string> continents = default, IEnumerable<string> countryOrRegions = default, IEnumerable<string> customDomains = default, IEnumerable<string> protocols = default)
+        {
+            metrics ??= new ChangeTrackingList<LogMetric>();
+            groupBy ??= new ChangeTrackingList<LogMetricsGroupBy>();
+            continents ??= new ChangeTrackingList<string>();
+            countryOrRegions ??= new ChangeTrackingList<string>();
+            customDomains ??= new ChangeTrackingList<string>();
+            protocols ??= new ChangeTrackingList<string>();
+
+            return new ProfileResourceGetLogAnalyticsMetricsOptions(
+                metrics.ToList(),
+                dateTimeBegin,
+                dateTimeEnd,
+                granularity,
+                groupBy.ToList(),
+                continents.ToList(),
+                countryOrRegions.ToList(),
+                customDomains.ToList(),
+                protocols.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Metrics Response. </summary>
         /// <param name="dateTimeBegin"></param>
         /// <param name="dateTimeEnd"></param>
@@ -2057,6 +2090,30 @@ namespace Azure.ResourceManager.Cdn.Models
         public static Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems(DateTimeOffset? dateOn = default, float? value = default)
         {
             return new Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems(dateOn, value, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Options for the GetLogAnalyticsRankings operation. </summary>
+        /// <param name="rankings"></param>
+        /// <param name="metrics"></param>
+        /// <param name="maxRanking"></param>
+        /// <param name="dateTimeBegin"></param>
+        /// <param name="dateTimeEnd"></param>
+        /// <param name="customDomains"></param>
+        /// <returns> A new <see cref="Models.ProfileResourceGetLogAnalyticsRankingsOptions"/> instance for mocking. </returns>
+        public static ProfileResourceGetLogAnalyticsRankingsOptions ProfileResourceGetLogAnalyticsRankingsOptions(IEnumerable<LogRanking> rankings = default, IEnumerable<LogRankingMetric> metrics = default, int maxRanking = default, DateTimeOffset dateTimeBegin = default, DateTimeOffset dateTimeEnd = default, IEnumerable<string> customDomains = default)
+        {
+            rankings ??= new ChangeTrackingList<LogRanking>();
+            metrics ??= new ChangeTrackingList<LogRankingMetric>();
+            customDomains ??= new ChangeTrackingList<string>();
+
+            return new ProfileResourceGetLogAnalyticsRankingsOptions(
+                rankings.ToList(),
+                metrics.ToList(),
+                maxRanking,
+                dateTimeBegin,
+                dateTimeEnd,
+                customDomains.ToList(),
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Rankings Response. </summary>
@@ -2179,6 +2236,33 @@ namespace Azure.ResourceManager.Cdn.Models
             return new ResourcesResponseCustomDomainsItem(id, name, endpointId, history, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Options for the GetWafLogAnalyticsMetrics operation. </summary>
+        /// <param name="metrics"></param>
+        /// <param name="dateTimeBegin"></param>
+        /// <param name="dateTimeEnd"></param>
+        /// <param name="granularity"></param>
+        /// <param name="actions"></param>
+        /// <param name="groupBy"></param>
+        /// <param name="ruleTypes"></param>
+        /// <returns> A new <see cref="Models.ProfileResourceGetWafLogAnalyticsMetricsOptions"/> instance for mocking. </returns>
+        public static ProfileResourceGetWafLogAnalyticsMetricsOptions ProfileResourceGetWafLogAnalyticsMetricsOptions(IEnumerable<WafMetric> metrics = default, DateTimeOffset dateTimeBegin = default, DateTimeOffset dateTimeEnd = default, WafGranularity granularity = default, IEnumerable<WafAction> actions = default, IEnumerable<WafRankingGroupBy> groupBy = default, IEnumerable<WafRuleType> ruleTypes = default)
+        {
+            metrics ??= new ChangeTrackingList<WafMetric>();
+            actions ??= new ChangeTrackingList<WafAction>();
+            groupBy ??= new ChangeTrackingList<WafRankingGroupBy>();
+            ruleTypes ??= new ChangeTrackingList<WafRuleType>();
+
+            return new ProfileResourceGetWafLogAnalyticsMetricsOptions(
+                metrics.ToList(),
+                dateTimeBegin,
+                dateTimeEnd,
+                granularity,
+                actions.ToList(),
+                groupBy.ToList(),
+                ruleTypes.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Waf Metrics Response. </summary>
         /// <param name="dateTimeBegin"></param>
         /// <param name="dateTimeEnd"></param>
@@ -2222,6 +2306,33 @@ namespace Azure.ResourceManager.Cdn.Models
         public static Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems(DateTimeOffset? dateOn = default, float? value = default)
         {
             return new Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems(dateOn, value, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Options for the GetWafLogAnalyticsRankings operation. </summary>
+        /// <param name="metrics"></param>
+        /// <param name="dateTimeBegin"></param>
+        /// <param name="dateTimeEnd"></param>
+        /// <param name="maxRanking"></param>
+        /// <param name="rankings"></param>
+        /// <param name="actions"></param>
+        /// <param name="ruleTypes"></param>
+        /// <returns> A new <see cref="Models.ProfileResourceGetWafLogAnalyticsRankingsOptions"/> instance for mocking. </returns>
+        public static ProfileResourceGetWafLogAnalyticsRankingsOptions ProfileResourceGetWafLogAnalyticsRankingsOptions(IEnumerable<WafMetric> metrics = default, DateTimeOffset dateTimeBegin = default, DateTimeOffset dateTimeEnd = default, int maxRanking = default, IEnumerable<WafRankingType> rankings = default, IEnumerable<WafAction> actions = default, IEnumerable<WafRuleType> ruleTypes = default)
+        {
+            metrics ??= new ChangeTrackingList<WafMetric>();
+            rankings ??= new ChangeTrackingList<WafRankingType>();
+            actions ??= new ChangeTrackingList<WafAction>();
+            ruleTypes ??= new ChangeTrackingList<WafRuleType>();
+
+            return new ProfileResourceGetWafLogAnalyticsRankingsOptions(
+                metrics.ToList(),
+                dateTimeBegin,
+                dateTimeEnd,
+                maxRanking,
+                rankings.ToList(),
+                actions.ToList(),
+                ruleTypes.ToList(),
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Waf Rankings Response. </summary>
@@ -2380,15 +2491,15 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> CDN Ip address group. </summary>
         /// <param name="deliveryRegion"> The delivery region of the ip address group. </param>
-        /// <param name="ipv4Addresses"> The list of ip v4 addresses. </param>
-        /// <param name="ipv6Addresses"> The list of ip v6 addresses. </param>
+        /// <param name="iPv4Addresses"> The list of ip v4 addresses. </param>
+        /// <param name="iPv6Addresses"> The list of ip v6 addresses. </param>
         /// <returns> A new <see cref="Models.IPAddressGroup"/> instance for mocking. </returns>
-        public static IPAddressGroup IPAddressGroup(string deliveryRegion = default, IEnumerable<CidrIPAddress> ipv4Addresses = default, IEnumerable<CidrIPAddress> ipv6Addresses = default)
+        public static IPAddressGroup IPAddressGroup(string deliveryRegion = default, IEnumerable<CidrIPAddress> iPv4Addresses = default, IEnumerable<CidrIPAddress> iPv6Addresses = default)
         {
-            ipv4Addresses ??= new ChangeTrackingList<CidrIPAddress>();
-            ipv6Addresses ??= new ChangeTrackingList<CidrIPAddress>();
+            iPv4Addresses ??= new ChangeTrackingList<CidrIPAddress>();
+            iPv6Addresses ??= new ChangeTrackingList<CidrIPAddress>();
 
-            return new IPAddressGroup(deliveryRegion, ipv4Addresses.ToList(), ipv6Addresses.ToList(), additionalBinaryDataProperties: null);
+            return new IPAddressGroup(deliveryRegion, iPv4Addresses.ToList(), iPv6Addresses.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Describes a managed rule group. </summary>
@@ -2468,16 +2579,6 @@ namespace Azure.ResourceManager.Cdn.Models
         public static FrontDoorCustomDomainData FrontDoorCustomDomainData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string profileName, FrontDoorCustomDomainHttpsContent tlsSettings, ResourceIdentifier dnsZoneId, ResourceIdentifier preValidatedCustomDomainResourceId, FrontDoorProvisioningState? provisioningState, FrontDoorDeploymentStatus? deploymentStatus, DomainValidationState? domainValidationState, string hostName, IDictionary<string, string> extendedProperties, DomainValidationProperties validationProperties)
         {
             return FrontDoorCustomDomainData(id, name, resourceType, systemData, profileName, tlsSettings, mtlsSettings: default, provisioningState, deploymentStatus, domainValidationState, hostName, extendedProperties, validationProperties, dnsZoneId, preValidatedCustomDomainResourceId);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DomainValidationProperties"/>. </summary>
-        /// <param name="validationToken"> Challenge used for DNS TXT record or file based validation. </param>
-        /// <param name="expiresOn"> The date time that the token expires. </param>
-        /// <returns> A new <see cref="Models.DomainValidationProperties"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DomainValidationProperties DomainValidationProperties(string validationToken, DateTimeOffset? expiresOn)
-        {
-            return new DomainValidationProperties(validationToken, default, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.FrontDoorCustomDomainPatch"/>. </summary>
@@ -2670,15 +2771,6 @@ namespace Azure.ResourceManager.Cdn.Models
             return new MigrationContent(default, default, profileName, migrationWebApplicationFirewallMappings.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SsoUri"/>. </summary>
-        /// <param name="availableSsoUri"> The URI used to login to the supplemental portal. </param>
-        /// <returns> A new <see cref="Models.SsoUri"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SsoUri SsoUri(Uri availableSsoUri)
-        {
-            return new SsoUri(default, additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Cdn.CdnEndpointData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -2825,44 +2917,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ManagedCertificateProperties"/>. </summary>
-        /// <param name="subject"> Subject name in the certificate. </param>
-        /// <param name="expiresOn"> Certificate expiration date. </param>
-        /// <returns> A new <see cref="Models.ManagedCertificateProperties"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ManagedCertificateProperties ManagedCertificateProperties(string subject, DateTimeOffset? expiresOn)
-        {
-            return new ManagedCertificateProperties(SecretType.ManagedCertificate, additionalBinaryDataProperties: null, subject, default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.CustomerCertificateProperties"/>. </summary>
-        /// <param name="secretSourceId"> Resource reference to the Azure Key Vault certificate. Expected to be in format of /subscriptions/{​​​​​​​​​subscriptionId}​​​​​​​​​/resourceGroups/{​​​​​​​​​resourceGroupName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/providers/Microsoft.KeyVault/vaults/{vaultName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/secrets/{certificateName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​. </param>
-        /// <param name="secretVersion"> Version of the secret to be used. </param>
-        /// <param name="useLatestVersion"> Whether to use the latest version for the certificate. </param>
-        /// <param name="subject"> Subject name in the certificate. </param>
-        /// <param name="expiresOn"> Certificate expiration date. </param>
-        /// <param name="certificateAuthority"> Certificate issuing authority. </param>
-        /// <param name="subjectAlternativeNames"> The list of SANs. </param>
-        /// <param name="thumbprint"> Certificate thumbprint. </param>
-        /// <returns> A new <see cref="Models.CustomerCertificateProperties"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static CustomerCertificateProperties CustomerCertificateProperties(ResourceIdentifier secretSourceId, string secretVersion, bool? useLatestVersion, string subject, DateTimeOffset? expiresOn, string certificateAuthority, IEnumerable<string> subjectAlternativeNames, string thumbprint)
-        {
-            subjectAlternativeNames ??= new ChangeTrackingList<string>();
-
-            return new CustomerCertificateProperties(
-                SecretType.CustomerCertificate,
-                additionalBinaryDataProperties: null,
-                default,
-                secretVersion,
-                useLatestVersion,
-                subject,
-                default,
-                certificateAuthority,
-                subjectAlternativeNames.ToList(),
-                thumbprint);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Cdn.FrontDoorOriginGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -2966,8 +3020,8 @@ namespace Azure.ResourceManager.Cdn.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ProfileData ProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CdnSkuName? skuName, string kind, ProfileResourceState? resourceState, ProfileProvisioningState? provisioningState, Guid? frontDoorId, int? originResponseTimeoutSeconds)
         {
-            //return ProfileData(id, name, resourceType, systemData, tags, location, resourceState, provisioningState, extendedProperties: default, frontDoorId, originResponseTimeoutSeconds, logScrubbing: default, skuName, kind, identity: default);
             throw new NotImplementedException();
+            //return ProfileData(id, name, resourceType, systemData, tags, location, resourceState, provisioningState, extendedProperties: default, frontDoorId, originResponseTimeoutSeconds, logScrubbing: default, skuName, kind, identity: default);
         }
 
         /// <summary> Initializes a new instance of CdnWebApplicationFirewallPolicyData. </summary>

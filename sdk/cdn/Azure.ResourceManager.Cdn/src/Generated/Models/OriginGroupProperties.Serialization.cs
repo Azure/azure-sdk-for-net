@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             HealthProbeSettings healthProbeSettings = default;
             IList<WritableSubResource> origins = default;
-            int? trafficRestorationTimeInMinutes = default;
+            int? trafficRestorationTimeToHealedOrNewEndpointsInMinutes = default;
             ResponseBasedOriginErrorDetectionSettings responseBasedOriginErrorDetectionSettings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             OriginGroupResourceState? resourceState = default;
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    trafficRestorationTimeInMinutes = prop.Value.GetInt32();
+                    trafficRestorationTimeToHealedOrNewEndpointsInMinutes = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("responseBasedOriginErrorDetectionSettings"u8))
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Cdn.Models
             return new OriginGroupProperties(
                 healthProbeSettings,
                 origins ?? new ChangeTrackingList<WritableSubResource>(),
-                trafficRestorationTimeInMinutes,
+                trafficRestorationTimeToHealedOrNewEndpointsInMinutes,
                 responseBasedOriginErrorDetectionSettings,
                 additionalBinaryDataProperties,
                 resourceState,

@@ -20,20 +20,20 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of <see cref="IPAddressGroup"/>. </summary>
         public IPAddressGroup()
         {
-            Ipv4Addresses = new ChangeTrackingList<CidrIPAddress>();
-            Ipv6Addresses = new ChangeTrackingList<CidrIPAddress>();
+            IPv4Addresses = new ChangeTrackingList<CidrIPAddress>();
+            IPv6Addresses = new ChangeTrackingList<CidrIPAddress>();
         }
 
         /// <summary> Initializes a new instance of <see cref="IPAddressGroup"/>. </summary>
         /// <param name="deliveryRegion"> The delivery region of the ip address group. </param>
-        /// <param name="ipv4Addresses"> The list of ip v4 addresses. </param>
-        /// <param name="ipv6Addresses"> The list of ip v6 addresses. </param>
+        /// <param name="iPv4Addresses"> The list of ip v4 addresses. </param>
+        /// <param name="iPv6Addresses"> The list of ip v6 addresses. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IPAddressGroup(string deliveryRegion, IList<CidrIPAddress> ipv4Addresses, IList<CidrIPAddress> ipv6Addresses, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IPAddressGroup(string deliveryRegion, IList<CidrIPAddress> iPv4Addresses, IList<CidrIPAddress> iPv6Addresses, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DeliveryRegion = deliveryRegion;
-            Ipv4Addresses = ipv4Addresses;
-            Ipv6Addresses = ipv6Addresses;
+            IPv4Addresses = iPv4Addresses;
+            IPv6Addresses = iPv6Addresses;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -43,10 +43,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> The list of ip v4 addresses. </summary>
         [WirePath("ipv4Addresses")]
-        public IList<CidrIPAddress> Ipv4Addresses { get; }
+        public IList<CidrIPAddress> IPv4Addresses { get; }
 
         /// <summary> The list of ip v6 addresses. </summary>
         [WirePath("ipv6Addresses")]
-        public IList<CidrIPAddress> Ipv6Addresses { get; }
+        public IList<CidrIPAddress> IPv6Addresses { get; }
     }
 }

@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 throw new FormatException($"The model {nameof(ValidateProbeContent)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("probeURL"u8);
-            writer.WriteStringValue(ProbeURL);
+            writer.WriteStringValue(ProbeUri.AbsoluteUri);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -134,13 +134,13 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            string probeURL = default;
+            Uri probeUri = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("probeURL"u8))
                 {
-                    probeURL = prop.Value.GetString();
+                    probeUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (options.Format != "W")
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ValidateProbeContent(probeURL, additionalBinaryDataProperties);
+            return new ValidateProbeContent(probeUri, additionalBinaryDataProperties);
         }
     }
 }

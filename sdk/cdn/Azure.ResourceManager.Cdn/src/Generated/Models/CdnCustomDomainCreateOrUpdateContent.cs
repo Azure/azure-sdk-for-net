@@ -43,6 +43,14 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return Properties is null ? default : Properties.HostName;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CustomDomainPropertiesParameters();
+                }
+                Properties.HostName = value;
+            }
         }
     }
 }

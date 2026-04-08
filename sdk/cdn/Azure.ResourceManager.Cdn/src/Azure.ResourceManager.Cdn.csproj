@@ -9,4 +9,7 @@
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <NoWarn>$(NoWarn);CS1591;CS0051;</NoWarn>
   </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="Customization\Models\CdnOriginGroupPatch.cs" />
+  </ItemGroup>
 </Project>

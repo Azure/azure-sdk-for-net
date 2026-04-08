@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of <see cref="OriginGroupUpdatePropertiesParameters"/>. </summary>
         /// <param name="healthProbeSettings"> Health probe settings to the origin that is used to determine the health of the origin. </param>
         /// <param name="origins"> The source of the content being delivered via CDN within given origin group. </param>
-        /// <param name="trafficRestorationTimeInMinutes"> Time in minutes to shift the traffic to the endpoint gradually when an unhealthy endpoint comes healthy or a new endpoint is added. Default is 10 mins. This property is currently not supported. </param>
+        /// <param name="trafficRestorationTimeToHealedOrNewEndpointsInMinutes"> Time in minutes to shift the traffic to the endpoint gradually when an unhealthy endpoint comes healthy or a new endpoint is added. Default is 10 mins. This property is currently not supported. </param>
         /// <param name="responseBasedOriginErrorDetectionSettings"> The JSON object that contains the properties to determine origin health using real requests/responses. This property is currently not supported. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OriginGroupUpdatePropertiesParameters(HealthProbeSettings healthProbeSettings, IList<WritableSubResource> origins, int? trafficRestorationTimeInMinutes, ResponseBasedOriginErrorDetectionSettings responseBasedOriginErrorDetectionSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OriginGroupUpdatePropertiesParameters(HealthProbeSettings healthProbeSettings, IList<WritableSubResource> origins, int? trafficRestorationTimeToHealedOrNewEndpointsInMinutes, ResponseBasedOriginErrorDetectionSettings responseBasedOriginErrorDetectionSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             HealthProbeSettings = healthProbeSettings;
             Origins = origins;
-            TrafficRestorationTimeInMinutes = trafficRestorationTimeInMinutes;
+            TrafficRestorationTimeToHealedOrNewEndpointsInMinutes = trafficRestorationTimeToHealedOrNewEndpointsInMinutes;
             ResponseBasedOriginErrorDetectionSettings = responseBasedOriginErrorDetectionSettings;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Time in minutes to shift the traffic to the endpoint gradually when an unhealthy endpoint comes healthy or a new endpoint is added. Default is 10 mins. This property is currently not supported. </summary>
         [WirePath("trafficRestorationTimeToHealedOrNewEndpointsInMinutes")]
-        public int? TrafficRestorationTimeInMinutes { get; set; }
+        public int? TrafficRestorationTimeToHealedOrNewEndpointsInMinutes { get; set; }
 
         /// <summary> The JSON object that contains the properties to determine origin health using real requests/responses. This property is currently not supported. </summary>
         [WirePath("responseBasedOriginErrorDetectionSettings")]

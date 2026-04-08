@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WritePropertyName("profileName"u8);
                 writer.WriteStringValue(ProfileName);
             }
-            if (Optional.IsDefined(SecurityPolicyParameters))
+            if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("parameters"u8);
-                writer.WriteObjectValue(SecurityPolicyParameters, options);
+                writer.WriteObjectValue(Properties, options);
             }
         }
 
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Cdn.Models
             FrontDoorDeploymentStatus? deploymentStatus = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string profileName = default;
-            SecurityPolicyProperties securityPolicyParameters = default;
+            SecurityPolicyProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("provisioningState"u8))
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    securityPolicyParameters = SecurityPolicyProperties.DeserializeSecurityPolicyProperties(prop.Value, options);
+                    properties = SecurityPolicyProperties.DeserializeSecurityPolicyProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SecurityPolicyDetails(provisioningState, deploymentStatus, additionalBinaryDataProperties, profileName, securityPolicyParameters);
+            return new SecurityPolicyDetails(provisioningState, deploymentStatus, additionalBinaryDataProperties, profileName, properties);
         }
     }
 }

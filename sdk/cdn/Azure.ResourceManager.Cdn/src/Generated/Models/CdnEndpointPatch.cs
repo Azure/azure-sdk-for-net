@@ -215,20 +215,6 @@ namespace Azure.ResourceManager.Cdn.Models
             }
         }
 
-        /// <summary> List of keys used to validate the signed URL hashes. </summary>
-        [WirePath("properties.urlSigningKeys")]
-        public IList<UriSigningKey> UriSigningKeys
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new EndpointPropertiesUpdateParameters();
-                }
-                return Properties.UriSigningKeys;
-            }
-        }
-
         /// <summary> A policy that specifies the delivery rules to be used for an endpoint. </summary>
         [WirePath("properties.deliveryPolicy")]
         public EndpointDeliveryPolicy DeliveryPolicy

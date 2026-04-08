@@ -216,20 +216,6 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        /// <summary> List of keys used to validate the signed URL hashes. </summary>
-        [WirePath("properties.urlSigningKeys")]
-        public IList<UriSigningKey> UriSigningKeys
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new EndpointProperties();
-                }
-                return Properties.UriSigningKeys;
-            }
-        }
-
         /// <summary> A policy that specifies the delivery rules to be used for an endpoint. </summary>
         [WirePath("properties.deliveryPolicy")]
         public EndpointDeliveryPolicy DeliveryPolicy
@@ -284,6 +270,20 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
+        /// <summary> List of keys used to validate the signed URL hashes. </summary>
+        [WirePath("properties.urlSigningKeys")]
+        public IReadOnlyList<UriSigningKey> UriSigningKeys
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new EndpointProperties();
+                }
+                return Properties.UriSigningKeys;
+            }
+        }
+
         /// <summary> The host name of the endpoint structured as {endpointName}.{DNSZone}, e.g. contoso.azureedge.net. </summary>
         [WirePath("properties.hostName")]
         public string HostName
@@ -322,20 +322,6 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        /// <summary> The custom domains under the endpoint. </summary>
-        [WirePath("properties.customDomains")]
-        public IList<DeepCreatedCustomDomain> DeepCreatedCustomDomains
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new EndpointProperties();
-                }
-                return Properties.DeepCreatedCustomDomains;
-            }
-        }
-
         /// <summary> Resource status of the endpoint. </summary>
         [WirePath("properties.resourceState")]
         public EndpointResourceState? ResourceState
@@ -353,6 +339,20 @@ namespace Azure.ResourceManager.Cdn
             get
             {
                 return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> The custom domains under the endpoint. </summary>
+        [WirePath("properties.customDomains")]
+        public IReadOnlyList<DeepCreatedCustomDomain> DeepCreatedCustomDomains
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new EndpointProperties();
+                }
+                return Properties.DeepCreatedCustomDomains;
             }
         }
     }

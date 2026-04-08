@@ -79,21 +79,21 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WritePropertyName("deliveryRegion"u8);
                 writer.WriteStringValue(DeliveryRegion);
             }
-            if (Optional.IsCollectionDefined(Ipv4Addresses))
+            if (Optional.IsCollectionDefined(IPv4Addresses))
             {
                 writer.WritePropertyName("ipv4Addresses"u8);
                 writer.WriteStartArray();
-                foreach (CidrIPAddress item in Ipv4Addresses)
+                foreach (CidrIPAddress item in IPv4Addresses)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Ipv6Addresses))
+            if (Optional.IsCollectionDefined(IPv6Addresses))
             {
                 writer.WritePropertyName("ipv6Addresses"u8);
                 writer.WriteStartArray();
-                foreach (CidrIPAddress item in Ipv6Addresses)
+                foreach (CidrIPAddress item in IPv6Addresses)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -142,8 +142,8 @@ namespace Azure.ResourceManager.Cdn.Models
                 return null;
             }
             string deliveryRegion = default;
-            IList<CidrIPAddress> ipv4Addresses = default;
-            IList<CidrIPAddress> ipv6Addresses = default;
+            IList<CidrIPAddress> iPv4Addresses = default;
+            IList<CidrIPAddress> iPv6Addresses = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         array.Add(CidrIPAddress.DeserializeCidrIPAddress(item, options));
                     }
-                    ipv4Addresses = array;
+                    iPv4Addresses = array;
                     continue;
                 }
                 if (prop.NameEquals("ipv6Addresses"u8))
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         array.Add(CidrIPAddress.DeserializeCidrIPAddress(item, options));
                     }
-                    ipv6Addresses = array;
+                    iPv6Addresses = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new IPAddressGroup(deliveryRegion, ipv4Addresses ?? new ChangeTrackingList<CidrIPAddress>(), ipv6Addresses ?? new ChangeTrackingList<CidrIPAddress>(), additionalBinaryDataProperties);
+            return new IPAddressGroup(deliveryRegion, iPv4Addresses ?? new ChangeTrackingList<CidrIPAddress>(), iPv6Addresses ?? new ChangeTrackingList<CidrIPAddress>(), additionalBinaryDataProperties);
         }
     }
 }

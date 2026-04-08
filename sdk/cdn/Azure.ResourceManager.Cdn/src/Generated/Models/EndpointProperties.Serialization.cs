@@ -13,7 +13,6 @@ using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The JSON object that contains the properties required to create an endpoint. </summary>
     internal partial class EndpointProperties : EndpointPropertiesUpdateParameters, IJsonModel<EndpointProperties>
     {
         /// <summary> Initializes a new instance of <see cref="EndpointProperties"/> for deserialization. </summary>
@@ -160,14 +159,14 @@ namespace Azure.ResourceManager.Cdn.Models
             string probePath = default;
             IList<GeoFilter> geoFilters = default;
             ResourceReference defaultOriginGroup = default;
-            IList<UriSigningKey> uriSigningKeys = default;
+            IReadOnlyList<UriSigningKey> uriSigningKeys = default;
             EndpointDeliveryPolicy deliveryPolicy = default;
             EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink webApplicationFirewallPolicyLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string hostName = default;
             IList<DeepCreatedOrigin> origins = default;
             IList<DeepCreatedOriginGroup> originGroups = default;
-            IList<DeepCreatedCustomDomain> deepCreatedCustomDomains = default;
+            IReadOnlyList<DeepCreatedCustomDomain> deepCreatedCustomDomains = default;
             EndpointResourceState? resourceState = default;
             CdnEndpointProvisioningState? provisioningState = default;
             foreach (var prop in element.EnumerateObject())

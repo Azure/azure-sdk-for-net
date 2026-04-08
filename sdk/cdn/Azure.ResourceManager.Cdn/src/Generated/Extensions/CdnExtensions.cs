@@ -609,7 +609,7 @@ namespace Azure.ResourceManager.Cdn
         /// Checks if CDN profile can be migrated to Azure Frontdoor(Standard/Premium) profile.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCdnResourceGroupResource.CanMigrateAsync(WaitUntil, CanMigrateContent, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCdnResourceGroupResource.CanMigrateProfileAsync(WaitUntil, CanMigrateContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -617,18 +617,18 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="content"> Properties needed to check if cdn profile or classic frontdoor can be migrated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static async Task<ArmOperation<CanMigrateResult>> CanMigrateAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, CanMigrateContent content, CancellationToken cancellationToken = default)
+        public static async Task<ArmOperation<CanMigrateResult>> CanMigrateProfileAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, CanMigrateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableCdnResourceGroupResource(resourceGroupResource).CanMigrateAsync(waitUntil, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableCdnResourceGroupResource(resourceGroupResource).CanMigrateProfileAsync(waitUntil, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Checks if CDN profile can be migrated to Azure Frontdoor(Standard/Premium) profile.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCdnResourceGroupResource.CanMigrate(WaitUntil, CanMigrateContent, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCdnResourceGroupResource.CanMigrateProfile(WaitUntil, CanMigrateContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -636,18 +636,18 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="content"> Properties needed to check if cdn profile or classic frontdoor can be migrated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static ArmOperation<CanMigrateResult> CanMigrate(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, CanMigrateContent content, CancellationToken cancellationToken = default)
+        public static ArmOperation<CanMigrateResult> CanMigrateProfile(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, CanMigrateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableCdnResourceGroupResource(resourceGroupResource).CanMigrate(waitUntil, content, cancellationToken);
+            return GetMockableCdnResourceGroupResource(resourceGroupResource).CanMigrateProfile(waitUntil, content, cancellationToken);
         }
 
         /// <summary>
         /// Migrate the CDN profile to Azure Frontdoor(Standard/Premium) profile. The change need to be committed after this.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCdnResourceGroupResource.MigrateAsync(WaitUntil, MigrationContent, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCdnResourceGroupResource.MigrateProfileAsync(WaitUntil, MigrationContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -655,18 +655,18 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="content"> Properties needed to migrate the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static async Task<ArmOperation<MigrateResult>> MigrateAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, MigrationContent content, CancellationToken cancellationToken = default)
+        public static async Task<ArmOperation<MigrateResult>> MigrateProfileAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, MigrationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableCdnResourceGroupResource(resourceGroupResource).MigrateAsync(waitUntil, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableCdnResourceGroupResource(resourceGroupResource).MigrateProfileAsync(waitUntil, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Migrate the CDN profile to Azure Frontdoor(Standard/Premium) profile. The change need to be committed after this.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCdnResourceGroupResource.Migrate(WaitUntil, MigrationContent, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCdnResourceGroupResource.MigrateProfile(WaitUntil, MigrationContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -674,11 +674,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="content"> Properties needed to migrate the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static ArmOperation<MigrateResult> Migrate(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, MigrationContent content, CancellationToken cancellationToken = default)
+        public static ArmOperation<MigrateResult> MigrateProfile(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, MigrationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableCdnResourceGroupResource(resourceGroupResource).Migrate(waitUntil, content, cancellationToken);
+            return GetMockableCdnResourceGroupResource(resourceGroupResource).MigrateProfile(waitUntil, content, cancellationToken);
         }
 
         /// <summary>
@@ -757,36 +757,36 @@ namespace Azure.ResourceManager.Cdn
         /// Check the availability of a resource name. This is needed for resources where name is globally unique, such as a CDN endpoint.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCdnSubscriptionResource.CheckNameAvailabilityWithSubscriptionAsync(CdnNameAvailabilityContent, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCdnSubscriptionResource.CheckCdnNameAvailabilityWithSubscriptionAsync(CdnNameAvailabilityContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<CdnNameAvailabilityResult>> CheckNameAvailabilityWithSubscriptionAsync(this SubscriptionResource subscriptionResource, CdnNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<CdnNameAvailabilityResult>> CheckCdnNameAvailabilityWithSubscriptionAsync(this SubscriptionResource subscriptionResource, CdnNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableCdnSubscriptionResource(subscriptionResource).CheckNameAvailabilityWithSubscriptionAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableCdnSubscriptionResource(subscriptionResource).CheckCdnNameAvailabilityWithSubscriptionAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Check the availability of a resource name. This is needed for resources where name is globally unique, such as a CDN endpoint.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCdnSubscriptionResource.CheckNameAvailabilityWithSubscription(CdnNameAvailabilityContent, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCdnSubscriptionResource.CheckCdnNameAvailabilityWithSubscription(CdnNameAvailabilityContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<CdnNameAvailabilityResult> CheckNameAvailabilityWithSubscription(this SubscriptionResource subscriptionResource, CdnNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static Response<CdnNameAvailabilityResult> CheckCdnNameAvailabilityWithSubscription(this SubscriptionResource subscriptionResource, CdnNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableCdnSubscriptionResource(subscriptionResource).CheckNameAvailabilityWithSubscription(content, cancellationToken);
+            return GetMockableCdnSubscriptionResource(subscriptionResource).CheckCdnNameAvailabilityWithSubscription(content, cancellationToken);
         }
 
         /// <summary>
@@ -901,72 +901,72 @@ namespace Azure.ResourceManager.Cdn
         /// Check the availability of a resource name. This is needed for resources where name is globally unique, such as a CDN endpoint.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCdnTenantResource.CheckNameAvailabilityAsync(CdnNameAvailabilityContent, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCdnTenantResource.CheckCdnNameAvailabilityAsync(CdnNameAvailabilityContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        public static async Task<Response<CdnNameAvailabilityResult>> CheckNameAvailabilityAsync(this TenantResource tenantResource, CdnNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<CdnNameAvailabilityResult>> CheckCdnNameAvailabilityAsync(this TenantResource tenantResource, CdnNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return await GetMockableCdnTenantResource(tenantResource).CheckNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableCdnTenantResource(tenantResource).CheckCdnNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Check the availability of a resource name. This is needed for resources where name is globally unique, such as a CDN endpoint.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCdnTenantResource.CheckNameAvailability(CdnNameAvailabilityContent, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCdnTenantResource.CheckCdnNameAvailability(CdnNameAvailabilityContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        public static Response<CdnNameAvailabilityResult> CheckNameAvailability(this TenantResource tenantResource, CdnNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static Response<CdnNameAvailabilityResult> CheckCdnNameAvailability(this TenantResource tenantResource, CdnNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockableCdnTenantResource(tenantResource).CheckNameAvailability(content, cancellationToken);
+            return GetMockableCdnTenantResource(tenantResource).CheckCdnNameAvailability(content, cancellationToken);
         }
 
         /// <summary>
         /// Edgenodes are the global Point of Presence (POP) locations used to deliver CDN content to end users.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCdnTenantResource.GetAllAsync(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCdnTenantResource.GetEdgeNodesAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         /// <returns> A collection of <see cref="EdgeNode"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<EdgeNode> GetAllAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
+        public static AsyncPageable<EdgeNode> GetEdgeNodesAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockableCdnTenantResource(tenantResource).GetAllAsync(cancellationToken);
+            return GetMockableCdnTenantResource(tenantResource).GetEdgeNodesAsync(cancellationToken);
         }
 
         /// <summary>
         /// Edgenodes are the global Point of Presence (POP) locations used to deliver CDN content to end users.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCdnTenantResource.GetAll(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCdnTenantResource.GetEdgeNodes(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         /// <returns> A collection of <see cref="EdgeNode"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<EdgeNode> GetAll(this TenantResource tenantResource, CancellationToken cancellationToken = default)
+        public static Pageable<EdgeNode> GetEdgeNodes(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockableCdnTenantResource(tenantResource).GetAll(cancellationToken);
+            return GetMockableCdnTenantResource(tenantResource).GetEdgeNodes(cancellationToken);
         }
     }
 }

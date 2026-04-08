@@ -66,11 +66,11 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<CdnNameAvailabilityResult>> CheckNameAvailabilityAsync(CdnNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CdnNameAvailabilityResult>> CheckCdnNameAvailabilityAsync(CdnNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = CdnClientClientDiagnostics.CreateScope("MockableCdnTenantResource.CheckNameAvailability");
+            using DiagnosticScope scope = CdnClientClientDiagnostics.CreateScope("MockableCdnTenantResource.CheckCdnNameAvailability");
             scope.Start();
             try
             {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Cdn.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = CdnClientRestClient.CreateCheckNameAvailabilityRequest(CdnNameAvailabilityContent.ToRequestContent(content), context);
+                HttpMessage message = CdnClientRestClient.CreateCheckCdnNameAvailabilityRequest(CdnNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CdnNameAvailabilityResult> response = Response.FromValue(CdnNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -114,11 +114,11 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<CdnNameAvailabilityResult> CheckNameAvailability(CdnNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<CdnNameAvailabilityResult> CheckCdnNameAvailability(CdnNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = CdnClientClientDiagnostics.CreateScope("MockableCdnTenantResource.CheckNameAvailability");
+            using DiagnosticScope scope = CdnClientClientDiagnostics.CreateScope("MockableCdnTenantResource.CheckCdnNameAvailability");
             scope.Start();
             try
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Cdn.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = CdnClientRestClient.CreateCheckNameAvailabilityRequest(CdnNameAvailabilityContent.ToRequestContent(content), context);
+                HttpMessage message = CdnClientRestClient.CreateCheckCdnNameAvailabilityRequest(CdnNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CdnNameAvailabilityResult> response = Response.FromValue(CdnNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -161,13 +161,13 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="EdgeNode"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<EdgeNode> GetAllAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<EdgeNode> GetEdgeNodesAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new EdgeNodesGetAllAsyncCollectionResultOfT(EdgeNodesRestClient, context);
+            return new EdgeNodesGetEdgeNodesAsyncCollectionResultOfT(EdgeNodesRestClient, context);
         }
 
         /// <summary>
@@ -189,13 +189,13 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="EdgeNode"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<EdgeNode> GetAll(CancellationToken cancellationToken = default)
+        public virtual Pageable<EdgeNode> GetEdgeNodes(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new EdgeNodesGetAllCollectionResultOfT(EdgeNodesRestClient, context);
+            return new EdgeNodesGetEdgeNodesCollectionResultOfT(EdgeNodesRestClient, context);
         }
     }
 }

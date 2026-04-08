@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="OriginAuthenticationProperties"/>. </summary>
-        /// <param name="type"> The type of the authentication for the origin. </param>
+        /// <param name="authenticationType"> The type of the authentication for the origin. </param>
         /// <param name="userAssignedIdentity"> The user assigned managed identity to use for the origin authentication if type is UserAssignedIdentity. </param>
         /// <param name="scope"> The scope used when requesting token from Microsoft Entra. For example, for Azure Blob Storage, scope could be "https://storage.azure.com/.default". </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OriginAuthenticationProperties(OriginAuthenticationType? @type, ResourceReference userAssignedIdentity, Uri scope, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OriginAuthenticationProperties(OriginAuthenticationType? authenticationType, ResourceReference userAssignedIdentity, Uri scope, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = @type;
+            AuthenticationType = authenticationType;
             UserAssignedIdentity = userAssignedIdentity;
             Scope = scope;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> The type of the authentication for the origin. </summary>
         [WirePath("type")]
-        public OriginAuthenticationType? Type { get; set; }
+        public OriginAuthenticationType? AuthenticationType { get; set; }
 
         /// <summary> The user assigned managed identity to use for the origin authentication if type is UserAssignedIdentity. </summary>
         [WirePath("userAssignedIdentity")]

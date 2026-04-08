@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="secretVersion"> Version of the secret to be used. </param>
         /// <param name="useLatestVersion"> Whether to use the latest version for the certificate. </param>
         /// <param name="subject"> Subject name in the certificate. </param>
-        /// <param name="expirationDate"> Certificate expiration date. </param>
+        /// <param name="expiresOn"> Certificate expiration date. </param>
         /// <param name="certificateAuthority"> Certificate issuing authority. </param>
         /// <param name="subjectAlternativeNames"> The list of SANs. </param>
         /// <param name="thumbprint"> Certificate thumbprint. </param>
-        internal CustomerCertificateProperties(SecretType secretType, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceReference secretSource, string secretVersion, bool? useLatestVersion, string subject, string expirationDate, string certificateAuthority, IReadOnlyList<string> subjectAlternativeNames, string thumbprint) : base(secretType, additionalBinaryDataProperties)
+        internal CustomerCertificateProperties(SecretType secretType, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceReference secretSource, string secretVersion, bool? useLatestVersion, string subject, DateTimeOffset? expiresOn, string certificateAuthority, IList<string> subjectAlternativeNames, string thumbprint) : base(secretType, additionalBinaryDataProperties)
         {
             SecretSource = secretSource;
             SecretVersion = secretVersion;
             UseLatestVersion = useLatestVersion;
             Subject = subject;
-            ExpirationDate = expirationDate;
+            ExpiresOn = expiresOn;
             CertificateAuthority = certificateAuthority;
             SubjectAlternativeNames = subjectAlternativeNames;
             Thumbprint = thumbprint;
@@ -63,15 +63,11 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Certificate expiration date. </summary>
         [WirePath("expirationDate")]
-        public string ExpirationDate { get; }
+        public DateTimeOffset? ExpiresOn { get; }
 
         /// <summary> Certificate issuing authority. </summary>
         [WirePath("certificateAuthority")]
         public string CertificateAuthority { get; }
-
-        /// <summary> The list of SANs. </summary>
-        [WirePath("subjectAlternativeNames")]
-        public IReadOnlyList<string> SubjectAlternativeNames { get; }
 
         /// <summary> Certificate thumbprint. </summary>
         [WirePath("thumbprint")]

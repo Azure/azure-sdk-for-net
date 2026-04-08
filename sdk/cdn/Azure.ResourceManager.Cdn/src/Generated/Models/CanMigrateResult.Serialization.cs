@@ -83,15 +83,15 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 throw new FormatException($"The model {nameof(CanMigrateResult)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                writer.WriteStringValue(ResourceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(Type))
+            if (options.Format != "W" && Optional.IsDefined(CanMigrateResultType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type);
+                writer.WriteStringValue(CanMigrateResultType);
             }
             if (Optional.IsDefined(Properties))
             {
@@ -140,8 +140,8 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            ResourceIdentifier id = default;
-            string @type = default;
+            ResourceIdentifier resourceId = default;
+            string canMigrateResultType = default;
             CanMigrateProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -152,12 +152,12 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    id = new ResourceIdentifier(prop.Value.GetString());
+                    resourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    canMigrateResultType = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CanMigrateResult(id, @type, properties, additionalBinaryDataProperties);
+            return new CanMigrateResult(resourceId, canMigrateResultType, properties, additionalBinaryDataProperties);
         }
     }
 }

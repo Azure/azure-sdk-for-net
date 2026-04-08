@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Cdn.Models
             if (Optional.IsDefined(CacheDuration))
             {
                 writer.WritePropertyName("cacheDuration"u8);
-                writer.WriteStringValue(CacheDuration);
+                writer.WriteStringValue(CacheDuration.Value, "P");
             }
         }
 
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Cdn.Models
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             CacheBehaviorSetting cacheBehavior = default;
             CdnCacheLevel cacheType = default;
-            string cacheDuration = default;
+            TimeSpan? cacheDuration = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("typeName"u8))
@@ -142,10 +142,9 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        cacheDuration = null;
                         continue;
                     }
-                    cacheDuration = prop.Value.GetString();
+                    cacheDuration = prop.Value.GetTimeSpan("P");
                     continue;
                 }
                 if (options.Format != "W")

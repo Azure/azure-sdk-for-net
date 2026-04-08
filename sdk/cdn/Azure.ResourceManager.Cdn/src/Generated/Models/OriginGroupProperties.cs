@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of <see cref="OriginGroupProperties"/>. </summary>
         /// <param name="healthProbeSettings"> Health probe settings to the origin that is used to determine the health of the origin. </param>
         /// <param name="origins"> The source of the content being delivered via CDN within given origin group. </param>
-        /// <param name="trafficRestorationTimeInMinutes"> Time in minutes to shift the traffic to the endpoint gradually when an unhealthy endpoint comes healthy or a new endpoint is added. Default is 10 mins. This property is currently not supported. </param>
+        /// <param name="trafficRestorationTimeToHealedOrNewEndpointsInMinutes"> Time in minutes to shift the traffic to the endpoint gradually when an unhealthy endpoint comes healthy or a new endpoint is added. Default is 10 mins. This property is currently not supported. </param>
         /// <param name="responseBasedOriginErrorDetectionSettings"> The JSON object that contains the properties to determine origin health using real requests/responses. This property is currently not supported. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="resourceState"> Resource status of the origin group. </param>
         /// <param name="provisioningState"> Provisioning status of the origin group. </param>
-        internal OriginGroupProperties(HealthProbeSettings healthProbeSettings, IList<WritableSubResource> origins, int? trafficRestorationTimeInMinutes, ResponseBasedOriginErrorDetectionSettings responseBasedOriginErrorDetectionSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties, OriginGroupResourceState? resourceState, OriginGroupProvisioningState? provisioningState) : base(healthProbeSettings, origins, trafficRestorationTimeInMinutes, responseBasedOriginErrorDetectionSettings, additionalBinaryDataProperties)
+        internal OriginGroupProperties(HealthProbeSettings healthProbeSettings, IList<WritableSubResource> origins, int? trafficRestorationTimeToHealedOrNewEndpointsInMinutes, ResponseBasedOriginErrorDetectionSettings responseBasedOriginErrorDetectionSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties, OriginGroupResourceState? resourceState, OriginGroupProvisioningState? provisioningState) : base(healthProbeSettings, origins, trafficRestorationTimeToHealedOrNewEndpointsInMinutes, responseBasedOriginErrorDetectionSettings, additionalBinaryDataProperties)
         {
             ResourceState = resourceState;
             ProvisioningState = provisioningState;

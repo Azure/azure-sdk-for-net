@@ -3,9 +3,8 @@
 
 #nullable disable
 
-using System;
+using System.Collections.Generic;
 using System.ComponentModel;
-using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
@@ -22,18 +21,9 @@ namespace Azure.ResourceManager.Cdn.Models
             }
         }
 
-        // Backward compatibility: old API exposed ExpiresOn as DateTimeOffset
+        /// <summary> The list of SANs. </summary>
+        [WirePath("subjectAlternativeNames")]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public DateTimeOffset? ExpiresOn
-        {
-            get
-            {
-                if (ExpirationDate != null && DateTimeOffset.TryParse(ExpirationDate, out var result))
-                {
-                    return result;
-                }
-                return null;
-            }
-        }
+        public IList<string> SubjectAlternativeNames { get; }
     }
 }

@@ -24,25 +24,25 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CanMigrateResult"/>. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceId"> Resource ID. </param>
+        /// <param name="canMigrateResultType"> Resource type. </param>
         /// <param name="properties"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CanMigrateResult(ResourceIdentifier id, string @type, CanMigrateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CanMigrateResult(ResourceIdentifier resourceId, string canMigrateResultType, CanMigrateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Id = id;
-            Type = @type;
+            ResourceId = resourceId;
+            CanMigrateResultType = canMigrateResultType;
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Resource ID. </summary>
         [WirePath("id")]
-        public ResourceIdentifier Id { get; }
+        public ResourceIdentifier ResourceId { get; }
 
         /// <summary> Resource type. </summary>
         [WirePath("type")]
-        public string Type { get; }
+        public string CanMigrateResultType { get; }
 
         /// <summary> Gets the Properties. </summary>
         [WirePath("properties")]
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Gets the Errors. </summary>
         [WirePath("properties.errors")]
-        public IList<MigrationErrorType> Errors
+        public IReadOnlyList<MigrationErrorType> Errors
         {
             get
             {

@@ -13,7 +13,6 @@ using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The CanMigrateProperties. </summary>
     internal partial class CanMigrateProperties : IJsonModel<CanMigrateProperties>
     {
         /// <param name="data"> The data to parse. </param>
@@ -138,7 +137,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             bool? canMigrate = default;
             CanMigrateDefaultSku? defaultSku = default;
-            IList<MigrationErrorType> errors = default;
+            IReadOnlyList<MigrationErrorType> errors = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Initializes a new instance of <see cref="DomainValidationProperties"/>. </summary>
         /// <param name="validationToken"> Challenge used for DNS TXT record or file based validation. </param>
-        /// <param name="expirationDate"> The date time that the token expires. </param>
+        /// <param name="expiresOn"> The date time that the token expires. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DomainValidationProperties(string validationToken, string expirationDate, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DomainValidationProperties(string validationToken, DateTimeOffset? expiresOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ValidationToken = validationToken;
-            ExpirationDate = expirationDate;
+            ExpiresOn = expiresOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> The date time that the token expires. </summary>
         [WirePath("expirationDate")]
-        public string ExpirationDate { get; }
+        public DateTimeOffset? ExpiresOn { get; }
     }
 }

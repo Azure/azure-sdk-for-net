@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Cdn.Models
     /// The json object containing secret parameters
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="UriSigningKeyProperties"/>, <see cref="ManagedCertificateProperties"/>, <see cref="CustomerCertificateProperties"/>, <see cref="AzureFirstPartyManagedCertificateProperties"/>, and <see cref="AfdSecretMtlsCertificateChain"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownFrontDoorSecretProperties))]
+    [PersistableModelProxy(typeof(UnknownSecretProperties))]
     public abstract partial class FrontDoorSecretProperties : IJsonModel<FrontDoorSecretProperties>
     {
         /// <param name="data"> The data to parse. </param>
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         return AfdSecretMtlsCertificateChain.DeserializeAfdSecretMtlsCertificateChain(element, options);
                 }
             }
-            return UnknownFrontDoorSecretProperties.DeserializeUnknownFrontDoorSecretProperties(element, options);
+            return UnknownSecretProperties.DeserializeUnknownSecretProperties(element, options);
         }
     }
 }

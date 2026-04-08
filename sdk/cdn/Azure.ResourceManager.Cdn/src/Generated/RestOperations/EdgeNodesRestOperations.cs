@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetAllRequest(RequestContext context)
+        internal HttpMessage CreateGetEdgeNodesRequest(RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Cdn
             return message;
         }
 
-        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, RequestContext context)
+        internal HttpMessage CreateNextGetEdgeNodesRequest(Uri nextPage, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

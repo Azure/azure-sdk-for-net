@@ -30,16 +30,16 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="properties"> The JSON object that contains the properties of the Secret to create. </param>
-        internal FrontDoorSecretData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, SecretDetails properties) : base(id, name, resourceType, systemData)
+        /// <param name="secretProperties"> The JSON object that contains the properties of the Secret to create. </param>
+        internal FrontDoorSecretData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, SecretDetails secretProperties) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
-            Properties = properties;
+            SecretProperties = secretProperties;
         }
 
         /// <summary> The JSON object that contains the properties of the Secret to create. </summary>
         [WirePath("properties")]
-        internal SecretDetails Properties { get; set; }
+        internal SecretDetails SecretProperties { get; set; }
 
         /// <summary> Provisioning status. </summary>
         [WirePath("properties.provisioningState")]
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Cdn
         {
             get
             {
-                return Properties is null ? default : Properties.ProvisioningState;
+                return SecretProperties is null ? default : SecretProperties.ProvisioningState;
             }
         }
 
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Cdn
         {
             get
             {
-                return Properties is null ? default : Properties.DeploymentStatus;
+                return SecretProperties is null ? default : SecretProperties.DeploymentStatus;
             }
         }
 
@@ -67,25 +67,25 @@ namespace Azure.ResourceManager.Cdn
         {
             get
             {
-                return Properties is null ? default : Properties.ProfileName;
+                return SecretProperties is null ? default : SecretProperties.ProfileName;
             }
         }
 
         /// <summary> object which contains secret parameters. </summary>
         [WirePath("properties.parameters")]
-        public FrontDoorSecretProperties Parameters
+        public FrontDoorSecretProperties Properties
         {
             get
             {
-                return Properties is null ? default : Properties.Parameters;
+                return SecretProperties is null ? default : SecretProperties.Properties;
             }
             set
             {
-                if (Properties is null)
+                if (SecretProperties is null)
                 {
-                    Properties = new SecretDetails();
+                    SecretProperties = new SecretDetails();
                 }
-                Properties.Parameters = value;
+                SecretProperties.Properties = value;
             }
         }
     }

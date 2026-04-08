@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 throw new FormatException($"The model {nameof(CidrIPAddress)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(BaseIpAddress))
+            if (Optional.IsDefined(BaseIPAddress))
             {
                 writer.WritePropertyName("baseIpAddress"u8);
-                writer.WriteStringValue(BaseIpAddress);
+                writer.WriteStringValue(BaseIPAddress);
             }
             if (Optional.IsDefined(PrefixLength))
             {
@@ -126,14 +126,14 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            string baseIpAddress = default;
+            string baseIPAddress = default;
             int? prefixLength = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("baseIpAddress"u8))
                 {
-                    baseIpAddress = prop.Value.GetString();
+                    baseIPAddress = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("prefixLength"u8))
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CidrIPAddress(baseIpAddress, prefixLength, additionalBinaryDataProperties);
+            return new CidrIPAddress(baseIPAddress, prefixLength, additionalBinaryDataProperties);
         }
     }
 }

@@ -24,11 +24,11 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="deploymentStatus"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="profileName"> The name of the profile which holds the secret. </param>
-        /// <param name="parameters"> object which contains secret parameters. </param>
-        internal SecretDetails(FrontDoorProvisioningState? provisioningState, FrontDoorDeploymentStatus? deploymentStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties, string profileName, FrontDoorSecretProperties parameters) : base(provisioningState, deploymentStatus, additionalBinaryDataProperties)
+        /// <param name="properties"> object which contains secret parameters. </param>
+        internal SecretDetails(FrontDoorProvisioningState? provisioningState, FrontDoorDeploymentStatus? deploymentStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties, string profileName, FrontDoorSecretProperties properties) : base(provisioningState, deploymentStatus, additionalBinaryDataProperties)
         {
             ProfileName = profileName;
-            Parameters = parameters;
+            Properties = properties;
         }
 
         /// <summary> The name of the profile which holds the secret. </summary>
@@ -37,6 +37,6 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> object which contains secret parameters. </summary>
         [WirePath("parameters")]
-        public FrontDoorSecretProperties Parameters { get; set; }
+        public FrontDoorSecretProperties Properties { get; set; }
     }
 }

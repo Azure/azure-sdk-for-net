@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WritePropertyName("profileName"u8);
                 writer.WriteStringValue(ProfileName);
             }
-            if (Optional.IsDefined(Parameters))
+            if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("parameters"u8);
-                writer.WriteObjectValue(Parameters, options);
+                writer.WriteObjectValue(Properties, options);
             }
         }
 
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Cdn.Models
             FrontDoorDeploymentStatus? deploymentStatus = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string profileName = default;
-            FrontDoorSecretProperties parameters = default;
+            FrontDoorSecretProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("provisioningState"u8))
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    parameters = FrontDoorSecretProperties.DeserializeFrontDoorSecretProperties(prop.Value, options);
+                    properties = FrontDoorSecretProperties.DeserializeFrontDoorSecretProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SecretDetails(provisioningState, deploymentStatus, additionalBinaryDataProperties, profileName, parameters);
+            return new SecretDetails(provisioningState, deploymentStatus, additionalBinaryDataProperties, profileName, properties);
         }
     }
 }

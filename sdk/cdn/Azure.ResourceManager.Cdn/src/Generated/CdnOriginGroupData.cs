@@ -76,11 +76,11 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> Time in minutes to shift the traffic to the endpoint gradually when an unhealthy endpoint comes healthy or a new endpoint is added. Default is 10 mins. This property is currently not supported. </summary>
         [WirePath("properties.trafficRestorationTimeToHealedOrNewEndpointsInMinutes")]
-        public int? TrafficRestorationTimeInMinutes
+        public int? TrafficRestorationTimeToHealedOrNewEndpointsInMinutes
         {
             get
             {
-                return Properties is null ? default : Properties.TrafficRestorationTimeInMinutes;
+                return Properties is null ? default : Properties.TrafficRestorationTimeToHealedOrNewEndpointsInMinutes;
             }
             set
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     Properties = new OriginGroupProperties();
                 }
-                Properties.TrafficRestorationTimeInMinutes = value.Value;
+                Properties.TrafficRestorationTimeToHealedOrNewEndpointsInMinutes = value.Value;
             }
         }
 

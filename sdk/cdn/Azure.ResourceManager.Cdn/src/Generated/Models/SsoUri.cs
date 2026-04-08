@@ -23,16 +23,16 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SsoUri"/>. </summary>
-        /// <param name="ssoUriValue"> The URI used to login to the supplemental portal. </param>
+        /// <param name="availableSsoUri"> The URI used to login to the supplemental portal. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SsoUri(string ssoUriValue, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SsoUri(Uri availableSsoUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            SsoUriValue = ssoUriValue;
+            AvailableSsoUri = availableSsoUri;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The URI used to login to the supplemental portal. </summary>
         [WirePath("ssoUriValue")]
-        public string SsoUriValue { get; }
+        public Uri AvailableSsoUri { get; }
     }
 }

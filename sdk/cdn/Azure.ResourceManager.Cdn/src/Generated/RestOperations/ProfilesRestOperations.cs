@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.Cdn
             return message;
         }
 
-        internal HttpMessage CreateGetCdnProfileResourceUsagesRequest(Guid subscriptionId, string resourceGroupName, string profileName, RequestContext context)
+        internal HttpMessage CreateGetResourceUsagesRequest(Guid subscriptionId, string resourceGroupName, string profileName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.Cdn
             return message;
         }
 
-        internal HttpMessage CreateNextGetCdnProfileResourceUsagesRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string profileName, RequestContext context)
+        internal HttpMessage CreateNextGetResourceUsagesRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string profileName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.Cdn
             return message;
         }
 
-        internal HttpMessage CreateCdnCanMigrateToAfdRequest(Guid subscriptionId, string resourceGroupName, string profileName, RequestContext context)
+        internal HttpMessage CreateCheckCdnMigrationCompatibilityRequest(Guid subscriptionId, string resourceGroupName, string profileName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.Cdn
             return message;
         }
 
-        internal HttpMessage CreateCdnMigrateToAfdRequest(Guid subscriptionId, string resourceGroupName, string profileName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateMigrateCdnToAfdRequest(Guid subscriptionId, string resourceGroupName, string profileName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.Cdn
             return message;
         }
 
-        internal HttpMessage CreateMigrationAbortRequest(Guid subscriptionId, string resourceGroupName, string profileName, RequestContext context)
+        internal HttpMessage CreateAbortMigrationRequest(Guid subscriptionId, string resourceGroupName, string profileName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.Cdn
             return message;
         }
 
-        internal HttpMessage CreateCanMigrateRequest(string resourceGroupName, Guid subscriptionId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCanMigrateProfileRequest(string resourceGroupName, Guid subscriptionId, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.Cdn
             return message;
         }
 
-        internal HttpMessage CreateMigrateRequest(string resourceGroupName, Guid subscriptionId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateMigrateProfileRequest(string resourceGroupName, Guid subscriptionId, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

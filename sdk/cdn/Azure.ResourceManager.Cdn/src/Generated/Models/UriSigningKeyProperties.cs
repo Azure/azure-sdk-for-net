@@ -7,8 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.ResourceManager.Cdn;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -16,25 +16,12 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class UriSigningKeyProperties : FrontDoorSecretProperties
     {
         /// <summary> Initializes a new instance of <see cref="UriSigningKeyProperties"/>. </summary>
-        /// <param name="keyId"> Defines the customer defined key Id. This id will exist in the incoming request to indicate the key used to form the hash. </param>
-        /// <param name="secretVersion"> Version of the secret to be used. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="keyId"/> or <paramref name="secretVersion"/> is null. </exception>
-        public UriSigningKeyProperties(string keyId, string secretVersion) : base(SecretType.UriSigningKey)
-        {
-            Argument.AssertNotNull(keyId, nameof(keyId));
-            Argument.AssertNotNull(secretVersion, nameof(secretVersion));
-
-            KeyId = keyId;
-            SecretVersion = secretVersion;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UriSigningKeyProperties"/>. </summary>
         /// <param name="secretType"> The type of the secret resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="keyId"> Defines the customer defined key Id. This id will exist in the incoming request to indicate the key used to form the hash. </param>
         /// <param name="secretSource"> Resource reference to the Azure Key Vault secret. Expected to be in format of /subscriptions/{​​​​​​​​​subscriptionId}​​​​​​​​​/resourceGroups/{​​​​​​​​​resourceGroupName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/providers/Microsoft.KeyVault/vaults/{vaultName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/secrets/{secretName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​. </param>
         /// <param name="secretVersion"> Version of the secret to be used. </param>
-        internal UriSigningKeyProperties(SecretType secretType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string keyId, ResourceReference secretSource, string secretVersion) : base(secretType, additionalBinaryDataProperties)
+        internal UriSigningKeyProperties(SecretType secretType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string keyId, WritableSubResource secretSource, string secretVersion) : base(secretType, additionalBinaryDataProperties)
         {
             KeyId = keyId;
             SecretSource = secretSource;
@@ -47,28 +34,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Resource reference to the Azure Key Vault secret. Expected to be in format of /subscriptions/{​​​​​​​​​subscriptionId}​​​​​​​​​/resourceGroups/{​​​​​​​​​resourceGroupName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/providers/Microsoft.KeyVault/vaults/{vaultName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/secrets/{secretName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​. </summary>
         [WirePath("secretSource")]
-        internal ResourceReference SecretSource { get; set; }
+        public WritableSubResource SecretSource { get; set; }
 
         /// <summary> Version of the secret to be used. </summary>
         [WirePath("secretVersion")]
         public string SecretVersion { get; set; }
-
-        /// <summary> Resource ID. </summary>
-        [WirePath("secretSource.id")]
-        public ResourceIdentifier SecretSourceId
-        {
-            get
-            {
-                return SecretSource is null ? default : SecretSource.Id;
-            }
-            set
-            {
-                if (SecretSource is null)
-                {
-                    SecretSource = new ResourceReference();
-                }
-                SecretSource.Id = value;
-            }
-        }
     }
 }

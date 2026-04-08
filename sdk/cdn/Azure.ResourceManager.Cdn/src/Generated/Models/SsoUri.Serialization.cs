@@ -82,10 +82,10 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 throw new FormatException($"The model {nameof(SsoUri)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(SsoUriValue))
+            if (options.Format != "W" && Optional.IsDefined(AvailableSsoUri))
             {
                 writer.WritePropertyName("ssoUriValue"u8);
-                writer.WriteStringValue(SsoUriValue);
+                writer.WriteStringValue(AvailableSsoUri.AbsoluteUri);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -129,13 +129,17 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            string ssoUriValue = default;
+            Uri availableSsoUri = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("ssoUriValue"u8))
                 {
-                    ssoUriValue = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    availableSsoUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (options.Format != "W")
@@ -143,7 +147,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SsoUri(ssoUriValue, additionalBinaryDataProperties);
+            return new SsoUri(availableSsoUri, additionalBinaryDataProperties);
         }
     }
 }

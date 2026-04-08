@@ -14,9 +14,9 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this FrontDoorMinimumTlsVersion value) => value switch
         {
-            FrontDoorMinimumTlsVersion.Tls10 => "TLS10",
-            FrontDoorMinimumTlsVersion.Tls12 => "TLS12",
-            FrontDoorMinimumTlsVersion.Tls13 => "TLS13",
+            FrontDoorMinimumTlsVersion.Tls1_0 => "TLS10",
+            FrontDoorMinimumTlsVersion.Tls1_2 => "TLS12",
+            FrontDoorMinimumTlsVersion.Tls1_3 => "TLS13",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FrontDoorMinimumTlsVersion value.")
         };
 
@@ -25,15 +25,15 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "TLS10"))
             {
-                return FrontDoorMinimumTlsVersion.Tls10;
+                return FrontDoorMinimumTlsVersion.Tls1_0;
             }
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "TLS12"))
             {
-                return FrontDoorMinimumTlsVersion.Tls12;
+                return FrontDoorMinimumTlsVersion.Tls1_2;
             }
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "TLS13"))
             {
-                return FrontDoorMinimumTlsVersion.Tls13;
+                return FrontDoorMinimumTlsVersion.Tls1_3;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FrontDoorMinimumTlsVersion value.");
         }

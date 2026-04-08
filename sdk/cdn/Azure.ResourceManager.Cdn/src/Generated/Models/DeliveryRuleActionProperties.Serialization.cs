@@ -16,14 +16,9 @@ namespace Azure.ResourceManager.Cdn.Models
     /// Defines the parameters for delivery rule actions
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="UriRedirectActionProperties"/>, <see cref="UriSigningActionProperties"/>, <see cref="OriginGroupOverrideActionProperties"/>, <see cref="DeliveryRuleEdgeActionParameters"/>, <see cref="UriRewriteActionProperties"/>, <see cref="HeaderActionProperties"/>, <see cref="CacheExpirationActionProperties"/>, <see cref="CacheKeyQueryStringActionProperties"/>, and <see cref="RouteConfigurationOverrideActionProperties"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownDeliveryRuleActionProperties))]
+    [PersistableModelProxy(typeof(UnknownDeliveryRuleActionParameters))]
     public abstract partial class DeliveryRuleActionProperties : IJsonModel<DeliveryRuleActionProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="DeliveryRuleActionProperties"/> for deserialization. </summary>
-        internal DeliveryRuleActionProperties()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual DeliveryRuleActionProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -150,7 +145,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         return RouteConfigurationOverrideActionProperties.DeserializeRouteConfigurationOverrideActionProperties(element, options);
                 }
             }
-            return UnknownDeliveryRuleActionProperties.DeserializeUnknownDeliveryRuleActionProperties(element, options);
+            return UnknownDeliveryRuleActionParameters.DeserializeUnknownDeliveryRuleActionParameters(element, options);
         }
     }
 }

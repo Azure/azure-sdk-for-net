@@ -30,16 +30,16 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="properties"> The json object that contains properties required to create a security policy. </param>
-        internal FrontDoorSecurityPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, SecurityPolicyDetails properties) : base(id, name, resourceType, systemData)
+        /// <param name="securityPolicyProperties"> The json object that contains properties required to create a security policy. </param>
+        internal FrontDoorSecurityPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, SecurityPolicyDetails securityPolicyProperties) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
-            Properties = properties;
+            SecurityPolicyProperties = securityPolicyProperties;
         }
 
         /// <summary> The json object that contains properties required to create a security policy. </summary>
         [WirePath("properties")]
-        internal SecurityPolicyDetails Properties { get; set; }
+        internal SecurityPolicyDetails SecurityPolicyProperties { get; set; }
 
         /// <summary> Provisioning status. </summary>
         [WirePath("properties.provisioningState")]
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Cdn
         {
             get
             {
-                return Properties is null ? default : Properties.ProvisioningState;
+                return SecurityPolicyProperties is null ? default : SecurityPolicyProperties.ProvisioningState;
             }
         }
 
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Cdn
         {
             get
             {
-                return Properties is null ? default : Properties.DeploymentStatus;
+                return SecurityPolicyProperties is null ? default : SecurityPolicyProperties.DeploymentStatus;
             }
         }
 
@@ -67,25 +67,25 @@ namespace Azure.ResourceManager.Cdn
         {
             get
             {
-                return Properties is null ? default : Properties.ProfileName;
+                return SecurityPolicyProperties is null ? default : SecurityPolicyProperties.ProfileName;
             }
         }
 
         /// <summary> object which contains security policy parameters. </summary>
         [WirePath("properties.parameters")]
-        public SecurityPolicyProperties SecurityPolicyParameters
+        public SecurityPolicyProperties Properties
         {
             get
             {
-                return Properties is null ? default : Properties.SecurityPolicyParameters;
+                return SecurityPolicyProperties is null ? default : SecurityPolicyProperties.Properties;
             }
             set
             {
-                if (Properties is null)
+                if (SecurityPolicyProperties is null)
                 {
-                    Properties = new SecurityPolicyDetails();
+                    SecurityPolicyProperties = new SecurityPolicyDetails();
                 }
-                Properties.SecurityPolicyParameters = value;
+                SecurityPolicyProperties.Properties = value;
             }
         }
     }

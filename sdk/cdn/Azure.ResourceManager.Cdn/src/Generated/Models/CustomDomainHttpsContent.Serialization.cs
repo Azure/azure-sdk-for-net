@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Cdn.Models
     /// The JSON object that contains the properties to secure a custom domain.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CdnManagedHttpsContent"/> and <see cref="UserManagedHttpsContent"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownCustomDomainHttpsContent))]
+    [PersistableModelProxy(typeof(UnknownCustomDomainHttpsParameters))]
     public abstract partial class CustomDomainHttpsContent : IJsonModel<CustomDomainHttpsContent>
     {
         /// <summary> Initializes a new instance of <see cref="CustomDomainHttpsContent"/> for deserialization. </summary>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         return UserManagedHttpsContent.DeserializeUserManagedHttpsContent(element, options);
                 }
             }
-            return UnknownCustomDomainHttpsContent.DeserializeUnknownCustomDomainHttpsContent(element, options);
+            return UnknownCustomDomainHttpsParameters.DeserializeUnknownCustomDomainHttpsParameters(element, options);
         }
     }
 }

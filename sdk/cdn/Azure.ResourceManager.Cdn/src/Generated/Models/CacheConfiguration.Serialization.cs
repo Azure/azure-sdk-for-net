@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Cdn.Models
             if (Optional.IsDefined(CacheDuration))
             {
                 writer.WritePropertyName("cacheDuration"u8);
-                writer.WriteStringValue(CacheDuration);
+                writer.WriteStringValue(CacheDuration.Value, "P");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Cdn.Models
             string queryParameters = default;
             RuleIsCompressionEnabled? isCompressionEnabled = default;
             RuleCacheBehavior? cacheBehavior = default;
-            string cacheDuration = default;
+            TimeSpan? cacheDuration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -183,7 +183,11 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (prop.NameEquals("cacheDuration"u8))
                 {
-                    cacheDuration = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    cacheDuration = prop.Value.GetTimeSpan("P");
                     continue;
                 }
                 if (options.Format != "W")

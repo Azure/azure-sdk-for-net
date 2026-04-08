@@ -19,11 +19,6 @@ namespace Azure.ResourceManager.Cdn.Models
     [PersistableModelProxy(typeof(UnknownDeliveryRuleCondition))]
     public abstract partial class DeliveryRuleCondition : IJsonModel<DeliveryRuleCondition>
     {
-        /// <summary> Initializes a new instance of <see cref="DeliveryRuleCondition"/> for deserialization. </summary>
-        internal DeliveryRuleCondition()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual DeliveryRuleCondition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

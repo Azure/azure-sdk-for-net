@@ -196,11 +196,11 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<CdnNameAvailabilityResult>> CheckNameAvailabilityWithSubscriptionAsync(CdnNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CdnNameAvailabilityResult>> CheckCdnNameAvailabilityWithSubscriptionAsync(CdnNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = CdnClientClientDiagnostics.CreateScope("MockableCdnSubscriptionResource.CheckNameAvailabilityWithSubscription");
+            using DiagnosticScope scope = CdnClientClientDiagnostics.CreateScope("MockableCdnSubscriptionResource.CheckCdnNameAvailabilityWithSubscription");
             scope.Start();
             try
             {
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Cdn.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = CdnClientRestClient.CreateCheckNameAvailabilityWithSubscriptionRequest(Guid.Parse(Id.SubscriptionId), CdnNameAvailabilityContent.ToRequestContent(content), context);
+                HttpMessage message = CdnClientRestClient.CreateCheckCdnNameAvailabilityWithSubscriptionRequest(Guid.Parse(Id.SubscriptionId), CdnNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CdnNameAvailabilityResult> response = Response.FromValue(CdnNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -244,11 +244,11 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<CdnNameAvailabilityResult> CheckNameAvailabilityWithSubscription(CdnNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<CdnNameAvailabilityResult> CheckCdnNameAvailabilityWithSubscription(CdnNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = CdnClientClientDiagnostics.CreateScope("MockableCdnSubscriptionResource.CheckNameAvailabilityWithSubscription");
+            using DiagnosticScope scope = CdnClientClientDiagnostics.CreateScope("MockableCdnSubscriptionResource.CheckCdnNameAvailabilityWithSubscription");
             scope.Start();
             try
             {
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Cdn.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = CdnClientRestClient.CreateCheckNameAvailabilityWithSubscriptionRequest(Guid.Parse(Id.SubscriptionId), CdnNameAvailabilityContent.ToRequestContent(content), context);
+                HttpMessage message = CdnClientRestClient.CreateCheckCdnNameAvailabilityWithSubscriptionRequest(Guid.Parse(Id.SubscriptionId), CdnNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CdnNameAvailabilityResult> response = Response.FromValue(CdnNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)

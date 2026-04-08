@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WritePropertyName("validationToken"u8);
                 writer.WriteStringValue(ValidationToken);
             }
-            if (options.Format != "W" && Optional.IsDefined(ExpirationDate))
+            if (options.Format != "W" && Optional.IsDefined(ExpiresOn))
             {
                 writer.WritePropertyName("expirationDate"u8);
-                writer.WriteStringValue(ExpirationDate);
+                writer.WriteStringValue(ExpiresOn.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 return null;
             }
             string validationToken = default;
-            string expirationDate = default;
+            DateTimeOffset? expiresOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -138,7 +138,11 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (prop.NameEquals("expirationDate"u8))
                 {
-                    expirationDate = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    expiresOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -146,7 +150,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DomainValidationProperties(validationToken, expirationDate, additionalBinaryDataProperties);
+            return new DomainValidationProperties(validationToken, expiresOn, additionalBinaryDataProperties);
         }
     }
 }

@@ -96,10 +96,10 @@ namespace Azure.ResourceManager.Cdn
                 throw new FormatException($"The model {nameof(FrontDoorSecurityPolicyData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Properties))
+            if (Optional.IsDefined(SecurityPolicyProperties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                writer.WriteObjectValue(SecurityPolicyProperties, options);
             }
         }
 
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Cdn
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            SecurityPolicyDetails properties = default;
+            SecurityPolicyDetails securityPolicyProperties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Cdn
                     {
                         continue;
                     }
-                    properties = SecurityPolicyDetails.DeserializeSecurityPolicyDetails(prop.Value, options);
+                    securityPolicyProperties = SecurityPolicyDetails.DeserializeSecurityPolicyDetails(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Cdn
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties,
-                properties);
+                securityPolicyProperties);
         }
     }
 }

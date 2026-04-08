@@ -8,8 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.ResourceManager.Cdn;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -86,9 +88,14 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             writer.WritePropertyName("origins"u8);
             writer.WriteStartArray();
-            foreach (ResourceReference item in Origins)
+            foreach (WritableSubResource item in Origins)
             {
-                writer.WriteObjectValue(item, options);
+                if (item == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
+                ((IJsonModel<WritableSubResource>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(TrafficRestorationTimeToHealedOrNewEndpointsInMinutes))
@@ -144,7 +151,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 return null;
             }
             HealthProbeSettings healthProbeSettings = default;
-            IList<ResourceReference> origins = default;
+            IList<WritableSubResource> origins = default;
             int? trafficRestorationTimeToHealedOrNewEndpointsInMinutes = default;
             ResponseBasedOriginErrorDetectionSettings responseBasedOriginErrorDetectionSettings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -161,10 +168,17 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (prop.NameEquals("origins"u8))
                 {
-                    List<ResourceReference> array = new List<ResourceReference>();
+                    List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ResourceReference.DeserializeResourceReference(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerCdnContext.Default));
+                        }
                     }
                     origins = array;
                     continue;

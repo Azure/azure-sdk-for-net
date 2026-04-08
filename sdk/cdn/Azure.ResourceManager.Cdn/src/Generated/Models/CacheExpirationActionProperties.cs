@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="cacheBehavior"> Caching behavior for the requests. </param>
         /// <param name="cacheType"> The level at which the content needs to be cached. </param>
         /// <param name="cacheDuration"> The duration for which the content needs to be cached. Allowed format is [d.]hh:mm:ss. </param>
-        internal CacheExpirationActionProperties(DeliveryRuleActionParametersType typeName, IDictionary<string, BinaryData> additionalBinaryDataProperties, CacheBehaviorSetting cacheBehavior, CdnCacheLevel cacheType, string cacheDuration) : base(typeName, additionalBinaryDataProperties)
+        internal CacheExpirationActionProperties(DeliveryRuleActionParametersType typeName, IDictionary<string, BinaryData> additionalBinaryDataProperties, CacheBehaviorSetting cacheBehavior, CdnCacheLevel cacheType, TimeSpan? cacheDuration) : base(typeName, additionalBinaryDataProperties)
         {
             CacheBehavior = cacheBehavior;
             CacheType = cacheType;
@@ -46,6 +46,6 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> The duration for which the content needs to be cached. Allowed format is [d.]hh:mm:ss. </summary>
         [WirePath("cacheDuration")]
-        public string CacheDuration { get; set; }
+        public TimeSpan? CacheDuration { get; set; }
     }
 }

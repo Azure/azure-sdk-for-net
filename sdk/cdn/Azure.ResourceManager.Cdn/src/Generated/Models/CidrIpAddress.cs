@@ -23,19 +23,19 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CidrIPAddress"/>. </summary>
-        /// <param name="baseIpAddress"> Ip address itself. </param>
+        /// <param name="baseIPAddress"> Ip address itself. </param>
         /// <param name="prefixLength"> The length of the prefix of the ip address. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CidrIPAddress(string baseIpAddress, int? prefixLength, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CidrIPAddress(string baseIPAddress, int? prefixLength, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            BaseIpAddress = baseIpAddress;
+            BaseIPAddress = baseIPAddress;
             PrefixLength = prefixLength;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Ip address itself. </summary>
         [WirePath("baseIpAddress")]
-        public string BaseIpAddress { get; set; }
+        public string BaseIPAddress { get; set; }
 
         /// <summary> The length of the prefix of the ip address. </summary>
         [WirePath("prefixLength")]
