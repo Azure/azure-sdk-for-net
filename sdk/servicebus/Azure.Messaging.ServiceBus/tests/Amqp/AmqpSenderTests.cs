@@ -124,27 +124,17 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
         ///   <see cref="AmqpSender.CreateLinkAndEnsureSenderStateAsync" />.
         /// </summary>
         ///
-        private static void SetLinkLimits(AmqpSender target, long value)
+        private static void SetLinkLimits(AmqpSender target, long value, long? maxBatchSize = null)
         {
             var defaultMaxBatchSize = (long)typeof(AmqpSender)
                 .GetField("DefaultMaxBatchSize", BindingFlags.Static | BindingFlags.NonPublic)
                 .GetValue(null);
 
-            typeof(AmqpSender)
-                .GetField("_linkLimits", BindingFlags.Instance | BindingFlags.NonPublic)
-                .SetValue(target, (value, Math.Min(value, defaultMaxBatchSize)));
-        }
+            var effectiveBatchSize = maxBatchSize ?? defaultMaxBatchSize;
 
-        /// <summary>
-        ///   Sets the link limits tuple with an explicit batch size, allowing
-        ///   tests to simulate the vendor property path where MaxBatchSize
-        ///   differs from DefaultMaxBatchSize.
-        /// </summary>
-        private static void SetLinkLimitsWithBatchSize(AmqpSender target, long maxMessageSize, long maxBatchSize)
-        {
             typeof(AmqpSender)
                 .GetField("_linkLimits", BindingFlags.Instance | BindingFlags.NonPublic)
-                .SetValue(target, (maxMessageSize, Math.Min(maxMessageSize, maxBatchSize)));
+                .SetValue(target, (value, Math.Min(value, effectiveBatchSize)));
         }
 
         /// <summary>
@@ -369,7 +359,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
                 .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureSenderStateAsync",
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>())
-                .Callback(() => SetLinkLimitsWithBatchSize(sender.Object, premiumLargeMaxMessageSize, vendorBatchSize))
+                .Callback(() => SetLinkLimits(sender.Object, premiumLargeMaxMessageSize, maxBatchSize: vendorBatchSize))
                 .Returns(Task.FromResult(new SendingAmqpLink(new AmqpLinkSettings())));
 
             using TransportMessageBatch batch = await sender.Object.CreateMessageBatchAsync(
@@ -402,7 +392,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
                 .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureSenderStateAsync",
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>())
-                .Callback(() => SetLinkLimitsWithBatchSize(sender.Object, standardMaxMessageSize, vendorBatchSize))
+                .Callback(() => SetLinkLimits(sender.Object, standardMaxMessageSize, maxBatchSize: vendorBatchSize))
                 .Returns(Task.FromResult(new SendingAmqpLink(new AmqpLinkSettings())));
 
             using TransportMessageBatch batch = await sender.Object.CreateMessageBatchAsync(
@@ -467,7 +457,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
 
             // Use a large batch size (10 MB) to ensure we can fit well over 4500
             // tiny messages regardless of envelope overhead variations.
-            SetLinkLimitsWithBatchSize(sender.Object, 10L * 1024 * 1024, 10L * 1024 * 1024);
+            SetLinkLimits(sender.Object, 10L * 1024 * 1024, maxBatchSize: 10L * 1024 * 1024);
 
             using TransportMessageBatch batch = await sender.Object.CreateMessageBatchAsync(
                 new CreateMessageBatchOptions(), default);

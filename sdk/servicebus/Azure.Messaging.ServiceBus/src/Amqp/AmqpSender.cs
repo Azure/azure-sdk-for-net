@@ -657,15 +657,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                 var maxMessageSize = (long)link.Settings.MaxMessageSize;
 
-                // Read the vendor property 'com.microsoft:max-message-batch-size' from
-                // the link, which correctly reports the batch size limit (e.g. 1 MB on
-                // Premium) independent of max-message-size (which can be up to 100 MB on
-                // Premium large-message entities).  Fall back to the hardcoded default
-                // for older service versions that don't advertise the property.
+                // Read the batch size limit from the vendor property if available;
+                // fall back to the default for older service versions.
                 long maxBatchSize = DefaultMaxBatchSize;
-                if (link.Settings.Properties != null &&
-                    link.Settings.Properties.TryGetValue<long>(AmqpClientConstants.MaxMessageBatchSizeName, out var vendorBatchSize) &&
-                    vendorBatchSize > 0)
+                if (link.Settings?.Properties.TryGetValue<long>(AmqpClientConstants.MaxMessageBatchSizeName, out var vendorBatchSize) == true
+                    && vendorBatchSize > 0)
                 {
                     maxBatchSize = vendorBatchSize;
                 }
