@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="workspaces"> List of all synapselink workspaces. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SqlSynapseLinkWorkspace(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, IList<SqlSynapseLinkWorkspaceInfo> workspaces, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SqlSynapseLinkWorkspace(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<SqlSynapseLinkWorkspaceInfo> workspaces, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Workspaces = workspaces;
             _serializedAdditionalRawData = serializedAdditionalRawData;

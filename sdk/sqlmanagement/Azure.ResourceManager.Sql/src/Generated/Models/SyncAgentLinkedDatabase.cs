@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="databaseName"> Database name of the sync agent linked database. </param>
         /// <param name="userName"> User name of the sync agent linked database. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SyncAgentLinkedDatabase(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, SyncMemberDbType? databaseType, Guid? databaseId, string description, string serverName, string databaseName, string userName, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SyncAgentLinkedDatabase(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SyncMemberDbType? databaseType, Guid? databaseId, string description, string serverName, string databaseName, string userName, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             DatabaseType = databaseType;
             DatabaseId = databaseId;

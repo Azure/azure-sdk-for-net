@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="isBackupImmutable"> The setting whether the LTR backup is immutable. </param>
         /// <param name="backupStorageAccessTier"> The BackupStorageAccessTier for the LTR backup. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LongTermRetentionBackupData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string serverName, DateTimeOffset? serverCreateOn, string databaseName, DateTimeOffset? databaseDeletedOn, DateTimeOffset? backupOn, DateTimeOffset? backupExpireOn, SqlBackupStorageRedundancy? backupStorageRedundancy, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy, bool? isBackupImmutable, SqlBackupStorageAccessTier? backupStorageAccessTier, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal LongTermRetentionBackupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string serverName, DateTimeOffset? serverCreateOn, string databaseName, DateTimeOffset? databaseDeletedOn, DateTimeOffset? backupOn, DateTimeOffset? backupExpireOn, SqlBackupStorageRedundancy? backupStorageRedundancy, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy, bool? isBackupImmutable, SqlBackupStorageAccessTier? backupStorageAccessTier, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ServerName = serverName;
             ServerCreateOn = serverCreateOn;

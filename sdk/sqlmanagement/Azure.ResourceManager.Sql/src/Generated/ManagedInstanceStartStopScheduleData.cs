@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="nextRunAction"> Next action to be executed (Start or Stop). </param>
         /// <param name="nextExecutionTime"> Timestamp when the next action will be executed in the corresponding schedule time zone. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedInstanceStartStopScheduleData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string description, string timeZoneId, IList<SqlScheduleItem> scheduleList, string nextRunAction, string nextExecutionTime, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ManagedInstanceStartStopScheduleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string timeZoneId, IList<SqlScheduleItem> scheduleList, string nextRunAction, string nextExecutionTime, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Description = description;
             TimeZoneId = timeZoneId;

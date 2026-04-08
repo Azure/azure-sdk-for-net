@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The private link resource group id. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedInstancePrivateLinkData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, ManagedInstancePrivateLinkProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ManagedInstancePrivateLinkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedInstancePrivateLinkProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;

@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="linkType"> Link type (GEO, NAMED, STANDBY). Update operation does not support NAMED. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SqlServerDatabaseReplicationLinkPatch(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, ReplicationLinkType? linkType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SqlServerDatabaseReplicationLinkPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ReplicationLinkType? linkType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             LinkType = linkType;
             _serializedAdditionalRawData = serializedAdditionalRawData;

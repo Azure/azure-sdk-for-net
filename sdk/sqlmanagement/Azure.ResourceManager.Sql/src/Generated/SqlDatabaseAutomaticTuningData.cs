@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="actualState"> Automatic tuning actual state. </param>
         /// <param name="options"> Automatic tuning options definition. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SqlDatabaseAutomaticTuningData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, AutomaticTuningMode? desiredState, AutomaticTuningMode? actualState, IDictionary<string, AutomaticTuningOptions> options, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SqlDatabaseAutomaticTuningData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AutomaticTuningMode? desiredState, AutomaticTuningMode? actualState, IDictionary<string, AutomaticTuningOptions> options, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             DesiredState = desiredState;
             ActualState = actualState;

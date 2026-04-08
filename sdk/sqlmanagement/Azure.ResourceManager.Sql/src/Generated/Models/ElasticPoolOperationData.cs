@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="description"> The operation description. </param>
         /// <param name="isCancellable"> Whether the operation can be cancelled. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ElasticPoolOperationData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string elasticPoolName, string operation, string operationFriendlyName, int? percentComplete, string serverName, DateTimeOffset? startOn, string state, int? errorCode, string errorDescription, int? errorSeverity, bool? isUserError, DateTimeOffset? estimatedCompleteOn, string description, bool? isCancellable, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ElasticPoolOperationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string elasticPoolName, string operation, string operationFriendlyName, int? percentComplete, string serverName, DateTimeOffset? startOn, string state, int? errorCode, string errorDescription, int? errorSeverity, bool? isUserError, DateTimeOffset? estimatedCompleteOn, string description, bool? isCancellable, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ElasticPoolName = elasticPoolName;
             Operation = operation;

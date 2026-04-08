@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="syncDirection"> Sync direction of the sync member. </param>
         /// <param name="syncState"> Sync state of the sync member. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SyncMemberData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, SyncMemberDbType? databaseType, ResourceIdentifier syncAgentId, Guid? sqlServerDatabaseId, ResourceIdentifier syncMemberAzureDatabaseResourceId, bool? usePrivateLinkConnection, string privateEndpointName, string serverName, string databaseName, string userName, string password, SyncDirection? syncDirection, SyncMemberState? syncState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SyncMemberData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SyncMemberDbType? databaseType, ResourceIdentifier syncAgentId, Guid? sqlServerDatabaseId, ResourceIdentifier syncMemberAzureDatabaseResourceId, bool? usePrivateLinkConnection, string privateEndpointName, string serverName, string databaseName, string userName, string password, SyncDirection? syncDirection, SyncMemberState? syncState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             DatabaseType = databaseType;
             SyncAgentId = syncAgentId;

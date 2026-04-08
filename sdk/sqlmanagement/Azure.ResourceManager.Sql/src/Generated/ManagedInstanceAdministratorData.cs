@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="sid"> SID (object ID) of the managed instance administrator. </param>
         /// <param name="tenantId"> Tenant ID of the managed instance administrator. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedInstanceAdministratorData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, ManagedInstanceAdministratorType? administratorType, string login, Guid? sid, Guid? tenantId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ManagedInstanceAdministratorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedInstanceAdministratorType? administratorType, string login, Guid? sid, Guid? tenantId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             AdministratorType = administratorType;
             Login = login;

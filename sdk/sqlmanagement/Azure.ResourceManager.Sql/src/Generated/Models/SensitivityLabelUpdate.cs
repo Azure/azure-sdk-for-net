@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="column"> Column name to update. </param>
         /// <param name="sensitivityLabel"> The sensitivity label information to apply on a column. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SensitivityLabelUpdate(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, SensitivityLabelUpdateKind? op, string schema, string table, string column, SensitivityLabelData sensitivityLabel, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SensitivityLabelUpdate(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SensitivityLabelUpdateKind? op, string schema, string table, string column, SensitivityLabelData sensitivityLabel, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Op = op;
             Schema = schema;

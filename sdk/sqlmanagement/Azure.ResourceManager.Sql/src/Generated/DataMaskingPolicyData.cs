@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="applicationPrincipals"> The list of the application principals. This is a legacy parameter and is no longer used. </param>
         /// <param name="maskingLevel"> The masking level. This is a legacy parameter and is no longer used. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataMaskingPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, AzureLocation? location, string kind, DataMaskingState? dataMaskingState, string exemptPrincipals, string applicationPrincipals, string maskingLevel, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal DataMaskingPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string kind, DataMaskingState? dataMaskingState, string exemptPrincipals, string applicationPrincipals, string maskingLevel, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Location = location;
             Kind = kind;

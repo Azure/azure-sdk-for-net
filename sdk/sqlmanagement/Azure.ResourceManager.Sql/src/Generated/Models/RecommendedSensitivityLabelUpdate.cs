@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="table"> Table name of the column to update. </param>
         /// <param name="column"> Column name to update. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RecommendedSensitivityLabelUpdate(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, RecommendedSensitivityLabelUpdateKind? op, string schema, string table, string column, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal RecommendedSensitivityLabelUpdate(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RecommendedSensitivityLabelUpdateKind? op, string schema, string table, string column, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Op = op;
             Schema = schema;

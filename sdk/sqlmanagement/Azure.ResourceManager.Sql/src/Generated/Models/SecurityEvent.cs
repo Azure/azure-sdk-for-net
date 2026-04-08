@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="principalName"> The principal user who executed the statement. </param>
         /// <param name="securityEventSqlInjectionAdditionalProperties"> The sql injection additional properties, populated only if the type of the security event is sql injection. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityEvent(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, DateTimeOffset? eventOn, SecurityEventType? securityEventType, string subscription, string server, string database, IPAddress clientIP, string applicationName, string principalName, SecurityEventSqlInjectionAdditionalProperties securityEventSqlInjectionAdditionalProperties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SecurityEvent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? eventOn, SecurityEventType? securityEventType, string subscription, string server, string database, IPAddress clientIP, string applicationName, string principalName, SecurityEventSqlInjectionAdditionalProperties securityEventSqlInjectionAdditionalProperties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             EventOn = eventOn;
             SecurityEventType = securityEventType;

@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="queryText"> Query text. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedInstanceQuery(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string queryText, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ManagedInstanceQuery(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string queryText, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             QueryText = queryText;
             _serializedAdditionalRawData = serializedAdditionalRawData;

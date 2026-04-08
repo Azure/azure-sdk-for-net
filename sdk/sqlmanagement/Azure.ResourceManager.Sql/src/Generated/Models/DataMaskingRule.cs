@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="suffixSize"> If maskingFunction is set to Text, the number of characters to show unmasked at the end of the string. Otherwise, this parameter will be ignored. </param>
         /// <param name="replacementString"> If maskingFunction is set to Text, the character to use for masking the unexposed part of the string. Otherwise, this parameter will be ignored. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataMaskingRule(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, AzureLocation? location, string kind, string ruleId, DataMaskingRuleState? ruleState, string schemaName, string tableName, string columnName, string aliasName, DataMaskingFunction? maskingFunction, string numberFrom, string numberTo, string prefixSize, string suffixSize, string replacementString, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal DataMaskingRule(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string kind, string ruleId, DataMaskingRuleState? ruleState, string schemaName, string tableName, string columnName, string aliasName, DataMaskingFunction? maskingFunction, string numberFrom, string numberTo, string prefixSize, string suffixSize, string replacementString, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Location = location;
             Kind = kind;

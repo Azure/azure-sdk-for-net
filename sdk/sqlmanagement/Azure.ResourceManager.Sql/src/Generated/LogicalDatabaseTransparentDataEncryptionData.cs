@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="systemData"> The systemData. </param>
         /// <param name="state"> Specifies the state of the transparent data encryption. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LogicalDatabaseTransparentDataEncryptionData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, TransparentDataEncryptionState? state, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal LogicalDatabaseTransparentDataEncryptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TransparentDataEncryptionState? state, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             State = state;
             _serializedAdditionalRawData = serializedAdditionalRawData;

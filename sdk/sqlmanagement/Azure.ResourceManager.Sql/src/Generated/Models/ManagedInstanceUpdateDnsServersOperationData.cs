@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="status"> The status of the DNS refresh operation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedInstanceUpdateDnsServersOperationData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, DnsRefreshConfigurationPropertiesStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ManagedInstanceUpdateDnsServersOperationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DnsRefreshConfigurationPropertiesStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Status = status;
             _serializedAdditionalRawData = serializedAdditionalRawData;

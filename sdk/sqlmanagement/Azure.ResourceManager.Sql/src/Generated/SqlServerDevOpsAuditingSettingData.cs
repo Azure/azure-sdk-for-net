@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Sql
         /// </param>
         /// <param name="storageAccountSubscriptionId"> Specifies the blob storage subscription Id. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SqlServerDevOpsAuditingSettingData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, bool? isAzureMonitorTargetEnabled, bool? isManagedIdentityInUse, BlobAuditingPolicyState? state, string storageEndpoint, string storageAccountAccessKey, Guid? storageAccountSubscriptionId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SqlServerDevOpsAuditingSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isAzureMonitorTargetEnabled, bool? isManagedIdentityInUse, BlobAuditingPolicyState? state, string storageEndpoint, string storageAccountAccessKey, Guid? storageAccountSubscriptionId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             IsAzureMonitorTargetEnabled = isAzureMonitorTargetEnabled;
             IsManagedIdentityInUse = isManagedIdentityInUse;
