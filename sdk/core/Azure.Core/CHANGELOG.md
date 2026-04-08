@@ -10,6 +10,8 @@
 
 ### Other Changes
 
+- Azure.Identity credential types are now included in Azure.Core, enabling SDK libraries to provide configuration-driven DI extensions (e.g., `AddAzureSecretClient`) without requiring a direct dependency on Azure.Identity.
+
 ## 1.52.0 (2026-03-23)
 
 ### Features Added
@@ -22,8 +24,6 @@
 - Fixed implicit conversion operators to not throw exceptions on null inputs per Framework Design Guidelines. Operators now return safe defaults: `null` for reference types, `default` for value types.
 - Fixed `RequestContent.Dispose()` to be idempotent and thread-safe, preventing `ArrayPool` buffers from being returned multiple times when disposed concurrently or repeatedly.
 - Fixed `HttpClientTransport` to correctly set the `Host` header on outgoing requests when explicitly specified, rather than falling through to `TryAddWithoutValidation`.
-
-- Azure.Identity credential types are now included in Azure.Core, enabling SDK libraries to provide configuration-driven DI extensions (e.g., `AddAzureSecretClient`) without requiring a direct dependency on Azure.Identity.
 
 ### Breaking Changes
 
