@@ -20,7 +20,9 @@ import {
   ParentResourceLookupContext,
   assignNonResourceMethodsToResources,
   resolveResourceApiVersions,
-  extractRbacRoles
+  extractRbacRoles,
+  findLongestPrefixMatch,
+  RequestPath
 } from "./resource-metadata.js";
 import {
   DecoratorInfo,
@@ -62,7 +64,6 @@ import {
 } from "@typespec/compiler";
 import { resolveArmResources } from "./resolve-arm-resources-converter.js";
 import { AzureMgmtEmitterOptions } from "./options.js";
-import { findLongestPrefixMatch, RequestPath } from "./utils.js";
 import { getAllSdkClients, traverseClient } from "./sdk-client-utils.js";
 
 export async function updateClients(

@@ -37,6 +37,8 @@ import {
   resolveArmResources as resolveArmResourcesFromLibrary
 } from "@azure-tools/typespec-azure-resource-manager";
 import {
+  findLongestPrefixMatch,
+  RequestPath,
   ArmProviderSchema,
   ArmResourceSchema,
   NameConstraints,
@@ -57,7 +59,6 @@ import {
   getClientType,
   SdkModelType
 } from "@azure-tools/typespec-client-generator-core";
-import { findLongestPrefixMatch, RequestPath } from "./utils.js";
 import { getAllSdkClients } from "./sdk-client-utils.js";
 import {
   extensionResourceOperationName,
