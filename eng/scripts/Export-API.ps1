@@ -46,7 +46,7 @@ foreach ($file in $apiListingFiles) {
         # Replace any remaining CR with LF
         $content = $content -replace "`r", "`n"
         # Remove CCI dummy type reference artifacts emitted by GenAPI --follow-type-forwards
-        $content = $content -replace "(?m)^\s*\[Microsoft\.Cci\.DummyTypeReference\]\n", ""
+        $content = ($content -split "`n" | Where-Object { $_ -notmatch '\[Microsoft\.Cci\.DummyTypeReference\]' }) -join "`n"
         # Write back without adding extra newline
         Set-Content -Path $file.FullName -Value $content -NoNewline
     }
