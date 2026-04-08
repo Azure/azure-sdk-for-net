@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -158,9 +157,6 @@ namespace Azure.Provisioning.MySql
         {
             /// <summary> API version "2024-12-30". </summary>
             public static readonly string V2024_12_30 = "2024-12-30";
-            /// <summary> API version "2024-12-01-preview". </summary>
-            [Experimental("AZPROVISION001")]
-            public static readonly string V2024_12_01_PREVIEW = "2024-12-01-preview";
         }
     }
 }
