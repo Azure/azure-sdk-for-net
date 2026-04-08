@@ -7,6 +7,7 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- Fixed `MCPApprovalType` serialization so that `BinaryData.FromObjectAsJson(MCPApprovalType.Never)` correctly serializes to `"never"` on the wire. Previously, this silently produced an empty object `{}`, causing the service to treat it as `"always"` and send unexpected approval requests.
 
 ### Other Changes
 
