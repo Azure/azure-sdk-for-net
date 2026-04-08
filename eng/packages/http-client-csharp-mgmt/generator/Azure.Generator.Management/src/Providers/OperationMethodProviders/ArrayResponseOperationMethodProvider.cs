@@ -157,7 +157,6 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             var scopeName = ResourceHelpers.GetDiagnosticScope(_enclosingType, _methodName, _isAsync);
             var collectionResult = CreateCollectionResultDefinition(scopeName);
 
-
             statements.Add(ResourceMethodSnippets.CreateRequestContext(KnownParameters.CancellationTokenParameter, out var contextVariable));
 
             var requestMethod = _restClient.GetRequestMethodByOperation(_serviceMethod.Operation);
