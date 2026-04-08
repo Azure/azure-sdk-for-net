@@ -23466,7 +23466,7 @@
                     "methodId": "MgmtTypeSpec.GroupQuotaLimitLists.createOrUpdate",
                     "kind": "Create",
                     "operationPath": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/groupQuotaLimits/{location}",
-                    "operationScope": "ManagementGroup",
+                    "operationScope": "Tenant",
                     "resourceScope": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/groupQuotaLimits/{location}"
                   },
                   {
@@ -23474,7 +23474,7 @@
                     "methodId": "MgmtTypeSpec.GroupQuotaLimitLists.list",
                     "kind": "Read",
                     "operationPath": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/groupQuotaLimits/{location}",
-                    "operationScope": "ManagementGroup",
+                    "operationScope": "Tenant",
                     "resourceScope": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/groupQuotaLimits/{location}"
                   },
                   {
@@ -23482,11 +23482,11 @@
                     "methodId": "MgmtTypeSpec.GroupQuotaLimitLists.update",
                     "kind": "Update",
                     "operationPath": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/groupQuotaLimits/{location}",
-                    "operationScope": "ManagementGroup",
+                    "operationScope": "Tenant",
                     "resourceScope": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/groupQuotaLimits/{location}"
                   }
                 ],
-                "resourceScope": "ManagementGroup",
+                "resourceScope": "Tenant",
                 "resourceName": "GroupQuotaLimitList",
                 "nameConstraints": {},
                 "apiVersions": [
