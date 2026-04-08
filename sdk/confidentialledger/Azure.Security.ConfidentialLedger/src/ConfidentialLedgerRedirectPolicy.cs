@@ -140,7 +140,7 @@ namespace Azure.Security.ConfidentialLedger
 
             lock (_primaryNodeLock)
             {
-                _primaryNodeBaseUri = candidatePrimary;
+                Volatile.Write(ref _primaryNodeBaseUri, candidatePrimary);
             }
         }
 
