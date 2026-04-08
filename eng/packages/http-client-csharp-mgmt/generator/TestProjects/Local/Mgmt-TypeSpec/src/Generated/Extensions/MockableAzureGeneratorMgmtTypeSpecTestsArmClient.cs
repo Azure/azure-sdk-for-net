@@ -473,10 +473,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         /// <returns> Returns a collection of <see cref="ServiceGroupSiteResource"/> objects. </returns>
         public virtual ServiceGroupSiteCollection GetServiceGroupSites(ResourceIdentifier scope)
         {
-            if (scope.ResourceType != "Microsoft.Management/serviceGroups")
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0}, expected {1}", scope.ResourceType, "Microsoft.Management/serviceGroups"), scope);
-            }
             return new ServiceGroupSiteCollection(Client, scope);
         }
 
@@ -639,10 +635,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         /// <returns> Returns a collection of <see cref="PolicyVmAssignmentResource"/> objects. </returns>
         public virtual PolicyVmAssignmentCollection GetPolicyVmAssignments(ResourceIdentifier scope)
         {
-            if (scope.ResourceType != "Microsoft.Compute/virtualMachines")
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0}, expected {1}", scope.ResourceType, "Microsoft.Compute/virtualMachines"), scope);
-            }
             return new PolicyVmAssignmentCollection(Client, scope);
         }
 
@@ -688,10 +680,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         /// <returns> Returns a collection of <see cref="PolicyArcAssignmentResource"/> objects. </returns>
         public virtual PolicyArcAssignmentCollection GetPolicyArcAssignments(ResourceIdentifier scope)
         {
-            if (scope.ResourceType != "Microsoft.HybridCompute/machines")
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0}, expected {1}", scope.ResourceType, "Microsoft.HybridCompute/machines"), scope);
-            }
             return new PolicyArcAssignmentCollection(Client, scope);
         }
 

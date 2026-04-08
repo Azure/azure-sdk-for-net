@@ -318,6 +318,10 @@ namespace Azure.Generator.Management.Providers
                     return typeof(TenantResource);
                 case ResourceScope.ManagementGroup:
                     return typeof(ManagementGroupResource);
+                case ResourceScope.Extension:
+                    // Generic-scope extension resources (e.g., /{scope}/providers/...) have no
+                    // specific parent type. Return null so callers fall back to ArmResource.
+                    return null;
                 default:
                     // TODO -- this is incorrect, but we put it here as a placeholder.
                     return resource.Type;
