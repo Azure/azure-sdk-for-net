@@ -15,16 +15,18 @@ namespace Azure.ResourceManager.CloudHealth.Models
     public readonly partial struct EntitySignalOperator : IEquatable<EntitySignalOperator>
     {
         private readonly string _value;
-        /// <summary> Lower than. </summary>
-        private const string LowerThanValue = "LowerThan";
-        /// <summary> Lower than or equal to. </summary>
-        private const string LowerOrEqualsValue = "LowerOrEquals";
         /// <summary> Greater than. </summary>
         private const string GreaterThanValue = "GreaterThan";
+        /// <summary> Less than. </summary>
+        private const string LessThanValue = "LessThan";
+        /// <summary> Less than or equal to. </summary>
+        private const string LessThanOrEqualValue = "LessThanOrEqual";
         /// <summary> Greater than or equal to. </summary>
-        private const string GreaterOrEqualsValue = "GreaterOrEquals";
+        private const string GreaterThanOrEqualValue = "GreaterThanOrEqual";
         /// <summary> Equal to. </summary>
-        private const string EqualsValueValue = "Equals";
+        private const string EqualValue = "Equal";
+        /// <summary> Not equal to. </summary>
+        private const string NotEqualValue = "NotEqual";
 
         /// <summary> Initializes a new instance of <see cref="EntitySignalOperator"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -36,20 +38,23 @@ namespace Azure.ResourceManager.CloudHealth.Models
             _value = value;
         }
 
-        /// <summary> Lower than. </summary>
-        public static EntitySignalOperator LowerThan { get; } = new EntitySignalOperator(LowerThanValue);
-
-        /// <summary> Lower than or equal to. </summary>
-        public static EntitySignalOperator LowerOrEquals { get; } = new EntitySignalOperator(LowerOrEqualsValue);
-
         /// <summary> Greater than. </summary>
         public static EntitySignalOperator GreaterThan { get; } = new EntitySignalOperator(GreaterThanValue);
 
+        /// <summary> Less than. </summary>
+        public static EntitySignalOperator LessThan { get; } = new EntitySignalOperator(LessThanValue);
+
+        /// <summary> Less than or equal to. </summary>
+        public static EntitySignalOperator LessThanOrEqual { get; } = new EntitySignalOperator(LessThanOrEqualValue);
+
         /// <summary> Greater than or equal to. </summary>
-        public static EntitySignalOperator GreaterOrEquals { get; } = new EntitySignalOperator(GreaterOrEqualsValue);
+        public static EntitySignalOperator GreaterThanOrEqual { get; } = new EntitySignalOperator(GreaterThanOrEqualValue);
 
         /// <summary> Equal to. </summary>
-        public static EntitySignalOperator EqualsValue { get; } = new EntitySignalOperator(EqualsValueValue);
+        public static EntitySignalOperator Equal { get; } = new EntitySignalOperator(EqualValue);
+
+        /// <summary> Not equal to. </summary>
+        public static EntitySignalOperator NotEqual { get; } = new EntitySignalOperator(NotEqualValue);
 
         /// <summary> Determines if two <see cref="EntitySignalOperator"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

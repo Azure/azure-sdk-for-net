@@ -108,11 +108,6 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Properties))
-            {
-                writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
-            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -157,7 +152,6 @@ namespace Azure.ResourceManager.CloudHealth.Models
             }
             ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
-            HealthModelUpdateProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -191,21 +185,12 @@ namespace Azure.ResourceManager.CloudHealth.Models
                     tags = dictionary;
                     continue;
                 }
-                if (prop.NameEquals("properties"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    properties = HealthModelUpdateProperties.DeserializeHealthModelUpdateProperties(prop.Value, options);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new HealthModelPatch(identity, tags ?? new ChangeTrackingDictionary<string, string>(), properties, additionalBinaryDataProperties);
+            return new HealthModelPatch(identity, tags ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
         }
     }
 }

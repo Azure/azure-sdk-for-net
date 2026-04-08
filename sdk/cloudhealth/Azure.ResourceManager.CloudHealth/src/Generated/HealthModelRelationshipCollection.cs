@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.CloudHealth
         {
             TryGetApiVersion(HealthModelRelationshipResource.ResourceType, out string healthModelRelationshipApiVersion);
             _relationshipsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CloudHealth", HealthModelRelationshipResource.ResourceType.Namespace, Diagnostics);
-            _relationshipsRestClient = new Relationships(_relationshipsClientDiagnostics, Pipeline, Endpoint, healthModelRelationshipApiVersion ?? "2025-05-01-preview");
+            _relationshipsRestClient = new Relationships(_relationshipsClientDiagnostics, Pipeline, Endpoint, healthModelRelationshipApiVersion ?? "2026-01-01-preview");
             ValidateResourceId(id);
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.CloudHealth
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -91,11 +91,14 @@ namespace Azure.ResourceManager.CloudHealth
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = _relationshipsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, relationshipName, HealthModelRelationshipData.ToRequestContent(data), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<HealthModelRelationshipData> response = Response.FromValue(HealthModelRelationshipData.FromResponse(result), result);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                CloudHealthArmOperation<HealthModelRelationshipResource> operation = new CloudHealthArmOperation<HealthModelRelationshipResource>(Response.FromValue(new HealthModelRelationshipResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                CloudHealthArmOperation<HealthModelRelationshipResource> operation = new CloudHealthArmOperation<HealthModelRelationshipResource>(
+                    new HealthModelRelationshipOperationSource(Client),
+                    _relationshipsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -122,7 +125,7 @@ namespace Azure.ResourceManager.CloudHealth
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -146,11 +149,14 @@ namespace Azure.ResourceManager.CloudHealth
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = _relationshipsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, relationshipName, HealthModelRelationshipData.ToRequestContent(data), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<HealthModelRelationshipData> response = Response.FromValue(HealthModelRelationshipData.FromResponse(result), result);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                CloudHealthArmOperation<HealthModelRelationshipResource> operation = new CloudHealthArmOperation<HealthModelRelationshipResource>(Response.FromValue(new HealthModelRelationshipResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                Response response = Pipeline.ProcessMessage(message, context);
+                CloudHealthArmOperation<HealthModelRelationshipResource> operation = new CloudHealthArmOperation<HealthModelRelationshipResource>(
+                    new HealthModelRelationshipOperationSource(Client),
+                    _relationshipsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);
@@ -177,7 +183,7 @@ namespace Azure.ResourceManager.CloudHealth
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -226,7 +232,7 @@ namespace Azure.ResourceManager.CloudHealth
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -275,7 +281,7 @@ namespace Azure.ResourceManager.CloudHealth
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -311,7 +317,7 @@ namespace Azure.ResourceManager.CloudHealth
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -347,7 +353,7 @@ namespace Azure.ResourceManager.CloudHealth
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -404,7 +410,7 @@ namespace Azure.ResourceManager.CloudHealth
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -461,7 +467,7 @@ namespace Azure.ResourceManager.CloudHealth
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -522,7 +528,7 @@ namespace Azure.ResourceManager.CloudHealth
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

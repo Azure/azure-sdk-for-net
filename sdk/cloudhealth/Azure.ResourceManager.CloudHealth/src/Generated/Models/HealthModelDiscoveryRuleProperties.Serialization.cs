@@ -89,28 +89,18 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            writer.WritePropertyName("resourceGraphQuery"u8);
-            writer.WriteStringValue(ResourceGraphQuery);
             writer.WritePropertyName("authenticationSetting"u8);
             writer.WriteStringValue(AuthenticationSetting);
             writer.WritePropertyName("discoverRelationships"u8);
             writer.WriteStringValue(DiscoverRelationships.ToString());
             writer.WritePropertyName("addRecommendedSignals"u8);
             writer.WriteStringValue(AddRecommendedSignals.ToString());
-            if (options.Format != "W" && Optional.IsDefined(DeletedOn))
+            writer.WritePropertyName("specification"u8);
+            writer.WriteObjectValue(Specification, options);
+            if (options.Format != "W" && Optional.IsDefined(Error))
             {
-                writer.WritePropertyName("deletionDate"u8);
-                writer.WriteStringValue(DeletedOn.Value, "O");
-            }
-            if (options.Format != "W" && Optional.IsDefined(ErrorMessage))
-            {
-                writer.WritePropertyName("errorMessage"u8);
-                writer.WriteStringValue(ErrorMessage);
-            }
-            if (options.Format != "W" && Optional.IsDefined(NumberOfDiscoveredEntities))
-            {
-                writer.WritePropertyName("numberOfDiscoveredEntities"u8);
-                writer.WriteNumberValue(NumberOfDiscoveredEntities.Value);
+                writer.WritePropertyName("error"u8);
+                writer.WriteObjectValue(Error, options);
             }
             if (options.Format != "W")
             {
@@ -161,13 +151,11 @@ namespace Azure.ResourceManager.CloudHealth.Models
             }
             HealthModelProvisioningState? provisioningState = default;
             string displayName = default;
-            string resourceGraphQuery = default;
             string authenticationSetting = default;
             DiscoveryRuleRelationshipDiscoveryBehavior discoverRelationships = default;
             DiscoveryRuleRecommendedSignalsBehavior addRecommendedSignals = default;
-            DateTimeOffset? deletedOn = default;
-            string errorMessage = default;
-            int? numberOfDiscoveredEntities = default;
+            DiscoveryRuleSpecification specification = default;
+            DiscoveryError error = default;
             string entityName = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -186,11 +174,6 @@ namespace Azure.ResourceManager.CloudHealth.Models
                     displayName = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("resourceGraphQuery"u8))
-                {
-                    resourceGraphQuery = prop.Value.GetString();
-                    continue;
-                }
                 if (prop.NameEquals("authenticationSetting"u8))
                 {
                     authenticationSetting = prop.Value.GetString();
@@ -206,27 +189,18 @@ namespace Azure.ResourceManager.CloudHealth.Models
                     addRecommendedSignals = new DiscoveryRuleRecommendedSignalsBehavior(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("deletionDate"u8))
+                if (prop.NameEquals("specification"u8))
+                {
+                    specification = DiscoveryRuleSpecification.DeserializeDiscoveryRuleSpecification(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("error"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    deletedOn = prop.Value.GetDateTimeOffset("O");
-                    continue;
-                }
-                if (prop.NameEquals("errorMessage"u8))
-                {
-                    errorMessage = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("numberOfDiscoveredEntities"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    numberOfDiscoveredEntities = prop.Value.GetInt32();
+                    error = DiscoveryError.DeserializeDiscoveryError(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("entityName"u8))
@@ -242,13 +216,11 @@ namespace Azure.ResourceManager.CloudHealth.Models
             return new HealthModelDiscoveryRuleProperties(
                 provisioningState,
                 displayName,
-                resourceGraphQuery,
                 authenticationSetting,
                 discoverRelationships,
                 addRecommendedSignals,
-                deletedOn,
-                errorMessage,
-                numberOfDiscoveredEntities,
+                specification,
+                error,
                 entityName,
                 additionalBinaryDataProperties);
         }

@@ -93,11 +93,11 @@ namespace Azure.ResourceManager.CloudHealth.Models
             writer.WriteStringValue(ParentEntityName);
             writer.WritePropertyName("childEntityName"u8);
             writer.WriteStringValue(ChildEntityName);
-            if (Optional.IsCollectionDefined(Labels))
+            if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("labels"u8);
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
-                foreach (var item in Labels)
+                foreach (var item in Tags)
                 {
                     writer.WritePropertyName(item.Key);
                     if (item.Value == null)
@@ -113,11 +113,6 @@ namespace Azure.ResourceManager.CloudHealth.Models
             {
                 writer.WritePropertyName("discoveredBy"u8);
                 writer.WriteStringValue(DiscoveredBy);
-            }
-            if (options.Format != "W" && Optional.IsDefined(DeletedOn))
-            {
-                writer.WritePropertyName("deletionDate"u8);
-                writer.WriteStringValue(DeletedOn.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -165,9 +160,8 @@ namespace Azure.ResourceManager.CloudHealth.Models
             string displayName = default;
             string parentEntityName = default;
             string childEntityName = default;
-            IDictionary<string, string> labels = default;
+            IDictionary<string, string> tags = default;
             string discoveredBy = default;
-            DateTimeOffset? deletedOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -195,7 +189,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
                     childEntityName = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("labels"u8))
+                if (prop.NameEquals("tags"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -213,21 +207,12 @@ namespace Azure.ResourceManager.CloudHealth.Models
                             dictionary.Add(prop0.Name, prop0.Value.GetString());
                         }
                     }
-                    labels = dictionary;
+                    tags = dictionary;
                     continue;
                 }
                 if (prop.NameEquals("discoveredBy"u8))
                 {
                     discoveredBy = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("deletionDate"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    deletedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -240,9 +225,8 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 displayName,
                 parentEntityName,
                 childEntityName,
-                labels ?? new ChangeTrackingDictionary<string, string>(),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 discoveredBy,
-                deletedOn,
                 additionalBinaryDataProperties);
         }
     }

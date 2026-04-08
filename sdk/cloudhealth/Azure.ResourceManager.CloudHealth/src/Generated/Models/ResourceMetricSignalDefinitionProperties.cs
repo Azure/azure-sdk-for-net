@@ -39,10 +39,9 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="displayName"> Display name. </param>
         /// <param name="signalKind"> Kind of the signal definition. </param>
         /// <param name="refreshInterval"> Interval in which the signal is being evaluated. Defaults to PT1M (1 minute). </param>
-        /// <param name="labels"> Optional set of labels (key-value pairs). </param>
+        /// <param name="tags"> Optional set of tags (key-value pairs). </param>
         /// <param name="dataUnit"> Unit of the signal result (e.g. Bytes, MilliSeconds, Percent, Count)). </param>
         /// <param name="evaluationRules"> Evaluation rules for the signal definition. </param>
-        /// <param name="deletedOn"> Date when the signal definition was (soft-)deleted. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="metricNamespace"> Metric namespace. </param>
         /// <param name="metricName"> Name of the metric. </param>
@@ -50,7 +49,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="aggregationType"> Type of aggregation to apply to the metric. </param>
         /// <param name="dimension"> Optional: Dimension to split by. </param>
         /// <param name="dimensionFilter"> Optional: Dimension filter to apply to the dimension. Must only be set if also Dimension is set. </param>
-        internal ResourceMetricSignalDefinitionProperties(HealthModelProvisioningState? provisioningState, string displayName, EntitySignalKind signalKind, EntitySignalRefreshInterval? refreshInterval, IDictionary<string, string> labels, string dataUnit, EntitySignalEvaluationRule evaluationRules, DateTimeOffset? deletedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties, string metricNamespace, string metricName, string timeGrain, MetricAggregationType aggregationType, string dimension, string dimensionFilter) : base(provisioningState, displayName, signalKind, refreshInterval, labels, dataUnit, evaluationRules, deletedOn, additionalBinaryDataProperties)
+        internal ResourceMetricSignalDefinitionProperties(HealthModelProvisioningState? provisioningState, string displayName, EntitySignalKind signalKind, EntitySignalRefreshInterval? refreshInterval, IDictionary<string, string> tags, string dataUnit, EntitySignalEvaluationRule evaluationRules, IDictionary<string, BinaryData> additionalBinaryDataProperties, string metricNamespace, string metricName, string timeGrain, MetricAggregationType aggregationType, string dimension, string dimensionFilter) : base(provisioningState, displayName, signalKind, refreshInterval, tags, dataUnit, evaluationRules, additionalBinaryDataProperties)
         {
             MetricNamespace = metricNamespace;
             MetricName = metricName;

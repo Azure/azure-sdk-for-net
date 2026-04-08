@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         private protected HealthModelSignalDefinitionProperties(EntitySignalKind signalKind, EntitySignalEvaluationRule evaluationRules)
         {
             SignalKind = signalKind;
-            Labels = new ChangeTrackingDictionary<string, string>();
+            Tags = new ChangeTrackingDictionary<string, string>();
             EvaluationRules = evaluationRules;
         }
 
@@ -35,21 +35,19 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="displayName"> Display name. </param>
         /// <param name="signalKind"> Kind of the signal definition. </param>
         /// <param name="refreshInterval"> Interval in which the signal is being evaluated. Defaults to PT1M (1 minute). </param>
-        /// <param name="labels"> Optional set of labels (key-value pairs). </param>
+        /// <param name="tags"> Optional set of tags (key-value pairs). </param>
         /// <param name="dataUnit"> Unit of the signal result (e.g. Bytes, MilliSeconds, Percent, Count)). </param>
         /// <param name="evaluationRules"> Evaluation rules for the signal definition. </param>
-        /// <param name="deletedOn"> Date when the signal definition was (soft-)deleted. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HealthModelSignalDefinitionProperties(HealthModelProvisioningState? provisioningState, string displayName, EntitySignalKind signalKind, EntitySignalRefreshInterval? refreshInterval, IDictionary<string, string> labels, string dataUnit, EntitySignalEvaluationRule evaluationRules, DateTimeOffset? deletedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HealthModelSignalDefinitionProperties(HealthModelProvisioningState? provisioningState, string displayName, EntitySignalKind signalKind, EntitySignalRefreshInterval? refreshInterval, IDictionary<string, string> tags, string dataUnit, EntitySignalEvaluationRule evaluationRules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             DisplayName = displayName;
             SignalKind = signalKind;
             RefreshInterval = refreshInterval;
-            Labels = labels;
+            Tags = tags;
             DataUnit = dataUnit;
             EvaluationRules = evaluationRules;
-            DeletedOn = deletedOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -65,16 +63,13 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <summary> Interval in which the signal is being evaluated. Defaults to PT1M (1 minute). </summary>
         public EntitySignalRefreshInterval? RefreshInterval { get; set; }
 
-        /// <summary> Optional set of labels (key-value pairs). </summary>
-        public IDictionary<string, string> Labels { get; }
+        /// <summary> Optional set of tags (key-value pairs). </summary>
+        public IDictionary<string, string> Tags { get; }
 
         /// <summary> Unit of the signal result (e.g. Bytes, MilliSeconds, Percent, Count)). </summary>
         public string DataUnit { get; set; }
 
         /// <summary> Evaluation rules for the signal definition. </summary>
         public EntitySignalEvaluationRule EvaluationRules { get; set; }
-
-        /// <summary> Date when the signal definition was (soft-)deleted. </summary>
-        public DateTimeOffset? DeletedOn { get; }
     }
 }
