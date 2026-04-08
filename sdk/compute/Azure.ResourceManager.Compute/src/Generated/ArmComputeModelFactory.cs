@@ -1503,16 +1503,6 @@ namespace Azure.ResourceManager.Compute
                 null));
         }
 
-        /// <summary> The List VMSS VM Extension operation response. </summary>
-        /// <param name="value"> The list of VMSS VM extensions. </param>
-        /// <returns> A new <see cref="Models.VirtualMachineScaleSetVmExtensionsListResult"/> instance for mocking. </returns>
-        public static VirtualMachineScaleSetVmExtensionsListResult VirtualMachineScaleSetVmExtensionsListResult(IEnumerable<VirtualMachineScaleSetVmExtensionData> value = default)
-        {
-            value ??= new ChangeTrackingList<VirtualMachineScaleSetVmExtensionData>();
-
-            return new VirtualMachineScaleSetVmExtensionsListResult(value.ToList(), additionalBinaryDataProperties: null);
-        }
-
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -2037,16 +2027,6 @@ namespace Azure.ResourceManager.Compute
                 suppressFailures,
                 protectedSettingsFromKeyVault,
                 null));
-        }
-
-        /// <summary> The List Extension operation response. </summary>
-        /// <param name="value"> The list of extensions. </param>
-        /// <returns> A new <see cref="Models.VirtualMachineExtensionsListResult"/> instance for mocking. </returns>
-        public static VirtualMachineExtensionsListResult VirtualMachineExtensionsListResult(IEnumerable<VirtualMachineExtensionData> value = default)
-        {
-            value ??= new ChangeTrackingList<VirtualMachineExtensionData>();
-
-            return new VirtualMachineExtensionsListResult(value.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

@@ -15,7 +15,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Compute.Models;
 
 namespace Azure.ResourceManager.Compute
 {
@@ -290,30 +289,21 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<VirtualMachineExtensionsListResult>> GetAllAsync(string expand = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualMachineExtensionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualMachineExtensionResource> GetAllAsync(string expand = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _virtualMachineExtensionsClientDiagnostics.CreateScope("VirtualMachineExtensionCollection.GetAll");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _virtualMachineExtensionsRestClient.CreateGetAllRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<VirtualMachineExtensionsListResult> response = Response.FromValue(VirtualMachineExtensionsListResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<VirtualMachineExtensionData, VirtualMachineExtensionResource>(new VirtualMachineExtensionsGetAllAsyncCollectionResultOfT(
+                _virtualMachineExtensionsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                expand,
+                context,
+                "VirtualMachineExtensionCollection.GetAll"), data => new VirtualMachineExtensionResource(Client, data));
         }
 
         /// <summary>
@@ -335,30 +325,21 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<VirtualMachineExtensionsListResult> GetAll(string expand = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualMachineExtensionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualMachineExtensionResource> GetAll(string expand = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _virtualMachineExtensionsClientDiagnostics.CreateScope("VirtualMachineExtensionCollection.GetAll");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _virtualMachineExtensionsRestClient.CreateGetAllRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<VirtualMachineExtensionsListResult> response = Response.FromValue(VirtualMachineExtensionsListResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<VirtualMachineExtensionData, VirtualMachineExtensionResource>(new VirtualMachineExtensionsGetAllCollectionResultOfT(
+                _virtualMachineExtensionsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                expand,
+                context,
+                "VirtualMachineExtensionCollection.GetAll"), data => new VirtualMachineExtensionResource(Client, data));
         }
 
         /// <summary>

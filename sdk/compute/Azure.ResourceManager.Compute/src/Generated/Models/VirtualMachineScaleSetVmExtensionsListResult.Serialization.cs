@@ -15,7 +15,7 @@ using Azure.ResourceManager.Compute;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The List VMSS VM Extension operation response. </summary>
-    public partial class VirtualMachineScaleSetVmExtensionsListResult : IJsonModel<VirtualMachineScaleSetVmExtensionsListResult>
+    internal partial class VirtualMachineScaleSetVmExtensionsListResult : IJsonModel<VirtualMachineScaleSetVmExtensionsListResult>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
