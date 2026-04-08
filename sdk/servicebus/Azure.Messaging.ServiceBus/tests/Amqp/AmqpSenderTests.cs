@@ -136,6 +136,18 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
         }
 
         /// <summary>
+        ///   Sets the link limits tuple with an explicit batch size, allowing
+        ///   tests to simulate the vendor property path where MaxBatchSize
+        ///   differs from DefaultMaxBatchSize.
+        /// </summary>
+        private static void SetLinkLimitsWithBatchSize(AmqpSender target, long maxMessageSize, long maxBatchSize)
+        {
+            typeof(AmqpSender)
+                .GetField("_linkLimits", BindingFlags.Instance | BindingFlags.NonPublic)
+                .SetValue(target, (maxMessageSize, Math.Min(maxMessageSize, maxBatchSize)));
+        }
+
+        /// <summary>
         ///    Creates an <see cref="AmqpSender"/> for use with test cases.
         /// </summary>
         /// <returns>An <see cref="Amqp"/> with arbitrary configuration.</returns>
@@ -331,6 +343,149 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             Assert.That(GetEventBatchOptions((AmqpMessageBatch)batch).MaxSizeInBytes,
                 Is.EqualTo(standardTierMaxMessageSize),
                 "MaxBatchSize should be Math.Min(MaxMessageSize, DefaultMaxBatchSize).");
+        }
+
+        /// <summary>
+        ///   Verifies that when the vendor property <c>com.microsoft:max-message-batch-size</c>
+        ///   reports a batch limit smaller than <c>MaxMessageSize</c>, the batch uses the
+        ///   vendor-reported limit.  This simulates a Premium tier large-message entity where
+        ///   <c>MaxMessageSize</c> is 100 MB but the batch limit is 1 MB.
+        /// </summary>
+        ///
+        [Test]
+        public async Task CreateBatchAsyncUsesVendorPropertyWhenSmallerThanMaxMessageSize()
+        {
+            var premiumLargeMaxMessageSize = 100L * 1024 * 1024; // 100 MB
+            var vendorBatchSize = 1_048_576L;                     // 1 MB
+            var retryPolicy = new BasicRetryPolicy(new ServiceBusRetryOptions { TryTimeout = TimeSpan.FromSeconds(17) });
+
+            var sender = new Mock<AmqpSender>("somePath", Mock.Of<AmqpConnectionScope>(), retryPolicy, "fake-id", new AmqpMessageConverter())
+            {
+                CallBase = true
+            };
+
+            sender
+                .Protected()
+                .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureSenderStateAsync",
+                    ItExpr.IsAny<TimeSpan>(),
+                    ItExpr.IsAny<CancellationToken>())
+                .Callback(() => SetLinkLimitsWithBatchSize(sender.Object, premiumLargeMaxMessageSize, vendorBatchSize))
+                .Returns(Task.FromResult(new SendingAmqpLink(new AmqpLinkSettings())));
+
+            using TransportMessageBatch batch = await sender.Object.CreateMessageBatchAsync(
+                new CreateMessageBatchOptions(), default);
+
+            Assert.That(GetEventBatchOptions((AmqpMessageBatch)batch).MaxSizeInBytes,
+                Is.EqualTo(vendorBatchSize),
+                "MaxBatchSize should use the vendor property (1 MB), not MaxMessageSize (100 MB).");
+        }
+
+        /// <summary>
+        ///   Verifies that Standard tier batch sizing works when the vendor property reports
+        ///   256 KB — the same value as <c>MaxMessageSize</c>.
+        /// </summary>
+        ///
+        [Test]
+        public async Task CreateBatchAsyncUsesVendorPropertyForStandardTier()
+        {
+            var standardMaxMessageSize = 262_144L; // 256 KB
+            var vendorBatchSize = 262_144L;         // 256 KB (same as max-message-size on Standard)
+            var retryPolicy = new BasicRetryPolicy(new ServiceBusRetryOptions { TryTimeout = TimeSpan.FromSeconds(17) });
+
+            var sender = new Mock<AmqpSender>("somePath", Mock.Of<AmqpConnectionScope>(), retryPolicy, "fake-id", new AmqpMessageConverter())
+            {
+                CallBase = true
+            };
+
+            sender
+                .Protected()
+                .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureSenderStateAsync",
+                    ItExpr.IsAny<TimeSpan>(),
+                    ItExpr.IsAny<CancellationToken>())
+                .Callback(() => SetLinkLimitsWithBatchSize(sender.Object, standardMaxMessageSize, vendorBatchSize))
+                .Returns(Task.FromResult(new SendingAmqpLink(new AmqpLinkSettings())));
+
+            using TransportMessageBatch batch = await sender.Object.CreateMessageBatchAsync(
+                new CreateMessageBatchOptions(), default);
+
+            Assert.That(GetEventBatchOptions((AmqpMessageBatch)batch).MaxSizeInBytes,
+                Is.EqualTo(vendorBatchSize),
+                "Standard tier batch size should be 256 KB.");
+        }
+
+        /// <summary>
+        ///   Verifies that when the vendor property is absent, the batch falls back to
+        ///   <c>DefaultMaxBatchSize</c> (1 MB) — not the link's <c>MaxMessageSize</c>
+        ///   when MaxMessageSize is larger.
+        /// </summary>
+        ///
+        [Test]
+        public async Task CreateBatchAsyncFallsBackToDefaultWhenVendorPropertyAbsent()
+        {
+            // Simulate a link that reports 100 MB max-message-size but no vendor property.
+            // The fallback DefaultMaxBatchSize caps batch at 1 MB.
+
+            var premiumLargeMaxMessageSize = 100L * 1024 * 1024;
+            var expectedBatchSize = 1_048_576L; // DefaultMaxBatchSize
+            var retryPolicy = new BasicRetryPolicy(new ServiceBusRetryOptions { TryTimeout = TimeSpan.FromSeconds(17) });
+
+            var sender = new Mock<AmqpSender>("somePath", Mock.Of<AmqpConnectionScope>(), retryPolicy, "fake-id", new AmqpMessageConverter())
+            {
+                CallBase = true
+            };
+
+            sender
+                .Protected()
+                .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureSenderStateAsync",
+                    ItExpr.IsAny<TimeSpan>(),
+                    ItExpr.IsAny<CancellationToken>())
+                .Callback(() => SetLinkLimits(sender.Object, premiumLargeMaxMessageSize))
+                .Returns(Task.FromResult(new SendingAmqpLink(new AmqpLinkSettings())));
+
+            using TransportMessageBatch batch = await sender.Object.CreateMessageBatchAsync(
+                new CreateMessageBatchOptions(), default);
+
+            Assert.That(GetEventBatchOptions((AmqpMessageBatch)batch).MaxSizeInBytes,
+                Is.EqualTo(expectedBatchSize),
+                "Without vendor property, batch should fall back to DefaultMaxBatchSize (1 MB).");
+        }
+
+        /// <summary>
+        ///   Verifies that the message count is not capped — batches are limited only
+        ///   by byte size, not by message count.
+        /// </summary>
+        ///
+        [Test]
+        public async Task CreateBatchAsyncDoesNotEnforceMessageCountLimit()
+        {
+            var retryPolicy = new BasicRetryPolicy(new ServiceBusRetryOptions { TryTimeout = TimeSpan.FromSeconds(17) });
+
+            var sender = new Mock<AmqpSender>("somePath", Mock.Of<AmqpConnectionScope>(), retryPolicy, "fake-id", new AmqpMessageConverter())
+            {
+                CallBase = true
+            };
+
+            // Use a large enough batch size to hold many small messages.
+            SetLinkLimits(sender.Object, 1_048_576);
+
+            using TransportMessageBatch batch = await sender.Object.CreateMessageBatchAsync(
+                new CreateMessageBatchOptions(), default);
+
+            // Add many messages — previously capped at 4500. Verify that
+            // the limit is now purely byte-based by adding 5000+ messages.
+            int added = 0;
+            for (int i = 0; i < 6000; i++)
+            {
+                if (!batch.TryAddMessage(new ServiceBusMessage(new byte[] { 0x01 })))
+                    break;
+                added++;
+            }
+
+            // The batch should accept as many as fit within the 1 MB byte limit.
+            // With ~200 bytes per message (including AMQP envelope overhead), ~5000
+            // should fit. The test verifies count exceeds the old 4500 cap.
+            Assert.That(added, Is.GreaterThan(4500),
+                "Batch should accept more than 4500 messages now that the count cap is removed.");
         }
     }
 }
