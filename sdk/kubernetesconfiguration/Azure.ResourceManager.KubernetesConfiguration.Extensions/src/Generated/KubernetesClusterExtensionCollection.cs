@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Extensions
 {
     /// <summary>
     /// A class representing a collection of <see cref="KubernetesClusterExtensionResource"/> and their operations.
-    /// Each <see cref="KubernetesClusterExtensionResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
-    /// To get a <see cref="KubernetesClusterExtensionCollection"/> instance call the GetKubernetesClusterExtensions method from an instance of <see cref="ArmResource"/>.
+    /// Each <see cref="KubernetesClusterExtensionResource"/> in the collection will belong to the same instance of <see cref="KubernetesClusterExtensionResource"/>.
+    /// To get a <see cref="KubernetesClusterExtensionCollection"/> instance call the GetKubernetesClusterExtensions method from an instance of <see cref="KubernetesClusterExtensionResource"/>.
     /// </summary>
     public partial class KubernetesClusterExtensionCollection : ArmCollection, IEnumerable<KubernetesClusterExtensionResource>, IAsyncEnumerable<KubernetesClusterExtensionResource>
     {

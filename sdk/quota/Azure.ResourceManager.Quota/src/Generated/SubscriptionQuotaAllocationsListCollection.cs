@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.Quota
 {
     /// <summary>
     /// A class representing a collection of <see cref="SubscriptionQuotaAllocationsListResource"/> and their operations.
-    /// Each <see cref="SubscriptionQuotaAllocationsListResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
-    /// To get a <see cref="SubscriptionQuotaAllocationsListCollection"/> instance call the GetSubscriptionQuotaAllocationsLists method from an instance of <see cref="ArmResource"/>.
+    /// Each <see cref="SubscriptionQuotaAllocationsListResource"/> in the collection will belong to the same instance of <see cref="SubscriptionQuotaAllocationsListResource"/>.
+    /// To get a <see cref="SubscriptionQuotaAllocationsListCollection"/> instance call the GetSubscriptionQuotaAllocationsLists method from an instance of <see cref="SubscriptionQuotaAllocationsListResource"/>.
     /// </summary>
     public partial class SubscriptionQuotaAllocationsListCollection : ArmCollection
     {

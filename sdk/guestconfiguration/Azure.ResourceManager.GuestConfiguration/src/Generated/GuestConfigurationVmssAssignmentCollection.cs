@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -19,8 +20,8 @@ namespace Azure.ResourceManager.GuestConfiguration
 {
     /// <summary>
     /// A class representing a collection of <see cref="GuestConfigurationVmssAssignmentResource"/> and their operations.
-    /// Each <see cref="GuestConfigurationVmssAssignmentResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
-    /// To get a <see cref="GuestConfigurationVmssAssignmentCollection"/> instance call the GetGuestConfigurationVmssAssignments method from an instance of <see cref="ArmResource"/>.
+    /// Each <see cref="GuestConfigurationVmssAssignmentResource"/> in the collection will belong to the same instance of <see cref="GuestConfigurationVmssAssignmentResource"/>.
+    /// To get a <see cref="GuestConfigurationVmssAssignmentCollection"/> instance call the GetGuestConfigurationVmssAssignments method from an instance of <see cref="GuestConfigurationVmssAssignmentResource"/>.
     /// </summary>
     public partial class GuestConfigurationVmssAssignmentCollection : ArmCollection, IEnumerable<GuestConfigurationVmssAssignmentResource>, IAsyncEnumerable<GuestConfigurationVmssAssignmentResource>
     {
@@ -44,6 +45,17 @@ namespace Azure.ResourceManager.GuestConfiguration
             _guestConfigurationAssignmentsVMSSRestClient = new GuestConfigurationAssignmentsVMSS(_guestConfigurationAssignmentsVMSSClientDiagnostics, Pipeline, Endpoint, guestConfigurationVmssAssignmentApiVersion ?? "2024-04-05");
             _guestConfigurationAssignmentReportsVMSSClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.GuestConfiguration", GuestConfigurationVmssAssignmentResource.ResourceType.Namespace, Diagnostics);
             _guestConfigurationAssignmentReportsVMSSRestClient = new GuestConfigurationAssignmentReportsVMSS(_guestConfigurationAssignmentReportsVMSSClientDiagnostics, Pipeline, Endpoint, guestConfigurationVmssAssignmentApiVersion ?? "2024-04-05");
+            ValidateResourceId(id);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != "Microsoft.Compute/virtualMachineScaleSets")
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, "Microsoft.Compute/virtualMachineScaleSets"), nameof(id));
+            }
         }
 
         /// <summary>

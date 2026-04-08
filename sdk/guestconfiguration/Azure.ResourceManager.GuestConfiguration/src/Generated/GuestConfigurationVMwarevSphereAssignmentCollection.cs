@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -19,8 +20,8 @@ namespace Azure.ResourceManager.GuestConfiguration
 {
     /// <summary>
     /// A class representing a collection of <see cref="GuestConfigurationVMwarevSphereAssignmentResource"/> and their operations.
-    /// Each <see cref="GuestConfigurationVMwarevSphereAssignmentResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
-    /// To get a <see cref="GuestConfigurationVMwarevSphereAssignmentCollection"/> instance call the GetGuestConfigurationVMwarevSphereAssignments method from an instance of <see cref="ArmResource"/>.
+    /// Each <see cref="GuestConfigurationVMwarevSphereAssignmentResource"/> in the collection will belong to the same instance of <see cref="GuestConfigurationVMwarevSphereAssignmentResource"/>.
+    /// To get a <see cref="GuestConfigurationVMwarevSphereAssignmentCollection"/> instance call the GetGuestConfigurationVMwarevSphereAssignments method from an instance of <see cref="GuestConfigurationVMwarevSphereAssignmentResource"/>.
     /// </summary>
     public partial class GuestConfigurationVMwarevSphereAssignmentCollection : ArmCollection, IEnumerable<GuestConfigurationVMwarevSphereAssignmentResource>, IAsyncEnumerable<GuestConfigurationVMwarevSphereAssignmentResource>
     {
@@ -44,6 +45,17 @@ namespace Azure.ResourceManager.GuestConfiguration
             _guestConfigurationConnectedVMwarevSphereAssignmentsRestClient = new GuestConfigurationConnectedVMwarevSphereAssignments(_guestConfigurationConnectedVMwarevSphereAssignmentsClientDiagnostics, Pipeline, Endpoint, guestConfigurationVMwarevSphereAssignmentApiVersion ?? "2024-04-05");
             _guestConfigurationConnectedVMwarevSphereAssignmentsReportsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.GuestConfiguration", GuestConfigurationVMwarevSphereAssignmentResource.ResourceType.Namespace, Diagnostics);
             _guestConfigurationConnectedVMwarevSphereAssignmentsReportsRestClient = new GuestConfigurationConnectedVMwarevSphereAssignmentsReports(_guestConfigurationConnectedVMwarevSphereAssignmentsReportsClientDiagnostics, Pipeline, Endpoint, guestConfigurationVMwarevSphereAssignmentApiVersion ?? "2024-04-05");
+            ValidateResourceId(id);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != "Microsoft.ConnectedVMwarevSphere/virtualmachines")
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, "Microsoft.ConnectedVMwarevSphere/virtualmachines"), nameof(id));
+            }
         }
 
         /// <summary>

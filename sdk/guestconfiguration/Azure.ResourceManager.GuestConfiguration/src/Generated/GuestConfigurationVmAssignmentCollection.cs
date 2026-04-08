@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -19,8 +20,8 @@ namespace Azure.ResourceManager.GuestConfiguration
 {
     /// <summary>
     /// A class representing a collection of <see cref="GuestConfigurationVmAssignmentResource"/> and their operations.
-    /// Each <see cref="GuestConfigurationVmAssignmentResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
-    /// To get a <see cref="GuestConfigurationVmAssignmentCollection"/> instance call the GetGuestConfigurationVmAssignments method from an instance of <see cref="ArmResource"/>.
+    /// Each <see cref="GuestConfigurationVmAssignmentResource"/> in the collection will belong to the same instance of <see cref="GuestConfigurationVmAssignmentResource"/>.
+    /// To get a <see cref="GuestConfigurationVmAssignmentCollection"/> instance call the GetGuestConfigurationVmAssignments method from an instance of <see cref="GuestConfigurationVmAssignmentResource"/>.
     /// </summary>
     public partial class GuestConfigurationVmAssignmentCollection : ArmCollection, IEnumerable<GuestConfigurationVmAssignmentResource>, IAsyncEnumerable<GuestConfigurationVmAssignmentResource>
     {
@@ -44,6 +45,17 @@ namespace Azure.ResourceManager.GuestConfiguration
             _guestConfigurationAssignmentsRestClient = new GuestConfigurationAssignments(_guestConfigurationAssignmentsClientDiagnostics, Pipeline, Endpoint, guestConfigurationVmAssignmentApiVersion ?? "2024-04-05");
             _guestConfigurationAssignmentReportsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.GuestConfiguration", GuestConfigurationVmAssignmentResource.ResourceType.Namespace, Diagnostics);
             _guestConfigurationAssignmentReportsRestClient = new GuestConfigurationAssignmentReports(_guestConfigurationAssignmentReportsClientDiagnostics, Pipeline, Endpoint, guestConfigurationVmAssignmentApiVersion ?? "2024-04-05");
+            ValidateResourceId(id);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != "Microsoft.Compute/virtualMachines")
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, "Microsoft.Compute/virtualMachines"), nameof(id));
+            }
         }
 
         /// <summary>

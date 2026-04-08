@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Quota
 {
     /// <summary>
     /// A class representing a collection of <see cref="CurrentQuotaLimitBaseResource"/> and their operations.
-    /// Each <see cref="CurrentQuotaLimitBaseResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
-    /// To get a <see cref="CurrentQuotaLimitBaseCollection"/> instance call the GetCurrentQuotaLimitBases method from an instance of <see cref="ArmResource"/>.
+    /// Each <see cref="CurrentQuotaLimitBaseResource"/> in the collection will belong to the same instance of <see cref="CurrentQuotaLimitBaseResource"/>.
+    /// To get a <see cref="CurrentQuotaLimitBaseCollection"/> instance call the GetCurrentQuotaLimitBases method from an instance of <see cref="CurrentQuotaLimitBaseResource"/>.
     /// </summary>
     public partial class CurrentQuotaLimitBaseCollection : ArmCollection, IEnumerable<CurrentQuotaLimitBaseResource>, IAsyncEnumerable<CurrentQuotaLimitBaseResource>
     {

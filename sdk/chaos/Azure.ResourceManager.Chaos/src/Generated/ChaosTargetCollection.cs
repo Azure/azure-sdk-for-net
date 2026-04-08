@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Chaos
 {
     /// <summary>
     /// A class representing a collection of <see cref="ChaosTargetResource"/> and their operations.
-    /// Each <see cref="ChaosTargetResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
-    /// To get a <see cref="ChaosTargetCollection"/> instance call the GetChaosTargets method from an instance of <see cref="ArmResource"/>.
+    /// Each <see cref="ChaosTargetResource"/> in the collection will belong to the same instance of <see cref="ChaosTargetResource"/>.
+    /// To get a <see cref="ChaosTargetCollection"/> instance call the GetChaosTargets method from an instance of <see cref="ChaosTargetResource"/>.
     /// </summary>
     public partial class ChaosTargetCollection : ArmCollection, IEnumerable<ChaosTargetResource>, IAsyncEnumerable<ChaosTargetResource>
     {

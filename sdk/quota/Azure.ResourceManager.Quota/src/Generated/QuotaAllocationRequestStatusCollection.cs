@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.Quota
 {
     /// <summary>
     /// A class representing a collection of <see cref="QuotaAllocationRequestStatusResource"/> and their operations.
-    /// Each <see cref="QuotaAllocationRequestStatusResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
-    /// To get a <see cref="QuotaAllocationRequestStatusCollection"/> instance call the GetQuotaAllocationRequestStatuses method from an instance of <see cref="ArmResource"/>.
+    /// Each <see cref="QuotaAllocationRequestStatusResource"/> in the collection will belong to the same instance of <see cref="QuotaAllocationRequestStatusResource"/>.
+    /// To get a <see cref="QuotaAllocationRequestStatusCollection"/> instance call the GetQuotaAllocationRequestStatuses method from an instance of <see cref="QuotaAllocationRequestStatusResource"/>.
     /// </summary>
     public partial class QuotaAllocationRequestStatusCollection : ArmCollection
     {
