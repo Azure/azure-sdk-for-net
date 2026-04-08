@@ -10,16 +10,6 @@ require: https://github.com/Azure/azure-rest-api-specs/blob/8c2c4da647cc9dbe6317
 namespace: Azure.ResourceManager.Sql
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
-sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
-  clear-output-folder: true
-  skipped-operations:
-  - ManagedDatabaseSensitivityLabels_CreateOrUpdate
-  - ManagedDatabaseSensitivityLabels_Delete
-  - SensitivityLabels_CreateOrUpdate
-  - SensitivityLabels_Delete
-  - ManagedDatabaseSecurityEvents_ListByDatabase
-  - OutboundFirewallRules_CreateOrUpdate
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
