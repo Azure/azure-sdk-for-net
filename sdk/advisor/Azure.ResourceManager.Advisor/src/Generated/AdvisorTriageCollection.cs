@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -19,8 +20,8 @@ namespace Azure.ResourceManager.Advisor
 {
     /// <summary>
     /// A class representing a collection of <see cref="AdvisorTriageResource"/> and their operations.
-    /// Each <see cref="AdvisorTriageResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
-    /// To get a <see cref="AdvisorTriageCollection"/> instance call the GetAdvisorTriages method from an instance of <see cref="ArmResource"/>.
+    /// Each <see cref="AdvisorTriageResource"/> in the collection will belong to the same instance of <see cref="AdvisorTriageRecommendationResource"/>.
+    /// To get a <see cref="AdvisorTriageCollection"/> instance call the GetAdvisorTriages method from an instance of <see cref="AdvisorTriageRecommendationResource"/>.
     /// </summary>
     public partial class AdvisorTriageCollection : ArmCollection, IEnumerable<AdvisorTriageResource>, IAsyncEnumerable<AdvisorTriageResource>
     {
@@ -40,6 +41,17 @@ namespace Azure.ResourceManager.Advisor
             TryGetApiVersion(AdvisorTriageResource.ResourceType, out string advisorTriageApiVersion);
             _triageResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Advisor", AdvisorTriageResource.ResourceType.Namespace, Diagnostics);
             _triageResourcesRestClient = new TriageResources(_triageResourcesClientDiagnostics, Pipeline, Endpoint, advisorTriageApiVersion ?? "2025-05-01-preview");
+            ValidateResourceId(id);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != AdvisorTriageRecommendationResource.ResourceType)
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AdvisorTriageRecommendationResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>

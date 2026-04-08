@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Advisor
             }
         }
 
-        /// <summary> Gets a collection of AdvisorTriageRecommendations in the <see cref="ArmResource"/>. </summary>
+        /// <summary> Gets a collection of AdvisorTriageRecommendations in the <see cref="AdvisorResiliencyReviewResource"/>. </summary>
         /// <returns> An object representing collection of AdvisorTriageRecommendations and their operations over a AdvisorTriageRecommendationResource. </returns>
         public virtual AdvisorTriageRecommendationCollection GetAdvisorTriageRecommendations()
         {

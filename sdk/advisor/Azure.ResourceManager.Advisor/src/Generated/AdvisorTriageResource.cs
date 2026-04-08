@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Advisor
     /// <summary>
     /// A class representing a AdvisorTriage along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="AdvisorTriageResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetAdvisorTriages method.
+    /// Otherwise you can get one from its parent resource <see cref="AdvisorTriageRecommendationResource"/> using the GetAdvisorTriages method.
     /// </summary>
     public partial class AdvisorTriageResource : ArmResource
     {
