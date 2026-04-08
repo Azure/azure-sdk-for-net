@@ -29,6 +29,11 @@ export class RequestPath {
   /** A shared empty RequestPath instance (represents tenant scope) */
   public static readonly empty = new RequestPath("");
 
+  /** Creates a RequestPath from pre-computed segments */
+  static fromSegments(segments: readonly string[]): RequestPath {
+    return new RequestPath("/" + segments.join("/"));
+  }
+
   /** The non-empty path segments (e.g., ["subscriptions", "{subscriptionId}", "providers", ...]) */
   public readonly segments: readonly string[];
 
@@ -120,9 +125,15 @@ export class RequestPath {
    * Returns an empty RequestPath if the path has no "/providers/" segment (tenant scope).
    */
   get scopePath(): RequestPath {
-    const providerIndex = this.path.lastIndexOf(ProvidersPrefix);
-    if (providerIndex < 0) return RequestPath.empty;
-    return new RequestPath(this.path.substring(0, providerIndex));
+    // Find the last "providers" segment index
+    let lastProvidersIndex = -1;
+    for (let i = 0; i < this.segments.length; i++) {
+      if (this.segments[i].toLowerCase() === "providers") {
+        lastProvidersIndex = i;
+      }
+    }
+    if (lastProvidersIndex < 0) return RequestPath.empty;
+    return RequestPath.fromSegments(this.segments.slice(0, lastProvidersIndex));
   }
 
   /**
@@ -152,26 +163,44 @@ export class RequestPath {
    * for resourceGroups, subscriptions, and tenants.
    */
   get resourceType(): string {
-    const providerIndex = this.path.lastIndexOf(ProvidersPrefix);
-    if (providerIndex === -1) {
-      if (this.path.startsWith(ResourceGroupScopePrefix)) {
+    // Find the last "providers" segment index
+    let lastProvidersIndex = -1;
+    for (let i = 0; i < this.segments.length; i++) {
+      if (this.segments[i].toLowerCase() === "providers") {
+        lastProvidersIndex = i;
+      }
+    }
+
+    if (lastProvidersIndex === -1) {
+      // No providers segment — check well-known scope patterns
+      if (
+        this.segments.length >= 2 &&
+        this.segments[0] === "subscriptions" &&
+        this.segments[2] === "resourceGroups"
+      ) {
         return "Microsoft.Resources/resourceGroups";
-      } else if (this.path.startsWith(SubscriptionScopePrefix)) {
+      } else if (
+        this.segments.length >= 1 &&
+        this.segments[0] === "subscriptions"
+      ) {
         return "Microsoft.Resources/subscriptions";
-      } else if (this.path.startsWith(TenantScopePrefix)) {
+      } else if (this.segments.length >= 1 && this.segments[0] === "tenants") {
         return "Microsoft.Resources/tenants";
       }
       throw `Path ${this.path} doesn't have resource type`;
     }
 
-    return this.path
-      .substring(providerIndex + ProvidersPrefix.length)
-      .split("/")
-      .reduce((result, current, index) => {
-        if (index === 1 || index % 2 === 0)
-          return result === "" ? current : `${result}/${current}`;
-        else return result;
-      }, "");
+    // Segments after "providers": [namespace, type1, {name1}, type2, {name2}, ...]
+    // Resource type = namespace/type1/type2/...  (index 0, then odd indices 1, 3, 5, ...)
+    const afterProviders = this.segments.slice(lastProvidersIndex + 1);
+    const typeParts: string[] = [];
+    if (afterProviders.length > 0) {
+      typeParts.push(afterProviders[0]); // namespace
+      for (let i = 1; i < afterProviders.length; i += 2) {
+        typeParts.push(afterProviders[i]); // type segments at odd indices
+      }
+    }
+    return typeParts.join("/");
   }
 
   /**
@@ -202,23 +231,14 @@ export class RequestPath {
    * Returns undefined if the path has no segments.
    */
   get parentPath(): RequestPath | undefined {
-    if (this.length === 0) return undefined;
-    const lastSlash = this.path.lastIndexOf("/");
-    return lastSlash > 0
-      ? new RequestPath(this.path.substring(0, lastSlash))
-      : undefined;
+    if (this.length <= 1) return undefined;
+    return RequestPath.fromSegments(this.segments.slice(0, -1));
   }
 
   toString(): string {
     return this.path;
   }
 }
-
-const ResourceGroupScopePrefix =
-  "/subscriptions/{subscriptionId}/resourceGroups";
-const SubscriptionScopePrefix = "/subscriptions";
-const TenantScopePrefix = "/tenants";
-const ProvidersPrefix = "/providers";
 
 // Well-known scope paths for operationScope detection
 const ResourceGroupScope = new RequestPath(
