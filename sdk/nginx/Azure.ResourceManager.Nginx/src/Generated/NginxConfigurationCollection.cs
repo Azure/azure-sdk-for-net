@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Nginx
         {
             if (id.ResourceType != NginxDeploymentResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, NginxDeploymentResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, NginxDeploymentResource.ResourceType), nameof(id));
             }
         }
 
@@ -292,7 +292,13 @@ namespace Azure.ResourceManager.Nginx
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NginxConfigurationData, NginxConfigurationResource>(new NginxConfigurationResponsesGetAllAsyncCollectionResultOfT(_nginxConfigurationResponsesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new NginxConfigurationResource(Client, data));
+            return new AsyncPageableWrapper<NginxConfigurationData, NginxConfigurationResource>(new NginxConfigurationResponsesGetAllAsyncCollectionResultOfT(
+                _nginxConfigurationResponsesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "NginxConfigurationCollection.GetAll"), data => new NginxConfigurationResource(Client, data));
         }
 
         /// <summary>
@@ -320,7 +326,13 @@ namespace Azure.ResourceManager.Nginx
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NginxConfigurationData, NginxConfigurationResource>(new NginxConfigurationResponsesGetAllCollectionResultOfT(_nginxConfigurationResponsesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new NginxConfigurationResource(Client, data));
+            return new PageableWrapper<NginxConfigurationData, NginxConfigurationResource>(new NginxConfigurationResponsesGetAllCollectionResultOfT(
+                _nginxConfigurationResponsesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "NginxConfigurationCollection.GetAll"), data => new NginxConfigurationResource(Client, data));
         }
 
         /// <summary>

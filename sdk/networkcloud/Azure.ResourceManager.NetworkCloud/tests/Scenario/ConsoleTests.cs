@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             };
 
             // Create
-            ArmOperation<NetworkCloudVirtualMachineConsoleResource> createResult = await collection.CreateOrUpdateAsync(WaitUntil.Completed, ConsoleName, data);
+            ArmOperation<NetworkCloudVirtualMachineConsoleResource> createResult = await collection.CreateOrUpdateAsync(WaitUntil.Completed, ConsoleName, data, matchConditions: null);
             Assert.AreEqual(ConsoleName, createResult.Value.Data.Name);
 
             // Get
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                     ["key2"] = "newvalue2",
                 }
             };
-            ArmOperation<NetworkCloudVirtualMachineConsoleResource> updateResult = await console.UpdateAsync(WaitUntil.Completed, patch);
+            ArmOperation<NetworkCloudVirtualMachineConsoleResource> updateResult = await console.UpdateAsync(WaitUntil.Completed, patch, matchConditions: null);
             Assert.AreEqual(patch.Tags, updateResult.Value.Data.Tags);
 
             // Delete

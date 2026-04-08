@@ -43,12 +43,13 @@ Set-StrictMode -Version Latest
 
 # Resolve paths relative to the agentserver root (parent of scripts/)
 $AgentServerRoot = Split-Path -Parent $PSScriptRoot
+$PackageRoot = Join-Path $AgentServerRoot "Azure.AI.AgentServer.Responses"
 
-$TspDir = Join-Path $AgentServerRoot "Azure.AI.AgentServer.Responses" "src" "TypeSpec"
+$TspDir = Join-Path $PackageRoot "src" "TypeSpec"
 $TspOut = Join-Path $TspDir "tsp-output"
-$ContractsGenerated = Join-Path $AgentServerRoot "Azure.AI.AgentServer.Responses" "src" "Generated"
-$ValidatorsDir = Join-Path $AgentServerRoot "Azure.AI.AgentServer.Responses" "src" "Generated" "Validators"
-$OverlayYaml = Join-Path $AgentServerRoot "Azure.AI.AgentServer.Responses" "src" "Validation" "validation-overlay.yaml"
+$ContractsGenerated = Join-Path $PackageRoot "src" "Generated"
+$ValidatorsDir = Join-Path $PackageRoot "src" "Generated" "Validators"
+$OverlayYaml = Join-Path $PackageRoot "src" "Validation" "validation-overlay.yaml"
 $ValidatorsNamespace = "Azure.AI.AgentServer.Responses.Validators"
 $GenerateValidatorsScript = Join-Path $AgentServerRoot "scripts" "generate-validators.py"
 
@@ -82,9 +83,8 @@ try {
         }
 
         Write-Host "Syncing upstream TypeSpec sources..."
-        $syncOutputDir = Join-Path $AgentServerRoot "Azure.AI.AgentServer.Responses" "src" "TypeSpec"
-        npx --prefix $TspClientDir --no -- tsp-client sync --no-prompt --output-dir $syncOutputDir
-        $TempTypeSpecDir = Join-Path $TspDir "TempTypeSpecFiles"
+        npx --prefix $TspClientDir --no -- tsp-client sync --no-prompt --output-dir $PackageRoot
+        $TempTypeSpecDir = Join-Path $PackageRoot "TempTypeSpecFiles"
         if ($LASTEXITCODE -ne 0) {
             # Verify sync at least downloaded the source files
             if (-not (Test-Path (Join-Path $TempTypeSpecDir "Foundry"))) {
@@ -199,7 +199,7 @@ try {
 
         # Remove node_modules installed for tsp compile (contains .cs files that
         # would confuse MSBuild if left in place)
-        $nodeModules = Join-Path $TspDir "TempTypeSpecFiles" "node_modules"
+        $nodeModules = Join-Path $PackageRoot "TempTypeSpecFiles" "node_modules"
         if (Test-Path $nodeModules) {
             Remove-Item -Recurse -Force $nodeModules
             Write-Host "  Removed TempTypeSpecFiles/node_modules"

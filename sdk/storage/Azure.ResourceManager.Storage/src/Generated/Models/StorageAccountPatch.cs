@@ -452,42 +452,6 @@ namespace Azure.ResourceManager.Storage.Models
             }
         }
 
-        /// <summary> Indicate shared key access properties at service level. </summary>
-        [WirePath("properties.allowSharedKeyAccessForServices")]
-        public StorageAccountSharedKeyAccessProperties AllowSharedKeyAccessForServices
-        {
-            get
-            {
-                return Properties is null ? default : Properties.AllowSharedKeyAccessForServices;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new StorageAccountPropertiesUpdateParameters();
-                }
-                Properties.AllowSharedKeyAccessForServices = value;
-            }
-        }
-
-        /// <summary> Data Collaboration policy for the storage account. </summary>
-        [WirePath("properties.dataCollaborationPolicyProperties")]
-        public StorageDataCollaborationPolicyProperties DataCollaborationPolicyProperties
-        {
-            get
-            {
-                return Properties is null ? default : Properties.DataCollaborationPolicyProperties;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new StorageAccountPropertiesUpdateParameters();
-                }
-                Properties.DataCollaborationPolicyProperties = value;
-            }
-        }
-
         /// <summary> The key expiration period in days. </summary>
         [WirePath("properties.keyPolicy.keyExpirationPeriodInDays")]
         public int? KeyExpirationPeriodInDays

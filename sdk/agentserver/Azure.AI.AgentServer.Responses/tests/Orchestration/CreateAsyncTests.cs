@@ -193,7 +193,7 @@ public class CreateAsyncTests : IDisposable
     [Test]
     public async Task Default_NoTerminalEvent_SetsResponseFailed()
     {
-        // FR-009: handler ends without emitting a terminal event
+        // B32/S-015: handler ends without emitting a terminal event
         var response = new Models.ResponseObject("resp_create_08", "test") { Status = ResponseStatus.InProgress };
         _handler.EventFactory = (req, ctx, ct) => YieldEvents(
             new ResponseCreatedEvent(0, response),

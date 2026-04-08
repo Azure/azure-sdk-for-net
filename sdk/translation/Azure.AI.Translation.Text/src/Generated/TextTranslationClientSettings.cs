@@ -19,6 +19,15 @@ namespace Azure.AI.Translation.Text
         /// <summary> Gets or sets the Endpoint. </summary>
         public Uri Endpoint { get; set; }
 
+        /// <summary> Gets or sets the Region. </summary>
+        public string Region { get; set; }
+
+        /// <summary> Gets or sets the TokenScope. </summary>
+        public string TokenScope { get; set; }
+
+        /// <summary> Gets or sets the ResourceId. </summary>
+        public string ResourceId { get; set; }
+
         /// <summary> Gets or sets the Options. </summary>
         public TextTranslationClientOptions Options { get; set; }
 
@@ -29,6 +38,21 @@ namespace Azure.AI.Translation.Text
             if (Uri.TryCreate(section["Endpoint"], UriKind.Absolute, out Uri endpoint))
             {
                 Endpoint = endpoint;
+            }
+            string region = section["Region"];
+            if (!string.IsNullOrEmpty(region))
+            {
+                Region = region;
+            }
+            string tokenScope = section["TokenScope"];
+            if (!string.IsNullOrEmpty(tokenScope))
+            {
+                TokenScope = tokenScope;
+            }
+            string resourceId = section["ResourceId"];
+            if (!string.IsNullOrEmpty(resourceId))
+            {
+                ResourceId = resourceId;
             }
             IConfigurationSection optionsSection = section.GetSection("Options");
             if (optionsSection.Exists())

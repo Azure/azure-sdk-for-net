@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Quota
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -441,7 +441,8 @@ namespace Azure.ResourceManager.Quota
                 Id.Name,
                 resourceProviderName,
                 filter,
-                context), data => new GroupQuotaRequestStatusResource(Client, data));
+                context,
+                "GroupQuotaEntityResource.GetGroupQuotaLimitsRequests"), data => new GroupQuotaRequestStatusResource(Client, data));
         }
 
         /// <summary>
@@ -486,7 +487,8 @@ namespace Azure.ResourceManager.Quota
                 Id.Name,
                 resourceProviderName,
                 filter,
-                context), data => new GroupQuotaRequestStatusResource(Client, data));
+                context,
+                "GroupQuotaEntityResource.GetGroupQuotaLimitsRequests"), data => new GroupQuotaRequestStatusResource(Client, data));
         }
 
         /// <summary>
@@ -530,7 +532,8 @@ namespace Azure.ResourceManager.Quota
                 Id.Name,
                 resourceProviderName,
                 location,
-                context);
+                context,
+                "GroupQuotaEntityResource.GetGroupQuotaUsages");
         }
 
         /// <summary>
@@ -574,7 +577,8 @@ namespace Azure.ResourceManager.Quota
                 Id.Name,
                 resourceProviderName,
                 location,
-                context);
+                context,
+                "GroupQuotaEntityResource.GetGroupQuotaUsages");
         }
 
         /// <summary> Gets a collection of GroupQuotaSubscriptions in the <see cref="GroupQuotaEntityResource"/>. </summary>

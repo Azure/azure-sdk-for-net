@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Qumulo.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<QumuloFileSystemResourceData, QumuloFileSystemResource>(new FileSystemsGetBySubscriptionAsyncCollectionResultOfT(FileSystemsRestClient, Id.SubscriptionId, context), data => new QumuloFileSystemResource(Client, data));
+            return new AsyncPageableWrapper<QumuloFileSystemResourceData, QumuloFileSystemResource>(new FileSystemsGetBySubscriptionAsyncCollectionResultOfT(FileSystemsRestClient, Id.SubscriptionId, context, "MockableQumuloSubscriptionResource.GetQumuloFileSystemResources"), data => new QumuloFileSystemResource(Client, data));
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Qumulo.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<QumuloFileSystemResourceData, QumuloFileSystemResource>(new FileSystemsGetBySubscriptionCollectionResultOfT(FileSystemsRestClient, Id.SubscriptionId, context), data => new QumuloFileSystemResource(Client, data));
+            return new PageableWrapper<QumuloFileSystemResourceData, QumuloFileSystemResource>(new FileSystemsGetBySubscriptionCollectionResultOfT(FileSystemsRestClient, Id.SubscriptionId, context, "MockableQumuloSubscriptionResource.GetQumuloFileSystemResources"), data => new QumuloFileSystemResource(Client, data));
         }
     }
 }

@@ -7,253 +7,476 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetworkCloud.Models;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
-    /// <summary>
-    /// A class representing the NetworkCloudCluster data model.
-    /// Cluster represents the on-premises Network Cloud cluster.
-    /// </summary>
+    /// <summary> Cluster represents the on-premises Network Cloud cluster. </summary>
     public partial class NetworkCloudClusterData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudClusterData"/>. </summary>
-        /// <param name="location"> The location. </param>
-        /// <param name="extendedLocation"> The extended location of the cluster manager associated with the cluster. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="aggregatorOrSingleRackDefinition"> The rack definition that is intended to reflect only a single rack in a single rack cluster, or an aggregator rack in a multi-rack cluster. </param>
         /// <param name="clusterType"> The type of rack configuration for the cluster. </param>
         /// <param name="clusterVersion"> The current runtime version of the cluster. </param>
         /// <param name="networkFabricId"> The resource ID of the Network Fabric associated with the cluster. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="extendedLocation"/>, <paramref name="aggregatorOrSingleRackDefinition"/>, <paramref name="clusterVersion"/> or <paramref name="networkFabricId"/> is null. </exception>
-        public NetworkCloudClusterData(AzureLocation location, ExtendedLocation extendedLocation, NetworkCloudRackDefinition aggregatorOrSingleRackDefinition, ClusterType clusterType, string clusterVersion, ResourceIdentifier networkFabricId) : base(location)
+        /// <param name="extendedLocation"> The extended location of the resource. This property is required when creating the resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="aggregatorOrSingleRackDefinition"/>, <paramref name="clusterVersion"/>, <paramref name="networkFabricId"/> or <paramref name="extendedLocation"/> is null. </exception>
+        public NetworkCloudClusterData(AzureLocation location, NetworkCloudRackDefinition aggregatorOrSingleRackDefinition, ClusterType clusterType, string clusterVersion, ResourceIdentifier networkFabricId, ExtendedLocation extendedLocation) : base(location)
         {
-            Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
             Argument.AssertNotNull(aggregatorOrSingleRackDefinition, nameof(aggregatorOrSingleRackDefinition));
             Argument.AssertNotNull(clusterVersion, nameof(clusterVersion));
             Argument.AssertNotNull(networkFabricId, nameof(networkFabricId));
+            Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
 
+            Properties = new ClusterProperties(aggregatorOrSingleRackDefinition, clusterType, clusterVersion, networkFabricId);
             ExtendedLocation = extendedLocation;
-            ActionStates = new ChangeTrackingList<NetworkCloudActionState>();
-            AggregatorOrSingleRackDefinition = aggregatorOrSingleRackDefinition;
-            AvailableUpgradeVersions = new ChangeTrackingList<ClusterAvailableUpgradeVersion>();
-            ClusterType = clusterType;
-            ClusterVersion = clusterVersion;
-            ComputeRackDefinitions = new ChangeTrackingList<NetworkCloudRackDefinition>();
-            NetworkFabricId = networkFabricId;
-            WorkloadResourceIds = new ChangeTrackingList<ResourceIdentifier>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudClusterData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="etag"> Resource ETag. </param>
-        /// <param name="extendedLocation"> The extended location of the cluster manager associated with the cluster. </param>
-        /// <param name="identity"> The identity for the resource. </param>
-        /// <param name="actionStates"> The current state of any in progress or completed actions. The most recent known instance of each action type is shown. </param>
-        /// <param name="aggregatorOrSingleRackDefinition"> The rack definition that is intended to reflect only a single rack in a single rack cluster, or an aggregator rack in a multi-rack cluster. </param>
-        /// <param name="analyticsOutputSettings"> The settings for the log analytics workspace used for output of logs from this cluster. </param>
-        /// <param name="analyticsWorkspaceId"> Field Deprecated. The resource ID of the Log Analytics Workspace that will be used for storing relevant logs. </param>
-        /// <param name="availableUpgradeVersions"> The list of cluster runtime version upgrades available for this cluster. </param>
-        /// <param name="clusterCapacity"> The capacity supported by this cluster. </param>
-        /// <param name="clusterConnectionStatus"> The latest heartbeat status between the cluster manager and the cluster. </param>
-        /// <param name="clusterExtendedLocation"> The extended location (custom location) that represents the cluster's control plane location. This extended location is used to route the requests of child objects of the cluster that are handled by the platform operator. </param>
-        /// <param name="clusterLocation"> The customer-provided location information to identify where the cluster resides. </param>
-        /// <param name="clusterManagerConnectionStatus"> The latest connectivity status between cluster manager and the cluster. </param>
-        /// <param name="clusterManagerId"> The resource ID of the cluster manager that manages this cluster. This is set by the Cluster Manager when the cluster is created. </param>
-        /// <param name="clusterServicePrincipal"> Field Deprecated: Use managed identity to provide cluster privileges. The service principal to be used by the cluster during Arc Appliance installation. </param>
-        /// <param name="clusterType"> The type of rack configuration for the cluster. </param>
-        /// <param name="clusterVersion"> The current runtime version of the cluster. </param>
-        /// <param name="commandOutputSettings"> The settings for commands run in this cluster, such as bare metal machine run read only commands and data extracts. </param>
-        /// <param name="computeDeploymentThreshold"> The validation threshold indicating the allowable failures of compute machines during environment validation and deployment. </param>
-        /// <param name="computeRackDefinitions"> The list of rack definitions for the compute racks in a multi-rack cluster, or an empty list in a single-rack cluster. </param>
-        /// <param name="detailedStatus"> The current detailed status of the cluster. </param>
-        /// <param name="detailedStatusMessage"> The descriptive message about the detailed status. </param>
-        /// <param name="hybridAksExtendedLocation"> Field Deprecated. This field will not be populated in an upcoming version. The extended location (custom location) that represents the Hybrid AKS control plane location. This extended location is used when creating provisioned clusters (Hybrid AKS clusters). </param>
-        /// <param name="managedResourceGroupConfiguration"> The configuration of the managed resource group associated with the resource. </param>
-        /// <param name="manualActionCount"> The count of Manual Action Taken (MAT) events that have not been validated. </param>
-        /// <param name="networkFabricId"> The resource ID of the Network Fabric associated with the cluster. </param>
-        /// <param name="provisioningState"> The provisioning state of the cluster. </param>
-        /// <param name="runtimeProtectionConfiguration"> The settings for cluster runtime protection. </param>
-        /// <param name="secretArchive"> The configuration for use of a key vault to store secrets for later retrieval by the operator. </param>
-        /// <param name="secretArchiveSettings"> The settings for the secret archive used to hold credentials for the cluster. </param>
-        /// <param name="supportExpireOn"> The support end date of the runtime version of the cluster. </param>
-        /// <param name="updateStrategy"> The strategy for updating the cluster. </param>
-        /// <param name="vulnerabilityScanningSettings"> The settings for how security vulnerability scanning is applied to the cluster. </param>
-        /// <param name="workloadResourceIds"> The list of workload resource IDs that are hosted within this cluster. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkCloudClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ExtendedLocation extendedLocation, ManagedServiceIdentity identity, IReadOnlyList<NetworkCloudActionState> actionStates, NetworkCloudRackDefinition aggregatorOrSingleRackDefinition, AnalyticsOutputSettings analyticsOutputSettings, ResourceIdentifier analyticsWorkspaceId, IReadOnlyList<ClusterAvailableUpgradeVersion> availableUpgradeVersions, ClusterCapacity clusterCapacity, ClusterConnectionStatus? clusterConnectionStatus, ExtendedLocation clusterExtendedLocation, string clusterLocation, ClusterManagerConnectionStatus? clusterManagerConnectionStatus, ResourceIdentifier clusterManagerId, ServicePrincipalInformation clusterServicePrincipal, ClusterType clusterType, string clusterVersion, CommandOutputSettings commandOutputSettings, ValidationThreshold computeDeploymentThreshold, IList<NetworkCloudRackDefinition> computeRackDefinitions, ClusterDetailedStatus? detailedStatus, string detailedStatusMessage, ExtendedLocation hybridAksExtendedLocation, ManagedResourceGroupConfiguration managedResourceGroupConfiguration, long? manualActionCount, ResourceIdentifier networkFabricId, ClusterProvisioningState? provisioningState, RuntimeProtectionConfiguration runtimeProtectionConfiguration, ClusterSecretArchive secretArchive, SecretArchiveSettings secretArchiveSettings, DateTimeOffset? supportExpireOn, ClusterUpdateStrategy updateStrategy, VulnerabilityScanningSettings vulnerabilityScanningSettings, IReadOnlyList<ResourceIdentifier> workloadResourceIds, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The list of the resource properties. </param>
+        /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
+        /// <param name="extendedLocation"> The extended location of the resource. This property is required when creating the resource. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="kind"> The type (kind) of the cluster. When specified, the value must exactly match the kind configured on the cluster manager that manages the cluster. If omitted, the service will default the value to the kind value of the cluster manager. </param>
+        internal NetworkCloudClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, ClusterProperties properties, ETag? eTag, ExtendedLocation extendedLocation, ManagedServiceIdentity identity, NetworkCloudDeploymentType? kind) : base(id, name, resourceType, systemData, tags, location)
         {
-            ETag = etag;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
+            ETag = eTag;
             ExtendedLocation = extendedLocation;
             Identity = identity;
-            ActionStates = actionStates;
-            AggregatorOrSingleRackDefinition = aggregatorOrSingleRackDefinition;
-            AnalyticsOutputSettings = analyticsOutputSettings;
-            AnalyticsWorkspaceId = analyticsWorkspaceId;
-            AvailableUpgradeVersions = availableUpgradeVersions;
-            ClusterCapacity = clusterCapacity;
-            ClusterConnectionStatus = clusterConnectionStatus;
-            ClusterExtendedLocation = clusterExtendedLocation;
-            ClusterLocation = clusterLocation;
-            ClusterManagerConnectionStatus = clusterManagerConnectionStatus;
-            ClusterManagerId = clusterManagerId;
-            ClusterServicePrincipal = clusterServicePrincipal;
-            ClusterType = clusterType;
-            ClusterVersion = clusterVersion;
-            CommandOutputSettings = commandOutputSettings;
-            ComputeDeploymentThreshold = computeDeploymentThreshold;
-            ComputeRackDefinitions = computeRackDefinitions;
-            DetailedStatus = detailedStatus;
-            DetailedStatusMessage = detailedStatusMessage;
-            HybridAksExtendedLocation = hybridAksExtendedLocation;
-            ManagedResourceGroupConfiguration = managedResourceGroupConfiguration;
-            ManualActionCount = manualActionCount;
-            NetworkFabricId = networkFabricId;
-            ProvisioningState = provisioningState;
-            RuntimeProtectionConfiguration = runtimeProtectionConfiguration;
-            SecretArchive = secretArchive;
-            SecretArchiveSettings = secretArchiveSettings;
-            SupportExpireOn = supportExpireOn;
-            UpdateStrategy = updateStrategy;
-            VulnerabilityScanningSettings = vulnerabilityScanningSettings;
-            WorkloadResourceIds = workloadResourceIds;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Kind = kind;
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkCloudClusterData"/> for deserialization. </summary>
-        internal NetworkCloudClusterData()
-        {
-        }
+        /// <summary> The list of the resource properties. </summary>
+        internal ClusterProperties Properties { get; set; }
 
-        /// <summary> Resource ETag. </summary>
+        /// <summary> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </summary>
         public ETag? ETag { get; }
-        /// <summary> The extended location of the cluster manager associated with the cluster. </summary>
-        public ExtendedLocation ExtendedLocation { get; set; }
-        /// <summary> The identity for the resource. </summary>
+
+        /// <summary> The managed service identities assigned to this resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
-        /// <summary> The current state of any in progress or completed actions. The most recent known instance of each action type is shown. </summary>
-        public IReadOnlyList<NetworkCloudActionState> ActionStates { get; }
+
+        /// <summary> The type (kind) of the cluster. When specified, the value must exactly match the kind configured on the cluster manager that manages the cluster. If omitted, the service will default the value to the kind value of the cluster manager. </summary>
+        public NetworkCloudDeploymentType? Kind { get; set; }
+
         /// <summary> The rack definition that is intended to reflect only a single rack in a single rack cluster, or an aggregator rack in a multi-rack cluster. </summary>
-        public NetworkCloudRackDefinition AggregatorOrSingleRackDefinition { get; set; }
-        /// <summary> The settings for the log analytics workspace used for output of logs from this cluster. </summary>
-        public AnalyticsOutputSettings AnalyticsOutputSettings { get; set; }
-        /// <summary> Field Deprecated. The resource ID of the Log Analytics Workspace that will be used for storing relevant logs. </summary>
-        public ResourceIdentifier AnalyticsWorkspaceId { get; set; }
-        /// <summary> The list of cluster runtime version upgrades available for this cluster. </summary>
-        public IReadOnlyList<ClusterAvailableUpgradeVersion> AvailableUpgradeVersions { get; }
-        /// <summary> The capacity supported by this cluster. </summary>
-        public ClusterCapacity ClusterCapacity { get; }
-        /// <summary> The latest heartbeat status between the cluster manager and the cluster. </summary>
-        public ClusterConnectionStatus? ClusterConnectionStatus { get; }
-        /// <summary> The extended location (custom location) that represents the cluster's control plane location. This extended location is used to route the requests of child objects of the cluster that are handled by the platform operator. </summary>
-        public ExtendedLocation ClusterExtendedLocation { get; }
-        /// <summary> The customer-provided location information to identify where the cluster resides. </summary>
-        public string ClusterLocation { get; set; }
-        /// <summary> The latest connectivity status between cluster manager and the cluster. </summary>
-        public ClusterManagerConnectionStatus? ClusterManagerConnectionStatus { get; }
-        /// <summary> The resource ID of the cluster manager that manages this cluster. This is set by the Cluster Manager when the cluster is created. </summary>
-        public ResourceIdentifier ClusterManagerId { get; }
-        /// <summary> Field Deprecated: Use managed identity to provide cluster privileges. The service principal to be used by the cluster during Arc Appliance installation. </summary>
-        public ServicePrincipalInformation ClusterServicePrincipal { get; set; }
-        /// <summary> The type of rack configuration for the cluster. </summary>
-        public ClusterType ClusterType { get; set; }
-        /// <summary> The current runtime version of the cluster. </summary>
-        public string ClusterVersion { get; set; }
-        /// <summary> The settings for commands run in this cluster, such as bare metal machine run read only commands and data extracts. </summary>
-        public CommandOutputSettings CommandOutputSettings { get; set; }
-        /// <summary> The validation threshold indicating the allowable failures of compute machines during environment validation and deployment. </summary>
-        public ValidationThreshold ComputeDeploymentThreshold { get; set; }
-        /// <summary> The list of rack definitions for the compute racks in a multi-rack cluster, or an empty list in a single-rack cluster. </summary>
-        public IList<NetworkCloudRackDefinition> ComputeRackDefinitions { get; }
-        /// <summary> The current detailed status of the cluster. </summary>
-        public ClusterDetailedStatus? DetailedStatus { get; }
-        /// <summary> The descriptive message about the detailed status. </summary>
-        public string DetailedStatusMessage { get; }
-        /// <summary> Field Deprecated. This field will not be populated in an upcoming version. The extended location (custom location) that represents the Hybrid AKS control plane location. This extended location is used when creating provisioned clusters (Hybrid AKS clusters). </summary>
-        public ExtendedLocation HybridAksExtendedLocation { get; }
-        /// <summary> The configuration of the managed resource group associated with the resource. </summary>
-        public ManagedResourceGroupConfiguration ManagedResourceGroupConfiguration { get; set; }
-        /// <summary> The count of Manual Action Taken (MAT) events that have not been validated. </summary>
-        public long? ManualActionCount { get; }
-        /// <summary> The resource ID of the Network Fabric associated with the cluster. </summary>
-        public ResourceIdentifier NetworkFabricId { get; set; }
-        /// <summary> The provisioning state of the cluster. </summary>
-        public ClusterProvisioningState? ProvisioningState { get; }
-        /// <summary> The settings for cluster runtime protection. </summary>
-        internal RuntimeProtectionConfiguration RuntimeProtectionConfiguration { get; set; }
-        /// <summary> The mode of operation for runtime protection. </summary>
-        public RuntimeProtectionEnforcementLevel? RuntimeProtectionEnforcementLevel
+        public NetworkCloudRackDefinition AggregatorOrSingleRackDefinition
         {
-            get => RuntimeProtectionConfiguration is null ? default : RuntimeProtectionConfiguration.EnforcementLevel;
+            get
+            {
+                return Properties is null ? default : Properties.AggregatorOrSingleRackDefinition;
+            }
             set
             {
-                if (RuntimeProtectionConfiguration is null)
-                    RuntimeProtectionConfiguration = new RuntimeProtectionConfiguration();
-                RuntimeProtectionConfiguration.EnforcementLevel = value;
+                if (Properties is null)
+                {
+                    Properties = new ClusterProperties();
+                }
+                Properties.AggregatorOrSingleRackDefinition = value;
+            }
+        }
+
+        /// <summary> The settings for the log analytics workspace used for output of logs from this cluster. </summary>
+        public AnalyticsOutputSettings AnalyticsOutputSettings
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AnalyticsOutputSettings;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterProperties();
+                }
+                Properties.AnalyticsOutputSettings = value;
+            }
+        }
+
+        /// <summary> Field Deprecated. The resource ID of the Log Analytics Workspace that will be used for storing relevant logs. </summary>
+        public ResourceIdentifier AnalyticsWorkspaceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AnalyticsWorkspaceId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterProperties();
+                }
+                Properties.AnalyticsWorkspaceId = value;
+            }
+        }
+
+        /// <summary> The customer-provided location information to identify where the cluster resides. </summary>
+        public string ClusterLocation
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ClusterLocation;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterProperties();
+                }
+                Properties.ClusterLocation = value;
+            }
+        }
+
+        /// <summary> Field Deprecated: Use managed identity to provide cluster privileges. The service principal to be used by the cluster during Arc Appliance installation. </summary>
+        public ServicePrincipalInformation ClusterServicePrincipal
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ClusterServicePrincipal;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterProperties();
+                }
+                Properties.ClusterServicePrincipal = value;
+            }
+        }
+
+        /// <summary> The type of rack configuration for the cluster. </summary>
+        public ClusterType ClusterType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ClusterType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterProperties();
+                }
+                Properties.ClusterType = value;
+            }
+        }
+
+        /// <summary> The current runtime version of the cluster. </summary>
+        public string ClusterVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ClusterVersion;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterProperties();
+                }
+                Properties.ClusterVersion = value;
+            }
+        }
+
+        /// <summary> The settings for commands run in this cluster, such as bare metal machine run read only commands and data extracts. </summary>
+        public CommandOutputSettings CommandOutputSettings
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CommandOutputSettings;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterProperties();
+                }
+                Properties.CommandOutputSettings = value;
+            }
+        }
+
+        /// <summary> The validation threshold indicating the allowable failures of compute machines during environment validation and deployment. </summary>
+        public ValidationThreshold ComputeDeploymentThreshold
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ComputeDeploymentThreshold;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterProperties();
+                }
+                Properties.ComputeDeploymentThreshold = value;
+            }
+        }
+
+        /// <summary> The list of rack definitions for the compute racks in a multi-rack cluster, or an empty list in a single-rack cluster. </summary>
+        public IList<NetworkCloudRackDefinition> ComputeRackDefinitions
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterProperties();
+                }
+                return Properties.ComputeRackDefinitions;
+            }
+        }
+
+        /// <summary> The configuration of the managed resource group associated with the resource. </summary>
+        public ManagedResourceGroupConfiguration ManagedResourceGroupConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ManagedResourceGroupConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterProperties();
+                }
+                Properties.ManagedResourceGroupConfiguration = value;
+            }
+        }
+
+        /// <summary> The resource ID of the Network Fabric associated with the cluster. </summary>
+        public ResourceIdentifier NetworkFabricId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NetworkFabricId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterProperties();
+                }
+                Properties.NetworkFabricId = value;
+            }
+        }
+
+        /// <summary> The settings for cluster runtime protection. </summary>
+        public RuntimeProtectionConfiguration RuntimeProtectionConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RuntimeProtectionConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterProperties();
+                }
+                Properties.RuntimeProtectionConfiguration = value;
             }
         }
 
         /// <summary> The configuration for use of a key vault to store secrets for later retrieval by the operator. </summary>
-        public ClusterSecretArchive SecretArchive { get; set; }
-        /// <summary> The settings for the secret archive used to hold credentials for the cluster. </summary>
-        public SecretArchiveSettings SecretArchiveSettings { get; set; }
-        /// <summary> The support end date of the runtime version of the cluster. </summary>
-        public DateTimeOffset? SupportExpireOn { get; }
-        /// <summary> The strategy for updating the cluster. </summary>
-        public ClusterUpdateStrategy UpdateStrategy { get; set; }
-        /// <summary> The settings for how security vulnerability scanning is applied to the cluster. </summary>
-        internal VulnerabilityScanningSettings VulnerabilityScanningSettings { get; set; }
-        /// <summary> The mode selection for container vulnerability scanning. </summary>
-        public VulnerabilityScanningSettingsContainerScan? VulnerabilityScanningContainerScan
+        public ClusterSecretArchive SecretArchive
         {
-            get => VulnerabilityScanningSettings is null ? default : VulnerabilityScanningSettings.ContainerScan;
+            get
+            {
+                return Properties is null ? default : Properties.SecretArchive;
+            }
             set
             {
-                if (VulnerabilityScanningSettings is null)
-                    VulnerabilityScanningSettings = new VulnerabilityScanningSettings();
-                VulnerabilityScanningSettings.ContainerScan = value;
+                if (Properties is null)
+                {
+                    Properties = new ClusterProperties();
+                }
+                Properties.SecretArchive = value;
+            }
+        }
+
+        /// <summary> The settings for the secret archive used to hold credentials for the cluster. </summary>
+        public SecretArchiveSettings SecretArchiveSettings
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SecretArchiveSettings;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterProperties();
+                }
+                Properties.SecretArchiveSettings = value;
+            }
+        }
+
+        /// <summary> The strategy for updating the cluster. </summary>
+        public ClusterUpdateStrategy UpdateStrategy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UpdateStrategy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterProperties();
+                }
+                Properties.UpdateStrategy = value;
+            }
+        }
+
+        /// <summary> The current state of any in progress or completed actions. The most recent known instance of each action type is shown. </summary>
+        public IReadOnlyList<NetworkCloudActionState> ActionStates
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterProperties();
+                }
+                return Properties.ActionStates;
+            }
+        }
+
+        /// <summary> The list of cluster runtime version upgrades available for this cluster. </summary>
+        public IReadOnlyList<ClusterAvailableUpgradeVersion> AvailableUpgradeVersions
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterProperties();
+                }
+                return Properties.AvailableUpgradeVersions;
+            }
+        }
+
+        /// <summary> The capacity supported by this cluster. </summary>
+        public ClusterCapacity ClusterCapacity
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ClusterCapacity;
+            }
+        }
+
+        /// <summary> The latest heartbeat status between the cluster manager and the cluster. </summary>
+        public ClusterConnectionStatus? ClusterConnectionStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ClusterConnectionStatus;
+            }
+        }
+
+        /// <summary> The latest connectivity status between cluster manager and the cluster. </summary>
+        public ClusterManagerConnectionStatus? ClusterManagerConnectionStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ClusterManagerConnectionStatus;
+            }
+        }
+
+        /// <summary> The resource ID of the cluster manager that manages this cluster. This is set by the Cluster Manager when the cluster is created. </summary>
+        public ResourceIdentifier ClusterManagerId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ClusterManagerId;
+            }
+        }
+
+        /// <summary> The current detailed status of the cluster. </summary>
+        public ClusterDetailedStatus? DetailedStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DetailedStatus;
+            }
+        }
+
+        /// <summary> The descriptive message about the detailed status. </summary>
+        public string DetailedStatusMessage
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DetailedStatusMessage;
+            }
+        }
+
+        /// <summary> The count of Manual Action Taken (MAT) events that have not been validated. </summary>
+        public long? ManualActionCount
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ManualActionCount;
+            }
+        }
+
+        /// <summary> The support end date of the runtime version of the cluster. </summary>
+        public DateTimeOffset? SupportExpireOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SupportExpireOn;
             }
         }
 
         /// <summary> The list of workload resource IDs that are hosted within this cluster. </summary>
-        public IReadOnlyList<ResourceIdentifier> WorkloadResourceIds { get; }
+        public IReadOnlyList<ResourceIdentifier> WorkloadResourceIds
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterProperties();
+                }
+                return Properties.WorkloadResourceIds;
+            }
+        }
+
+        /// <summary> The provisioning state of the cluster. </summary>
+        public ClusterProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> The mode selection for container vulnerability scanning. </summary>
+        public VulnerabilityScanningSettingsContainerScan? VulnerabilityScanningContainerScan
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VulnerabilityScanningContainerScan;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterProperties();
+                }
+                Properties.VulnerabilityScanningContainerScan = value.Value;
+            }
+        }
     }
 }

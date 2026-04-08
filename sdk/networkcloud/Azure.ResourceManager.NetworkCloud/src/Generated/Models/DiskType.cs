@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     public readonly partial struct DiskType : IEquatable<DiskType>
     {
         private readonly string _value;
+        /// <summary> HDD disk type. </summary>
+        private const string HDDValue = "HDD";
+        /// <summary> SSD disk type. </summary>
+        private const string SSDValue = "SSD";
 
         /// <summary> Initializes a new instance of <see cref="DiskType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DiskType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string HDDValue = "HDD";
-        private const string SSDValue = "SSD";
-
-        /// <summary> HDD. </summary>
+        /// <summary> HDD disk type. </summary>
         public static DiskType HDD { get; } = new DiskType(HDDValue);
-        /// <summary> SSD. </summary>
+
+        /// <summary> SSD disk type. </summary>
         public static DiskType SSD { get; } = new DiskType(SSDValue);
+
         /// <summary> Determines if two <see cref="DiskType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DiskType left, DiskType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DiskType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DiskType left, DiskType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DiskType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DiskType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DiskType(string value) => new DiskType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DiskType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DiskType?(string value) => value == null ? null : new DiskType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DiskType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DiskType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

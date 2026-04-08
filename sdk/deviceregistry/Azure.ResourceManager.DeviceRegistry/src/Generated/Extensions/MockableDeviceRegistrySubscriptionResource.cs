@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DeviceRegistryAssetData, DeviceRegistryAssetResource>(new AssetsGetBySubscriptionAsyncCollectionResultOfT(AssetsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DeviceRegistryAssetResource(Client, data));
+            return new AsyncPageableWrapper<DeviceRegistryAssetData, DeviceRegistryAssetResource>(new AssetsGetBySubscriptionAsyncCollectionResultOfT(AssetsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDeviceRegistrySubscriptionResource.GetDeviceRegistryAssets"), data => new DeviceRegistryAssetResource(Client, data));
         }
 
         /// <summary>
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DeviceRegistryAssetData, DeviceRegistryAssetResource>(new AssetsGetBySubscriptionCollectionResultOfT(AssetsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DeviceRegistryAssetResource(Client, data));
+            return new PageableWrapper<DeviceRegistryAssetData, DeviceRegistryAssetResource>(new AssetsGetBySubscriptionCollectionResultOfT(AssetsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDeviceRegistrySubscriptionResource.GetDeviceRegistryAssets"), data => new DeviceRegistryAssetResource(Client, data));
         }
 
         /// <summary>
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DeviceRegistryAssetEndpointProfileData, DeviceRegistryAssetEndpointProfileResource>(new AssetEndpointProfilesGetBySubscriptionAsyncCollectionResultOfT(AssetEndpointProfilesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DeviceRegistryAssetEndpointProfileResource(Client, data));
+            return new AsyncPageableWrapper<DeviceRegistryAssetEndpointProfileData, DeviceRegistryAssetEndpointProfileResource>(new AssetEndpointProfilesGetBySubscriptionAsyncCollectionResultOfT(AssetEndpointProfilesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDeviceRegistrySubscriptionResource.GetDeviceRegistryAssetEndpointProfiles"), data => new DeviceRegistryAssetEndpointProfileResource(Client, data));
         }
 
         /// <summary>
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DeviceRegistryAssetEndpointProfileData, DeviceRegistryAssetEndpointProfileResource>(new AssetEndpointProfilesGetBySubscriptionCollectionResultOfT(AssetEndpointProfilesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DeviceRegistryAssetEndpointProfileResource(Client, data));
+            return new PageableWrapper<DeviceRegistryAssetEndpointProfileData, DeviceRegistryAssetEndpointProfileResource>(new AssetEndpointProfilesGetBySubscriptionCollectionResultOfT(AssetEndpointProfilesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDeviceRegistrySubscriptionResource.GetDeviceRegistryAssetEndpointProfiles"), data => new DeviceRegistryAssetEndpointProfileResource(Client, data));
         }
 
         /// <summary>
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DeviceRegistryNamespaceData, DeviceRegistryNamespaceResource>(new NamespacesGetBySubscriptionAsyncCollectionResultOfT(NamespacesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DeviceRegistryNamespaceResource(Client, data));
+            return new AsyncPageableWrapper<DeviceRegistryNamespaceData, DeviceRegistryNamespaceResource>(new NamespacesGetBySubscriptionAsyncCollectionResultOfT(NamespacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDeviceRegistrySubscriptionResource.GetDeviceRegistryNamespaces"), data => new DeviceRegistryNamespaceResource(Client, data));
         }
 
         /// <summary>
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DeviceRegistryNamespaceData, DeviceRegistryNamespaceResource>(new NamespacesGetBySubscriptionCollectionResultOfT(NamespacesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DeviceRegistryNamespaceResource(Client, data));
+            return new PageableWrapper<DeviceRegistryNamespaceData, DeviceRegistryNamespaceResource>(new NamespacesGetBySubscriptionCollectionResultOfT(NamespacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDeviceRegistrySubscriptionResource.GetDeviceRegistryNamespaces"), data => new DeviceRegistryNamespaceResource(Client, data));
         }
 
         /// <summary>
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DeviceRegistrySchemaRegistryData, DeviceRegistrySchemaRegistryResource>(new SchemaRegistriesGetBySubscriptionAsyncCollectionResultOfT(SchemaRegistriesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DeviceRegistrySchemaRegistryResource(Client, data));
+            return new AsyncPageableWrapper<DeviceRegistrySchemaRegistryData, DeviceRegistrySchemaRegistryResource>(new SchemaRegistriesGetBySubscriptionAsyncCollectionResultOfT(SchemaRegistriesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDeviceRegistrySubscriptionResource.GetDeviceRegistrySchemaRegistries"), data => new DeviceRegistrySchemaRegistryResource(Client, data));
         }
 
         /// <summary>
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DeviceRegistrySchemaRegistryData, DeviceRegistrySchemaRegistryResource>(new SchemaRegistriesGetBySubscriptionCollectionResultOfT(SchemaRegistriesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DeviceRegistrySchemaRegistryResource(Client, data));
+            return new PageableWrapper<DeviceRegistrySchemaRegistryData, DeviceRegistrySchemaRegistryResource>(new SchemaRegistriesGetBySubscriptionCollectionResultOfT(SchemaRegistriesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDeviceRegistrySubscriptionResource.GetDeviceRegistrySchemaRegistries"), data => new DeviceRegistrySchemaRegistryResource(Client, data));
         }
     }
 }

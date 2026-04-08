@@ -98,7 +98,8 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
                 filter,
                 expand,
                 top,
-                context), data => new PolicyAssignmentResource(Client, data));
+                context,
+                "MockableResourcesPolicyManagementGroupResource.GetPolicyAssignments"), data => new PolicyAssignmentResource(Client, data));
         }
 
         /// <summary>
@@ -135,7 +136,8 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
                 filter,
                 expand,
                 top,
-                context), data => new PolicyAssignmentResource(Client, data));
+                context,
+                "MockableResourcesPolicyManagementGroupResource.GetPolicyAssignments"), data => new PolicyAssignmentResource(Client, data));
         }
 
         /// <summary>
@@ -252,7 +254,7 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PolicyExemptionData, PolicyExemptionResource>(new PolicyExemptionsGetForManagementGroupAsyncCollectionResultOfT(PolicyExemptionsRestClient, Id.Name, filter, context), data => new PolicyExemptionResource(Client, data));
+            return new AsyncPageableWrapper<PolicyExemptionData, PolicyExemptionResource>(new PolicyExemptionsGetForManagementGroupAsyncCollectionResultOfT(PolicyExemptionsRestClient, Id.Name, filter, context, "MockableResourcesPolicyManagementGroupResource.GetPolicyExemptions"), data => new PolicyExemptionResource(Client, data));
         }
 
         /// <summary>
@@ -281,7 +283,7 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PolicyExemptionData, PolicyExemptionResource>(new PolicyExemptionsGetForManagementGroupCollectionResultOfT(PolicyExemptionsRestClient, Id.Name, filter, context), data => new PolicyExemptionResource(Client, data));
+            return new PageableWrapper<PolicyExemptionData, PolicyExemptionResource>(new PolicyExemptionsGetForManagementGroupCollectionResultOfT(PolicyExemptionsRestClient, Id.Name, filter, context, "MockableResourcesPolicyManagementGroupResource.GetPolicyExemptions"), data => new PolicyExemptionResource(Client, data));
         }
 
         /// <summary>

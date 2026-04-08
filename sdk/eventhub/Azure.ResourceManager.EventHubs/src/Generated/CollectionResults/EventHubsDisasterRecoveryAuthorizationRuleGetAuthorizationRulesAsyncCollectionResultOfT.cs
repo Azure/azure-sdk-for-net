@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.EventHubs
         private readonly string _namespaceName;
         private readonly string _alias;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of EventHubsDisasterRecoveryAuthorizationRuleGetAuthorizationRulesAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The EventHubsDisasterRecoveryAuthorizationRule client used to send requests. </param>
@@ -31,7 +32,8 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="namespaceName"> The Namespace name. </param>
         /// <param name="alias"> The Disaster Recovery configuration name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public EventHubsDisasterRecoveryAuthorizationRuleGetAuthorizationRulesAsyncCollectionResultOfT(EventHubsDisasterRecoveryAuthorizationRule client, string subscriptionId, string resourceGroupName, string namespaceName, string @alias, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public EventHubsDisasterRecoveryAuthorizationRuleGetAuthorizationRulesAsyncCollectionResultOfT(EventHubsDisasterRecoveryAuthorizationRule client, string subscriptionId, string resourceGroupName, string namespaceName, string @alias, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -39,6 +41,7 @@ namespace Azure.ResourceManager.EventHubs
             _namespaceName = namespaceName;
             _alias = @alias;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of EventHubsDisasterRecoveryAuthorizationRuleGetAuthorizationRulesAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -71,7 +74,7 @@ namespace Azure.ResourceManager.EventHubs
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAuthorizationRulesRequest(nextLink, _subscriptionId, _resourceGroupName, _namespaceName, _alias, _context) : _client.CreateGetAuthorizationRulesRequest(_subscriptionId, _resourceGroupName, _namespaceName, _alias, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("EventHubsDisasterRecoveryAuthorizationRuleCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {
