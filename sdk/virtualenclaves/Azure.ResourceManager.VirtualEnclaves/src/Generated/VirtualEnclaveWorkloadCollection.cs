@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.VirtualEnclaves
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VirtualEnclaveWorkloadData, VirtualEnclaveWorkloadResource>(new WorkloadGetByEnclaveResourceAsyncCollectionResultOfT(_workloadRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new VirtualEnclaveWorkloadResource(Client, data));
+            return new AsyncPageableWrapper<VirtualEnclaveWorkloadData, VirtualEnclaveWorkloadResource>(new WorkloadGetByEnclaveResourceAsyncCollectionResultOfT(
+                _workloadRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "VirtualEnclaveWorkloadCollection.GetAll"), data => new VirtualEnclaveWorkloadResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.VirtualEnclaves
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VirtualEnclaveWorkloadData, VirtualEnclaveWorkloadResource>(new WorkloadGetByEnclaveResourceCollectionResultOfT(_workloadRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new VirtualEnclaveWorkloadResource(Client, data));
+            return new PageableWrapper<VirtualEnclaveWorkloadData, VirtualEnclaveWorkloadResource>(new WorkloadGetByEnclaveResourceCollectionResultOfT(
+                _workloadRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "VirtualEnclaveWorkloadCollection.GetAll"), data => new VirtualEnclaveWorkloadResource(Client, data));
         }
 
         /// <summary>

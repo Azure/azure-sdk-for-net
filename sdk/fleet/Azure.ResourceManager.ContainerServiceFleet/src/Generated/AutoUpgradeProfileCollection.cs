@@ -310,7 +310,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 Id.Name,
                 maxCount,
                 skipToken,
-                context), data => new AutoUpgradeProfileResource(Client, data));
+                context,
+                "AutoUpgradeProfileCollection.GetAll"), data => new AutoUpgradeProfileResource(Client, data));
         }
 
         /// <summary>
@@ -347,7 +348,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 Id.Name,
                 maxCount,
                 skipToken,
-                context), data => new AutoUpgradeProfileResource(Client, data));
+                context,
+                "AutoUpgradeProfileCollection.GetAll"), data => new AutoUpgradeProfileResource(Client, data));
         }
 
         /// <summary>

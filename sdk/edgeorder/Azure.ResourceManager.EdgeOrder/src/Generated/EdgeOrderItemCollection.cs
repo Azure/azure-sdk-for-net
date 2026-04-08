@@ -310,7 +310,8 @@ namespace Azure.ResourceManager.EdgeOrder
                 expand,
                 skipToken,
                 top,
-                context), data => new EdgeOrderItemResource(Client, data));
+                context,
+                "EdgeOrderItemCollection.GetAll"), data => new EdgeOrderItemResource(Client, data));
         }
 
         /// <summary>
@@ -350,7 +351,8 @@ namespace Azure.ResourceManager.EdgeOrder
                 expand,
                 skipToken,
                 top,
-                context), data => new EdgeOrderItemResource(Client, data));
+                context,
+                "EdgeOrderItemCollection.GetAll"), data => new EdgeOrderItemResource(Client, data));
         }
 
         /// <summary>

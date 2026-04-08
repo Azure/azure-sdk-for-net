@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -304,7 +304,8 @@ namespace Azure.ResourceManager.NetworkCloud
                 Id.ResourceGroupName,
                 top,
                 skipToken,
-                context), data => new NetworkCloudL2NetworkResource(Client, data));
+                context,
+                "NetworkCloudL2NetworkCollection.GetAll"), data => new NetworkCloudL2NetworkResource(Client, data));
         }
 
         /// <summary>
@@ -340,7 +341,8 @@ namespace Azure.ResourceManager.NetworkCloud
                 Id.ResourceGroupName,
                 top,
                 skipToken,
-                context), data => new NetworkCloudL2NetworkResource(Client, data));
+                context,
+                "NetworkCloudL2NetworkCollection.GetAll"), data => new NetworkCloudL2NetworkResource(Client, data));
         }
 
         /// <summary>

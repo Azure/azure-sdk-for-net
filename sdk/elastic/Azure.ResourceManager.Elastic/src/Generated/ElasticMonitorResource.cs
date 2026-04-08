@@ -720,7 +720,13 @@ namespace Azure.ResourceManager.Elastic
             {
                 CancellationToken = cancellationToken
             };
-            return new ElasticMonitorResourcesGetConnectedPartnerResourcesAsyncCollectionResultOfT(_elasticMonitorResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new ElasticMonitorResourcesGetConnectedPartnerResourcesAsyncCollectionResultOfT(
+                _elasticMonitorResourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ElasticMonitorResource.GetConnectedPartnerResources");
         }
 
         /// <summary>
@@ -752,7 +758,13 @@ namespace Azure.ResourceManager.Elastic
             {
                 CancellationToken = cancellationToken
             };
-            return new ElasticMonitorResourcesGetConnectedPartnerResourcesCollectionResultOfT(_elasticMonitorResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new ElasticMonitorResourcesGetConnectedPartnerResourcesCollectionResultOfT(
+                _elasticMonitorResourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ElasticMonitorResource.GetConnectedPartnerResources");
         }
 
         /// <summary>
@@ -1564,7 +1576,13 @@ namespace Azure.ResourceManager.Elastic
             {
                 CancellationToken = cancellationToken
             };
-            return new ElasticMonitorResourcesGetMonitoredResourcesAsyncCollectionResultOfT(_elasticMonitorResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new ElasticMonitorResourcesGetMonitoredResourcesAsyncCollectionResultOfT(
+                _elasticMonitorResourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ElasticMonitorResource.GetMonitoredResources");
         }
 
         /// <summary>
@@ -1596,7 +1614,13 @@ namespace Azure.ResourceManager.Elastic
             {
                 CancellationToken = cancellationToken
             };
-            return new ElasticMonitorResourcesGetMonitoredResourcesCollectionResultOfT(_elasticMonitorResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new ElasticMonitorResourcesGetMonitoredResourcesCollectionResultOfT(
+                _elasticMonitorResourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ElasticMonitorResource.GetMonitoredResources");
         }
 
         /// <summary>
@@ -2112,7 +2136,13 @@ namespace Azure.ResourceManager.Elastic
             {
                 CancellationToken = cancellationToken
             };
-            return new ElasticMonitorResourcesGetVmHostsAsyncCollectionResultOfT(_elasticMonitorResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new ElasticMonitorResourcesGetVmHostsAsyncCollectionResultOfT(
+                _elasticMonitorResourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ElasticMonitorResource.GetVmHosts");
         }
 
         /// <summary>
@@ -2144,7 +2174,13 @@ namespace Azure.ResourceManager.Elastic
             {
                 CancellationToken = cancellationToken
             };
-            return new ElasticMonitorResourcesGetVmHostsCollectionResultOfT(_elasticMonitorResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new ElasticMonitorResourcesGetVmHostsCollectionResultOfT(
+                _elasticMonitorResourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ElasticMonitorResource.GetVmHosts");
         }
 
         /// <summary> Add a tag to the current resource. </summary>

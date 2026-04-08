@@ -287,7 +287,13 @@ namespace Azure.ResourceManager.Peering
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ConnectionMonitorTestData, ConnectionMonitorTestResource>(new ConnectionMonitorTestsGetByPeeringServiceAsyncCollectionResultOfT(_connectionMonitorTestsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new ConnectionMonitorTestResource(Client, data));
+            return new AsyncPageableWrapper<ConnectionMonitorTestData, ConnectionMonitorTestResource>(new ConnectionMonitorTestsGetByPeeringServiceAsyncCollectionResultOfT(
+                _connectionMonitorTestsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ConnectionMonitorTestCollection.GetAll"), data => new ConnectionMonitorTestResource(Client, data));
         }
 
         /// <summary>
@@ -315,7 +321,13 @@ namespace Azure.ResourceManager.Peering
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ConnectionMonitorTestData, ConnectionMonitorTestResource>(new ConnectionMonitorTestsGetByPeeringServiceCollectionResultOfT(_connectionMonitorTestsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new ConnectionMonitorTestResource(Client, data));
+            return new PageableWrapper<ConnectionMonitorTestData, ConnectionMonitorTestResource>(new ConnectionMonitorTestsGetByPeeringServiceCollectionResultOfT(
+                _connectionMonitorTestsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ConnectionMonitorTestCollection.GetAll"), data => new ConnectionMonitorTestResource(Client, data));
         }
 
         /// <summary>

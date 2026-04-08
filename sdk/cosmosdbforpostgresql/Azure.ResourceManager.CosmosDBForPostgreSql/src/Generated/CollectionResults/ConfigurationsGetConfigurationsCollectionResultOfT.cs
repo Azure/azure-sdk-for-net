@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         private readonly string _clusterName;
         private readonly string _serverName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of ConfigurationsGetConfigurationsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Configurations client used to send requests. </param>
@@ -30,7 +31,8 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <param name="clusterName"> The name of the cluster. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ConfigurationsGetConfigurationsCollectionResultOfT(Configurations client, Guid subscriptionId, string resourceGroupName, string clusterName, string serverName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public ConfigurationsGetConfigurationsCollectionResultOfT(Configurations client, Guid subscriptionId, string resourceGroupName, string clusterName, string serverName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -38,6 +40,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             _clusterName = clusterName;
             _serverName = serverName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of ConfigurationsGetConfigurationsCollectionResultOfT as an enumerable collection. </summary>
@@ -70,7 +73,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetConfigurationsRequest(nextLink, _subscriptionId, _resourceGroupName, _clusterName, _serverName, _context) : _client.CreateGetConfigurationsRequest(_subscriptionId, _resourceGroupName, _clusterName, _serverName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("CosmosDBForPostgreSqlClusterServerResource.GetConfigurations");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

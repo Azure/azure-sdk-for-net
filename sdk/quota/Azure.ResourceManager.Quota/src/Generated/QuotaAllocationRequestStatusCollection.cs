@@ -205,7 +205,8 @@ namespace Azure.ResourceManager.Quota
                 _groupQuotaName,
                 _resourceProviderName,
                 filter,
-                context), data => new QuotaAllocationRequestStatusResource(Client, data));
+                context,
+                "QuotaAllocationRequestStatusCollection.GetAll"), data => new QuotaAllocationRequestStatusResource(Client, data));
         }
 
         /// <summary>
@@ -250,7 +251,8 @@ namespace Azure.ResourceManager.Quota
                 _groupQuotaName,
                 _resourceProviderName,
                 filter,
-                context), data => new QuotaAllocationRequestStatusResource(Client, data));
+                context,
+                "QuotaAllocationRequestStatusCollection.GetAll"), data => new QuotaAllocationRequestStatusResource(Client, data));
         }
 
         /// <summary>

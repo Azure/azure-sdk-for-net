@@ -21,18 +21,21 @@ namespace Azure.ResourceManager.Resources.Policy
         private readonly Guid _subscriptionId;
         private readonly string _variableName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of VariableValuesGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The VariableValues client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="variableName"> The name of the variable to operate on. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public VariableValuesGetAllAsyncCollectionResultOfT(VariableValues client, Guid subscriptionId, string variableName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public VariableValuesGetAllAsyncCollectionResultOfT(VariableValues client, Guid subscriptionId, string variableName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _variableName = variableName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of VariableValuesGetAllAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -65,7 +68,7 @@ namespace Azure.ResourceManager.Resources.Policy
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _variableName, _context) : _client.CreateGetAllRequest(_subscriptionId, _variableName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("VariableValueCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

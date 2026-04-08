@@ -92,6 +92,31 @@ namespace Azure.AI.Projects.Agents
             writer.WriteStringValue(Name);
             writer.WritePropertyName("versions"u8);
             writer.WriteObjectValue(Versions, options);
+            if (Optional.IsDefined(AgentEndpoint))
+            {
+                writer.WritePropertyName("agent_endpoint"u8);
+                writer.WriteObjectValue(AgentEndpoint, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(InstanceIdentity))
+            {
+                writer.WritePropertyName("instance_identity"u8);
+                writer.WriteObjectValue(InstanceIdentity, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Blueprint))
+            {
+                writer.WritePropertyName("blueprint"u8);
+                writer.WriteObjectValue(Blueprint, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(BlueprintReference))
+            {
+                writer.WritePropertyName("blueprint_reference"u8);
+                writer.WriteObjectValue(BlueprintReference, options);
+            }
+            if (Optional.IsDefined(AgentCard))
+            {
+                writer.WritePropertyName("agent_card"u8);
+                writer.WriteObjectValue(AgentCard, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -138,6 +163,11 @@ namespace Azure.AI.Projects.Agents
             string id = default;
             string name = default;
             AgentObjectVersions versions = default;
+            AgentEndpoint agentEndpoint = default;
+            AgentIdentity instanceIdentity = default;
+            AgentIdentity blueprint = default;
+            AgentBlueprintReference blueprintReference = default;
+            AgentCard agentCard = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -161,12 +191,67 @@ namespace Azure.AI.Projects.Agents
                     versions = AgentObjectVersions.DeserializeAgentObjectVersions(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("agent_endpoint"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    agentEndpoint = AgentEndpoint.DeserializeAgentEndpoint(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("instance_identity"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    instanceIdentity = AgentIdentity.DeserializeAgentIdentity(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("blueprint"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    blueprint = AgentIdentity.DeserializeAgentIdentity(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("blueprint_reference"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    blueprintReference = AgentBlueprintReference.DeserializeAgentBlueprintReference(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("agent_card"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    agentCard = AgentCard.DeserializeAgentCard(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ProjectsAgentRecord(@object, id, name, versions, additionalBinaryDataProperties);
+            return new ProjectsAgentRecord(
+                @object,
+                id,
+                name,
+                versions,
+                agentEndpoint,
+                instanceIdentity,
+                blueprint,
+                blueprintReference,
+                agentCard,
+                additionalBinaryDataProperties);
         }
     }
 }

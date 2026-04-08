@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CosmosDBForPostgreSqlClusterData, CosmosDBForPostgreSqlClusterResource>(new ClustersGetByResourceGroupAsyncCollectionResultOfT(_clustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new CosmosDBForPostgreSqlClusterResource(Client, data));
+            return new AsyncPageableWrapper<CosmosDBForPostgreSqlClusterData, CosmosDBForPostgreSqlClusterResource>(new ClustersGetByResourceGroupAsyncCollectionResultOfT(_clustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CosmosDBForPostgreSqlClusterCollection.GetAll"), data => new CosmosDBForPostgreSqlClusterResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CosmosDBForPostgreSqlClusterData, CosmosDBForPostgreSqlClusterResource>(new ClustersGetByResourceGroupCollectionResultOfT(_clustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new CosmosDBForPostgreSqlClusterResource(Client, data));
+            return new PageableWrapper<CosmosDBForPostgreSqlClusterData, CosmosDBForPostgreSqlClusterResource>(new ClustersGetByResourceGroupCollectionResultOfT(_clustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CosmosDBForPostgreSqlClusterCollection.GetAll"), data => new CosmosDBForPostgreSqlClusterResource(Client, data));
         }
 
         /// <summary>

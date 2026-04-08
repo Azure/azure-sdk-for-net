@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.HealthBot
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.HealthBot
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HealthBotData, HealthBotResource>(new BotsGetByResourceGroupAsyncCollectionResultOfT(_botsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new HealthBotResource(Client, data));
+            return new AsyncPageableWrapper<HealthBotData, HealthBotResource>(new BotsGetByResourceGroupAsyncCollectionResultOfT(_botsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "HealthBotCollection.GetAll"), data => new HealthBotResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.HealthBot
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HealthBotData, HealthBotResource>(new BotsGetByResourceGroupCollectionResultOfT(_botsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new HealthBotResource(Client, data));
+            return new PageableWrapper<HealthBotData, HealthBotResource>(new BotsGetByResourceGroupCollectionResultOfT(_botsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "HealthBotCollection.GetAll"), data => new HealthBotResource(Client, data));
         }
 
         /// <summary>

@@ -29,13 +29,23 @@ namespace Azure.AI.Projects.Agents
         /// <param name="id"> The unique identifier of the agent. </param>
         /// <param name="name"> The name of the agent. </param>
         /// <param name="versions"> The latest version of the agent. </param>
+        /// <param name="agentEndpoint"> The endpoint configuration for the agent. </param>
+        /// <param name="instanceIdentity"> The instance identity of the agent. </param>
+        /// <param name="blueprint"> The blueprint for the agent. </param>
+        /// <param name="blueprintReference"> The blueprint for the agent. </param>
+        /// <param name="agentCard"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProjectsAgentRecord(string @object, string id, string name, AgentObjectVersions versions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProjectsAgentRecord(string @object, string id, string name, AgentObjectVersions versions, AgentEndpoint agentEndpoint, AgentIdentity instanceIdentity, AgentIdentity blueprint, AgentBlueprintReference blueprintReference, AgentCard agentCard, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Object = @object;
             Id = id;
             Name = name;
             Versions = versions;
+            AgentEndpoint = agentEndpoint;
+            InstanceIdentity = instanceIdentity;
+            Blueprint = blueprint;
+            BlueprintReference = blueprintReference;
+            AgentCard = agentCard;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -44,5 +54,20 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> The name of the agent. </summary>
         public string Name { get; }
+
+        /// <summary> The endpoint configuration for the agent. </summary>
+        public AgentEndpoint AgentEndpoint { get; }
+
+        /// <summary> The instance identity of the agent. </summary>
+        public AgentIdentity InstanceIdentity { get; }
+
+        /// <summary> The blueprint for the agent. </summary>
+        public AgentIdentity Blueprint { get; }
+
+        /// <summary> The blueprint for the agent. </summary>
+        public AgentBlueprintReference BlueprintReference { get; }
+
+        /// <summary> Gets the AgentCard. </summary>
+        public AgentCard AgentCard { get; }
     }
 }

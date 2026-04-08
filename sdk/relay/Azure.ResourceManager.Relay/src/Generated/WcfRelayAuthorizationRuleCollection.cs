@@ -293,7 +293,8 @@ namespace Azure.ResourceManager.Relay
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new WcfRelayAuthorizationRuleResource(Client, data));
+                context,
+                "WcfRelayAuthorizationRuleCollection.GetAll"), data => new WcfRelayAuthorizationRuleResource(Client, data));
         }
 
         /// <summary>
@@ -327,7 +328,8 @@ namespace Azure.ResourceManager.Relay
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new WcfRelayAuthorizationRuleResource(Client, data));
+                context,
+                "WcfRelayAuthorizationRuleCollection.GetAll"), data => new WcfRelayAuthorizationRuleResource(Client, data));
         }
 
         /// <summary>

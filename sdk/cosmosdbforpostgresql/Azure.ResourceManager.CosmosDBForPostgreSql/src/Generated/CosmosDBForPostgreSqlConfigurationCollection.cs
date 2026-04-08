@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         {
             if (id.ResourceType != CosmosDBForPostgreSqlClusterResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, CosmosDBForPostgreSqlClusterResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, CosmosDBForPostgreSqlClusterResource.ResourceType), nameof(id));
             }
         }
 
@@ -177,7 +177,13 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CosmosDBForPostgreSqlConfigurationData, CosmosDBForPostgreSqlConfigurationResource>(new ConfigurationsGetByClusterAsyncCollectionResultOfT(_configurationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new CosmosDBForPostgreSqlConfigurationResource(Client, data));
+            return new AsyncPageableWrapper<CosmosDBForPostgreSqlConfigurationData, CosmosDBForPostgreSqlConfigurationResource>(new ConfigurationsGetByClusterAsyncCollectionResultOfT(
+                _configurationsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "CosmosDBForPostgreSqlConfigurationCollection.GetAll"), data => new CosmosDBForPostgreSqlConfigurationResource(Client, data));
         }
 
         /// <summary>
@@ -205,7 +211,13 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CosmosDBForPostgreSqlConfigurationData, CosmosDBForPostgreSqlConfigurationResource>(new ConfigurationsGetByClusterCollectionResultOfT(_configurationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new CosmosDBForPostgreSqlConfigurationResource(Client, data));
+            return new PageableWrapper<CosmosDBForPostgreSqlConfigurationData, CosmosDBForPostgreSqlConfigurationResource>(new ConfigurationsGetByClusterCollectionResultOfT(
+                _configurationsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "CosmosDBForPostgreSqlConfigurationCollection.GetAll"), data => new CosmosDBForPostgreSqlConfigurationResource(Client, data));
         }
 
         /// <summary>

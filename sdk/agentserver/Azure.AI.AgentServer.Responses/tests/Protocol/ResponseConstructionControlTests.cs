@@ -10,8 +10,8 @@ using Azure.AI.AgentServer.Responses.Tests.Helpers;
 namespace Azure.AI.AgentServer.Responses.Tests.Protocol;
 
 /// <summary>
-/// E2E protocol tests for developer Models.ResponseObject construction control (US1).
-/// Validates FR-001 (full replacement), FR-004 (Models.ResponseObject property exposure).
+/// E2E protocol tests for developer Models.ResponseObject construction control.
+/// Validates B37 (full replacement), response property exposure.
 /// These tests verify that handler-set Models.ResponseObject properties survive through the
 /// orchestration pipeline and appear in the final HTTP response.
 /// </summary>
@@ -22,7 +22,7 @@ public class ResponseConstructionControlTests : ProtocolTestBase
     [Test]
     public async Task POST_Responses_HandlerSetsCustomMetadata_PreservedInResponse()
     {
-        // Handler sets custom Metadata via events.Response before EmitCreated (FR-004)
+        // Handler sets custom Metadata via events.Response before EmitCreated (B37)
         // → final response contains handler's metadata values
         Handler.EventFactory = (req, ctx, ct) => CustomMetadataStream(req, ctx);
 
@@ -62,7 +62,7 @@ public class ResponseConstructionControlTests : ProtocolTestBase
     [Test]
     public async Task POST_Responses_Streaming_HandlerSetsCustomInstructions_PreservedInCreatedEvent()
     {
-        // Handler sets custom Instructions via events.Response before EmitCreated (FR-004)
+        // Handler sets custom Instructions via events.Response before EmitCreated (B37)
         // → response.created SSE event contains handler's instructions
         Handler.EventFactory = (req, ctx, ct) => CustomInstructionsStream(req, ctx);
 
@@ -100,7 +100,7 @@ public class ResponseConstructionControlTests : ProtocolTestBase
     public async Task POST_Responses_RawResponseCreatedEvent_CustomMetadataPreservedInFinalResponse()
     {
         // Handler emits raw ResponseCreatedEvent with custom fields (no ResponseEventStream)
-        // → persisted Models.ResponseObject preserves those fields (FR-001 full replacement)
+        // → persisted Models.ResponseObject preserves those fields (B37 full replacement)
         Handler.EventFactory = (req, ctx, ct) => RawEventStream(ctx);
 
         var response = await PostResponsesAsync(new { model = "test" });
@@ -141,7 +141,7 @@ public class ResponseConstructionControlTests : ProtocolTestBase
     {
         await Task.CompletedTask;
         var stream = new ResponseEventStream(ctx, request);
-        // Handler initializes Metadata and sets custom value via Models.ResponseObject property (FR-004)
+        // Handler initializes Metadata and sets custom value via Models.ResponseObject property (B37)
         stream.Response.Metadata = new Metadata();
         stream.Response.Metadata.AdditionalProperties["handler_key"] = "from_handler";
         yield return stream.EmitCreated();
@@ -155,7 +155,7 @@ public class ResponseConstructionControlTests : ProtocolTestBase
     {
         await Task.CompletedTask;
         var stream = new ResponseEventStream(ctx, request);
-        // Handler sets custom instructions via Models.ResponseObject property (FR-004)
+        // Handler sets custom instructions via Models.ResponseObject property (B37)
         stream.Response.Instructions = BinaryData.FromObjectAsJson("Custom handler instructions");
         yield return stream.EmitCreated();
         yield return stream.EmitCompleted();
@@ -166,7 +166,7 @@ public class ResponseConstructionControlTests : ProtocolTestBase
         [EnumeratorCancellation] CancellationToken ct = default)
     {
         await Task.CompletedTask;
-        // Handler constructs raw events without using ResponseEventStream (FR-001)
+        // Handler constructs raw events without using ResponseEventStream (B37)
         var response = new Models.ResponseObject(ctx.ResponseId, "test")
         {
             Metadata = new Metadata(),

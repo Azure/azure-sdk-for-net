@@ -24,6 +24,7 @@ namespace Azure.ResourceManager.Storage
         private readonly int? _maxpagesize;
         private readonly string _filter;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of StorageAccountsGetStorageTaskAssignmentsInstancesReportsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The StorageAccounts client used to send requests. </param>
@@ -33,7 +34,8 @@ namespace Azure.ResourceManager.Storage
         /// <param name="maxpagesize"> Optional, specifies the maximum number of storage task assignment instances to be included in the list response. </param>
         /// <param name="filter"> Optional. When specified, it can be used to query using reporting properties. See [Constructing Filter Strings](https://learn.microsoft.com/rest/api/storageservices/querying-tables-and-entities#constructing-filter-strings) for details. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public StorageAccountsGetStorageTaskAssignmentsInstancesReportsAsyncCollectionResultOfT(StorageAccounts client, Guid subscriptionId, string resourceGroupName, string accountName, int? maxpagesize, string filter, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public StorageAccountsGetStorageTaskAssignmentsInstancesReportsAsyncCollectionResultOfT(StorageAccounts client, Guid subscriptionId, string resourceGroupName, string accountName, int? maxpagesize, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -42,6 +44,7 @@ namespace Azure.ResourceManager.Storage
             _maxpagesize = maxpagesize;
             _filter = filter;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of StorageAccountsGetStorageTaskAssignmentsInstancesReportsAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -74,7 +77,7 @@ namespace Azure.ResourceManager.Storage
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetStorageTaskAssignmentsInstancesReportsRequest(nextLink, _subscriptionId, _resourceGroupName, _accountName, _maxpagesize, _filter, _context) : _client.CreateGetStorageTaskAssignmentsInstancesReportsRequest(_subscriptionId, _resourceGroupName, _accountName, _maxpagesize, _filter, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("StorageAccountResource.GetStorageTaskAssignmentsInstancesReports");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

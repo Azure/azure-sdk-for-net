@@ -11,4 +11,3 @@ extends:
       safeName: AzureResourceManagerOperationalInsights
     - name: Azure.Provisioning.OperationalInsights
       safeName: AzureProvisioningOperationalInsights
-    TestDependsOnDependency: Azure.Provisioning.OperationalInsights Azure.ResourceManager.OperationalInsights

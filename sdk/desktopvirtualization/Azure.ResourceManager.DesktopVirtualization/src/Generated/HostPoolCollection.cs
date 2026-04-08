@@ -322,7 +322,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 pageSize,
                 isDescending,
                 initialSkip,
-                context), data => new HostPoolResource(Client, data));
+                context,
+                "HostPoolCollection.GetAll"), data => new HostPoolResource(Client, data));
         }
 
         /// <summary>
@@ -360,7 +361,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 pageSize,
                 isDescending,
                 initialSkip,
-                context), data => new HostPoolResource(Client, data));
+                context,
+                "HostPoolCollection.GetAll"), data => new HostPoolResource(Client, data));
         }
 
         /// <summary>

@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.Search
         private readonly string _searchServiceName;
         private readonly string _clientRequestId;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of SharedPrivateLinkResourcesGetByServiceAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The SharedPrivateLinkResources client used to send requests. </param>
@@ -31,7 +32,8 @@ namespace Azure.ResourceManager.Search
         /// <param name="searchServiceName"> The name of the Azure AI Search service associated with the specified resource group. </param>
         /// <param name="clientRequestId"> A client-generated GUID value that identifies this request. If specified, this will be included in response information as a way to track the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public SharedPrivateLinkResourcesGetByServiceAsyncCollectionResultOfT(SharedPrivateLinkResources client, Guid subscriptionId, string resourceGroupName, string searchServiceName, string clientRequestId, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public SharedPrivateLinkResourcesGetByServiceAsyncCollectionResultOfT(SharedPrivateLinkResources client, Guid subscriptionId, string resourceGroupName, string searchServiceName, string clientRequestId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -39,6 +41,7 @@ namespace Azure.ResourceManager.Search
             _searchServiceName = searchServiceName;
             _clientRequestId = clientRequestId;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of SharedPrivateLinkResourcesGetByServiceAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -72,7 +75,7 @@ namespace Azure.ResourceManager.Search
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByServiceRequest(nextLink, _subscriptionId, _resourceGroupName, _searchServiceName, _clientRequestId, _context) : _client.CreateGetByServiceRequest(_subscriptionId, _resourceGroupName, _searchServiceName, _clientRequestId, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("SharedSearchServicePrivateLinkResourceCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

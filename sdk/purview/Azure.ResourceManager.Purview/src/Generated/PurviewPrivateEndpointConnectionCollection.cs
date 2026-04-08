@@ -300,7 +300,8 @@ namespace Azure.ResourceManager.Purview
                 Id.ResourceGroupName,
                 Id.Name,
                 skipToken,
-                context), data => new PurviewPrivateEndpointConnectionResource(Client, data));
+                context,
+                "PurviewPrivateEndpointConnectionCollection.GetAll"), data => new PurviewPrivateEndpointConnectionResource(Client, data));
         }
 
         /// <summary>
@@ -335,7 +336,8 @@ namespace Azure.ResourceManager.Purview
                 Id.ResourceGroupName,
                 Id.Name,
                 skipToken,
-                context), data => new PurviewPrivateEndpointConnectionResource(Client, data));
+                context,
+                "PurviewPrivateEndpointConnectionCollection.GetAll"), data => new PurviewPrivateEndpointConnectionResource(Client, data));
         }
 
         /// <summary>

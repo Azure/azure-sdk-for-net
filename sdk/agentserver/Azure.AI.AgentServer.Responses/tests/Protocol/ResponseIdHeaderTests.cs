@@ -10,9 +10,9 @@ using Azure.AI.AgentServer.Responses.Tests.Helpers;
 namespace Azure.AI.AgentServer.Responses.Tests.Protocol;
 
 /// <summary>
-/// Protocol conformance tests for the <c>x-agent-response-id</c> request header (S-047).
+/// Protocol conformance tests for the <c>x-agent-response-id</c> request header (B38).
 /// When the header is present, the library MUST use its value as the response ID
-/// instead of generating one.
+/// instead of generating one. The value MUST be validated as a well-formed caresp_ ID.
 /// </summary>
 public class ResponseIdHeaderTests : ProtocolTestBase
 {
@@ -21,7 +21,7 @@ public class ResponseIdHeaderTests : ProtocolTestBase
     [Test]
     public async Task POST_Default_WithAgentResponseIdHeader_UsesHeaderValueAsResponseId()
     {
-        const string customId = "my-custom-response-id-12345";
+        var customId = IdGenerator.NewResponseId();
         var response = await PostWithHeaderAsync(
             new { model = "test" },
             "x-agent-response-id", customId);
@@ -55,12 +55,34 @@ public class ResponseIdHeaderTests : ProtocolTestBase
         Assert.That(id, Does.StartWith("caresp_"));
     }
 
+    [Test]
+    public async Task POST_Default_WithInvalidAgentResponseIdHeader_Returns400()
+    {
+        var response = await PostWithHeaderAsync(
+            new { model = "test" },
+            "x-agent-response-id", "not-a-valid-id");
+
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
+    }
+
+    [Test]
+    public async Task POST_Default_WithWrongPrefixAgentResponseIdHeader_Returns400()
+    {
+        // Valid format but wrong prefix (msg_ instead of caresp_)
+        var wrongPrefixId = IdGenerator.NewId("msg");
+        var response = await PostWithHeaderAsync(
+            new { model = "test" },
+            "x-agent-response-id", wrongPrefixId);
+
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
+    }
+
     // ── Streaming mode ──
 
     [Test]
     public async Task POST_Streaming_WithAgentResponseIdHeader_UsesHeaderValueAsResponseId()
     {
-        const string customId = "stream-custom-id-67890";
+        var customId = IdGenerator.NewResponseId();
         var response = await PostWithHeaderAsync(
             new { model = "test", stream = true },
             "x-agent-response-id", customId);
@@ -72,12 +94,22 @@ public class ResponseIdHeaderTests : ProtocolTestBase
         Assert.That(id, Is.EqualTo(customId));
     }
 
+    [Test]
+    public async Task POST_Streaming_WithInvalidAgentResponseIdHeader_Returns400()
+    {
+        var response = await PostWithHeaderAsync(
+            new { model = "test", stream = true },
+            "x-agent-response-id", "bad-id-value");
+
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
+    }
+
     // ── Background mode ──
 
     [Test]
     public async Task POST_Background_WithAgentResponseIdHeader_UsesHeaderValueAsResponseId()
     {
-        const string customId = "bg-custom-id-abcde";
+        var customId = IdGenerator.NewResponseId();
         var response = await PostWithHeaderAsync(
             new { model = "test", background = true },
             "x-agent-response-id", customId);
@@ -92,7 +124,7 @@ public class ResponseIdHeaderTests : ProtocolTestBase
     [Test]
     public async Task POST_Default_WithAgentResponseIdHeader_HandlerContextHasCorrectResponseId()
     {
-        const string customId = "ctx-response-id-99";
+        var customId = IdGenerator.NewResponseId();
         await PostWithHeaderAsync(
             new { model = "test" },
             "x-agent-response-id", customId);

@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
         private readonly string _resourceGroupName;
         private readonly string _dedicatedCapacityName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of CapacitiesGetSkusForCapacityCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Capacities client used to send requests. </param>
@@ -28,13 +29,15 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="dedicatedCapacityName"> The name of the dedicated capacity. It must be a minimum of 3 characters, and a maximum of 63. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public CapacitiesGetSkusForCapacityCollectionResultOfT(Capacities client, string subscriptionId, string resourceGroupName, string dedicatedCapacityName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public CapacitiesGetSkusForCapacityCollectionResultOfT(Capacities client, string subscriptionId, string resourceGroupName, string dedicatedCapacityName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
             _dedicatedCapacityName = dedicatedCapacityName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of CapacitiesGetSkusForCapacityCollectionResultOfT as an enumerable collection. </summary>
@@ -54,7 +57,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
         private Response GetNextResponse(int? pageSizeHint, string continuationToken)
         {
             HttpMessage message = _client.CreateGetSkusForCapacityRequest(_subscriptionId, _resourceGroupName, _dedicatedCapacityName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("DedicatedCapacityResource.GetSkusForCapacity");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

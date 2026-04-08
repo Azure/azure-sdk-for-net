@@ -293,7 +293,8 @@ namespace Azure.ResourceManager.StorageMover
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new JobDefinitionResource(Client, data));
+                context,
+                "JobDefinitionCollection.GetAll"), data => new JobDefinitionResource(Client, data));
         }
 
         /// <summary>
@@ -327,7 +328,8 @@ namespace Azure.ResourceManager.StorageMover
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new JobDefinitionResource(Client, data));
+                context,
+                "JobDefinitionCollection.GetAll"), data => new JobDefinitionResource(Client, data));
         }
 
         /// <summary>

@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -296,7 +296,13 @@ namespace Azure.ResourceManager.GuestConfiguration
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<GuestConfigurationAssignmentData, GuestConfigurationVmssAssignmentResource>(new GuestConfigurationAssignmentsVMSSGetAllForVmssAsyncCollectionResultOfT(_guestConfigurationAssignmentsVMSSRestClient, Id.SubscriptionId, Id.ResourceGroupName, _vmssName, context), data => new GuestConfigurationVmssAssignmentResource(Client, data));
+            return new AsyncPageableWrapper<GuestConfigurationAssignmentData, GuestConfigurationVmssAssignmentResource>(new GuestConfigurationAssignmentsVMSSGetAllForVmssAsyncCollectionResultOfT(
+                _guestConfigurationAssignmentsVMSSRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                _vmssName,
+                context,
+                "GuestConfigurationVmssAssignmentCollection.GetAll"), data => new GuestConfigurationVmssAssignmentResource(Client, data));
         }
 
         /// <summary>
@@ -324,7 +330,13 @@ namespace Azure.ResourceManager.GuestConfiguration
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<GuestConfigurationAssignmentData, GuestConfigurationVmssAssignmentResource>(new GuestConfigurationAssignmentsVMSSGetAllForVmssCollectionResultOfT(_guestConfigurationAssignmentsVMSSRestClient, Id.SubscriptionId, Id.ResourceGroupName, _vmssName, context), data => new GuestConfigurationVmssAssignmentResource(Client, data));
+            return new PageableWrapper<GuestConfigurationAssignmentData, GuestConfigurationVmssAssignmentResource>(new GuestConfigurationAssignmentsVMSSGetAllForVmssCollectionResultOfT(
+                _guestConfigurationAssignmentsVMSSRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                _vmssName,
+                context,
+                "GuestConfigurationVmssAssignmentCollection.GetAll"), data => new GuestConfigurationVmssAssignmentResource(Client, data));
         }
 
         /// <summary>

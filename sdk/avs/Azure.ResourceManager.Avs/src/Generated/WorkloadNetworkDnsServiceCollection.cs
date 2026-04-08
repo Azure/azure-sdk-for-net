@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Avs
         {
             if (id.ResourceType != WorkloadNetworkResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, WorkloadNetworkResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, WorkloadNetworkResource.ResourceType), nameof(id));
             }
         }
 
@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<WorkloadNetworkDnsServiceData, WorkloadNetworkDnsServiceResource>(new WorkloadNetworksGetDnsServicesAsyncCollectionResultOfT(_workloadNetworksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context), data => new WorkloadNetworkDnsServiceResource(Client, data));
+            return new AsyncPageableWrapper<WorkloadNetworkDnsServiceData, WorkloadNetworkDnsServiceResource>(new WorkloadNetworksGetDnsServicesAsyncCollectionResultOfT(
+                _workloadNetworksRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                context,
+                "WorkloadNetworkDnsServiceCollection.GetAll"), data => new WorkloadNetworkDnsServiceResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<WorkloadNetworkDnsServiceData, WorkloadNetworkDnsServiceResource>(new WorkloadNetworksGetDnsServicesCollectionResultOfT(_workloadNetworksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context), data => new WorkloadNetworkDnsServiceResource(Client, data));
+            return new PageableWrapper<WorkloadNetworkDnsServiceData, WorkloadNetworkDnsServiceResource>(new WorkloadNetworksGetDnsServicesCollectionResultOfT(
+                _workloadNetworksRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                context,
+                "WorkloadNetworkDnsServiceCollection.GetAll"), data => new WorkloadNetworkDnsServiceResource(Client, data));
         }
 
         /// <summary>

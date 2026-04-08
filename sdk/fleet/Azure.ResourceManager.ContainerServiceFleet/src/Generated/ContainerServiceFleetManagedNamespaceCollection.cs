@@ -297,7 +297,13 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ContainerServiceFleetManagedNamespaceData, ContainerServiceFleetManagedNamespaceResource>(new FleetManagedNamespacesGetByFleetAsyncCollectionResultOfT(_fleetManagedNamespacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ContainerServiceFleetManagedNamespaceResource(Client, data));
+            return new AsyncPageableWrapper<ContainerServiceFleetManagedNamespaceData, ContainerServiceFleetManagedNamespaceResource>(new FleetManagedNamespacesGetByFleetAsyncCollectionResultOfT(
+                _fleetManagedNamespacesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ContainerServiceFleetManagedNamespaceCollection.GetAll"), data => new ContainerServiceFleetManagedNamespaceResource(Client, data));
         }
 
         /// <summary>
@@ -325,7 +331,13 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ContainerServiceFleetManagedNamespaceData, ContainerServiceFleetManagedNamespaceResource>(new FleetManagedNamespacesGetByFleetCollectionResultOfT(_fleetManagedNamespacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ContainerServiceFleetManagedNamespaceResource(Client, data));
+            return new PageableWrapper<ContainerServiceFleetManagedNamespaceData, ContainerServiceFleetManagedNamespaceResource>(new FleetManagedNamespacesGetByFleetCollectionResultOfT(
+                _fleetManagedNamespacesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ContainerServiceFleetManagedNamespaceCollection.GetAll"), data => new ContainerServiceFleetManagedNamespaceResource(Client, data));
         }
 
         /// <summary>

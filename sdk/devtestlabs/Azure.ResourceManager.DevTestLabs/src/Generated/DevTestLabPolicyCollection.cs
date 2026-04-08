@@ -307,7 +307,8 @@ namespace Azure.ResourceManager.DevTestLabs
                 filter,
                 top,
                 @orderby,
-                context), data => new DevTestLabPolicyResource(Client, data));
+                context,
+                "DevTestLabPolicyCollection.GetAll"), data => new DevTestLabPolicyResource(Client, data));
         }
 
         /// <summary>
@@ -349,7 +350,8 @@ namespace Azure.ResourceManager.DevTestLabs
                 filter,
                 top,
                 @orderby,
-                context), data => new DevTestLabPolicyResource(Client, data));
+                context,
+                "DevTestLabPolicyCollection.GetAll"), data => new DevTestLabPolicyResource(Client, data));
         }
 
         /// <summary>

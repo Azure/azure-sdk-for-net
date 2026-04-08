@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -904,7 +904,13 @@ namespace Azure.ResourceManager.ComputeSchedule
             {
                 CancellationToken = cancellationToken
             };
-            return new ScheduledActionsGetAttachedResourcesAsyncCollectionResultOfT(_scheduledActionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new ScheduledActionsGetAttachedResourcesAsyncCollectionResultOfT(
+                _scheduledActionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ScheduledActionResource.GetAttachedResources");
         }
 
         /// <summary>
@@ -936,7 +942,13 @@ namespace Azure.ResourceManager.ComputeSchedule
             {
                 CancellationToken = cancellationToken
             };
-            return new ScheduledActionsGetAttachedResourcesCollectionResultOfT(_scheduledActionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new ScheduledActionsGetAttachedResourcesCollectionResultOfT(
+                _scheduledActionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ScheduledActionResource.GetAttachedResources");
         }
 
         /// <summary>

@@ -18,14 +18,17 @@ namespace Azure.ResourceManager.Search
     {
         private readonly Offerings _client;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of OfferingsGetOfferingsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Offerings client used to send requests. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public OfferingsGetOfferingsCollectionResultOfT(Offerings client, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public OfferingsGetOfferingsCollectionResultOfT(Offerings client, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of OfferingsGetOfferingsCollectionResultOfT as an enumerable collection. </summary>
@@ -45,7 +48,7 @@ namespace Azure.ResourceManager.Search
         private Response GetNextResponse(int? pageSizeHint, string continuationToken)
         {
             HttpMessage message = _client.CreateGetOfferingsRequest(_context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableSearchTenantResource.GetOfferings");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

@@ -183,7 +183,8 @@ namespace Azure.ResourceManager.ServiceBus
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new ServiceBusDisasterRecoveryAuthorizationRuleResource(Client, data));
+                context,
+                "ServiceBusDisasterRecoveryAuthorizationRuleCollection.GetAll"), data => new ServiceBusDisasterRecoveryAuthorizationRuleResource(Client, data));
         }
 
         /// <summary>
@@ -217,7 +218,8 @@ namespace Azure.ResourceManager.ServiceBus
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new ServiceBusDisasterRecoveryAuthorizationRuleResource(Client, data));
+                context,
+                "ServiceBusDisasterRecoveryAuthorizationRuleCollection.GetAll"), data => new ServiceBusDisasterRecoveryAuthorizationRuleResource(Client, data));
         }
 
         /// <summary>
