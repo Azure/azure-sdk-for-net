@@ -180,22 +180,14 @@ export function buildArmProviderSchema(
 
             // Try to match based on resource type segments
             // Extract the resource type part (after "/providers/")
-            const existingResourceType = new RequestPath(existingPath)
-              .resourceType;
-            let operationResourceType = "";
-            try {
-              operationResourceType = new RequestPath(operationPath)
-                .resourceType;
-            } catch {
-              // If we can't calculate resource type, try string matching
-            }
-
-            // If resource types match exactly, this is a potential candidate
+            const existingReqPath = new RequestPath(existingPath);
+            const operationReqPath = new RequestPath(operationPath);
+            // Only compare resource types when both paths have a /providers/ segment
             if (
-              existingResourceType &&
-              operationResourceType === existingResourceType
+              existingReqPath.scopePath.length > 0 &&
+              operationReqPath.scopePath.length > 0 &&
+              existingReqPath.resourceType === operationReqPath.resourceType
             ) {
-              // Add to type match candidates
               typeMatchCandidates.push({ existingPath });
             }
           }
@@ -285,7 +277,7 @@ export function buildArmProviderSchema(
         }
 
         entry = {
-          resourceIdPattern: new RequestPath(""), // this will be populated later
+          resourceIdPattern: RequestPath.empty, // this will be populated later
           resourceType: "", // this will be populated later
           singletonResourceName: getSingletonResource(
             model?.decorators?.find((d) => d.name == singleton)

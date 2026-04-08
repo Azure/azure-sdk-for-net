@@ -700,7 +700,7 @@ function assignListOperationsToResources(
 
         // Fall back to resource type matching if prefix matching didn't find a match
         const listPath = new RequestPath(listOp.path);
-        if (!targetResource && listPath.scopePath !== undefined) {
+        if (!targetResource && listPath.scopePath.length > 0) {
           const listType = listPath.resourceType;
           targetResource = resourcesForModel.find((r) => {
             if (!listPath.hasSameScopeNesting(r.metadata.resourceIdPattern)) {

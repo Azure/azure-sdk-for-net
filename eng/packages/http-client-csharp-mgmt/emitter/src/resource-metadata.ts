@@ -28,6 +28,9 @@ const providersLiteral = "providers";
  * prefix matching, scope detection, and resource type extraction in a single place.
  */
 export class RequestPath {
+  /** A shared empty RequestPath instance (represents tenant scope) */
+  public static readonly empty = new RequestPath("");
+
   /** The non-empty path segments (e.g., ["subscriptions", "{subscriptionId}", "providers", ...]) */
   public readonly segments: readonly string[];
 
@@ -116,11 +119,11 @@ export class RequestPath {
    * Gets the scope path — the portion of the path before the last "/providers/" segment.
    * E.g., for ".../providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.GuestConfiguration/...",
    * the scope is ".../providers/Microsoft.Compute/virtualMachines/{vmName}".
-   * Returns undefined if the path has no "/providers/" segment.
+   * Returns an empty RequestPath if the path has no "/providers/" segment (tenant scope).
    */
-  get scopePath(): RequestPath | undefined {
+  get scopePath(): RequestPath {
     const providerIndex = this.path.lastIndexOf(ProvidersPrefix);
-    if (providerIndex < 0) return undefined;
+    if (providerIndex < 0) return RequestPath.empty;
     return new RequestPath(this.path.substring(0, providerIndex));
   }
 
@@ -138,8 +141,8 @@ export class RequestPath {
   hasSameScopeNesting(other: RequestPath): boolean {
     const scopeA = this.scopePath;
     const scopeB = other.scopePath;
-    if (scopeA === undefined && scopeB === undefined) return true;
-    if (scopeA === undefined || scopeB === undefined) return false;
+    if (scopeA.length === 0 && scopeB.length === 0) return true;
+    if (scopeA.length === 0 || scopeB.length === 0) return false;
     return scopeA.hasSameScopeNesting(scopeB);
   }
 
@@ -175,59 +178,31 @@ export class RequestPath {
 
   /**
    * Determines the operation scope (Tenant, Subscription, ResourceGroup, ManagementGroup, Extension)
-   * from the path structure.
+   * from the path structure by examining the scope path (portion before the last /providers/ segment).
    */
   get operationScope(): ResourceScope {
-    // Match any path starting with a variable segment followed by /providers/
-    // This covers scope-based operations like /{resourceUri}/providers/..., /{scope}/providers/..., etc.
-    if (
-      this.length >= 3 &&
-      isVariableSegment(this.segments[0]) &&
-      this.segments[1].toLowerCase() === providersLiteral
-    ) {
-      return ResourceScope.Extension;
+    const scope = this.scopePath;
+
+    // No scope (no /providers/ segment) — tenant scope
+    if (scope.length === 0) return ResourceScope.Tenant;
+
+    // Check the outermost scope by walking up the scope chain.
+    // For nested extension resources like /subscriptions/{sub}/resourceGroups/{rg}/providers/.../providers/...,
+    // the immediate scope contains another /providers/ segment. We need to find the root scope.
+    let rootScope = scope;
+    while (rootScope.scopePath.length > 0) {
+      rootScope = rootScope.scopePath;
     }
 
-    // /subscriptions/{sub}/resourceGroups/{rg}/...
-    if (
-      this.length >= 4 &&
-      this.segments[0] === "subscriptions" &&
-      isVariableSegment(this.segments[1]) &&
-      this.segments[2] === "resourceGroups" &&
-      isVariableSegment(this.segments[3])
-    ) {
+    // Root scope matches well-known patterns
+    if (rootScope.equals(ResourceGroupScope))
       return ResourceScope.ResourceGroup;
-    }
-
-    // /subscriptions/{sub}/...
-    if (
-      this.length >= 2 &&
-      this.segments[0] === "subscriptions" &&
-      isVariableSegment(this.segments[1])
-    ) {
-      return ResourceScope.Subscription;
-    }
-
-    // /providers/Microsoft.Management/managementGroups/{groupId}/...
-    if (
-      this.length >= 4 &&
-      this.segments[0].toLowerCase() === providersLiteral &&
-      this.segments[1] === "Microsoft.Management" &&
-      this.segments[2] === "managementGroups" &&
-      isVariableSegment(this.segments[3])
-    ) {
+    if (rootScope.equals(SubscriptionScope)) return ResourceScope.Subscription;
+    if (rootScope.equals(ManagementGroupScope))
       return ResourceScope.ManagementGroup;
-    }
 
-    // Paths with multiple /providers/ segments indicate extension resources
-    if (
-      this.scopePath !== undefined &&
-      this.scopePath.scopePath !== undefined
-    ) {
-      return ResourceScope.Extension;
-    }
-
-    return ResourceScope.Tenant;
+    // Everything else is an extension resource
+    return ResourceScope.Extension;
   }
 
   /**
@@ -253,6 +228,17 @@ const ResourceGroupScopePrefix =
 const SubscriptionScopePrefix = "/subscriptions";
 const TenantScopePrefix = "/tenants";
 const ProvidersPrefix = "/providers";
+
+// Well-known scope paths for operationScope detection
+const ResourceGroupScope = new RequestPath(
+  "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}"
+);
+const SubscriptionScope = new RequestPath(
+  "/subscriptions/{subscriptionId}"
+);
+const ManagementGroupScope = new RequestPath(
+  "/providers/Microsoft.Management/managementGroups/{managementGroupId}"
+);
 
 /**
  * Finds the candidate whose path is the longest prefix match against the target path.
@@ -842,7 +828,7 @@ export function assignNonResourceMethodsToResources(
       }
     } else {
       // Both prefix and model ID matching failed — try matching by resource type.
-      if (method.operationPath.scopePath !== undefined) {
+      if (method.operationPath.scopePath.length > 0) {
         const operationType = method.operationPath.resourceType;
         const match = resources.find((r) => {
           if (

@@ -239,9 +239,9 @@ describe("RequestPath", () => {
       );
     });
 
-    it("should return undefined for paths without providers", () => {
+    it("should return empty RequestPath for paths without providers", () => {
       const rp = new RequestPath("/subscriptions/{sub}/resourceGroups/{rg}");
-      strictEqual(rp.scopePath, undefined);
+      strictEqual(rp.scopePath.length, 0);
     });
 
     it("should return empty scope for tenant-scoped resources", () => {
@@ -249,8 +249,7 @@ describe("RequestPath", () => {
         "/providers/Microsoft.Compute/virtualMachines/{vmName}"
       );
       const scope = rp.scopePath;
-      ok(scope !== undefined);
-      strictEqual(scope!.length, 0);
+      strictEqual(scope.length, 0);
     });
   });
 
