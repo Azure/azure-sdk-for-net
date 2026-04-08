@@ -17,7 +17,8 @@ internal static class GeneratedPathGuard
     /// </summary>
     internal static bool IsInGeneratedDirectory(string filePath)
     {
-        var segments = filePath.Split(s_separators, StringSplitOptions.RemoveEmptyEntries);
+        var normalized = Path.GetFullPath(filePath);
+        var segments = normalized.Split(s_separators, StringSplitOptions.RemoveEmptyEntries);
 
         for (var i = 0; i < segments.Length - 1; i++) // -1: last segment is the filename
         {
