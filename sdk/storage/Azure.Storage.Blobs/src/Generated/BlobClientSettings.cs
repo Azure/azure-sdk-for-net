@@ -19,15 +19,6 @@ namespace Azure.Storage.Blobs
         /// <summary> Gets or sets the Url. </summary>
         public Uri Url { get; set; }
 
-        /// <summary> Gets or sets the ConnectionString. </summary>
-        public string ConnectionString { get; set; }
-
-        /// <summary> Gets or sets the BlobContainerName. </summary>
-        public string BlobContainerName { get; set; }
-
-        /// <summary> Gets or sets the BlobName. </summary>
-        public string BlobName { get; set; }
-
         /// <summary> Gets or sets the Options. </summary>
         public BlobClientOptions Options { get; set; }
 
