@@ -114,7 +114,7 @@ namespace Azure.Generator.Tests.Visitors
 
             // find the subclient factory method
             var factoryMethod = clientProvider!.Methods
-                .FirstOrDefault(m =>m.Signature.Name == "GetSubClient");
+                .FirstOrDefault(m => m.Signature.Name == "GetSubClient");
             Assert.IsNotNull(factoryMethod);
 
             var updatedFactoryMethod = visitor.InvokeVisitMethod(factoryMethod!);
@@ -249,6 +249,19 @@ namespace Azure.Generator.Tests.Visitors
 
         private class TestDistributedTracingVisitor : DistributedTracingVisitor
         {
+            public TestDistributedTracingVisitor()
+                : base(new CSharpType(typeof(ClientDiagnostics)), new CSharpType(typeof(DiagnosticScope)), IsPagingMethod)
+            {
+            }
+
+            private static bool IsPagingMethod(ScmMethodProvider method)
+            {
+                var returnType = method.Signature.ReturnType;
+                return returnType != null &&
+                    returnType.IsFrameworkType &&
+                    (returnType.FrameworkType == typeof(Pageable<>) || returnType.FrameworkType == typeof(AsyncPageable<>));
+            }
+
             public ClientProvider? InvokeVisit(InputClient client, ClientProvider? clientProvider)
             {
                 return base.Visit(client, clientProvider);
