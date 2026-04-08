@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -23,16 +24,8 @@ namespace Microsoft.Azure.WebPubSub.Common
         {
             try
             {
-                var dict = new Dictionary<string, BinaryData>();
                 using var jsonDocument = JsonDocument.ParseValue(ref reader);
-                var element = jsonDocument.RootElement;
-                foreach (var elementInfo in element.EnumerateObject())
-                {
-                    // Use Base64 decode mapping to encode to avoid data loss.
-                    var decoded = elementInfo.Value.GetBytesFromBase64();
-                    dict.Add(elementInfo.Name, BinaryData.FromBytes(decoded));
-                }
-                return dict;
+                return ReadCore(jsonDocument.RootElement);
             }
             catch
             {
@@ -45,12 +38,57 @@ namespace Microsoft.Azure.WebPubSub.Common
         /// <inheritdoc/>
         public override void Write(Utf8JsonWriter writer, IReadOnlyDictionary<string, BinaryData> value, JsonSerializerOptions options)
         {
+            WriteCore(writer, value);
+        }
+
+        internal static Dictionary<string, BinaryData> Decode(string connectionStates)
+        {
+            if (string.IsNullOrEmpty(connectionStates))
+            {
+                return null;
+            }
+
+            try
+            {
+                using JsonDocument jsonDocument = JsonDocument.Parse(Convert.FromBase64String(connectionStates));
+                return ReadCore(jsonDocument.RootElement);
+            }
+            catch
+            {
+                // States not set via SDK and users need to read from Header themselves.
+                // Avoid partial results and return a non-null value.
+                return new Dictionary<string, BinaryData>(EmptyDictionary);
+            }
+        }
+
+        internal static string Encode(IReadOnlyDictionary<string, BinaryData> value)
+        {
+            using MemoryStream stream = new();
+            using (Utf8JsonWriter writer = new(stream))
+            {
+                WriteCore(writer, value);
+            }
+
+            return Convert.ToBase64String(stream.ToArray());
+        }
+
+        private static Dictionary<string, BinaryData> ReadCore(JsonElement element)
+        {
+            var dict = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                dict[property.Name] = BinaryData.FromBytes(property.Value.GetBytesFromBase64());
+            }
+            return dict;
+        }
+
+        private static void WriteCore(Utf8JsonWriter writer, IReadOnlyDictionary<string, BinaryData> value)
+        {
             writer.WriteStartObject();
             if (value != null)
             {
                 foreach (KeyValuePair<string, BinaryData> pair in value)
                 {
-                    // Use Base64 encode to avoid data loss when source is pure binary/string instead of object.
                     writer.WriteBase64String(pair.Key, pair.Value.ToArray());
                 }
             }

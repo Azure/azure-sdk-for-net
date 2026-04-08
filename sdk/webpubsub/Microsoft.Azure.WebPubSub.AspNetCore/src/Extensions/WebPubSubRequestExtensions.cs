@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http.Headers;
-using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -22,7 +21,6 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
     /// </summary>
     internal static class WebPubSubRequestExtensions
     {
-        private static JsonSerializerOptions _innerSerializer => CreateSystemTextJsonSerializer();
         /// <summary>
         /// Parse request to system/user type ServiceRequest.
         /// </summary>
@@ -138,12 +136,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
 
         internal static Dictionary<string, BinaryData> DecodeConnectionStates(this string connectionStates)
         {
-            if (!string.IsNullOrEmpty(connectionStates))
-            {
-                var strongTyped = JsonSerializer.Deserialize<IReadOnlyDictionary<string, BinaryData>>(Convert.FromBase64String(connectionStates), _innerSerializer);
-                return new Dictionary<string, BinaryData>(strongTyped);
-            }
-            return null;
+            return ConnectionStatesConverter.Decode(connectionStates);
         }
 
         internal static Dictionary<string, BinaryData> UpdateStates(this WebPubSubConnectionContext connectionContext, IReadOnlyDictionary<string, BinaryData> newStates)
@@ -179,7 +172,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
 
         internal static string EncodeConnectionStates(this IReadOnlyDictionary<string, BinaryData> value)
         {
-            return Convert.ToBase64String(Encoding.UTF8.GetBytes(JsonSerializer.Serialize(value, _innerSerializer)));
+            return ConnectionStatesConverter.Encode(value);
         }
 
         private static bool TryParseCloudEvents(this HttpRequest request, out WebPubSubConnectionContext connectionContext)
@@ -305,12 +298,5 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
                 Constants.ContentTypes.JsonContentType => WebPubSubDataType.Json,
                 _ => throw new ArgumentException($"Invalid content type: {mediaType}")
             };
-
-        private static JsonSerializerOptions CreateSystemTextJsonSerializer()
-        {
-            var options = new JsonSerializerOptions();
-            options.Converters.Add(new ConnectionStatesConverter());
-            return options;
-        }
     }
 }

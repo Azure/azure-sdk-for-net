@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text.Json.Serialization;
 
@@ -20,7 +19,12 @@ namespace Microsoft.Azure.WebPubSub.Common
     [JsonSerializable(typeof(MqttDisconnectedEventRequestProperties))]
     [JsonSerializable(typeof(JoinedGroupEventRequest))]
     [JsonSerializable(typeof(LeftGroupEventRequest))]
-    [JsonSerializable(typeof(Dictionary<string, string[]>))]
+    [JsonSerializable(typeof(ConnectEventResponse))]
+    [JsonSerializable(typeof(MqttConnectEventResponse))]
+    [JsonSerializable(typeof(MqttConnectEventResponseProperties))]
+    [JsonSerializable(typeof(MqttConnectEventErrorResponse))]
+    [JsonSerializable(typeof(MqttConnectEventErrorResponseProperties))]
+    [JsonSerializable(typeof(MqttUserProperty))]
     [JsonSourceGenerationOptions(
         PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
         DefaultIgnoreCondition = JsonIgnoreCondition.Never,

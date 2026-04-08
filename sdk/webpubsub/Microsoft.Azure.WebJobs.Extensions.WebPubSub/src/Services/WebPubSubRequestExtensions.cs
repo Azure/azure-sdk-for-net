@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http.Headers;
-using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -99,13 +98,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         }
         internal static Dictionary<string, BinaryData> DecodeConnectionStates(this string connectionStates)
         {
-            if (!string.IsNullOrEmpty(connectionStates))
-            {
-                var states = new Dictionary<string, object>();
-                return JsonSerializer.Deserialize<IReadOnlyDictionary<string, BinaryData>>(Convert.FromBase64String(connectionStates), ConnectionStatesConverter.Options)
-                    .ToDictionary(k => k.Key, v => v.Value);
-            }
-            return null;
+            return ConnectionStatesConverter.Decode(connectionStates);
         }
 
         internal static Dictionary<string, object> UpdateStates(this WebPubSubConnectionContext connectionContext, IReadOnlyDictionary<string, BinaryData> newStates)
@@ -144,8 +137,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 
         internal static string EncodeConnectionStates(this Dictionary<string, object> value)
         {
-            IReadOnlyDictionary<string, BinaryData> readOnlyDict = value.ToDictionary(x => x.Key, y => y.Value is BinaryData data ? data : FromObjectAsJsonExtended(y.Value));
-            return Convert.ToBase64String(Encoding.UTF8.GetBytes(JsonSerializer.Serialize(readOnlyDict, ConnectionStatesConverter.Options)));
+            IReadOnlyDictionary<string, BinaryData> readOnlyDict = value.ToDictionary(
+                pair => pair.Key,
+                pair => pair.Value as BinaryData ?? BinaryData.FromString(Newtonsoft.Json.JsonConvert.SerializeObject(pair.Value)));
+            return ConnectionStatesConverter.Encode(readOnlyDict);
         }
 
         private static bool TryParseCloudEvents(this HttpRequest request, out WebPubSubConnectionContext connectionContext)
@@ -249,18 +244,5 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                 Constants.ContentTypes.JsonContentType => WebPubSubDataType.Json,
                 _ => throw new ArgumentException($"Invalid content type: {mediaType}")
             };
-
-        // support JToken for backward compatiblity.
-        private static BinaryData FromObjectAsJsonExtended<T>(T item, JsonSerializerOptions? options = null)
-        {
-            if (item is JToken)
-            {
-                return BinaryData.FromString(Newtonsoft.Json.JsonConvert.SerializeObject(item));
-            }
-            else
-            {
-                return BinaryData.FromObjectAsJson(item, options);
-            }
-        }
     }
 }

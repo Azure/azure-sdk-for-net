@@ -118,7 +118,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
                             if (response != null)
                             {
                                 SetConnectionState(ref context, connectEventRequest.ConnectionContext, response.ConnectionStates);
-                                await context.Response.WriteAsync(JsonSerializer.Serialize(response, response.GetType())).ConfigureAwait(false);
+                                await context.Response.WriteAsync(SerializeConnectResponse(response)).ConfigureAwait(false);
                             }
                             break;
                         }
@@ -189,7 +189,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
                         // Should not reach here.
                         _ => throw new NotSupportedException($"MQTT protocol version {mqttConnect.Mqtt.ProtocolVersion} is not supported.")
                     };
-                    responseBodyString = JsonSerializer.Serialize(responseBody, responseBody.GetType());
+                    responseBodyString = SerializeMqttConnectErrorResponse(responseBody);
                 }
                 else
                 {
@@ -203,7 +203,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
                 if (serviceRequest is MqttConnectEventRequest mqttConnect)
                 {
                     context.Response.StatusCode = (int)MqttConnectCodeToHttpStatusCodeConverter.ToHttpStatusCode(mqttException.MqttErrorResponse.Mqtt.Code);
-                    await context.Response.WriteAsync(JsonSerializer.Serialize(mqttException.MqttErrorResponse)).ConfigureAwait(false);
+                    await context.Response.WriteAsync(SerializeMqttConnectErrorResponse(mqttException.MqttErrorResponse)).ConfigureAwait(false);
                 }
                 else
                 {
@@ -226,7 +226,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
                         // Should not reach here.
                         _ => throw new NotSupportedException($"MQTT protocol version {mqttConnect.Mqtt.ProtocolVersion} is not supported.")
                     };
-                    responseBodyString = JsonSerializer.Serialize(responseBody, responseBody.GetType());
+                    responseBodyString = SerializeMqttConnectErrorResponse(responseBody);
                 }
                 else
                 {
@@ -252,6 +252,16 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
                 WebPubSubDataType.Json => $"{Constants.ContentTypes.JsonContentType}; {Constants.ContentTypes.CharsetUTF8}",
                 _ => Constants.ContentTypes.BinaryContentType
             };
+
+        private static string SerializeConnectResponse(ConnectEventResponse response) =>
+            response switch
+            {
+                MqttConnectEventResponse mqttResponse => JsonSerializer.Serialize(mqttResponse, WebPubSubCommonJsonSerializerContext.Default.MqttConnectEventResponse),
+                _ => JsonSerializer.Serialize(response, WebPubSubCommonJsonSerializerContext.Default.ConnectEventResponse)
+            };
+
+        private static string SerializeMqttConnectErrorResponse(MqttConnectEventErrorResponse response) =>
+            JsonSerializer.Serialize(response, WebPubSubCommonJsonSerializerContext.Default.MqttConnectEventErrorResponse);
 
         private THub Create<THub>() where THub : WebPubSubHub
         {
