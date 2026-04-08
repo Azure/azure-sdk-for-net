@@ -37,6 +37,7 @@ namespace Azure.Storage.Blobs.Test
 
         private BlobContainerClient _containerClient;
 
+        // TODO: Will add back after tests have [PlaybackOnly] removed
         //[OneTimeSetUp]
         //public async Task GlobalSetUp()
         //{
@@ -76,43 +77,43 @@ namespace Azure.Storage.Blobs.Test
             _containerClient = BlobsClientBuilder.GetServiceClient_OAuthAccount_SharedKey().GetBlobContainerClient(_containerName);
         }
 
-        [OneTimeTearDown]
-        public async Task GlobalTearDown()
-        {
-            if (Mode != RecordedTestMode.Playback)
-            {
-                TenantConfiguration configuration = TestConfigurations.DefaultTargetOAuthTenant;
-                BlobContainerClient containerClient = new BlobServiceClient(
-                    new Uri(Tenants.TestConfigOAuth.BlobServiceEndpoint),
-                    new StorageSharedKeyCredential(Tenants.TestConfigOAuth.AccountName,
-                    Tenants.TestConfigOAuth.AccountKey))
-                    .GetBlobContainerClient(_containerName);
+        //[OneTimeTearDown]
+        //public async Task GlobalTearDown()
+        //{
+        //    if (Mode != RecordedTestMode.Playback)
+        //    {
+        //        TenantConfiguration configuration = TestConfigurations.DefaultTargetOAuthTenant;
+        //        BlobContainerClient containerClient = new BlobServiceClient(
+        //            new Uri(Tenants.TestConfigOAuth.BlobServiceEndpoint),
+        //            new StorageSharedKeyCredential(Tenants.TestConfigOAuth.AccountName,
+        //            Tenants.TestConfigOAuth.AccountKey))
+        //            .GetBlobContainerClient(_containerName);
 
-                GetBlobsOptions options = new GetBlobsOptions
-                {
-                    Traits = BlobTraits.ImmutabilityPolicy | BlobTraits.LegalHold,
-                };
+        //        GetBlobsOptions options = new GetBlobsOptions
+        //        {
+        //            Traits = BlobTraits.ImmutabilityPolicy | BlobTraits.LegalHold,
+        //        };
 
-                await foreach (BlobItem blobItem in containerClient.GetBlobsAsync(options))
-                {
-                    BlobClient blobClient = containerClient.GetBlobClient(blobItem.Name);
+        //        await foreach (BlobItem blobItem in containerClient.GetBlobsAsync(options))
+        //        {
+        //            BlobClient blobClient = containerClient.GetBlobClient(blobItem.Name);
 
-                    if (blobItem.Properties.HasLegalHold)
-                    {
-                        await blobClient.SetLegalHoldAsync(false);
-                    }
+        //            if (blobItem.Properties.HasLegalHold)
+        //            {
+        //                await blobClient.SetLegalHoldAsync(false);
+        //            }
 
-                    if (blobItem.Properties.ImmutabilityPolicy.ExpiresOn != null)
-                    {
-                        await blobClient.DeleteImmutabilityPolicyAsync();
-                    }
+        //            if (blobItem.Properties.ImmutabilityPolicy.ExpiresOn != null)
+        //            {
+        //                await blobClient.DeleteImmutabilityPolicyAsync();
+        //            }
 
-                    await blobClient.DeleteIfExistsAsync();
-                }
+        //            await blobClient.DeleteIfExistsAsync();
+        //        }
 
-                await _container.DeleteAsync(WaitUntil.Completed);
-            }
-        }
+        //        await _container.DeleteAsync(WaitUntil.Completed);
+        //    }
+        //}
 
         [Test]
         [PlaybackOnly("Immutability Storage Accounts are not being cleaned up after test run")]
