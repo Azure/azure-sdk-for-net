@@ -17,7 +17,7 @@ The Responses library has **authoritative contract documents** that define all r
 | **Library Behaviour Spec** | `/tmp/foundrysdk_specs/specs/hosted-agents/container-spec/docs/responses-library-behaviour-spec.md` | Language-agnostic library rules: handler contract, builder pattern, cancellation, streaming lifecycle |
 | **Protocol Spec** | `/tmp/foundrysdk_specs/specs/hosted-agents/container-spec/docs/responses-protocol-spec.md` | Wire-level SSE format, distributed tracing, storage & persistence, content-type negotiation |
 
-Cross-package specs (container image, package architecture, tools integration, handler guide) are in the parent [AGENTS.md](../AGENTS.md) §1 "Authoritative spec documents".
+Cross-package specs (container image, package architecture, tools integration, handler guide) are in the parent [AGENTS.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/AGENTS.md) §1 "Authoritative spec documents".
 
 ### Compliance workflow
 
