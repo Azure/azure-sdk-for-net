@@ -4,7 +4,7 @@ import { strictEqual, deepStrictEqual } from "assert";
 import {
   filterSuppressedDiagnostics,
   suppressedUpstreamDiagnosticCodes
-} from "../src/emitter.js";
+} from "../src/options.js";
 
 function createDiagnostic(code: string): Diagnostic {
   return {
