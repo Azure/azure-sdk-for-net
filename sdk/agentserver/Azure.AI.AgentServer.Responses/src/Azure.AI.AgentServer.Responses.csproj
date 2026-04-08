@@ -11,10 +11,6 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <Nullable>enable</Nullable>
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
-    <!-- This package uses a custom generation pipeline (Generate-Contracts.ps1), not the
-         standard tsp-client workflow. Clear TypeSpecInput to prevent the repo-wide
-         CodeGeneration.targets from running tsp-client update during CodeChecks. -->
-    <TypeSpecInput />
     <!-- AZC0100: Server-side hosting library on ASP.NET Core async pipeline — ConfigureAwait(false) is unnecessary and harmful.
          AZC0004: Async-only API — no sync variants needed (same exemption as AMQP-based SDKs).
          See AGENTS.md §0.VI for rationale. -->
