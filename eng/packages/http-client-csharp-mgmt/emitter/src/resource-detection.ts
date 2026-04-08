@@ -277,7 +277,7 @@ export function buildArmProviderSchema(
         }
 
         entry = {
-          resourceIdPattern: RequestPath.empty, // this will be populated later
+          resourceIdPattern: undefined, // this will be populated later
           resourceType: "", // this will be populated later
           singletonResourceName: getSingletonResource(
             model?.decorators?.find((d) => d.name == singleton)
@@ -305,7 +305,7 @@ export function buildArmProviderSchema(
       if (!entry.resourceType) {
         entry.resourceType = opPath.resourceType;
       }
-      if (!entry.resourceIdPattern.length && isCRUDKind(kind)) {
+      if (!entry.resourceIdPattern && isCRUDKind(kind)) {
         entry.resourceIdPattern = opPath;
       }
     } else {
@@ -361,7 +361,7 @@ export function buildArmProviderSchema(
     const model = resourceModelMap.get(modelId);
 
     // Emit diagnostic for resources without resourceIdPattern
-    if (metadata.resourceIdPattern.length === 0 && model) {
+    if (metadata.resourceIdPattern === undefined && model) {
       sdkContext.program.reportDiagnostic({
         code: "general-warning",
         severity: "warning",
@@ -396,13 +396,16 @@ export function buildArmProviderSchema(
   // This is also specific to legacy resource detection
   const allMapEntries = [...resourcePathToMetadataMap.entries()];
   for (const [metadataKey, metadata] of resourcePathToMetadataMap) {
-    if (!metadata.parentResourceId && metadata.resourceIdPattern.length > 0) {
+    if (
+      !metadata.parentResourceId &&
+      metadata.resourceIdPattern !== undefined
+    ) {
       // Find the longest matching parent path (most specific parent)
       const bestParent = findLongestPrefixMatch(
         metadata.resourceIdPattern,
         allMapEntries,
         ([key, m]) =>
-          key !== metadataKey && m.resourceIdPattern.length > 0
+          key !== metadataKey && m.resourceIdPattern !== undefined
             ? m.resourceIdPattern
             : undefined,
         true
@@ -453,7 +456,7 @@ export function buildArmProviderSchema(
 
   // Track resources before post-processing to emit diagnostics for filtered resources
   const resourcesBeforeFiltering = new Set(
-    resources.filter((r) => r.metadata.resourceIdPattern.length > 0)
+    resources.filter((r) => r.metadata.resourceIdPattern !== undefined)
   );
 
   // Use the shared post-processing function

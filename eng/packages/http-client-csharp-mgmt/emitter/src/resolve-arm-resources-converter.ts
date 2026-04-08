@@ -200,7 +200,7 @@ export function resolveArmResources(
   // Build validResourceMap once for efficient lookup
   const validResourceMap = new Map<string, ArmResourceSchema>();
   for (const r of resources.filter(
-    (r) => r.metadata.resourceIdPattern.length > 0
+    (r) => r.metadata.resourceIdPattern !== undefined
   )) {
     const resolvedR = schemaToResolvedResource.get(r);
     if (resolvedR) {
@@ -488,8 +488,10 @@ function convertResolvedResourceToMetadata(
   const rbacRoles = extractRbacRoles(sdkModel);
 
   return {
-    // we only assign resourceIdPattern when this resource has a read operation, otherwise this is empty
-    resourceIdPattern: new RequestPath(resourceIdPattern),
+    // we only assign resourceIdPattern when this resource has a read operation, otherwise this is undefined
+    resourceIdPattern: resourceIdPattern
+      ? new RequestPath(resourceIdPattern)
+      : undefined,
     resourceType,
     methods,
     resourceScope: resourceScopeValue,
@@ -691,7 +693,7 @@ function assignListOperationsToResources(
           resourcesForModel,
           (r) => {
             const pattern = r.metadata.resourceIdPattern;
-            if (pattern.length === 0) return undefined;
+            if (pattern === undefined) return undefined;
             // Strip the last segment (the key variable like {resourceName})
             // so we compare against the collection/type segment
             return pattern.parentPath;
@@ -703,7 +705,10 @@ function assignListOperationsToResources(
         if (!targetResource && listPath.scopePath.length > 0) {
           const listType = listPath.resourceType;
           targetResource = resourcesForModel.find((r) => {
-            if (!listPath.hasSameScopeNesting(r.metadata.resourceIdPattern)) {
+            if (
+              !r.metadata.resourceIdPattern ||
+              !listPath.hasSameScopeNesting(r.metadata.resourceIdPattern)
+            ) {
               return false;
             }
             return r.metadata.resourceType === listType;

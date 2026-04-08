@@ -294,11 +294,11 @@ describe("RequestPath", () => {
       strictEqual(rp.operationScope, ResourceScope.Extension);
     });
 
-    it("should give ResourceGroup priority over nested extension resources", () => {
+    it("should detect Extension for nested extension resources under ResourceGroup", () => {
       const rp = new RequestPath(
         "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Something/parentResource/{parentName}/providers/Microsoft.Edge/sites/{siteName}"
       );
-      strictEqual(rp.operationScope, ResourceScope.ResourceGroup);
+      strictEqual(rp.operationScope, ResourceScope.Extension);
     });
   });
 });

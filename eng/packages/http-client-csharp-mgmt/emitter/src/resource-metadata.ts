@@ -16,8 +16,6 @@ export function isVariableSegment(segment: string): boolean {
   return segment.startsWith("{") && segment.endsWith("}");
 }
 
-const providersLiteral = "providers";
-
 /**
  * Represents a parsed ARM request path with pre-computed segment information.
  *
@@ -186,19 +184,12 @@ export class RequestPath {
     // No scope (no /providers/ segment) — tenant scope
     if (scope.length === 0) return ResourceScope.Tenant;
 
-    // Check the outermost scope by walking up the scope chain.
-    // For nested extension resources like /subscriptions/{sub}/resourceGroups/{rg}/providers/.../providers/...,
-    // the immediate scope contains another /providers/ segment. We need to find the root scope.
-    let rootScope = scope;
-    while (rootScope.scopePath.length > 0) {
-      rootScope = rootScope.scopePath;
-    }
-
-    // Root scope matches well-known patterns
-    if (rootScope.equals(ResourceGroupScope))
-      return ResourceScope.ResourceGroup;
-    if (rootScope.equals(SubscriptionScope)) return ResourceScope.Subscription;
-    if (rootScope.equals(ManagementGroupScope))
+    // Check the immediate scope against well-known patterns.
+    // If the scope doesn't match any known pattern (e.g., it contains another /providers/
+    // segment like nested extension resources), it's an Extension.
+    if (scope.equals(ResourceGroupScope)) return ResourceScope.ResourceGroup;
+    if (scope.equals(SubscriptionScope)) return ResourceScope.Subscription;
+    if (scope.equals(ManagementGroupScope))
       return ResourceScope.ManagementGroup;
 
     // Everything else is an extension resource
@@ -233,9 +224,7 @@ const ProvidersPrefix = "/providers";
 const ResourceGroupScope = new RequestPath(
   "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}"
 );
-const SubscriptionScope = new RequestPath(
-  "/subscriptions/{subscriptionId}"
-);
+const SubscriptionScope = new RequestPath("/subscriptions/{subscriptionId}");
 const ManagementGroupScope = new RequestPath(
   "/providers/Microsoft.Management/managementGroups/{managementGroupId}"
 );
@@ -303,7 +292,7 @@ export interface RbacRole {
 }
 
 export interface ResourceMetadata {
-  resourceIdPattern: RequestPath;
+  resourceIdPattern?: RequestPath;
   resourceType: string;
   methods: ResourceMethod[];
   resourceScope: ResourceScope;
@@ -323,7 +312,7 @@ export function convertResourceMetadataToArguments(
   metadata: ResourceMetadata
 ): Record<string, any> {
   return {
-    resourceIdPattern: metadata.resourceIdPattern.path,
+    resourceIdPattern: metadata.resourceIdPattern?.path,
     resourceType: metadata.resourceType,
     methods: metadata.methods.map((m) => ({
       methodId: m.methodId,
@@ -512,7 +501,7 @@ export function convertArmProviderSchemaToArguments(
   return {
     resources: schema.resources.map((r) => ({
       resourceModelId: r.resourceModelId,
-      resourceIdPattern: r.metadata.resourceIdPattern.path,
+      resourceIdPattern: r.metadata.resourceIdPattern?.path,
       resourceType: r.metadata.resourceType,
       methods: r.metadata.methods.map((m) => ({
         methodId: m.methodId,
@@ -569,17 +558,17 @@ export function postProcessArmResources(
 ): ArmResourceSchema[] {
   // Step 1: Separate valid resources (with resourceIdPattern) from incomplete ones (without)
   const validResources = resources.filter(
-    (r) => r.metadata.resourceIdPattern.length > 0
+    (r) => r.metadata.resourceIdPattern !== undefined
   );
   const incompleteResources = resources.filter(
-    (r) => r.metadata.resourceIdPattern.length === 0
+    (r) => r.metadata.resourceIdPattern === undefined
   );
 
   // Step 2: Populate parentResourceId in all resources
   // Build a map for efficient parent lookup
   const validResourceMap = new Map<string, ArmResourceSchema>();
   for (const resource of validResources) {
-    validResourceMap.set(resource.metadata.resourceIdPattern.path, resource);
+    validResourceMap.set(resource.metadata.resourceIdPattern!.path, resource);
   }
 
   for (const resource of resources) {
@@ -593,12 +582,13 @@ export function postProcessArmResources(
     const parentResource = parentLookup.getParentResource(resource);
     if (
       parentResource &&
+      parentResource.metadata.resourceIdPattern &&
       validResourceMap.has(parentResource.metadata.resourceIdPattern.path)
     ) {
       const parent = validResourceMap.get(
         parentResource.metadata.resourceIdPattern.path
       );
-      if (parent) {
+      if (parent && parent.metadata.resourceIdPattern) {
         resource.metadata.parentResourceId = parent.metadata.resourceIdPattern;
         resource.metadata.parentResourceModelId = parent.resourceModelId;
       }
@@ -659,10 +649,7 @@ export function postProcessArmResources(
       const bestMatch = findLongestPrefixMatch(
         method.operationPath,
         validResources,
-        (r) =>
-          r.metadata.resourceIdPattern.length > 0
-            ? r.metadata.resourceIdPattern
-            : undefined
+        (r) => r.metadata.resourceIdPattern
       );
       if (bestMatch) {
         method.resourceScope = bestMatch.metadata.resourceIdPattern;
@@ -683,7 +670,7 @@ export function postProcessArmResources(
   }
   // then we gather all the resourceInstancePath for all resources
   const resourceInstancePaths: RequestPath[] = validResources.map(
-    (r) => r.metadata.resourceIdPattern
+    (r) => r.metadata.resourceIdPattern!
   );
 
   // now we assign one of the most matched resourceInstancePath in above candidates to each list operation's resourceScope
@@ -723,10 +710,12 @@ export function postProcessArmResources(
 
       if (resource.metadata.parentResourceId) {
         // Find parent resource
-        const parent = validResources.find((r) =>
-          r.metadata.resourceIdPattern.equals(
-            resource.metadata.parentResourceId!
-          )
+        const parent = validResources.find(
+          (r) =>
+            r.metadata.resourceIdPattern !== undefined &&
+            r.metadata.resourceIdPattern.equals(
+              resource.metadata.parentResourceId!
+            )
         );
         if (parent) {
           // When moving operations to parent resource, convert them to Action kind
@@ -793,10 +782,7 @@ export function assignNonResourceMethodsToResources(
     const bestMatch = findLongestPrefixMatch(
       method.operationPath,
       resources,
-      (r) =>
-        r.metadata.resourceIdPattern.length > 0
-          ? r.metadata.resourceIdPattern
-          : undefined,
+      (r) => r.metadata.resourceIdPattern,
       true
     );
 
@@ -806,7 +792,7 @@ export function assignNonResourceMethodsToResources(
         kind: ResourceOperationKind.Action,
         operationPath: method.operationPath,
         operationScope: method.operationScope,
-        resourceScope: bestMatch.metadata.resourceIdPattern
+        resourceScope: bestMatch.metadata.resourceIdPattern!
       });
       methodsToRemove.add(method.methodId);
     } else if (method.resourceModelId) {
@@ -832,6 +818,7 @@ export function assignNonResourceMethodsToResources(
         const operationType = method.operationPath.resourceType;
         const match = resources.find((r) => {
           if (
+            !r.metadata.resourceIdPattern ||
             !method.operationPath.hasSameScopeNesting(
               r.metadata.resourceIdPattern
             )
@@ -952,6 +939,7 @@ function relocateCrossResourceListActions(
       for (const candidate of validResources) {
         if (candidate === resource) continue;
         if (
+          !candidate.metadata.resourceIdPattern ||
           !method.operationPath.isPrefixOf(candidate.metadata.resourceIdPattern)
         )
           continue;
