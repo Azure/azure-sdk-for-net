@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.ContainerService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ContainerServiceManagedClusterData, ContainerServiceManagedClusterResource>(new ManagedClustersGetAllAsyncCollectionResultOfT(_managedClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new ContainerServiceManagedClusterResource(Client, data));
+            return new AsyncPageableWrapper<ContainerServiceManagedClusterData, ContainerServiceManagedClusterResource>(new ManagedClustersGetAllAsyncCollectionResultOfT(_managedClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ContainerServiceManagedClusterCollection.GetAll"), data => new ContainerServiceManagedClusterResource(Client, data));
         }
 
         /// <summary>
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.ContainerService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ContainerServiceManagedClusterData, ContainerServiceManagedClusterResource>(new ManagedClustersGetAllCollectionResultOfT(_managedClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new ContainerServiceManagedClusterResource(Client, data));
+            return new PageableWrapper<ContainerServiceManagedClusterData, ContainerServiceManagedClusterResource>(new ManagedClustersGetAllCollectionResultOfT(_managedClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ContainerServiceManagedClusterCollection.GetAll"), data => new ContainerServiceManagedClusterResource(Client, data));
         }
 
         /// <summary>

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ContainerService
         {
             if (id.ResourceType != ContainerServiceManagedClusterResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ContainerServiceManagedClusterResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ContainerServiceManagedClusterResource.ResourceType), nameof(id));
             }
         }
 
@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.ContainerService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ManagedClusterIdentityBindingData, ManagedClusterIdentityBindingResource>(new IdentityBindingsGetByManagedClusterAsyncCollectionResultOfT(_identityBindingsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ManagedClusterIdentityBindingResource(Client, data));
+            return new AsyncPageableWrapper<ManagedClusterIdentityBindingData, ManagedClusterIdentityBindingResource>(new IdentityBindingsGetByManagedClusterAsyncCollectionResultOfT(
+                _identityBindingsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ManagedClusterIdentityBindingCollection.GetAll"), data => new ManagedClusterIdentityBindingResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.ContainerService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ManagedClusterIdentityBindingData, ManagedClusterIdentityBindingResource>(new IdentityBindingsGetByManagedClusterCollectionResultOfT(_identityBindingsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ManagedClusterIdentityBindingResource(Client, data));
+            return new PageableWrapper<ManagedClusterIdentityBindingData, ManagedClusterIdentityBindingResource>(new IdentityBindingsGetByManagedClusterCollectionResultOfT(
+                _identityBindingsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ManagedClusterIdentityBindingCollection.GetAll"), data => new ManagedClusterIdentityBindingResource(Client, data));
         }
 
         /// <summary>

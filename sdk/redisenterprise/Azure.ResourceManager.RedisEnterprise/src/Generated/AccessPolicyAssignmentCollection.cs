@@ -299,7 +299,8 @@ namespace Azure.ResourceManager.RedisEnterprise
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new AccessPolicyAssignmentResource(Client, data));
+                context,
+                "AccessPolicyAssignmentCollection.GetAll"), data => new AccessPolicyAssignmentResource(Client, data));
         }
 
         /// <summary>
@@ -333,7 +334,8 @@ namespace Azure.ResourceManager.RedisEnterprise
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new AccessPolicyAssignmentResource(Client, data));
+                context,
+                "AccessPolicyAssignmentCollection.GetAll"), data => new AccessPolicyAssignmentResource(Client, data));
         }
 
         /// <summary>

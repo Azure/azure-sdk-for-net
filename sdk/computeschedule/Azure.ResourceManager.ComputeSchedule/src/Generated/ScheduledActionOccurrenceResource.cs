@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -445,7 +445,8 @@ namespace Azure.ResourceManager.ComputeSchedule
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context);
+                context,
+                "ScheduledActionOccurrenceResource.GetAttachedResources");
         }
 
         /// <summary>
@@ -483,7 +484,8 @@ namespace Azure.ResourceManager.ComputeSchedule
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context);
+                context,
+                "ScheduledActionOccurrenceResource.GetAttachedResources");
         }
     }
 }

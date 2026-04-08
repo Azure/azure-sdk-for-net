@@ -10,4 +10,3 @@ extends:
       safeName: AzureResourceManagerWebPubSub
     - name: Azure.Provisioning.WebPubSub
       safeName: AzureProvisioningWebPubSub
-    TestDependsOnDependency: Azure.ResourceManager.WebPubSub

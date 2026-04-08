@@ -191,7 +191,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
                 _registryName,
                 filter,
                 top,
-                context), data => new RunResource(Client, data));
+                context,
+                "RunCollection.GetAll"), data => new RunResource(Client, data));
         }
 
         /// <summary>
@@ -228,7 +229,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
                 _registryName,
                 filter,
                 top,
-                context), data => new RunResource(Client, data));
+                context,
+                "RunCollection.GetAll"), data => new RunResource(Client, data));
         }
 
         /// <summary>

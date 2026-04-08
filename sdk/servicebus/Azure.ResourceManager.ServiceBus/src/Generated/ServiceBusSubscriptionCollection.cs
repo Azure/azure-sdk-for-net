@@ -297,7 +297,8 @@ namespace Azure.ResourceManager.ServiceBus
                 Id.Name,
                 skip,
                 top,
-                context), data => new ServiceBusSubscriptionResource(Client, data));
+                context,
+                "ServiceBusSubscriptionCollection.GetAll"), data => new ServiceBusSubscriptionResource(Client, data));
         }
 
         /// <summary>
@@ -335,7 +336,8 @@ namespace Azure.ResourceManager.ServiceBus
                 Id.Name,
                 skip,
                 top,
-                context), data => new ServiceBusSubscriptionResource(Client, data));
+                context,
+                "ServiceBusSubscriptionCollection.GetAll"), data => new ServiceBusSubscriptionResource(Client, data));
         }
 
         /// <summary>

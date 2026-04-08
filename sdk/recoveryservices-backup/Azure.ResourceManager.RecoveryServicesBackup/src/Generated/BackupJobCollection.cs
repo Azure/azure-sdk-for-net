@@ -199,7 +199,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 _vaultName,
                 filter,
                 skipToken,
-                context), data => new BackupJobResource(Client, data));
+                context,
+                "BackupJobCollection.GetAll"), data => new BackupJobResource(Client, data));
         }
 
         /// <summary>
@@ -236,7 +237,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 _vaultName,
                 filter,
                 skipToken,
-                context), data => new BackupJobResource(Client, data));
+                context,
+                "BackupJobCollection.GetAll"), data => new BackupJobResource(Client, data));
         }
 
         /// <summary>

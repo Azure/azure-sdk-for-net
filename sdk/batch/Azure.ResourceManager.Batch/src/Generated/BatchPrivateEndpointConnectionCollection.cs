@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Batch
         {
             if (id.ResourceType != BatchAccountResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, BatchAccountResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, BatchAccountResource.ResourceType), nameof(id));
             }
         }
 
@@ -184,7 +184,8 @@ namespace Azure.ResourceManager.Batch
                 Id.ResourceGroupName,
                 Id.Name,
                 maxresults,
-                context), data => new BatchPrivateEndpointConnectionResource(Client, data));
+                context,
+                "BatchPrivateEndpointConnectionCollection.GetAll"), data => new BatchPrivateEndpointConnectionResource(Client, data));
         }
 
         /// <summary>
@@ -219,7 +220,8 @@ namespace Azure.ResourceManager.Batch
                 Id.ResourceGroupName,
                 Id.Name,
                 maxresults,
-                context), data => new BatchPrivateEndpointConnectionResource(Client, data));
+                context,
+                "BatchPrivateEndpointConnectionCollection.GetAll"), data => new BatchPrivateEndpointConnectionResource(Client, data));
         }
 
         /// <summary>

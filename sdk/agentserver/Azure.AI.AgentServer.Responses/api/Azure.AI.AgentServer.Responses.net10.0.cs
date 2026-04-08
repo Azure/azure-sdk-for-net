@@ -410,6 +410,8 @@ namespace Azure.AI.AgentServer.Responses
     public partial class OutputItemCodeInterpreterCallBuilder : Azure.AI.AgentServer.Responses.OutputItemBuilder<Azure.AI.AgentServer.Responses.Models.OutputItemCodeInterpreterToolCall>
     {
         protected OutputItemCodeInterpreterCallBuilder() { }
+        public virtual System.Collections.Generic.IAsyncEnumerable<Azure.AI.AgentServer.Responses.Models.ResponseStreamEvent> Code(System.Collections.Generic.IAsyncEnumerable<string> chunks, [System.Runtime.CompilerServices.EnumeratorCancellationAttribute] System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.ResponseStreamEvent> Code(string code) { throw null; }
         public virtual Azure.AI.AgentServer.Responses.Models.ResponseOutputItemAddedEvent EmitAdded() { throw null; }
         public virtual Azure.AI.AgentServer.Responses.Models.ResponseCodeInterpreterCallCodeDeltaEvent EmitCodeDelta(string delta) { throw null; }
         public virtual Azure.AI.AgentServer.Responses.Models.ResponseCodeInterpreterCallCodeDoneEvent EmitCodeDone(string code) { throw null; }
@@ -427,6 +429,8 @@ namespace Azure.AI.AgentServer.Responses
         public virtual Azure.AI.AgentServer.Responses.Models.ResponseOutputItemDoneEvent EmitDone() { throw null; }
         public virtual Azure.AI.AgentServer.Responses.Models.ResponseCustomToolCallInputDeltaEvent EmitInputDelta(string delta) { throw null; }
         public virtual Azure.AI.AgentServer.Responses.Models.ResponseCustomToolCallInputDoneEvent EmitInputDone(string input) { throw null; }
+        public System.Collections.Generic.IAsyncEnumerable<Azure.AI.AgentServer.Responses.Models.ResponseStreamEvent> Input(System.Collections.Generic.IAsyncEnumerable<string> chunks, [System.Runtime.CompilerServices.EnumeratorCancellationAttribute] System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.ResponseStreamEvent> Input(string input) { throw null; }
     }
     public partial class OutputItemFileSearchCallBuilder : Azure.AI.AgentServer.Responses.OutputItemBuilder<Azure.AI.AgentServer.Responses.Models.OutputItemFileSearchToolCall>
     {
@@ -442,6 +446,8 @@ namespace Azure.AI.AgentServer.Responses
         protected OutputItemFunctionCallBuilder() { }
         public string CallId { get { throw null; } }
         public string Name { get { throw null; } }
+        public virtual System.Collections.Generic.IAsyncEnumerable<Azure.AI.AgentServer.Responses.Models.ResponseStreamEvent> Arguments(System.Collections.Generic.IAsyncEnumerable<string> chunks, [System.Runtime.CompilerServices.EnumeratorCancellationAttribute] System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.ResponseStreamEvent> Arguments(string arguments) { throw null; }
         public virtual Azure.AI.AgentServer.Responses.Models.ResponseOutputItemAddedEvent EmitAdded() { throw null; }
         public virtual Azure.AI.AgentServer.Responses.Models.ResponseFunctionCallArgumentsDeltaEvent EmitArgumentsDelta(string delta) { throw null; }
         public virtual Azure.AI.AgentServer.Responses.Models.ResponseFunctionCallArgumentsDoneEvent EmitArgumentsDone(string arguments) { throw null; }
@@ -462,6 +468,8 @@ namespace Azure.AI.AgentServer.Responses
         protected OutputItemMcpCallBuilder() { }
         public string Name { get { throw null; } }
         public string ServerLabel { get { throw null; } }
+        public virtual System.Collections.Generic.IAsyncEnumerable<Azure.AI.AgentServer.Responses.Models.ResponseStreamEvent> Arguments(System.Collections.Generic.IAsyncEnumerable<string> chunks, [System.Runtime.CompilerServices.EnumeratorCancellationAttribute] System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.ResponseStreamEvent> Arguments(string arguments) { throw null; }
         public virtual Azure.AI.AgentServer.Responses.Models.ResponseOutputItemAddedEvent EmitAdded() { throw null; }
         public virtual Azure.AI.AgentServer.Responses.Models.ResponseMCPCallArgumentsDeltaEvent EmitArgumentsDelta(string delta) { throw null; }
         public virtual Azure.AI.AgentServer.Responses.Models.ResponseMCPCallArgumentsDoneEvent EmitArgumentsDone(string arguments) { throw null; }
@@ -489,6 +497,10 @@ namespace Azure.AI.AgentServer.Responses
         public virtual Azure.AI.AgentServer.Responses.Models.ResponseContentPartDoneEvent EmitContentDone(Azure.AI.AgentServer.Responses.RefusalContentBuilder refusalContent) { throw null; }
         public virtual Azure.AI.AgentServer.Responses.Models.ResponseContentPartDoneEvent EmitContentDone(Azure.AI.AgentServer.Responses.TextContentBuilder textContent) { throw null; }
         public virtual Azure.AI.AgentServer.Responses.Models.ResponseOutputItemDoneEvent EmitDone() { throw null; }
+        public virtual System.Collections.Generic.IAsyncEnumerable<Azure.AI.AgentServer.Responses.Models.ResponseStreamEvent> RefusalContent(System.Collections.Generic.IAsyncEnumerable<string> chunks, [System.Runtime.CompilerServices.EnumeratorCancellationAttribute] System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.ResponseStreamEvent> RefusalContent(string text) { throw null; }
+        public virtual System.Collections.Generic.IAsyncEnumerable<Azure.AI.AgentServer.Responses.Models.ResponseStreamEvent> TextContent(System.Collections.Generic.IAsyncEnumerable<string> chunks, [System.Runtime.CompilerServices.EnumeratorCancellationAttribute] System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.ResponseStreamEvent> TextContent(string text) { throw null; }
     }
     public partial class OutputItemReasoningItemBuilder : Azure.AI.AgentServer.Responses.OutputItemBuilder<Azure.AI.AgentServer.Responses.Models.OutputItemReasoningItem>
     {
@@ -497,6 +509,8 @@ namespace Azure.AI.AgentServer.Responses
         public virtual Azure.AI.AgentServer.Responses.Models.ResponseOutputItemAddedEvent EmitAdded() { throw null; }
         public virtual Azure.AI.AgentServer.Responses.Models.ResponseOutputItemDoneEvent EmitDone() { throw null; }
         public virtual void EmitSummaryPartDone(Azure.AI.AgentServer.Responses.ReasoningSummaryPartBuilder summaryPart) { }
+        public virtual System.Collections.Generic.IAsyncEnumerable<Azure.AI.AgentServer.Responses.Models.ResponseStreamEvent> SummaryPart(System.Collections.Generic.IAsyncEnumerable<string> chunks, [System.Runtime.CompilerServices.EnumeratorCancellationAttribute] System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.ResponseStreamEvent> SummaryPart(string text) { throw null; }
     }
     public partial class OutputItemWebSearchCallBuilder : Azure.AI.AgentServer.Responses.OutputItemBuilder<Azure.AI.AgentServer.Responses.Models.OutputItemWebSearchToolCall>
     {
@@ -599,6 +613,13 @@ namespace Azure.AI.AgentServer.Responses
         public virtual Azure.AI.AgentServer.Responses.Models.ResponseInProgressEvent EmitInProgress() { throw null; }
         public virtual Azure.AI.AgentServer.Responses.Models.ResponseQueuedEvent EmitQueued() { throw null; }
         public virtual long NextSequenceNumber() { throw null; }
+        public System.Collections.Generic.IAsyncEnumerable<Azure.AI.AgentServer.Responses.Models.ResponseStreamEvent> OutputItemFunctionCall(string name, string callId, System.Collections.Generic.IAsyncEnumerable<string> chunks, [System.Runtime.CompilerServices.EnumeratorCancellationAttribute] System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.ResponseStreamEvent> OutputItemFunctionCall(string name, string callId, string arguments) { throw null; }
+        public System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.ResponseStreamEvent> OutputItemFunctionCallOutput(string callId, System.BinaryData output) { throw null; }
+        public System.Collections.Generic.IAsyncEnumerable<Azure.AI.AgentServer.Responses.Models.ResponseStreamEvent> OutputItemMessage(System.Collections.Generic.IAsyncEnumerable<string> chunks, [System.Runtime.CompilerServices.EnumeratorCancellationAttribute] System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.ResponseStreamEvent> OutputItemMessage(string text) { throw null; }
+        public System.Collections.Generic.IAsyncEnumerable<Azure.AI.AgentServer.Responses.Models.ResponseStreamEvent> OutputItemReasoningItem(System.Collections.Generic.IAsyncEnumerable<string> chunks, [System.Runtime.CompilerServices.EnumeratorCancellationAttribute] System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.ResponseStreamEvent> OutputItemReasoningItem(string summaryText) { throw null; }
     }
     public abstract partial class ResponseHandler
     {
@@ -669,6 +690,7 @@ namespace Azure.AI.AgentServer.Responses
     {
         protected ResponsesStreamProvider() { }
         public abstract System.Threading.Tasks.Task<Azure.AI.AgentServer.Responses.IAsyncObserver<Azure.AI.AgentServer.Responses.Models.ResponseStreamEvent>> CreateEventPublisherAsync(string responseId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        public virtual System.Threading.Tasks.Task DeleteEventStreamAsync(string responseId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public abstract System.Threading.Tasks.Task<System.IAsyncDisposable> SubscribeToEventsAsync(string responseId, Azure.AI.AgentServer.Responses.IAsyncObserver<Azure.AI.AgentServer.Responses.Models.ResponseStreamEvent> observer, long? cursor = default(long?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     }
     public static partial class ResponsesTracingConstants

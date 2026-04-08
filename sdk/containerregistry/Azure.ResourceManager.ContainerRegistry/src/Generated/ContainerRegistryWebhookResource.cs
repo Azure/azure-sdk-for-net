@@ -537,7 +537,8 @@ namespace Azure.ResourceManager.ContainerRegistry
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context);
+                context,
+                "ContainerRegistryWebhookResource.GetEvents");
         }
 
         /// <summary>
@@ -575,7 +576,8 @@ namespace Azure.ResourceManager.ContainerRegistry
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context);
+                context,
+                "ContainerRegistryWebhookResource.GetEvents");
         }
 
         /// <summary>

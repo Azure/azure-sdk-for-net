@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.DurableTask
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DurableTaskSchedulerData, DurableTaskSchedulerResource>(new SchedulersGetByResourceGroupAsyncCollectionResultOfT(_schedulersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new DurableTaskSchedulerResource(Client, data));
+            return new AsyncPageableWrapper<DurableTaskSchedulerData, DurableTaskSchedulerResource>(new SchedulersGetByResourceGroupAsyncCollectionResultOfT(_schedulersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DurableTaskSchedulerCollection.GetAll"), data => new DurableTaskSchedulerResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.DurableTask
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DurableTaskSchedulerData, DurableTaskSchedulerResource>(new SchedulersGetByResourceGroupCollectionResultOfT(_schedulersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new DurableTaskSchedulerResource(Client, data));
+            return new PageableWrapper<DurableTaskSchedulerData, DurableTaskSchedulerResource>(new SchedulersGetByResourceGroupCollectionResultOfT(_schedulersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DurableTaskSchedulerCollection.GetAll"), data => new DurableTaskSchedulerResource(Client, data));
         }
 
         /// <summary>

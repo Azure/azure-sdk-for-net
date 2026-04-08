@@ -445,7 +445,8 @@ namespace Azure.ResourceManager.WebPubSub
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context);
+                context,
+                "WebPubSubReplicaResource.GetReplicaSkus");
         }
 
         /// <summary>
@@ -483,7 +484,8 @@ namespace Azure.ResourceManager.WebPubSub
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context);
+                context,
+                "WebPubSubReplicaResource.GetReplicaSkus");
         }
 
         /// <summary>

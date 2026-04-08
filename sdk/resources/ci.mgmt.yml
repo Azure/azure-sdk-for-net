@@ -17,4 +17,3 @@ extends:
       safeName: AzureResourceManagerResourcesDeploymentStacks
     - name: Azure.ResourceManager.Resources.Policy
       safeName: AzureResourceManagerResourcesPolicy
-    TestDependsOnDependency: Azure.ResourceManager.Resources

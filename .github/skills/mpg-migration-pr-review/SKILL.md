@@ -11,7 +11,7 @@ The review is split into sequential phases:
 1. **Phase 1: Versioning Review** (gate) — from base skill
 2. **Phase 2: API Review** — from base skill
 3. **Phase 3: Breaking Change Detection** — from base skill
-4. **Phase 4: Migration Customization Review** — migration-specific (includes blocking rule 4.9: no manual edits to generated files)
+4. **Phase 4: Migration Customization Review** — migration-specific (includes blocking rule 4.10: no manual edits to generated files)
 5. **Phase 5: TypeSpec Decorator Preference Review** — migration-specific
 
 ## When to Use This Skill
@@ -196,7 +196,25 @@ If a generated constructor has the wrong signature (e.g., missing flattened prop
 
 Customization files should not have unnecessary `using` statements. If a customization file shows up in the diff only because of added/removed using statements with no other changes, flag it — the file should be cleaned up or not included in the PR.
 
-### 4.9 No Manual Edits to Generated Files — MUST FIX (Blocking)
+### 4.9 Obsolete Members Must Throw NotSupportedException
+
+When a member (property, method, constructor) is marked with `[Obsolete]`, it **must** throw `NotSupportedException` instead of providing a functional implementation. An obsolete member signals that it is no longer supported; keeping it functional encourages continued use and makes it harder to remove in the future. Throwing ensures callers get a clear signal to migrate.
+
+**Rule**: Every `[Obsolete]`-attributed member should have a body that throws `NotSupportedException`. Do not delegate to the replacement member or return a default value.
+
+**Bad** — obsolete member still functional:
+```csharp
+[Obsolete("Use LastUpdatedOn instead.")]
+public DateTimeOffset? LastUpdated => LastUpdatedOn;  // still works — callers won't migrate
+```
+
+**Good** — obsolete member throws:
+```csharp
+[Obsolete("This property is now deprecated. Please use the new property `LastUpdatedOn` moving forward.")]
+public DateTimeOffset? LastUpdated => throw new NotSupportedException("This property is now deprecated. Please use the new property `LastUpdatedOn` moving forward.");
+```
+
+### 4.10 No Manual Edits to Generated Files — MUST FIX (Blocking)
 
 Files under `src/Generated/` must never be manually edited. All code in that directory must come exclusively from the generator. If the PR diff shows manual modifications to any file under `src/Generated/` (e.g., changing a property type, adding `#pragma` suppressions, fixing deserialization calls), this is a **blocking issue** that must be fixed before merge.
 
@@ -356,7 +374,7 @@ The review body should include an overall summary with pass/fail per phase and c
 1. **Report Phase 1–3 results** (from base skill)
 2. **Report Phase 4 results** (Migration Customization Review):
    - Post inline comments on each customization issue at the relevant file and line
-   - Group findings by category (4.1–4.8)
+   - Group findings by category (4.1–4.10)
 3. **Report Phase 5 results** (TypeSpec Decorator Preference):
    - Post inline comments where a TypeSpec decorator could replace customization code
 4. **Final summary** with counts: critical issues, should-fix issues, suggestions

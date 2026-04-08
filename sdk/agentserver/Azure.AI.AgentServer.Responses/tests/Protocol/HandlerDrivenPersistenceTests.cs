@@ -16,9 +16,9 @@ namespace Azure.AI.AgentServer.Responses.Tests.Protocol;
 
 /// <summary>
 /// Protocol tests for User Story 1 — Handler-Driven Persistence.
-/// Verifies FR-001 (no persistence before handler runs),
-/// FR-002 (bg=true: Create at response.created, Update at terminal),
-/// FR-003 (bg=false: single Create at terminal state).
+/// Verifies S-035/B36 (no persistence before handler runs),
+/// S-035 (bg=true: Create at response.created, Update at terminal),
+/// S-035 (bg=false: single Create at terminal state).
 /// </summary>
 public class HandlerDrivenPersistenceTests : IDisposable
 {
