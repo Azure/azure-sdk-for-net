@@ -291,7 +291,8 @@ namespace Azure.ResourceManager.NetworkCloud
                 Id.ResourceGroupName,
                 top,
                 skipToken,
-                context), data => new NetworkCloudAccessBridgeResource(Client, data));
+                context,
+                "NetworkCloudAccessBridgeCollection.GetAll"), data => new NetworkCloudAccessBridgeResource(Client, data));
         }
 
         /// <summary>
@@ -327,7 +328,8 @@ namespace Azure.ResourceManager.NetworkCloud
                 Id.ResourceGroupName,
                 top,
                 skipToken,
-                context), data => new NetworkCloudAccessBridgeResource(Client, data));
+                context,
+                "NetworkCloudAccessBridgeCollection.GetAll"), data => new NetworkCloudAccessBridgeResource(Client, data));
         }
 
         /// <summary>

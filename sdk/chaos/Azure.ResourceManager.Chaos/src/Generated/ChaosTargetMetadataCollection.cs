@@ -183,7 +183,13 @@ namespace Azure.ResourceManager.Chaos
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ChaosTargetMetadataData, ChaosTargetMetadataResource>(new TargetTypesGetAllAsyncCollectionResultOfT(_targetTypesRestClient, Guid.Parse(Id.SubscriptionId), _location, continuationToken, context), data => new ChaosTargetMetadataResource(Client, data));
+            return new AsyncPageableWrapper<ChaosTargetMetadataData, ChaosTargetMetadataResource>(new TargetTypesGetAllAsyncCollectionResultOfT(
+                _targetTypesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                _location,
+                continuationToken,
+                context,
+                "ChaosTargetMetadataCollection.GetAll"), data => new ChaosTargetMetadataResource(Client, data));
         }
 
         /// <summary>
@@ -212,7 +218,13 @@ namespace Azure.ResourceManager.Chaos
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ChaosTargetMetadataData, ChaosTargetMetadataResource>(new TargetTypesGetAllCollectionResultOfT(_targetTypesRestClient, Guid.Parse(Id.SubscriptionId), _location, continuationToken, context), data => new ChaosTargetMetadataResource(Client, data));
+            return new PageableWrapper<ChaosTargetMetadataData, ChaosTargetMetadataResource>(new TargetTypesGetAllCollectionResultOfT(
+                _targetTypesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                _location,
+                continuationToken,
+                context,
+                "ChaosTargetMetadataCollection.GetAll"), data => new ChaosTargetMetadataResource(Client, data));
         }
 
         /// <summary>

@@ -296,7 +296,13 @@ namespace Azure.ResourceManager.GuestConfiguration
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<GuestConfigurationAssignmentData, GuestConfigurationHcrpAssignmentResource>(new GuestConfigurationHCRPAssignmentsGetAllForMachineAsyncCollectionResultOfT(_guestConfigurationHCRPAssignmentsRestClient, Id.SubscriptionId, Id.ResourceGroupName, _machineName, context), data => new GuestConfigurationHcrpAssignmentResource(Client, data));
+            return new AsyncPageableWrapper<GuestConfigurationAssignmentData, GuestConfigurationHcrpAssignmentResource>(new GuestConfigurationHCRPAssignmentsGetAllForMachineAsyncCollectionResultOfT(
+                _guestConfigurationHCRPAssignmentsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                _machineName,
+                context,
+                "GuestConfigurationHcrpAssignmentCollection.GetAll"), data => new GuestConfigurationHcrpAssignmentResource(Client, data));
         }
 
         /// <summary>
@@ -324,7 +330,13 @@ namespace Azure.ResourceManager.GuestConfiguration
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<GuestConfigurationAssignmentData, GuestConfigurationHcrpAssignmentResource>(new GuestConfigurationHCRPAssignmentsGetAllForMachineCollectionResultOfT(_guestConfigurationHCRPAssignmentsRestClient, Id.SubscriptionId, Id.ResourceGroupName, _machineName, context), data => new GuestConfigurationHcrpAssignmentResource(Client, data));
+            return new PageableWrapper<GuestConfigurationAssignmentData, GuestConfigurationHcrpAssignmentResource>(new GuestConfigurationHCRPAssignmentsGetAllForMachineCollectionResultOfT(
+                _guestConfigurationHCRPAssignmentsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                _machineName,
+                context,
+                "GuestConfigurationHcrpAssignmentCollection.GetAll"), data => new GuestConfigurationHcrpAssignmentResource(Client, data));
         }
 
         /// <summary>

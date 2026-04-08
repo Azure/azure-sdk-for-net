@@ -299,7 +299,8 @@ namespace Azure.ResourceManager.SignalR
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new SignalRReplicaSharedPrivateLinkResource(Client, data));
+                context,
+                "SignalRReplicaSharedPrivateLinkResourceCollection.GetAll"), data => new SignalRReplicaSharedPrivateLinkResource(Client, data));
         }
 
         /// <summary>
@@ -333,7 +334,8 @@ namespace Azure.ResourceManager.SignalR
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new SignalRReplicaSharedPrivateLinkResource(Client, data));
+                context,
+                "SignalRReplicaSharedPrivateLinkResourceCollection.GetAll"), data => new SignalRReplicaSharedPrivateLinkResource(Client, data));
         }
 
         /// <summary>

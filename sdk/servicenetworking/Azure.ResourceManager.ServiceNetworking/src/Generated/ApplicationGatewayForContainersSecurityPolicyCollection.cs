@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.ServiceNetworking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApplicationGatewayForContainersSecurityPolicyData, ApplicationGatewayForContainersSecurityPolicyResource>(new SecurityPoliciesInterfaceGetByTrafficControllerAsyncCollectionResultOfT(_securityPoliciesInterfaceRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new ApplicationGatewayForContainersSecurityPolicyResource(Client, data));
+            return new AsyncPageableWrapper<ApplicationGatewayForContainersSecurityPolicyData, ApplicationGatewayForContainersSecurityPolicyResource>(new SecurityPoliciesInterfaceGetByTrafficControllerAsyncCollectionResultOfT(
+                _securityPoliciesInterfaceRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ApplicationGatewayForContainersSecurityPolicyCollection.GetAll"), data => new ApplicationGatewayForContainersSecurityPolicyResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.ServiceNetworking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApplicationGatewayForContainersSecurityPolicyData, ApplicationGatewayForContainersSecurityPolicyResource>(new SecurityPoliciesInterfaceGetByTrafficControllerCollectionResultOfT(_securityPoliciesInterfaceRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new ApplicationGatewayForContainersSecurityPolicyResource(Client, data));
+            return new PageableWrapper<ApplicationGatewayForContainersSecurityPolicyData, ApplicationGatewayForContainersSecurityPolicyResource>(new SecurityPoliciesInterfaceGetByTrafficControllerCollectionResultOfT(
+                _securityPoliciesInterfaceRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ApplicationGatewayForContainersSecurityPolicyCollection.GetAll"), data => new ApplicationGatewayForContainersSecurityPolicyResource(Client, data));
         }
 
         /// <summary>

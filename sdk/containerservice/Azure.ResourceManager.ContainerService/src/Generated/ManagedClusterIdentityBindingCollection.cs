@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.ContainerService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ManagedClusterIdentityBindingData, ManagedClusterIdentityBindingResource>(new IdentityBindingsGetByManagedClusterAsyncCollectionResultOfT(_identityBindingsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ManagedClusterIdentityBindingResource(Client, data));
+            return new AsyncPageableWrapper<ManagedClusterIdentityBindingData, ManagedClusterIdentityBindingResource>(new IdentityBindingsGetByManagedClusterAsyncCollectionResultOfT(
+                _identityBindingsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ManagedClusterIdentityBindingCollection.GetAll"), data => new ManagedClusterIdentityBindingResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.ContainerService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ManagedClusterIdentityBindingData, ManagedClusterIdentityBindingResource>(new IdentityBindingsGetByManagedClusterCollectionResultOfT(_identityBindingsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ManagedClusterIdentityBindingResource(Client, data));
+            return new PageableWrapper<ManagedClusterIdentityBindingData, ManagedClusterIdentityBindingResource>(new IdentityBindingsGetByManagedClusterCollectionResultOfT(
+                _identityBindingsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ManagedClusterIdentityBindingCollection.GetAll"), data => new ManagedClusterIdentityBindingResource(Client, data));
         }
 
         /// <summary>

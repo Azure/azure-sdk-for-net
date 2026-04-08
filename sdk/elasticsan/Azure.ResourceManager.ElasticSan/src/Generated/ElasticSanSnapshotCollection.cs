@@ -301,7 +301,8 @@ namespace Azure.ResourceManager.ElasticSan
                 Id.Parent.Name,
                 Id.Name,
                 filter,
-                context), data => new ElasticSanSnapshotResource(Client, data));
+                context,
+                "ElasticSanSnapshotCollection.GetAll"), data => new ElasticSanSnapshotResource(Client, data));
         }
 
         /// <summary>
@@ -337,7 +338,8 @@ namespace Azure.ResourceManager.ElasticSan
                 Id.Parent.Name,
                 Id.Name,
                 filter,
-                context), data => new ElasticSanSnapshotResource(Client, data));
+                context,
+                "ElasticSanSnapshotCollection.GetAll"), data => new ElasticSanSnapshotResource(Client, data));
         }
 
         /// <summary>

@@ -295,7 +295,8 @@ namespace Azure.ResourceManager.Confluent
                 Id.Name,
                 pageSize,
                 pageToken,
-                context), data => new SCClusterRecordResource(Client, data));
+                context,
+                "SCClusterRecordCollection.GetAll"), data => new SCClusterRecordResource(Client, data));
         }
 
         /// <summary>
@@ -333,7 +334,8 @@ namespace Azure.ResourceManager.Confluent
                 Id.Name,
                 pageSize,
                 pageToken,
-                context), data => new SCClusterRecordResource(Client, data));
+                context,
+                "SCClusterRecordCollection.GetAll"), data => new SCClusterRecordResource(Client, data));
         }
 
         /// <summary>

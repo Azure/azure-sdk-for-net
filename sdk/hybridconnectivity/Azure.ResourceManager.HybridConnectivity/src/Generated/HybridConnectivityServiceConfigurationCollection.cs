@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.HybridConnectivity
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HybridConnectivityServiceConfigurationData, HybridConnectivityServiceConfigurationResource>(new ServiceConfigurationResourcesGetByEndpointResourceAsyncCollectionResultOfT(_serviceConfigurationResourcesRestClient, Id.Parent, Id.Name, context), data => new HybridConnectivityServiceConfigurationResource(Client, data));
+            return new AsyncPageableWrapper<HybridConnectivityServiceConfigurationData, HybridConnectivityServiceConfigurationResource>(new ServiceConfigurationResourcesGetByEndpointResourceAsyncCollectionResultOfT(_serviceConfigurationResourcesRestClient, Id.Parent, Id.Name, context, "HybridConnectivityServiceConfigurationCollection.GetAll"), data => new HybridConnectivityServiceConfigurationResource(Client, data));
         }
 
         /// <summary>
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.HybridConnectivity
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HybridConnectivityServiceConfigurationData, HybridConnectivityServiceConfigurationResource>(new ServiceConfigurationResourcesGetByEndpointResourceCollectionResultOfT(_serviceConfigurationResourcesRestClient, Id.Parent, Id.Name, context), data => new HybridConnectivityServiceConfigurationResource(Client, data));
+            return new PageableWrapper<HybridConnectivityServiceConfigurationData, HybridConnectivityServiceConfigurationResource>(new ServiceConfigurationResourcesGetByEndpointResourceCollectionResultOfT(_serviceConfigurationResourcesRestClient, Id.Parent, Id.Name, context, "HybridConnectivityServiceConfigurationCollection.GetAll"), data => new HybridConnectivityServiceConfigurationResource(Client, data));
         }
 
         /// <summary>

@@ -308,7 +308,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 maxCount,
                 skipToken,
                 filter,
-                context), data => new ContainerServiceFleetMemberResource(Client, data));
+                context,
+                "ContainerServiceFleetMemberCollection.GetAll"), data => new ContainerServiceFleetMemberResource(Client, data));
         }
 
         /// <summary>
@@ -347,7 +348,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 maxCount,
                 skipToken,
                 filter,
-                context), data => new ContainerServiceFleetMemberResource(Client, data));
+                context,
+                "ContainerServiceFleetMemberCollection.GetAll"), data => new ContainerServiceFleetMemberResource(Client, data));
         }
 
         /// <summary>

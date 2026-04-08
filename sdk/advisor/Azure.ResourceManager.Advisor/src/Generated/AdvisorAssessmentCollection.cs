@@ -290,7 +290,13 @@ namespace Azure.ResourceManager.Advisor
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AdvisorAssessmentData, AdvisorAssessmentResource>(new AssessmentResultsGetAllAsyncCollectionResultOfT(_assessmentResultsRestClient, Guid.Parse(Id.SubscriptionId), top, skiptoken, context), data => new AdvisorAssessmentResource(Client, data));
+            return new AsyncPageableWrapper<AdvisorAssessmentData, AdvisorAssessmentResource>(new AssessmentResultsGetAllAsyncCollectionResultOfT(
+                _assessmentResultsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                top,
+                skiptoken,
+                context,
+                "AdvisorAssessmentCollection.GetAll"), data => new AdvisorAssessmentResource(Client, data));
         }
 
         /// <summary>
@@ -320,7 +326,13 @@ namespace Azure.ResourceManager.Advisor
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AdvisorAssessmentData, AdvisorAssessmentResource>(new AssessmentResultsGetAllCollectionResultOfT(_assessmentResultsRestClient, Guid.Parse(Id.SubscriptionId), top, skiptoken, context), data => new AdvisorAssessmentResource(Client, data));
+            return new PageableWrapper<AdvisorAssessmentData, AdvisorAssessmentResource>(new AssessmentResultsGetAllCollectionResultOfT(
+                _assessmentResultsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                top,
+                skiptoken,
+                context,
+                "AdvisorAssessmentCollection.GetAll"), data => new AdvisorAssessmentResource(Client, data));
         }
 
         /// <summary>

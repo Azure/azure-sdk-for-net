@@ -287,7 +287,13 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CloudHsmClusterPrivateEndpointConnectionData, CloudHsmClusterPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByCloudHsmClusterAsyncCollectionResultOfT(_privateEndpointConnectionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new CloudHsmClusterPrivateEndpointConnectionResource(Client, data));
+            return new AsyncPageableWrapper<CloudHsmClusterPrivateEndpointConnectionData, CloudHsmClusterPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByCloudHsmClusterAsyncCollectionResultOfT(
+                _privateEndpointConnectionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "CloudHsmClusterPrivateEndpointConnectionCollection.GetAll"), data => new CloudHsmClusterPrivateEndpointConnectionResource(Client, data));
         }
 
         /// <summary>
@@ -315,7 +321,13 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CloudHsmClusterPrivateEndpointConnectionData, CloudHsmClusterPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByCloudHsmClusterCollectionResultOfT(_privateEndpointConnectionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new CloudHsmClusterPrivateEndpointConnectionResource(Client, data));
+            return new PageableWrapper<CloudHsmClusterPrivateEndpointConnectionData, CloudHsmClusterPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByCloudHsmClusterCollectionResultOfT(
+                _privateEndpointConnectionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "CloudHsmClusterPrivateEndpointConnectionCollection.GetAll"), data => new CloudHsmClusterPrivateEndpointConnectionResource(Client, data));
         }
 
         /// <summary>

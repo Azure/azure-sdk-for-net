@@ -535,7 +535,13 @@ namespace Azure.ResourceManager.EventHubs
             {
                 CancellationToken = cancellationToken
             };
-            return new ClustersGetNamespacesAsyncCollectionResultOfT(_clustersRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+            return new ClustersGetNamespacesAsyncCollectionResultOfT(
+                _clustersRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "EventHubsClusterResource.GetNamespaces");
         }
 
         /// <summary>
@@ -567,7 +573,13 @@ namespace Azure.ResourceManager.EventHubs
             {
                 CancellationToken = cancellationToken
             };
-            return new ClustersGetNamespacesCollectionResultOfT(_clustersRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+            return new ClustersGetNamespacesCollectionResultOfT(
+                _clustersRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "EventHubsClusterResource.GetNamespaces");
         }
 
         /// <summary>

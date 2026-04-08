@@ -302,7 +302,8 @@ namespace Azure.ResourceManager.DevTestLabs
                 filter,
                 top,
                 @orderby,
-                context), data => new DevTestLabScheduleResource(Client, data));
+                context,
+                "DevTestLabScheduleCollection.GetAll"), data => new DevTestLabScheduleResource(Client, data));
         }
 
         /// <summary>
@@ -343,7 +344,8 @@ namespace Azure.ResourceManager.DevTestLabs
                 filter,
                 top,
                 @orderby,
-                context), data => new DevTestLabScheduleResource(Client, data));
+                context,
+                "DevTestLabScheduleCollection.GetAll"), data => new DevTestLabScheduleResource(Client, data));
         }
 
         /// <summary>

@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<WorkloadNetworkPortMirroringProfileData, WorkloadNetworkPortMirroringProfileResource>(new WorkloadNetworksGetPortMirroringAsyncCollectionResultOfT(_workloadNetworksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context), data => new WorkloadNetworkPortMirroringProfileResource(Client, data));
+            return new AsyncPageableWrapper<WorkloadNetworkPortMirroringProfileData, WorkloadNetworkPortMirroringProfileResource>(new WorkloadNetworksGetPortMirroringAsyncCollectionResultOfT(
+                _workloadNetworksRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                context,
+                "WorkloadNetworkPortMirroringProfileCollection.GetAll"), data => new WorkloadNetworkPortMirroringProfileResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<WorkloadNetworkPortMirroringProfileData, WorkloadNetworkPortMirroringProfileResource>(new WorkloadNetworksGetPortMirroringCollectionResultOfT(_workloadNetworksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context), data => new WorkloadNetworkPortMirroringProfileResource(Client, data));
+            return new PageableWrapper<WorkloadNetworkPortMirroringProfileData, WorkloadNetworkPortMirroringProfileResource>(new WorkloadNetworksGetPortMirroringCollectionResultOfT(
+                _workloadNetworksRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                context,
+                "WorkloadNetworkPortMirroringProfileCollection.GetAll"), data => new WorkloadNetworkPortMirroringProfileResource(Client, data));
         }
 
         /// <summary>

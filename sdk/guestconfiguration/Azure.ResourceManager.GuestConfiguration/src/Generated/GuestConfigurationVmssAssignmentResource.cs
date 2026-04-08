@@ -332,7 +332,8 @@ namespace Azure.ResourceManager.GuestConfiguration
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context);
+                context,
+                "GuestConfigurationVmssAssignmentResource.GetReports");
         }
 
         /// <summary>
@@ -370,7 +371,8 @@ namespace Azure.ResourceManager.GuestConfiguration
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context);
+                context,
+                "GuestConfigurationVmssAssignmentResource.GetReports");
         }
 
         /// <summary>

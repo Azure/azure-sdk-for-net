@@ -434,7 +434,13 @@ namespace Azure.ResourceManager.SignalR
             {
                 CancellationToken = cancellationToken
             };
-            return new SignalRResourcesGetSignalRPrivateLinkResourcesAsyncCollectionResultOfT(_signalRResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new SignalRResourcesGetSignalRPrivateLinkResourcesAsyncCollectionResultOfT(
+                _signalRResourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "SignalRResource.GetSignalRPrivateLinkResources");
         }
 
         /// <summary>
@@ -466,7 +472,13 @@ namespace Azure.ResourceManager.SignalR
             {
                 CancellationToken = cancellationToken
             };
-            return new SignalRResourcesGetSignalRPrivateLinkResourcesCollectionResultOfT(_signalRResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new SignalRResourcesGetSignalRPrivateLinkResourcesCollectionResultOfT(
+                _signalRResourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "SignalRResource.GetSignalRPrivateLinkResources");
         }
 
         /// <summary>
@@ -594,7 +606,13 @@ namespace Azure.ResourceManager.SignalR
             {
                 CancellationToken = cancellationToken
             };
-            return new SignalRResourcesGetSkusAsyncCollectionResultOfT(_signalRResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new SignalRResourcesGetSkusAsyncCollectionResultOfT(
+                _signalRResourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "SignalRResource.GetSkus");
         }
 
         /// <summary>
@@ -626,7 +644,13 @@ namespace Azure.ResourceManager.SignalR
             {
                 CancellationToken = cancellationToken
             };
-            return new SignalRResourcesGetSkusCollectionResultOfT(_signalRResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new SignalRResourcesGetSkusCollectionResultOfT(
+                _signalRResourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "SignalRResource.GetSkus");
         }
 
         /// <summary>

@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<GlobalRulestackData, GlobalRulestackResource>(new GlobalRulestackGetAllAsyncCollectionResultOfT(_globalRulestackRestClient, context), data => new GlobalRulestackResource(Client, data));
+            return new AsyncPageableWrapper<GlobalRulestackData, GlobalRulestackResource>(new GlobalRulestackGetAllAsyncCollectionResultOfT(_globalRulestackRestClient, context, "GlobalRulestackCollection.GetAll"), data => new GlobalRulestackResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<GlobalRulestackData, GlobalRulestackResource>(new GlobalRulestackGetAllCollectionResultOfT(_globalRulestackRestClient, context), data => new GlobalRulestackResource(Client, data));
+            return new PageableWrapper<GlobalRulestackData, GlobalRulestackResource>(new GlobalRulestackGetAllCollectionResultOfT(_globalRulestackRestClient, context, "GlobalRulestackCollection.GetAll"), data => new GlobalRulestackResource(Client, data));
         }
 
         /// <summary>

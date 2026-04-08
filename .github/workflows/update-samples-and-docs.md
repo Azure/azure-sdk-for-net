@@ -26,6 +26,7 @@ safe-outputs:
       output: "Triage workflow dispatched"
       permissions:
         actions: write
+        issues: write
       steps:
         - name: Dispatch triage workflow
           uses: actions/github-script@v8
@@ -38,14 +39,23 @@ safe-outputs:
                 core.info('No issue was created; skipping triage dispatch');
                 return;
               }
+
+              const issueNum = parseInt(issueNumber, 10);
+              const repo = { owner: context.repo.owner, repo: context.repo.repo };
+
+              const { data: issue } = await github.rest.issues.get({ ...repo, issue_number: issueNum });
+              if (issue.labels && issue.labels.length > 0) {
+                await github.rest.issues.setLabels({ ...repo, issue_number: issueNum, labels: [] });
+                core.info(`Removed all labels from issue #${issueNum}`);
+              }
+
               await github.rest.actions.createWorkflowDispatch({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
+                ...repo,
                 workflow_id: 'issue-triage.lock.yml',
                 ref: 'main',
                 inputs: { issue_number: issueNumber }
               });
-              core.info(`Dispatched triage for issue #${issueNumber}`);
+              core.info(`Dispatched triage for issue #${issueNum}`);
 
 tools:
   web-fetch:
@@ -204,6 +214,7 @@ This dispatches full triage — including label prediction, CODEOWNERS owner loo
 ### Rules
 
 - Do NOT write code, create patches, or modify any files in the repository
+- Do NOT apply any labels to the issue — no labels of any kind; triage handles labeling
 - Do NOT assign the issue to anyone
 - File at most one issue per push; scope to the most impactful documentation gap
 - Title must start with `[<Service>] Docs:`

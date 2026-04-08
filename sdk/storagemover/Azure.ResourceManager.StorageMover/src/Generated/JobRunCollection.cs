@@ -184,7 +184,8 @@ namespace Azure.ResourceManager.StorageMover
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new JobRunResource(Client, data));
+                context,
+                "JobRunCollection.GetAll"), data => new JobRunResource(Client, data));
         }
 
         /// <summary>
@@ -219,7 +220,8 @@ namespace Azure.ResourceManager.StorageMover
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new JobRunResource(Client, data));
+                context,
+                "JobRunCollection.GetAll"), data => new JobRunResource(Client, data));
         }
 
         /// <summary>

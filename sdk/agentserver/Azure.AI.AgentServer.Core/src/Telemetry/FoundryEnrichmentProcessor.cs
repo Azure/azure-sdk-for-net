@@ -39,6 +39,20 @@ internal sealed class FoundryEnrichmentProcessor : BaseProcessor<Activity>
     /// <inheritdoc/>
     public override void OnStart(Activity activity)
     {
+        if (_projectId is not null)
+        {
+            activity.SetTag("microsoft.foundry.project.id", _projectId);
+        }
+    }
+
+    /// <inheritdoc/>
+    /// <remarks>
+    /// Agent identity tags are set in <c>OnEnd</c> rather than <c>OnStart</c>
+    /// so that they take precedence over any values an underlying framework
+    /// (e.g. the OpenAI SDK) may have stamped during the span's lifetime.
+    /// </remarks>
+    public override void OnEnd(Activity activity)
+    {
         if (_agentName is not null)
         {
             activity.SetTag("gen_ai.agent.name", _agentName);
@@ -52,11 +66,6 @@ internal sealed class FoundryEnrichmentProcessor : BaseProcessor<Activity>
         if (_agentId is not null)
         {
             activity.SetTag("gen_ai.agent.id", _agentId);
-        }
-
-        if (_projectId is not null)
-        {
-            activity.SetTag("microsoft.foundry.project.id", _projectId);
         }
     }
 }

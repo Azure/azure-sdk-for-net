@@ -292,7 +292,13 @@ namespace Azure.ResourceManager.Nginx
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NginxConfigurationData, NginxConfigurationResource>(new NginxConfigurationResponsesGetAllAsyncCollectionResultOfT(_nginxConfigurationResponsesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new NginxConfigurationResource(Client, data));
+            return new AsyncPageableWrapper<NginxConfigurationData, NginxConfigurationResource>(new NginxConfigurationResponsesGetAllAsyncCollectionResultOfT(
+                _nginxConfigurationResponsesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "NginxConfigurationCollection.GetAll"), data => new NginxConfigurationResource(Client, data));
         }
 
         /// <summary>
@@ -320,7 +326,13 @@ namespace Azure.ResourceManager.Nginx
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NginxConfigurationData, NginxConfigurationResource>(new NginxConfigurationResponsesGetAllCollectionResultOfT(_nginxConfigurationResponsesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new NginxConfigurationResource(Client, data));
+            return new PageableWrapper<NginxConfigurationData, NginxConfigurationResource>(new NginxConfigurationResponsesGetAllCollectionResultOfT(
+                _nginxConfigurationResponsesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "NginxConfigurationCollection.GetAll"), data => new NginxConfigurationResource(Client, data));
         }
 
         /// <summary>

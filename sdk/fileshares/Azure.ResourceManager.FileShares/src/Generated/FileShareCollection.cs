@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.FileShares
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<FileShareData, FileShareResource>(new FileSharesInterfaceGetByParentAsyncCollectionResultOfT(_fileSharesInterfaceRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new FileShareResource(Client, data));
+            return new AsyncPageableWrapper<FileShareData, FileShareResource>(new FileSharesInterfaceGetByParentAsyncCollectionResultOfT(_fileSharesInterfaceRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "FileShareCollection.GetAll"), data => new FileShareResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.FileShares
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<FileShareData, FileShareResource>(new FileSharesInterfaceGetByParentCollectionResultOfT(_fileSharesInterfaceRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new FileShareResource(Client, data));
+            return new PageableWrapper<FileShareData, FileShareResource>(new FileSharesInterfaceGetByParentCollectionResultOfT(_fileSharesInterfaceRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "FileShareCollection.GetAll"), data => new FileShareResource(Client, data));
         }
 
         /// <summary>

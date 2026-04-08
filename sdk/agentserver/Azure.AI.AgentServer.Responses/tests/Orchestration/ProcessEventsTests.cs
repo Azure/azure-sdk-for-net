@@ -13,7 +13,7 @@ namespace Azure.AI.AgentServer.Responses.Tests.Orchestration;
 
 /// <summary>
 /// Tests for <see cref="ResponseOrchestrator.ProcessEventsAsync"/> covering:
-/// - First event validation (FR-006: must be ResponseCreatedEvent)
+/// - First event validation (B8: must be ResponseCreatedEvent)
 /// - Auto-stamping of output items
 /// - Full replacement on response.* events (via ReplaceResponse)
 /// - Output list update on output_item.* events (via SetOutputItemAtIndex)
@@ -42,7 +42,7 @@ public class ProcessEventsTests : IDisposable
     [Test]
     public async Task FirstEvent_NotResponseCreated_ThrowsResponsesApiException()
     {
-        // FR-006: first event must be ResponseCreatedEvent
+        // B8: first event must be ResponseCreatedEvent
         _handler.EventFactory = (req, ctx, ct) => YieldEvents(
             new ResponseInProgressEvent(0, new Models.ResponseObject(ctx.ResponseId, "test")));
 
@@ -60,7 +60,7 @@ public class ProcessEventsTests : IDisposable
     [Test]
     public async Task EmptyEnumerable_ThrowsResponsesApiException()
     {
-        // FR-007: empty enumerable — bad handler
+        // B32/S-015: empty enumerable — bad handler
         _handler.EventFactory = (req, ctx, ct) => EmptyStream();
 
         var (execution, publisher) = await CreateExecutionWithPublisher("resp_proc_02");

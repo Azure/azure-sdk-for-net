@@ -296,7 +296,8 @@ namespace Azure.ResourceManager.Confluent
                 Id.Name,
                 pageSize,
                 pageToken,
-                context), data => new ConfluentConnectorResource(Client, data));
+                context,
+                "ConfluentConnectorCollection.GetAll"), data => new ConfluentConnectorResource(Client, data));
         }
 
         /// <summary>
@@ -335,7 +336,8 @@ namespace Azure.ResourceManager.Confluent
                 Id.Name,
                 pageSize,
                 pageToken,
-                context), data => new ConfluentConnectorResource(Client, data));
+                context,
+                "ConfluentConnectorCollection.GetAll"), data => new ConfluentConnectorResource(Client, data));
         }
 
         /// <summary>

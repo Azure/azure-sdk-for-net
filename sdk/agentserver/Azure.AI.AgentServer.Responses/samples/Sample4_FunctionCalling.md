@@ -1,6 +1,6 @@
 # Sample 4: Function Calling — Two-Turn Weather Handler
 
-This sample shows the two-turn function calling pattern where the server emits a function call on the first turn, receives the function output on the second turn, and returns a final text message.
+This sample shows the two-turn function calling pattern where the server emits a function call on the first turn, receives the function output on the second turn, and returns a final text message. The handler is shown first using convenience generators, then with full builder control.
 
 ## Prerequisites
 
@@ -10,8 +10,61 @@ dotnet add package Azure.AI.AgentServer.Responses --prerelease
 
 ## Implement the handler
 
-```C# Snippet:Responses_Sample4_WeatherHandler
+Use `OutputItemFunctionCall()` and `OutputItemMessage()` to emit complete output items in one call each. The convenience generators handle all inner events automatically:
+
+```C# Snippet:Responses_Sample4_WeatherHandlerConvenience
 public class WeatherHandler : ResponseHandler
+{
+    public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
+        CreateResponse request,
+        ResponseContext context,
+        [EnumeratorCancellation] CancellationToken cancellationToken)
+    {
+        await Task.CompletedTask;
+        var stream = new ResponseEventStream(context, request);
+
+        // Check if the input contains a function call output (turn 2)
+        var inputItems = request.GetInputExpanded();
+        var toolOutput = inputItems.OfType<FunctionCallOutputItemParam>().FirstOrDefault();
+
+        if (toolOutput is not null)
+        {
+            // Turn 2: function output received — return the weather as a text message
+            var weatherJson = toolOutput.Output is not null
+                ? JsonSerializer.Deserialize<string>(toolOutput.Output) ?? "{}"
+                : "{}";
+
+            yield return stream.EmitCreated();
+            yield return stream.EmitInProgress();
+
+            foreach (var evt in stream.OutputItemMessage($"The weather is: {weatherJson}"))
+                yield return evt;
+
+            yield return stream.EmitCompleted();
+        }
+        else
+        {
+            // Turn 1: emit a function call for "get_weather"
+            yield return stream.EmitCreated();
+            yield return stream.EmitInProgress();
+
+            var arguments = JsonSerializer.Serialize(
+                new { location = "Seattle", unit = "fahrenheit" });
+            foreach (var evt in stream.OutputItemFunctionCall("get_weather", "call_weather_1", arguments))
+                yield return evt;
+
+            yield return stream.EmitCompleted();
+        }
+    }
+}
+```
+
+## With full event control
+
+When you need to set custom properties on the function call item before `EmitAdded()`, or interleave non-event work between builder calls, use the builder API:
+
+```C# Snippet:Responses_Sample4_WeatherHandler
+public class WeatherHandlerFullControl : ResponseHandler
 {
     public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
         CreateResponse request,

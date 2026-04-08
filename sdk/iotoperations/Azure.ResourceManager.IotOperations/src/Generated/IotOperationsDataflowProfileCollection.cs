@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.IotOperations
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<IotOperationsDataflowProfileData, IotOperationsDataflowProfileResource>(new DataflowProfileGetByResourceGroupAsyncCollectionResultOfT(_dataflowProfileRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new IotOperationsDataflowProfileResource(Client, data));
+            return new AsyncPageableWrapper<IotOperationsDataflowProfileData, IotOperationsDataflowProfileResource>(new DataflowProfileGetByResourceGroupAsyncCollectionResultOfT(
+                _dataflowProfileRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "IotOperationsDataflowProfileCollection.GetAll"), data => new IotOperationsDataflowProfileResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.IotOperations
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<IotOperationsDataflowProfileData, IotOperationsDataflowProfileResource>(new DataflowProfileGetByResourceGroupCollectionResultOfT(_dataflowProfileRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new IotOperationsDataflowProfileResource(Client, data));
+            return new PageableWrapper<IotOperationsDataflowProfileData, IotOperationsDataflowProfileResource>(new DataflowProfileGetByResourceGroupCollectionResultOfT(
+                _dataflowProfileRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "IotOperationsDataflowProfileCollection.GetAll"), data => new IotOperationsDataflowProfileResource(Client, data));
         }
 
         /// <summary>

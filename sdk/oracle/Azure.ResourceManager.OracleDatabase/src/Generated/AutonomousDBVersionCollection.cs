@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AutonomousDBVersionData, AutonomousDBVersionResource>(new AutonomousDatabaseVersionsGetByLocationAsyncCollectionResultOfT(_autonomousDatabaseVersionsRestClient, Guid.Parse(Id.SubscriptionId), _location, context), data => new AutonomousDBVersionResource(Client, data));
+            return new AsyncPageableWrapper<AutonomousDBVersionData, AutonomousDBVersionResource>(new AutonomousDatabaseVersionsGetByLocationAsyncCollectionResultOfT(_autonomousDatabaseVersionsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "AutonomousDBVersionCollection.GetAll"), data => new AutonomousDBVersionResource(Client, data));
         }
 
         /// <summary>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AutonomousDBVersionData, AutonomousDBVersionResource>(new AutonomousDatabaseVersionsGetByLocationCollectionResultOfT(_autonomousDatabaseVersionsRestClient, Guid.Parse(Id.SubscriptionId), _location, context), data => new AutonomousDBVersionResource(Client, data));
+            return new PageableWrapper<AutonomousDBVersionData, AutonomousDBVersionResource>(new AutonomousDatabaseVersionsGetByLocationCollectionResultOfT(_autonomousDatabaseVersionsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "AutonomousDBVersionCollection.GetAll"), data => new AutonomousDBVersionResource(Client, data));
         }
 
         /// <summary>
