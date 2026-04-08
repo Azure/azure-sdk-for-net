@@ -8,7 +8,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -20,8 +19,8 @@ namespace Azure.ResourceManager.Chaos
 {
     /// <summary>
     /// A class representing a collection of <see cref="ChaosCapabilityResource"/> and their operations.
-    /// Each <see cref="ChaosCapabilityResource"/> in the collection will belong to the same instance of <see cref="ChaosTargetResource"/>.
-    /// To get a <see cref="ChaosCapabilityCollection"/> instance call the GetChaosCapabilities method from an instance of <see cref="ChaosTargetResource"/>.
+    /// Each <see cref="ChaosCapabilityResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
+    /// To get a <see cref="ChaosCapabilityCollection"/> instance call the GetChaosCapabilities method from an instance of <see cref="ArmResource"/>.
     /// </summary>
     public partial class ChaosCapabilityCollection : ArmCollection, IEnumerable<ChaosCapabilityResource>, IAsyncEnumerable<ChaosCapabilityResource>
     {
@@ -41,17 +40,6 @@ namespace Azure.ResourceManager.Chaos
             TryGetApiVersion(ChaosCapabilityResource.ResourceType, out string chaosCapabilityApiVersion);
             _capabilitiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Chaos", ChaosCapabilityResource.ResourceType.Namespace, Diagnostics);
             _capabilitiesRestClient = new Capabilities(_capabilitiesClientDiagnostics, Pipeline, Endpoint, chaosCapabilityApiVersion ?? "2025-01-01");
-            ValidateResourceId(id);
-        }
-
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
-        internal static void ValidateResourceId(ResourceIdentifier id)
-        {
-            if (id.ResourceType != ChaosTargetResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ChaosTargetResource.ResourceType), nameof(id));
-            }
         }
 
         /// <summary>

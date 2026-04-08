@@ -8,21 +8,19 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.GuestConfiguration
 {
     /// <summary>
     /// A class representing a collection of <see cref="GuestConfigurationVmssAssignmentResource"/> and their operations.
-    /// Each <see cref="GuestConfigurationVmssAssignmentResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="GuestConfigurationVmssAssignmentCollection"/> instance call the GetGuestConfigurationVmssAssignments method from an instance of <see cref="ResourceGroupResource"/>.
+    /// Each <see cref="GuestConfigurationVmssAssignmentResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
+    /// To get a <see cref="GuestConfigurationVmssAssignmentCollection"/> instance call the GetGuestConfigurationVmssAssignments method from an instance of <see cref="ArmResource"/>.
     /// </summary>
     public partial class GuestConfigurationVmssAssignmentCollection : ArmCollection, IEnumerable<GuestConfigurationVmssAssignmentResource>, IAsyncEnumerable<GuestConfigurationVmssAssignmentResource>
     {
@@ -30,8 +28,6 @@ namespace Azure.ResourceManager.GuestConfiguration
         private readonly GuestConfigurationAssignmentsVMSS _guestConfigurationAssignmentsVMSSRestClient;
         private readonly ClientDiagnostics _guestConfigurationAssignmentReportsVMSSClientDiagnostics;
         private readonly GuestConfigurationAssignmentReportsVMSS _guestConfigurationAssignmentReportsVMSSRestClient;
-        /// <summary> The vmssName. </summary>
-        private readonly string _vmssName;
 
         /// <summary> Initializes a new instance of GuestConfigurationVmssAssignmentCollection for mocking. </summary>
         protected GuestConfigurationVmssAssignmentCollection()
@@ -41,26 +37,13 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <summary> Initializes a new instance of <see cref="GuestConfigurationVmssAssignmentCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        /// <param name="vmssName"> The vmssName for the resource. </param>
-        internal GuestConfigurationVmssAssignmentCollection(ArmClient client, ResourceIdentifier id, string vmssName) : base(client, id)
+        internal GuestConfigurationVmssAssignmentCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(GuestConfigurationVmssAssignmentResource.ResourceType, out string guestConfigurationVmssAssignmentApiVersion);
-            _vmssName = vmssName;
             _guestConfigurationAssignmentsVMSSClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.GuestConfiguration", GuestConfigurationVmssAssignmentResource.ResourceType.Namespace, Diagnostics);
             _guestConfigurationAssignmentsVMSSRestClient = new GuestConfigurationAssignmentsVMSS(_guestConfigurationAssignmentsVMSSClientDiagnostics, Pipeline, Endpoint, guestConfigurationVmssAssignmentApiVersion ?? "2024-04-05");
             _guestConfigurationAssignmentReportsVMSSClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.GuestConfiguration", GuestConfigurationVmssAssignmentResource.ResourceType.Namespace, Diagnostics);
             _guestConfigurationAssignmentReportsVMSSRestClient = new GuestConfigurationAssignmentReportsVMSS(_guestConfigurationAssignmentReportsVMSSClientDiagnostics, Pipeline, Endpoint, guestConfigurationVmssAssignmentApiVersion ?? "2024-04-05");
-            ValidateResourceId(id);
-        }
-
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
-        internal static void ValidateResourceId(ResourceIdentifier id)
-        {
-            if (id.ResourceType != ResourceGroupResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
-            }
         }
 
         /// <summary>
@@ -99,7 +82,7 @@ namespace Azure.ResourceManager.GuestConfiguration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _guestConfigurationAssignmentsVMSSRestClient.CreateCreateOrUpdateForVmssRequest(Id.SubscriptionId, Id.ResourceGroupName, _vmssName, name, GuestConfigurationAssignmentData.ToRequestContent(data), context);
+                HttpMessage message = _guestConfigurationAssignmentsVMSSRestClient.CreateCreateOrUpdateForVmssRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, GuestConfigurationAssignmentData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<GuestConfigurationAssignmentData> response = Response.FromValue(GuestConfigurationAssignmentData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -154,7 +137,7 @@ namespace Azure.ResourceManager.GuestConfiguration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _guestConfigurationAssignmentsVMSSRestClient.CreateCreateOrUpdateForVmssRequest(Id.SubscriptionId, Id.ResourceGroupName, _vmssName, name, GuestConfigurationAssignmentData.ToRequestContent(data), context);
+                HttpMessage message = _guestConfigurationAssignmentsVMSSRestClient.CreateCreateOrUpdateForVmssRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, GuestConfigurationAssignmentData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<GuestConfigurationAssignmentData> response = Response.FromValue(GuestConfigurationAssignmentData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -206,7 +189,7 @@ namespace Azure.ResourceManager.GuestConfiguration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _guestConfigurationAssignmentsVMSSRestClient.CreateGetForVmssRequest(Id.SubscriptionId, Id.ResourceGroupName, _vmssName, name, context);
+                HttpMessage message = _guestConfigurationAssignmentsVMSSRestClient.CreateGetForVmssRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<GuestConfigurationAssignmentData> response = Response.FromValue(GuestConfigurationAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -255,7 +238,7 @@ namespace Azure.ResourceManager.GuestConfiguration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _guestConfigurationAssignmentsVMSSRestClient.CreateGetForVmssRequest(Id.SubscriptionId, Id.ResourceGroupName, _vmssName, name, context);
+                HttpMessage message = _guestConfigurationAssignmentsVMSSRestClient.CreateGetForVmssRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<GuestConfigurationAssignmentData> response = Response.FromValue(GuestConfigurationAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -300,7 +283,7 @@ namespace Azure.ResourceManager.GuestConfiguration
                 _guestConfigurationAssignmentsVMSSRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
-                _vmssName,
+                Id.Name,
                 context,
                 "GuestConfigurationVmssAssignmentCollection.GetAll"), data => new GuestConfigurationVmssAssignmentResource(Client, data));
         }
@@ -334,7 +317,7 @@ namespace Azure.ResourceManager.GuestConfiguration
                 _guestConfigurationAssignmentsVMSSRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
-                _vmssName,
+                Id.Name,
                 context,
                 "GuestConfigurationVmssAssignmentCollection.GetAll"), data => new GuestConfigurationVmssAssignmentResource(Client, data));
         }
@@ -372,7 +355,7 @@ namespace Azure.ResourceManager.GuestConfiguration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _guestConfigurationAssignmentsVMSSRestClient.CreateGetForVmssRequest(Id.SubscriptionId, Id.ResourceGroupName, _vmssName, name, context);
+                HttpMessage message = _guestConfigurationAssignmentsVMSSRestClient.CreateGetForVmssRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<GuestConfigurationAssignmentData> response = default;
@@ -429,7 +412,7 @@ namespace Azure.ResourceManager.GuestConfiguration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _guestConfigurationAssignmentsVMSSRestClient.CreateGetForVmssRequest(Id.SubscriptionId, Id.ResourceGroupName, _vmssName, name, context);
+                HttpMessage message = _guestConfigurationAssignmentsVMSSRestClient.CreateGetForVmssRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<GuestConfigurationAssignmentData> response = default;
@@ -486,7 +469,7 @@ namespace Azure.ResourceManager.GuestConfiguration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _guestConfigurationAssignmentsVMSSRestClient.CreateGetForVmssRequest(Id.SubscriptionId, Id.ResourceGroupName, _vmssName, name, context);
+                HttpMessage message = _guestConfigurationAssignmentsVMSSRestClient.CreateGetForVmssRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<GuestConfigurationAssignmentData> response = default;
@@ -547,7 +530,7 @@ namespace Azure.ResourceManager.GuestConfiguration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _guestConfigurationAssignmentsVMSSRestClient.CreateGetForVmssRequest(Id.SubscriptionId, Id.ResourceGroupName, _vmssName, name, context);
+                HttpMessage message = _guestConfigurationAssignmentsVMSSRestClient.CreateGetForVmssRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<GuestConfigurationAssignmentData> response = default;

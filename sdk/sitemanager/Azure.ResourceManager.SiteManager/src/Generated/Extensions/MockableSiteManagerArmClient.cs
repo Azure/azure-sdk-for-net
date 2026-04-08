@@ -62,6 +62,10 @@ namespace Azure.ResourceManager.SiteManager.Mocking
         /// <returns> Returns a collection of <see cref="ServiceGroupEdgeSiteResource"/> objects. </returns>
         public virtual ServiceGroupEdgeSiteCollection GetServiceGroupEdgeSites(ResourceIdentifier scope)
         {
+            if (scope.ResourceType != "Microsoft.Management/serviceGroups")
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0}, expected {1}", scope.ResourceType, "Microsoft.Management/serviceGroups"), scope);
+            }
             return new ServiceGroupEdgeSiteCollection(Client, scope);
         }
 

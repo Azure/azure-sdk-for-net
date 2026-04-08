@@ -8,7 +8,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -20,8 +19,8 @@ namespace Azure.ResourceManager.Advisor
 {
     /// <summary>
     /// A class representing a collection of <see cref="AdvisorTriageRecommendationResource"/> and their operations.
-    /// Each <see cref="AdvisorTriageRecommendationResource"/> in the collection will belong to the same instance of <see cref="AdvisorResiliencyReviewResource"/>.
-    /// To get a <see cref="AdvisorTriageRecommendationCollection"/> instance call the GetAdvisorTriageRecommendations method from an instance of <see cref="AdvisorResiliencyReviewResource"/>.
+    /// Each <see cref="AdvisorTriageRecommendationResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
+    /// To get a <see cref="AdvisorTriageRecommendationCollection"/> instance call the GetAdvisorTriageRecommendations method from an instance of <see cref="ArmResource"/>.
     /// </summary>
     public partial class AdvisorTriageRecommendationCollection : ArmCollection, IEnumerable<AdvisorTriageRecommendationResource>, IAsyncEnumerable<AdvisorTriageRecommendationResource>
     {
@@ -41,17 +40,6 @@ namespace Azure.ResourceManager.Advisor
             TryGetApiVersion(AdvisorTriageRecommendationResource.ResourceType, out string advisorTriageRecommendationApiVersion);
             _triageRecommendationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Advisor", AdvisorTriageRecommendationResource.ResourceType.Namespace, Diagnostics);
             _triageRecommendationsRestClient = new TriageRecommendations(_triageRecommendationsClientDiagnostics, Pipeline, Endpoint, advisorTriageRecommendationApiVersion ?? "2025-05-01-preview");
-            ValidateResourceId(id);
-        }
-
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
-        internal static void ValidateResourceId(ResourceIdentifier id)
-        {
-            if (id.ResourceType != AdvisorResiliencyReviewResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AdvisorResiliencyReviewResource.ResourceType), nameof(id));
-            }
         }
 
         /// <summary>

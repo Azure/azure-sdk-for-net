@@ -13,14 +13,13 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Chaos
 {
     /// <summary>
     /// A class representing a ChaosTarget along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ChaosTargetResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetChaosTargets method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetChaosTargets method.
     /// </summary>
     public partial class ChaosTargetResource : ArmResource
     {
@@ -404,7 +403,7 @@ namespace Azure.ResourceManager.Chaos
             }
         }
 
-        /// <summary> Gets a collection of ChaosCapabilities in the <see cref="ChaosTargetResource"/>. </summary>
+        /// <summary> Gets a collection of ChaosCapabilities in the <see cref="ArmResource"/>. </summary>
         /// <returns> An object representing collection of ChaosCapabilities and their operations over a ChaosCapabilityResource. </returns>
         public virtual ChaosCapabilityCollection GetChaosCapabilities()
         {

@@ -8,32 +8,24 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Chaos
 {
     /// <summary>
     /// A class representing a collection of <see cref="ChaosTargetResource"/> and their operations.
-    /// Each <see cref="ChaosTargetResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="ChaosTargetCollection"/> instance call the GetChaosTargets method from an instance of <see cref="ResourceGroupResource"/>.
+    /// Each <see cref="ChaosTargetResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
+    /// To get a <see cref="ChaosTargetCollection"/> instance call the GetChaosTargets method from an instance of <see cref="ArmResource"/>.
     /// </summary>
     public partial class ChaosTargetCollection : ArmCollection, IEnumerable<ChaosTargetResource>, IAsyncEnumerable<ChaosTargetResource>
     {
         private readonly ClientDiagnostics _targetsClientDiagnostics;
         private readonly Targets _targetsRestClient;
-        /// <summary> The parentProviderNamespace. </summary>
-        private readonly string _parentProviderNamespace;
-        /// <summary> The parentResourceType. </summary>
-        private readonly string _parentResourceType;
-        /// <summary> The parentResourceName. </summary>
-        private readonly string _parentResourceName;
 
         /// <summary> Initializes a new instance of ChaosTargetCollection for mocking. </summary>
         protected ChaosTargetCollection()
@@ -43,28 +35,11 @@ namespace Azure.ResourceManager.Chaos
         /// <summary> Initializes a new instance of <see cref="ChaosTargetCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        /// <param name="parentProviderNamespace"> The parentProviderNamespace for the resource. </param>
-        /// <param name="parentResourceType"> The parentResourceType for the resource. </param>
-        /// <param name="parentResourceName"> The parentResourceName for the resource. </param>
-        internal ChaosTargetCollection(ArmClient client, ResourceIdentifier id, string parentProviderNamespace, string parentResourceType, string parentResourceName) : base(client, id)
+        internal ChaosTargetCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ChaosTargetResource.ResourceType, out string chaosTargetApiVersion);
-            _parentProviderNamespace = parentProviderNamespace;
-            _parentResourceType = parentResourceType;
-            _parentResourceName = parentResourceName;
             _targetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Chaos", ChaosTargetResource.ResourceType.Namespace, Diagnostics);
             _targetsRestClient = new Targets(_targetsClientDiagnostics, Pipeline, Endpoint, chaosTargetApiVersion ?? "2025-01-01");
-            ValidateResourceId(id);
-        }
-
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
-        internal static void ValidateResourceId(ResourceIdentifier id)
-        {
-            if (id.ResourceType != ResourceGroupResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
-            }
         }
 
         /// <summary>
@@ -103,7 +78,7 @@ namespace Azure.ResourceManager.Chaos
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _targetsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _parentProviderNamespace, _parentResourceType, _parentResourceName, targetName, ChaosTargetData.ToRequestContent(data), context);
+                HttpMessage message = _targetsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Name, Id.ResourceType.Type, targetName, ChaosTargetData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ChaosTargetData> response = Response.FromValue(ChaosTargetData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -158,7 +133,7 @@ namespace Azure.ResourceManager.Chaos
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _targetsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _parentProviderNamespace, _parentResourceType, _parentResourceName, targetName, ChaosTargetData.ToRequestContent(data), context);
+                HttpMessage message = _targetsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Name, Id.ResourceType.Type, targetName, ChaosTargetData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ChaosTargetData> response = Response.FromValue(ChaosTargetData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -210,7 +185,7 @@ namespace Azure.ResourceManager.Chaos
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _targetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _parentProviderNamespace, _parentResourceType, _parentResourceName, targetName, context);
+                HttpMessage message = _targetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Name, Id.ResourceType.Type, targetName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ChaosTargetData> response = Response.FromValue(ChaosTargetData.FromResponse(result), result);
                 if (response.Value == null)
@@ -259,7 +234,7 @@ namespace Azure.ResourceManager.Chaos
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _targetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _parentProviderNamespace, _parentResourceType, _parentResourceName, targetName, context);
+                HttpMessage message = _targetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Name, Id.ResourceType.Type, targetName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ChaosTargetData> response = Response.FromValue(ChaosTargetData.FromResponse(result), result);
                 if (response.Value == null)
@@ -305,9 +280,9 @@ namespace Azure.ResourceManager.Chaos
                 _targetsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
-                _parentProviderNamespace,
-                _parentResourceType,
-                _parentResourceName,
+                Id.ResourceType.Namespace,
+                Id.Name,
+                Id.ResourceType.Type,
                 continuationToken,
                 context,
                 "ChaosTargetCollection.GetAll"), data => new ChaosTargetResource(Client, data));
@@ -343,9 +318,9 @@ namespace Azure.ResourceManager.Chaos
                 _targetsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
-                _parentProviderNamespace,
-                _parentResourceType,
-                _parentResourceName,
+                Id.ResourceType.Namespace,
+                Id.Name,
+                Id.ResourceType.Type,
                 continuationToken,
                 context,
                 "ChaosTargetCollection.GetAll"), data => new ChaosTargetResource(Client, data));
@@ -384,7 +359,7 @@ namespace Azure.ResourceManager.Chaos
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _targetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _parentProviderNamespace, _parentResourceType, _parentResourceName, targetName, context);
+                HttpMessage message = _targetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Name, Id.ResourceType.Type, targetName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ChaosTargetData> response = default;
@@ -441,7 +416,7 @@ namespace Azure.ResourceManager.Chaos
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _targetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _parentProviderNamespace, _parentResourceType, _parentResourceName, targetName, context);
+                HttpMessage message = _targetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Name, Id.ResourceType.Type, targetName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ChaosTargetData> response = default;
@@ -498,7 +473,7 @@ namespace Azure.ResourceManager.Chaos
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _targetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _parentProviderNamespace, _parentResourceType, _parentResourceName, targetName, context);
+                HttpMessage message = _targetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Name, Id.ResourceType.Type, targetName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ChaosTargetData> response = default;
@@ -559,7 +534,7 @@ namespace Azure.ResourceManager.Chaos
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _targetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _parentProviderNamespace, _parentResourceType, _parentResourceName, targetName, context);
+                HttpMessage message = _targetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Name, Id.ResourceType.Type, targetName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ChaosTargetData> response = default;
