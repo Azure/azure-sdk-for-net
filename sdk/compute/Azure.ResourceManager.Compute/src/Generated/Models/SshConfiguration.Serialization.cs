@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 writer.WritePropertyName("publicKeys"u8);
                 writer.WriteStartArray();
-                foreach (SshPublicKey item in PublicKeys)
+                foreach (SshPublicKeyConfiguration item in PublicKeys)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            IList<SshPublicKey> publicKeys = default;
+            IList<SshPublicKeyConfiguration> publicKeys = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -136,10 +136,10 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    List<SshPublicKey> array = new List<SshPublicKey>();
+                    List<SshPublicKeyConfiguration> array = new List<SshPublicKeyConfiguration>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SshPublicKey.DeserializeSshPublicKey(item, options));
+                        array.Add(SshPublicKeyConfiguration.DeserializeSshPublicKeyConfiguration(item, options));
                     }
                     publicKeys = array;
                     continue;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SshConfiguration(publicKeys ?? new ChangeTrackingList<SshPublicKey>(), additionalBinaryDataProperties);
+            return new SshConfiguration(publicKeys ?? new ChangeTrackingList<SshPublicKeyConfiguration>(), additionalBinaryDataProperties);
         }
     }
 }

@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.Compute
     /// <summary>
     /// A class representing a collection of <see cref="SshPublicKeyResource"/> and their operations.
     /// Each <see cref="SshPublicKeyResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="SshPublicKeyResourceCollection"/> instance call the GetSshPublicKeyResources method from an instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="SshPublicKeyCollection"/> instance call the GetSshPublicKeys method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
-    public partial class SshPublicKeyResourceCollection : ArmCollection, IEnumerable<SshPublicKeyResource>, IAsyncEnumerable<SshPublicKeyResource>
+    public partial class SshPublicKeyCollection : ArmCollection, IEnumerable<SshPublicKeyResource>, IAsyncEnumerable<SshPublicKeyResource>
     {
         private readonly ClientDiagnostics _sshPublicKeyResourcesClientDiagnostics;
         private readonly SshPublicKeyResources _sshPublicKeyResourcesRestClient;
 
-        /// <summary> Initializes a new instance of SshPublicKeyResourceCollection for mocking. </summary>
-        protected SshPublicKeyResourceCollection()
+        /// <summary> Initializes a new instance of SshPublicKeyCollection for mocking. </summary>
+        protected SshPublicKeyCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SshPublicKeyResourceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SshPublicKeyCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SshPublicKeyResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal SshPublicKeyCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(SshPublicKeyResource.ResourceType, out string sshPublicKeyResourceApiVersion);
+            TryGetApiVersion(SshPublicKeyResource.ResourceType, out string sshPublicKeyApiVersion);
             _sshPublicKeyResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", SshPublicKeyResource.ResourceType.Namespace, Diagnostics);
-            _sshPublicKeyResourcesRestClient = new SshPublicKeyResources(_sshPublicKeyResourcesClientDiagnostics, Pipeline, Endpoint, sshPublicKeyResourceApiVersion ?? "2025-04-01");
+            _sshPublicKeyResourcesRestClient = new SshPublicKeyResources(_sshPublicKeyResourcesClientDiagnostics, Pipeline, Endpoint, sshPublicKeyApiVersion ?? "2025-04-01");
             ValidateResourceId(id);
         }
 
@@ -78,12 +78,12 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sshPublicKeyName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sshPublicKeyName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<SshPublicKeyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string sshPublicKeyName, SshPublicKeyResourceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SshPublicKeyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string sshPublicKeyName, SshPublicKeyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sshPublicKeyName, nameof(sshPublicKeyName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _sshPublicKeyResourcesClientDiagnostics.CreateScope("SshPublicKeyResourceCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _sshPublicKeyResourcesClientDiagnostics.CreateScope("SshPublicKeyCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -91,9 +91,9 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sshPublicKeyResourcesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, sshPublicKeyName, SshPublicKeyResourceData.ToRequestContent(data), context);
+                HttpMessage message = _sshPublicKeyResourcesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, sshPublicKeyName, SshPublicKeyData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<SshPublicKeyResourceData> response = Response.FromValue(SshPublicKeyResourceData.FromResponse(result), result);
+                Response<SshPublicKeyData> response = Response.FromValue(SshPublicKeyData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 ComputeArmOperation<SshPublicKeyResource> operation = new ComputeArmOperation<SshPublicKeyResource>(Response.FromValue(new SshPublicKeyResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
@@ -133,12 +133,12 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sshPublicKeyName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sshPublicKeyName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<SshPublicKeyResource> CreateOrUpdate(WaitUntil waitUntil, string sshPublicKeyName, SshPublicKeyResourceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SshPublicKeyResource> CreateOrUpdate(WaitUntil waitUntil, string sshPublicKeyName, SshPublicKeyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sshPublicKeyName, nameof(sshPublicKeyName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _sshPublicKeyResourcesClientDiagnostics.CreateScope("SshPublicKeyResourceCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _sshPublicKeyResourcesClientDiagnostics.CreateScope("SshPublicKeyCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -146,9 +146,9 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sshPublicKeyResourcesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, sshPublicKeyName, SshPublicKeyResourceData.ToRequestContent(data), context);
+                HttpMessage message = _sshPublicKeyResourcesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, sshPublicKeyName, SshPublicKeyData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<SshPublicKeyResourceData> response = Response.FromValue(SshPublicKeyResourceData.FromResponse(result), result);
+                Response<SshPublicKeyData> response = Response.FromValue(SshPublicKeyData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 ComputeArmOperation<SshPublicKeyResource> operation = new ComputeArmOperation<SshPublicKeyResource>(Response.FromValue(new SshPublicKeyResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNullOrEmpty(sshPublicKeyName, nameof(sshPublicKeyName));
 
-            using DiagnosticScope scope = _sshPublicKeyResourcesClientDiagnostics.CreateScope("SshPublicKeyResourceCollection.Get");
+            using DiagnosticScope scope = _sshPublicKeyResourcesClientDiagnostics.CreateScope("SshPublicKeyCollection.Get");
             scope.Start();
             try
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Compute
                 };
                 HttpMessage message = _sshPublicKeyResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, sshPublicKeyName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<SshPublicKeyResourceData> response = Response.FromValue(SshPublicKeyResourceData.FromResponse(result), result);
+                Response<SshPublicKeyData> response = Response.FromValue(SshPublicKeyData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNullOrEmpty(sshPublicKeyName, nameof(sshPublicKeyName));
 
-            using DiagnosticScope scope = _sshPublicKeyResourcesClientDiagnostics.CreateScope("SshPublicKeyResourceCollection.Get");
+            using DiagnosticScope scope = _sshPublicKeyResourcesClientDiagnostics.CreateScope("SshPublicKeyCollection.Get");
             scope.Start();
             try
             {
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Compute
                 };
                 HttpMessage message = _sshPublicKeyResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, sshPublicKeyName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<SshPublicKeyResourceData> response = Response.FromValue(SshPublicKeyResourceData.FromResponse(result), result);
+                Response<SshPublicKeyData> response = Response.FromValue(SshPublicKeyData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SshPublicKeyResourceData, SshPublicKeyResource>(new SshPublicKeyResourcesGetByResourceGroupAsyncCollectionResultOfT(_sshPublicKeyResourcesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "SshPublicKeyResourceCollection.GetAll"), data => new SshPublicKeyResource(Client, data));
+            return new AsyncPageableWrapper<SshPublicKeyData, SshPublicKeyResource>(new SshPublicKeyResourcesGetByResourceGroupAsyncCollectionResultOfT(_sshPublicKeyResourcesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "SshPublicKeyCollection.GetAll"), data => new SshPublicKeyResource(Client, data));
         }
 
         /// <summary>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SshPublicKeyResourceData, SshPublicKeyResource>(new SshPublicKeyResourcesGetByResourceGroupCollectionResultOfT(_sshPublicKeyResourcesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "SshPublicKeyResourceCollection.GetAll"), data => new SshPublicKeyResource(Client, data));
+            return new PageableWrapper<SshPublicKeyData, SshPublicKeyResource>(new SshPublicKeyResourcesGetByResourceGroupCollectionResultOfT(_sshPublicKeyResourcesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "SshPublicKeyCollection.GetAll"), data => new SshPublicKeyResource(Client, data));
         }
 
         /// <summary>
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNullOrEmpty(sshPublicKeyName, nameof(sshPublicKeyName));
 
-            using DiagnosticScope scope = _sshPublicKeyResourcesClientDiagnostics.CreateScope("SshPublicKeyResourceCollection.Exists");
+            using DiagnosticScope scope = _sshPublicKeyResourcesClientDiagnostics.CreateScope("SshPublicKeyCollection.Exists");
             scope.Start();
             try
             {
@@ -355,14 +355,14 @@ namespace Azure.ResourceManager.Compute
                 HttpMessage message = _sshPublicKeyResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, sshPublicKeyName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<SshPublicKeyResourceData> response = default;
+                Response<SshPublicKeyData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(SshPublicKeyResourceData.FromResponse(result), result);
+                        response = Response.FromValue(SshPublicKeyData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((SshPublicKeyResourceData)null, result);
+                        response = Response.FromValue((SshPublicKeyData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNullOrEmpty(sshPublicKeyName, nameof(sshPublicKeyName));
 
-            using DiagnosticScope scope = _sshPublicKeyResourcesClientDiagnostics.CreateScope("SshPublicKeyResourceCollection.Exists");
+            using DiagnosticScope scope = _sshPublicKeyResourcesClientDiagnostics.CreateScope("SshPublicKeyCollection.Exists");
             scope.Start();
             try
             {
@@ -412,14 +412,14 @@ namespace Azure.ResourceManager.Compute
                 HttpMessage message = _sshPublicKeyResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, sshPublicKeyName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<SshPublicKeyResourceData> response = default;
+                Response<SshPublicKeyData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(SshPublicKeyResourceData.FromResponse(result), result);
+                        response = Response.FromValue(SshPublicKeyData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((SshPublicKeyResourceData)null, result);
+                        response = Response.FromValue((SshPublicKeyData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNullOrEmpty(sshPublicKeyName, nameof(sshPublicKeyName));
 
-            using DiagnosticScope scope = _sshPublicKeyResourcesClientDiagnostics.CreateScope("SshPublicKeyResourceCollection.GetIfExists");
+            using DiagnosticScope scope = _sshPublicKeyResourcesClientDiagnostics.CreateScope("SshPublicKeyCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -469,14 +469,14 @@ namespace Azure.ResourceManager.Compute
                 HttpMessage message = _sshPublicKeyResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, sshPublicKeyName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<SshPublicKeyResourceData> response = default;
+                Response<SshPublicKeyData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(SshPublicKeyResourceData.FromResponse(result), result);
+                        response = Response.FromValue(SshPublicKeyData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((SshPublicKeyResourceData)null, result);
+                        response = Response.FromValue((SshPublicKeyData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -519,7 +519,7 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNullOrEmpty(sshPublicKeyName, nameof(sshPublicKeyName));
 
-            using DiagnosticScope scope = _sshPublicKeyResourcesClientDiagnostics.CreateScope("SshPublicKeyResourceCollection.GetIfExists");
+            using DiagnosticScope scope = _sshPublicKeyResourcesClientDiagnostics.CreateScope("SshPublicKeyCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -530,14 +530,14 @@ namespace Azure.ResourceManager.Compute
                 HttpMessage message = _sshPublicKeyResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, sshPublicKeyName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<SshPublicKeyResourceData> response = default;
+                Response<SshPublicKeyData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(SshPublicKeyResourceData.FromResponse(result), result);
+                        response = Response.FromValue(SshPublicKeyData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((SshPublicKeyResourceData)null, result);
+                        response = Response.FromValue((SshPublicKeyData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);

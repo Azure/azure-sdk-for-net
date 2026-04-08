@@ -18,10 +18,10 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> Specifies information about the SSH public key. </summary>
-    public partial class SshPublicKeyResourceData : TrackedResourceData, IJsonModel<SshPublicKeyResourceData>
+    public partial class SshPublicKeyData : TrackedResourceData, IJsonModel<SshPublicKeyData>
     {
-        /// <summary> Initializes a new instance of <see cref="SshPublicKeyResourceData"/> for deserialization. </summary>
-        internal SshPublicKeyResourceData()
+        /// <summary> Initializes a new instance of <see cref="SshPublicKeyData"/> for deserialization. </summary>
+        internal SshPublicKeyData()
         {
         }
 
@@ -29,62 +29,62 @@ namespace Azure.ResourceManager.Compute
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SshPublicKeyResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SshPublicKeyData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSshPublicKeyResourceData(document.RootElement, options);
+                        return DeserializeSshPublicKeyData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SshPublicKeyResourceData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SshPublicKeyData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SshPublicKeyResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SshPublicKeyData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SshPublicKeyResourceData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SshPublicKeyData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SshPublicKeyResourceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<SshPublicKeyData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SshPublicKeyResourceData IPersistableModel<SshPublicKeyResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (SshPublicKeyResourceData)PersistableModelCreateCore(data, options);
+        SshPublicKeyData IPersistableModel<SshPublicKeyData>.Create(BinaryData data, ModelReaderWriterOptions options) => (SshPublicKeyData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SshPublicKeyResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SshPublicKeyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="sshPublicKeyResourceData"> The <see cref="SshPublicKeyResourceData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(SshPublicKeyResourceData sshPublicKeyResourceData)
+        /// <param name="sshPublicKeyData"> The <see cref="SshPublicKeyData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(SshPublicKeyData sshPublicKeyData)
         {
-            if (sshPublicKeyResourceData == null)
+            if (sshPublicKeyData == null)
             {
                 return null;
             }
-            return RequestContent.Create(sshPublicKeyResourceData, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(sshPublicKeyData, ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SshPublicKeyResourceData"/> from. </param>
-        internal static SshPublicKeyResourceData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SshPublicKeyData"/> from. </param>
+        internal static SshPublicKeyData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeSshPublicKeyResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeSshPublicKeyData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SshPublicKeyResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SshPublicKeyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -95,10 +95,10 @@ namespace Azure.ResourceManager.Compute
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SshPublicKeyResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SshPublicKeyData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SshPublicKeyResourceData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SshPublicKeyData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -110,24 +110,24 @@ namespace Azure.ResourceManager.Compute
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SshPublicKeyResourceData IJsonModel<SshPublicKeyResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SshPublicKeyResourceData)JsonModelCreateCore(ref reader, options);
+        SshPublicKeyData IJsonModel<SshPublicKeyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SshPublicKeyData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SshPublicKeyResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SshPublicKeyData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SshPublicKeyResourceData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SshPublicKeyData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSshPublicKeyResourceData(document.RootElement, options);
+            return DeserializeSshPublicKeyData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static SshPublicKeyResourceData DeserializeSshPublicKeyResourceData(JsonElement element, ModelReaderWriterOptions options)
+        internal static SshPublicKeyData DeserializeSshPublicKeyData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Compute
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SshPublicKeyResourceData(
+            return new SshPublicKeyData(
                 id,
                 name,
                 resourceType,

@@ -11,18 +11,18 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies information about the SSH public key. </summary>
-    public partial class SshPublicKeyResourcePatch : ComputeResourcePatch
+    public partial class SshPublicKeyPatch : ComputeResourcePatch
     {
-        /// <summary> Initializes a new instance of <see cref="SshPublicKeyResourcePatch"/>. </summary>
-        public SshPublicKeyResourcePatch()
+        /// <summary> Initializes a new instance of <see cref="SshPublicKeyPatch"/>. </summary>
+        public SshPublicKeyPatch()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SshPublicKeyResourcePatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SshPublicKeyPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Properties of the SSH public key. </param>
-        internal SshPublicKeyResourcePatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, SshPublicKeyResourceProperties properties) : base(tags, additionalBinaryDataProperties)
+        internal SshPublicKeyPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, SshPublicKeyResourceProperties properties) : base(tags, additionalBinaryDataProperties)
         {
             Properties = properties;
         }

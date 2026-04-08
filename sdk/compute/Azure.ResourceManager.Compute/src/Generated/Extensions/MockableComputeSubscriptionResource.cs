@@ -603,13 +603,13 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SshPublicKeyResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SshPublicKeyResource> GetSshPublicKeyResourcesAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SshPublicKeyResource> GetSshPublicKeysAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SshPublicKeyResourceData, SshPublicKeyResource>(new SshPublicKeyResourcesGetBySubscriptionAsyncCollectionResultOfT(SshPublicKeyResourcesRestClient, Id.SubscriptionId, context, "MockableComputeSubscriptionResource.GetSshPublicKeyResources"), data => new SshPublicKeyResource(Client, data));
+            return new AsyncPageableWrapper<SshPublicKeyData, SshPublicKeyResource>(new SshPublicKeyResourcesGetBySubscriptionAsyncCollectionResultOfT(SshPublicKeyResourcesRestClient, Id.SubscriptionId, context, "MockableComputeSubscriptionResource.GetSshPublicKeys"), data => new SshPublicKeyResource(Client, data));
         }
 
         /// <summary>
@@ -631,13 +631,13 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SshPublicKeyResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SshPublicKeyResource> GetSshPublicKeyResources(CancellationToken cancellationToken = default)
+        public virtual Pageable<SshPublicKeyResource> GetSshPublicKeys(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SshPublicKeyResourceData, SshPublicKeyResource>(new SshPublicKeyResourcesGetBySubscriptionCollectionResultOfT(SshPublicKeyResourcesRestClient, Id.SubscriptionId, context, "MockableComputeSubscriptionResource.GetSshPublicKeyResources"), data => new SshPublicKeyResource(Client, data));
+            return new PageableWrapper<SshPublicKeyData, SshPublicKeyResource>(new SshPublicKeyResourcesGetBySubscriptionCollectionResultOfT(SshPublicKeyResourcesRestClient, Id.SubscriptionId, context, "MockableComputeSubscriptionResource.GetSshPublicKeys"), data => new SshPublicKeyResource(Client, data));
         }
 
         /// <summary>

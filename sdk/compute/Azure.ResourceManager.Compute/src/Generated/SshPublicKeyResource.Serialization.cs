@@ -12,28 +12,28 @@ using System.Text.Json;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary></summary>
-    public partial class SshPublicKeyResource : IJsonModel<SshPublicKeyResourceData>
+    public partial class SshPublicKeyResource : IJsonModel<SshPublicKeyData>
     {
-        private static IJsonModel<SshPublicKeyResourceData> s_dataDeserializationInstance;
+        private static IJsonModel<SshPublicKeyData> s_dataDeserializationInstance;
 
-        private static IJsonModel<SshPublicKeyResourceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SshPublicKeyResourceData();
+        private static IJsonModel<SshPublicKeyData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SshPublicKeyData();
 
         /// <param name="writer"> The writer to serialize the model to. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SshPublicKeyResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SshPublicKeyResourceData>)Data).Write(writer, options);
+        void IJsonModel<SshPublicKeyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SshPublicKeyData>)Data).Write(writer, options);
 
         /// <param name="reader"> The reader for deserializing the model. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SshPublicKeyResourceData IJsonModel<SshPublicKeyResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        SshPublicKeyData IJsonModel<SshPublicKeyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SshPublicKeyResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SshPublicKeyResourceData>(Data, options, AzureResourceManagerComputeContext.Default);
+        BinaryData IPersistableModel<SshPublicKeyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SshPublicKeyData>(Data, options, AzureResourceManagerComputeContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SshPublicKeyResourceData IPersistableModel<SshPublicKeyResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SshPublicKeyResourceData>(data, options, AzureResourceManagerComputeContext.Default);
+        SshPublicKeyData IPersistableModel<SshPublicKeyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SshPublicKeyData>(data, options, AzureResourceManagerComputeContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SshPublicKeyResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<SshPublicKeyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

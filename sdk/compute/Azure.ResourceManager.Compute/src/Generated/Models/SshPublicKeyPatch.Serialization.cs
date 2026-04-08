@@ -15,61 +15,61 @@ using Azure.ResourceManager.Compute;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies information about the SSH public key. </summary>
-    public partial class SshPublicKeyResourcePatch : ComputeResourcePatch, IJsonModel<SshPublicKeyResourcePatch>
+    public partial class SshPublicKeyPatch : ComputeResourcePatch, IJsonModel<SshPublicKeyPatch>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ComputeResourcePatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SshPublicKeyResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SshPublicKeyPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSshPublicKeyResourcePatch(document.RootElement, options);
+                        return DeserializeSshPublicKeyPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SshPublicKeyResourcePatch)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SshPublicKeyPatch)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SshPublicKeyResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SshPublicKeyPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SshPublicKeyResourcePatch)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SshPublicKeyPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SshPublicKeyResourcePatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<SshPublicKeyPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SshPublicKeyResourcePatch IPersistableModel<SshPublicKeyResourcePatch>.Create(BinaryData data, ModelReaderWriterOptions options) => (SshPublicKeyResourcePatch)PersistableModelCreateCore(data, options);
+        SshPublicKeyPatch IPersistableModel<SshPublicKeyPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => (SshPublicKeyPatch)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SshPublicKeyResourcePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SshPublicKeyPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="sshPublicKeyResourcePatch"> The <see cref="SshPublicKeyResourcePatch"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(SshPublicKeyResourcePatch sshPublicKeyResourcePatch)
+        /// <param name="sshPublicKeyPatch"> The <see cref="SshPublicKeyPatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(SshPublicKeyPatch sshPublicKeyPatch)
         {
-            if (sshPublicKeyResourcePatch == null)
+            if (sshPublicKeyPatch == null)
             {
                 return null;
             }
-            return RequestContent.Create(sshPublicKeyResourcePatch, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(sshPublicKeyPatch, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SshPublicKeyResourcePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SshPublicKeyPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SshPublicKeyResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SshPublicKeyPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SshPublicKeyResourcePatch)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SshPublicKeyPatch)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -95,24 +95,24 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SshPublicKeyResourcePatch IJsonModel<SshPublicKeyResourcePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SshPublicKeyResourcePatch)JsonModelCreateCore(ref reader, options);
+        SshPublicKeyPatch IJsonModel<SshPublicKeyPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SshPublicKeyPatch)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ComputeResourcePatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SshPublicKeyResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SshPublicKeyPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SshPublicKeyResourcePatch)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SshPublicKeyPatch)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSshPublicKeyResourcePatch(document.RootElement, options);
+            return DeserializeSshPublicKeyPatch(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static SshPublicKeyResourcePatch DeserializeSshPublicKeyResourcePatch(JsonElement element, ModelReaderWriterOptions options)
+        internal static SshPublicKeyPatch DeserializeSshPublicKeyPatch(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SshPublicKeyResourcePatch(tags ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties, properties);
+            return new SshPublicKeyPatch(tags ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties, properties);
         }
     }
 }

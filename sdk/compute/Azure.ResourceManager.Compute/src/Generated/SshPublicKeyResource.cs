@@ -20,15 +20,15 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary>
-    /// A class representing a SshPublicKeyResource along with the instance operations that can be performed on it.
+    /// A class representing a SshPublicKey along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SshPublicKeyResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetSshPublicKeyResources method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetSshPublicKeys method.
     /// </summary>
     public partial class SshPublicKeyResource : ArmResource
     {
         private readonly ClientDiagnostics _sshPublicKeyResourcesClientDiagnostics;
         private readonly SshPublicKeyResources _sshPublicKeyResourcesRestClient;
-        private readonly SshPublicKeyResourceData _data;
+        private readonly SshPublicKeyData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Compute/sshPublicKeys";
 
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Initializes a new instance of <see cref="SshPublicKeyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SshPublicKeyResource(ArmClient client, SshPublicKeyResourceData data) : this(client, data.Id)
+        internal SshPublicKeyResource(ArmClient client, SshPublicKeyData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -51,9 +51,9 @@ namespace Azure.ResourceManager.Compute
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SshPublicKeyResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string sshPublicKeyResourceApiVersion);
+            TryGetApiVersion(ResourceType, out string sshPublicKeyApiVersion);
             _sshPublicKeyResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, Diagnostics);
-            _sshPublicKeyResourcesRestClient = new SshPublicKeyResources(_sshPublicKeyResourcesClientDiagnostics, Pipeline, Endpoint, sshPublicKeyResourceApiVersion ?? "2025-04-01");
+            _sshPublicKeyResourcesRestClient = new SshPublicKeyResources(_sshPublicKeyResourcesClientDiagnostics, Pipeline, Endpoint, sshPublicKeyApiVersion ?? "2025-04-01");
             ValidateResourceId(id);
         }
 
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Compute
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual SshPublicKeyResourceData Data
+        public virtual SshPublicKeyData Data
         {
             get
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Compute
                 };
                 HttpMessage message = _sshPublicKeyResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<SshPublicKeyResourceData> response = Response.FromValue(SshPublicKeyResourceData.FromResponse(result), result);
+                Response<SshPublicKeyData> response = Response.FromValue(SshPublicKeyData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Compute
                 };
                 HttpMessage message = _sshPublicKeyResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<SshPublicKeyResourceData> response = Response.FromValue(SshPublicKeyResourceData.FromResponse(result), result);
+                Response<SshPublicKeyData> response = Response.FromValue(SshPublicKeyData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="patch"> Parameters supplied to update the SSH public key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<SshPublicKeyResource>> UpdateAsync(SshPublicKeyResourcePatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SshPublicKeyResource>> UpdateAsync(SshPublicKeyPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -225,9 +225,9 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sshPublicKeyResourcesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, SshPublicKeyResourcePatch.ToRequestContent(patch), context);
+                HttpMessage message = _sshPublicKeyResourcesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, SshPublicKeyPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<SshPublicKeyResourceData> response = Response.FromValue(SshPublicKeyResourceData.FromResponse(result), result);
+                Response<SshPublicKeyData> response = Response.FromValue(SshPublicKeyData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="patch"> Parameters supplied to update the SSH public key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<SshPublicKeyResource> Update(SshPublicKeyResourcePatch patch, CancellationToken cancellationToken = default)
+        public virtual Response<SshPublicKeyResource> Update(SshPublicKeyPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -277,9 +277,9 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sshPublicKeyResourcesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, SshPublicKeyResourcePatch.ToRequestContent(patch), context);
+                HttpMessage message = _sshPublicKeyResourcesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, SshPublicKeyPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<SshPublicKeyResourceData> response = Response.FromValue(SshPublicKeyResourceData.FromResponse(result), result);
+                Response<SshPublicKeyData> response = Response.FromValue(SshPublicKeyData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -518,13 +518,13 @@ namespace Azure.ResourceManager.Compute
                     };
                     HttpMessage message = _sshPublicKeyResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<SshPublicKeyResourceData> response = Response.FromValue(SshPublicKeyResourceData.FromResponse(result), result);
+                    Response<SshPublicKeyData> response = Response.FromValue(SshPublicKeyData.FromResponse(result), result);
                     return Response.FromValue(new SshPublicKeyResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    SshPublicKeyResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    SshPublicKeyResourcePatch patch = new SshPublicKeyResourcePatch();
+                    SshPublicKeyData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    SshPublicKeyPatch patch = new SshPublicKeyPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -566,13 +566,13 @@ namespace Azure.ResourceManager.Compute
                     };
                     HttpMessage message = _sshPublicKeyResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<SshPublicKeyResourceData> response = Response.FromValue(SshPublicKeyResourceData.FromResponse(result), result);
+                    Response<SshPublicKeyData> response = Response.FromValue(SshPublicKeyData.FromResponse(result), result);
                     return Response.FromValue(new SshPublicKeyResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    SshPublicKeyResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    SshPublicKeyResourcePatch patch = new SshPublicKeyResourcePatch();
+                    SshPublicKeyData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    SshPublicKeyPatch patch = new SshPublicKeyPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -613,13 +613,13 @@ namespace Azure.ResourceManager.Compute
                     };
                     HttpMessage message = _sshPublicKeyResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<SshPublicKeyResourceData> response = Response.FromValue(SshPublicKeyResourceData.FromResponse(result), result);
+                    Response<SshPublicKeyData> response = Response.FromValue(SshPublicKeyData.FromResponse(result), result);
                     return Response.FromValue(new SshPublicKeyResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    SshPublicKeyResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    SshPublicKeyResourcePatch patch = new SshPublicKeyResourcePatch();
+                    SshPublicKeyData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    SshPublicKeyPatch patch = new SshPublicKeyPatch();
                     patch.Tags.ReplaceWith(tags);
                     Response<SshPublicKeyResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -656,13 +656,13 @@ namespace Azure.ResourceManager.Compute
                     };
                     HttpMessage message = _sshPublicKeyResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<SshPublicKeyResourceData> response = Response.FromValue(SshPublicKeyResourceData.FromResponse(result), result);
+                    Response<SshPublicKeyData> response = Response.FromValue(SshPublicKeyData.FromResponse(result), result);
                     return Response.FromValue(new SshPublicKeyResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    SshPublicKeyResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    SshPublicKeyResourcePatch patch = new SshPublicKeyResourcePatch();
+                    SshPublicKeyData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    SshPublicKeyPatch patch = new SshPublicKeyPatch();
                     patch.Tags.ReplaceWith(tags);
                     Response<SshPublicKeyResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -698,13 +698,13 @@ namespace Azure.ResourceManager.Compute
                     };
                     HttpMessage message = _sshPublicKeyResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<SshPublicKeyResourceData> response = Response.FromValue(SshPublicKeyResourceData.FromResponse(result), result);
+                    Response<SshPublicKeyData> response = Response.FromValue(SshPublicKeyData.FromResponse(result), result);
                     return Response.FromValue(new SshPublicKeyResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    SshPublicKeyResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    SshPublicKeyResourcePatch patch = new SshPublicKeyResourcePatch();
+                    SshPublicKeyData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    SshPublicKeyPatch patch = new SshPublicKeyPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -744,13 +744,13 @@ namespace Azure.ResourceManager.Compute
                     };
                     HttpMessage message = _sshPublicKeyResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<SshPublicKeyResourceData> response = Response.FromValue(SshPublicKeyResourceData.FromResponse(result), result);
+                    Response<SshPublicKeyData> response = Response.FromValue(SshPublicKeyData.FromResponse(result), result);
                     return Response.FromValue(new SshPublicKeyResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    SshPublicKeyResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    SshPublicKeyResourcePatch patch = new SshPublicKeyResourcePatch();
+                    SshPublicKeyData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    SshPublicKeyPatch patch = new SshPublicKeyPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

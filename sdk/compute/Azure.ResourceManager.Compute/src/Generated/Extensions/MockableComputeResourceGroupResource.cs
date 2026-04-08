@@ -365,11 +365,11 @@ namespace Azure.ResourceManager.Compute.Mocking
             return GetDedicatedHostGroups().Get(hostGroupName, expand, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SshPublicKeyResources in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of SshPublicKeyResources and their operations over a SshPublicKeyResource. </returns>
-        public virtual SshPublicKeyResourceCollection GetSshPublicKeyResources()
+        /// <summary> Gets a collection of SshPublicKeys in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of SshPublicKeys and their operations over a SshPublicKeyResource. </returns>
+        public virtual SshPublicKeyCollection GetSshPublicKeys()
         {
-            return GetCachedClient(client => new SshPublicKeyResourceCollection(client, Id));
+            return GetCachedClient(client => new SshPublicKeyCollection(client, Id));
         }
 
         /// <summary>
@@ -394,11 +394,11 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="sshPublicKeyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sshPublicKeyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SshPublicKeyResource>> GetSshPublicKeyResourceAsync(string sshPublicKeyName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SshPublicKeyResource>> GetSshPublicKeyAsync(string sshPublicKeyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sshPublicKeyName, nameof(sshPublicKeyName));
 
-            return await GetSshPublicKeyResources().GetAsync(sshPublicKeyName, cancellationToken).ConfigureAwait(false);
+            return await GetSshPublicKeys().GetAsync(sshPublicKeyName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -423,11 +423,11 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="sshPublicKeyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sshPublicKeyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SshPublicKeyResource> GetSshPublicKeyResource(string sshPublicKeyName, CancellationToken cancellationToken = default)
+        public virtual Response<SshPublicKeyResource> GetSshPublicKey(string sshPublicKeyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sshPublicKeyName, nameof(sshPublicKeyName));
 
-            return GetSshPublicKeyResources().Get(sshPublicKeyName, cancellationToken);
+            return GetSshPublicKeys().Get(sshPublicKeyName, cancellationToken);
         }
 
         /// <summary> Gets a collection of DiskImages in the <see cref="ResourceGroupResource"/>. </summary>

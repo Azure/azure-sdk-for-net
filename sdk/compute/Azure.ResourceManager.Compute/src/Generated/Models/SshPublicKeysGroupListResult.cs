@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of <see cref="SshPublicKeysGroupListResult"/>. </summary>
         /// <param name="value"> The list of SSH public keys. </param>
-        internal SshPublicKeysGroupListResult(IEnumerable<SshPublicKeyResourceData> value)
+        internal SshPublicKeysGroupListResult(IEnumerable<SshPublicKeyData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="value"> The list of SSH public keys. </param>
         /// <param name="nextLink"> The URI to fetch the next page of SSH public keys. Call ListNext() with this URI to fetch the next page of SSH public keys. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SshPublicKeysGroupListResult(IList<SshPublicKeyResourceData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SshPublicKeysGroupListResult(IList<SshPublicKeyData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The list of SSH public keys. </summary>
-        public IList<SshPublicKeyResourceData> Value { get; }
+        public IList<SshPublicKeyData> Value { get; }
 
         /// <summary> The URI to fetch the next page of SSH public keys. Call ListNext() with this URI to fetch the next page of SSH public keys. </summary>
         public Uri NextLink { get; }

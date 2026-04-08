@@ -2375,12 +2375,12 @@ namespace Azure.ResourceManager.Compute
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="publicKey"> SSH public key used to authenticate to a virtual machine through ssh. If this property is not initially provided when the resource is created, the publicKey property will be populated when generateKeyPair is called. If the public key is provided upon resource creation, the provided public key needs to be at least 2048-bit and in ssh-rsa format. </param>
-        /// <returns> A new <see cref="Compute.SshPublicKeyResourceData"/> instance for mocking. </returns>
-        public static SshPublicKeyResourceData SshPublicKeyResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string publicKey = default)
+        /// <returns> A new <see cref="Compute.SshPublicKeyData"/> instance for mocking. </returns>
+        public static SshPublicKeyData SshPublicKeyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string publicKey = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new SshPublicKeyResourceData(
+            return new SshPublicKeyData(
                 id,
                 name,
                 resourceType,
@@ -2393,12 +2393,12 @@ namespace Azure.ResourceManager.Compute
 
         /// <param name="tags"> Resource tags. </param>
         /// <param name="publicKey"> SSH public key used to authenticate to a virtual machine through ssh. If this property is not initially provided when the resource is created, the publicKey property will be populated when generateKeyPair is called. If the public key is provided upon resource creation, the provided public key needs to be at least 2048-bit and in ssh-rsa format. </param>
-        /// <returns> A new <see cref="Models.SshPublicKeyResourcePatch"/> instance for mocking. </returns>
-        public static SshPublicKeyResourcePatch SshPublicKeyResourcePatch(IDictionary<string, string> tags = default, string publicKey = default)
+        /// <returns> A new <see cref="Models.SshPublicKeyPatch"/> instance for mocking. </returns>
+        public static SshPublicKeyPatch SshPublicKeyPatch(IDictionary<string, string> tags = default, string publicKey = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new SshPublicKeyResourcePatch(tags, additionalBinaryDataProperties: null, publicKey is null ? default : new SshPublicKeyResourceProperties(publicKey, null));
+            return new SshPublicKeyPatch(tags, additionalBinaryDataProperties: null, publicKey is null ? default : new SshPublicKeyResourceProperties(publicKey, null));
         }
 
         /// <summary> Response from generation of an SSH key pair. </summary>

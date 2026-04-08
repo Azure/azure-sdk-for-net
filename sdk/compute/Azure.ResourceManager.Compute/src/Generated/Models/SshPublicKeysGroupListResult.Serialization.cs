@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (SshPublicKeyResourceData item in Value)
+            foreach (SshPublicKeyData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            IList<SshPublicKeyResourceData> value = default;
+            IList<SshPublicKeyData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<SshPublicKeyResourceData> array = new List<SshPublicKeyResourceData>();
+                    List<SshPublicKeyData> array = new List<SshPublicKeyData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SshPublicKeyResourceData.DeserializeSshPublicKeyResourceData(item, options));
+                        array.Add(SshPublicKeyData.DeserializeSshPublicKeyData(item, options));
                     }
                     value = array;
                     continue;
