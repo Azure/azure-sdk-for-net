@@ -556,14 +556,6 @@ function convertScopeToResourceScope(
 }
 
 /**
- * Determine operation scope from path.
- * Delegates to RequestPath.operationScope for the actual computation.
- */
-export function getOperationScopeFromPath(path: string): ResourceScope {
-  return new RequestPath(path).operationScope;
-}
-
-/**
  * Format ResourceType to a string
  */
 function formatResourceType(resourceType: ResourceType): string {

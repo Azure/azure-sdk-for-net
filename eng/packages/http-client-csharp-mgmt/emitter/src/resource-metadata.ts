@@ -286,14 +286,6 @@ export function findLongestPrefixMatch<T>(
   return bestMatch;
 }
 
-/**
- * Calculates the resource type from a request path.
- * Delegates to RequestPath.resourceType for the actual computation.
- */
-export function calculateResourceTypeFromPath(path: string): string {
-  return new RequestPath(path).resourceType;
-}
-
 export enum ResourceScope {
   Tenant = "Tenant",
   Subscription = "Subscription",
@@ -796,7 +788,7 @@ export function postProcessArmResources(
  *    it is matched to a valid resource with the same model ID and assigned as a List operation.
  *    This handles extension resources where list paths have different parent structures.
  * 3. Resource type matching: if both prefix and model ID matching fail, the resource type
- *    is extracted from the operation path using calculateResourceTypeFromPath (which includes
+ *    is extracted from the operation path using RequestPath.resourceType (which includes
  *    the provider namespace) and compared against each resource's metadata.resourceType.
  *    The provider hierarchy depth must also match to prevent cross-scope false matches.
  *    This handles operations from resolveArmResources that lack resourceModelId but share
