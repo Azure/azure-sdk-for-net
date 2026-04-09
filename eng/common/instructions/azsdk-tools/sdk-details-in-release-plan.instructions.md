@@ -1,6 +1,10 @@
 ---
 description: 'Identify languages configured in the TypeSpec project and add it to release plan'
+related_skill: "azsdk-common-prepare-release-plan"
 ---
+
+> **Related Skill:** See `.github/skills/azsdk-common-prepare-release-plan/SKILL.md` — SDK details update is Step 5 of the release plan workflow. See also `references/release-plan-details.md` for additional context.
+
 # Step 1: Find the list of languages and package names
 **Goal**: Identify languages configured in the TypeSpec project and generate the json object with language and package name.
 1. Identify the language emitter configuration in the `tspconfig.yaml` file in the TypeSpec project root.

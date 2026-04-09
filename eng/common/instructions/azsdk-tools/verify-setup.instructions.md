@@ -1,6 +1,9 @@
 ---
 description: 'Verify Setup'
+related_skill: "azsdk-common-generate-sdk-locally"
 ---
+
+> **Related Skill:** See `.github/skills/azsdk-common-generate-sdk-locally/SKILL.md` — environment verification is Step 1 of the generate-build-test workflow.
 
 ## Goal
 This tool verifies the developer's environment for SDK development and release tasks. It returns what requirements are missing for the specified languages and repo, or success if all requirements are satisfied. It can help install supported requirements.

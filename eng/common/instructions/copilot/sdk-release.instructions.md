@@ -1,5 +1,7 @@
 # SDK release
 
+> **Related Skill:** See `.github/skills/azsdk-common-sdk-release/SKILL.md` for the complete release workflow with step-by-step guidance and troubleshooting.
+
 There are two tools to help with SDK releases:
 - Check SDK release readiness
 - Release SDK

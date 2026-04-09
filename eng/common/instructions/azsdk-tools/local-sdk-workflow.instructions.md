@@ -1,6 +1,9 @@
 ---
 description: "Guide the user to generate and build SDKs locally for a TypeSpec based API spec"
+related_skill: "azsdk-common-generate-sdk-locally"
 ---
+
+> **Related Skill:** See `.github/skills/azsdk-common-generate-sdk-locally/SKILL.md` for the high-level workflow, MCP tool reference, and customization guidance. This instruction file provides the detailed step-by-step interaction flow.
 
 # Goal
 

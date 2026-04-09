@@ -1,3 +1,5 @@
+> **Related Skill:** See `.github/skills/azsdk-common-prepare-release-plan/SKILL.md` for the high-level release plan workflow and MCP tool reference. This instruction file provides the detailed step-by-step interaction flow.
+
 > **CRITICAL INSTRUCTIONS FOR LLM**
 > 1. Backend processes may use Azure DevOps work item data as needed. However, do **not** mention or display the work item link/URL, or any reference to Azure DevOps work item resources directly in conversation with the user.
 > 2. All manual updates to an existing release plan must be made through the [Release Planner Tool](https://aka.ms/sdk-release-planner) to ensure proper tracking and validation.

@@ -1,6 +1,10 @@
 ---
 description: 'Run the package validation checks for the SDK package.'
+related_skill: "azsdk-common-generate-sdk-locally"
 ---
+
+> **Related Skill:** See `.github/skills/azsdk-common-generate-sdk-locally/SKILL.md` — package validation is Step 5 of the generate-build-test workflow.
+
 ## Goal
 Run the validation checks for the SDK package by collecting the required information from the user and executing the `azsdk_package_run_check` tool.
 
