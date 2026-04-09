@@ -50,13 +50,13 @@ internal sealed class FoundryEnrichmentProcessor : BaseProcessor<Activity>
         // them without extra plumbing. The two are independent — no fallback
         // between them.
         var sessionId = activity.GetBaggageItem("azure.ai.agentserver.session_id");
-        if (sessionId is not null)
+        if (!string.IsNullOrWhiteSpace(sessionId))
         {
             activity.SetTag("microsoft.session.id", sessionId);
         }
 
         var conversationId = activity.GetBaggageItem("azure.ai.agentserver.conversation_id");
-        if (conversationId is not null)
+        if (!string.IsNullOrWhiteSpace(conversationId))
         {
             activity.SetTag("gen_ai.conversation.id", conversationId);
         }

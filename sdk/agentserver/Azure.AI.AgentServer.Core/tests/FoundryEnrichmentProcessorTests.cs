@@ -250,6 +250,48 @@ public class FoundryEnrichmentProcessorTests
         Assert.That(child.GetTagItem("gen_ai.conversation.id"), Is.Null);
     }
 
+    [Test]
+    public void DoesNotSetSessionId_WhenBaggageIsEmpty()
+    {
+        BuildProvider();
+
+        using var parent = _activitySource.StartActivity("parent")!;
+        parent.SetBaggage("azure.ai.agentserver.session_id", string.Empty);
+
+        using var child = _activitySource.StartActivity("child")!;
+        child.Stop();
+
+        Assert.That(child.GetTagItem("microsoft.session.id"), Is.Null);
+    }
+
+    [Test]
+    public void DoesNotSetConversationId_WhenBaggageIsEmpty()
+    {
+        BuildProvider();
+
+        using var parent = _activitySource.StartActivity("parent")!;
+        parent.SetBaggage("azure.ai.agentserver.conversation_id", string.Empty);
+
+        using var child = _activitySource.StartActivity("child")!;
+        child.Stop();
+
+        Assert.That(child.GetTagItem("gen_ai.conversation.id"), Is.Null);
+    }
+
+    [Test]
+    public void DoesNotSetSessionId_WhenBaggageIsWhitespace()
+    {
+        BuildProvider();
+
+        using var parent = _activitySource.StartActivity("parent")!;
+        parent.SetBaggage("azure.ai.agentserver.session_id", "   ");
+
+        using var child = _activitySource.StartActivity("child")!;
+        child.Stop();
+
+        Assert.That(child.GetTagItem("microsoft.session.id"), Is.Null);
+    }
+
     private static void SetEnv(string? agentName = null, string? agentVersion = null, string? projectArmId = null)
     {
         Environment.SetEnvironmentVariable("FOUNDRY_AGENT_NAME", agentName);
