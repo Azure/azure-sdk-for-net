@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.Generator.MgmtTypeSpec.MultiService.Tests.Mocking;
 using Azure.Generator.MgmtTypeSpec.MultiService.Tests.Models;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.Generator.MgmtTypeSpec.MultiService.Tests
@@ -19,10 +20,168 @@ namespace Azure.Generator.MgmtTypeSpec.MultiService.Tests
     /// <summary> A class to add extension methods to Azure.Generator.MgmtTypeSpec.MultiService.Tests. </summary>
     public static partial class AzureGeneratorMgmtTypeSpecMultiServiceTestsExtensions
     {
+        /// <param name="client"></param>
+        private static MockableAzureGeneratorMgmtTypeSpecMultiServiceTestsArmClient GetMockableAzureGeneratorMgmtTypeSpecMultiServiceTestsArmClient(ArmClient client)
+        {
+            return client.GetCachedClient(client0 => new MockableAzureGeneratorMgmtTypeSpecMultiServiceTestsArmClient(client0, ResourceIdentifier.Root));
+        }
+
+        /// <param name="resourceGroupResource"></param>
+        private static MockableAzureGeneratorMgmtTypeSpecMultiServiceTestsResourceGroupResource GetMockableAzureGeneratorMgmtTypeSpecMultiServiceTestsResourceGroupResource(ResourceGroupResource resourceGroupResource)
+        {
+            return resourceGroupResource.GetCachedClient(client => new MockableAzureGeneratorMgmtTypeSpecMultiServiceTestsResourceGroupResource(client, resourceGroupResource.Id));
+        }
+
         /// <param name="subscriptionResource"></param>
         private static MockableAzureGeneratorMgmtTypeSpecMultiServiceTestsSubscriptionResource GetMockableAzureGeneratorMgmtTypeSpecMultiServiceTestsSubscriptionResource(SubscriptionResource subscriptionResource)
         {
             return subscriptionResource.GetCachedClient(client => new MockableAzureGeneratorMgmtTypeSpecMultiServiceTestsSubscriptionResource(client, subscriptionResource.Id));
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="FooResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecMultiServiceTestsArmClient.GetFooResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="FooResource"/> object. </returns>
+        public static FooResource GetFooResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAzureGeneratorMgmtTypeSpecMultiServiceTestsArmClient(client).GetFooResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="BarResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecMultiServiceTestsArmClient.GetBarResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="BarResource"/> object. </returns>
+        public static BarResource GetBarResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAzureGeneratorMgmtTypeSpecMultiServiceTestsArmClient(client).GetBarResource(id);
+        }
+
+        /// <summary>
+        /// Gets a collection of Foos in the <see cref="ResourceGroupResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecMultiServiceTestsResourceGroupResource.GetFoos()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> An object representing collection of Foos and their operations over a FooResource. </returns>
+        public static FooCollection GetFoos(this ResourceGroupResource resourceGroupResource)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableAzureGeneratorMgmtTypeSpecMultiServiceTestsResourceGroupResource(resourceGroupResource).GetFoos();
+        }
+
+        /// <summary>
+        /// Get a Foo
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecMultiServiceTestsResourceGroupResource.GetFooAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="fooName"> The name of the Foo. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<FooResource>> GetFooAsync(this ResourceGroupResource resourceGroupResource, string fooName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableAzureGeneratorMgmtTypeSpecMultiServiceTestsResourceGroupResource(resourceGroupResource).GetFooAsync(fooName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a Foo
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecMultiServiceTestsResourceGroupResource.GetFoo(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="fooName"> The name of the Foo. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<FooResource> GetFoo(this ResourceGroupResource resourceGroupResource, string fooName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableAzureGeneratorMgmtTypeSpecMultiServiceTestsResourceGroupResource(resourceGroupResource).GetFoo(fooName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of Bars in the <see cref="ResourceGroupResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecMultiServiceTestsResourceGroupResource.GetBars()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> An object representing collection of Bars and their operations over a BarResource. </returns>
+        public static BarCollection GetBars(this ResourceGroupResource resourceGroupResource)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableAzureGeneratorMgmtTypeSpecMultiServiceTestsResourceGroupResource(resourceGroupResource).GetBars();
+        }
+
+        /// <summary>
+        /// Get a Bar
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecMultiServiceTestsResourceGroupResource.GetBarAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="barName"> The name of the Bar. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<BarResource>> GetBarAsync(this ResourceGroupResource resourceGroupResource, string barName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableAzureGeneratorMgmtTypeSpecMultiServiceTestsResourceGroupResource(resourceGroupResource).GetBarAsync(barName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a Bar
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecMultiServiceTestsResourceGroupResource.GetBar(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="barName"> The name of the Bar. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<BarResource> GetBar(this ResourceGroupResource resourceGroupResource, string barName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableAzureGeneratorMgmtTypeSpecMultiServiceTestsResourceGroupResource(resourceGroupResource).GetBar(barName, cancellationToken);
         }
 
         /// <summary>
