@@ -187,7 +187,8 @@ namespace Azure.ResourceManager.OracleDatabase
                 Id.Name,
                 shapeFamily?.ToString(),
                 zone,
-                context), data => new OracleGIMinorVersionResource(Client, data));
+                context,
+                "OracleGIMinorVersionCollection.GetAll"), data => new OracleGIMinorVersionResource(Client, data));
         }
 
         /// <summary>
@@ -224,7 +225,8 @@ namespace Azure.ResourceManager.OracleDatabase
                 Id.Name,
                 shapeFamily?.ToString(),
                 zone,
-                context), data => new OracleGIMinorVersionResource(Client, data));
+                context,
+                "OracleGIMinorVersionCollection.GetAll"), data => new OracleGIMinorVersionResource(Client, data));
         }
 
         /// <summary>

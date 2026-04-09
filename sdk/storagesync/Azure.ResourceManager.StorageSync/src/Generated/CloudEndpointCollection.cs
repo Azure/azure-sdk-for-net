@@ -300,7 +300,8 @@ namespace Azure.ResourceManager.StorageSync
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new CloudEndpointResource(Client, data));
+                context,
+                "CloudEndpointCollection.GetAll"), data => new CloudEndpointResource(Client, data));
         }
 
         /// <summary>
@@ -334,7 +335,8 @@ namespace Azure.ResourceManager.StorageSync
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new CloudEndpointResource(Client, data));
+                context,
+                "CloudEndpointCollection.GetAll"), data => new CloudEndpointResource(Client, data));
         }
 
         /// <summary>

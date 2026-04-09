@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Hci.Vm
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HciVmPublicIPAddressData, HciVmPublicIPAddressResource>(new PublicIPAddressesGetByResourceGroupAsyncCollectionResultOfT(_publicIPAddressesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new HciVmPublicIPAddressResource(Client, data));
+            return new AsyncPageableWrapper<HciVmPublicIPAddressData, HciVmPublicIPAddressResource>(new PublicIPAddressesGetByResourceGroupAsyncCollectionResultOfT(_publicIPAddressesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HciVmPublicIPAddressCollection.GetAll"), data => new HciVmPublicIPAddressResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Hci.Vm
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HciVmPublicIPAddressData, HciVmPublicIPAddressResource>(new PublicIPAddressesGetByResourceGroupCollectionResultOfT(_publicIPAddressesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new HciVmPublicIPAddressResource(Client, data));
+            return new PageableWrapper<HciVmPublicIPAddressData, HciVmPublicIPAddressResource>(new PublicIPAddressesGetByResourceGroupCollectionResultOfT(_publicIPAddressesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HciVmPublicIPAddressCollection.GetAll"), data => new HciVmPublicIPAddressResource(Client, data));
         }
 
         /// <summary>

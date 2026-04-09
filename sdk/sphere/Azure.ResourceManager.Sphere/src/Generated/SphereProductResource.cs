@@ -439,7 +439,8 @@ namespace Azure.ResourceManager.Sphere
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new SphereDeviceGroupResource(Client, data));
+                context,
+                "SphereProductResource.GenerateDefaultDeviceGroups"), data => new SphereDeviceGroupResource(Client, data));
         }
 
         /// <summary>
@@ -477,7 +478,8 @@ namespace Azure.ResourceManager.Sphere
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new SphereDeviceGroupResource(Client, data));
+                context,
+                "SphereProductResource.GenerateDefaultDeviceGroups"), data => new SphereDeviceGroupResource(Client, data));
         }
 
         /// <summary>

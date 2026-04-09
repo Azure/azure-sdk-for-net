@@ -48,7 +48,7 @@ public class StreamingUpstreamHandler : ResponseHandler
         // Translate every input item. Both model stacks share the
         // same JSON wire contract, so .Translate().To<T>() round-trips
         // through JSON: our Item → JSON → OpenAI ResponseItem.
-        foreach (Item item in request.GetInputExpanded())
+        foreach (Item item in await context.GetInputItemsAsync(cancellationToken: cancellationToken))
         {
             options.InputItems.Add(item.Translate().To<ResponseItem>());
         }

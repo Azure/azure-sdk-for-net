@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Grafana
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ManagedGrafanaData, ManagedGrafanaResource>(new ManagedGrafanasGetByResourceGroupAsyncCollectionResultOfT(_managedGrafanasRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new ManagedGrafanaResource(Client, data));
+            return new AsyncPageableWrapper<ManagedGrafanaData, ManagedGrafanaResource>(new ManagedGrafanasGetByResourceGroupAsyncCollectionResultOfT(_managedGrafanasRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "ManagedGrafanaCollection.GetAll"), data => new ManagedGrafanaResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Grafana
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ManagedGrafanaData, ManagedGrafanaResource>(new ManagedGrafanasGetByResourceGroupCollectionResultOfT(_managedGrafanasRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new ManagedGrafanaResource(Client, data));
+            return new PageableWrapper<ManagedGrafanaData, ManagedGrafanaResource>(new ManagedGrafanasGetByResourceGroupCollectionResultOfT(_managedGrafanasRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "ManagedGrafanaCollection.GetAll"), data => new ManagedGrafanaResource(Client, data));
         }
 
         /// <summary>

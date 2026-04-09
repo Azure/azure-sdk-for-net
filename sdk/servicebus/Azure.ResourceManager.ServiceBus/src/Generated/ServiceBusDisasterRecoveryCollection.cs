@@ -287,7 +287,13 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ServiceBusDisasterRecoveryData, ServiceBusDisasterRecoveryResource>(new DisasterRecoveryConfigsGetAllAsyncCollectionResultOfT(_disasterRecoveryConfigsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ServiceBusDisasterRecoveryResource(Client, data));
+            return new AsyncPageableWrapper<ServiceBusDisasterRecoveryData, ServiceBusDisasterRecoveryResource>(new DisasterRecoveryConfigsGetAllAsyncCollectionResultOfT(
+                _disasterRecoveryConfigsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ServiceBusDisasterRecoveryCollection.GetAll"), data => new ServiceBusDisasterRecoveryResource(Client, data));
         }
 
         /// <summary>
@@ -315,7 +321,13 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ServiceBusDisasterRecoveryData, ServiceBusDisasterRecoveryResource>(new DisasterRecoveryConfigsGetAllCollectionResultOfT(_disasterRecoveryConfigsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ServiceBusDisasterRecoveryResource(Client, data));
+            return new PageableWrapper<ServiceBusDisasterRecoveryData, ServiceBusDisasterRecoveryResource>(new DisasterRecoveryConfigsGetAllCollectionResultOfT(
+                _disasterRecoveryConfigsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ServiceBusDisasterRecoveryCollection.GetAll"), data => new ServiceBusDisasterRecoveryResource(Client, data));
         }
 
         /// <summary>

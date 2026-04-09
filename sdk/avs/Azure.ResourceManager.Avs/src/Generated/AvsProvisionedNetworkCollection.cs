@@ -177,7 +177,13 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AvsProvisionedNetworkData, AvsProvisionedNetworkResource>(new ProvisionedNetworksGetAllAsyncCollectionResultOfT(_provisionedNetworksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new AvsProvisionedNetworkResource(Client, data));
+            return new AsyncPageableWrapper<AvsProvisionedNetworkData, AvsProvisionedNetworkResource>(new ProvisionedNetworksGetAllAsyncCollectionResultOfT(
+                _provisionedNetworksRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "AvsProvisionedNetworkCollection.GetAll"), data => new AvsProvisionedNetworkResource(Client, data));
         }
 
         /// <summary>
@@ -205,7 +211,13 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AvsProvisionedNetworkData, AvsProvisionedNetworkResource>(new ProvisionedNetworksGetAllCollectionResultOfT(_provisionedNetworksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new AvsProvisionedNetworkResource(Client, data));
+            return new PageableWrapper<AvsProvisionedNetworkData, AvsProvisionedNetworkResource>(new ProvisionedNetworksGetAllCollectionResultOfT(
+                _provisionedNetworksRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "AvsProvisionedNetworkCollection.GetAll"), data => new AvsProvisionedNetworkResource(Client, data));
         }
 
         /// <summary>

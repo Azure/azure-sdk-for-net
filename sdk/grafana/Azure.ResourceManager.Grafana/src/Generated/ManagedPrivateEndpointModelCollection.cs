@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.Grafana
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ManagedPrivateEndpointModelData, ManagedPrivateEndpointModelResource>(new ManagedPrivateEndpointModelsGetAllAsyncCollectionResultOfT(_managedPrivateEndpointModelsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new ManagedPrivateEndpointModelResource(Client, data));
+            return new AsyncPageableWrapper<ManagedPrivateEndpointModelData, ManagedPrivateEndpointModelResource>(new ManagedPrivateEndpointModelsGetAllAsyncCollectionResultOfT(
+                _managedPrivateEndpointModelsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ManagedPrivateEndpointModelCollection.GetAll"), data => new ManagedPrivateEndpointModelResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.Grafana
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ManagedPrivateEndpointModelData, ManagedPrivateEndpointModelResource>(new ManagedPrivateEndpointModelsGetAllCollectionResultOfT(_managedPrivateEndpointModelsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new ManagedPrivateEndpointModelResource(Client, data));
+            return new PageableWrapper<ManagedPrivateEndpointModelData, ManagedPrivateEndpointModelResource>(new ManagedPrivateEndpointModelsGetAllCollectionResultOfT(
+                _managedPrivateEndpointModelsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ManagedPrivateEndpointModelCollection.GetAll"), data => new ManagedPrivateEndpointModelResource(Client, data));
         }
 
         /// <summary>

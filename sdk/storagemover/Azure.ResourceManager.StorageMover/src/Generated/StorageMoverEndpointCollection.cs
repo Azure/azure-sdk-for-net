@@ -287,7 +287,13 @@ namespace Azure.ResourceManager.StorageMover
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<StorageMoverEndpointData, StorageMoverEndpointResource>(new EndpointsGetAllAsyncCollectionResultOfT(_endpointsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new StorageMoverEndpointResource(Client, data));
+            return new AsyncPageableWrapper<StorageMoverEndpointData, StorageMoverEndpointResource>(new EndpointsGetAllAsyncCollectionResultOfT(
+                _endpointsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "StorageMoverEndpointCollection.GetAll"), data => new StorageMoverEndpointResource(Client, data));
         }
 
         /// <summary>
@@ -315,7 +321,13 @@ namespace Azure.ResourceManager.StorageMover
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<StorageMoverEndpointData, StorageMoverEndpointResource>(new EndpointsGetAllCollectionResultOfT(_endpointsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new StorageMoverEndpointResource(Client, data));
+            return new PageableWrapper<StorageMoverEndpointData, StorageMoverEndpointResource>(new EndpointsGetAllCollectionResultOfT(
+                _endpointsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "StorageMoverEndpointCollection.GetAll"), data => new StorageMoverEndpointResource(Client, data));
         }
 
         /// <summary>

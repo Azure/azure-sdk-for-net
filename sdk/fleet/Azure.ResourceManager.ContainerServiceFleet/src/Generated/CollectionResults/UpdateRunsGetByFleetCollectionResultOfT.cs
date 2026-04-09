@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         private readonly int? _maxCount;
         private readonly string _skipToken;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of UpdateRunsGetByFleetCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The UpdateRuns client used to send requests. </param>
@@ -32,7 +33,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <param name="maxCount"> The number of result items to return. </param>
         /// <param name="skipToken"> The page-continuation token to use with a paged version of this API. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public UpdateRunsGetByFleetCollectionResultOfT(UpdateRuns client, Guid subscriptionId, string resourceGroupName, string fleetName, int? maxCount, string skipToken, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public UpdateRunsGetByFleetCollectionResultOfT(UpdateRuns client, Guid subscriptionId, string resourceGroupName, string fleetName, int? maxCount, string skipToken, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -41,6 +43,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             _maxCount = maxCount;
             _skipToken = skipToken;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of UpdateRunsGetByFleetCollectionResultOfT as an enumerable collection. </summary>
@@ -73,7 +76,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByFleetRequest(nextLink, _subscriptionId, _resourceGroupName, _fleetName, _maxCount, _skipToken, _context) : _client.CreateGetByFleetRequest(_subscriptionId, _resourceGroupName, _fleetName, _maxCount, _skipToken, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ContainerServiceFleetUpdateRunCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

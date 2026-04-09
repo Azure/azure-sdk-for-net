@@ -520,7 +520,13 @@ namespace Azure.ResourceManager.BotService
             {
                 CancellationToken = cancellationToken
             };
-            return new BotsGetPrivateLinkResourcesByBotResourceAsyncCollectionResultOfT(_botsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+            return new BotsGetPrivateLinkResourcesByBotResourceAsyncCollectionResultOfT(
+                _botsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "BotResource.GetPrivateLinkResourcesByBotResource");
         }
 
         /// <summary>
@@ -552,7 +558,13 @@ namespace Azure.ResourceManager.BotService
             {
                 CancellationToken = cancellationToken
             };
-            return new BotsGetPrivateLinkResourcesByBotResourceCollectionResultOfT(_botsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+            return new BotsGetPrivateLinkResourcesByBotResourceCollectionResultOfT(
+                _botsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "BotResource.GetPrivateLinkResourcesByBotResource");
         }
 
         /// <summary> Add a tag to the current resource. </summary>

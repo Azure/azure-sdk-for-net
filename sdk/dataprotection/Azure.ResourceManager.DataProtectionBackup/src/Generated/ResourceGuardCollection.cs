@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ResourceGuardData, ResourceGuardResource>(new ResourceGuardResourcesGetResourcesInResourceGroupAsyncCollectionResultOfT(_resourceGuardResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new ResourceGuardResource(Client, data));
+            return new AsyncPageableWrapper<ResourceGuardData, ResourceGuardResource>(new ResourceGuardResourcesGetResourcesInResourceGroupAsyncCollectionResultOfT(_resourceGuardResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ResourceGuardCollection.GetAll"), data => new ResourceGuardResource(Client, data));
         }
 
         /// <summary>
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ResourceGuardData, ResourceGuardResource>(new ResourceGuardResourcesGetResourcesInResourceGroupCollectionResultOfT(_resourceGuardResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new ResourceGuardResource(Client, data));
+            return new PageableWrapper<ResourceGuardData, ResourceGuardResource>(new ResourceGuardResourcesGetResourcesInResourceGroupCollectionResultOfT(_resourceGuardResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ResourceGuardCollection.GetAll"), data => new ResourceGuardResource(Client, data));
         }
 
         /// <summary>

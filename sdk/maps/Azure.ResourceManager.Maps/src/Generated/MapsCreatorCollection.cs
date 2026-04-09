@@ -287,7 +287,13 @@ namespace Azure.ResourceManager.Maps
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MapsCreatorData, MapsCreatorResource>(new CreatorsGetByAccountAsyncCollectionResultOfT(_creatorsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new MapsCreatorResource(Client, data));
+            return new AsyncPageableWrapper<MapsCreatorData, MapsCreatorResource>(new CreatorsGetByAccountAsyncCollectionResultOfT(
+                _creatorsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "MapsCreatorCollection.GetAll"), data => new MapsCreatorResource(Client, data));
         }
 
         /// <summary>
@@ -315,7 +321,13 @@ namespace Azure.ResourceManager.Maps
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MapsCreatorData, MapsCreatorResource>(new CreatorsGetByAccountCollectionResultOfT(_creatorsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new MapsCreatorResource(Client, data));
+            return new PageableWrapper<MapsCreatorData, MapsCreatorResource>(new CreatorsGetByAccountCollectionResultOfT(
+                _creatorsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "MapsCreatorCollection.GetAll"), data => new MapsCreatorResource(Client, data));
         }
 
         /// <summary>

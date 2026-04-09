@@ -40,15 +40,38 @@ namespace Azure.Security.CodeTransparency
 
         private async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
         {
-            TryApplyCachedPrimaryNode(message.Request);
+            bool appliedCache = TryApplyCachedPrimaryNode(message.Request);
 
-            if (async)
+            try
             {
-                await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
+                if (async)
+                {
+                    await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
+                }
+                else
+                {
+                    ProcessNext(message, pipeline);
+                }
             }
-            else
+            catch
             {
-                ProcessNext(message, pipeline);
+                // Transport failure (connection refused, timeout, DNS, etc.) while targeting
+                // the cached primary — invalidate so the next request goes through the load
+                // balancer and can discover the new primary via redirect.
+                if (appliedCache)
+                {
+                    InvalidateCachedPrimaryNode();
+                }
+
+                throw;
+            }
+
+            // If we sent to the cached primary and got a server error, the node may be
+            // unhealthy or no longer primary (e.g., DR failover). Invalidate the cache so
+            // the next write goes through the load balancer to re-discover the primary.
+            if (appliedCache && message.Response.Status >= 500)
+            {
+                InvalidateCachedPrimaryNode();
             }
 
             int redirectCount = 0;
@@ -69,7 +92,13 @@ namespace Azure.Security.CodeTransparency
 
                 Uri redirectUri = BuildRedirectUri(message.Request.Uri.ToUri(), location);
 
-                CachePrimaryNode(redirectUri);
+                // Only cache the redirect target as the primary node for non-GET (write) requests.
+                // GET requests may be redirected for other reasons (e.g., historical queries routed
+                // to backup nodes), so their redirect targets should not be assumed to be the primary.
+                if (message.Request.Method != RequestMethod.Get)
+                {
+                    CachePrimaryNode(redirectUri);
+                }
 
                 // Disallow redirect from HTTPS to HTTP.
                 if (string.Equals(message.Request.Uri.Scheme, "https", StringComparison.OrdinalIgnoreCase) &&
@@ -114,20 +143,21 @@ namespace Azure.Security.CodeTransparency
             return redirectUri;
         }
 
-        private void TryApplyCachedPrimaryNode(Request request)
+        private bool TryApplyCachedPrimaryNode(Request request)
         {
             if (request.Method == RequestMethod.Get)
             {
-                return;
+                return false;
             }
 
             Uri primaryNodeBaseUri = Volatile.Read(ref _primaryNodeBaseUri);
             if (primaryNodeBaseUri == null)
             {
-                return;
+                return false;
             }
 
             request.Uri.Reset(BuildUriWithPrimaryHost(request.Uri.ToUri(), primaryNodeBaseUri));
+            return true;
         }
 
         private void CachePrimaryNode(Uri redirectUri)
@@ -140,7 +170,15 @@ namespace Azure.Security.CodeTransparency
 
             lock (_primaryNodeLock)
             {
-                _primaryNodeBaseUri = candidatePrimary;
+                Volatile.Write(ref _primaryNodeBaseUri, candidatePrimary);
+            }
+        }
+
+        private void InvalidateCachedPrimaryNode()
+        {
+            lock (_primaryNodeLock)
+            {
+                _primaryNodeBaseUri = null;
             }
         }
 

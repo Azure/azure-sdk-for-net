@@ -23,22 +23,10 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         private const string NormalValue = "Normal";
-        private const string ServerMigrationV1Value = "ServerMigrationV1";
-        private const string DatabaseMigrationV1Value = "DatabaseMigrationV1";
-        private const string ServerMigrationValue = "ServerMigration";
-        private const string StandbyValue = "Standby";
         private const string RestoreValue = "Restore";
 
         /// <summary> Normal. </summary>
         public static SqlServerCreateMode Normal { get; } = new SqlServerCreateMode(NormalValue);
-        /// <summary> ServerMigrationV1. </summary>
-        public static SqlServerCreateMode ServerMigrationV1 { get; } = new SqlServerCreateMode(ServerMigrationV1Value);
-        /// <summary> DatabaseMigrationV1. </summary>
-        public static SqlServerCreateMode DatabaseMigrationV1 { get; } = new SqlServerCreateMode(DatabaseMigrationV1Value);
-        /// <summary> ServerMigration. </summary>
-        public static SqlServerCreateMode ServerMigration { get; } = new SqlServerCreateMode(ServerMigrationValue);
-        /// <summary> Standby. </summary>
-        public static SqlServerCreateMode Standby { get; } = new SqlServerCreateMode(StandbyValue);
         /// <summary> Restore. </summary>
         public static SqlServerCreateMode Restore { get; } = new SqlServerCreateMode(RestoreValue);
         /// <summary> Determines if two <see cref="SqlServerCreateMode"/> values are the same. </summary>

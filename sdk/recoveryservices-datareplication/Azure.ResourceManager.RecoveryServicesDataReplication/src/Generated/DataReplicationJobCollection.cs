@@ -188,7 +188,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 odataOptions,
                 continuationToken,
                 pageSize,
-                context), data => new DataReplicationJobResource(Client, data));
+                context,
+                "DataReplicationJobCollection.GetAll"), data => new DataReplicationJobResource(Client, data));
         }
 
         /// <summary>
@@ -227,7 +228,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 odataOptions,
                 continuationToken,
                 pageSize,
-                context), data => new DataReplicationJobResource(Client, data));
+                context,
+                "DataReplicationJobCollection.GetAll"), data => new DataReplicationJobResource(Client, data));
         }
 
         /// <summary>

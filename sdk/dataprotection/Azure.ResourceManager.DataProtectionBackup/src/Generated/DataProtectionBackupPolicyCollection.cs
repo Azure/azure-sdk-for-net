@@ -287,7 +287,13 @@ namespace Azure.ResourceManager.DataProtectionBackup
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataProtectionBackupPolicyData, DataProtectionBackupPolicyResource>(new BaseBackupPolicyResourcesGetAllAsyncCollectionResultOfT(_baseBackupPolicyResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new DataProtectionBackupPolicyResource(Client, data));
+            return new AsyncPageableWrapper<DataProtectionBackupPolicyData, DataProtectionBackupPolicyResource>(new BaseBackupPolicyResourcesGetAllAsyncCollectionResultOfT(
+                _baseBackupPolicyResourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DataProtectionBackupPolicyCollection.GetAll"), data => new DataProtectionBackupPolicyResource(Client, data));
         }
 
         /// <summary>
@@ -315,7 +321,13 @@ namespace Azure.ResourceManager.DataProtectionBackup
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataProtectionBackupPolicyData, DataProtectionBackupPolicyResource>(new BaseBackupPolicyResourcesGetAllCollectionResultOfT(_baseBackupPolicyResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new DataProtectionBackupPolicyResource(Client, data));
+            return new PageableWrapper<DataProtectionBackupPolicyData, DataProtectionBackupPolicyResource>(new BaseBackupPolicyResourcesGetAllCollectionResultOfT(
+                _baseBackupPolicyResourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DataProtectionBackupPolicyCollection.GetAll"), data => new DataProtectionBackupPolicyResource(Client, data));
         }
 
         /// <summary>

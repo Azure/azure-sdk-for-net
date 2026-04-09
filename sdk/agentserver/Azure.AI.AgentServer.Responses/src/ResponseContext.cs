@@ -45,14 +45,21 @@ public class ResponseContext
 
     /// <summary>
     /// Resolves and returns the input items for the current request.
-    /// Inline items are converted to <see cref="OutputItem"/> instances;
-    /// item references are resolved via the provider. Results are cached
-    /// after the first call.
+    /// Inline items are returned as their <see cref="Item"/> subtypes;
+    /// item references are optionally resolved via the provider and converted
+    /// to <see cref="Item"/> subtypes. Results are cached after the first call
+    /// for each <paramref name="resolveReferences"/> mode.
     /// </summary>
+    /// <param name="resolveReferences">
+    /// When <c>true</c> (the default), <see cref="Models.ItemReferenceParam"/> items
+    /// are resolved via the provider and returned as their concrete <see cref="Item"/> subtype.
+    /// When <c>false</c>, item references are left as <see cref="Models.ItemReferenceParam"/>
+    /// in the returned list.
+    /// </param>
     /// <param name="cancellationToken">A token to cancel the operation.</param>
     /// <returns>The resolved input items.</returns>
-    public virtual Task<IReadOnlyList<OutputItem>> GetInputItemsAsync(CancellationToken cancellationToken = default)
-        => Task.FromResult<IReadOnlyList<OutputItem>>(Array.Empty<OutputItem>());
+    public virtual Task<IReadOnlyList<Item>> GetInputItemsAsync(bool resolveReferences = true, CancellationToken cancellationToken = default)
+        => Task.FromResult<IReadOnlyList<Item>>(Array.Empty<Item>());
 
     /// <summary>
     /// Resolves and returns the conversation history items for the current request.
@@ -64,6 +71,24 @@ public class ResponseContext
     /// <returns>The resolved history items, or an empty list if no conversation context exists.</returns>
     public virtual Task<IReadOnlyList<OutputItem>> GetHistoryAsync(CancellationToken cancellationToken = default)
         => Task.FromResult<IReadOnlyList<OutputItem>>(Array.Empty<OutputItem>());
+
+    /// <summary>
+    /// Resolves input items and extracts all text content as a single string.
+    /// Filters for <see cref="Models.ItemMessage"/> items, expands their content,
+    /// and joins all text values with newline separators.
+    /// </summary>
+    /// <param name="resolveReferences">
+    /// When <c>true</c> (the default), item references are resolved before extracting text.
+    /// </param>
+    /// <param name="cancellationToken">A token to cancel the operation.</param>
+    /// <returns>
+    /// The combined text content, or an empty string if no text content is found.
+    /// </returns>
+    public virtual async Task<string> GetInputTextAsync(bool resolveReferences = true, CancellationToken cancellationToken = default)
+    {
+        var items = await GetInputItemsAsync(resolveReferences, cancellationToken).ConfigureAwait(false);
+        return items.GetInputText();
+    }
 
     /// <summary>
     /// Gets the platform-injected isolation keys for this request.
