@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "@azure-tools/typespec-client-generator-cli": "0.31.0"
+    "@azure-tools/typespec-client-generator-cli": "0.32.0"
   },
   "overrides": {
     "@autorest/openapi-to-typespec": {
