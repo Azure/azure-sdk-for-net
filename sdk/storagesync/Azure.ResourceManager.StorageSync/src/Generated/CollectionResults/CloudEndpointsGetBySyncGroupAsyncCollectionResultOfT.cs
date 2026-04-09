@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.StorageSync
         private readonly string _storageSyncServiceName;
         private readonly string _syncGroupName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of CloudEndpointsGetBySyncGroupAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The CloudEndpoints client used to send requests. </param>
@@ -31,7 +32,8 @@ namespace Azure.ResourceManager.StorageSync
         /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
         /// <param name="syncGroupName"> Name of Sync Group resource. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public CloudEndpointsGetBySyncGroupAsyncCollectionResultOfT(CloudEndpoints client, Guid subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public CloudEndpointsGetBySyncGroupAsyncCollectionResultOfT(CloudEndpoints client, Guid subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -39,6 +41,7 @@ namespace Azure.ResourceManager.StorageSync
             _storageSyncServiceName = storageSyncServiceName;
             _syncGroupName = syncGroupName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of CloudEndpointsGetBySyncGroupAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -72,7 +75,7 @@ namespace Azure.ResourceManager.StorageSync
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetBySyncGroupRequest(nextLink, _subscriptionId, _resourceGroupName, _storageSyncServiceName, _syncGroupName, _context) : _client.CreateGetBySyncGroupRequest(_subscriptionId, _resourceGroupName, _storageSyncServiceName, _syncGroupName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("CloudEndpointCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

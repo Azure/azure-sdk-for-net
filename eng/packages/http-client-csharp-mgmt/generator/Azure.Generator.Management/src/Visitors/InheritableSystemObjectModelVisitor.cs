@@ -305,6 +305,11 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
     /// model.Type.BaseType as the return type, which can produce a covariant return type
     /// (e.g., returning CustomPatchBase instead of ResourceData). Covariant returns are not
     /// supported on .NET Framework.
+    ///
+    /// Also fixes the explicit interface implementations (IJsonModel&lt;T&gt;.Create,
+    /// IPersistableModel&lt;T&gt;.Create) that call these methods, adding a cast to the
+    /// model type when the return type was changed. Without this cast, the implicit
+    /// conversion from ResourceData to the model type would fail to compile.
     /// </summary>
     private void FixSerializationReturnTypes(ModelProvider model)
     {
@@ -318,6 +323,7 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
         {
             if (provider is MrwSerializationTypeDefinition serializationTypeDefinition)
             {
+                bool returnTypeChanged = false;
                 foreach (var method in serializationTypeDefinition.Methods.Where(
                     m => _methodNamesToFixReturnType.Contains(m.Signature.Name)
                          && m.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Override)))
@@ -326,8 +332,40 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
                     if (currentReturnType is not null && !currentReturnType.Equals(systemBaseType))
                     {
                         method.Signature.Update(returnType: systemBaseType);
+                        returnTypeChanged = true;
                     }
                 }
+
+                // When the *Core methods' return type was changed to the system base type,
+                // the explicit interface implementations that call them need a cast to the
+                // model type (e.g., (PolyDeviceData)JsonModelCreateCore(ref reader, options)).
+                if (returnTypeChanged)
+                {
+                    FixExplicitInterfaceCreateMethods(serializationTypeDefinition);
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// Adds a cast to the explicit interface Create methods (IJsonModel&lt;T&gt;.Create,
+    /// IPersistableModel&lt;T&gt;.Create) when their body expressions return the system base
+    /// type (e.g., ResourceData) instead of the expected model type (e.g., PolyDeviceData).
+    /// </summary>
+    private static void FixExplicitInterfaceCreateMethods(MrwSerializationTypeDefinition serializationTypeDefinition)
+    {
+        foreach (var method in serializationTypeDefinition.Methods.Where(
+            m => m.Signature.Name == "Create"
+                 && m.Signature.ExplicitInterface is not null
+                 && m.BodyExpression is not null))
+        {
+            // Cast to the method's declared return type (the discriminated base, e.g., PolyDeviceData)
+            // rather than the model type (e.g., UnknownPolyDevice), because the deserialization
+            // factory can return any derived type.
+            var returnType = method.Signature.ReturnType;
+            if (returnType is not null)
+            {
+                method.Update(bodyExpression: method.BodyExpression!.CastTo(returnType));
             }
         }
     }

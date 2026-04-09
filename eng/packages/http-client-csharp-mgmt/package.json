@@ -37,7 +37,7 @@
     "dist/**"
   ],
   "dependencies": {
-    "@azure-typespec/http-client-csharp": "1.0.0-alpha.20260320.2"
+    "@azure-typespec/http-client-csharp": "1.0.0-alpha.20260403.3"
   },
   "peerDependencies": {
     "@typespec/http-client-csharp": "^1.0.0-alpha"
@@ -45,8 +45,8 @@
   "devDependencies": {
     "@azure-tools/azure-http-specs": "0.1.0-alpha.38",
     "@azure-tools/typespec-autorest": "0.66.0",
-    "@azure-tools/typespec-azure-core": "0.66.0",
-    "@azure-tools/typespec-azure-resource-manager": "0.66.0",
+    "@azure-tools/typespec-azure-core": "0.66.1",
+    "@azure-tools/typespec-azure-resource-manager": "0.66.1",
     "@azure-tools/typespec-azure-rulesets": "0.66.0",
     "@azure-tools/typespec-client-generator-core": "0.66.3",
     "@azure-tools/typespec-liftr-base": "0.12.0",
@@ -57,7 +57,6 @@
     "@typespec/compiler": "1.10.0",
     "@typespec/events": "0.80.0",
     "@typespec/http": "1.10.0",
-    "@typespec/http-client-csharp": "1.0.0-alpha.20260320.2",
     "@typespec/http-specs": "0.1.0-alpha.34",
     "@typespec/openapi": "1.10.0",
     "@typespec/rest": "0.80.0",

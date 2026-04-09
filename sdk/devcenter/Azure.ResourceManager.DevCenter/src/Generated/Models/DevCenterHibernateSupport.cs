@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DevCenter;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.DevCenter.Models
     public readonly partial struct DevCenterHibernateSupport : IEquatable<DevCenterHibernateSupport>
     {
         private readonly string _value;
+        /// <summary> Hibernate is disabled. </summary>
+        private const string IsDisabledValue = "Disabled";
+        /// <summary> Hibernate is enabled. </summary>
+        private const string IsEnabledValue = "Enabled";
 
         /// <summary> Initializes a new instance of <see cref="DevCenterHibernateSupport"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DevCenterHibernateSupport(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string IsDisabledValue = "Disabled";
-        private const string IsEnabledValue = "Enabled";
-
-        /// <summary> Disabled. </summary>
+        /// <summary> Hibernate is disabled. </summary>
         public static DevCenterHibernateSupport IsDisabled { get; } = new DevCenterHibernateSupport(IsDisabledValue);
-        /// <summary> Enabled. </summary>
+
+        /// <summary> Hibernate is enabled. </summary>
         public static DevCenterHibernateSupport IsEnabled { get; } = new DevCenterHibernateSupport(IsEnabledValue);
+
         /// <summary> Determines if two <see cref="DevCenterHibernateSupport"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DevCenterHibernateSupport left, DevCenterHibernateSupport right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DevCenterHibernateSupport"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DevCenterHibernateSupport left, DevCenterHibernateSupport right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DevCenterHibernateSupport"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DevCenterHibernateSupport"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DevCenterHibernateSupport(string value) => new DevCenterHibernateSupport(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DevCenterHibernateSupport"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DevCenterHibernateSupport?(string value) => value == null ? null : new DevCenterHibernateSupport(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DevCenterHibernateSupport other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DevCenterHibernateSupport other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

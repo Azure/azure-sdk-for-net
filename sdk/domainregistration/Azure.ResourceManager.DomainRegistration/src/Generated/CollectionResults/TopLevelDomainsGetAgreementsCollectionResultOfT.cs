@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.DomainRegistration
         private readonly string _name;
         private readonly RequestContent _content;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of TopLevelDomainsGetAgreementsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The TopLevelDomains client used to send requests. </param>
@@ -28,13 +29,15 @@ namespace Azure.ResourceManager.DomainRegistration
         /// <param name="name"> Name of the top-level domain. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public TopLevelDomainsGetAgreementsCollectionResultOfT(TopLevelDomains client, string subscriptionId, string name, RequestContent content, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public TopLevelDomainsGetAgreementsCollectionResultOfT(TopLevelDomains client, string subscriptionId, string name, RequestContent content, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _name = name;
             _content = content;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of TopLevelDomainsGetAgreementsCollectionResultOfT as an enumerable collection. </summary>
@@ -67,7 +70,7 @@ namespace Azure.ResourceManager.DomainRegistration
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAgreementsRequest(nextLink, _subscriptionId, _name, _content, _context) : _client.CreateGetAgreementsRequest(_subscriptionId, _name, _content, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("TopLevelDomainResource.GetAgreements");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

@@ -43,9 +43,9 @@ namespace Azure.ResourceManager.Storage
         {
             TryGetApiVersion(BlobContainerResource.ResourceType, out string blobContainerApiVersion);
             _blobContainersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", BlobContainerResource.ResourceType.Namespace, Diagnostics);
-            _blobContainersRestClient = new BlobContainers(_blobContainersClientDiagnostics, Pipeline, Endpoint, blobContainerApiVersion ?? "2025-08-01");
+            _blobContainersRestClient = new BlobContainers(_blobContainersClientDiagnostics, Pipeline, Endpoint, blobContainerApiVersion ?? "2025-06-01");
             _blobServicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", BlobContainerResource.ResourceType.Namespace, Diagnostics);
-            _blobServicesRestClient = new BlobServices(_blobServicesClientDiagnostics, Pipeline, Endpoint, blobContainerApiVersion ?? "2025-08-01");
+            _blobServicesRestClient = new BlobServices(_blobServicesClientDiagnostics, Pipeline, Endpoint, blobContainerApiVersion ?? "2025-06-01");
             ValidateResourceId(id);
         }
 
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Storage
         {
             if (id.ResourceType != BlobServiceResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, BlobServiceResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, BlobServiceResource.ResourceType), nameof(id));
             }
         }
 
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -303,7 +303,8 @@ namespace Azure.ResourceManager.Storage
                 maxpagesize,
                 filter,
                 include?.ToString(),
-                context), data => new BlobContainerResource(Client, data));
+                context,
+                "BlobContainerCollection.GetAll"), data => new BlobContainerResource(Client, data));
         }
 
         /// <summary>
@@ -319,7 +320,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -342,7 +343,8 @@ namespace Azure.ResourceManager.Storage
                 maxpagesize,
                 filter,
                 include?.ToString(),
-                context), data => new BlobContainerResource(Client, data));
+                context,
+                "BlobContainerCollection.GetAll"), data => new BlobContainerResource(Client, data));
         }
 
         /// <summary>
@@ -358,7 +360,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -415,7 +417,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -472,7 +474,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -533,7 +535,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>

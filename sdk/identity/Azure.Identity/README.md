@@ -231,7 +231,7 @@ Not all credentials require this configuration. Credentials that authenticate th
 |-|-
 |`AZURE_CLIENT_ID`|ID of a Microsoft Entra application
 |`AZURE_TENANT_ID`|ID of the application's Microsoft Entra tenant
-|`AZURE_CLIENT_CERTIFICATE_PATH`|path to a PFX or PEM-encoded certificate file including private key
+|`AZURE_CLIENT_CERTIFICATE_PATH`|Path to the client certificate, including the private key. The path must be to either a "pfx"- or "pem"-encoded certificate on disk, or a certificate in the platform certificate store by thumbprint.<br>For example:<ul><li>`c:\data\certificate.pfx`</li><li>`/etc/app/cert.pem`</li><li>`cert:/CurrentUser/My/E661583E8FABEF4C0BEF694CBC41C28FB81CD870`</li></ul>
 |`AZURE_CLIENT_CERTIFICATE_PASSWORD`|(optional) the password protecting the certificate file (currently only supported for PFX (PKCS12) certificates)
 |`AZURE_CLIENT_SEND_CERTIFICATE_CHAIN`|(optional) send certificate chain in x5c header to support subject name / issuer based authentication
 

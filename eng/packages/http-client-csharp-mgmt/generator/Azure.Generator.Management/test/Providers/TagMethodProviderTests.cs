@@ -162,19 +162,58 @@ namespace Azure.Generator.Management.Tests.Providers
         }
 
         [TestCase]
-        public void Verify_TagMethodsGenerated_WhenPatchHasNoBodyButPutExists()
+        public void Verify_NoTagMethods_WhenNonSingletonHasBodylessPatchAndPut()
         {
             var (client, models) = InputResourceData.ClientWithResourceBodylessPatchAndPut();
             _ = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
             var resourceClientProvider = ManagementClientGenerator.Instance.OutputLibrary.TypeProviders.OfType<ResourceClientProvider>().First();
             Assert.IsNotNull(resourceClientProvider);
 
-            // Verify that tag methods ARE generated using the PUT fallback
+            // For a non-singleton resource, the Create (PUT) method is categorized only into the collection,
+            // not the resource. When PATCH has no body, the PUT fallback should not be found in the resource's
+            // methods, so tag methods should NOT be generated.
             var tagMethodNames = new[] { "AddTag", "AddTagAsync", "SetTags", "SetTagsAsync", "RemoveTag", "RemoveTagAsync" };
             foreach (var tagMethodName in tagMethodNames)
             {
                 var method = resourceClientProvider.Methods.SingleOrDefault(m => m.Signature.Name == tagMethodName);
-                Assert.IsNotNull(method, $"Tag method '{tagMethodName}' should be generated using PUT fallback when PATCH has no body.");
+                Assert.IsNull(method, $"Tag method '{tagMethodName}' should not be generated for non-singleton resource when PATCH has no body and PUT is collection-only.");
+            }
+        }
+
+        [TestCase]
+        public void Verify_TagMethodsGenerated_WhenSingletonHasBodylessPatchAndPut()
+        {
+            var (client, models) = InputResourceData.ClientWithSingletonResourceBodylessPatchAndPut();
+            _ = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
+            var resourceClientProvider = ManagementClientGenerator.Instance.OutputLibrary.TypeProviders.OfType<ResourceClientProvider>().First();
+            Assert.IsNotNull(resourceClientProvider);
+
+            // For a singleton resource, the Create (PUT) method is categorized into the resource,
+            // so the PUT fallback should be found and tag methods SHOULD be generated.
+            var tagMethodNames = new[] { "AddTag", "AddTagAsync", "SetTags", "SetTagsAsync", "RemoveTag", "RemoveTagAsync" };
+            foreach (var tagMethodName in tagMethodNames)
+            {
+                var method = resourceClientProvider.Methods.SingleOrDefault(m => m.Signature.Name == tagMethodName);
+                Assert.IsNotNull(method, $"Tag method '{tagMethodName}' should be generated for singleton resource using PUT fallback when PATCH has no body.");
+            }
+        }
+
+        [TestCase]
+        public void Verify_TagMethodsGenerated_WhenNonSingletonHasNoPatchOnlyPut()
+        {
+            var (client, models) = InputResourceData.ClientWithResourceNoPatchOnlyPut();
+            _ = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
+            var resourceClientProvider = ManagementClientGenerator.Instance.OutputLibrary.TypeProviders.OfType<ResourceClientProvider>().First();
+            Assert.IsNotNull(resourceClientProvider);
+
+            // For a non-singleton resource with no PATCH at all, the Create (PUT) method gets added
+            // to the resource's methods by the categorization fallback (no hasUpdateMethod).
+            // Tag methods SHOULD be generated using PUT.
+            var tagMethodNames = new[] { "AddTag", "AddTagAsync", "SetTags", "SetTagsAsync", "RemoveTag", "RemoveTagAsync" };
+            foreach (var tagMethodName in tagMethodNames)
+            {
+                var method = resourceClientProvider.Methods.SingleOrDefault(m => m.Signature.Name == tagMethodName);
+                Assert.IsNotNull(method, $"Tag method '{tagMethodName}' should be generated for non-singleton resource using PUT when no PATCH exists.");
             }
         }
 

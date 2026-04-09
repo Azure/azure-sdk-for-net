@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Dynatrace
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -712,7 +712,13 @@ namespace Azure.ResourceManager.Dynatrace
             {
                 CancellationToken = cancellationToken
             };
-            return new MonitorsGetAppServicesAsyncCollectionResultOfT(_monitorsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new MonitorsGetAppServicesAsyncCollectionResultOfT(
+                _monitorsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DynatraceMonitorResource.GetAppServices");
         }
 
         /// <summary>
@@ -744,7 +750,13 @@ namespace Azure.ResourceManager.Dynatrace
             {
                 CancellationToken = cancellationToken
             };
-            return new MonitorsGetAppServicesCollectionResultOfT(_monitorsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new MonitorsGetAppServicesCollectionResultOfT(
+                _monitorsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DynatraceMonitorResource.GetAppServices");
         }
 
         /// <summary>
@@ -776,7 +788,13 @@ namespace Azure.ResourceManager.Dynatrace
             {
                 CancellationToken = cancellationToken
             };
-            return new MonitorsGetHostsAsyncCollectionResultOfT(_monitorsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new MonitorsGetHostsAsyncCollectionResultOfT(
+                _monitorsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DynatraceMonitorResource.GetHosts");
         }
 
         /// <summary>
@@ -808,7 +826,13 @@ namespace Azure.ResourceManager.Dynatrace
             {
                 CancellationToken = cancellationToken
             };
-            return new MonitorsGetHostsCollectionResultOfT(_monitorsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new MonitorsGetHostsCollectionResultOfT(
+                _monitorsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DynatraceMonitorResource.GetHosts");
         }
 
         /// <summary>
@@ -850,7 +874,8 @@ namespace Azure.ResourceManager.Dynatrace
                 Id.ResourceGroupName,
                 Id.Name,
                 LinkableEnvironmentContent.ToRequestContent(content),
-                context);
+                context,
+                "DynatraceMonitorResource.GetLinkableEnvironments");
         }
 
         /// <summary>
@@ -892,7 +917,8 @@ namespace Azure.ResourceManager.Dynatrace
                 Id.ResourceGroupName,
                 Id.Name,
                 LinkableEnvironmentContent.ToRequestContent(content),
-                context);
+                context,
+                "DynatraceMonitorResource.GetLinkableEnvironments");
         }
 
         /// <summary>
@@ -931,7 +957,8 @@ namespace Azure.ResourceManager.Dynatrace
                 Id.ResourceGroupName,
                 Id.Name,
                 DynatraceMonitoredResourceContent.ToRequestContent(content),
-                context);
+                context,
+                "DynatraceMonitorResource.GetMonitoredResources");
         }
 
         /// <summary>
@@ -970,7 +997,8 @@ namespace Azure.ResourceManager.Dynatrace
                 Id.ResourceGroupName,
                 Id.Name,
                 DynatraceMonitoredResourceContent.ToRequestContent(content),
-                context);
+                context,
+                "DynatraceMonitorResource.GetMonitoredResources");
         }
 
         /// <summary>

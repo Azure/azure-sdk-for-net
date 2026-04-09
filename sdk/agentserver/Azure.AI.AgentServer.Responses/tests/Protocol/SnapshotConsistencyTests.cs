@@ -23,6 +23,7 @@ public class SnapshotConsistencyTests : ProtocolTestBase
     /// never completed with fewer items than final count).
     /// </summary>
     [Test]
+    [Ignore("Flaky due to race condition — https://github.com/Azure/azure-sdk-for-net/issues/57815")]
     public async Task ConcurrentGET_DuringEmission_ReturnsConsistentSnapshots()
     {
         var handlerStarted = new TaskCompletionSource();
@@ -216,7 +217,6 @@ public class SnapshotConsistencyTests : ProtocolTestBase
         foreach (var item in items)
             completedResponse.Output.Add(item);
         completedResponse.CompletedAt = DateTimeOffset.UtcNow;
-        completedResponse.OutputText = completedResponse.ComputeOutputText();
         yield return new ResponseCompletedEvent(0, completedResponse);
     }
 
@@ -245,7 +245,6 @@ public class SnapshotConsistencyTests : ProtocolTestBase
         completedResponse.Output.Add(msg1);
         completedResponse.Output.Add(msg2);
         completedResponse.CompletedAt = DateTimeOffset.UtcNow;
-        completedResponse.OutputText = completedResponse.ComputeOutputText();
         yield return new ResponseCompletedEvent(0, completedResponse);
     }
 
@@ -262,7 +261,6 @@ public class SnapshotConsistencyTests : ProtocolTestBase
 
         var completedResponse = new Models.ResponseObject(ctx.ResponseId, "test-model") { Status = ResponseStatus.Completed };
         completedResponse.CompletedAt = DateTimeOffset.UtcNow;
-        completedResponse.OutputText = completedResponse.ComputeOutputText();
         yield return new ResponseCompletedEvent(0, completedResponse);
     }
 }

@@ -6,6 +6,7 @@ using System.Net;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
+using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Responses.Internal;
 using Azure.AI.AgentServer.Responses.Models;
 using Azure.AI.AgentServer.Responses.Tests.Helpers;
@@ -15,9 +16,9 @@ namespace Azure.AI.AgentServer.Responses.Tests.Protocol;
 
 /// <summary>
 /// Protocol tests for User Story 1 — Handler-Driven Persistence.
-/// Verifies FR-001 (no persistence before handler runs),
-/// FR-002 (bg=true: Create at response.created, Update at terminal),
-/// FR-003 (bg=false: single Create at terminal state).
+/// Verifies S-035/B36 (no persistence before handler runs),
+/// S-035 (bg=true: Create at response.created, Update at terminal),
+/// S-035 (bg=false: single Create at terminal state).
 /// </summary>
 public class HandlerDrivenPersistenceTests : IDisposable
 {
@@ -154,6 +155,10 @@ public class HandlerDrivenPersistenceTests : IDisposable
         // Wait for bg task to complete
         await WaitForBackgroundCompletionAsync(responseId);
 
+        // GET returning a terminal status does not guarantee finalization
+        // (persistence) has completed — poll until UpdateResponseAsync appears.
+        await WaitForSpyCallAsync("UpdateResponseAsync");
+
         // Provider should have exactly 1 Create and 1 Update
         var calls = _spy.Calls.ToArray();
         Assert.That(calls.Count(c => c == "CreateResponseAsync"), Is.EqualTo(1));
@@ -233,6 +238,20 @@ public class HandlerDrivenPersistenceTests : IDisposable
         }
     }
 
+    /// <summary>
+    /// Polls the spy's call log until the expected method name appears or timeout.
+    /// </summary>
+    private async Task WaitForSpyCallAsync(string methodName, TimeSpan? timeout = null)
+    {
+        var deadline = DateTimeOffset.UtcNow + (timeout ?? TimeSpan.FromSeconds(5));
+        while (DateTimeOffset.UtcNow < deadline)
+        {
+            if (_spy.Calls.Contains(methodName))
+                return;
+            await Task.Delay(50);
+        }
+    }
+
     public void Dispose()
     {
         _client.Dispose();
@@ -254,14 +273,14 @@ public class HandlerDrivenPersistenceTests : IDisposable
 
         public ConcurrentBag<string> Calls { get; } = new();
 
-        public override Task CreateResponseAsync(CreateResponseRequest request, CancellationToken cancellationToken = default)
+        public override Task CreateResponseAsync(CreateResponseRequest request, IsolationContext isolation, CancellationToken cancellationToken = default)
         {
             Calls.Add("CreateResponseAsync");
             _responses.TryAdd(request.Response.Id, request.Response);
             return Task.CompletedTask;
         }
 
-        public override Task<Models.ResponseObject> GetResponseAsync(string responseId, CancellationToken cancellationToken = default)
+        public override Task<Models.ResponseObject> GetResponseAsync(string responseId, IsolationContext isolation, CancellationToken cancellationToken = default)
         {
             Calls.Add("GetResponseAsync");
             if (!_responses.TryGetValue(responseId, out var response))
@@ -271,14 +290,14 @@ public class HandlerDrivenPersistenceTests : IDisposable
             return Task.FromResult(response);
         }
 
-        public override Task UpdateResponseAsync(Models.ResponseObject response, CancellationToken cancellationToken = default)
+        public override Task UpdateResponseAsync(Models.ResponseObject response, IsolationContext isolation, CancellationToken cancellationToken = default)
         {
             Calls.Add("UpdateResponseAsync");
             _responses[response.Id] = response;
             return Task.CompletedTask;
         }
 
-        public override Task DeleteResponseAsync(string responseId, CancellationToken cancellationToken = default)
+        public override Task DeleteResponseAsync(string responseId, IsolationContext isolation, CancellationToken cancellationToken = default)
         {
             Calls.Add("DeleteResponseAsync");
             if (!_responses.TryRemove(responseId, out _))
@@ -286,13 +305,13 @@ public class HandlerDrivenPersistenceTests : IDisposable
             return Task.CompletedTask;
         }
 
-        public override Task<AgentsPagedResultOutputItem> GetInputItemsAsync(string responseId, int limit = 20, bool ascending = false, string? after = null, string? before = null, CancellationToken cancellationToken = default)
+        public override Task<AgentsPagedResultOutputItem> GetInputItemsAsync(string responseId, IsolationContext isolation, int limit = 20, bool ascending = false, string? after = null, string? before = null, CancellationToken cancellationToken = default)
             => Task.FromResult(ResponsesModelFactory.AgentsPagedResultOutputItem(data: Array.Empty<OutputItem>(), hasMore: false));
 
-        public override Task<IEnumerable<OutputItem?>> GetItemsAsync(IEnumerable<string> itemIds, CancellationToken cancellationToken = default)
+        public override Task<IEnumerable<OutputItem?>> GetItemsAsync(IEnumerable<string> itemIds, IsolationContext isolation, CancellationToken cancellationToken = default)
             => Task.FromResult(Enumerable.Empty<OutputItem?>());
 
-        public override Task<IEnumerable<string>> GetHistoryItemIdsAsync(string? previousResponseId, string? conversationId, int limit, CancellationToken cancellationToken = default)
+        public override Task<IEnumerable<string>> GetHistoryItemIdsAsync(string? previousResponseId, string? conversationId, int limit, IsolationContext isolation, CancellationToken cancellationToken = default)
             => Task.FromResult(Enumerable.Empty<string>());
 
         // --- Adapter factories for DI registration ---

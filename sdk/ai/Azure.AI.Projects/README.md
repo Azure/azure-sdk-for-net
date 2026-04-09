@@ -44,6 +44,8 @@ The client library uses version `v1` of the AI Foundry [data plane REST APIs](ht
     - [Evaluating responses](#evaluating-responses)
     - [Evaluation rules](#evaluation-rules)
   - [Red teams](#red-teams)
+  - [Schedules](#schedules)
+  - [Toolboxes](#toolboxes)
 - [Tracing](#tracing)
     - [Azure Monitor Tracing](#tracing-to-azure-monitor)
     - [Console Tracing](#tracing-to-console)
@@ -1165,7 +1167,317 @@ EvaluationRule continuousEvalRule = await projectClient.EvaluationRules.CreateOr
 Console.WriteLine($"Continuous Evaluation Rule created (id: {continuousEvalRule.Id}, name: {continuousEvalRule.DisplayName})");
 ```
 
-### Performing Classic Agent operations
+### Red teams
+**Note:** Red teams is an experimental feature, to use it, please disable the `AAIP001` warning.
+```C#
+#pragma warning disable AAIP001
+```
+Red teams allow to check how models behave in response to attack attempts.
+To test the model using Base64-encoded strings, with the prompts asking it to generate violent content, we can use the next code.
+
+```C# Snippet:Sample_CreateRedTeam_RedTeam
+AzureOpenAIModelConfiguration config = new(modelDeploymentName: modelDeploymentName);
+RedTeam redTeam = new(target: config)
+{
+    AttackStrategies = { AttackStrategy.Base64 },
+    RiskCategories = { RiskCategory.Violence },
+    DisplayName = "redteamtest1"
+};
+```
+
+Start the Red Teaming task.
+
+```C# Snippet:Sample_RunScan_RedTeam_Async
+RequestOptions options = new();
+options.AddHeader("model-endpoint", modelEndpoint);
+options.AddHeader("model-api-key", modelApiKey);
+redTeam = await projectClient.RedTeams.CreateAsync(redTeam: redTeam, options: options);
+Console.WriteLine($"Red Team scan created with scan name: {redTeam.Name}");
+```
+
+Get Red Teaming task and output its status.
+
+```C# Snippet:Sample_GetScanDetails_RedTeam_Async
+redTeam = await projectClient.RedTeams.GetAsync(name: redTeam.Name);
+Console.WriteLine($"Red Team scan status: {redTeam.Status}");
+```
+
+To get the results of the red teaming experiment, open Microsoft Foundry used for the experiments, on the left panel select **Evaluation** and choose **AI red teaming** tab.
+
+## Schedules
+
+The `ProjectsSchedule` class may be used to schedule an evaluation run. To schedule the evaluation run, create a JSON object that points
+to the existing evaluation and dataset.
+
+```C# Snippet:Sample_CreateRunObject_ScheduledEvaluations
+private static BinaryData CreateRunObject(string evaluationId, string evaluationName, string fileDatasetId)
+{
+    return BinaryData.FromObjectAsJson(new
+    {
+        eval_id = evaluationId,
+        name = evaluationName,
+        metadata = new
+        {
+            team = "eval-exp",
+            scenario = "dataset-id-v1"
+        },
+        data_source = new
+        {
+            type = "jsonl",
+            source = new
+            {
+                id = fileDatasetId,
+                type = "file_id",
+            }
+        }
+    });
+}
+```
+
+ Create the `RecurrenceTrigger`, which will start the task at 9 AM every day. Provide the evaluation ID and configuration to the `EvaluationScheduleTask` object and use it to create the `ProjectsSchedule`. `RecurrenceTrigger` has a `TimeZone` property, defining which time zone will be used. By default, it is UTC.
+ Finally, create the schedule in the Azure and wait while the provisioning will get to the final state.
+
+ ```C# Snippet:Sample_ScheduleEvaluation_ScheduledEvaluations_Async
+RecurrenceTrigger trigger = new(interval: 1, new DailyRecurrenceSchedule(hours: [9]));
+EvaluationScheduleTask scheduleTask = new(evalId: evaluationId, evalRun: CreateRunObject(evaluationId, evaluationName, fileDataset.Id));
+ProjectsSchedule schedule = new(enabled: true, trigger: trigger, task: scheduleTask)
+{
+    DisplayName = "Dataset Evaluation Eval Run Schedule"
+};
+ProjectsSchedule scheduleResponse = await projectClient.Schedules.CreateOrUpdateAsync(id: "dataset-eval-run-schedule-9am", resource: schedule);
+while (scheduleResponse.ProvisioningStatus != ScheduleProvisioningStatus.Failed && scheduleResponse.ProvisioningStatus != ScheduleProvisioningStatus.Succeeded)
+{
+    await Task.Delay(TimeSpan.FromSeconds(1));
+    scheduleResponse = await projectClient.Schedules.GetAsync(scheduleResponse.Id);
+}
+if (scheduleResponse.ProvisioningStatus == ScheduleProvisioningStatus.Failed)
+{
+    throw new InvalidOperationException($"Failed to create a schedule.");
+}
+Console.WriteLine($"Schedule created for dataset evaluation: {scheduleResponse.Id}");
+```
+
+Schedules may also be used for red teaming purposes. In this case we need to use appropriate evaluators with the
+evaluation taxonomy.
+
+First we need to create `AzureAIAgentTarget` or `AzureAIModelTarget` to test Agent or model respectively.
+
+```C# Snippet:Sample_GetAITarget_ScheduledEvaluations
+private static AzureAIAgentTarget GetAgentTarget(ProjectsAgentVersion agentVersion)
+{
+    AzureAIAgentTarget target = new(name: agentVersion.Name)
+    {
+        Version = agentVersion.Version,
+    };
+    if (agentVersion.Definition is DeclarativeAgentDefinition agentDefinition)
+    {
+        foreach (ResponseTool agentTool in agentDefinition.Tools)
+        {
+            ToolDescription tool = new();
+            ProjectsAgentTool projectTool = agentTool.AsAgentTool();
+            if (projectTool is OpenAPITool openAPITool)
+            {
+                tool.Name = openAPITool.FunctionDefinition.Name;
+                tool.Description = string.IsNullOrEmpty(openAPITool.FunctionDefinition.Description) ? "No description provided" : openAPITool.FunctionDefinition.Description;
+            }
+            else
+            {
+                tool.Name = $"Tool of type {projectTool.GetType()}";
+                tool.Description = "No description provided";
+            }
+            target.ToolDescriptions.Add(tool);
+        }
+    }
+    if (target.ToolDescriptions.Count == 0)
+    {
+        target.ToolDescriptions.Add(new()
+        {
+            Name = "No Tools",
+            Description = "This agent does not use any tools."
+        });
+    }
+    return target;
+}
+```
+
+Then we need to create a taxonomy, which will provide prompts from different categories to test Agent or model
+over evaluators set up in the evaluation.
+
+```C# Snippet:Sample_AgentTaxonomy_ScheduledEvaluations_Async
+AzureAIAgentTarget agentTarget = GetAgentTarget(agentVersion);
+AgentTaxonomyInput agentTaxonomyInput = new(target: agentTarget, riskCategories: [RiskCategory.ProhibitedActions]);
+EvaluationTaxonomy evalTaxonomyInput = new(agentTaxonomyInput)
+{
+    Description = "Taxonomy for red teaming evaluation"
+};
+EvaluationTaxonomy taxonomy = await projectClient.EvaluationTaxonomies.CreateAsync(agentVersion.Name, body: evalTaxonomyInput);
+DirectoryInfo dataPath = Directory.CreateDirectory("data_folder");
+string taxonomyPath = Path.Combine(dataPath.FullName, $"taxonomy_{agentVersion.Name}.json");
+BinaryData taxonomyJson = ((IJsonModel<EvaluationTaxonomy>)taxonomy).Write(ModelReaderWriterOptions.Json);
+File.WriteAllBytes(taxonomyPath, taxonomyJson.ToArray());
+Console.WriteLine($"RedTeaming Taxonomy created for agent: {agentVersion.Name}. Taxonomy written to {taxonomyPath}");
+```
+
+ For Red teaming JSON object should contain data source pointing to the red team taxonomy.
+
+ ```C# Snippet:Sample_CreateRedTeamRunObject_ScheduledEvaluations
+private static BinaryData CreateRedTeamRunObject(string evaluationId, string evaluationName, EvaluationTaxonomy taxonomy)
+{
+    return BinaryData.FromObjectAsJson(new
+    {
+        eval_id = evaluationId,
+        name = evaluationName,
+        metadata = new
+        {
+            team = "eval-exp",
+            scenario = "dataset-id-v1"
+        },
+        data_source = new
+        {
+            type = "azure_ai_red_team",
+            item_generation_params = new
+            {
+                type = "red_team_taxonomy",
+                attack_strategies = new[] { "Flip", "Base64" },
+                num_turns = 5,
+                source = new
+                {
+                    type = "file_id",
+                    id = taxonomy.Id,
+                    attack_strategies = new[] { "Flip", "Base64" },
+                }
+            }
+        }
+    });
+}
+```
+
+## Toolboxes
+
+Toolboxes allow us to store tools in Azure so that they can be retrieved and used by the Agents. To use this feature please disable
+the `AAIP001` warning.
+
+```C#
+#pragma warning disable AAIP001
+```
+
+In the example below we create two versions of MCP tool and save it to Azure.
+```C# Snippet:Sample_CreateToolbox_ToolboxesCRUD_Async
+ProjectsAgentTool tool = ProjectsAgentTool.AsProjectTool(ResponseTool.CreateMcpTool(
+    serverLabel: "api-specs",
+    serverUri: new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
+    toolCallApprovalPolicy: new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
+));
+ToolboxVersion toolBox1 = await toolboxClient.CreateToolboxVersionAsync(
+    toolboxName: toolboxName,
+    tools: [tool],
+    description: "Example toolbox created by the azure-ai-projects sample.",
+    metadata: new Dictionary<string, string> {
+        {"team", "Engineers"}
+    }
+);
+ToolboxVersion toolBox2 = await toolboxClient.CreateToolboxVersionAsync(
+    toolboxName: toolboxName,
+    tools: [tool],
+    description: "Another toolbox created by the azure-ai-projects sample.",
+    metadata: new Dictionary<string, string> {
+        {"team", "Data scientists"}
+    }
+);
+string status = "unknown status";
+toolBox1.Metadata?.TryGetValue("team", out status);
+Console.WriteLine($"Toolbox: {toolBox1.Name}, version: {toolBox1.Version}, (tools: {toolBox1.Tools.Count}) (team: {status}).");
+```
+
+There are two objects which help to work with the Toolboxes: `ToolboxRecord` and `ToolboxVersion`. `ToolboxRecord` can be retrieved by
+name, it contains the default version of the Toolbox.
+
+```C# Snippet:Sample_GetToolbox_ToolboxesCRUD_Async
+ToolboxRecord record = await toolboxClient.GetToolboxAsync(toolboxName: toolBox1.Name);
+Console.WriteLine($"The default version for a toolbox {record.Name} is {record.DefaultVersion}");
+```
+
+The name of Toolbox and its version allow to get the `ToolboxVersion`, containing the tools, which can be used by Agent.
+
+```C# Snippet:Sample_GetToolboxVersion_ToolboxesCRUD_Async
+ToolboxVersion toolBox = await toolboxClient.GetToolboxVersionAsync(record.Name, record.DefaultVersion);
+Console.WriteLine($"Retrieved toolbox: {toolBox.Name} ({toolBox.Id})");
+```
+
+## Tracing
+
+**Note:** Tracing functionality is in preliminary preview and is subject to change. Spans, attributes, and events may be modified in future versions.
+
+> **Environment variable values:** All tracing-related environment variables accept `true` (case-insensitive) or `1` as equivalent enabling values.
+
+### Enabling GenAI Tracing
+
+Tracing requires enabling GenAI-specific OpenTelemetry support. One way to do this is to set the `AZURE_EXPERIMENTAL_ENABLE_GENAI_TRACING` environment variable value to `true`. You can also enable the feature with the following code:
+```C# Snippet:Sample_EnableGenAITracing
+AppContext.SetSwitch("Azure.Experimental.EnableGenAITracing", true);
+```
+
+> **Precedence:** If both the `AppContext` switch and the environment variable are set, the `AppContext` switch takes priority. No exception is thrown on conflict. If neither is set, the value defaults to `false`.
+
+**Important:** When you enable `Azure.Experimental.EnableGenAITracing`, the SDK automatically enables the `Azure.Experimental.EnableActivitySource` flag, which is required for the OpenTelemetry instrumentation to function.
+
+You can add an Application Insights Azure resource to your Microsoft Foundry project. If one was enabled, you can get the Application Insights connection string, configure your AI Projects client, and observe traces in Azure Monitor. Typically, you might want to start tracing before you create a client or Agent.
+
+### Tracing to Azure Monitor
+
+First, set the `APPLICATIONINSIGHTS_CONNECTION_STRING` environment variable to point to your Azure Monitor resource.
+
+For tracing to Azure Monitor from your application, the preferred option is to use Azure.Monitor.OpenTelemetry.AspNetCore. Install the package with [NuGet](https://www.nuget.org/ ):
+```dotnetcli
+dotnet add package Azure.Monitor.OpenTelemetry.AspNetCore
+```
+
+More information about using the Azure.Monitor.OpenTelemetry.AspNetCore package can be found [here](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.OpenTelemetry.AspNetCore/README.md).
+
+Another option is to use Azure.Monitor.OpenTelemetry.Exporter package. Install the package with [NuGet](https://www.nuget.org/ ):
+```dotnetcli
+dotnet add package Azure.Monitor.OpenTelemetry.Exporter
+```
+
+Here is an example how to set up tracing to Azure Monitor using Azure.Monitor.OpenTelemetry.Exporter:
+```C# Snippet:Sample_SetupTracingToAzureMonitor
+var tracerProvider = Sdk.CreateTracerProviderBuilder()
+    .AddSource("Azure.AI.Projects.*")
+    .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("AgentTracingSample"))
+    .AddAzureMonitorTraceExporter().Build();
+```
+
+### Tracing to Console
+
+For tracing to console from your application, install the OpenTelemetry.Exporter.Console with [NuGet](https://www.nuget.org/ ):
+
+```dotnetcli
+dotnet add package OpenTelemetry.Exporter.Console
+```
+
+```C# Snippet:Sample_SetupTracingToConsole
+var tracerProvider = Sdk.CreateTracerProviderBuilder()
+                .AddSource("Azure.AI.Projects.*") // Add the required sources name
+                .SetResourceBuilder(OpenTelemetry.Resources.ResourceBuilder.CreateDefault().AddService("AgentTracingSample"))
+                .AddConsoleExporter() // Export traces to the console
+                .Build();
+```
+
+### Enabling content recording
+
+Content recording controls whether message contents and tool call related details, such as parameters and return values, are captured with the traces. This data may include sensitive user information.
+
+To enable content recording, set the `OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT` environment variable to `true`. Alternatively, you can control content recording with the following code:
+```C#
+AppContext.SetSwitch("Azure.Experimental.TraceGenAIMessageContent", true);
+```
+
+If neither the environment variable nor the `AppContext` switch is set, content recording defaults to `false`.
+
+> **Precedence:** If both the `AppContext` switch and the environment variable are set, the `AppContext` switch takes priority. No exception is thrown on conflict.
+
+
+## Performing Classic Agent operations
 
 The `Azure.AI.Agents.Persistent` package provides the legacy way to create and use Agents (Classic Agents).
 Please consider upgrading the codebase to use Agents as described  in "[Performing Agent operations](#performing-agent-operations)" section. 
@@ -1242,115 +1554,6 @@ foreach (PersistentThreadMessage threadMessage in messages)
 agentsClient.Threads.DeleteThread(threadId: thread.Id);
 agentsClient.Administration.DeleteAgent(agentId: agent.Id);
 ```
-
-## Tracing
-
-**Note:** Tracing functionality is in preliminary preview and is subject to change. Spans, attributes, and events may be modified in future versions.
-
-> **Environment variable values:** All tracing-related environment variables accept `true` (case-insensitive) or `1` as equivalent enabling values.
-
-### Enabling GenAI Tracing
-
-Tracing requires enabling GenAI-specific OpenTelemetry support. One way to do this is to set the `AZURE_EXPERIMENTAL_ENABLE_GENAI_TRACING` environment variable value to `true`. You can also enable the feature with the following code:
-```C# Snippet:Sample_EnableGenAITracing
-AppContext.SetSwitch("Azure.Experimental.EnableGenAITracing", true);
-```
-
-> **Precedence:** If both the `AppContext` switch and the environment variable are set, the `AppContext` switch takes priority. No exception is thrown on conflict. If neither is set, the value defaults to `false`.
-
-**Important:** When you enable `Azure.Experimental.EnableGenAITracing`, the SDK automatically enables the `Azure.Experimental.EnableActivitySource` flag, which is required for the OpenTelemetry instrumentation to function.
-
-You can add an Application Insights Azure resource to your Microsoft Foundry project. If one was enabled, you can get the Application Insights connection string, configure your AI Projects client, and observe traces in Azure Monitor. Typically, you might want to start tracing before you create a client or Agent.
-
-### Tracing to Azure Monitor
-
-First, set the `APPLICATIONINSIGHTS_CONNECTION_STRING` environment variable to point to your Azure Monitor resource.
-
-For tracing to Azure Monitor from your application, the preferred option is to use Azure.Monitor.OpenTelemetry.AspNetCore. Install the package with [NuGet](https://www.nuget.org/ ):
-```dotnetcli
-dotnet add package Azure.Monitor.OpenTelemetry.AspNetCore
-```
-
-More information about using the Azure.Monitor.OpenTelemetry.AspNetCore package can be found [here](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.OpenTelemetry.AspNetCore/README.md).
-
-Another option is to use Azure.Monitor.OpenTelemetry.Exporter package. Install the package with [NuGet](https://www.nuget.org/ ):
-```dotnetcli
-dotnet add package Azure.Monitor.OpenTelemetry.Exporter
-```
-
-Here is an example how to set up tracing to Azure Monitor using Azure.Monitor.OpenTelemetry.Exporter:
-```C# Snippet:Sample_SetupTracingToAzureMonitor
-var tracerProvider = Sdk.CreateTracerProviderBuilder()
-    .AddSource("Azure.AI.Projects.*")
-    .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("AgentTracingSample"))
-    .AddAzureMonitorTraceExporter().Build();
-```
-
-### Tracing to Console
-
-For tracing to console from your application, install the OpenTelemetry.Exporter.Console with [NuGet](https://www.nuget.org/ ):
-
-```dotnetcli
-dotnet add package OpenTelemetry.Exporter.Console
-```
-
-```C# Snippet:Sample_SetupTracingToConsole
-var tracerProvider = Sdk.CreateTracerProviderBuilder()
-                .AddSource("Azure.AI.Projects.*") // Add the required sources name
-                .SetResourceBuilder(OpenTelemetry.Resources.ResourceBuilder.CreateDefault().AddService("AgentTracingSample"))
-                .AddConsoleExporter() // Export traces to the console
-                .Build();
-```
-
-### Enabling content recording
-
-Content recording controls whether message contents and tool call related details, such as parameters and return values, are captured with the traces. This data may include sensitive user information.
-
-To enable content recording, set the `OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT` environment variable to `true`. Alternatively, you can control content recording with the following code:
-```C#
-AppContext.SetSwitch("Azure.Experimental.TraceGenAIMessageContent", true);
-```
-
-If neither the environment variable nor the `AppContext` switch is set, content recording defaults to `false`.
-
-> **Precedence:** If both the `AppContext` switch and the environment variable are set, the `AppContext` switch takes priority. No exception is thrown on conflict.
-
-### Red teams
-**Note:** Red teams is an experimental feature, to use it, please disable the `AAIP001` warning.
-```C#
-#pragma warning disable AAIP001
-```
-Red teams allow to check how models behave in response to attack attempts.
-To test the model using Base64-encoded strings, with the prompts asking it to generate violent content, we can use the next code.
-
-```C# Snippet:Sample_CreateRedTeam_RedTeam
-AzureOpenAIModelConfiguration config = new(modelDeploymentName: modelDeploymentName);
-RedTeam redTeam = new(target: config)
-{
-    AttackStrategies = { AttackStrategy.Base64 },
-    RiskCategories = { RiskCategory.Violence },
-    DisplayName = "redteamtest1"
-};
-```
-
-Start the Read-Teaming task.
-
-```C# Snippet:Sample_RunScan_RedTeam_Async
-RequestOptions options = new();
-options.AddHeader("model-endpoint", modelEndpoint);
-options.AddHeader("model-api-key", modelApiKey);
-redTeam = await projectClient.RedTeams.CreateAsync(redTeam: redTeam, options: options);
-Console.WriteLine($"Red Team scan created with scan name: {redTeam.Name}");
-```
-
-Get Read-Teaming task and output its status.
-
-```C# Snippet:Sample_GetScanDetails_RedTeam_Async
-redTeam = await projectClient.RedTeams.GetAsync(name: redTeam.Name);
-Console.WriteLine($"Red Team scan status: {redTeam.Status}");
-```
-
-To get the results of the red teaming experiment, open Microsoft Foundry used for the experiments, on the left panel select **Evaluation** and choose **AI red teaming** tab.
 
 ## Troubleshooting
 

@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Batch
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -516,7 +516,13 @@ namespace Azure.ResourceManager.Batch
             {
                 CancellationToken = cancellationToken
             };
-            return new BatchAccountGetOutboundNetworkDependenciesEndpointsAsyncCollectionResultOfT(_batchAccountRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new BatchAccountGetOutboundNetworkDependenciesEndpointsAsyncCollectionResultOfT(
+                _batchAccountRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "BatchAccountResource.GetOutboundNetworkDependenciesEndpoints");
         }
 
         /// <summary>
@@ -548,7 +554,13 @@ namespace Azure.ResourceManager.Batch
             {
                 CancellationToken = cancellationToken
             };
-            return new BatchAccountGetOutboundNetworkDependenciesEndpointsCollectionResultOfT(_batchAccountRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new BatchAccountGetOutboundNetworkDependenciesEndpointsCollectionResultOfT(
+                _batchAccountRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "BatchAccountResource.GetOutboundNetworkDependenciesEndpoints");
         }
 
         /// <summary>

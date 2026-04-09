@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DeidServiceData, DeidServiceResource>(new DeidServicesGetByResourceGroupAsyncCollectionResultOfT(_deidServicesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new DeidServiceResource(Client, data));
+            return new AsyncPageableWrapper<DeidServiceData, DeidServiceResource>(new DeidServicesGetByResourceGroupAsyncCollectionResultOfT(_deidServicesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DeidServiceCollection.GetAll"), data => new DeidServiceResource(Client, data));
         }
 
         /// <summary>
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DeidServiceData, DeidServiceResource>(new DeidServicesGetByResourceGroupCollectionResultOfT(_deidServicesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new DeidServiceResource(Client, data));
+            return new PageableWrapper<DeidServiceData, DeidServiceResource>(new DeidServicesGetByResourceGroupCollectionResultOfT(_deidServicesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DeidServiceCollection.GetAll"), data => new DeidServiceResource(Client, data));
         }
 
         /// <summary>

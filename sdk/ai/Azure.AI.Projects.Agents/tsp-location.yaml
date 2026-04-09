@@ -1,5 +1,5 @@
 directory: specification/ai-foundry/data-plane/Foundry/src/sdk-projects-agents
-commit: 03b6f7d177c8164c960fe091d82e413b7b8ea392
+commit: 2335562c2d9473873887c3a5ab2457d0f78cfa06
 repo: Azure/azure-rest-api-specs
 additionalDirectories: 
 - specification/ai-foundry/data-plane/Foundry/src/agents
@@ -8,5 +8,6 @@ additionalDirectories:
 - specification/ai-foundry/data-plane/Foundry/src/openai-conversations
 - specification/ai-foundry/data-plane/Foundry/src/openai-responses
 - specification/ai-foundry/data-plane/Foundry/src/tools
+- specification/ai-foundry/data-plane/Foundry/src/toolboxes
 
 emitterPackageJsonPath: eng/http-client-csharp-emitter-package.json

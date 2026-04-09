@@ -9,8 +9,7 @@ namespace Azure.AI.AgentServer.Responses.Tests.Builders;
 /// <summary>
 /// Tests that builder EmitDone() calls TrackCompletedOutputItem, accumulating
 /// items in the stream-owned Models.ResponseObject. Verifies that EmitCompleted() after
-/// builder emission produces a terminal event with the full Output list and
-/// correctly computed OutputText.
+/// builder emission produces a terminal event with the full Output list.
 /// </summary>
 public class BuilderAccumulationTests
 {
@@ -97,7 +96,7 @@ public class BuilderAccumulationTests
     }
 
     [Test]
-    public void EmitCompleted_ComputesOutputTextFromAccumulatedMessages()
+    public void EmitCompleted_DoesNotSetOutputText()
     {
         var (stream, response) = CreateStream();
 
@@ -119,11 +118,12 @@ public class BuilderAccumulationTests
 
         var completed = stream.EmitCompleted();
 
-        Assert.That(completed.Response.OutputText, Is.EqualTo("Hello World"));
+        // output_text is a client SDK convenience property; the server never sets it.
+        Assert.That(completed.Response.OutputText, Is.Null);
     }
 
     [Test]
-    public void EmitCompleted_OutputTextIgnoresNonMessageItems()
+    public void EmitCompleted_OutputTextNotSetEvenWithNonMessageItems()
     {
         var (stream, response) = CreateStream();
 
@@ -142,7 +142,7 @@ public class BuilderAccumulationTests
 
         var completed = stream.EmitCompleted();
 
-        // OutputText comes only from messages, not function calls
-        Assert.That(completed.Response.OutputText, Is.EqualTo("Only this"));
+        // output_text is a client SDK convenience property; the server never sets it.
+        Assert.That(completed.Response.OutputText, Is.Null);
     }
 }

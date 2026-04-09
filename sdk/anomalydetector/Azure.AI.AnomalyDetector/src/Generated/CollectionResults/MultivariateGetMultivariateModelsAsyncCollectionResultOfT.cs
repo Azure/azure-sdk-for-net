@@ -20,18 +20,21 @@ namespace Azure.AI.AnomalyDetector
         private readonly int? _skip;
         private readonly int? _maxCount;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of MultivariateGetMultivariateModelsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Multivariate client used to send requests. </param>
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxCount"> The number of result items to return. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public MultivariateGetMultivariateModelsAsyncCollectionResultOfT(Multivariate client, int? skip, int? maxCount, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public MultivariateGetMultivariateModelsAsyncCollectionResultOfT(Multivariate client, int? skip, int? maxCount, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _skip = skip;
             _maxCount = maxCount;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of MultivariateGetMultivariateModelsAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -65,7 +68,7 @@ namespace Azure.AI.AnomalyDetector
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetMultivariateModelsRequest(nextLink, _skip, _maxCount, _context) : _client.CreateGetMultivariateModelsRequest(_skip, _maxCount, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("Multivariate.GetMultivariateModels");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {
