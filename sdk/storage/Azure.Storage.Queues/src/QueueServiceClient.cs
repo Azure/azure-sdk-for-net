@@ -718,6 +718,7 @@ namespace Azure.Storage.Queues
                     Response response;
 
                     scope.Start();
+                    Argument.AssertNotNull(properties, nameof(properties));
 
                     if (async)
                     {

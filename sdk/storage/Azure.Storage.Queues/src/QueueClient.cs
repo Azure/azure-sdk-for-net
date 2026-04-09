@@ -2786,6 +2786,8 @@ namespace Azure.Storage.Queues
                 {
                     Response response;
                     scope.Start();
+                    Argument.AssertNotNull(messageId, nameof(messageId));
+                    Argument.AssertNotNull(popReceipt, nameof(popReceipt));
 
                     if (async)
                     {
@@ -3082,6 +3084,8 @@ namespace Azure.Storage.Queues
                 try
                 {
                     scope.Start();
+                    Argument.AssertNotNull(messageId, nameof(messageId));
+                    Argument.AssertNotNull(popReceipt, nameof(popReceipt));
                     if (UsingClientSideEncryption)
                     {
                         IClientSideEncryptor encryptor = ClientConfiguration.ClientSideEncryption.EncryptionVersion switch
