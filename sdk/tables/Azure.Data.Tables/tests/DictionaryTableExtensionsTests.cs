@@ -97,6 +97,112 @@ namespace Azure.Data.Tables.Tests
             Assert.AreEqual("name", dictionary["RowKey"]);
         }
 
+        /// <summary>
+        /// Tests that TablesTypeBinder can handle Int32 values when model expects Int64.
+        /// </summary>
+        [Test]
+        public void ToTableEntityHandlesInt32StoredAsLongProperty()
+        {
+            var dict = new Dictionary<string, object> {
+                {"PartitionKey", "pk"},
+                {"RowKey", "rk"},
+                {"LongValue", (int)42}
+            };
+
+            var result = dict.ToTableEntity<ModelWithLong>();
+
+            Assert.AreEqual(42, result.LongValue);
+        }
+
+        /// <summary>
+        /// Tests that TablesTypeBinder can handle Int16 values when model expects Int64.
+        /// </summary>
+        [Test]
+        public void ToTableEntityHandlesInt16StoredAsLongProperty()
+        {
+            var dict = new Dictionary<string, object> {
+                {"PartitionKey", "pk"},
+                {"RowKey", "rk"},
+                {"LongValue", (short)42}
+            };
+
+            var result = dict.ToTableEntity<ModelWithLong>();
+
+            Assert.AreEqual(42, result.LongValue);
+        }
+
+        /// <summary>
+        /// Tests that TablesTypeBinder can handle UInt32 values when model expects UInt64.
+        /// </summary>
+        [Test]
+        public void ToTableEntityHandlesUInt32StoredAsULongProperty()
+        {
+            var dict = new Dictionary<string, object> {
+                {"PartitionKey", "pk"},
+                {"RowKey", "rk"},
+                {"ULongValue", (uint)42}
+            };
+
+            var result = dict.ToTableEntity<ModelWithULong>();
+
+            Assert.AreEqual(42, result.ULongValue);
+        }
+
+        /// <summary>
+        /// Tests that TablesTypeBinder can handle UInt16 values when model expects UInt64.
+        /// </summary>
+        [Test]
+        public void ToTableEntityHandlesUInt16StoredAsULongProperty()
+        {
+            var dict = new Dictionary<string, object> {
+                {"PartitionKey", "pk"},
+                {"RowKey", "rk"},
+                {"ULongValue", (ushort)42}
+            };
+
+            var result = dict.ToTableEntity<ModelWithULong>();
+
+            Assert.AreEqual(42, result.ULongValue);
+        }
+
+        /// <summary>
+        /// Tests that TablesTypeBinder throws a descriptive error when a negative long
+        /// is stored but the model expects ulong (cannot convert negative to unsigned).
+        /// </summary>
+        [Test]
+        public void ToTableEntityThrowsForNegativeLongToULong()
+        {
+            var dict = new Dictionary<string, object> {
+                {"PartitionKey", "pk"},
+                {"RowKey", "rk"},
+                {"ULongValue", -42L}
+            };
+
+            var exception = Assert.Throws<InvalidOperationException>(() => dict.ToTableEntity<ModelWithULong>());
+
+            Assert.IsTrue(exception.Message.Contains("Cannot convert"));
+            Assert.IsTrue(exception.Message.Contains("Int64"));
+            Assert.IsTrue(exception.Message.Contains("UInt64"));
+        }
+
+        private class ModelWithLong : ITableEntity
+        {
+            public string PartitionKey { get; set; }
+            public string RowKey { get; set; }
+            public DateTimeOffset? Timestamp { get; set; }
+            public ETag ETag { get; set; }
+            public long LongValue { get; set; }
+        }
+
+        private class ModelWithULong : ITableEntity
+        {
+            public string PartitionKey { get; set; }
+            public string RowKey { get; set; }
+            public DateTimeOffset? Timestamp { get; set; }
+            public ETag ETag { get; set; }
+            public ulong ULongValue { get; set; }
+        }
+
         private class ExplicitInterfaceModel : ITableEntity
         {
             public string Category { get; set; }
