@@ -15,11 +15,11 @@ using Azure.ResourceManager.Compute;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies information about the Shared Gallery that you want to create or update. </summary>
-    public partial class SharedGallery : PirSharedGalleryResource, IJsonModel<SharedGallery>
+    public partial class SharedGallery : PirSharedGalleryResourceData, IJsonModel<SharedGallery>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override PirResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override PirResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<SharedGallery>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override PirResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override PirResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<SharedGallery>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

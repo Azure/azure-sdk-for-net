@@ -11,22 +11,22 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The Resource model definition. </summary>
-    public partial class PirResource
+    public partial class PirResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private protected string _name;
 
-        /// <summary> Initializes a new instance of <see cref="PirResource"/>. </summary>
-        internal PirResource()
+        /// <summary> Initializes a new instance of <see cref="PirResourceData"/>. </summary>
+        internal PirResourceData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PirResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PirResourceData"/>. </summary>
         /// <param name="name"> Resource name. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PirResource(string name, string location, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PirResourceData(string name, string location, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Location = location;

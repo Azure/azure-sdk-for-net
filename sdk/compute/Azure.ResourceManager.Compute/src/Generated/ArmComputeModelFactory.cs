@@ -4933,19 +4933,19 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="name"> Resource name. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="uniqueId"> The unique id of this shared gallery. </param>
-        /// <returns> A new <see cref="Models.PirSharedGalleryResource"/> instance for mocking. </returns>
-        public static PirSharedGalleryResource PirSharedGalleryResource(string name = default, string location = default, string uniqueId = default)
+        /// <returns> A new <see cref="Models.PirSharedGalleryResourceData"/> instance for mocking. </returns>
+        public static PirSharedGalleryResourceData PirSharedGalleryResourceData(string name = default, string location = default, string uniqueId = default)
         {
-            return new PirSharedGalleryResource(name, location, additionalBinaryDataProperties: null, uniqueId is null ? default : new SharedGalleryIdentifier(uniqueId, null));
+            return new PirSharedGalleryResourceData(name, location, additionalBinaryDataProperties: null, uniqueId is null ? default : new SharedGalleryIdentifier(uniqueId, null));
         }
 
         /// <summary> The Resource model definition. </summary>
         /// <param name="name"> Resource name. </param>
         /// <param name="location"> Resource location. </param>
-        /// <returns> A new <see cref="Models.PirResource"/> instance for mocking. </returns>
-        public static PirResource PirResource(string name = default, string location = default)
+        /// <returns> A new <see cref="Models.PirResourceData"/> instance for mocking. </returns>
+        public static PirResourceData PirResourceData(string name = default, string location = default)
         {
-            return new PirResource(name, location, additionalBinaryDataProperties: null);
+            return new PirResourceData(name, location, additionalBinaryDataProperties: null);
         }
 
         /// <summary> This is the storage profile of a Gallery Image Version. </summary>
@@ -5011,10 +5011,10 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="location"> Resource location. </param>
         /// <param name="type"> Resource type. </param>
         /// <param name="uniqueId"> The unique id of this community gallery. </param>
-        /// <returns> A new <see cref="Models.PirCommunityGalleryResource"/> instance for mocking. </returns>
-        public static PirCommunityGalleryResource PirCommunityGalleryResource(string name = default, string location = default, string @type = default, string uniqueId = default)
+        /// <returns> A new <see cref="Models.PirCommunityGalleryResourceData"/> instance for mocking. </returns>
+        public static PirCommunityGalleryResourceData PirCommunityGalleryResourceData(string name = default, string location = default, string @type = default, string uniqueId = default)
         {
-            return new PirCommunityGalleryResource(name, location, @type, uniqueId is null ? default : new CommunityGalleryIdentifier(uniqueId, null), additionalBinaryDataProperties: null);
+            return new PirCommunityGalleryResourceData(name, location, @type, uniqueId is null ? default : new CommunityGalleryIdentifier(uniqueId, null), additionalBinaryDataProperties: null);
         }
 
         /// <summary> This is the community gallery image definition identifier. </summary>
@@ -6896,6 +6896,18 @@ namespace Azure.ResourceManager.Compute.Models
                 location,
                 default,
                 identity);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.PirCommunityGalleryResourceData"/>. </summary>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="uniqueId"> The unique id of this community gallery. </param>
+        /// <returns> A new <see cref="Models.PirCommunityGalleryResourceData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PirCommunityGalleryResourceData PirCommunityGalleryResourceData(string name, AzureLocation? location, ResourceType? resourceType, string uniqueId)
+        {
+            return new PirCommunityGalleryResourceData(name, location, default, default, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GalleryPatch"/>. </summary>

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies information about the gallery image version that you want to create or update. </summary>
-    public partial class SharedGalleryImageVersion : PirSharedGalleryResource
+    public partial class SharedGalleryImageVersion : PirSharedGalleryResourceData
     {
         /// <summary> Initializes a new instance of <see cref="SharedGalleryImageVersion"/>. </summary>
         internal SharedGalleryImageVersion()

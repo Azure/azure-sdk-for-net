@@ -11,19 +11,19 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Base information about the shared gallery resource in pir. </summary>
-    public partial class PirSharedGalleryResource : PirResource
+    public partial class PirSharedGalleryResourceData : PirResourceData
     {
-        /// <summary> Initializes a new instance of <see cref="PirSharedGalleryResource"/>. </summary>
-        internal PirSharedGalleryResource()
+        /// <summary> Initializes a new instance of <see cref="PirSharedGalleryResourceData"/>. </summary>
+        internal PirSharedGalleryResourceData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PirSharedGalleryResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PirSharedGalleryResourceData"/>. </summary>
         /// <param name="name"> Resource name. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="identifier"> The identifier information of shared gallery. </param>
-        internal PirSharedGalleryResource(string name, string location, IDictionary<string, BinaryData> additionalBinaryDataProperties, SharedGalleryIdentifier identifier) : base(name, location, additionalBinaryDataProperties)
+        internal PirSharedGalleryResourceData(string name, string location, IDictionary<string, BinaryData> additionalBinaryDataProperties, SharedGalleryIdentifier identifier) : base(name, location, additionalBinaryDataProperties)
         {
             Identifier = identifier;
         }

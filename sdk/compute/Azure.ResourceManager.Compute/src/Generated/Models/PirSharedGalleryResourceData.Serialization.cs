@@ -14,51 +14,51 @@ using Azure.ResourceManager.Compute;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Base information about the shared gallery resource in pir. </summary>
-    public partial class PirSharedGalleryResource : PirResource, IJsonModel<PirSharedGalleryResource>
+    public partial class PirSharedGalleryResourceData : PirResourceData, IJsonModel<PirSharedGalleryResourceData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override PirResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override PirResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PirSharedGalleryResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PirSharedGalleryResourceData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializePirSharedGalleryResource(document.RootElement, options);
+                        return DeserializePirSharedGalleryResourceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PirSharedGalleryResource)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PirSharedGalleryResourceData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PirSharedGalleryResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PirSharedGalleryResourceData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(PirSharedGalleryResource)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PirSharedGalleryResourceData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PirSharedGalleryResource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<PirSharedGalleryResourceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PirSharedGalleryResource IPersistableModel<PirSharedGalleryResource>.Create(BinaryData data, ModelReaderWriterOptions options) => (PirSharedGalleryResource)PersistableModelCreateCore(data, options);
+        PirSharedGalleryResourceData IPersistableModel<PirSharedGalleryResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (PirSharedGalleryResourceData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PirSharedGalleryResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PirSharedGalleryResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<PirSharedGalleryResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PirSharedGalleryResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PirSharedGalleryResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PirSharedGalleryResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PirSharedGalleryResource)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PirSharedGalleryResourceData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Identifier))
@@ -84,24 +84,24 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PirSharedGalleryResource IJsonModel<PirSharedGalleryResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (PirSharedGalleryResource)JsonModelCreateCore(ref reader, options);
+        PirSharedGalleryResourceData IJsonModel<PirSharedGalleryResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (PirSharedGalleryResourceData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override PirResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override PirResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PirSharedGalleryResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PirSharedGalleryResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PirSharedGalleryResource)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PirSharedGalleryResourceData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePirSharedGalleryResource(document.RootElement, options);
+            return DeserializePirSharedGalleryResourceData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static PirSharedGalleryResource DeserializePirSharedGalleryResource(JsonElement element, ModelReaderWriterOptions options)
+        internal static PirSharedGalleryResourceData DeserializePirSharedGalleryResourceData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PirSharedGalleryResource(name, location, additionalBinaryDataProperties, identifier);
+            return new PirSharedGalleryResourceData(name, location, additionalBinaryDataProperties, identifier);
         }
     }
 }

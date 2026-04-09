@@ -11,24 +11,24 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Base information about the community gallery resource in azure compute gallery. </summary>
-    public partial class PirCommunityGalleryResource
+    public partial class PirCommunityGalleryResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private protected string _name;
 
-        /// <summary> Initializes a new instance of <see cref="PirCommunityGalleryResource"/>. </summary>
-        internal PirCommunityGalleryResource()
+        /// <summary> Initializes a new instance of <see cref="PirCommunityGalleryResourceData"/>. </summary>
+        internal PirCommunityGalleryResourceData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PirCommunityGalleryResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PirCommunityGalleryResourceData"/>. </summary>
         /// <param name="name"> Resource name. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="type"> Resource type. </param>
         /// <param name="identifier"> The identifier information of community gallery. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PirCommunityGalleryResource(string name, string location, string @type, CommunityGalleryIdentifier identifier, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PirCommunityGalleryResourceData(string name, string location, string @type, CommunityGalleryIdentifier identifier, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Location = location;

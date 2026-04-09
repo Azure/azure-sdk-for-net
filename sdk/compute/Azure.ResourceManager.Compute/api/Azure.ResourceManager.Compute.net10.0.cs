@@ -3298,16 +3298,16 @@ namespace Azure.ResourceManager.Compute.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.CapacityReservationUtilization>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.CapacityReservationUtilization>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class CommunityGallery : Azure.ResourceManager.Compute.Models.PirCommunityGalleryResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.CommunityGallery>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.CommunityGallery>
+    public partial class CommunityGallery : Azure.ResourceManager.Compute.Models.PirCommunityGalleryResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.CommunityGallery>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.CommunityGallery>
     {
         internal CommunityGallery() { }
         public System.Collections.Generic.IDictionary<string, string> ArtifactTags { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.CommunityGalleryMetadata CommunityMetadata { get { throw null; } }
         public string Disclaimer { get { throw null; } }
         public string ParentName { get { throw null; } }
-        protected override Azure.ResourceManager.Compute.Models.PirCommunityGalleryResource JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override Azure.ResourceManager.Compute.Models.PirCommunityGalleryResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override Azure.ResourceManager.Compute.Models.PirCommunityGalleryResource PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override Azure.ResourceManager.Compute.Models.PirCommunityGalleryResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Compute.Models.CommunityGallery System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.CommunityGallery>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.CommunityGallery>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -3315,7 +3315,7 @@ namespace Azure.ResourceManager.Compute.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.CommunityGallery>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.CommunityGallery>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class CommunityGalleryImage : Azure.ResourceManager.Compute.Models.PirCommunityGalleryResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.CommunityGalleryImage>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.CommunityGalleryImage>
+    public partial class CommunityGalleryImage : Azure.ResourceManager.Compute.Models.PirCommunityGalleryResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.CommunityGalleryImage>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.CommunityGalleryImage>
     {
         internal CommunityGalleryImage() { }
         public Azure.ResourceManager.Compute.Models.Architecture? Architecture { get { throw null; } }
@@ -3333,9 +3333,9 @@ namespace Azure.ResourceManager.Compute.Models
         public string PrivacyStatementUri { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.ImagePurchasePlan PurchasePlan { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.RecommendedMachineConfiguration Recommended { get { throw null; } }
-        protected override Azure.ResourceManager.Compute.Models.PirCommunityGalleryResource JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override Azure.ResourceManager.Compute.Models.PirCommunityGalleryResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override Azure.ResourceManager.Compute.Models.PirCommunityGalleryResource PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override Azure.ResourceManager.Compute.Models.PirCommunityGalleryResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Compute.Models.CommunityGalleryImage System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.CommunityGalleryImage>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.CommunityGalleryImage>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -3359,7 +3359,7 @@ namespace Azure.ResourceManager.Compute.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.CommunityGalleryImageIdentifier>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.CommunityGalleryImageIdentifier>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class CommunityGalleryImageVersion : Azure.ResourceManager.Compute.Models.PirCommunityGalleryResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.CommunityGalleryImageVersion>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.CommunityGalleryImageVersion>
+    public partial class CommunityGalleryImageVersion : Azure.ResourceManager.Compute.Models.PirCommunityGalleryResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.CommunityGalleryImageVersion>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.CommunityGalleryImageVersion>
     {
         internal CommunityGalleryImageVersion() { }
         public System.Collections.Generic.IDictionary<string, string> ArtifactTags { get { throw null; } }
@@ -3369,9 +3369,9 @@ namespace Azure.ResourceManager.Compute.Models
         public string ParentName { get { throw null; } }
         public System.DateTimeOffset? PublishedOn { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.SharedGalleryImageVersionStorageProfile StorageProfile { get { throw null; } }
-        protected override Azure.ResourceManager.Compute.Models.PirCommunityGalleryResource JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override Azure.ResourceManager.Compute.Models.PirCommunityGalleryResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override Azure.ResourceManager.Compute.Models.PirCommunityGalleryResource PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override Azure.ResourceManager.Compute.Models.PirCommunityGalleryResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Compute.Models.CommunityGalleryImageVersion System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.CommunityGalleryImageVersion>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.CommunityGalleryImageVersion>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -7074,51 +7074,51 @@ namespace Azure.ResourceManager.Compute.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.PatchSettings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.PatchSettings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PirCommunityGalleryResource : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.PirCommunityGalleryResource>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.PirCommunityGalleryResource>
+    public partial class PirCommunityGalleryResourceData : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.PirCommunityGalleryResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.PirCommunityGalleryResourceData>
     {
-        internal PirCommunityGalleryResource() { }
+        internal PirCommunityGalleryResourceData() { }
         public string Location { get { throw null; } }
         public string Name { get { throw null; } }
         public string Type { get { throw null; } }
         public string UniqueId { get { throw null; } }
-        protected virtual Azure.ResourceManager.Compute.Models.PirCommunityGalleryResource JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.Compute.Models.PirCommunityGalleryResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Compute.Models.PirCommunityGalleryResource PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.Compute.Models.PirCommunityGalleryResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Compute.Models.PirCommunityGalleryResource System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.PirCommunityGalleryResource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.PirCommunityGalleryResource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Compute.Models.PirCommunityGalleryResource System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.PirCommunityGalleryResource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.PirCommunityGalleryResource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.PirCommunityGalleryResource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Compute.Models.PirCommunityGalleryResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.PirCommunityGalleryResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.PirCommunityGalleryResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Compute.Models.PirCommunityGalleryResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.PirCommunityGalleryResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.PirCommunityGalleryResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.PirCommunityGalleryResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PirResource : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.PirResource>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.PirResource>
+    public partial class PirResourceData : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.PirResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.PirResourceData>
     {
-        internal PirResource() { }
+        internal PirResourceData() { }
         public string Location { get { throw null; } }
         public string Name { get { throw null; } }
-        protected virtual Azure.ResourceManager.Compute.Models.PirResource JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.Compute.Models.PirResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Compute.Models.PirResource PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.Compute.Models.PirResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Compute.Models.PirResource System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.PirResource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.PirResource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Compute.Models.PirResource System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.PirResource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.PirResource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.PirResource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Compute.Models.PirResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.PirResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.PirResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Compute.Models.PirResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.PirResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.PirResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.PirResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PirSharedGalleryResource : Azure.ResourceManager.Compute.Models.PirResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.PirSharedGalleryResource>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.PirSharedGalleryResource>
+    public partial class PirSharedGalleryResourceData : Azure.ResourceManager.Compute.Models.PirResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.PirSharedGalleryResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.PirSharedGalleryResourceData>
     {
-        internal PirSharedGalleryResource() { }
+        internal PirSharedGalleryResourceData() { }
         public string UniqueId { get { throw null; } }
-        protected override Azure.ResourceManager.Compute.Models.PirResource JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override Azure.ResourceManager.Compute.Models.PirResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override Azure.ResourceManager.Compute.Models.PirResource PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override Azure.ResourceManager.Compute.Models.PirResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Compute.Models.PirSharedGalleryResource System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.PirSharedGalleryResource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.PirSharedGalleryResource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Compute.Models.PirSharedGalleryResource System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.PirSharedGalleryResource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.PirSharedGalleryResource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.PirSharedGalleryResource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Compute.Models.PirSharedGalleryResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.PirSharedGalleryResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.PirSharedGalleryResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Compute.Models.PirSharedGalleryResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.PirSharedGalleryResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.PirSharedGalleryResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.PirSharedGalleryResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PolicyViolationCategory : System.IEquatable<Azure.ResourceManager.Compute.Models.PolicyViolationCategory>
@@ -8099,14 +8099,14 @@ namespace Azure.ResourceManager.Compute.Models
         AutoLogon = 0,
         FirstLogonCommands = 1,
     }
-    public partial class SharedGallery : Azure.ResourceManager.Compute.Models.PirSharedGalleryResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.SharedGallery>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.SharedGallery>
+    public partial class SharedGallery : Azure.ResourceManager.Compute.Models.PirSharedGalleryResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.SharedGallery>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.SharedGallery>
     {
         internal SharedGallery() { }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> ArtifactTags { get { throw null; } }
         public string ParentName { get { throw null; } }
-        protected override Azure.ResourceManager.Compute.Models.PirResource JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override Azure.ResourceManager.Compute.Models.PirResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override Azure.ResourceManager.Compute.Models.PirResource PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override Azure.ResourceManager.Compute.Models.PirResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Compute.Models.SharedGallery System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.SharedGallery>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.SharedGallery>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -8161,7 +8161,7 @@ namespace Azure.ResourceManager.Compute.Models
         public static bool operator !=(Azure.ResourceManager.Compute.Models.SharedGalleryHostCaching left, Azure.ResourceManager.Compute.Models.SharedGalleryHostCaching right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SharedGalleryImage : Azure.ResourceManager.Compute.Models.PirSharedGalleryResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.SharedGalleryImage>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.SharedGalleryImage>
+    public partial class SharedGalleryImage : Azure.ResourceManager.Compute.Models.PirSharedGalleryResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.SharedGalleryImage>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.SharedGalleryImage>
     {
         internal SharedGalleryImage() { }
         public Azure.ResourceManager.Compute.Models.Architecture? Architecture { get { throw null; } }
@@ -8178,9 +8178,9 @@ namespace Azure.ResourceManager.Compute.Models
         public string PrivacyStatementUri { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.ImagePurchasePlan PurchasePlan { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.RecommendedMachineConfiguration Recommended { get { throw null; } }
-        protected override Azure.ResourceManager.Compute.Models.PirResource JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override Azure.ResourceManager.Compute.Models.PirResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override Azure.ResourceManager.Compute.Models.PirResource PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override Azure.ResourceManager.Compute.Models.PirResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Compute.Models.SharedGalleryImage System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.SharedGalleryImage>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.SharedGalleryImage>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -8188,7 +8188,7 @@ namespace Azure.ResourceManager.Compute.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.SharedGalleryImage>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.SharedGalleryImage>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SharedGalleryImageVersion : Azure.ResourceManager.Compute.Models.PirSharedGalleryResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.SharedGalleryImageVersion>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.SharedGalleryImageVersion>
+    public partial class SharedGalleryImageVersion : Azure.ResourceManager.Compute.Models.PirSharedGalleryResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.SharedGalleryImageVersion>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.SharedGalleryImageVersion>
     {
         internal SharedGalleryImageVersion() { }
         public System.Collections.Generic.IDictionary<string, string> ArtifactTags { get { throw null; } }
@@ -8197,9 +8197,9 @@ namespace Azure.ResourceManager.Compute.Models
         public string ParentName { get { throw null; } }
         public System.DateTimeOffset? PublishedOn { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.SharedGalleryImageVersionStorageProfile StorageProfile { get { throw null; } }
-        protected override Azure.ResourceManager.Compute.Models.PirResource JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override Azure.ResourceManager.Compute.Models.PirResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override Azure.ResourceManager.Compute.Models.PirResource PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override Azure.ResourceManager.Compute.Models.PirResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Compute.Models.SharedGalleryImageVersion System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.SharedGalleryImageVersion>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.SharedGalleryImageVersion>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
