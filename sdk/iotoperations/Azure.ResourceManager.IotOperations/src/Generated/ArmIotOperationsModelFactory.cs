@@ -122,9 +122,10 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="memoryProfile"> Memory profile of Broker. </param>
         /// <param name="persistence"> The persistence settings of the Broker. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <param name="statusHealthState"> The health state of the Broker. </param>
         /// <param name="healthState"> The health state of the resource. </param>
         /// <returns> A new <see cref="Models.IotOperationsBrokerProperties"/> instance for mocking. </returns>
-        public static IotOperationsBrokerProperties IotOperationsBrokerProperties(BrokerAdvancedSettings advanced = default, BrokerCardinality cardinality = default, BrokerDiagnostics diagnostics = default, DiskBackedMessageBuffer diskBackedMessageBuffer = default, IotOperationsOperationalMode? generateResourceLimitsCpu = default, BrokerMemoryProfile? memoryProfile = default, BrokerPersistence persistence = default, IotOperationsProvisioningState? provisioningState = default, ResourceHealthState? healthState = default)
+        public static IotOperationsBrokerProperties IotOperationsBrokerProperties(BrokerAdvancedSettings advanced = default, BrokerCardinality cardinality = default, BrokerDiagnostics diagnostics = default, DiskBackedMessageBuffer diskBackedMessageBuffer = default, IotOperationsOperationalMode? generateResourceLimitsCpu = default, BrokerMemoryProfile? memoryProfile = default, BrokerPersistence persistence = default, IotOperationsProvisioningState? provisioningState = default, ResourceHealthStatus statusHealthState = default, ResourceHealthState? healthState = default)
         {
             return new IotOperationsBrokerProperties(
                 advanced,
@@ -135,6 +136,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                 memoryProfile,
                 persistence,
                 provisioningState,
+                statusHealthState is null ? default : new BrokerStatus(statusHealthState, null),
                 healthState,
                 additionalBinaryDataProperties: null);
         }
@@ -246,6 +248,24 @@ namespace Azure.ResourceManager.IotOperations.Models
             subscriberClientIds ??= new ChangeTrackingList<string>();
 
             return new BrokerSubscriberQueueCustomPolicySettings(subscriberClientIds.ToList(), dynamicMode is null ? default : new BrokerSubscriberQueueDynamic(dynamicMode.Value, null), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Represents the health state of a resource. </summary>
+        /// <param name="status"> The high-level health status of the resource. </param>
+        /// <param name="lastTransitionTime"> The timestamp (RFC3339) when the health status last changed. </param>
+        /// <param name="lastUpdateTime"> The timestamp (RFC3339) when the health status was last updated, even if the status did not change. </param>
+        /// <param name="message"> A human-readable message describing the last transition. </param>
+        /// <param name="reasonCode"> Unique, CamelCase reason code describing the cause of the last health state transition. </param>
+        /// <returns> A new <see cref="Models.ResourceHealthStatus"/> instance for mocking. </returns>
+        public static ResourceHealthStatus ResourceHealthStatus(ResourceHealthState? status = default, string lastTransitionTime = default, string lastUpdateTime = default, string message = default, string reasonCode = default)
+        {
+            return new ResourceHealthStatus(
+                status,
+                lastTransitionTime,
+                lastUpdateTime,
+                message,
+                reasonCode,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Instance broker resource. </summary>
@@ -480,15 +500,21 @@ namespace Azure.ResourceManager.IotOperations.Models
                 extendedLocation);
         }
 
-        /// <summary> DataflowProfile Resource properties. </summary>
         /// <param name="diagnostics"> Spec defines the desired identities of NBC diagnostics settings. </param>
         /// <param name="instanceCount"> To manually scale the dataflow profile, specify the maximum number of instances you want to run. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <param name="statusHealthState"> The health state of the DataflowProfile. </param>
         /// <param name="healthState"> The health state of the resource. </param>
         /// <returns> A new <see cref="Models.IotOperationsDataflowProfileProperties"/> instance for mocking. </returns>
-        public static IotOperationsDataflowProfileProperties IotOperationsDataflowProfileProperties(DataflowProfileDiagnostics diagnostics = default, int? instanceCount = default, IotOperationsProvisioningState? provisioningState = default, ResourceHealthState? healthState = default)
+        public static IotOperationsDataflowProfileProperties IotOperationsDataflowProfileProperties(DataflowProfileDiagnostics diagnostics = default, int? instanceCount = default, IotOperationsProvisioningState? provisioningState = default, ResourceHealthStatus statusHealthState = default, ResourceHealthState? healthState = default)
         {
-            return new IotOperationsDataflowProfileProperties(diagnostics, instanceCount, provisioningState, healthState, additionalBinaryDataProperties: null);
+            return new IotOperationsDataflowProfileProperties(
+                diagnostics,
+                instanceCount,
+                provisioningState,
+                statusHealthState is null ? default : new DataflowProfileStatus(statusHealthState, null),
+                healthState,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Instance dataflowProfile dataflow resource. </summary>
@@ -511,14 +537,14 @@ namespace Azure.ResourceManager.IotOperations.Models
                 extendedLocation);
         }
 
-        /// <summary> Dataflow Resource properties. </summary>
         /// <param name="mode"> Mode for Dataflow. Optional; defaults to Enabled. </param>
         /// <param name="requestDiskPersistence"> Disk persistence mode. </param>
         /// <param name="operations"> List of operations including source and destination references as well as transformation. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <param name="statusHealthState"> The health state of the Dataflow. </param>
         /// <param name="healthState"> The health state of the resource. </param>
         /// <returns> A new <see cref="Models.IotOperationsDataflowProperties"/> instance for mocking. </returns>
-        public static IotOperationsDataflowProperties IotOperationsDataflowProperties(IotOperationsOperationalMode? mode = default, IotOperationsOperationalMode? requestDiskPersistence = default, IEnumerable<DataflowOperationProperties> operations = default, IotOperationsProvisioningState? provisioningState = default, ResourceHealthState? healthState = default)
+        public static IotOperationsDataflowProperties IotOperationsDataflowProperties(IotOperationsOperationalMode? mode = default, IotOperationsOperationalMode? requestDiskPersistence = default, IEnumerable<DataflowOperationProperties> operations = default, IotOperationsProvisioningState? provisioningState = default, ResourceHealthStatus statusHealthState = default, ResourceHealthState? healthState = default)
         {
             operations ??= new ChangeTrackingList<DataflowOperationProperties>();
 
@@ -527,6 +553,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                 requestDiskPersistence,
                 operations.ToList(),
                 provisioningState,
+                statusHealthState is null ? default : new DataflowStatus(statusHealthState, null),
                 healthState,
                 additionalBinaryDataProperties: null);
         }
@@ -707,15 +734,15 @@ namespace Azure.ResourceManager.IotOperations.Models
                 extendedLocation);
         }
 
-        /// <summary> DataflowGraph properties. </summary>
         /// <param name="mode"> The mode of the dataflow graph. </param>
         /// <param name="requestDiskPersistence"> Disk persistence mode. </param>
         /// <param name="nodes"> List of nodes in the dataflow graph. </param>
         /// <param name="nodeConnections"> List of connections between nodes in the dataflow graph. </param>
         /// <param name="provisioningState"> The provisioning state of the dataflow graph. </param>
+        /// <param name="statusHealthState"> The health state of the DataflowGraph. </param>
         /// <param name="healthState"> The health state of the resource. </param>
         /// <returns> A new <see cref="Models.IotOperationsDataflowGraphProperties"/> instance for mocking. </returns>
-        public static IotOperationsDataflowGraphProperties IotOperationsDataflowGraphProperties(IotOperationsOperationalMode? mode = default, IotOperationsOperationalMode? requestDiskPersistence = default, IEnumerable<DataflowGraphNode> nodes = default, IEnumerable<DataflowGraphNodeConnection> nodeConnections = default, IotOperationsProvisioningState? provisioningState = default, ResourceHealthState? healthState = default)
+        public static IotOperationsDataflowGraphProperties IotOperationsDataflowGraphProperties(IotOperationsOperationalMode? mode = default, IotOperationsOperationalMode? requestDiskPersistence = default, IEnumerable<DataflowGraphNode> nodes = default, IEnumerable<DataflowGraphNodeConnection> nodeConnections = default, IotOperationsProvisioningState? provisioningState = default, ResourceHealthStatus statusHealthState = default, ResourceHealthState? healthState = default)
         {
             nodes ??= new ChangeTrackingList<DataflowGraphNode>();
             nodeConnections ??= new ChangeTrackingList<DataflowGraphNodeConnection>();
@@ -726,6 +753,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                 nodes.ToList(),
                 nodeConnections.ToList(),
                 provisioningState,
+                statusHealthState is null ? default : new DataflowGraphStatus(statusHealthState, null),
                 healthState,
                 additionalBinaryDataProperties: null);
         }
@@ -975,16 +1003,16 @@ namespace Azure.ResourceManager.IotOperations.Models
                 extendedLocation);
         }
 
-        /// <summary> AkriConnector properties. </summary>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="allocatedDevices"> The allocated devices for the connector. </param>
+        /// <param name="statusHealthState"> The health state of the AkriConnector. </param>
         /// <param name="healthState"> The health state of the resource. </param>
         /// <returns> A new <see cref="Models.IotOperationsAkriConnectorProperties"/> instance for mocking. </returns>
-        public static IotOperationsAkriConnectorProperties IotOperationsAkriConnectorProperties(IotOperationsProvisioningState? provisioningState = default, IEnumerable<AkriConnectorAllocatedDevice> allocatedDevices = default, ResourceHealthState? healthState = default)
+        public static IotOperationsAkriConnectorProperties IotOperationsAkriConnectorProperties(IotOperationsProvisioningState? provisioningState = default, IEnumerable<AkriConnectorAllocatedDevice> allocatedDevices = default, ResourceHealthStatus statusHealthState = default, ResourceHealthState? healthState = default)
         {
             allocatedDevices ??= new ChangeTrackingList<AkriConnectorAllocatedDevice>();
 
-            return new IotOperationsAkriConnectorProperties(provisioningState, allocatedDevices.ToList(), healthState, additionalBinaryDataProperties: null);
+            return new IotOperationsAkriConnectorProperties(provisioningState, allocatedDevices.ToList(), statusHealthState is null ? default : new AkriConnectorStatus(statusHealthState, null), healthState, additionalBinaryDataProperties: null);
         }
 
         /// <summary> AkriConnector allocated device. </summary>
@@ -994,6 +1022,34 @@ namespace Azure.ResourceManager.IotOperations.Models
         public static AkriConnectorAllocatedDevice AkriConnectorAllocatedDevice(string deviceInboundEndpointName = default, string deviceName = default)
         {
             return new AkriConnectorAllocatedDevice(deviceInboundEndpointName, deviceName, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> AkriService resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="extendedLocation"> Edge location of the resource. </param>
+        /// <returns> A new <see cref="IotOperations.AkriServiceResourceData"/> instance for mocking. </returns>
+        public static AkriServiceResourceData AkriServiceResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AkriServiceProperties properties = default, IotOperationsExtendedLocation extendedLocation = default)
+        {
+            return new AkriServiceResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties,
+                extendedLocation);
+        }
+
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <param name="statusHealthState"> The health state of the AkriService. </param>
+        /// <returns> A new <see cref="Models.AkriServiceProperties"/> instance for mocking. </returns>
+        public static AkriServiceProperties AkriServiceProperties(IotOperationsProvisioningState? provisioningState = default, ResourceHealthStatus statusHealthState = default)
+        {
+            return new AkriServiceProperties(provisioningState, statusHealthState is null ? default : new AkriServiceStatus(statusHealthState, null), additionalBinaryDataProperties: null);
         }
     }
 }

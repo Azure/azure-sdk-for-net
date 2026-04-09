@@ -114,6 +114,11 @@ namespace Azure.ResourceManager.IotOperations.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
+            if (options.Format != "W" && Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteObjectValue(Status, options);
+            }
             if (options.Format != "W" && Optional.IsDefined(HealthState))
             {
                 writer.WritePropertyName("healthState"u8);
@@ -169,6 +174,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             BrokerMemoryProfile? memoryProfile = default;
             BrokerPersistence persistence = default;
             IotOperationsProvisioningState? provisioningState = default;
+            BrokerStatus status = default;
             ResourceHealthState? healthState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -245,6 +251,15 @@ namespace Azure.ResourceManager.IotOperations.Models
                     provisioningState = new IotOperationsProvisioningState(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("status"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    status = BrokerStatus.DeserializeBrokerStatus(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("healthState"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -268,6 +283,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                 memoryProfile,
                 persistence,
                 provisioningState,
+                status,
                 healthState,
                 additionalBinaryDataProperties);
         }

@@ -25,13 +25,15 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="diagnostics"> Spec defines the desired identities of NBC diagnostics settings. </param>
         /// <param name="instanceCount"> To manually scale the dataflow profile, specify the maximum number of instances you want to run. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <param name="status"> The status for the dataflow profile. </param>
         /// <param name="healthState"> The health state of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IotOperationsDataflowProfileProperties(DataflowProfileDiagnostics diagnostics, int? instanceCount, IotOperationsProvisioningState? provisioningState, ResourceHealthState? healthState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IotOperationsDataflowProfileProperties(DataflowProfileDiagnostics diagnostics, int? instanceCount, IotOperationsProvisioningState? provisioningState, DataflowProfileStatus status, ResourceHealthState? healthState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Diagnostics = diagnostics;
             InstanceCount = instanceCount;
             ProvisioningState = provisioningState;
+            Status = status;
             HealthState = healthState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -45,7 +47,19 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <summary> The status of the last operation. </summary>
         public IotOperationsProvisioningState? ProvisioningState { get; }
 
+        /// <summary> The status for the dataflow profile. </summary>
+        internal DataflowProfileStatus Status { get; }
+
         /// <summary> The health state of the resource. </summary>
         public ResourceHealthState? HealthState { get; }
+
+        /// <summary> The health state of the DataflowProfile. </summary>
+        public ResourceHealthStatus StatusHealthState
+        {
+            get
+            {
+                return Status.HealthState;
+            }
+        }
     }
 }

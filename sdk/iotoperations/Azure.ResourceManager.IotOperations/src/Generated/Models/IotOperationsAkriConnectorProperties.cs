@@ -26,12 +26,14 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <summary> Initializes a new instance of <see cref="IotOperationsAkriConnectorProperties"/>. </summary>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="allocatedDevices"> The allocated devices for the connector. </param>
+        /// <param name="status"> The status for the connector. </param>
         /// <param name="healthState"> The health state of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IotOperationsAkriConnectorProperties(IotOperationsProvisioningState? provisioningState, IReadOnlyList<AkriConnectorAllocatedDevice> allocatedDevices, ResourceHealthState? healthState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IotOperationsAkriConnectorProperties(IotOperationsProvisioningState? provisioningState, IReadOnlyList<AkriConnectorAllocatedDevice> allocatedDevices, AkriConnectorStatus status, ResourceHealthState? healthState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             AllocatedDevices = allocatedDevices;
+            Status = status;
             HealthState = healthState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -42,7 +44,19 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <summary> The allocated devices for the connector. </summary>
         public IReadOnlyList<AkriConnectorAllocatedDevice> AllocatedDevices { get; }
 
+        /// <summary> The status for the connector. </summary>
+        internal AkriConnectorStatus Status { get; }
+
         /// <summary> The health state of the resource. </summary>
         public ResourceHealthState? HealthState { get; }
+
+        /// <summary> The health state of the AkriConnector. </summary>
+        public ResourceHealthStatus StatusHealthState
+        {
+            get
+            {
+                return Status.HealthState;
+            }
+        }
     }
 }

@@ -30,9 +30,10 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="memoryProfile"> Memory profile of Broker. </param>
         /// <param name="persistence"> The persistence settings of the Broker. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <param name="status"> The status for the broker. </param>
         /// <param name="healthState"> The health state of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IotOperationsBrokerProperties(BrokerAdvancedSettings advanced, BrokerCardinality cardinality, BrokerDiagnostics diagnostics, DiskBackedMessageBuffer diskBackedMessageBuffer, GenerateResourceLimits generateResourceLimits, BrokerMemoryProfile? memoryProfile, BrokerPersistence persistence, IotOperationsProvisioningState? provisioningState, ResourceHealthState? healthState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IotOperationsBrokerProperties(BrokerAdvancedSettings advanced, BrokerCardinality cardinality, BrokerDiagnostics diagnostics, DiskBackedMessageBuffer diskBackedMessageBuffer, GenerateResourceLimits generateResourceLimits, BrokerMemoryProfile? memoryProfile, BrokerPersistence persistence, IotOperationsProvisioningState? provisioningState, BrokerStatus status, ResourceHealthState? healthState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Advanced = advanced;
             Cardinality = cardinality;
@@ -42,6 +43,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             MemoryProfile = memoryProfile;
             Persistence = persistence;
             ProvisioningState = provisioningState;
+            Status = status;
             HealthState = healthState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -70,6 +72,9 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <summary> The status of the last operation. </summary>
         public IotOperationsProvisioningState? ProvisioningState { get; }
 
+        /// <summary> The status for the broker. </summary>
+        internal BrokerStatus Status { get; }
+
         /// <summary> The health state of the resource. </summary>
         public ResourceHealthState? HealthState { get; }
 
@@ -87,6 +92,15 @@ namespace Azure.ResourceManager.IotOperations.Models
                     GenerateResourceLimits = new GenerateResourceLimits();
                 }
                 GenerateResourceLimits.Cpu = value;
+            }
+        }
+
+        /// <summary> The health state of the Broker. </summary>
+        public ResourceHealthStatus StatusHealthState
+        {
+            get
+            {
+                return Status.HealthState;
             }
         }
     }

@@ -33,14 +33,16 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="requestDiskPersistence"> Disk persistence mode. </param>
         /// <param name="operations"> List of operations including source and destination references as well as transformation. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <param name="status"> The status for the dataflow. </param>
         /// <param name="healthState"> The health state of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IotOperationsDataflowProperties(IotOperationsOperationalMode? mode, IotOperationsOperationalMode? requestDiskPersistence, IList<DataflowOperationProperties> operations, IotOperationsProvisioningState? provisioningState, ResourceHealthState? healthState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IotOperationsDataflowProperties(IotOperationsOperationalMode? mode, IotOperationsOperationalMode? requestDiskPersistence, IList<DataflowOperationProperties> operations, IotOperationsProvisioningState? provisioningState, DataflowStatus status, ResourceHealthState? healthState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Mode = mode;
             RequestDiskPersistence = requestDiskPersistence;
             Operations = operations;
             ProvisioningState = provisioningState;
+            Status = status;
             HealthState = healthState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -57,7 +59,19 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <summary> The status of the last operation. </summary>
         public IotOperationsProvisioningState? ProvisioningState { get; }
 
+        /// <summary> The status for the dataflow. </summary>
+        internal DataflowStatus Status { get; }
+
         /// <summary> The health state of the resource. </summary>
         public ResourceHealthState? HealthState { get; }
+
+        /// <summary> The health state of the Dataflow. </summary>
+        public ResourceHealthStatus StatusHealthState
+        {
+            get
+            {
+                return Status.HealthState;
+            }
+        }
     }
 }

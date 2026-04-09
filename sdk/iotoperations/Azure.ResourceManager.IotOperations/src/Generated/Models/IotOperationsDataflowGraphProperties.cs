@@ -37,15 +37,17 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="nodes"> List of nodes in the dataflow graph. </param>
         /// <param name="nodeConnections"> List of connections between nodes in the dataflow graph. </param>
         /// <param name="provisioningState"> The provisioning state of the dataflow graph. </param>
+        /// <param name="status"> The status for the dataflow graph. </param>
         /// <param name="healthState"> The health state of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IotOperationsDataflowGraphProperties(IotOperationsOperationalMode? mode, IotOperationsOperationalMode? requestDiskPersistence, IList<DataflowGraphNode> nodes, IList<DataflowGraphNodeConnection> nodeConnections, IotOperationsProvisioningState? provisioningState, ResourceHealthState? healthState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IotOperationsDataflowGraphProperties(IotOperationsOperationalMode? mode, IotOperationsOperationalMode? requestDiskPersistence, IList<DataflowGraphNode> nodes, IList<DataflowGraphNodeConnection> nodeConnections, IotOperationsProvisioningState? provisioningState, DataflowGraphStatus status, ResourceHealthState? healthState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Mode = mode;
             RequestDiskPersistence = requestDiskPersistence;
             Nodes = nodes;
             NodeConnections = nodeConnections;
             ProvisioningState = provisioningState;
+            Status = status;
             HealthState = healthState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -65,7 +67,19 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <summary> The provisioning state of the dataflow graph. </summary>
         public IotOperationsProvisioningState? ProvisioningState { get; }
 
+        /// <summary> The status for the dataflow graph. </summary>
+        internal DataflowGraphStatus Status { get; }
+
         /// <summary> The health state of the resource. </summary>
         public ResourceHealthState? HealthState { get; }
+
+        /// <summary> The health state of the DataflowGraph. </summary>
+        public ResourceHealthStatus StatusHealthState
+        {
+            get
+            {
+                return Status.HealthState;
+            }
+        }
     }
 }
