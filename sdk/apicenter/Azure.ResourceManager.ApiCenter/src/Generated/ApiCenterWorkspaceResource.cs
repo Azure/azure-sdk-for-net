@@ -6,46 +6,41 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ApiCenter
 {
     /// <summary>
-    /// A Class representing an ApiCenterWorkspace along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ApiCenterWorkspaceResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetApiCenterWorkspaceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ApiCenterServiceResource"/> using the GetApiCenterWorkspace method.
+    /// A class representing a ApiCenterWorkspace along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ApiCenterWorkspaceResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ApiCenterServiceResource"/> using the GetApiCenterWorkspaces method.
     /// </summary>
     public partial class ApiCenterWorkspaceResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="ApiCenterWorkspaceResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="serviceName"> The serviceName. </param>
-        /// <param name="workspaceName"> The workspaceName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string workspaceName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _apiCenterWorkspaceWorkspacesClientDiagnostics;
-        private readonly WorkspacesRestOperations _apiCenterWorkspaceWorkspacesRestClient;
+        private readonly ClientDiagnostics _workspacesClientDiagnostics;
+        private readonly Workspaces _workspacesRestClient;
+        private readonly ClientDiagnostics _apisClientDiagnostics;
+        private readonly Apis _apisRestClient;
+        private readonly ClientDiagnostics _apiCenterApiSourceClientDiagnostics;
+        private readonly ApiCenterApiSource _apiCenterApiSourceRestClient;
+        private readonly ClientDiagnostics _environmentsClientDiagnostics;
+        private readonly Environments _environmentsRestClient;
         private readonly ApiCenterWorkspaceData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ApiCenter/services/workspaces";
 
-        /// <summary> Initializes a new instance of the <see cref="ApiCenterWorkspaceResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ApiCenterWorkspaceResource for mocking. </summary>
         protected ApiCenterWorkspaceResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ApiCenterWorkspaceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiCenterWorkspaceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ApiCenterWorkspaceResource(ArmClient client, ApiCenterWorkspaceData data) : this(client, data.Id)
@@ -54,209 +49,99 @@ namespace Azure.ResourceManager.ApiCenter
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ApiCenterWorkspaceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiCenterWorkspaceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ApiCenterWorkspaceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _apiCenterWorkspaceWorkspacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiCenter", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string apiCenterWorkspaceWorkspacesApiVersion);
-            _apiCenterWorkspaceWorkspacesRestClient = new WorkspacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, apiCenterWorkspaceWorkspacesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string apiCenterWorkspaceApiVersion);
+            _workspacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiCenter", ResourceType.Namespace, Diagnostics);
+            _workspacesRestClient = new Workspaces(_workspacesClientDiagnostics, Pipeline, Endpoint, apiCenterWorkspaceApiVersion ?? "2024-06-01-preview");
+            _apisClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiCenter", ResourceType.Namespace, Diagnostics);
+            _apisRestClient = new Apis(_apisClientDiagnostics, Pipeline, Endpoint, apiCenterWorkspaceApiVersion ?? "2024-06-01-preview");
+            _apiCenterApiSourceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiCenter", ResourceType.Namespace, Diagnostics);
+            _apiCenterApiSourceRestClient = new ApiCenterApiSource(_apiCenterApiSourceClientDiagnostics, Pipeline, Endpoint, apiCenterWorkspaceApiVersion ?? "2024-06-01-preview");
+            _environmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiCenter", ResourceType.Namespace, Diagnostics);
+            _environmentsRestClient = new Environments(_environmentsClientDiagnostics, Pipeline, Endpoint, apiCenterWorkspaceApiVersion ?? "2024-06-01-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual ApiCenterWorkspaceData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serviceName"> The serviceName. </param>
+        /// <param name="workspaceName"> The workspaceName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string workspaceName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-        }
-
-        /// <summary> Gets a collection of ApiCenterApiResources in the ApiCenterWorkspace. </summary>
-        /// <returns> An object representing collection of ApiCenterApiResources and their operations over a ApiCenterApiResource. </returns>
-        public virtual ApiCenterApiCollection GetApiCenterApis()
-        {
-            return GetCachedClient(client => new ApiCenterApiCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Returns details of the API.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}/apis/{apiName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Apis_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiCenterApiResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="apiName"> The name of the API. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="apiName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ApiCenterApiResource>> GetApiCenterApiAsync(string apiName, CancellationToken cancellationToken = default)
-        {
-            return await GetApiCenterApis().GetAsync(apiName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Returns details of the API.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}/apis/{apiName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Apis_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiCenterApiResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="apiName"> The name of the API. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="apiName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ApiCenterApiResource> GetApiCenterApi(string apiName, CancellationToken cancellationToken = default)
-        {
-            return GetApiCenterApis().Get(apiName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ApiCenterEnvironmentResources in the ApiCenterWorkspace. </summary>
-        /// <returns> An object representing collection of ApiCenterEnvironmentResources and their operations over a ApiCenterEnvironmentResource. </returns>
-        public virtual ApiCenterEnvironmentCollection GetApiCenterEnvironments()
-        {
-            return GetCachedClient(client => new ApiCenterEnvironmentCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Returns details of the environment.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}/environments/{environmentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Environments_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiCenterEnvironmentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="environmentName"> The name of the environment. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="environmentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ApiCenterEnvironmentResource>> GetApiCenterEnvironmentAsync(string environmentName, CancellationToken cancellationToken = default)
-        {
-            return await GetApiCenterEnvironments().GetAsync(environmentName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Returns details of the environment.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}/environments/{environmentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Environments_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiCenterEnvironmentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="environmentName"> The name of the environment. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="environmentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ApiCenterEnvironmentResource> GetApiCenterEnvironment(string environmentName, CancellationToken cancellationToken = default)
-        {
-            return GetApiCenterEnvironments().Get(environmentName, cancellationToken);
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Returns details of the workspace.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workspaces_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Workspaces_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiCenterWorkspaceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ApiCenterWorkspaceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ApiCenterWorkspaceResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _apiCenterWorkspaceWorkspacesClientDiagnostics.CreateScope("ApiCenterWorkspaceResource.Get");
+            using DiagnosticScope scope = _workspacesClientDiagnostics.CreateScope("ApiCenterWorkspaceResource.Get");
             scope.Start();
             try
             {
-                var response = await _apiCenterWorkspaceWorkspacesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ApiCenterWorkspaceData> response = Response.FromValue(ApiCenterWorkspaceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ApiCenterWorkspaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -270,33 +155,41 @@ namespace Azure.ResourceManager.ApiCenter
         /// Returns details of the workspace.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workspaces_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Workspaces_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiCenterWorkspaceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ApiCenterWorkspaceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ApiCenterWorkspaceResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _apiCenterWorkspaceWorkspacesClientDiagnostics.CreateScope("ApiCenterWorkspaceResource.Get");
+            using DiagnosticScope scope = _workspacesClientDiagnostics.CreateScope("ApiCenterWorkspaceResource.Get");
             scope.Start();
             try
             {
-                var response = _apiCenterWorkspaceWorkspacesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ApiCenterWorkspaceData> response = Response.FromValue(ApiCenterWorkspaceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ApiCenterWorkspaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -310,20 +203,20 @@ namespace Azure.ResourceManager.ApiCenter
         /// Deletes specified workspace.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workspaces_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> Workspaces_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiCenterWorkspaceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ApiCenterWorkspaceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -331,16 +224,23 @@ namespace Azure.ResourceManager.ApiCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _apiCenterWorkspaceWorkspacesClientDiagnostics.CreateScope("ApiCenterWorkspaceResource.Delete");
+            using DiagnosticScope scope = _workspacesClientDiagnostics.CreateScope("ApiCenterWorkspaceResource.Delete");
             scope.Start();
             try
             {
-                var response = await _apiCenterWorkspaceWorkspacesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var uri = _apiCenterWorkspaceWorkspacesRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ApiCenterArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspacesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                ApiCenterArmOperation operation = new ApiCenterArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -354,20 +254,20 @@ namespace Azure.ResourceManager.ApiCenter
         /// Deletes specified workspace.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workspaces_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> Workspaces_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiCenterWorkspaceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ApiCenterWorkspaceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -375,16 +275,23 @@ namespace Azure.ResourceManager.ApiCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _apiCenterWorkspaceWorkspacesClientDiagnostics.CreateScope("ApiCenterWorkspaceResource.Delete");
+            using DiagnosticScope scope = _workspacesClientDiagnostics.CreateScope("ApiCenterWorkspaceResource.Delete");
             scope.Start();
             try
             {
-                var response = _apiCenterWorkspaceWorkspacesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var uri = _apiCenterWorkspaceWorkspacesRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ApiCenterArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspacesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                ApiCenterArmOperation operation = new ApiCenterArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -395,23 +302,311 @@ namespace Azure.ResourceManager.ApiCenter
         }
 
         /// <summary>
-        /// Creates new or updates existing workspace.
+        /// Checks if specified API exists.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}/apis/{apiName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workspaces_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> Apis_Head. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiCenterWorkspaceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ApiCenterWorkspaceResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="apiName"> The name of the API. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="apiName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> HeadApiAsync(string apiName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(apiName, nameof(apiName));
+
+            using DiagnosticScope scope = _apisClientDiagnostics.CreateScope("ApiCenterWorkspaceResource.HeadApi");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _apisRestClient.CreateHeadApiRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiName, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Checks if specified API exists.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}/apis/{apiName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Apis_Head. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ApiCenterWorkspaceResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="apiName"> The name of the API. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="apiName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response HeadApi(string apiName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(apiName, nameof(apiName));
+
+            using DiagnosticScope scope = _apisClientDiagnostics.CreateScope("ApiCenterWorkspaceResource.HeadApi");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _apisRestClient.CreateHeadApiRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiName, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Checks if specified API source exists.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}/apiSources/{apiSourceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ApiSources_Head. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ApiCenterWorkspaceResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="apiSourceName"> The name of the API. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiSourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="apiSourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> HeadApiSourceAsync(string apiSourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(apiSourceName, nameof(apiSourceName));
+
+            using DiagnosticScope scope = _apiCenterApiSourceClientDiagnostics.CreateScope("ApiCenterWorkspaceResource.HeadApiSource");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _apiCenterApiSourceRestClient.CreateHeadApiSourceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiSourceName, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Checks if specified API source exists.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}/apiSources/{apiSourceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ApiSources_Head. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ApiCenterWorkspaceResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="apiSourceName"> The name of the API. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiSourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="apiSourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response HeadApiSource(string apiSourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(apiSourceName, nameof(apiSourceName));
+
+            using DiagnosticScope scope = _apiCenterApiSourceClientDiagnostics.CreateScope("ApiCenterWorkspaceResource.HeadApiSource");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _apiCenterApiSourceRestClient.CreateHeadApiSourceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiSourceName, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Checks if specified environment exists.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}/environments/{environmentName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Environments_Head. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ApiCenterWorkspaceResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="environmentName"> The name of the environment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="environmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> HeadEnvironmentAsync(string environmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
+
+            using DiagnosticScope scope = _environmentsClientDiagnostics.CreateScope("ApiCenterWorkspaceResource.HeadEnvironment");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _environmentsRestClient.CreateHeadEnvironmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, environmentName, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Checks if specified environment exists.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}/environments/{environmentName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Environments_Head. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ApiCenterWorkspaceResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="environmentName"> The name of the environment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="environmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response HeadEnvironment(string environmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
+
+            using DiagnosticScope scope = _environmentsClientDiagnostics.CreateScope("ApiCenterWorkspaceResource.HeadEnvironment");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _environmentsRestClient.CreateHeadEnvironmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, environmentName, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update a ApiCenterWorkspace.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Workspaces_CreateOrUpdate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ApiCenterWorkspaceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -423,16 +618,24 @@ namespace Azure.ResourceManager.ApiCenter
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _apiCenterWorkspaceWorkspacesClientDiagnostics.CreateScope("ApiCenterWorkspaceResource.Update");
+            using DiagnosticScope scope = _workspacesClientDiagnostics.CreateScope("ApiCenterWorkspaceResource.Update");
             scope.Start();
             try
             {
-                var response = await _apiCenterWorkspaceWorkspacesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var uri = _apiCenterWorkspaceWorkspacesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ApiCenterArmOperation<ApiCenterWorkspaceResource>(Response.FromValue(new ApiCenterWorkspaceResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspacesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ApiCenterWorkspaceData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ApiCenterWorkspaceData> response = Response.FromValue(ApiCenterWorkspaceData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                ApiCenterArmOperation<ApiCenterWorkspaceResource> operation = new ApiCenterArmOperation<ApiCenterWorkspaceResource>(Response.FromValue(new ApiCenterWorkspaceResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -443,23 +646,23 @@ namespace Azure.ResourceManager.ApiCenter
         }
 
         /// <summary>
-        /// Creates new or updates existing workspace.
+        /// Update a ApiCenterWorkspace.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workspaces_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> Workspaces_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiCenterWorkspaceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ApiCenterWorkspaceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -471,16 +674,24 @@ namespace Azure.ResourceManager.ApiCenter
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _apiCenterWorkspaceWorkspacesClientDiagnostics.CreateScope("ApiCenterWorkspaceResource.Update");
+            using DiagnosticScope scope = _workspacesClientDiagnostics.CreateScope("ApiCenterWorkspaceResource.Update");
             scope.Start();
             try
             {
-                var response = _apiCenterWorkspaceWorkspacesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var uri = _apiCenterWorkspaceWorkspacesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ApiCenterArmOperation<ApiCenterWorkspaceResource>(Response.FromValue(new ApiCenterWorkspaceResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspacesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ApiCenterWorkspaceData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ApiCenterWorkspaceData> response = Response.FromValue(ApiCenterWorkspaceData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                ApiCenterArmOperation<ApiCenterWorkspaceResource> operation = new ApiCenterArmOperation<ApiCenterWorkspaceResource>(Response.FromValue(new ApiCenterWorkspaceResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -490,80 +701,103 @@ namespace Azure.ResourceManager.ApiCenter
             }
         }
 
-        /// <summary>
-        /// Checks if specified workspace exists.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workspaces_Head</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiCenterWorkspaceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<bool>> HeadAsync(CancellationToken cancellationToken = default)
+        /// <summary> Gets a collection of ApiCenterApis in the <see cref="ApiCenterWorkspaceResource"/>. </summary>
+        /// <returns> An object representing collection of ApiCenterApis and their operations over a ApiCenterApiResource. </returns>
+        public virtual ApiCenterApiCollection GetApiCenterApis()
         {
-            using var scope = _apiCenterWorkspaceWorkspacesClientDiagnostics.CreateScope("ApiCenterWorkspaceResource.Head");
-            scope.Start();
-            try
-            {
-                var response = await _apiCenterWorkspaceWorkspacesRestClient.HeadAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return GetCachedClient(client => new ApiCenterApiCollection(client, Id));
         }
 
-        /// <summary>
-        /// Checks if specified workspace exists.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workspaces_Head</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiCenterWorkspaceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Returns details of the API. </summary>
+        /// <param name="apiName"> The name of the API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<bool> Head(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="apiName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="apiName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ApiCenterApiResource>> GetApiCenterApiAsync(string apiName, CancellationToken cancellationToken = default)
         {
-            using var scope = _apiCenterWorkspaceWorkspacesClientDiagnostics.CreateScope("ApiCenterWorkspaceResource.Head");
-            scope.Start();
-            try
-            {
-                var response = _apiCenterWorkspaceWorkspacesRestClient.Head(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            Argument.AssertNotNullOrEmpty(apiName, nameof(apiName));
+
+            return await GetApiCenterApis().GetAsync(apiName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Returns details of the API. </summary>
+        /// <param name="apiName"> The name of the API. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="apiName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ApiCenterApiResource> GetApiCenterApi(string apiName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(apiName, nameof(apiName));
+
+            return GetApiCenterApis().Get(apiName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ApiSources in the <see cref="ApiCenterWorkspaceResource"/>. </summary>
+        /// <returns> An object representing collection of ApiSources and their operations over a ApiSourceResource. </returns>
+        public virtual ApiSourceCollection GetApiSources()
+        {
+            return GetCachedClient(client => new ApiSourceCollection(client, Id));
+        }
+
+        /// <summary> Returns details of the API source. </summary>
+        /// <param name="apiSourceName"> The name of the API. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiSourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="apiSourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ApiSourceResource>> GetApiSourceAsync(string apiSourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(apiSourceName, nameof(apiSourceName));
+
+            return await GetApiSources().GetAsync(apiSourceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Returns details of the API source. </summary>
+        /// <param name="apiSourceName"> The name of the API. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiSourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="apiSourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ApiSourceResource> GetApiSource(string apiSourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(apiSourceName, nameof(apiSourceName));
+
+            return GetApiSources().Get(apiSourceName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ApiCenterEnvironments in the <see cref="ApiCenterWorkspaceResource"/>. </summary>
+        /// <returns> An object representing collection of ApiCenterEnvironments and their operations over a ApiCenterEnvironmentResource. </returns>
+        public virtual ApiCenterEnvironmentCollection GetApiCenterEnvironments()
+        {
+            return GetCachedClient(client => new ApiCenterEnvironmentCollection(client, Id));
+        }
+
+        /// <summary> Returns details of the environment. </summary>
+        /// <param name="environmentName"> The name of the environment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="environmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ApiCenterEnvironmentResource>> GetApiCenterEnvironmentAsync(string environmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
+
+            return await GetApiCenterEnvironments().GetAsync(environmentName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Returns details of the environment. </summary>
+        /// <param name="environmentName"> The name of the environment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="environmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ApiCenterEnvironmentResource> GetApiCenterEnvironment(string environmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
+
+            return GetApiCenterEnvironments().Get(environmentName, cancellationToken);
         }
     }
 }

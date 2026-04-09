@@ -612,15 +612,15 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.AreEqual("parentProviderNamespace", contextualParameters[2].VariableName);
             Assert.AreEqual("id.Parent.ResourceType.Namespace", contextualParameters[2].BuildValueExpression(_idVariable).ToDisplayString());
 
-            // parentResourceName uses the variable key - appears first due to stack order
-            Assert.AreEqual("parentResourceName", contextualParameters[3].Key);
-            Assert.AreEqual("parentResourceName", contextualParameters[3].VariableName);
-            Assert.AreEqual("id.Parent.Name", contextualParameters[3].BuildValueExpression(_idVariable).ToDisplayString());
-
             // parentResourceType is a variable key - should use ResourceType().Type()
-            Assert.AreEqual("parentResourceType", contextualParameters[4].Key);
-            Assert.AreEqual("parentResourceType", contextualParameters[4].VariableName);
-            Assert.AreEqual("id.Parent.ResourceType.Type", contextualParameters[4].BuildValueExpression(_idVariable).ToDisplayString());
+            Assert.AreEqual("parentResourceType", contextualParameters[3].Key);
+            Assert.AreEqual("parentResourceType", contextualParameters[3].VariableName);
+            Assert.AreEqual("id.Parent.ResourceType.Type", contextualParameters[3].BuildValueExpression(_idVariable).ToDisplayString());
+
+            // parentResourceName uses Name
+            Assert.AreEqual("parentResourceName", contextualParameters[4].Key);
+            Assert.AreEqual("parentResourceName", contextualParameters[4].VariableName);
+            Assert.AreEqual("id.Parent.Name", contextualParameters[4].BuildValueExpression(_idVariable).ToDisplayString());
 
             Assert.AreEqual("targets", contextualParameters[5].Key);
             Assert.AreEqual("targetName", contextualParameters[5].VariableName);
@@ -649,15 +649,15 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.AreEqual("parentProviderNamespace", contextualParameters[2].VariableName);
             Assert.AreEqual("id.ResourceType.Namespace", contextualParameters[2].BuildValueExpression(_idVariable).ToDisplayString());
 
-            // parentResourceName uses the variable key - appears first due to stack order
-            Assert.AreEqual("parentResourceName", contextualParameters[3].Key);
-            Assert.AreEqual("parentResourceName", contextualParameters[3].VariableName);
-            Assert.AreEqual("id.Name", contextualParameters[3].BuildValueExpression(_idVariable).ToDisplayString());
-
             // parentResourceType is a variable key
-            Assert.AreEqual("parentResourceType", contextualParameters[4].Key);
-            Assert.AreEqual("parentResourceType", contextualParameters[4].VariableName);
-            Assert.AreEqual("id.ResourceType.Type", contextualParameters[4].BuildValueExpression(_idVariable).ToDisplayString());
+            Assert.AreEqual("parentResourceType", contextualParameters[3].Key);
+            Assert.AreEqual("parentResourceType", contextualParameters[3].VariableName);
+            Assert.AreEqual("id.ResourceType.Type", contextualParameters[3].BuildValueExpression(_idVariable).ToDisplayString());
+
+            // parentResourceName uses Name
+            Assert.AreEqual("parentResourceName", contextualParameters[4].Key);
+            Assert.AreEqual("parentResourceName", contextualParameters[4].VariableName);
+            Assert.AreEqual("id.Name", contextualParameters[4].BuildValueExpression(_idVariable).ToDisplayString());
         }
 
         [Test]

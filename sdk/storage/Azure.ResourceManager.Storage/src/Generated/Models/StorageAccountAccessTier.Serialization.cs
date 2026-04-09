@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Storage.Models
 {
     internal static partial class StorageAccountAccessTierExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this StorageAccountAccessTier value) => value switch
         {
             StorageAccountAccessTier.Hot => "Hot",
@@ -20,12 +21,25 @@ namespace Azure.ResourceManager.Storage.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown StorageAccountAccessTier value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static StorageAccountAccessTier ToStorageAccountAccessTier(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Hot")) return StorageAccountAccessTier.Hot;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Cool")) return StorageAccountAccessTier.Cool;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Premium")) return StorageAccountAccessTier.Premium;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Cold")) return StorageAccountAccessTier.Cold;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Hot"))
+            {
+                return StorageAccountAccessTier.Hot;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Cool"))
+            {
+                return StorageAccountAccessTier.Cool;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Premium"))
+            {
+                return StorageAccountAccessTier.Premium;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Cold"))
+            {
+                return StorageAccountAccessTier.Cold;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown StorageAccountAccessTier value.");
         }
     }

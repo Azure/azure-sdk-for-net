@@ -68,7 +68,7 @@ public partial class ResponsesTelemetryTests
 
         AIProjectClient projectClient = GetTestProjectClient();
         var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
-        ProjectResponsesClient client = projectClient.OpenAI.GetProjectResponsesClientForModel(modelDeploymentName);
+        ProjectResponsesClient client = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForModel(modelDeploymentName);
 
         // First call: user message with tools → model should issue function_call(s)
         CreateResponseOptions options = new()
@@ -150,7 +150,7 @@ public partial class ResponsesTelemetryTests
 
         AIProjectClient projectClient = GetTestProjectClient();
         var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
-        ProjectResponsesClient client = projectClient.OpenAI.GetProjectResponsesClientForModel(modelDeploymentName);
+        ProjectResponsesClient client = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForModel(modelDeploymentName);
 
         CreateResponseOptions options = new()
         {
@@ -234,7 +234,7 @@ public partial class ResponsesTelemetryTests
 
         AIProjectClient projectClient = GetTestProjectClient();
         var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
-        ProjectResponsesClient client = projectClient.OpenAI.GetProjectResponsesClientForModel(modelDeploymentName);
+        ProjectResponsesClient client = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForModel(modelDeploymentName);
 
         CreateResponseOptions options = new()
         {
@@ -332,7 +332,7 @@ public partial class ResponsesTelemetryTests
 
         AIProjectClient projectClient = GetTestProjectClient();
         var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
-        ProjectResponsesClient client = projectClient.OpenAI.GetProjectResponsesClientForModel(modelDeploymentName);
+        ProjectResponsesClient client = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForModel(modelDeploymentName);
 
         CreateResponseOptions options = new()
         {

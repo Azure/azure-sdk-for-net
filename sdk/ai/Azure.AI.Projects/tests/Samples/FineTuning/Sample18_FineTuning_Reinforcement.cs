@@ -35,7 +35,7 @@ public partial class Sample18_FineTuning_Reinforcement : SamplesBase
         var modelDeploymentName = Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
         var graderModelDeploymentName = Environment.GetEnvironmentVariable("GRADER_FOUNDRY_MODEL_NAME");
         AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
-        ProjectOpenAIClient oaiClient = projectClient.OpenAI;
+        ProjectOpenAIClient oaiClient = projectClient.ProjectOpenAIClient;
         OpenAIFileClient fileClient = oaiClient.GetOpenAIFileClient();
         FineTuningClient fineTuningClient = oaiClient.GetFineTuningClient();
         #endregion
@@ -133,7 +133,7 @@ public partial class Sample18_FineTuning_Reinforcement : SamplesBase
         var modelDeploymentName = Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
         var graderModelDeploymentName = Environment.GetEnvironmentVariable("GRADER_FOUNDRY_MODEL_NAME");
         AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
-        ProjectOpenAIClient oaiClient = projectClient.OpenAI;
+        ProjectOpenAIClient oaiClient = projectClient.ProjectOpenAIClient;
         OpenAIFileClient fileClient = oaiClient.GetOpenAIFileClient();
         FineTuningClient fineTuningClient = oaiClient.GetFineTuningClient();
         #endregion

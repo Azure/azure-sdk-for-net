@@ -103,6 +103,9 @@ export function resolveArmResources(
   // Build a lookup map from methodId to SdkMethod kind (basic, paging, lro, lropaging)
   // so that we can detect pageable actions that should be classified as List
   const methodKindMap = new Map<string, string>();
+  // Build a lookup map from methodId to the response item type's crossLanguageDefinitionId
+  // so that we can verify pageable actions return actual resource models
+  const methodResponseModelIdMap = new Map<string, string>();
   for (const client of getAllSdkClients(sdkContext)) {
     for (const method of client.methods) {
       if (!methodApiVersionsMap.has(method.crossLanguageDefinitionId)) {
@@ -112,10 +115,36 @@ export function resolveArmResources(
         );
       }
       if (!methodKindMap.has(method.crossLanguageDefinitionId)) {
-        methodKindMap.set(
-          method.crossLanguageDefinitionId,
-          method.kind
-        );
+        methodKindMap.set(method.crossLanguageDefinitionId, method.kind);
+      }
+      if (
+        (method.kind === "paging" || method.kind === "lropaging") &&
+        !methodResponseModelIdMap.has(method.crossLanguageDefinitionId)
+      ) {
+        const responseType = method.response?.type;
+        if (
+          responseType?.kind === "array" &&
+          responseType.valueType.kind === "model"
+        ) {
+          methodResponseModelIdMap.set(
+            method.crossLanguageDefinitionId,
+            (responseType.valueType as SdkModelType).crossLanguageDefinitionId
+          );
+        }
+      }
+    }
+  }
+
+  // Build the set of resource model IDs for validating pageable action responses
+  const resourceModelIds = new Set<string>();
+  if (provider.resources) {
+    for (const resolvedResource of provider.resources) {
+      const modelId = getCrossLanguageDefinitionId(
+        sdkContext,
+        resolvedResource.type
+      );
+      if (modelId) {
+        resourceModelIds.add(modelId);
       }
     }
   }
@@ -143,7 +172,9 @@ export function resolveArmResources(
         program,
         sdkContext,
         resolvedResource,
-        methodKindMap
+        methodKindMap,
+        methodResponseModelIdMap,
+        resourceModelIds
       );
 
       const resource = {
@@ -208,7 +239,8 @@ export function resolveArmResources(
   const filteredResources = postProcessArmResources(
     resources,
     nonResourceMethods,
-    parentLookup
+    parentLookup,
+    methodResponseModelIdMap
   );
 
   // Add provider operations as non-resource methods
@@ -298,7 +330,9 @@ function convertResolvedResourceToMetadata(
   program: Program,
   sdkContext: CSharpEmitterContext,
   resolvedResource: ResolvedResource,
-  methodKindMap?: Map<string, string>
+  methodKindMap?: Map<string, string>,
+  methodResponseModelIdMap?: Map<string, string>,
+  resourceModelIds?: Set<string>
 ): ResourceMetadata {
   const methods: ResourceMethod[] = [];
   const resourceScope = convertScopeToResourceScope(resolvedResource.scope);
@@ -396,15 +430,20 @@ function convertResolvedResourceToMetadata(
     for (const actionOp of resolvedResource.operations.actions) {
       const methodId = getMethodIdFromOperation(sdkContext, actionOp.operation);
       if (methodId) {
-        // If the action is pageable, classify as List instead of Action
-        // (handles ArmResourceActionSync used for list-children operations)
+        // Classify as List only if the action is pageable AND its response item type
+        // is a known resource model. This prevents metadata-returning pageable actions
+        // from being misclassified as List operations.
         const sdkMethodKind = methodKindMap?.get(methodId);
+        const responseModelId = methodResponseModelIdMap?.get(methodId);
+        const isResourceList =
+          sdkMethodKind === "paging" &&
+          resourceModelIds !== undefined &&
+          resourceModelIds.has(responseModelId!);
         methods.push({
           methodId,
-          kind:
-            sdkMethodKind === "paging"
-              ? ResourceOperationKind.List
-              : ResourceOperationKind.Action,
+          kind: isResourceList
+            ? ResourceOperationKind.List
+            : ResourceOperationKind.Action,
           operationPath: actionOp.path,
           operationScope: resourceScope,
           resourceScope: calculateResourceScope(actionOp.path, resolvedResource)
@@ -525,35 +564,27 @@ function convertScopeToResourceScope(
 export function getOperationScopeFromPath(path: string): ResourceScope {
   // Match any path starting with a variable segment followed by /providers/
   // This covers scope-based operations like /{resourceUri}/providers/..., /{scope}/providers/..., /{resourceId}/providers/..., etc.
-  if (/^\/\{[^}]+\}\/providers\//.test(path)) {
-    return ResourceScope.Extension;
-  } else if (
-    /^\/subscriptions\/\{[^}]+\}\/resourceGroups\/\{[^}]+\}\//.test(path)
+  const lastProviderIndex = path.lastIndexOf("/providers/");
+  const scopePath = path.substring(0, lastProviderIndex);
+  if (!scopePath) {
+      return ResourceScope.Tenant;
+  }
+  else if (
+    /^\/subscriptions\/\{[^}]+\}\/resourceGroups\/\{[^}]+\}$/.test(scopePath)
   ) {
     return ResourceScope.ResourceGroup;
-  } else if (/^\/subscriptions\/\{[^}]+\}\//.test(path)) {
+  } else if (/^\/subscriptions\/\{[^}]+\}$/.test(scopePath)) {
     return ResourceScope.Subscription;
   } else if (
-    /^\/providers\/Microsoft\.Management\/managementGroups\/\{[^}]+\}\//.test(
-      path
+    /^\/providers\/Microsoft\.Management\/managementGroups\/\{[^}]+\}$/.test(
+      scopePath
     )
   ) {
     return ResourceScope.ManagementGroup;
-  } else if (hasMultipleProviderSegments(path)) {
-    // Paths with multiple /providers/ segments indicate extension resources
-    // e.g., /providers/Microsoft.Management/serviceGroups/{name}/providers/Microsoft.Edge/sites/{siteName}
+  }
+  else {
     return ResourceScope.Extension;
   }
-  return ResourceScope.Tenant; // all the templates work as if there is a tenant decorator when there is no such decorator
-}
-
-/**
- * Check if a path has multiple /providers/ segments, indicating an extension resource
- * that extends another ARM resource.
- */
-function hasMultipleProviderSegments(path: string): boolean {
-  const providerMatches = path.match(/\/providers\//gi);
-  return providerMatches !== null && providerMatches.length > 1;
 }
 
 /**

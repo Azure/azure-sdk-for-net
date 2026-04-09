@@ -7,7 +7,7 @@ To enable your Agent to Computer Use tool, you need to use `ComputerTool` while 
 var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("COMPUTER_USE_DEPLOYMENT_NAME");
 AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
-OpenAIFileClient fileClient = projectClient.OpenAI.GetOpenAIFileClient();
+OpenAIFileClient fileClient = projectClient.ProjectOpenAIClient.GetOpenAIFileClient();
 ```
 
 2. To use the tool, we need to read and upload image files using `UploadImageFile` and `UploadImageFileAsync` methods.
@@ -68,7 +68,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         ),
     }
 };
-ProjectsAgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
+ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(
     agentName: "myAgent",
     options: new(agentDefinition)
 );
@@ -88,7 +88,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         ),
     }
 };
-ProjectsAgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
     agentName: "myAgent",
     options: new(agentDefinition)
 );
@@ -185,7 +185,7 @@ public static async Task<ResponseResult> CreateResponseAsync(ResponsesClient res
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateResponse_ComputerUse_Sync
-ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
+ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentVersion.Name);
 CreateResponseOptions responseOptions = new()
 {
     TruncationMode = ResponseTruncationMode.Auto,
@@ -221,7 +221,7 @@ Console.WriteLine(response.GetOutputText());
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateResponse_ComputerUse_Async
-ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
+ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentVersion.Name);
 CreateResponseOptions responseOptions = new()
 {
     TruncationMode = ResponseTruncationMode.Auto,
@@ -262,7 +262,7 @@ Console.WriteLine(response.GetOutputText());
 
 Synchronous sample:
 ```C# Snippet:Sample_Cleanup_ComputerUse_Sync
-projectClient.Agents.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
 foreach (string fileId in screenshots.Values)
 {
     fileClient.DeleteFile(fileId);
@@ -271,7 +271,7 @@ foreach (string fileId in screenshots.Values)
 
 Asynchronous sample:
 ```C# Snippet:Sample_Cleanup_ComputerUse_Async
-await projectClient.Agents.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
 foreach (string fileId in screenshots.Values)
 {
     await fileClient.DeleteFileAsync(fileId);

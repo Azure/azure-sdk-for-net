@@ -48,10 +48,7 @@ import {
   builtInResourceOperationName,
   parentResourceName,
   readsResourceName,
-  resourceGroupResource,
   singleton,
-  subscriptionResource,
-  tenantResource
 } from "./sdk-context-options.js";
 import {
   DecoratorApplication,
@@ -124,6 +121,16 @@ export function buildArmProviderSchema(
     resourceModels.map((m) => m.crossLanguageDefinitionId)
   );
 
+  // Build a lookup map from methodId to the page item type's crossLanguageDefinitionId
+  // so that relocateCrossResourceListActions can verify type compatibility
+  const methodResponseModelIdMap = new Map<string, string>();
+  for (const [methodId, method] of serviceMethods) {
+    const itemModelId = getPagingItemModelId(method);
+    if (itemModelId) {
+      methodResponseModelIdMap.set(methodId, itemModelId);
+    }
+  }
+
   // Track client names associated with each resource path for name derivation
   const resourcePathToClientName = new Map<string, string>();
 
@@ -144,7 +151,8 @@ export function buildArmProviderSchema(
     const serviceMethod = serviceMethods.get(method.crossLanguageDefinitionId);
     const { kind, modelId, explicitResourceName } = parseResourceOperation(
       serviceMethod,
-      sdkContext
+      sdkContext,
+      resourceModelIds
     );
 
     if (modelId && kind && resourceModelIds.has(modelId)) {
@@ -359,12 +367,10 @@ export function buildArmProviderSchema(
 
     // Emit diagnostic for resources without resourceIdPattern
     if (metadata.resourceIdPattern === "" && model) {
-      sdkContext.logger.reportDiagnostic({
+      sdkContext.program.reportDiagnostic({
         code: "general-warning",
-        messageId: "default",
-        format: {
-          message: `Cannot figure out resourceIdPattern from model ${model.name}.`
-        },
+        severity: "warning",
+        message: `Cannot figure out resourceIdPattern from model ${model.name}.`,
         target: NoTarget
       });
     }
@@ -413,12 +419,8 @@ export function buildArmProviderSchema(
 
   // Update the model's resourceScope based on resource scope decorator if it exists or based on the Read method's scope.
   // This is specific to legacy resource detection
-  for (const [metadataKey, metadata] of resourcePathToMetadataMap) {
-    const modelId = metadataKey.split("|")[0];
-    const model = resourceModelMap.get(modelId);
-    if (model) {
-      metadata.resourceScope = getResourceScope(model, metadata.methods);
-    }
+  for (const metadata of resourcePathToMetadataMap.values()) {
+      metadata.resourceScope = getResourceScope(metadata.methods);
   }
 
   // Create parent lookup context for legacy resource detection
@@ -457,7 +459,8 @@ export function buildArmProviderSchema(
   const filteredResources = postProcessArmResources(
     resources,
     nonResourceMethodsArray,
-    parentLookup
+    parentLookup,
+    methodResponseModelIdMap
   );
 
   // Emit diagnostics for resources that were filtered out (non-singleton resources without Read operations)
@@ -466,12 +469,10 @@ export function buildArmProviderSchema(
     if (!resourcesAfterFiltering.has(resource)) {
       const model = resourceModelMap.get(resource.resourceModelId);
       if (model) {
-        sdkContext.logger.reportDiagnostic({
+        sdkContext.program.reportDiagnostic({
           code: "general-warning",
-          messageId: "default",
-          format: {
-            message: `Resource ${model.name} does not have a Get/Read operation and is not a singleton. All operations will be added to parent resource if available, otherwise treated as non-resource methods.`
-          },
+          severity: "warning",
+          message: `Resource ${model.name} does not have a Get/Read operation and is not a singleton. All operations will be added to parent resource if available, otherwise treated as non-resource methods.`,
           target: NoTarget
         });
       }
@@ -575,7 +576,8 @@ function isCRUDKind(kind: ResourceOperationKind): boolean {
 
 function parseResourceOperation(
   serviceMethod: SdkMethod<SdkHttpOperation> | undefined,
-  sdkContext: CSharpEmitterContext
+  sdkContext: CSharpEmitterContext,
+  resourceModelIds?: Set<string>
 ): {
   kind?: ResourceOperationKind;
   modelId?: string;
@@ -624,13 +626,13 @@ function parseResourceOperation(
         };
       case armResourceActionName:
         return {
-          // If the operation is pageable, it's actually a list operation
-          // (e.g., blobContainersList modeled as ArmResourceActionSync
-          // but returning paged results)
-          kind:
-            serviceMethod?.kind === "paging"
-              ? ResourceOperationKind.List
-              : ResourceOperationKind.Action,
+          // If the operation is pageable AND its response item type is a known
+          // resource model, it's a list-children operation (e.g., blobContainersList
+          // modeled as ArmResourceActionSync but returning paged Container resources).
+          // If the item type is NOT a resource model (e.g., metadata), keep it as Action.
+          kind: isPagingActionListingResources(serviceMethod, resourceModelIds)
+            ? ResourceOperationKind.List
+            : ResourceOperationKind.Action,
           modelId: getResourceModelId(sdkContext, decorator),
           explicitResourceName: undefined
         };
@@ -891,6 +893,41 @@ function getResourceModelId(
   );
 }
 
+/**
+ * Extracts the page item model's crossLanguageDefinitionId from a paging method
+ * using the method's response type (which is an array of the item type).
+ * Returns undefined if the item type is not a model.
+ */
+function getPagingItemModelId(
+  method: SdkMethod<SdkHttpOperation>
+): string | undefined {
+  if (method.kind !== "paging" && method.kind !== "lropaging") return undefined;
+  const responseType = method.response?.type;
+  if (
+    responseType?.kind === "array" &&
+    responseType.valueType.kind === "model"
+  ) {
+    return (responseType.valueType as SdkModelType).crossLanguageDefinitionId;
+  }
+  return undefined;
+}
+
+/**
+ * Checks whether a pageable action actually lists resource models.
+ * Returns true only if the method is a paging method AND its page item type
+ * matches a known resource model. This prevents metadata-returning pageable actions
+ * (e.g., NginxDeployments_WafPolicyList returning WafPolicyMetadata) from being
+ * misclassified as List operations.
+ */
+function isPagingActionListingResources(
+  serviceMethod: SdkMethod<SdkHttpOperation> | undefined,
+  resourceModelIds?: Set<string>
+): boolean {
+  if (!serviceMethod || !resourceModelIds) return false;
+  const itemModelId = getPagingItemModelId(serviceMethod);
+  return !!itemModelId && resourceModelIds.has(itemModelId);
+}
+
 function getResourceModelIdCore(
   sdkContext: CSharpEmitterContext,
   decoratorModel: Model,
@@ -900,12 +937,10 @@ function getResourceModelIdCore(
   if (model) {
     return model.crossLanguageDefinitionId;
   } else {
-    sdkContext.logger.reportDiagnostic({
+    sdkContext.program.reportDiagnostic({
       code: "general-error",
-      messageId: "default",
-      format: {
-        message: `Resource model not found for decorator ${decoratorName}`
-      },
+      severity: "error",
+      message: `Resource model not found for decorator ${decoratorName}`,
       target: NoTarget
     });
     return undefined;
@@ -997,31 +1032,25 @@ function getSingletonResource(
   return singletonResource ?? "default";
 }
 function getResourceScope(
-  model: InputModelType,
   methods?: ResourceMethod[]
 ): ResourceScope {
-  // First, check for explicit scope decorators
-  const decorators = model.decorators;
-  if (decorators?.some((d) => d.name == tenantResource)) {
-    return ResourceScope.Tenant;
-  } else if (decorators?.some((d) => d.name == subscriptionResource)) {
-    return ResourceScope.Subscription;
-  } else if (decorators?.some((d) => d.name == resourceGroupResource)) {
-    return ResourceScope.ResourceGroup;
-  }
-
-  // Fall back to Read method's scope only if no scope decorators are found
+  // Determine scope from the Read method's operation path, which is the source of truth.
+  // Scope decorators (@resourceGroupResource, etc.) can be inherited implicitly from base
+  // model types like ProxyResource and may not reflect the actual scope for extension
+  // resources that use Legacy.ExtensionOperations with specific parent types.
   if (methods) {
     const getMethod = methods.find(
       (m) => m.kind === ResourceOperationKind.Read
     );
+    // We have logic to filter out resources without get/read operations later in post-processing,
+    // so it's possible to have a resource with no Read method. In that case, we skip scope detection since the resource will be filtered out anyway.
     if (getMethod) {
       return getMethod.operationScope;
     }
   }
 
   // Final fallback to ResourceGroup
-  return ResourceScope.ResourceGroup; // all the templates work as if there is a resource group decorator when there is no such decorator
+  return ResourceScope.ResourceGroup;
 }
 
 /**

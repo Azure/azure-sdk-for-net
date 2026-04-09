@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Batch
         {
             if (id.ResourceType != BatchApplicationResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, BatchApplicationResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, BatchApplicationResource.ResourceType), nameof(id));
             }
         }
 
@@ -293,7 +293,8 @@ namespace Azure.ResourceManager.Batch
                 Id.Parent.Name,
                 Id.Name,
                 maxresults,
-                context), data => new BatchApplicationPackageResource(Client, data));
+                context,
+                "BatchApplicationPackageCollection.GetAll"), data => new BatchApplicationPackageResource(Client, data));
         }
 
         /// <summary>
@@ -329,7 +330,8 @@ namespace Azure.ResourceManager.Batch
                 Id.Parent.Name,
                 Id.Name,
                 maxresults,
-                context), data => new BatchApplicationPackageResource(Client, data));
+                context,
+                "BatchApplicationPackageCollection.GetAll"), data => new BatchApplicationPackageResource(Client, data));
         }
 
         /// <summary>

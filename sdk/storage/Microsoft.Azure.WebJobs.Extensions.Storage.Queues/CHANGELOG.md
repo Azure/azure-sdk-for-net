@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Fix QueueMetricsProvider: preserve ApproximateMessagesCount when PeekMessages fails
+
 ### Other Changes
 
 - Replaced scaling warning/error log calls with standardized `LogFunctionScaleWarning` extension method to enable Scale Controller App Insights diagnostics.

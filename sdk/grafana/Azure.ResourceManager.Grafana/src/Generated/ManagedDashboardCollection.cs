@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Grafana
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Grafana
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ManagedDashboardData, ManagedDashboardResource>(new ManagedDashboardsGetAllAsyncCollectionResultOfT(_managedDashboardsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new ManagedDashboardResource(Client, data));
+            return new AsyncPageableWrapper<ManagedDashboardData, ManagedDashboardResource>(new ManagedDashboardsGetAllAsyncCollectionResultOfT(_managedDashboardsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "ManagedDashboardCollection.GetAll"), data => new ManagedDashboardResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Grafana
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ManagedDashboardData, ManagedDashboardResource>(new ManagedDashboardsGetAllCollectionResultOfT(_managedDashboardsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new ManagedDashboardResource(Client, data));
+            return new PageableWrapper<ManagedDashboardData, ManagedDashboardResource>(new ManagedDashboardsGetAllCollectionResultOfT(_managedDashboardsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "ManagedDashboardCollection.GetAll"), data => new ManagedDashboardResource(Client, data));
         }
 
         /// <summary>

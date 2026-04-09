@@ -818,7 +818,8 @@ namespace Azure.Developer.LoadTesting
                 metricNamespace,
                 timespan,
                 interval,
-                context);
+                context,
+                "LoadTestRunClient.GetMetricDimensionValues");
         }
 
         /// <summary>
@@ -859,7 +860,8 @@ namespace Azure.Developer.LoadTesting
                 metricNamespace,
                 timespan,
                 interval,
-                context);
+                context,
+                "LoadTestRunClient.GetMetricDimensionValues");
         }
 
         /// <summary> List the dimension values for the given metric dimension name. </summary>
@@ -892,7 +894,8 @@ namespace Azure.Developer.LoadTesting
                 metricNamespace,
                 timespan,
                 interval?.ToString(),
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "LoadTestRunClient.GetMetricDimensionValues");
         }
 
         /// <summary> List the dimension values for the given metric dimension name. </summary>
@@ -925,7 +928,8 @@ namespace Azure.Developer.LoadTesting
                 metricNamespace,
                 timespan,
                 interval?.ToString(),
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "LoadTestRunClient.GetMetricDimensionValues");
         }
 
         /// <summary>
@@ -1183,7 +1187,8 @@ namespace Azure.Developer.LoadTesting
                 content,
                 aggregation,
                 interval,
-                context);
+                context,
+                "LoadTestRunClient.GetMetrics");
         }
 
         /// <summary>
@@ -1225,7 +1230,8 @@ namespace Azure.Developer.LoadTesting
                 content,
                 aggregation,
                 interval,
-                context);
+                context,
+                "LoadTestRunClient.GetMetrics");
         }
 
         /// <summary> List the metric values for a load test run. </summary>
@@ -1259,7 +1265,8 @@ namespace Azure.Developer.LoadTesting
                 body,
                 aggregation,
                 interval?.ToString(),
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "LoadTestRunClient.GetMetrics");
         }
 
         /// <summary> List the metric values for a load test run. </summary>
@@ -1293,7 +1300,8 @@ namespace Azure.Developer.LoadTesting
                 body,
                 aggregation,
                 interval?.ToString(),
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "LoadTestRunClient.GetMetrics");
         }
 
         /// <summary>
@@ -1336,7 +1344,8 @@ namespace Azure.Developer.LoadTesting
                 maxPageSize,
                 createdByTypes,
                 testIds,
-                context);
+                context,
+                "LoadTestRunClient.GetTestRuns");
         }
 
         /// <summary>
@@ -1379,7 +1388,8 @@ namespace Azure.Developer.LoadTesting
                 maxPageSize,
                 createdByTypes,
                 testIds,
-                context);
+                context,
+                "LoadTestRunClient.GetTestRuns");
         }
 
         /// <summary> Get all test runs for the given filters. </summary>
@@ -1414,7 +1424,8 @@ namespace Azure.Developer.LoadTesting
                 maxPageSize,
                 createdByTypes,
                 testIds,
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "LoadTestRunClient.GetTestRuns");
         }
 
         /// <summary> Get all test runs for the given filters. </summary>
@@ -1449,7 +1460,8 @@ namespace Azure.Developer.LoadTesting
                 maxPageSize,
                 createdByTypes,
                 testIds,
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "LoadTestRunClient.GetTestRuns");
         }
 
         /// <summary>

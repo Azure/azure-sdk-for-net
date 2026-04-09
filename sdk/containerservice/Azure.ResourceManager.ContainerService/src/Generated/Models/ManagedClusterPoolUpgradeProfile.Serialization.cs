@@ -98,6 +98,16 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(ComponentsByReleases))
+            {
+                writer.WritePropertyName("componentsByReleases"u8);
+                writer.WriteStartArray();
+                foreach (KubernetesVersionComponents item in ComponentsByReleases)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -144,6 +154,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             string name = default;
             ContainerServiceOSType osType = default;
             IReadOnlyList<ManagedClusterPoolUpgradeProfileUpgradesItem> upgrades = default;
+            IList<KubernetesVersionComponents> componentsByReleases = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -176,12 +187,32 @@ namespace Azure.ResourceManager.ContainerService.Models
                     upgrades = array;
                     continue;
                 }
+                if (prop.NameEquals("componentsByReleases"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<KubernetesVersionComponents> array = new List<KubernetesVersionComponents>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(KubernetesVersionComponents.DeserializeKubernetesVersionComponents(item, options));
+                    }
+                    componentsByReleases = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ManagedClusterPoolUpgradeProfile(kubernetesVersion, name, osType, upgrades ?? new ChangeTrackingList<ManagedClusterPoolUpgradeProfileUpgradesItem>(), additionalBinaryDataProperties);
+            return new ManagedClusterPoolUpgradeProfile(
+                kubernetesVersion,
+                name,
+                osType,
+                upgrades ?? new ChangeTrackingList<ManagedClusterPoolUpgradeProfileUpgradesItem>(),
+                componentsByReleases ?? new ChangeTrackingList<KubernetesVersionComponents>(),
+                additionalBinaryDataProperties);
         }
     }
 }

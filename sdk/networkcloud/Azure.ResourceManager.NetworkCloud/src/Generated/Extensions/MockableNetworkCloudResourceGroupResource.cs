@@ -8,33 +8,89 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.NetworkCloud;
+using Azure.ResourceManager.NetworkCloud.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.NetworkCloud.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableNetworkCloudResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableNetworkCloudResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableNetworkCloudResourceGroupResource for mocking. </summary>
         protected MockableNetworkCloudResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableNetworkCloudResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableNetworkCloudResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableNetworkCloudResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
+        /// <summary> Gets a collection of NetworkCloudAccessBridges in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of NetworkCloudAccessBridges and their operations over a NetworkCloudAccessBridgeResource. </returns>
+        public virtual NetworkCloudAccessBridgeCollection GetNetworkCloudAccessBridges()
         {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
+            return GetCachedClient(client => new NetworkCloudAccessBridgeCollection(client, Id));
         }
 
-        /// <summary> Gets a collection of NetworkCloudBareMetalMachineResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of NetworkCloudBareMetalMachineResources and their operations over a NetworkCloudBareMetalMachineResource. </returns>
+        /// <summary>
+        /// Get the properties of the provided access bridge.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/accessBridges/{accessBridgeName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AccessBridges_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="accessBridgeName"> The name of the access bridge. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<NetworkCloudAccessBridgeResource>> GetNetworkCloudAccessBridgeAsync(NetworkCloudAccessBridgeAllowedName accessBridgeName, CancellationToken cancellationToken = default)
+        {
+            return await GetNetworkCloudAccessBridges().GetAsync(accessBridgeName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the properties of the provided access bridge.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/accessBridges/{accessBridgeName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AccessBridges_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="accessBridgeName"> The name of the access bridge. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual Response<NetworkCloudAccessBridgeResource> GetNetworkCloudAccessBridge(NetworkCloudAccessBridgeAllowedName accessBridgeName, CancellationToken cancellationToken = default)
+        {
+            return GetNetworkCloudAccessBridges().Get(accessBridgeName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of NetworkCloudBareMetalMachines in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of NetworkCloudBareMetalMachines and their operations over a NetworkCloudBareMetalMachineResource. </returns>
         public virtual NetworkCloudBareMetalMachineCollection GetNetworkCloudBareMetalMachines()
         {
             return GetCachedClient(client => new NetworkCloudBareMetalMachineCollection(client, Id));
@@ -44,20 +100,16 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// Get properties of the provided bare metal machine.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/bareMetalMachines/{bareMetalMachineName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/bareMetalMachines/{bareMetalMachineName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BareMetalMachines_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> BareMetalMachines_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudBareMetalMachineResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -68,6 +120,8 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<NetworkCloudBareMetalMachineResource>> GetNetworkCloudBareMetalMachineAsync(string bareMetalMachineName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(bareMetalMachineName, nameof(bareMetalMachineName));
+
             return await GetNetworkCloudBareMetalMachines().GetAsync(bareMetalMachineName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -75,20 +129,16 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// Get properties of the provided bare metal machine.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/bareMetalMachines/{bareMetalMachineName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/bareMetalMachines/{bareMetalMachineName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BareMetalMachines_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> BareMetalMachines_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudBareMetalMachineResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -99,11 +149,13 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         [ForwardsClientCalls]
         public virtual Response<NetworkCloudBareMetalMachineResource> GetNetworkCloudBareMetalMachine(string bareMetalMachineName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(bareMetalMachineName, nameof(bareMetalMachineName));
+
             return GetNetworkCloudBareMetalMachines().Get(bareMetalMachineName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of NetworkCloudCloudServicesNetworkResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of NetworkCloudCloudServicesNetworkResources and their operations over a NetworkCloudCloudServicesNetworkResource. </returns>
+        /// <summary> Gets a collection of NetworkCloudCloudServicesNetworks in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of NetworkCloudCloudServicesNetworks and their operations over a NetworkCloudCloudServicesNetworkResource. </returns>
         public virtual NetworkCloudCloudServicesNetworkCollection GetNetworkCloudCloudServicesNetworks()
         {
             return GetCachedClient(client => new NetworkCloudCloudServicesNetworkCollection(client, Id));
@@ -113,20 +165,16 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// Get properties of the provided cloud services network.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/cloudServicesNetworks/{cloudServicesNetworkName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/cloudServicesNetworks/{cloudServicesNetworkName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CloudServicesNetworks_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> CloudServicesNetworks_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudCloudServicesNetworkResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -137,6 +185,8 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<NetworkCloudCloudServicesNetworkResource>> GetNetworkCloudCloudServicesNetworkAsync(string cloudServicesNetworkName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(cloudServicesNetworkName, nameof(cloudServicesNetworkName));
+
             return await GetNetworkCloudCloudServicesNetworks().GetAsync(cloudServicesNetworkName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -144,20 +194,16 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// Get properties of the provided cloud services network.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/cloudServicesNetworks/{cloudServicesNetworkName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/cloudServicesNetworks/{cloudServicesNetworkName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CloudServicesNetworks_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> CloudServicesNetworks_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudCloudServicesNetworkResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -168,11 +214,13 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         [ForwardsClientCalls]
         public virtual Response<NetworkCloudCloudServicesNetworkResource> GetNetworkCloudCloudServicesNetwork(string cloudServicesNetworkName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(cloudServicesNetworkName, nameof(cloudServicesNetworkName));
+
             return GetNetworkCloudCloudServicesNetworks().Get(cloudServicesNetworkName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of NetworkCloudClusterManagerResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of NetworkCloudClusterManagerResources and their operations over a NetworkCloudClusterManagerResource. </returns>
+        /// <summary> Gets a collection of NetworkCloudClusterManagers in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of NetworkCloudClusterManagers and their operations over a NetworkCloudClusterManagerResource. </returns>
         public virtual NetworkCloudClusterManagerCollection GetNetworkCloudClusterManagers()
         {
             return GetCachedClient(client => new NetworkCloudClusterManagerCollection(client, Id));
@@ -182,20 +230,16 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// Get the properties of the provided cluster manager.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusterManagers/{clusterManagerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusterManagers/{clusterManagerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ClusterManagers_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ClusterManagers_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudClusterManagerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -206,6 +250,8 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<NetworkCloudClusterManagerResource>> GetNetworkCloudClusterManagerAsync(string clusterManagerName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(clusterManagerName, nameof(clusterManagerName));
+
             return await GetNetworkCloudClusterManagers().GetAsync(clusterManagerName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -213,20 +259,16 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// Get the properties of the provided cluster manager.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusterManagers/{clusterManagerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusterManagers/{clusterManagerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ClusterManagers_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ClusterManagers_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudClusterManagerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -237,11 +279,13 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         [ForwardsClientCalls]
         public virtual Response<NetworkCloudClusterManagerResource> GetNetworkCloudClusterManager(string clusterManagerName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(clusterManagerName, nameof(clusterManagerName));
+
             return GetNetworkCloudClusterManagers().Get(clusterManagerName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of NetworkCloudClusterResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of NetworkCloudClusterResources and their operations over a NetworkCloudClusterResource. </returns>
+        /// <summary> Gets a collection of NetworkCloudClusters in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of NetworkCloudClusters and their operations over a NetworkCloudClusterResource. </returns>
         public virtual NetworkCloudClusterCollection GetNetworkCloudClusters()
         {
             return GetCachedClient(client => new NetworkCloudClusterCollection(client, Id));
@@ -251,20 +295,16 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// Get properties of the provided cluster.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Clusters_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Clusters_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudClusterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -275,6 +315,8 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<NetworkCloudClusterResource>> GetNetworkCloudClusterAsync(string clusterName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+
             return await GetNetworkCloudClusters().GetAsync(clusterName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -282,20 +324,16 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// Get properties of the provided cluster.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Clusters_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Clusters_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudClusterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -306,11 +344,13 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         [ForwardsClientCalls]
         public virtual Response<NetworkCloudClusterResource> GetNetworkCloudCluster(string clusterName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+
             return GetNetworkCloudClusters().Get(clusterName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of NetworkCloudKubernetesClusterResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of NetworkCloudKubernetesClusterResources and their operations over a NetworkCloudKubernetesClusterResource. </returns>
+        /// <summary> Gets a collection of NetworkCloudKubernetesClusters in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of NetworkCloudKubernetesClusters and their operations over a NetworkCloudKubernetesClusterResource. </returns>
         public virtual NetworkCloudKubernetesClusterCollection GetNetworkCloudKubernetesClusters()
         {
             return GetCachedClient(client => new NetworkCloudKubernetesClusterCollection(client, Id));
@@ -320,20 +360,16 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// Get properties of the provided the Kubernetes cluster.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/kubernetesClusters/{kubernetesClusterName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/kubernetesClusters/{kubernetesClusterName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>KubernetesClusters_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> KubernetesClusters_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudKubernetesClusterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -344,6 +380,8 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<NetworkCloudKubernetesClusterResource>> GetNetworkCloudKubernetesClusterAsync(string kubernetesClusterName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(kubernetesClusterName, nameof(kubernetesClusterName));
+
             return await GetNetworkCloudKubernetesClusters().GetAsync(kubernetesClusterName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -351,20 +389,16 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// Get properties of the provided the Kubernetes cluster.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/kubernetesClusters/{kubernetesClusterName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/kubernetesClusters/{kubernetesClusterName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>KubernetesClusters_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> KubernetesClusters_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudKubernetesClusterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -375,11 +409,78 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         [ForwardsClientCalls]
         public virtual Response<NetworkCloudKubernetesClusterResource> GetNetworkCloudKubernetesCluster(string kubernetesClusterName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(kubernetesClusterName, nameof(kubernetesClusterName));
+
             return GetNetworkCloudKubernetesClusters().Get(kubernetesClusterName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of NetworkCloudL2NetworkResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of NetworkCloudL2NetworkResources and their operations over a NetworkCloudL2NetworkResource. </returns>
+        /// <summary> Gets a collection of NetworkCloudKubernetesVersions in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of NetworkCloudKubernetesVersions and their operations over a NetworkCloudKubernetesVersionResource. </returns>
+        public virtual NetworkCloudKubernetesVersionCollection GetNetworkCloudKubernetesVersions()
+        {
+            return GetCachedClient(client => new NetworkCloudKubernetesVersionCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Retrieve the Kubernetes version resource that describes the available Kubernetes versions for deployment.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/kubernetesVersions/{kubernetesVersionName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> KubernetesVersions_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="kubernetesVersionName"> The name of the Kubernetes version resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="kubernetesVersionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="kubernetesVersionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<NetworkCloudKubernetesVersionResource>> GetNetworkCloudKubernetesVersionAsync(string kubernetesVersionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(kubernetesVersionName, nameof(kubernetesVersionName));
+
+            return await GetNetworkCloudKubernetesVersions().GetAsync(kubernetesVersionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Retrieve the Kubernetes version resource that describes the available Kubernetes versions for deployment.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/kubernetesVersions/{kubernetesVersionName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> KubernetesVersions_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="kubernetesVersionName"> The name of the Kubernetes version resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="kubernetesVersionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="kubernetesVersionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<NetworkCloudKubernetesVersionResource> GetNetworkCloudKubernetesVersion(string kubernetesVersionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(kubernetesVersionName, nameof(kubernetesVersionName));
+
+            return GetNetworkCloudKubernetesVersions().Get(kubernetesVersionName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of NetworkCloudL2Networks in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of NetworkCloudL2Networks and their operations over a NetworkCloudL2NetworkResource. </returns>
         public virtual NetworkCloudL2NetworkCollection GetNetworkCloudL2Networks()
         {
             return GetCachedClient(client => new NetworkCloudL2NetworkCollection(client, Id));
@@ -389,20 +490,16 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// Get properties of the provided layer 2 (L2) network.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/l2Networks/{l2NetworkName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/l2Networks/{l2NetworkName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>L2Networks_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> L2Networks_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudL2NetworkResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -413,6 +510,8 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<NetworkCloudL2NetworkResource>> GetNetworkCloudL2NetworkAsync(string l2NetworkName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(l2NetworkName, nameof(l2NetworkName));
+
             return await GetNetworkCloudL2Networks().GetAsync(l2NetworkName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -420,20 +519,16 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// Get properties of the provided layer 2 (L2) network.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/l2Networks/{l2NetworkName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/l2Networks/{l2NetworkName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>L2Networks_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> L2Networks_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudL2NetworkResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -444,11 +539,13 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         [ForwardsClientCalls]
         public virtual Response<NetworkCloudL2NetworkResource> GetNetworkCloudL2Network(string l2NetworkName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(l2NetworkName, nameof(l2NetworkName));
+
             return GetNetworkCloudL2Networks().Get(l2NetworkName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of NetworkCloudL3NetworkResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of NetworkCloudL3NetworkResources and their operations over a NetworkCloudL3NetworkResource. </returns>
+        /// <summary> Gets a collection of NetworkCloudL3Networks in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of NetworkCloudL3Networks and their operations over a NetworkCloudL3NetworkResource. </returns>
         public virtual NetworkCloudL3NetworkCollection GetNetworkCloudL3Networks()
         {
             return GetCachedClient(client => new NetworkCloudL3NetworkCollection(client, Id));
@@ -458,20 +555,16 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// Get properties of the provided layer 3 (L3) network.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/l3Networks/{l3NetworkName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/l3Networks/{l3NetworkName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>L3Networks_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> L3Networks_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudL3NetworkResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -482,6 +575,8 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<NetworkCloudL3NetworkResource>> GetNetworkCloudL3NetworkAsync(string l3NetworkName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(l3NetworkName, nameof(l3NetworkName));
+
             return await GetNetworkCloudL3Networks().GetAsync(l3NetworkName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -489,20 +584,16 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// Get properties of the provided layer 3 (L3) network.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/l3Networks/{l3NetworkName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/l3Networks/{l3NetworkName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>L3Networks_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> L3Networks_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudL3NetworkResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -513,11 +604,13 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         [ForwardsClientCalls]
         public virtual Response<NetworkCloudL3NetworkResource> GetNetworkCloudL3Network(string l3NetworkName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(l3NetworkName, nameof(l3NetworkName));
+
             return GetNetworkCloudL3Networks().Get(l3NetworkName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of NetworkCloudRackResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of NetworkCloudRackResources and their operations over a NetworkCloudRackResource. </returns>
+        /// <summary> Gets a collection of NetworkCloudRacks in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of NetworkCloudRacks and their operations over a NetworkCloudRackResource. </returns>
         public virtual NetworkCloudRackCollection GetNetworkCloudRacks()
         {
             return GetCachedClient(client => new NetworkCloudRackCollection(client, Id));
@@ -527,20 +620,16 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// Get properties of the provided rack.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/racks/{rackName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/racks/{rackName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Racks_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Racks_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudRackResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -551,6 +640,8 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<NetworkCloudRackResource>> GetNetworkCloudRackAsync(string rackName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(rackName, nameof(rackName));
+
             return await GetNetworkCloudRacks().GetAsync(rackName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -558,20 +649,16 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// Get properties of the provided rack.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/racks/{rackName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/racks/{rackName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Racks_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Racks_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudRackResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -582,11 +669,13 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         [ForwardsClientCalls]
         public virtual Response<NetworkCloudRackResource> GetNetworkCloudRack(string rackName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(rackName, nameof(rackName));
+
             return GetNetworkCloudRacks().Get(rackName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of NetworkCloudStorageApplianceResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of NetworkCloudStorageApplianceResources and their operations over a NetworkCloudStorageApplianceResource. </returns>
+        /// <summary> Gets a collection of NetworkCloudStorageAppliances in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of NetworkCloudStorageAppliances and their operations over a NetworkCloudStorageApplianceResource. </returns>
         public virtual NetworkCloudStorageApplianceCollection GetNetworkCloudStorageAppliances()
         {
             return GetCachedClient(client => new NetworkCloudStorageApplianceCollection(client, Id));
@@ -596,20 +685,16 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// Get properties of the provided storage appliance.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/storageAppliances/{storageApplianceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/storageAppliances/{storageApplianceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StorageAppliances_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> StorageAppliances_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudStorageApplianceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -620,6 +705,8 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<NetworkCloudStorageApplianceResource>> GetNetworkCloudStorageApplianceAsync(string storageApplianceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(storageApplianceName, nameof(storageApplianceName));
+
             return await GetNetworkCloudStorageAppliances().GetAsync(storageApplianceName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -627,20 +714,16 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// Get properties of the provided storage appliance.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/storageAppliances/{storageApplianceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/storageAppliances/{storageApplianceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StorageAppliances_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> StorageAppliances_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudStorageApplianceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -651,11 +734,13 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         [ForwardsClientCalls]
         public virtual Response<NetworkCloudStorageApplianceResource> GetNetworkCloudStorageAppliance(string storageApplianceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(storageApplianceName, nameof(storageApplianceName));
+
             return GetNetworkCloudStorageAppliances().Get(storageApplianceName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of NetworkCloudTrunkedNetworkResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of NetworkCloudTrunkedNetworkResources and their operations over a NetworkCloudTrunkedNetworkResource. </returns>
+        /// <summary> Gets a collection of NetworkCloudTrunkedNetworks in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of NetworkCloudTrunkedNetworks and their operations over a NetworkCloudTrunkedNetworkResource. </returns>
         public virtual NetworkCloudTrunkedNetworkCollection GetNetworkCloudTrunkedNetworks()
         {
             return GetCachedClient(client => new NetworkCloudTrunkedNetworkCollection(client, Id));
@@ -665,20 +750,16 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// Get properties of the provided trunked network.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/trunkedNetworks/{trunkedNetworkName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/trunkedNetworks/{trunkedNetworkName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TrunkedNetworks_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> TrunkedNetworks_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudTrunkedNetworkResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -689,6 +770,8 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<NetworkCloudTrunkedNetworkResource>> GetNetworkCloudTrunkedNetworkAsync(string trunkedNetworkName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(trunkedNetworkName, nameof(trunkedNetworkName));
+
             return await GetNetworkCloudTrunkedNetworks().GetAsync(trunkedNetworkName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -696,20 +779,16 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// Get properties of the provided trunked network.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/trunkedNetworks/{trunkedNetworkName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/trunkedNetworks/{trunkedNetworkName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TrunkedNetworks_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> TrunkedNetworks_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudTrunkedNetworkResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -720,11 +799,13 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         [ForwardsClientCalls]
         public virtual Response<NetworkCloudTrunkedNetworkResource> GetNetworkCloudTrunkedNetwork(string trunkedNetworkName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(trunkedNetworkName, nameof(trunkedNetworkName));
+
             return GetNetworkCloudTrunkedNetworks().Get(trunkedNetworkName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of NetworkCloudVirtualMachineResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of NetworkCloudVirtualMachineResources and their operations over a NetworkCloudVirtualMachineResource. </returns>
+        /// <summary> Gets a collection of NetworkCloudVirtualMachines in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of NetworkCloudVirtualMachines and their operations over a NetworkCloudVirtualMachineResource. </returns>
         public virtual NetworkCloudVirtualMachineCollection GetNetworkCloudVirtualMachines()
         {
             return GetCachedClient(client => new NetworkCloudVirtualMachineCollection(client, Id));
@@ -734,20 +815,16 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// Get properties of the provided virtual machine.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/virtualMachines/{virtualMachineName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/virtualMachines/{virtualMachineName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachines_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachines_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudVirtualMachineResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -758,6 +835,8 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<NetworkCloudVirtualMachineResource>> GetNetworkCloudVirtualMachineAsync(string virtualMachineName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(virtualMachineName, nameof(virtualMachineName));
+
             return await GetNetworkCloudVirtualMachines().GetAsync(virtualMachineName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -765,20 +844,16 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// Get properties of the provided virtual machine.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/virtualMachines/{virtualMachineName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/virtualMachines/{virtualMachineName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachines_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachines_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudVirtualMachineResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -789,11 +864,13 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         [ForwardsClientCalls]
         public virtual Response<NetworkCloudVirtualMachineResource> GetNetworkCloudVirtualMachine(string virtualMachineName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(virtualMachineName, nameof(virtualMachineName));
+
             return GetNetworkCloudVirtualMachines().Get(virtualMachineName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of NetworkCloudVolumeResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of NetworkCloudVolumeResources and their operations over a NetworkCloudVolumeResource. </returns>
+        /// <summary> Gets a collection of NetworkCloudVolumes in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of NetworkCloudVolumes and their operations over a NetworkCloudVolumeResource. </returns>
         public virtual NetworkCloudVolumeCollection GetNetworkCloudVolumes()
         {
             return GetCachedClient(client => new NetworkCloudVolumeCollection(client, Id));
@@ -803,20 +880,16 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// Get properties of the provided volume.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/volumes/{volumeName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/volumes/{volumeName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Volumes_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Volumes_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudVolumeResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -827,6 +900,8 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<NetworkCloudVolumeResource>> GetNetworkCloudVolumeAsync(string volumeName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
+
             return await GetNetworkCloudVolumes().GetAsync(volumeName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -834,20 +909,16 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// Get properties of the provided volume.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/volumes/{volumeName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/volumes/{volumeName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Volumes_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Volumes_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudVolumeResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -858,6 +929,8 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         [ForwardsClientCalls]
         public virtual Response<NetworkCloudVolumeResource> GetNetworkCloudVolume(string volumeName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
+
             return GetNetworkCloudVolumes().Get(volumeName, cancellationToken);
         }
     }

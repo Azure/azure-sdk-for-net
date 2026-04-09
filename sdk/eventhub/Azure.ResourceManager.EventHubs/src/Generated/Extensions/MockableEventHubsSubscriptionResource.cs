@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.EventHubs.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EventHubsClusterData, EventHubsClusterResource>(new ClustersGetBySubscriptionAsyncCollectionResultOfT(ClustersRestClient, Id.SubscriptionId, context), data => new EventHubsClusterResource(Client, data));
+            return new AsyncPageableWrapper<EventHubsClusterData, EventHubsClusterResource>(new ClustersGetBySubscriptionAsyncCollectionResultOfT(ClustersRestClient, Id.SubscriptionId, context, "MockableEventHubsSubscriptionResource.GetEventHubsClusters"), data => new EventHubsClusterResource(Client, data));
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.EventHubs.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EventHubsClusterData, EventHubsClusterResource>(new ClustersGetBySubscriptionCollectionResultOfT(ClustersRestClient, Id.SubscriptionId, context), data => new EventHubsClusterResource(Client, data));
+            return new PageableWrapper<EventHubsClusterData, EventHubsClusterResource>(new ClustersGetBySubscriptionCollectionResultOfT(ClustersRestClient, Id.SubscriptionId, context, "MockableEventHubsSubscriptionResource.GetEventHubsClusters"), data => new EventHubsClusterResource(Client, data));
         }
 
         /// <summary>
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.EventHubs.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EventHubsNamespaceData, EventHubsNamespaceResource>(new NamespacesGetAllAsyncCollectionResultOfT(NamespacesRestClient, Id.SubscriptionId, context), data => new EventHubsNamespaceResource(Client, data));
+            return new AsyncPageableWrapper<EventHubsNamespaceData, EventHubsNamespaceResource>(new NamespacesGetAllAsyncCollectionResultOfT(NamespacesRestClient, Id.SubscriptionId, context, "MockableEventHubsSubscriptionResource.GetEventHubsNamespaces"), data => new EventHubsNamespaceResource(Client, data));
         }
 
         /// <summary>
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.EventHubs.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EventHubsNamespaceData, EventHubsNamespaceResource>(new NamespacesGetAllCollectionResultOfT(NamespacesRestClient, Id.SubscriptionId, context), data => new EventHubsNamespaceResource(Client, data));
+            return new PageableWrapper<EventHubsNamespaceData, EventHubsNamespaceResource>(new NamespacesGetAllCollectionResultOfT(NamespacesRestClient, Id.SubscriptionId, context, "MockableEventHubsSubscriptionResource.GetEventHubsNamespaces"), data => new EventHubsNamespaceResource(Client, data));
         }
 
         /// <summary>
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.EventHubs.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ClustersGetAvailableClusterRegionClustersAsyncCollectionResultOfT(ClustersRestClient, Id.SubscriptionId, context);
+            return new ClustersGetAvailableClusterRegionClustersAsyncCollectionResultOfT(ClustersRestClient, Id.SubscriptionId, context, "MockableEventHubsSubscriptionResource.GetAvailableClusterRegionClusters");
         }
 
         /// <summary>
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.EventHubs.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ClustersGetAvailableClusterRegionClustersCollectionResultOfT(ClustersRestClient, Id.SubscriptionId, context);
+            return new ClustersGetAvailableClusterRegionClustersCollectionResultOfT(ClustersRestClient, Id.SubscriptionId, context, "MockableEventHubsSubscriptionResource.GetAvailableClusterRegionClusters");
         }
 
         /// <summary>

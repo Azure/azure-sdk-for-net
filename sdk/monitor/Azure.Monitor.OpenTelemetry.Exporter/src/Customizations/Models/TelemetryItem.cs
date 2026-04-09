@@ -137,7 +137,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         }
 
         public TelemetryItem (string name, LogRecord logRecord, AzureMonitorResource? resource, string instrumentationKey, LogContextInfo logContext) :
-            this(name, FormatUtcTimestamp(logRecord.Timestamp))
+            this(name, FormatUtcTimestamp(logRecord.Timestamp), logRecord, resource, instrumentationKey, logContext)
+        {
+        }
+
+        public TelemetryItem(string name, DateTimeOffset envelopeTime, LogRecord logRecord, AzureMonitorResource? resource, string instrumentationKey, LogContextInfo logContext) :
+            this(name, envelopeTime)
         {
             if (logRecord.TraceId != default)
             {

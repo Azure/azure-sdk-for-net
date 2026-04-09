@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     /// <summary> KubernetesClusterPatchParameters represents the body of the request to patch the Hybrid AKS cluster. </summary>
     public partial class NetworkCloudKubernetesClusterPatch
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudKubernetesClusterPatch"/>. </summary>
         public NetworkCloudKubernetesClusterPatch()
@@ -52,38 +24,67 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudKubernetesClusterPatch"/>. </summary>
-        /// <param name="tags"> The Azure resource tags that will replace the existing ones. </param>
-        /// <param name="administratorConfiguration"> The configuration of the default administrator credentials. </param>
-        /// <param name="controlPlaneNodeConfiguration"> The defining characteristics of the control plane that can be patched for this Kubernetes cluster. </param>
-        /// <param name="kubernetesVersion"> The Kubernetes version for this cluster. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkCloudKubernetesClusterPatch(IDictionary<string, string> tags, AdministratorConfigurationPatch administratorConfiguration, ControlPlaneNodePatchConfiguration controlPlaneNodeConfiguration, string kubernetesVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> The list of the resource properties. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkCloudKubernetesClusterPatch(KubernetesClusterPatchProperties properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            Properties = properties;
             Tags = tags;
-            AdministratorConfiguration = administratorConfiguration;
-            ControlPlaneNodeConfiguration = controlPlaneNodeConfiguration;
-            KubernetesVersion = kubernetesVersion;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The Azure resource tags that will replace the existing ones. </summary>
+        /// <summary> The list of the resource properties. </summary>
+        internal KubernetesClusterPatchProperties Properties { get; set; }
+
+        /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary> The configuration of the default administrator credentials. </summary>
-        internal AdministratorConfigurationPatch AdministratorConfiguration { get; set; }
+
+        /// <summary> The defining characteristics of the control plane that can be patched for this Kubernetes cluster. </summary>
+        public ControlPlaneNodePatchConfiguration ControlPlaneNodeConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ControlPlaneNodeConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new KubernetesClusterPatchProperties();
+                }
+                Properties.ControlPlaneNodeConfiguration = value;
+            }
+        }
+
+        /// <summary> The Kubernetes version for this cluster. </summary>
+        public string KubernetesVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.KubernetesVersion;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new KubernetesClusterPatchProperties();
+                }
+                Properties.KubernetesVersion = value;
+            }
+        }
+
         /// <summary> SshPublicKey represents the public key used to authenticate with a resource through SSH. </summary>
         public IList<NetworkCloudSshPublicKey> AdministratorSshPublicKeys
         {
             get
             {
-                if (AdministratorConfiguration is null)
-                    AdministratorConfiguration = new AdministratorConfigurationPatch();
-                return AdministratorConfiguration.SshPublicKeys;
+                if (Properties is null)
+                {
+                    Properties = new KubernetesClusterPatchProperties();
+                }
+                return Properties.AdministratorSshPublicKeys;
             }
         }
-
-        /// <summary> The defining characteristics of the control plane that can be patched for this Kubernetes cluster. </summary>
-        public ControlPlaneNodePatchConfiguration ControlPlaneNodeConfiguration { get; set; }
-        /// <summary> The Kubernetes version for this cluster. </summary>
-        public string KubernetesVersion { get; set; }
     }
 }

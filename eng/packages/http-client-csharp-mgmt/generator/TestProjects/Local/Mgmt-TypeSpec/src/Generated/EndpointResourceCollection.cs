@@ -275,7 +275,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EndpointResourceData, EndpointResource>(new EndpointResourcesGetAllAsyncCollectionResultOfT(_endpointResourcesRestClient, Id, context), data => new EndpointResource(Client, data));
+            return new AsyncPageableWrapper<EndpointResourceData, EndpointResource>(new EndpointResourcesGetAllAsyncCollectionResultOfT(_endpointResourcesRestClient, Id, context, "EndpointResourceCollection.GetAll"), data => new EndpointResource(Client, data));
         }
 
         /// <summary>
@@ -303,7 +303,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EndpointResourceData, EndpointResource>(new EndpointResourcesGetAllCollectionResultOfT(_endpointResourcesRestClient, Id, context), data => new EndpointResource(Client, data));
+            return new PageableWrapper<EndpointResourceData, EndpointResource>(new EndpointResourcesGetAllCollectionResultOfT(_endpointResourcesRestClient, Id, context, "EndpointResourceCollection.GetAll"), data => new EndpointResource(Client, data));
         }
 
         /// <summary>

@@ -21,6 +21,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         private const string UserValue = "User";
         /// <summary> Gateway agent pools are dedicated to providing static egress IPs to pods. For more details, see https://aka.ms/aks/static-egress-gateway. </summary>
         private const string GatewayValue = "Gateway";
+        /// <summary> ManagedSystem is a system pool managed by AKS. The pool scales dynamically according to cluster usage, and has additional automated monitoring and healing capabilities. There can only be one ManagedSystem pool, and it is recommended to delete all other system pools for the best experience. </summary>
+        private const string ManagedSystemValue = "ManagedSystem";
+        /// <summary> Machines agent pools are dedicated to hosting machines. Only limited operations, such as creation and deletion, are allowed at the pool level. Please use the machine APIs to manage the full machine lifecycle. </summary>
+        private const string MachinesValue = "Machines";
 
         /// <summary> Initializes a new instance of <see cref="AgentPoolMode"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -40,6 +44,12 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Gateway agent pools are dedicated to providing static egress IPs to pods. For more details, see https://aka.ms/aks/static-egress-gateway. </summary>
         public static AgentPoolMode Gateway { get; } = new AgentPoolMode(GatewayValue);
+
+        /// <summary> ManagedSystem is a system pool managed by AKS. The pool scales dynamically according to cluster usage, and has additional automated monitoring and healing capabilities. There can only be one ManagedSystem pool, and it is recommended to delete all other system pools for the best experience. </summary>
+        public static AgentPoolMode ManagedSystem { get; } = new AgentPoolMode(ManagedSystemValue);
+
+        /// <summary> Machines agent pools are dedicated to hosting machines. Only limited operations, such as creation and deletion, are allowed at the pool level. Please use the machine APIs to manage the full machine lifecycle. </summary>
+        public static AgentPoolMode Machines { get; } = new AgentPoolMode(MachinesValue);
 
         /// <summary> Determines if two <see cref="AgentPoolMode"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

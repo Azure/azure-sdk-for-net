@@ -73,7 +73,7 @@ public class Sample_ImageGeneration : ProjectsOpenAITestBase
                 )
             }
         };
-        ProjectsAgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName: "myAgent",
             options: new(agentDefinition));
         #endregion
@@ -96,7 +96,7 @@ public class Sample_ImageGeneration : ProjectsOpenAITestBase
         }
         #endregion
         #region Snippet:Sample_Cleanup_ImageGeneration_Async
-        await projectClient.Agents.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         #endregion
     }
 
@@ -134,7 +134,7 @@ public class Sample_ImageGeneration : ProjectsOpenAITestBase
                 )
             }
         };
-        ProjectsAgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
+        ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(
             agentName: "myAgent",
             options: new(agentDefinition));
         #endregion
@@ -155,7 +155,7 @@ public class Sample_ImageGeneration : ProjectsOpenAITestBase
             }
         }
         #region Snippet:Sample_Cleanup_ImageGeneration_Sync
-        projectClient.Agents.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         #endregion
     }
 

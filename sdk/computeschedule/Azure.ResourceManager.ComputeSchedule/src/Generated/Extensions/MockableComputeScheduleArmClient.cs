@@ -38,11 +38,11 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
 
         private ClientDiagnostics ScheduledActionExtensionClientDiagnostics => _scheduledActionExtensionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ComputeSchedule.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ScheduledActionExtension ScheduledActionExtensionRestClient => _scheduledActionExtensionRestClient ??= new ScheduledActionExtension(ScheduledActionExtensionClientDiagnostics, Pipeline, Endpoint, "2026-01-01-preview");
+        private ScheduledActionExtension ScheduledActionExtensionRestClient => _scheduledActionExtensionRestClient ??= new ScheduledActionExtension(ScheduledActionExtensionClientDiagnostics, Pipeline, Endpoint, "2026-03-01-preview");
 
         private ClientDiagnostics OccurrenceExtensionClientDiagnostics => _occurrenceExtensionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ComputeSchedule.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private OccurrenceExtension OccurrenceExtensionRestClient => _occurrenceExtensionRestClient ??= new OccurrenceExtension(OccurrenceExtensionClientDiagnostics, Pipeline, Endpoint, "2026-01-01-preview");
+        private OccurrenceExtension OccurrenceExtensionRestClient => _occurrenceExtensionRestClient ??= new OccurrenceExtension(OccurrenceExtensionClientDiagnostics, Pipeline, Endpoint, "2026-03-01-preview");
 
         /// <summary> Gets an object representing a <see cref="ScheduledActionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ScheduledActionExtensionGetAssociatedScheduledActionsAsyncCollectionResultOfT(ScheduledActionExtensionRestClient, scope.ToString(), context);
+            return new ScheduledActionExtensionGetAssociatedScheduledActionsAsyncCollectionResultOfT(ScheduledActionExtensionRestClient, scope.ToString(), context, "MockableComputeScheduleArmClient.GetAssociatedScheduledActions");
         }
 
         /// <summary>
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ScheduledActionExtensionGetAssociatedScheduledActionsCollectionResultOfT(ScheduledActionExtensionRestClient, scope.ToString(), context);
+            return new ScheduledActionExtensionGetAssociatedScheduledActionsCollectionResultOfT(ScheduledActionExtensionRestClient, scope.ToString(), context, "MockableComputeScheduleArmClient.GetAssociatedScheduledActions");
         }
 
         /// <summary>
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new OccurrenceExtensionGetAssociatedOccurrencesAsyncCollectionResultOfT(OccurrenceExtensionRestClient, scope.ToString(), context);
+            return new OccurrenceExtensionGetAssociatedOccurrencesAsyncCollectionResultOfT(OccurrenceExtensionRestClient, scope.ToString(), context, "MockableComputeScheduleArmClient.GetAssociatedOccurrences");
         }
 
         /// <summary>
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new OccurrenceExtensionGetAssociatedOccurrencesCollectionResultOfT(OccurrenceExtensionRestClient, scope.ToString(), context);
+            return new OccurrenceExtensionGetAssociatedOccurrencesCollectionResultOfT(OccurrenceExtensionRestClient, scope.ToString(), context, "MockableComputeScheduleArmClient.GetAssociatedOccurrences");
         }
     }
 }

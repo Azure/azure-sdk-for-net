@@ -7,73 +7,84 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     /// <summary> CloudServicesNetworkPatchParameters represents the body of the request to patch the cloud services network. </summary>
     public partial class NetworkCloudCloudServicesNetworkPatch
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudCloudServicesNetworkPatch"/>. </summary>
         public NetworkCloudCloudServicesNetworkPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
-            AdditionalEgressEndpoints = new ChangeTrackingList<EgressEndpoint>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudCloudServicesNetworkPatch"/>. </summary>
-        /// <param name="tags"> The Azure resource tags that will replace the existing ones. </param>
-        /// <param name="additionalEgressEndpoints"> The list of egress endpoints. This allows for connection from a Hybrid AKS cluster to the specified endpoint. </param>
-        /// <param name="enableDefaultEgressEndpoints"> The indicator of whether the platform default endpoints are allowed for the egress traffic. </param>
-        /// <param name="storageOptions"> The storage options for the cloud services network. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkCloudCloudServicesNetworkPatch(IDictionary<string, string> tags, IList<EgressEndpoint> additionalEgressEndpoints, CloudServicesNetworkEnableDefaultEgressEndpoint? enableDefaultEgressEndpoints, CloudServicesNetworkStorageOptionsPatch storageOptions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> The list of the resource properties. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkCloudCloudServicesNetworkPatch(CloudServicesNetworkPatchProperties properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            Properties = properties;
             Tags = tags;
-            AdditionalEgressEndpoints = additionalEgressEndpoints;
-            EnableDefaultEgressEndpoints = enableDefaultEgressEndpoints;
-            StorageOptions = storageOptions;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The Azure resource tags that will replace the existing ones. </summary>
+        /// <summary> The list of the resource properties. </summary>
+        internal CloudServicesNetworkPatchProperties Properties { get; set; }
+
+        /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
+
         /// <summary> The list of egress endpoints. This allows for connection from a Hybrid AKS cluster to the specified endpoint. </summary>
-        public IList<EgressEndpoint> AdditionalEgressEndpoints { get; }
+        public IList<EgressEndpoint> AdditionalEgressEndpoints
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new CloudServicesNetworkPatchProperties();
+                }
+                return Properties.AdditionalEgressEndpoints;
+            }
+        }
+
         /// <summary> The indicator of whether the platform default endpoints are allowed for the egress traffic. </summary>
-        public CloudServicesNetworkEnableDefaultEgressEndpoint? EnableDefaultEgressEndpoints { get; set; }
+        public CloudServicesNetworkEnableDefaultEgressEndpoint? EnableDefaultEgressEndpoints
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnableDefaultEgressEndpoints;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CloudServicesNetworkPatchProperties();
+                }
+                Properties.EnableDefaultEgressEndpoints = value.Value;
+            }
+        }
+
         /// <summary> The storage options for the cloud services network. </summary>
-        public CloudServicesNetworkStorageOptionsPatch StorageOptions { get; set; }
+        public CloudServicesNetworkStorageOptionsPatch StorageOptions
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StorageOptions;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CloudServicesNetworkPatchProperties();
+                }
+                Properties.StorageOptions = value;
+            }
+        }
     }
 }

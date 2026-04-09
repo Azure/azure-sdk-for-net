@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EdgeTargetData, EdgeTargetResource>(new TargetsGetByResourceGroupAsyncCollectionResultOfT(_targetsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new EdgeTargetResource(Client, data));
+            return new AsyncPageableWrapper<EdgeTargetData, EdgeTargetResource>(new TargetsGetByResourceGroupAsyncCollectionResultOfT(_targetsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "EdgeTargetCollection.GetAll"), data => new EdgeTargetResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EdgeTargetData, EdgeTargetResource>(new TargetsGetByResourceGroupCollectionResultOfT(_targetsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new EdgeTargetResource(Client, data));
+            return new PageableWrapper<EdgeTargetData, EdgeTargetResource>(new TargetsGetByResourceGroupCollectionResultOfT(_targetsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "EdgeTargetCollection.GetAll"), data => new EdgeTargetResource(Client, data));
         }
 
         /// <summary>
