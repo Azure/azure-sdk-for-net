@@ -1,6 +1,16 @@
 ---
 description: 'Generate SDKs from TypeSpec'
+related_skills:
+  - "azsdk-common-generate-sdk-locally"
+  - "azsdk-common-prepare-release-plan"
+  - "azsdk-common-sdk-release"
 ---
+
+> **Related Skills:** This orchestration workflow references multiple shared skills:
+> - `.github/skills/azsdk-common-generate-sdk-locally/SKILL.md` — SDK generation, build, and test
+> - `.github/skills/azsdk-common-prepare-release-plan/SKILL.md` — Release plan creation and management
+> - `.github/skills/azsdk-common-sdk-release/SKILL.md` — Release readiness checks and publishing
+
 Your goal is to guide the user through the process of generating SDKs from TypeSpec projects. **Before starting**, show all the high level steps to the user and ask: 
 
 > "Would you like to begin the SDK generation process now? (yes/no)"

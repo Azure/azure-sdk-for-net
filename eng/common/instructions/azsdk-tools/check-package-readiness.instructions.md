@@ -1,6 +1,10 @@
 ---
 description: 'This prompt is designed to check the release readiness of a SDK package.'
+related_skill: "azsdk-common-sdk-release"
 ---
+
+> **Related Skill:** See `.github/skills/azsdk-common-sdk-release/SKILL.md` for the full release workflow including readiness checks and pipeline triggering.
+
 ## Goal
 Check the release readiness of an SDK package by collecting the required information from the user and executing the readiness check.
 

@@ -1,6 +1,10 @@
 ---
 description: 'Verify SDK namespace approval for management plane'
+related_skill: "azsdk-common-prepare-release-plan"
 ---
+
+> **Related Skill:** See `.github/skills/azsdk-common-prepare-release-plan/SKILL.md` — namespace approval is Step 6 of the release plan workflow (management plane only).
+
 This task is required only for management plane API spec and only if a release plan exists for the API spec pull request.
 
 ## Step 1: Check if release plan exists and it is for management plane SDK
