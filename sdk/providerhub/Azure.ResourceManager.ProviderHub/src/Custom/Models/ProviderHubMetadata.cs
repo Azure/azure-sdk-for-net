@@ -4,12 +4,12 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
+    // Backward-compat: re-exposes ProviderAuthenticationAllowedAudiences as a top-level settable property.
+    // This shim must initialize the nested generated model on demand, which cannot be expressed with a spec-side rename.
     /// <summary> The ProviderHubMetadata. </summary>
-    [CodeGenSuppress("ProviderAuthenticationAllowedAudiences")]
     public partial class ProviderHubMetadata
     {
         /// <summary> Gets or sets the provider authentication allowed audiences. </summary>

@@ -4,13 +4,12 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
+    // Backward-compat: re-exposes convenience properties that are now nested under generated wrapper models.
+    // These setters need custom initialization of RequestHeaderOptions, ProviderAuthentication, and FeaturesRule.
     /// <summary> The ResourceProviderManifestProperties. </summary>
-    [CodeGenSuppress("ProviderAuthenticationAllowedAudiences")]
-    [CodeGenSuppress("RequiredFeaturesPolicy")]
     public partial class ResourceProviderManifestProperties
     {
         /// <summary> Gets or sets the opt in headers. </summary>

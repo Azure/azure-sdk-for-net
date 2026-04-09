@@ -8,6 +8,9 @@ using Azure.ResourceManager.ProviderHub.Models;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
+    // Backward-compat: restores model factory overloads whose baseline signatures no longer match
+    // the generated constructors after migration. These overloads require custom object wiring, so
+    // they cannot be recovered with TypeSpec decorators alone.
     public static partial class ArmProviderHubModelFactory
     {
         /// <summary> Backward-compat factory method for ProviderRegistrationProperties (34 params). </summary>

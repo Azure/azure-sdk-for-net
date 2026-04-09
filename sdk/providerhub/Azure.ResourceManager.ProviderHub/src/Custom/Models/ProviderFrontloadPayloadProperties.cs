@@ -7,6 +7,8 @@ using System.Linq;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
+    // Backward-compat: restores the legacy public constructor overload that includes ManifestLevelPropertyBag.
+    // The generated constructor shape changed during migration, so this ApiCompat signature must stay in custom code.
     public partial class ProviderFrontloadPayloadProperties
     {
         /// <summary> Backward-compat constructor with ManifestLevelPropertyBag parameter. </summary>

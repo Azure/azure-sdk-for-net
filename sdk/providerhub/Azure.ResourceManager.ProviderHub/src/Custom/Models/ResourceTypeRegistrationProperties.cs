@@ -3,12 +3,11 @@
 
 #nullable disable
 
-using Microsoft.TypeSpec.Generator.Customizations;
-
 namespace Azure.ResourceManager.ProviderHub.Models
 {
+    // Backward-compat: re-exposes baseline properties that the generated model no longer publishes with the old shape.
+    // These are ApiCompat-only shims, so they stay in custom code instead of changing the TypeSpec contract.
     /// <summary> The ResourceTypeRegistrationProperties. </summary>
-    [CodeGenSuppress("ProvisioningState")]
     public partial class ResourceTypeRegistrationProperties
     {
         /// <summary> Gets or sets the provisioning state. </summary>
