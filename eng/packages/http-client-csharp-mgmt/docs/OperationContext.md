@@ -159,12 +159,51 @@ The `OperationContext` handles this by building two sets of contextual parameter
 
 ### Extension Resources
 
-Extension resources have a flexible scope (can extend any resource). Their contextual path starts with a single variable segment:
+Extension resources have a flexible scope — they can extend any resource. Their contextual path begins with a single variable segment representing the parent scope:
+
 ```
 /{resourceUri}/providers/Microsoft.Example/extensions/{extensionName}
 ```
 
-The system handles these specially, treating `resourceUri` as a contextual parameter derived from the parent resource's Id.
+The system detects this pattern when the first segment is a lone variable (not a constant key), and treats `resourceUri` as a contextual parameter derived from the parent resource's Id.
+
+#### Scope-Based Extension Resources
+
+Some extension resources are scoped under a specific parent resource instead of using a generic `{resourceUri}`. For example, a **Chaos Target** might live under a virtual machine:
+
+```
+/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.Chaos/targets/{targetName}
+```
+
+In such cases the parent path between the two `/providers/` markers contains **variable-key / variable-value pairs** — segments where *both* the type and the name are parameterized at the same positional level. The `BuildContextualParameterHierarchy` method handles these pairs with special attention to the LIFO (last-in-first-out) nature of the stack used to accumulate contextual parameters.
+
+**LIFO stack ordering:** Because a `Stack<ContextualParameter>` is used, parameters must be **pushed in reverse positional order** so they come out in the correct order when popped. For a variable-key/variable-value pair the value segment maps to `Id.Name` and the key segment maps to `Id.ResourceType.Type`:
+
+```
+Push order (into stack):
+  1. value → Id.Name              (pushed first, popped second)
+  2. key   → Id.ResourceType.Type (pushed second, popped first)
+
+Pop order (positional order in operation path):
+  1. key   → Id.ResourceType.Type
+  2. value → Id.Name
+```
+
+This ensures the generated REST call passes arguments in the correct positional order. For example, for a Chaos Target scoped under a virtual machine:
+
+```csharp
+// Correct argument order:
+_restClient.Get(
+    Id.SubscriptionId,          // subscriptionId
+    Id.ResourceGroupName,       // resourceGroupName
+    Id.Parent.ResourceType.Type,// parentResourceType  (e.g., "virtualMachines")
+    Id.Parent.Name,             // parentResourceName   (e.g., "myVm")
+    Id.Name,                    // targetName
+    context
+);
+```
+
+If the push order were reversed, `Id.Name` and `Id.ResourceType.Type` would be swapped, producing incorrect REST call arguments.
 
 ### Singleton Resources
 
