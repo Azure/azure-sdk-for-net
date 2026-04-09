@@ -323,6 +323,143 @@ public class ResponseEventStream
         return new OutputItemBuilder<T>(this, outputIndex, itemId);
     }
 
+    // ── Output-Item Convenience Generators (S-056/S-057/S-058) ──
+
+    /// <summary>
+    /// Convenience generator that yields the complete message output-item lifecycle
+    /// with a single text content part from a complete string (S-056).
+    /// </summary>
+    /// <param name="text">The complete message text.</param>
+    /// <returns>An enumerable of events: <c>output_item.added</c> → text content convenience → <c>output_item.done</c>.</returns>
+    public IEnumerable<ResponseStreamEvent> OutputItemMessage(string text)
+    {
+        var builder = AddOutputItemMessage();
+        yield return builder.EmitAdded();
+        foreach (var evt in builder.TextContent(text))
+        {
+            yield return evt;
+        }
+        yield return builder.EmitDone();
+    }
+
+    /// <summary>
+    /// Convenience generator that yields the complete message output-item lifecycle
+    /// with a single text content part from streaming chunks (S-056, S-058).
+    /// </summary>
+    /// <param name="chunks">An async enumerable of text chunks.</param>
+    /// <param name="cancellationToken">A token to cancel iteration.</param>
+    /// <returns>An async enumerable of events: <c>output_item.added</c> → text content convenience → <c>output_item.done</c>.</returns>
+    public async IAsyncEnumerable<ResponseStreamEvent> OutputItemMessage(
+        IAsyncEnumerable<string> chunks,
+        [System.Runtime.CompilerServices.EnumeratorCancellation] CancellationToken cancellationToken = default)
+    {
+        var builder = AddOutputItemMessage();
+        yield return builder.EmitAdded();
+        await foreach (var evt in builder.TextContent(chunks, cancellationToken).ConfigureAwait(false))
+        {
+            yield return evt;
+        }
+        yield return builder.EmitDone();
+    }
+
+    /// <summary>
+    /// Convenience generator that yields the complete function call output-item lifecycle
+    /// with arguments from a complete string (S-056).
+    /// </summary>
+    /// <param name="name">The function name.</param>
+    /// <param name="callId">The call ID.</param>
+    /// <param name="arguments">The complete arguments JSON string.</param>
+    /// <returns>An enumerable of events: <c>output_item.added</c> → arguments convenience → <c>output_item.done</c>.</returns>
+    public IEnumerable<ResponseStreamEvent> OutputItemFunctionCall(string name, string callId, string arguments)
+    {
+        var builder = AddOutputItemFunctionCall(name, callId);
+        yield return builder.EmitAdded();
+        foreach (var evt in builder.Arguments(arguments))
+        {
+            yield return evt;
+        }
+        yield return builder.EmitDone();
+    }
+
+    /// <summary>
+    /// Convenience generator that yields the complete function call output-item lifecycle
+    /// with arguments from streaming chunks (S-056, S-058).
+    /// </summary>
+    /// <param name="name">The function name.</param>
+    /// <param name="callId">The call ID.</param>
+    /// <param name="chunks">An async enumerable of argument chunks.</param>
+    /// <param name="cancellationToken">A token to cancel iteration.</param>
+    /// <returns>An async enumerable of events: <c>output_item.added</c> → arguments convenience → <c>output_item.done</c>.</returns>
+    public async IAsyncEnumerable<ResponseStreamEvent> OutputItemFunctionCall(
+        string name,
+        string callId,
+        IAsyncEnumerable<string> chunks,
+        [System.Runtime.CompilerServices.EnumeratorCancellation] CancellationToken cancellationToken = default)
+    {
+        var builder = AddOutputItemFunctionCall(name, callId);
+        yield return builder.EmitAdded();
+        await foreach (var evt in builder.Arguments(chunks, cancellationToken).ConfigureAwait(false))
+        {
+            yield return evt;
+        }
+        yield return builder.EmitDone();
+    }
+
+    /// <summary>
+    /// Convenience generator that yields the complete function call output item lifecycle
+    /// (S-056). Function call outputs have no deltas — only <c>output_item.added</c> and
+    /// <c>output_item.done</c>.
+    /// </summary>
+    /// <param name="callId">The call ID of the function call this output is for.</param>
+    /// <param name="output">The output data from the function call.</param>
+    /// <returns>An enumerable of events: <c>output_item.added</c> → <c>output_item.done</c>.</returns>
+    public IEnumerable<ResponseStreamEvent> OutputItemFunctionCallOutput(string callId, BinaryData output)
+    {
+        var itemId = IdGenerator.NewFunctionCallOutputItemId(_context.ResponseId);
+        var builder = AddOutputItem<FunctionToolCallOutputResource>(itemId);
+        var item = new FunctionToolCallOutputResource(callId, output);
+        item.Id = itemId;
+        yield return builder.EmitAdded(item);
+        yield return builder.EmitDone(item);
+    }
+
+    /// <summary>
+    /// Convenience generator that yields the complete reasoning output-item lifecycle
+    /// with a single summary part from a complete string (S-056).
+    /// </summary>
+    /// <param name="summaryText">The complete summary text.</param>
+    /// <returns>An enumerable of events: <c>output_item.added</c> → summary part convenience → <c>output_item.done</c>.</returns>
+    public IEnumerable<ResponseStreamEvent> OutputItemReasoningItem(string summaryText)
+    {
+        var builder = AddOutputItemReasoningItem();
+        yield return builder.EmitAdded();
+        foreach (var evt in builder.SummaryPart(summaryText))
+        {
+            yield return evt;
+        }
+        yield return builder.EmitDone();
+    }
+
+    /// <summary>
+    /// Convenience generator that yields the complete reasoning output-item lifecycle
+    /// with a single summary part from streaming chunks (S-056, S-058).
+    /// </summary>
+    /// <param name="chunks">An async enumerable of summary text chunks.</param>
+    /// <param name="cancellationToken">A token to cancel iteration.</param>
+    /// <returns>An async enumerable of events: <c>output_item.added</c> → summary part convenience → <c>output_item.done</c>.</returns>
+    public async IAsyncEnumerable<ResponseStreamEvent> OutputItemReasoningItem(
+        IAsyncEnumerable<string> chunks,
+        [System.Runtime.CompilerServices.EnumeratorCancellation] CancellationToken cancellationToken = default)
+    {
+        var builder = AddOutputItemReasoningItem();
+        yield return builder.EmitAdded();
+        await foreach (var evt in builder.SummaryPart(chunks, cancellationToken).ConfigureAwait(false))
+        {
+            yield return evt;
+        }
+        yield return builder.EmitDone();
+    }
+
     // ── Raw Event Interop ─────────────────────────────────────
 
     /// <summary>

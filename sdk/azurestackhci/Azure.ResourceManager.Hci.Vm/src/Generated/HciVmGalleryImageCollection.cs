@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Hci.Vm
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HciVmGalleryImageData, HciVmGalleryImageResource>(new GalleryImagesGetByResourceGroupAsyncCollectionResultOfT(_galleryImagesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new HciVmGalleryImageResource(Client, data));
+            return new AsyncPageableWrapper<HciVmGalleryImageData, HciVmGalleryImageResource>(new GalleryImagesGetByResourceGroupAsyncCollectionResultOfT(_galleryImagesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HciVmGalleryImageCollection.GetAll"), data => new HciVmGalleryImageResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Hci.Vm
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HciVmGalleryImageData, HciVmGalleryImageResource>(new GalleryImagesGetByResourceGroupCollectionResultOfT(_galleryImagesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new HciVmGalleryImageResource(Client, data));
+            return new PageableWrapper<HciVmGalleryImageData, HciVmGalleryImageResource>(new GalleryImagesGetByResourceGroupCollectionResultOfT(_galleryImagesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HciVmGalleryImageCollection.GetAll"), data => new HciVmGalleryImageResource(Client, data));
         }
 
         /// <summary>

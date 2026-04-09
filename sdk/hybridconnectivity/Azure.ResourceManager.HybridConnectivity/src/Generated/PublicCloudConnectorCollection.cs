@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.HybridConnectivity
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PublicCloudConnectorData, PublicCloudConnectorResource>(new PublicCloudConnectorsGetByResourceGroupAsyncCollectionResultOfT(_publicCloudConnectorsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new PublicCloudConnectorResource(Client, data));
+            return new AsyncPageableWrapper<PublicCloudConnectorData, PublicCloudConnectorResource>(new PublicCloudConnectorsGetByResourceGroupAsyncCollectionResultOfT(_publicCloudConnectorsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "PublicCloudConnectorCollection.GetAll"), data => new PublicCloudConnectorResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.HybridConnectivity
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PublicCloudConnectorData, PublicCloudConnectorResource>(new PublicCloudConnectorsGetByResourceGroupCollectionResultOfT(_publicCloudConnectorsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new PublicCloudConnectorResource(Client, data));
+            return new PageableWrapper<PublicCloudConnectorData, PublicCloudConnectorResource>(new PublicCloudConnectorsGetByResourceGroupCollectionResultOfT(_publicCloudConnectorsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "PublicCloudConnectorCollection.GetAll"), data => new PublicCloudConnectorResource(Client, data));
         }
 
         /// <summary>

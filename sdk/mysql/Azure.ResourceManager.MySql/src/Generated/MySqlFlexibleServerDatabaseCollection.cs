@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MySqlFlexibleServerDatabaseData, MySqlFlexibleServerDatabaseResource>(new DatabasesGetByServerAsyncCollectionResultOfT(_databasesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new MySqlFlexibleServerDatabaseResource(Client, data));
+            return new AsyncPageableWrapper<MySqlFlexibleServerDatabaseData, MySqlFlexibleServerDatabaseResource>(new DatabasesGetByServerAsyncCollectionResultOfT(
+                _databasesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "MySqlFlexibleServerDatabaseCollection.GetAll"), data => new MySqlFlexibleServerDatabaseResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MySqlFlexibleServerDatabaseData, MySqlFlexibleServerDatabaseResource>(new DatabasesGetByServerCollectionResultOfT(_databasesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new MySqlFlexibleServerDatabaseResource(Client, data));
+            return new PageableWrapper<MySqlFlexibleServerDatabaseData, MySqlFlexibleServerDatabaseResource>(new DatabasesGetByServerCollectionResultOfT(
+                _databasesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "MySqlFlexibleServerDatabaseCollection.GetAll"), data => new MySqlFlexibleServerDatabaseResource(Client, data));
         }
 
         /// <summary>

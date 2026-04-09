@@ -61,6 +61,13 @@ internal sealed class ResponseExecution : IDisposable
     public Task? ExecutionTask { get; set; }
 
     /// <summary>
+    /// Tracks the highest sequence number emitted by <see cref="ResponseOrchestrator.ProcessEventsAsync"/>
+    /// so that SDK-synthesized terminal events (error recovery, cancellation) can continue
+    /// the monotonic sequence (B9) instead of hardcoding 0.
+    /// </summary>
+    public long LastEmittedSequenceNumber { get; set; } = -1;
+
+    /// <summary>
     /// Gets or sets whether an explicit cancel request has been issued for this response.
     /// Used by handler code to distinguish cancellation from timeout/disconnect.
     /// Written from cancel endpoint thread, read from handler thread — uses Volatile for visibility.
@@ -120,6 +127,15 @@ internal sealed class ResponseExecution : IDisposable
     /// response before returning to the client.
     /// </summary>
     public TaskCompletionSource<Models.ResponseObject> ResponseCreatedSignal { get; } = new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+    /// <summary>
+    /// Signal that completes when <see cref="ResponseOrchestrator.FinalizeExecutionAsync"/>
+    /// finishes — the response is in its final terminal state and has been persisted.
+    /// <see cref="ResponseOrchestrator.CancelAsync"/> awaits this (with a 10-second timeout)
+    /// so that the cancel endpoint always returns the finalized cancelled snapshot,
+    /// regardless of streaming vs non-streaming mode.
+    /// </summary>
+    public TaskCompletionSource FinalizedSignal { get; } = new(TaskCreationOptions.RunContinuationsAsynchronously);
 
     /// <inheritdoc />
     public void Dispose()

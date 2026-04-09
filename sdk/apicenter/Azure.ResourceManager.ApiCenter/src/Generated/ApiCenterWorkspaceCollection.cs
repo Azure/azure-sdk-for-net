@@ -306,7 +306,8 @@ namespace Azure.ResourceManager.ApiCenter
                 Id.ResourceGroupName,
                 Id.Name,
                 filter,
-                context), data => new ApiCenterWorkspaceResource(Client, data));
+                context,
+                "ApiCenterWorkspaceCollection.GetAll"), data => new ApiCenterWorkspaceResource(Client, data));
         }
 
         /// <summary>
@@ -341,7 +342,8 @@ namespace Azure.ResourceManager.ApiCenter
                 Id.ResourceGroupName,
                 Id.Name,
                 filter,
-                context), data => new ApiCenterWorkspaceResource(Client, data));
+                context,
+                "ApiCenterWorkspaceCollection.GetAll"), data => new ApiCenterWorkspaceResource(Client, data));
         }
 
         /// <summary>

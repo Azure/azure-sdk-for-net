@@ -317,6 +317,16 @@ namespace Azure.Generator.Provisioning.Providers
             if (apiVersions == null || apiVersions.Count == 0)
                 return [];
 
+            // When the current (default) API version is GA, exclude preview versions.
+            // Preview versions are only included when the current version is itself a preview.
+            if (!IsPreviewApiVersion(apiVersions[^1]))
+            {
+                var gaVersions = apiVersions.Where(v => !IsPreviewApiVersion(v)).ToList();
+                if (gaVersions.Count == 0)
+                    return [];
+                apiVersions = gaVersions;
+            }
+
             // ResourceVersions nested class
             return [new ResourceVersionsProvider(this, apiVersions)];
         }
@@ -896,7 +906,7 @@ namespace Azure.Generator.Provisioning.Providers
                     var fieldName = "V" + version.Replace('.', '_').Replace('-', '_').ToUpperInvariant();
 
                     // Preview API versions are marked with [Experimental] to signal they may change or be removed.
-                    var isPreview = version.Contains("preview", StringComparison.OrdinalIgnoreCase);
+                    var isPreview = IsPreviewApiVersion(version);
                     var attributes = isPreview
                         ? [new AttributeStatement(typeof(ExperimentalAttribute), [Literal("AZPROVISION001")])]
                         : Array.Empty<AttributeStatement>();
@@ -914,5 +924,8 @@ namespace Azure.Generator.Provisioning.Providers
                 return [.. fields];
             }
         }
+
+        internal static bool IsPreviewApiVersion(string version)
+            => version.Contains("preview", StringComparison.OrdinalIgnoreCase);
     }
 }

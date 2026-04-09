@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.DeviceRegistry
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DeviceRegistryNamespaceDiscoveredAssetData, DeviceRegistryNamespaceDiscoveredAssetResource>(new NamespaceDiscoveredAssetsGetByResourceGroupAsyncCollectionResultOfT(_namespaceDiscoveredAssetsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new DeviceRegistryNamespaceDiscoveredAssetResource(Client, data));
+            return new AsyncPageableWrapper<DeviceRegistryNamespaceDiscoveredAssetData, DeviceRegistryNamespaceDiscoveredAssetResource>(new NamespaceDiscoveredAssetsGetByResourceGroupAsyncCollectionResultOfT(
+                _namespaceDiscoveredAssetsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DeviceRegistryNamespaceDiscoveredAssetCollection.GetAll"), data => new DeviceRegistryNamespaceDiscoveredAssetResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.DeviceRegistry
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DeviceRegistryNamespaceDiscoveredAssetData, DeviceRegistryNamespaceDiscoveredAssetResource>(new NamespaceDiscoveredAssetsGetByResourceGroupCollectionResultOfT(_namespaceDiscoveredAssetsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new DeviceRegistryNamespaceDiscoveredAssetResource(Client, data));
+            return new PageableWrapper<DeviceRegistryNamespaceDiscoveredAssetData, DeviceRegistryNamespaceDiscoveredAssetResource>(new NamespaceDiscoveredAssetsGetByResourceGroupCollectionResultOfT(
+                _namespaceDiscoveredAssetsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DeviceRegistryNamespaceDiscoveredAssetCollection.GetAll"), data => new DeviceRegistryNamespaceDiscoveredAssetResource(Client, data));
         }
 
         /// <summary>

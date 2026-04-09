@@ -10,7 +10,7 @@ namespace Azure.AI.AgentServer.Responses.Tests.Protocol;
 
 /// <summary>
 /// E2E protocol tests for distributed tracing: GenAI tags, baggage, and X-Request-Id
-/// (US2/US3/US4 / FR-004..015).
+/// (protocol-spec §7).
 /// Captures Activity.Current inside the handler for deterministic assertions —
 /// avoids race conditions with ActivityListener.ActivityStopped.
 /// </summary>
@@ -92,7 +92,7 @@ public sealed class DistributedTracingProtocolTests : IDisposable
     [Test]
     public async Task Activity_HasResponseIdTag()
     {
-        // T012 / FR-004: gen_ai.response.id tag
+        // T012 / §7.2: gen_ai.response.id tag
         await PostDefaultAsync(new { model = "test" });
 
         Assert.That(_capturedTags.ContainsKey(ResponsesTracingConstants.Tags.ResponseId), Is.True, "Should have gen_ai.response.id tag");
@@ -102,7 +102,7 @@ public sealed class DistributedTracingProtocolTests : IDisposable
     [Test]
     public async Task Activity_HasAgentTags_WhenAgentProvided()
     {
-        // T013 / FR-005, FR-006, FR-009e: agent tags with name+version
+        // T013 / §7.2: agent tags with name+version
         await PostDefaultAsync(new
         {
             model = "gpt-4",
@@ -117,7 +117,7 @@ public sealed class DistributedTracingProtocolTests : IDisposable
     [Test]
     public async Task Activity_HasAgentId_WithoutVersion()
     {
-        // T014 / FR-007: gen_ai.agent.id = {name} when no version
+        // T014 / §7.2: gen_ai.agent.id = {name} when no version
         await PostDefaultAsync(new
         {
             model = "gpt-4",
@@ -131,7 +131,7 @@ public sealed class DistributedTracingProtocolTests : IDisposable
     [Test]
     public async Task Activity_HasAlwaysOnTags()
     {
-        // T015 / FR-008a, FR-008b, FR-009a, FR-009b: always-on tags
+        // T015 / §7.2: always-on tags
         await PostDefaultAsync(new { model = "test" });
 
         Assert.That(_capturedTags[ResponsesTracingConstants.Tags.ProviderName], Is.EqualTo(ResponsesTracingConstants.ProviderName));
@@ -142,7 +142,7 @@ public sealed class DistributedTracingProtocolTests : IDisposable
     [Test]
     public async Task Activity_HasModelAndConversationTags()
     {
-        // T016 / FR-009c, FR-009d: model and conversation tags
+        // T016 / §7.2: model and conversation tags
         var conversationId = "conv_abc123";
         await PostDefaultAsync(new
         {
@@ -157,7 +157,7 @@ public sealed class DistributedTracingProtocolTests : IDisposable
     [Test]
     public async Task Activity_OmitsMissingFields()
     {
-        // T017 / FR-009: missing fields produce no tags (except gen_ai.agent.id which is always set)
+        // T017 / §7.2: missing fields produce no tags (except gen_ai.agent.id which is always set)
         await PostDefaultAsync(new { model = "test" });
 
         Assert.That(_capturedTags.ContainsKey(ResponsesTracingConstants.Tags.AgentName), Is.False);
@@ -212,7 +212,7 @@ public sealed class DistributedTracingProtocolTests : IDisposable
     [Test]
     public async Task Baggage_HasCoreItems()
     {
-        // T018 / FR-010, FR-011a, FR-011d: core baggage items (namespaced)
+        // T018 / §7.3: core baggage items (namespaced)
         await PostDefaultAsync(new { model = "test" });
 
         Assert.That(_capturedBaggage.ContainsKey(ResponsesTracingConstants.Baggage.ResponseId), Is.True, "Baggage should contain namespaced response_id");
@@ -224,7 +224,7 @@ public sealed class DistributedTracingProtocolTests : IDisposable
     [Test]
     public async Task Baggage_HasAgentAndConversation_WhenPresent()
     {
-        // T019 / FR-011, FR-011b, FR-011c: conversation baggage (namespaced)
+        // T019 / §7.3: conversation baggage (namespaced)
         await PostDefaultAsync(new
         {
             model = "test",
@@ -239,7 +239,7 @@ public sealed class DistributedTracingProtocolTests : IDisposable
     [Test]
     public async Task Baggage_IsSetBeforeHandlerInvocation()
     {
-        // T020 / FR-012: baggage set before handler runs
+        // T020 / S-044: baggage set before handler runs
         await PostDefaultAsync(new { model = "test" });
 
         Assert.That(_capturedBaggage.Count > 0, Is.True, "Baggage should be set before handler invocation");
@@ -267,7 +267,7 @@ public sealed class DistributedTracingProtocolTests : IDisposable
     [Test]
     public async Task XRequestId_SetsBaggage()
     {
-        // T021 / FR-013, FR-014: X-Request-Id propagated to namespaced baggage
+        // T021 / §7.3: X-Request-Id propagated to namespaced baggage
         var requestId = "req-12345-abc";
         var request = new HttpRequestMessage(HttpMethod.Post, "/responses")
         {
@@ -286,7 +286,7 @@ public sealed class DistributedTracingProtocolTests : IDisposable
     [Test]
     public async Task XRequestId_MissingHeader_NoBaggage()
     {
-        // T022 / FR-015: no X-Request-Id → no baggage
+        // T022 / §7.3: no X-Request-Id → no baggage
         await PostDefaultAsync(new { model = "test" });
 
         Assert.That(_capturedTags.ContainsKey("request.id"), Is.False);

@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MySqlFlexibleServersCapabilityData, MySqlFlexibleServersCapabilityResource>(new LocationBasedCapabilitySetGetAllAsyncCollectionResultOfT(_locationBasedCapabilitySetRestClient, Guid.Parse(Id.SubscriptionId), _locationName, context), data => new MySqlFlexibleServersCapabilityResource(Client, data));
+            return new AsyncPageableWrapper<MySqlFlexibleServersCapabilityData, MySqlFlexibleServersCapabilityResource>(new LocationBasedCapabilitySetGetAllAsyncCollectionResultOfT(_locationBasedCapabilitySetRestClient, Guid.Parse(Id.SubscriptionId), _locationName, context, "MySqlFlexibleServersCapabilityCollection.GetAll"), data => new MySqlFlexibleServersCapabilityResource(Client, data));
         }
 
         /// <summary>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MySqlFlexibleServersCapabilityData, MySqlFlexibleServersCapabilityResource>(new LocationBasedCapabilitySetGetAllCollectionResultOfT(_locationBasedCapabilitySetRestClient, Guid.Parse(Id.SubscriptionId), _locationName, context), data => new MySqlFlexibleServersCapabilityResource(Client, data));
+            return new PageableWrapper<MySqlFlexibleServersCapabilityData, MySqlFlexibleServersCapabilityResource>(new LocationBasedCapabilitySetGetAllCollectionResultOfT(_locationBasedCapabilitySetRestClient, Guid.Parse(Id.SubscriptionId), _locationName, context, "MySqlFlexibleServersCapabilityCollection.GetAll"), data => new MySqlFlexibleServersCapabilityResource(Client, data));
         }
 
         /// <summary>

@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.HybridConnectivity
             }
         }
 
-        /// <summary> Gets a collection of PublicCloudInventories in the <see cref="ArmResource"/>. </summary>
+        /// <summary> Gets a collection of PublicCloudInventories in the <see cref="PublicCloudConnectorSolutionConfigurationResource"/>. </summary>
         /// <returns> An object representing collection of PublicCloudInventories and their operations over a PublicCloudInventoryResource. </returns>
         public virtual PublicCloudInventoryCollection GetPublicCloudInventories()
         {

@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.RedisEnterprise
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RedisEnterpriseDatabaseData, RedisEnterpriseDatabaseResource>(new DatabasesGetByClusterAsyncCollectionResultOfT(_databasesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new RedisEnterpriseDatabaseResource(Client, data));
+            return new AsyncPageableWrapper<RedisEnterpriseDatabaseData, RedisEnterpriseDatabaseResource>(new DatabasesGetByClusterAsyncCollectionResultOfT(
+                _databasesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "RedisEnterpriseDatabaseCollection.GetAll"), data => new RedisEnterpriseDatabaseResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.RedisEnterprise
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RedisEnterpriseDatabaseData, RedisEnterpriseDatabaseResource>(new DatabasesGetByClusterCollectionResultOfT(_databasesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new RedisEnterpriseDatabaseResource(Client, data));
+            return new PageableWrapper<RedisEnterpriseDatabaseData, RedisEnterpriseDatabaseResource>(new DatabasesGetByClusterCollectionResultOfT(
+                _databasesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "RedisEnterpriseDatabaseCollection.GetAll"), data => new RedisEnterpriseDatabaseResource(Client, data));
         }
 
         /// <summary>

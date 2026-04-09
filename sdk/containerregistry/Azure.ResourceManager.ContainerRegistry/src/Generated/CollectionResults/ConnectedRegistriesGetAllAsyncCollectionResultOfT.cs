@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         private readonly string _registryName;
         private readonly string _filter;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of ConnectedRegistriesGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The ConnectedRegistries client used to send requests. </param>
@@ -31,7 +32,8 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="registryName"> The name of the container registry. </param>
         /// <param name="filter"> An OData filter expression that describes a subset of connectedRegistries to return. The parameters that can be filtered are parent.id (the resource id of the connectedRegistry parent), mode, and connectionState. The supported operator is eq. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ConnectedRegistriesGetAllAsyncCollectionResultOfT(ConnectedRegistries client, Guid subscriptionId, string resourceGroupName, string registryName, string filter, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public ConnectedRegistriesGetAllAsyncCollectionResultOfT(ConnectedRegistries client, Guid subscriptionId, string resourceGroupName, string registryName, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -39,6 +41,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             _registryName = registryName;
             _filter = filter;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of ConnectedRegistriesGetAllAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -72,7 +75,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _registryName, _filter, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _registryName, _filter, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ConnectedRegistryCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

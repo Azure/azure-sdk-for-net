@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         private readonly string _resourceGroupName;
         private readonly string _cloudHsmClusterName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of CloudHsmClusterPrivateLinkResourcesGetCloudHsmClusterPrivateLinkResourcesAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The CloudHsmClusterPrivateLinkResources client used to send requests. </param>
@@ -29,13 +30,15 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cloudHsmClusterName"> The name of the Cloud HSM Cluster within the specified resource group. Cloud HSM Cluster names must be between 3 and 23 characters in length. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public CloudHsmClusterPrivateLinkResourcesGetCloudHsmClusterPrivateLinkResourcesAsyncCollectionResultOfT(CloudHsmClusterPrivateLinkResources client, Guid subscriptionId, string resourceGroupName, string cloudHsmClusterName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public CloudHsmClusterPrivateLinkResourcesGetCloudHsmClusterPrivateLinkResourcesAsyncCollectionResultOfT(CloudHsmClusterPrivateLinkResources client, Guid subscriptionId, string resourceGroupName, string cloudHsmClusterName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
             _cloudHsmClusterName = cloudHsmClusterName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of CloudHsmClusterPrivateLinkResourcesGetCloudHsmClusterPrivateLinkResourcesAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -68,7 +71,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetCloudHsmClusterPrivateLinkResourcesRequest(nextLink, _subscriptionId, _resourceGroupName, _cloudHsmClusterName, _context) : _client.CreateGetCloudHsmClusterPrivateLinkResourcesRequest(_subscriptionId, _resourceGroupName, _cloudHsmClusterName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("CloudHsmClusterResource.GetCloudHsmClusterPrivateLinkResources");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

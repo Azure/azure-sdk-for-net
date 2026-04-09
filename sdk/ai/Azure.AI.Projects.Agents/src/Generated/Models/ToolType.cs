@@ -30,6 +30,7 @@ namespace OpenAI
         private const string FabricDataagentPreviewValue = "fabric_dataagent_preview";
         private const string SharepointGroundingPreviewValue = "sharepoint_grounding_preview";
         private const string MemorySearchPreviewValue = "memory_search_preview";
+        private const string WorkIqPreviewValue = "work_iq_preview";
         private const string AzureAiSearchValue = "azure_ai_search";
         private const string AzureFunctionValue = "azure_function";
         private const string BingGroundingValue = "bing_grounding";
@@ -99,6 +100,9 @@ namespace OpenAI
 
         /// <summary> Gets the MemorySearchPreview. </summary>
         public static ToolType MemorySearchPreview { get; } = new ToolType(MemorySearchPreviewValue);
+
+        /// <summary> Gets the WorkIqPreview. </summary>
+        public static ToolType WorkIqPreview { get; } = new ToolType(WorkIqPreviewValue);
 
         /// <summary> Gets the AzureAiSearch. </summary>
         public static ToolType AzureAiSearch { get; } = new ToolType(AzureAiSearchValue);

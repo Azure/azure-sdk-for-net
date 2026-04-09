@@ -188,7 +188,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 pageSize,
                 isDescending,
                 initialSkip,
-                context), data => new VirtualDesktopResource(Client, data));
+                context,
+                "VirtualDesktopCollection.GetAll"), data => new VirtualDesktopResource(Client, data));
         }
 
         /// <summary>
@@ -227,7 +228,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 pageSize,
                 isDescending,
                 initialSkip,
-                context), data => new VirtualDesktopResource(Client, data));
+                context,
+                "VirtualDesktopCollection.GetAll"), data => new VirtualDesktopResource(Client, data));
         }
 
         /// <summary>

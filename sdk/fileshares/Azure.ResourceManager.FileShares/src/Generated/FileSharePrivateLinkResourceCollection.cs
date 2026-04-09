@@ -177,7 +177,13 @@ namespace Azure.ResourceManager.FileShares
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<FileSharePrivateLinkResourceData, FileSharePrivateLinkResource>(new PrivateLinkResourcesGetAllAsyncCollectionResultOfT(_privateLinkResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new FileSharePrivateLinkResource(Client, data));
+            return new AsyncPageableWrapper<FileSharePrivateLinkResourceData, FileSharePrivateLinkResource>(new PrivateLinkResourcesGetAllAsyncCollectionResultOfT(
+                _privateLinkResourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "FileSharePrivateLinkResourceCollection.GetAll"), data => new FileSharePrivateLinkResource(Client, data));
         }
 
         /// <summary>
@@ -205,7 +211,13 @@ namespace Azure.ResourceManager.FileShares
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<FileSharePrivateLinkResourceData, FileSharePrivateLinkResource>(new PrivateLinkResourcesGetAllCollectionResultOfT(_privateLinkResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new FileSharePrivateLinkResource(Client, data));
+            return new PageableWrapper<FileSharePrivateLinkResourceData, FileSharePrivateLinkResource>(new PrivateLinkResourcesGetAllCollectionResultOfT(
+                _privateLinkResourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "FileSharePrivateLinkResourceCollection.GetAll"), data => new FileSharePrivateLinkResource(Client, data));
         }
 
         /// <summary>
