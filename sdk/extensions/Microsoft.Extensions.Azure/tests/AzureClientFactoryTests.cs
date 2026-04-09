@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
+using Azure.Core.TestFramework;
 using Azure.Identity;
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
@@ -472,7 +473,7 @@ namespace Azure.Core.Extensions.Tests
 
             provider.Dispose();
 
-            Assert.DoesNotThrowAsync(async () => await tcs.Task.WaitAsync(TimeSpan.FromSeconds(5)));
+            Assert.DoesNotThrowAsync(async () => await tcs.Task.TimeoutAfter(TimeSpan.FromSeconds(5)));
             Assert.IsTrue(disposed);
         }
 
@@ -498,7 +499,7 @@ namespace Azure.Core.Extensions.Tests
 
             provider.Dispose();
 
-            Assert.DoesNotThrowAsync(async () => await tcs.Task.WaitAsync(TimeSpan.FromSeconds(5)));
+            Assert.DoesNotThrowAsync(async () => await tcs.Task.TimeoutAfter(TimeSpan.FromSeconds(5)));
             Assert.IsTrue(disposed);
         }
 
@@ -560,7 +561,7 @@ namespace Azure.Core.Extensions.Tests
 
             Assert.DoesNotThrow(provider.Dispose);
 
-            Assert.DoesNotThrowAsync(async () => await tcs.Task.WaitAsync(TimeSpan.FromSeconds(5)));
+            Assert.DoesNotThrowAsync(async () => await tcs.Task.TimeoutAfter(TimeSpan.FromSeconds(5)));
             Assert.AreEqual(disposeCount, 3);
         }
 
@@ -586,7 +587,7 @@ namespace Azure.Core.Extensions.Tests
 
             await provider.DisposeAsync();
 
-            Assert.DoesNotThrowAsync(async () => await tcs.Task.WaitAsync(TimeSpan.FromSeconds(5)));
+            Assert.DoesNotThrowAsync(async () => await tcs.Task.TimeoutAfter(TimeSpan.FromSeconds(5)));
             Assert.IsTrue(disposed);
         }
 
@@ -612,7 +613,7 @@ namespace Azure.Core.Extensions.Tests
 
             await provider.DisposeAsync();
 
-            Assert.DoesNotThrowAsync(async () => await tcs.Task.WaitAsync(TimeSpan.FromSeconds(5)));
+            Assert.DoesNotThrowAsync(async () => await tcs.Task.TimeoutAfter(TimeSpan.FromSeconds(5)));
             Assert.IsTrue(disposed);
         }
 
@@ -674,7 +675,7 @@ namespace Azure.Core.Extensions.Tests
 
             await provider.DisposeAsync();
 
-            Assert.DoesNotThrowAsync(async () => await tcs.Task.WaitAsync(TimeSpan.FromSeconds(5)));
+            Assert.DoesNotThrowAsync(async () => await tcs.Task.TimeoutAfter(TimeSpan.FromSeconds(5)));
             Assert.AreEqual(disposeCount, 3);
         }
 
