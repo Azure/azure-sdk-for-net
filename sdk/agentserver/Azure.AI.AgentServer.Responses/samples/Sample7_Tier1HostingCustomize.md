@@ -36,7 +36,8 @@ public class KnowledgeHandler : ResponseHandler
         return new TextResponse(context, request,
             createText: async ct =>
             {
-                var question = await context.GetInputTextAsync(cancellationToken: ct);                        return await _kb.SearchAsync(question, ct);
+                var question = await context.GetInputTextAsync(cancellationToken: ct);
+                return await _kb.SearchAsync(question, ct);
             });
     }
 }
