@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Purview
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -442,7 +442,13 @@ namespace Azure.ResourceManager.Purview
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PurviewPrivateEndpointConnectionData, PurviewPrivateEndpointConnectionResource>(new IngestionPrivateEndpointConnectionsGetIngestionPrivateEndpointConnectionsAsyncCollectionResultOfT(_ingestionPrivateEndpointConnectionsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new PurviewPrivateEndpointConnectionResource(Client, data));
+            return new AsyncPageableWrapper<PurviewPrivateEndpointConnectionData, PurviewPrivateEndpointConnectionResource>(new IngestionPrivateEndpointConnectionsGetIngestionPrivateEndpointConnectionsAsyncCollectionResultOfT(
+                _ingestionPrivateEndpointConnectionsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "PurviewAccountResource.GetIngestionPrivateEndpointConnections"), data => new PurviewPrivateEndpointConnectionResource(Client, data));
         }
 
         /// <summary>
@@ -474,7 +480,13 @@ namespace Azure.ResourceManager.Purview
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PurviewPrivateEndpointConnectionData, PurviewPrivateEndpointConnectionResource>(new IngestionPrivateEndpointConnectionsGetIngestionPrivateEndpointConnectionsCollectionResultOfT(_ingestionPrivateEndpointConnectionsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new PurviewPrivateEndpointConnectionResource(Client, data));
+            return new PageableWrapper<PurviewPrivateEndpointConnectionData, PurviewPrivateEndpointConnectionResource>(new IngestionPrivateEndpointConnectionsGetIngestionPrivateEndpointConnectionsCollectionResultOfT(
+                _ingestionPrivateEndpointConnectionsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "PurviewAccountResource.GetIngestionPrivateEndpointConnections"), data => new PurviewPrivateEndpointConnectionResource(Client, data));
         }
 
         /// <summary>

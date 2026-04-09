@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.SignalR
         {
             if (id.ResourceType != SignalRReplicaResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SignalRReplicaResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SignalRReplicaResource.ResourceType), nameof(id));
             }
         }
 
@@ -299,7 +299,8 @@ namespace Azure.ResourceManager.SignalR
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new SignalRReplicaSharedPrivateLinkResource(Client, data));
+                context,
+                "SignalRReplicaSharedPrivateLinkResourceCollection.GetAll"), data => new SignalRReplicaSharedPrivateLinkResource(Client, data));
         }
 
         /// <summary>
@@ -333,7 +334,8 @@ namespace Azure.ResourceManager.SignalR
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new SignalRReplicaSharedPrivateLinkResource(Client, data));
+                context,
+                "SignalRReplicaSharedPrivateLinkResourceCollection.GetAll"), data => new SignalRReplicaSharedPrivateLinkResource(Client, data));
         }
 
         /// <summary>

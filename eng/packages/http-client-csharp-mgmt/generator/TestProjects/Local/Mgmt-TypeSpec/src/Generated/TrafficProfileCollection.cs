@@ -51,7 +51,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -288,7 +288,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<TrafficProfileData, TrafficProfileResource>(new TrafficProfilesGetAllAsyncCollectionResultOfT(_trafficProfilesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new TrafficProfileResource(Client, data));
+            return new AsyncPageableWrapper<TrafficProfileData, TrafficProfileResource>(new TrafficProfilesGetAllAsyncCollectionResultOfT(_trafficProfilesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "TrafficProfileCollection.GetAll"), data => new TrafficProfileResource(Client, data));
         }
 
         /// <summary>
@@ -316,7 +316,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<TrafficProfileData, TrafficProfileResource>(new TrafficProfilesGetAllCollectionResultOfT(_trafficProfilesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new TrafficProfileResource(Client, data));
+            return new PageableWrapper<TrafficProfileData, TrafficProfileResource>(new TrafficProfilesGetAllCollectionResultOfT(_trafficProfilesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "TrafficProfileCollection.GetAll"), data => new TrafficProfileResource(Client, data));
         }
 
         /// <summary>

@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         private readonly string _vaultName;
         private readonly string _filter;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of DeletedProtectionContainersGetSoftDeletedProtectionContainersAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The DeletedProtectionContainers client used to send requests. </param>
@@ -31,7 +32,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="vaultName"> The name of the recovery services vault. </param>
         /// <param name="filter"> OData filter options. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public DeletedProtectionContainersGetSoftDeletedProtectionContainersAsyncCollectionResultOfT(DeletedProtectionContainers client, string subscriptionId, string resourceGroupName, string vaultName, string filter, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public DeletedProtectionContainersGetSoftDeletedProtectionContainersAsyncCollectionResultOfT(DeletedProtectionContainers client, string subscriptionId, string resourceGroupName, string vaultName, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -39,6 +41,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             _vaultName = vaultName;
             _filter = filter;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of DeletedProtectionContainersGetSoftDeletedProtectionContainersAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -72,7 +75,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetSoftDeletedProtectionContainersRequest(nextLink, _subscriptionId, _resourceGroupName, _vaultName, _filter, _context) : _client.CreateGetSoftDeletedProtectionContainersRequest(_subscriptionId, _resourceGroupName, _vaultName, _filter, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableRecoveryServicesBackupResourceGroupResource.GetSoftDeletedProtectionContainers");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

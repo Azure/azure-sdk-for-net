@@ -13,187 +13,356 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.BillingBenefits
 {
-    /// <summary>
-    /// A class representing the BillingBenefitsSavingsPlan data model.
-    /// Savings plan
-    /// </summary>
+    /// <summary> Savings plan. </summary>
     public partial class BillingBenefitsSavingsPlanData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BillingBenefitsSavingsPlanData"/>. </summary>
-        /// <param name="sku"> Savings plan SKU. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
-        public BillingBenefitsSavingsPlanData(BillingBenefitsSku sku)
+        public BillingBenefitsSavingsPlanData()
         {
-            Argument.AssertNotNull(sku, nameof(sku));
 
-            Sku = sku;
         }
 
         /// <summary> Initializes a new instance of <see cref="BillingBenefitsSavingsPlanData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Savings plan properties. </param>
         /// <param name="sku"> Savings plan SKU. </param>
-        /// <param name="displayName"> Display name. </param>
-        /// <param name="provisioningState"> Provisioning state. </param>
-        /// <param name="displayProvisioningState"> The provisioning state of the savings plan for display, e.g. Succeeded. </param>
-        /// <param name="billingScopeId"> Subscription that will be charged for purchasing the benefit. </param>
-        /// <param name="billingProfileId"> Fully-qualified identifier of the billing profile where the savings plan is applied. Present only for Field-led or Customer-led customers. </param>
-        /// <param name="customerId"> Fully-qualified identifier of the customer where the savings plan is applied. Present only for Partner-led customers. </param>
-        /// <param name="billingAccountId"> Fully-qualified identifier of the billing account where the savings plan is applied. Present only for Enterprise Agreement customers. </param>
-        /// <param name="term"> Represent benefit term in ISO 8601 format. </param>
-        /// <param name="billingPlan"> Represents the billing plan in ISO 8601 format. Required only for monthly billing plans. </param>
-        /// <param name="appliedScopeType"> Type of the Applied Scope. </param>
-        /// <param name="userFriendlyAppliedScopeType"> The applied scope type of the savings plan for display, e.g. Shared. </param>
-        /// <param name="appliedScopeProperties"> Properties specific to applied scope type. Not required if not applicable. </param>
-        /// <param name="commitment"> Commitment towards the benefit. </param>
-        /// <param name="effectOn"> DateTime of the savings plan starts providing benefit from. </param>
-        /// <param name="expireOn"> Expiry date time. </param>
-        /// <param name="purchaseOn"> Date time when the savings plan was purchased. </param>
-        /// <param name="benefitStartOn"> This is the DateTime when the savings plan benefit started. </param>
-        /// <param name="extendedStatusInfo"></param>
-        /// <param name="isRenewed"> Setting this to true will automatically purchase a new benefit on the expiration date time. </param>
-        /// <param name="utilization"> Savings plan utilization. </param>
-        /// <param name="renewSource"> SavingsPlan Id of the SavingsPlan from which this SavingsPlan is renewed. </param>
-        /// <param name="renewDestination"> SavingsPlan Id of the SavingsPlan which is purchased because of renew. </param>
-        /// <param name="renewProperties"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BillingBenefitsSavingsPlanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BillingBenefitsSku sku, string displayName, BillingBenefitsProvisioningState? provisioningState, string displayProvisioningState, ResourceIdentifier billingScopeId, ResourceIdentifier billingProfileId, string customerId, ResourceIdentifier billingAccountId, BillingBenefitsTerm? term, BillingBenefitsBillingPlan? billingPlan, BillingBenefitsAppliedScopeType? appliedScopeType, string userFriendlyAppliedScopeType, BillingBenefitsAppliedScopeProperties appliedScopeProperties, BillingBenefitsCommitment commitment, DateTimeOffset? effectOn, DateTimeOffset? expireOn, DateTimeOffset? purchaseOn, DateTimeOffset? benefitStartOn, BillingBenefitsExtendedStatusInfo extendedStatusInfo, bool? isRenewed, BillingBenefitsSavingsPlanUtilization utilization, string renewSource, string renewDestination, RenewProperties renewProperties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal BillingBenefitsSavingsPlanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, SavingsPlanModelProperties properties, ResourceSku sku) : base(id, name, resourceType, systemData)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
             Sku = sku;
-            DisplayName = displayName;
-            ProvisioningState = provisioningState;
-            DisplayProvisioningState = displayProvisioningState;
-            BillingScopeId = billingScopeId;
-            BillingProfileId = billingProfileId;
-            CustomerId = customerId;
-            BillingAccountId = billingAccountId;
-            Term = term;
-            BillingPlan = billingPlan;
-            AppliedScopeType = appliedScopeType;
-            UserFriendlyAppliedScopeType = userFriendlyAppliedScopeType;
-            AppliedScopeProperties = appliedScopeProperties;
-            Commitment = commitment;
-            EffectOn = effectOn;
-            ExpireOn = expireOn;
-            PurchaseOn = purchaseOn;
-            BenefitStartOn = benefitStartOn;
-            ExtendedStatusInfo = extendedStatusInfo;
-            IsRenewed = isRenewed;
-            Utilization = utilization;
-            RenewSource = renewSource;
-            RenewDestination = renewDestination;
-            RenewProperties = renewProperties;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BillingBenefitsSavingsPlanData"/> for deserialization. </summary>
-        internal BillingBenefitsSavingsPlanData()
-        {
-        }
+        /// <summary> Savings plan properties. </summary>
+        internal SavingsPlanModelProperties Properties { get; set; }
 
         /// <summary> Savings plan SKU. </summary>
-        internal BillingBenefitsSku Sku { get; set; }
-        /// <summary> Name of the SKU to be applied. </summary>
-        public string SkuName
+        internal ResourceSku Sku { get; set; }
+
+        /// <summary> Display name. </summary>
+        public string DisplayName
         {
-            get => Sku is null ? default : Sku.Name;
+            get
+            {
+                return Properties is null ? default : Properties.DisplayName;
+            }
             set
             {
-                if (Sku is null)
-                    Sku = new BillingBenefitsSku();
-                Sku.Name = value;
+                if (Properties is null)
+                {
+                    Properties = new SavingsPlanModelProperties();
+                }
+                Properties.DisplayName = value;
             }
         }
 
-        /// <summary> Display name. </summary>
-        public string DisplayName { get; set; }
         /// <summary> Provisioning state. </summary>
-        public BillingBenefitsProvisioningState? ProvisioningState { get; }
-        /// <summary> The provisioning state of the savings plan for display, e.g. Succeeded. </summary>
-        public string DisplayProvisioningState { get; }
-        /// <summary> Subscription that will be charged for purchasing the benefit. </summary>
-        public ResourceIdentifier BillingScopeId { get; set; }
-        /// <summary> Fully-qualified identifier of the billing profile where the savings plan is applied. Present only for Field-led or Customer-led customers. </summary>
-        public ResourceIdentifier BillingProfileId { get; }
-        /// <summary> Fully-qualified identifier of the customer where the savings plan is applied. Present only for Partner-led customers. </summary>
-        public string CustomerId { get; }
-        /// <summary> Fully-qualified identifier of the billing account where the savings plan is applied. Present only for Enterprise Agreement customers. </summary>
-        public ResourceIdentifier BillingAccountId { get; }
-        /// <summary> Represent benefit term in ISO 8601 format. </summary>
-        public BillingBenefitsTerm? Term { get; set; }
-        /// <summary> Represents the billing plan in ISO 8601 format. Required only for monthly billing plans. </summary>
-        public BillingBenefitsBillingPlan? BillingPlan { get; set; }
-        /// <summary> Type of the Applied Scope. </summary>
-        public BillingBenefitsAppliedScopeType? AppliedScopeType { get; set; }
-        /// <summary> The applied scope type of the savings plan for display, e.g. Shared. </summary>
-        public string UserFriendlyAppliedScopeType { get; }
-        /// <summary> Properties specific to applied scope type. Not required if not applicable. </summary>
-        public BillingBenefitsAppliedScopeProperties AppliedScopeProperties { get; set; }
-        /// <summary> Commitment towards the benefit. </summary>
-        public BillingBenefitsCommitment Commitment { get; set; }
-        /// <summary> DateTime of the savings plan starts providing benefit from. </summary>
-        public DateTimeOffset? EffectOn { get; }
-        /// <summary> Expiry date time. </summary>
-        public DateTimeOffset? ExpireOn { get; }
-        /// <summary> Date time when the savings plan was purchased. </summary>
-        public DateTimeOffset? PurchaseOn { get; }
-        /// <summary> This is the DateTime when the savings plan benefit started. </summary>
-        public DateTimeOffset? BenefitStartOn { get; set; }
-        /// <summary> Gets the extended status info. </summary>
-        public BillingBenefitsExtendedStatusInfo ExtendedStatusInfo { get; }
-        /// <summary> Setting this to true will automatically purchase a new benefit on the expiration date time. </summary>
-        public bool? IsRenewed { get; set; }
-        /// <summary> Savings plan utilization. </summary>
-        public BillingBenefitsSavingsPlanUtilization Utilization { get; }
-        /// <summary> SavingsPlan Id of the SavingsPlan from which this SavingsPlan is renewed. </summary>
-        public string RenewSource { get; set; }
-        /// <summary> SavingsPlan Id of the SavingsPlan which is purchased because of renew. </summary>
-        public string RenewDestination { get; set; }
-        /// <summary> Gets or sets the renew properties. </summary>
-        internal RenewProperties RenewProperties { get; set; }
-        /// <summary> Gets or sets the renew purchase properties. </summary>
-        public BillingBenefitsPurchaseContent RenewPurchaseProperties
+        public BillingBenefitsProvisioningState? ProvisioningState
         {
-            get => RenewProperties is null ? default : RenewProperties.PurchaseProperties;
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> The provisioning state of the savings plan for display, e.g. Succeeded. </summary>
+        public string DisplayProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisplayProvisioningState;
+            }
+        }
+
+        /// <summary> Subscription that will be charged for purchasing the benefit. </summary>
+        public ResourceIdentifier BillingScopeId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BillingScopeId;
+            }
             set
             {
-                if (RenewProperties is null)
-                    RenewProperties = new RenewProperties();
-                RenewProperties.PurchaseProperties = value;
+                if (Properties is null)
+                {
+                    Properties = new SavingsPlanModelProperties();
+                }
+                Properties.BillingScopeId = value;
+            }
+        }
+
+        /// <summary> Fully-qualified identifier of the billing profile where the benefit is applied. Present only for Field-led or Customer-led customers. </summary>
+        public ResourceIdentifier BillingProfileId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BillingProfileId;
+            }
+        }
+
+        /// <summary> Fully-qualified identifier of the customer where the savings plan is applied. Present only for Partner-led customers. </summary>
+        public ResourceIdentifier CustomerId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CustomerId;
+            }
+        }
+
+        /// <summary> Fully-qualified identifier of the billing account where the benefit is applied. Present only for Enterprise Agreement customers. </summary>
+        public ResourceIdentifier BillingAccountId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BillingAccountId;
+            }
+        }
+
+        /// <summary> Represent benefit term in ISO 8601 format. </summary>
+        public BillingBenefitsTerm? Term
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Term;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SavingsPlanModelProperties();
+                }
+                Properties.Term = value.Value;
+            }
+        }
+
+        /// <summary> Represents the billing plan in ISO 8601 format. Required only for monthly billing plans. </summary>
+        public BillingBenefitsBillingPlan? BillingPlan
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BillingPlan;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SavingsPlanModelProperties();
+                }
+                Properties.BillingPlan = value.Value;
+            }
+        }
+
+        /// <summary> Type of the Applied Scope. </summary>
+        public BillingBenefitsAppliedScopeType? AppliedScopeType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AppliedScopeType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SavingsPlanModelProperties();
+                }
+                Properties.AppliedScopeType = value.Value;
+            }
+        }
+
+        /// <summary> The applied scope type of the savings plan for display, e.g. Shared. </summary>
+        public string UserFriendlyAppliedScopeType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UserFriendlyAppliedScopeType;
+            }
+        }
+
+        /// <summary> Properties specific to applied scope type. Not required if not applicable. </summary>
+        public BillingBenefitsAppliedScopeProperties AppliedScopeProperties
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AppliedScopeProperties;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SavingsPlanModelProperties();
+                }
+                Properties.AppliedScopeProperties = value;
+            }
+        }
+
+        /// <summary> Commitment towards the benefit. </summary>
+        public BillingBenefitsCommitment Commitment
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Commitment;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SavingsPlanModelProperties();
+                }
+                Properties.Commitment = value;
+            }
+        }
+
+        /// <summary> DateTime of the savings plan starts providing benefit from. </summary>
+        public DateTimeOffset? EffectOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EffectOn;
+            }
+        }
+
+        /// <summary> Expiry date time. </summary>
+        public DateTimeOffset? ExpireOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExpireOn;
+            }
+        }
+
+        /// <summary> Date time when the savings plan was purchased. </summary>
+        public DateTimeOffset? PurchaseOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PurchaseOn;
+            }
+        }
+
+        /// <summary> This is the DateTime when the savings plan benefit started. </summary>
+        public DateTimeOffset? BenefitStartOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BenefitStartOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SavingsPlanModelProperties();
+                }
+                Properties.BenefitStartOn = value.Value;
+            }
+        }
+
+        /// <summary> Gets the ExtendedStatusInfo. </summary>
+        public BillingBenefitsExtendedStatusInfo ExtendedStatusInfo
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExtendedStatusInfo;
+            }
+        }
+
+        /// <summary> Setting this to true will automatically purchase a new benefit on the expiration date time. </summary>
+        public bool? IsRenewed
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsRenewed;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SavingsPlanModelProperties();
+                }
+                Properties.IsRenewed = value.Value;
+            }
+        }
+
+        /// <summary> Savings plan utilization. </summary>
+        public BillingBenefitsSavingsPlanUtilization Utilization
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Utilization;
+            }
+        }
+
+        /// <summary> SavingsPlan Id of the SavingsPlan from which this SavingsPlan is renewed. </summary>
+        public string RenewSource
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RenewSource;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SavingsPlanModelProperties();
+                }
+                Properties.RenewSource = value;
+            }
+        }
+
+        /// <summary> SavingsPlan Id of the SavingsPlan which is purchased because of renew. </summary>
+        public string RenewDestination
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RenewDestination;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SavingsPlanModelProperties();
+                }
+                Properties.RenewDestination = value;
+            }
+        }
+
+        /// <summary> Gets or sets the PurchaseProperties. </summary>
+        public BillingBenefitsPurchaseContent RenewPurchaseProperties
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RenewPurchaseProperties;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SavingsPlanModelProperties();
+                }
+                Properties.RenewPurchaseProperties = value;
+            }
+        }
+
+        /// <summary> Gets or sets the Name. </summary>
+        public string SkuName
+        {
+            get
+            {
+                return Sku is null ? default : Sku.Name;
+            }
+            set
+            {
+                if (Sku is null)
+                {
+                    Sku = new ResourceSku();
+                }
+                Sku.Name = value;
             }
         }
     }

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateVirtualCluster()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-11-01-preview/examples/VirtualClusterCreate.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/SQL/stable/2025-01-01/examples/VirtualClusterCreate.json
             // this example is just showing the usage of "VirtualClusters_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetsAVirtualCluster()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-11-01-preview/examples/VirtualClusterGet.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/SQL/stable/2025-01-01/examples/VirtualClusterGet.json
             // this example is just showing the usage of "VirtualClusters_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListVirtualClustersByResourceGroup()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-11-01-preview/examples/VirtualClusterListByResourceGroup.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/SQL/stable/2025-01-01/examples/VirtualClusterListByResourceGroup.json
             // this example is just showing the usage of "VirtualClusters_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetsAVirtualCluster()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-11-01-preview/examples/VirtualClusterGet.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/SQL/stable/2025-01-01/examples/VirtualClusterGet.json
             // this example is just showing the usage of "VirtualClusters_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetsAVirtualCluster()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-11-01-preview/examples/VirtualClusterGet.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/SQL/stable/2025-01-01/examples/VirtualClusterGet.json
             // this example is just showing the usage of "VirtualClusters_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

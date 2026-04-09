@@ -23,6 +23,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         private readonly string _fooName;
         private readonly string _barName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of EmployeesGetEmployeesAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Employees client used to send requests. </param>
@@ -31,7 +32,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="fooName"> The name of the Foo. </param>
         /// <param name="barName"> The name of the Bar. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public EmployeesGetEmployeesAsyncCollectionResultOfT(Employees client, Guid subscriptionId, string resourceGroupName, string fooName, string barName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public EmployeesGetEmployeesAsyncCollectionResultOfT(Employees client, Guid subscriptionId, string resourceGroupName, string fooName, string barName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -39,6 +41,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             _fooName = fooName;
             _barName = barName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of EmployeesGetEmployeesAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -71,7 +74,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetEmployeesRequest(nextLink, _subscriptionId, _resourceGroupName, _fooName, _barName, _context) : _client.CreateGetEmployeesRequest(_subscriptionId, _resourceGroupName, _fooName, _barName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("BarResource.GetEmployees");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

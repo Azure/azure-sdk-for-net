@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ServiceBus
         {
             if (id.ResourceType != ServiceBusSubscriptionResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ServiceBusSubscriptionResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ServiceBusSubscriptionResource.ResourceType), nameof(id));
             }
         }
 
@@ -298,7 +298,8 @@ namespace Azure.ResourceManager.ServiceBus
                 Id.Name,
                 skip,
                 top,
-                context), data => new ServiceBusRuleResource(Client, data));
+                context,
+                "ServiceBusRuleCollection.GetAll"), data => new ServiceBusRuleResource(Client, data));
         }
 
         /// <summary>
@@ -337,7 +338,8 @@ namespace Azure.ResourceManager.ServiceBus
                 Id.Name,
                 skip,
                 top,
-                context), data => new ServiceBusRuleResource(Client, data));
+                context,
+                "ServiceBusRuleCollection.GetAll"), data => new ServiceBusRuleResource(Client, data));
         }
 
         /// <summary>

@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -350,7 +350,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 Id.Parent.Name,
                 Id.Name,
                 RecoveryPointsRecommendedForMoveContent.ToRequestContent(content),
-                context), data => new BackupRecoveryPointResource(Client, data));
+                context,
+                "BackupProtectedItemResource.GetRecoveryPointsRecommendedForMove"), data => new BackupRecoveryPointResource(Client, data));
         }
 
         /// <summary>
@@ -395,7 +396,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 Id.Parent.Name,
                 Id.Name,
                 RecoveryPointsRecommendedForMoveContent.ToRequestContent(content),
-                context), data => new BackupRecoveryPointResource(Client, data));
+                context,
+                "BackupProtectedItemResource.GetRecoveryPointsRecommendedForMove"), data => new BackupRecoveryPointResource(Client, data));
         }
 
         /// <summary>

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Batch
         {
             if (id.ResourceType != BatchAccountResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, BatchAccountResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, BatchAccountResource.ResourceType), nameof(id));
             }
         }
 
@@ -313,7 +313,8 @@ namespace Azure.ResourceManager.Batch
                 maxresults,
                 @select,
                 filter,
-                context), data => new BatchAccountPoolResource(Client, data));
+                context,
+                "BatchAccountPoolCollection.GetAll"), data => new BatchAccountPoolResource(Client, data));
         }
 
         /// <summary>
@@ -365,7 +366,8 @@ namespace Azure.ResourceManager.Batch
                 maxresults,
                 @select,
                 filter,
-                context), data => new BatchAccountPoolResource(Client, data));
+                context,
+                "BatchAccountPoolCollection.GetAll"), data => new BatchAccountPoolResource(Client, data));
         }
 
         /// <summary>

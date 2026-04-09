@@ -3113,6 +3113,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of <see cref="Models.ManagedInstanceVcoresCapability"/>. </summary>
         /// <param name="name"> The virtual cores identifier. </param>
         /// <param name="value"> The virtual cores value. </param>
+        /// <param name="supportedMemoryLimitsInMB"> Memory limit MB ranges. </param>
         /// <param name="supportedMemorySizesInGB"> Supported memory sizes in GB. </param>
         /// <param name="includedMaxSize"> Included size. </param>
         /// <param name="supportedStorageSizes"> Storage size ranges. </param>
@@ -3130,7 +3131,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="status"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
         /// <returns> A new <see cref="Models.ManagedInstanceVcoresCapability"/> instance for mocking. </returns>
-        public static ManagedInstanceVcoresCapability ManagedInstanceVcoresCapability(string name = null, int? value = null, MaxLimitRangeCapability supportedMemorySizesInGB = null, MaxSizeCapability includedMaxSize = null, IEnumerable<MaxSizeRangeCapability> supportedStorageSizes = null, long? includedStorageIOps = null, MaxLimitRangeCapability supportedStorageIOps = null, double? iopsMinValueOverrideFactorPerSelectedStorageGB = null, double? iopsIncludedValueOverrideFactorPerSelectedStorageGB = null, long? includedStorageThroughputMBps = null, MaxLimitRangeCapability supportedStorageThroughputMBps = null, double? throughputMBpsMinValueOverrideFactorPerSelectedStorageGB = null, double? throughputMBpsIncludedValueOverrideFactorPerSelectedStorageGB = null, bool? isInstancePoolSupported = null, bool? isStandaloneSupported = null, IEnumerable<ManagedInstanceMaintenanceConfigurationCapability> supportedMaintenanceConfigurations = null, SqlCapabilityStatus? status = null, string reason = null)
+        public static ManagedInstanceVcoresCapability ManagedInstanceVcoresCapability(string name = null, int? value = null, MaxLimitRangeCapability supportedMemoryLimitsInMB = null, MaxLimitRangeCapability supportedMemorySizesInGB = null, MaxSizeCapability includedMaxSize = null, IEnumerable<MaxSizeRangeCapability> supportedStorageSizes = null, long? includedStorageIOps = null, MaxLimitRangeCapability supportedStorageIOps = null, double? iopsMinValueOverrideFactorPerSelectedStorageGB = null, double? iopsIncludedValueOverrideFactorPerSelectedStorageGB = null, long? includedStorageThroughputMBps = null, MaxLimitRangeCapability supportedStorageThroughputMBps = null, double? throughputMBpsMinValueOverrideFactorPerSelectedStorageGB = null, double? throughputMBpsIncludedValueOverrideFactorPerSelectedStorageGB = null, bool? isInstancePoolSupported = null, bool? isStandaloneSupported = null, IEnumerable<ManagedInstanceMaintenanceConfigurationCapability> supportedMaintenanceConfigurations = null, SqlCapabilityStatus? status = null, string reason = null)
         {
             supportedStorageSizes ??= new List<MaxSizeRangeCapability>();
             supportedMaintenanceConfigurations ??= new List<ManagedInstanceMaintenanceConfigurationCapability>();
@@ -3138,6 +3139,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new ManagedInstanceVcoresCapability(
                 name,
                 value,
+                supportedMemoryLimitsInMB,
                 supportedMemorySizesInGB,
                 includedMaxSize,
                 supportedStorageSizes?.ToList(),

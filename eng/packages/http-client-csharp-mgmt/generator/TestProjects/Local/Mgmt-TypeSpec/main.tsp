@@ -33,7 +33,6 @@ import "./sharedmodel.tsp";
 import "./entityresource.tsp";
 import "./sharedparamrepro.tsp";
 import "./discriminatedextensionresource.tsp";
-import "./inherited-flatten-grandparent.tsp";
 using TypeSpec.Versioning;
 using Azure.ClientGenerator.Core;
 using Azure.ResourceManager;

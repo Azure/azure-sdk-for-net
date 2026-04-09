@@ -14,37 +14,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> CloudServicesNetworkStorageOptionsPatch represents the patchable storage options for the cloud services network. </summary>
     public partial class CloudServicesNetworkStorageOptionsPatch
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CloudServicesNetworkStorageOptionsPatch"/>. </summary>
         public CloudServicesNetworkStorageOptionsPatch()
@@ -55,19 +26,21 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="mode"> The indicator to enable shared storage on the cloud services network. </param>
         /// <param name="sizeMiB"> The requested storage allocation for the volume in Mebibytes. </param>
         /// <param name="storageApplianceId"> The resource ID of the storage appliance that hosts the storage. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CloudServicesNetworkStorageOptionsPatch(CloudServicesNetworkStorageMode? mode, long? sizeMiB, ResourceIdentifier storageApplianceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CloudServicesNetworkStorageOptionsPatch(CloudServicesNetworkStorageMode? mode, long? sizeMiB, ResourceIdentifier storageApplianceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Mode = mode;
             SizeMiB = sizeMiB;
             StorageApplianceId = storageApplianceId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The indicator to enable shared storage on the cloud services network. </summary>
         public CloudServicesNetworkStorageMode? Mode { get; set; }
+
         /// <summary> The requested storage allocation for the volume in Mebibytes. </summary>
         public long? SizeMiB { get; set; }
+
         /// <summary> The resource ID of the storage appliance that hosts the storage. </summary>
         public ResourceIdentifier StorageApplianceId { get; set; }
     }
