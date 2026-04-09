@@ -102,55 +102,34 @@ internal class ParameterContextRegistry : IReadOnlyDictionary<string, ParameterC
                 var bodyParameter = methodParameters.SingleOrDefault(p => p.Location == ParameterLocation.Body);
                 if (bodyParameter is not null)
                 {
-                    if (bodyParameter.Type.CanCreateRequestContent())
-                    {
-                        // For primitive types (string, BinaryData, Stream, byte[]) that have a direct
-                        // RequestContent.Create overload, use it instead of ToRequestContent.
-                        var createContent = Static(typeof(RequestContent)).Invoke(
-                            nameof(RequestContent.Create),
-                            [bodyParameter]);
-                        if (bodyParameter.Type.IsNullable)
-                        {
-                            arguments.Add(new TernaryConditionalExpression(bodyParameter.NotEqual(Null), createContent, Null));
-                        }
-                        else
-                        {
-                            arguments.Add(createContent);
-                        }
-                    }
-                    else if (bodyParameter.Type.IsCollection)
-                    {
-                        // For collection body parameters (e.g., IEnumerable<string> or IEnumerable<MyModel>),
-                        // we need to serialize the collection to a RequestContent.
-                        // For collections of model types, we use Utf8JsonWriter with WriteObjectValue to ensure
-                        // proper IJsonModel<T> serialization (correct wire property names, custom logic, etc.).
-                        // For primitive collections, RequestContent.Create(object) works via System.Text.Json.
-                        bool hasModelElements = bodyParameter.Type.Arguments.Count > 0
-                            && !bodyParameter.Type.Arguments[0].IsFrameworkType;
+                    bool isCollection = bodyParameter.Type.IsCollection;
+                    // For collections, check if element type is primitive; for single types, use CanCreateRequestContent.
+                    bool isPrimitive = isCollection
+                        ? bodyParameter.Type.Arguments.Count == 0 || bodyParameter.Type.Arguments[0].IsFrameworkType
+                        : bodyParameter.Type.CanCreateRequestContent();
 
-                        if (hasModelElements && preparationStatements is not null)
+                    if (isPrimitive)
+                    {
+                        // Primitive types or primitive collections → RequestContent.Create(param)
+                        AddRequestContentCreateArgument(arguments, bodyParameter);
+                    }
+                    else if (isCollection)
+                    {
+                        // Model collection → use Utf8JsonWriter with WriteObjectValue for proper
+                        // IJsonModel<T> serialization (correct wire names, custom logic, discriminators).
+                        if (preparationStatements is not null)
                         {
                             arguments.Add(BuildModelCollectionRequestContent(bodyParameter, preparationStatements));
                         }
                         else
                         {
-                            // Primitive collection or no preparation statements list provided:
-                            // use RequestContent.Create(object) which serializes via System.Text.Json.
-                            var createContent = Static(typeof(RequestContent)).Invoke(
-                                nameof(RequestContent.Create),
-                                [bodyParameter]);
-                            if (bodyParameter.Type.IsNullable)
-                            {
-                                arguments.Add(new TernaryConditionalExpression(bodyParameter.NotEqual(Null), createContent, Null));
-                            }
-                            else
-                            {
-                                arguments.Add(createContent);
-                            }
+                            // No preparation statements list provided: fall back to RequestContent.Create(object).
+                            AddRequestContentCreateArgument(arguments, bodyParameter);
                         }
                     }
                     else
                     {
+                        // Single model type → ToRequestContent
                         arguments.Add(Static(bodyParameter.Type).Invoke(SerializationVisitor.ToRequestContentMethodName, [bodyParameter]));
                     }
                 }
@@ -228,6 +207,25 @@ internal class ParameterContextRegistry : IReadOnlyDictionary<string, ParameterC
     private static bool IsMatchConditionType(CSharpType type)
     {
         return type.Equals(typeof(MatchConditions)) || type.Equals(typeof(RequestConditions));
+    }
+
+    /// <summary>
+    /// Adds a <c>RequestContent.Create(bodyParameter)</c> argument, with a null-check ternary if the type is nullable.
+    /// </summary>
+    private static void AddRequestContentCreateArgument(List<ValueExpression> arguments, ParameterProvider bodyParameter)
+    {
+        var createContent = Static(typeof(RequestContent)).Invoke(
+            nameof(RequestContent.Create),
+            [bodyParameter]);
+
+        if (bodyParameter.Type.IsNullable)
+        {
+            arguments.Add(new TernaryConditionalExpression(bodyParameter.NotEqual(Null), createContent, Null));
+        }
+        else
+        {
+            arguments.Add(createContent);
+        }
     }
 
     /// <summary>
