@@ -408,7 +408,57 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
             model.FullConstructor.Update(signature: updatedSignature);
         }
 
+        // Filter out parameters that reference [Obsolete] properties declared in custom code.
+        // Generated constructors should not include obsolete properties to avoid CS0618 errors.
+        signature = model.FullConstructor.Signature;
+        var obsoleteParamNames = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        var filteredParams = new List<ParameterProvider>();
+        foreach (var param in signature.Parameters)
+        {
+            if (param.Property is not null && FlattenPropertyVisitor.IsObsoleteProperty(param.Property))
+            {
+                obsoleteParamNames.Add(param.Name);
+            }
+            else
+            {
+                filteredParams.Add(param);
+            }
+        }
+
+        if (obsoleteParamNames.Count > 0)
+        {
+            var filteredSignature = new ConstructorSignature(
+                signature.Type,
+                signature.Description,
+                signature.Modifiers,
+                filteredParams,
+                signature.Attributes,
+                signature.Initializer);
+            model.FullConstructor.Update(signature: filteredSignature);
+        }
+
         var body = model.FullConstructor.BodyStatements;
+
+        // Filter out body statements that assign to obsolete properties
+        if (obsoleteParamNames.Count > 0 && body is MethodBodyStatements bodyStatements)
+        {
+            var filteredStatements = new List<MethodBodyStatement>();
+            foreach (var stmt in bodyStatements.Statements)
+            {
+                // Check if this is an assignment to an obsolete property (e.g. "PropertyName = paramName")
+                if (stmt is ExpressionStatement exprStmt &&
+                    exprStmt.Expression is AssignmentExpression assignment &&
+                    assignment.Variable is MemberExpression memberExpr &&
+                    memberExpr.MemberName is string memberName &&
+                    obsoleteParamNames.Contains(memberName))
+                {
+                    continue; // skip obsolete property assignment
+                }
+                filteredStatements.Add(stmt);
+            }
+            body = new MethodBodyStatements(filteredStatements);
+        }
+
         var statement = rawDataField.Assign(model.FullConstructor.Signature.Parameters.Single(f => f.Name.Equals(RawDataParameterName))).Terminate();
         MethodBodyStatement[] updatedBody = [statement, .. body!];
         model.FullConstructor.Update(bodyStatements: updatedBody);
