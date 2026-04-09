@@ -52,7 +52,6 @@ namespace Azure.Communication.Messages
                 Argument.CheckNotNull(credential, nameof(credential)),
                 options ?? new CommunicationMessagesClientOptions())
         {
-            _keyCredential = credential;
         }
 
         /// <summary> Initializes a new instance of ConversationManagementClient. </summary>
@@ -69,16 +68,11 @@ namespace Azure.Communication.Messages
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public ConversationAdministrationClient(Uri endpoint, TokenCredential credential, CommunicationMessagesClientOptions options)
+            : this(
+                Argument.CheckNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
+                Argument.CheckNotNull(credential, nameof(credential)),
+                options ?? new CommunicationMessagesClientOptions())
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
-            options ??= new CommunicationMessagesClientOptions();
-
-            ClientDiagnostics = new ClientDiagnostics(options, true);
-            _tokenCredential = credential;
-            Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
-            _endpoint = endpoint;
-            _apiVersion = options.Version;
         }
 
         #endregion
@@ -90,6 +84,10 @@ namespace Azure.Communication.Messages
 
         private ConversationAdministrationClient(string endpoint, AzureKeyCredential keyCredential, CommunicationMessagesClientOptions options)
             : this(new Uri(endpoint), options.BuildHttpPipeline(keyCredential), options)
+        { }
+
+        private ConversationAdministrationClient(string endpoint, TokenCredential credential, CommunicationMessagesClientOptions options)
+            : this(new Uri(endpoint), options.BuildHttpPipeline(credential), options)
         { }
 
         private ConversationAdministrationClient(Uri endpoint, HttpPipeline httpPipeline, CommunicationMessagesClientOptions options)

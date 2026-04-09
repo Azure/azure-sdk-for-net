@@ -208,25 +208,6 @@ namespace Azure.Communication.Messages
             return new WhatsAppUrlActionBindings(MessageActionBindingKind.WhatsAppUrlAction, additionalBinaryDataProperties: null, content);
         }
 
-        /// <summary> The message template's location value information. </summary>
-        /// <param name="name"> Template binding reference name. </param>
-        /// <param name="locationName"> The [Optional] name of the location. </param>
-        /// <param name="address"> The [Optional] address of the location. </param>
-        /// <param name="latitudeInternal"> The latitude of the location. </param>
-        /// <param name="longitudeInternal"> The longitude of the location. </param>
-        /// <returns> A new <see cref="Messages.MessageTemplateLocation"/> instance for mocking. </returns>
-        public static MessageTemplateLocation MessageTemplateLocation(string name = default, string locationName = default, string address = default, double latitudeInternal = default, double longitudeInternal = default)
-        {
-            return new MessageTemplateLocation(
-                name,
-                MessageTemplateValueKind.Location,
-                additionalBinaryDataProperties: null,
-                locationName,
-                address,
-                latitudeInternal,
-                longitudeInternal);
-        }
-
         /// <summary>
         /// The binding object to link values to the template specific locations
         /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.Channels.WhatsAppMessageTemplateBindings"/>.

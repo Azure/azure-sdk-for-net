@@ -440,7 +440,13 @@ namespace Azure.Communication.Messages
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetConversations(int? maxPageSize, string participantId, Guid? channelId, RequestContext context)
         {
-            return new ConversationAdministrationClientGetConversationsCollectionResult(this, maxPageSize, participantId, channelId, context);
+            return new ConversationAdministrationClientGetConversationsCollectionResult(
+                this,
+                maxPageSize,
+                participantId,
+                channelId,
+                context,
+                "ConversationAdministrationClient.GetConversations");
         }
 
         /// <summary>
@@ -459,7 +465,13 @@ namespace Azure.Communication.Messages
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetConversationsAsync(int? maxPageSize, string participantId, Guid? channelId, RequestContext context)
         {
-            return new ConversationAdministrationClientGetConversationsAsyncCollectionResult(this, maxPageSize, participantId, channelId, context);
+            return new ConversationAdministrationClientGetConversationsAsyncCollectionResult(
+                this,
+                maxPageSize,
+                participantId,
+                channelId,
+                context,
+                "ConversationAdministrationClient.GetConversations");
         }
 
         /// <summary> Retrieves list of conversations. </summary>
@@ -470,7 +482,13 @@ namespace Azure.Communication.Messages
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<CommunicationConversation> GetConversations(int? maxPageSize = default, string participantId = default, Guid? channelId = default, CancellationToken cancellationToken = default)
         {
-            return new ConversationAdministrationClientGetConversationsCollectionResultOfT(this, maxPageSize, participantId, channelId, cancellationToken.ToRequestContext());
+            return new ConversationAdministrationClientGetConversationsCollectionResultOfT(
+                this,
+                maxPageSize,
+                participantId,
+                channelId,
+                cancellationToken.ToRequestContext(),
+                "ConversationAdministrationClient.GetConversations");
         }
 
         /// <summary> Retrieves list of conversations. </summary>
@@ -481,7 +499,13 @@ namespace Azure.Communication.Messages
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<CommunicationConversation> GetConversationsAsync(int? maxPageSize = default, string participantId = default, Guid? channelId = default, CancellationToken cancellationToken = default)
         {
-            return new ConversationAdministrationClientGetConversationsAsyncCollectionResultOfT(this, maxPageSize, participantId, channelId, cancellationToken.ToRequestContext());
+            return new ConversationAdministrationClientGetConversationsAsyncCollectionResultOfT(
+                this,
+                maxPageSize,
+                participantId,
+                channelId,
+                cancellationToken.ToRequestContext(),
+                "ConversationAdministrationClient.GetConversations");
         }
 
         /// <summary>
@@ -504,7 +528,13 @@ namespace Azure.Communication.Messages
         {
             Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
 
-            return new ConversationAdministrationClientGetMessagesCollectionResult(this, conversationId, maxPageSize, participantId, context);
+            return new ConversationAdministrationClientGetMessagesCollectionResult(
+                this,
+                conversationId,
+                maxPageSize,
+                participantId,
+                context,
+                "ConversationAdministrationClient.GetMessages");
         }
 
         /// <summary>
@@ -527,7 +557,13 @@ namespace Azure.Communication.Messages
         {
             Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
 
-            return new ConversationAdministrationClientGetMessagesAsyncCollectionResult(this, conversationId, maxPageSize, participantId, context);
+            return new ConversationAdministrationClientGetMessagesAsyncCollectionResult(
+                this,
+                conversationId,
+                maxPageSize,
+                participantId,
+                context,
+                "ConversationAdministrationClient.GetMessages");
         }
 
         /// <summary> Retrieves list of conversation messages. </summary>
@@ -542,7 +578,13 @@ namespace Azure.Communication.Messages
         {
             Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
 
-            return new ConversationAdministrationClientGetMessagesCollectionResultOfT(this, conversationId, maxPageSize, participantId, cancellationToken.ToRequestContext());
+            return new ConversationAdministrationClientGetMessagesCollectionResultOfT(
+                this,
+                conversationId,
+                maxPageSize,
+                participantId,
+                cancellationToken.ToRequestContext(),
+                "ConversationAdministrationClient.GetMessages");
         }
 
         /// <summary> Retrieves list of conversation messages. </summary>
@@ -557,7 +599,13 @@ namespace Azure.Communication.Messages
         {
             Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
 
-            return new ConversationAdministrationClientGetMessagesAsyncCollectionResultOfT(this, conversationId, maxPageSize, participantId, cancellationToken.ToRequestContext());
+            return new ConversationAdministrationClientGetMessagesAsyncCollectionResultOfT(
+                this,
+                conversationId,
+                maxPageSize,
+                participantId,
+                cancellationToken.ToRequestContext(),
+                "ConversationAdministrationClient.GetMessages");
         }
 
         /// <summary>

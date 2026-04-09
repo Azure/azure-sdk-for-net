@@ -293,7 +293,13 @@ namespace Azure.Communication.Messages
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetConversations(int? maxPageSize, string participantId, Guid? channelId, RequestContext context)
         {
-            return new ConversationThreadClientGetConversationsCollectionResult(this, maxPageSize, participantId, channelId, context);
+            return new ConversationThreadClientGetConversationsCollectionResult(
+                this,
+                maxPageSize,
+                participantId,
+                channelId,
+                context,
+                "ConversationThreadClient.GetConversations");
         }
 
         /// <summary>
@@ -312,7 +318,13 @@ namespace Azure.Communication.Messages
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetConversationsAsync(int? maxPageSize, string participantId, Guid? channelId, RequestContext context)
         {
-            return new ConversationThreadClientGetConversationsAsyncCollectionResult(this, maxPageSize, participantId, channelId, context);
+            return new ConversationThreadClientGetConversationsAsyncCollectionResult(
+                this,
+                maxPageSize,
+                participantId,
+                channelId,
+                context,
+                "ConversationThreadClient.GetConversations");
         }
 
         /// <summary> Retrieves list of conversations. </summary>
@@ -323,7 +335,13 @@ namespace Azure.Communication.Messages
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<CommunicationConversation> GetConversations(int? maxPageSize = default, string participantId = default, Guid? channelId = default, CancellationToken cancellationToken = default)
         {
-            return new ConversationThreadClientGetConversationsCollectionResultOfT(this, maxPageSize, participantId, channelId, cancellationToken.ToRequestContext());
+            return new ConversationThreadClientGetConversationsCollectionResultOfT(
+                this,
+                maxPageSize,
+                participantId,
+                channelId,
+                cancellationToken.ToRequestContext(),
+                "ConversationThreadClient.GetConversations");
         }
 
         /// <summary> Retrieves list of conversations. </summary>
@@ -334,7 +352,13 @@ namespace Azure.Communication.Messages
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<CommunicationConversation> GetConversationsAsync(int? maxPageSize = default, string participantId = default, Guid? channelId = default, CancellationToken cancellationToken = default)
         {
-            return new ConversationThreadClientGetConversationsAsyncCollectionResultOfT(this, maxPageSize, participantId, channelId, cancellationToken.ToRequestContext());
+            return new ConversationThreadClientGetConversationsAsyncCollectionResultOfT(
+                this,
+                maxPageSize,
+                participantId,
+                channelId,
+                cancellationToken.ToRequestContext(),
+                "ConversationThreadClient.GetConversations");
         }
 
         /// <summary>
@@ -357,7 +381,13 @@ namespace Azure.Communication.Messages
         {
             Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
 
-            return new ConversationThreadClientGetMessagesCollectionResult(this, conversationId, maxPageSize, participantId, context);
+            return new ConversationThreadClientGetMessagesCollectionResult(
+                this,
+                conversationId,
+                maxPageSize,
+                participantId,
+                context,
+                "ConversationThreadClient.GetMessages");
         }
 
         /// <summary>
@@ -380,7 +410,13 @@ namespace Azure.Communication.Messages
         {
             Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
 
-            return new ConversationThreadClientGetMessagesAsyncCollectionResult(this, conversationId, maxPageSize, participantId, context);
+            return new ConversationThreadClientGetMessagesAsyncCollectionResult(
+                this,
+                conversationId,
+                maxPageSize,
+                participantId,
+                context,
+                "ConversationThreadClient.GetMessages");
         }
 
         /// <summary> Retrieves list of conversation messages. </summary>
@@ -395,7 +431,13 @@ namespace Azure.Communication.Messages
         {
             Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
 
-            return new ConversationThreadClientGetMessagesCollectionResultOfT(this, conversationId, maxPageSize, participantId, cancellationToken.ToRequestContext());
+            return new ConversationThreadClientGetMessagesCollectionResultOfT(
+                this,
+                conversationId,
+                maxPageSize,
+                participantId,
+                cancellationToken.ToRequestContext(),
+                "ConversationThreadClient.GetMessages");
         }
 
         /// <summary> Retrieves list of conversation messages. </summary>
@@ -410,7 +452,13 @@ namespace Azure.Communication.Messages
         {
             Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
 
-            return new ConversationThreadClientGetMessagesAsyncCollectionResultOfT(this, conversationId, maxPageSize, participantId, cancellationToken.ToRequestContext());
+            return new ConversationThreadClientGetMessagesAsyncCollectionResultOfT(
+                this,
+                conversationId,
+                maxPageSize,
+                participantId,
+                cancellationToken.ToRequestContext(),
+                "ConversationThreadClient.GetMessages");
         }
 
         /// <summary>

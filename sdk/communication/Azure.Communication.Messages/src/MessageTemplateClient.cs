@@ -51,7 +51,6 @@ namespace Azure.Communication.Messages
                 Argument.CheckNotNull(credential, nameof(credential)),
                 options ?? new CommunicationMessagesClientOptions())
         {
-            _keyCredential = credential;
         }
 
         /// <summary> Initializes a new instance of <see cref="MessageTemplateClient"/>.</summary>
@@ -72,7 +71,6 @@ namespace Azure.Communication.Messages
                 (options ?? new CommunicationMessagesClientOptions()).BuildHttpPipeline(credential),
                 options ?? new CommunicationMessagesClientOptions())
         {
-            _tokenCredential = credential;
         }
 
         /// <summary> Initializes a new instance of <see cref="MessageTemplateClient"/>.</summary>

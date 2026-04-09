@@ -75,7 +75,6 @@ namespace Azure.Communication.Messages
                 (options ?? new CommunicationMessagesClientOptions()).BuildHttpPipeline(credential),
                 options ?? new CommunicationMessagesClientOptions())
         {
-            _tokenCredential = credential;
         }
 
         /// <summary> Initializes a new instance of <see cref="NotificationMessagesClient"/>.</summary>
@@ -102,7 +101,6 @@ namespace Azure.Communication.Messages
         private NotificationMessagesClient(string endpoint, AzureKeyCredential credential, CommunicationMessagesClientOptions options)
             : this(new Uri(endpoint), options.BuildHttpPipeline(credential), options)
         {
-            _keyCredential = credential;
         }
 
         private NotificationMessagesClient(Uri endpoint, HttpPipeline httpPipeline, CommunicationMessagesClientOptions options)

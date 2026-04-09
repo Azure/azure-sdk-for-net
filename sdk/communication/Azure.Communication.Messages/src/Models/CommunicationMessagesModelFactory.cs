@@ -13,6 +13,7 @@ namespace Azure.Communication.Messages
 {
     /// <summary> Model factory for models. </summary>
     [CodeGenType("MessagesModelFactory")]
+    [CodeGenSuppress("MessageTemplateLocation", typeof(string), typeof(string), typeof(string), typeof(double), typeof(double))]
     public static partial class CommunicationMessagesModelFactory
     {
         /// <summary> A request to send an audio notification. </summary>
@@ -248,7 +249,13 @@ namespace Azure.Communication.Messages
         [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable CS0618
         public static Models.Channels.WhatsAppMessageTemplateItem WhatsAppMessageTemplateItem(string name, string language, MessageTemplateStatus status, BinaryData content)
-            => new Models.Channels.WhatsAppMessageTemplateItem(name, language, status, content);
+            => new Models.Channels.WhatsAppMessageTemplateItem(
+                name,
+                language,
+                status,
+                CommunicationMessagesChannel.WhatsApp,
+                additionalBinaryDataProperties: null,
+                content);
 #pragma warning restore CS0618
     }
 }

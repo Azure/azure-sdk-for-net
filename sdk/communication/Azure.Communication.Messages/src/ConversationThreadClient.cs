@@ -49,7 +49,6 @@ namespace Azure.Communication.Messages
                 Argument.CheckNotNull(credential, nameof(credential)),
                 options ?? new CommunicationMessagesClientOptions())
         {
-            _keyCredential = credential;
         }
 
         /// <summary>
@@ -64,7 +63,6 @@ namespace Azure.Communication.Messages
                 Argument.CheckNotNull(communicationTokenCredential, nameof(communicationTokenCredential)),
                 options ?? new CommunicationMessagesClientOptions())
         {
-            _tokenCredential = new CommunicationBearerTokenCredential(communicationTokenCredential);
         }
 
         #endregion

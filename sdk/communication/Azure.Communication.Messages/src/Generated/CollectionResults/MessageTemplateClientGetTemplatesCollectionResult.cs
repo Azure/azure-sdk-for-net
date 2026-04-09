@@ -20,18 +20,21 @@ namespace Azure.Communication.Messages
         private readonly Guid _channelId;
         private readonly int? _maxPageSize;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of MessageTemplateClientGetTemplatesCollectionResult, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The MessageTemplateClient client used to send requests. </param>
         /// <param name="channelId"> The registration ID of the channel. </param>
         /// <param name="maxPageSize"> Number of objects to return per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public MessageTemplateClientGetTemplatesCollectionResult(MessageTemplateClient client, Guid channelId, int? maxPageSize, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public MessageTemplateClientGetTemplatesCollectionResult(MessageTemplateClient client, Guid channelId, int? maxPageSize, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _channelId = channelId;
             _maxPageSize = maxPageSize;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of MessageTemplateClientGetTemplatesCollectionResult as an enumerable collection. </summary>
@@ -69,7 +72,7 @@ namespace Azure.Communication.Messages
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetTemplatesRequest(nextLink, _channelId, _maxPageSize, _context) : _client.CreateGetTemplatesRequest(_channelId, _maxPageSize, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MessageTemplateClient.GetTemplates");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

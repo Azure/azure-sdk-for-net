@@ -21,6 +21,7 @@ namespace Azure.Communication.Messages
         private readonly int? _maxPageSize;
         private readonly string _participantId;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of ConversationThreadClientGetMessagesCollectionResult, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The ConversationThreadClient client used to send requests. </param>
@@ -28,13 +29,15 @@ namespace Azure.Communication.Messages
         /// <param name="maxPageSize"> Number of objects to return per page. </param>
         /// <param name="participantId"> The participant user ID. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ConversationThreadClientGetMessagesCollectionResult(ConversationThreadClient client, string conversationId, int? maxPageSize, string participantId, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public ConversationThreadClientGetMessagesCollectionResult(ConversationThreadClient client, string conversationId, int? maxPageSize, string participantId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _conversationId = conversationId;
             _maxPageSize = maxPageSize;
             _participantId = participantId;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of ConversationThreadClientGetMessagesCollectionResult as an enumerable collection. </summary>
@@ -72,7 +75,7 @@ namespace Azure.Communication.Messages
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetMessagesRequest(nextLink, _conversationId, _maxPageSize, _participantId, _context) : _client.CreateGetMessagesRequest(_conversationId, _maxPageSize, _participantId, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ConversationThreadClient.GetMessages");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

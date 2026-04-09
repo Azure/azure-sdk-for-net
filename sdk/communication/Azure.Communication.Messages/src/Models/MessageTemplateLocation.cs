@@ -20,7 +20,7 @@ namespace Azure.Communication.Messages
         internal double LatitudeInternal
         {
             get => Position.Latitude;
-            set { }
+            set => Position = new GeoPosition(Position.Longitude, value);
         }
 
         /// <summary> The longitude of the location. </summary>
@@ -28,7 +28,7 @@ namespace Azure.Communication.Messages
         internal double LongitudeInternal
         {
             get => Position.Longitude;
-            set { }
+            set => Position = new GeoPosition(value, Position.Latitude);
         }
 
         /// <summary> The geo position of the location. </summary>
