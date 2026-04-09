@@ -3908,6 +3908,7 @@ namespace Azure.Storage.Blobs.Specialized
                 try
                 {
                     scope.Start();
+                    Argument.AssertNotNull(source, nameof(source));
                     Response response;
 
                     if (async)
@@ -4120,6 +4121,7 @@ namespace Azure.Storage.Blobs.Specialized
                 try
                 {
                     scope.Start();
+                    Argument.AssertNotNull(copyId, nameof(copyId));
                     Response response;
 
                     if (async)
@@ -4390,6 +4392,7 @@ namespace Azure.Storage.Blobs.Specialized
 
                     scope.Start();
 
+                    Argument.AssertNotNull(source, nameof(source));
                     Response response;
 
                     if (async)

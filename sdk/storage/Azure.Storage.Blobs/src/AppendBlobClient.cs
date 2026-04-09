@@ -1739,6 +1739,7 @@ namespace Azure.Storage.Blobs.Specialized
                 try
                 {
                     scope.Start();
+                    Argument.AssertNotNull(sourceUri, nameof(sourceUri));
                     Response response;
 
                     if (async)

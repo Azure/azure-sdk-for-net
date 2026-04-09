@@ -3628,6 +3628,7 @@ namespace Azure.Storage.Blobs.Specialized
                 try
                 {
                     scope.Start();
+                    Argument.AssertNotNull(sourceUri, nameof(sourceUri));
 
                     // Create copySource Uri
                     PageBlobClient sourcePageBlobClient = new PageBlobClient(
@@ -4092,15 +4093,21 @@ namespace Azure.Storage.Blobs.Specialized
                 try
                 {
                     scope.Start();
+                    Argument.AssertNotNull(sourceUri, nameof(sourceUri));
+                    string sourceRangeString = sourceRange.ToString();
+                    string rangeString = range.ToString();
+
+                    Argument.AssertNotNull(sourceRangeString, nameof(sourceRange));
+                    Argument.AssertNotNull(rangeString, nameof(range));
                     Response response;
 
                     if (async)
                     {
                         response = await PageBlobRestClient.UploadPagesFromUrlAsync(
                             sourceUrl: sourceUri.AbsoluteUri,
-                            sourceRange: sourceRange.ToString(),
+                            sourceRange: sourceRangeString,
                             contentLength: 0,
-                            range: range.ToString(),
+                            range: rangeString,
                             sourceContentMd5: sourceContentHash != null
                                 ? BinaryData.FromBytes(sourceContentHash)
                                 : null,
@@ -4130,9 +4137,9 @@ namespace Azure.Storage.Blobs.Specialized
                     {
                         response = PageBlobRestClient.UploadPagesFromUrl(
                             sourceUrl: sourceUri.AbsoluteUri,
-                            sourceRange: sourceRange.ToString(),
+                            sourceRange: sourceRangeString,
                             contentLength: 0,
-                            range: range.ToString(),
+                            range: rangeString,
                             sourceContentMd5: sourceContentHash != null
                                 ? BinaryData.FromBytes(sourceContentHash)
                                 : null,

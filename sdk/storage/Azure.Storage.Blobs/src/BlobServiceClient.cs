@@ -1305,6 +1305,7 @@ namespace Azure.Storage.Blobs
                 try
                 {
                     scope.Start();
+                    Argument.AssertNotNull(properties, nameof(properties));
                     Response response;
 
                     if (async)
@@ -2341,6 +2342,7 @@ namespace Azure.Storage.Blobs
                     BlobContainerClient containerClient = GetBlobContainerClient(destinationContainerName);
 
                     Response response;
+                    Argument.AssertNotNull(sourceContainerName, nameof(sourceContainerName));
 
                     if (async)
                     {

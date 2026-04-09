@@ -651,6 +651,7 @@ namespace Azure.Storage.Blobs.Specialized
                     if (BlobClient != null)
                     {
                         Response blobClientResponse;
+                        Argument.AssertNotNull(LeaseId, nameof(LeaseId));
 
                         if (async)
                         {
@@ -684,6 +685,7 @@ namespace Azure.Storage.Blobs.Specialized
                             parameterName: nameof(conditions));
 
                         Response containerClientResponse;
+                        Argument.AssertNotNull(LeaseId, nameof(LeaseId));
 
                         if (async)
                         {
@@ -874,6 +876,7 @@ namespace Azure.Storage.Blobs.Specialized
                     if (BlobClient != null)
                     {
                         Response response;
+                        Argument.AssertNotNull(LeaseId, nameof(LeaseId));
 
                         if (async)
                         {
@@ -907,6 +910,7 @@ namespace Azure.Storage.Blobs.Specialized
                             parameterName: nameof(conditions));
 
                         Response containerReleaseResponse;
+                        Argument.AssertNotNull(LeaseId, nameof(LeaseId));
 
                         if (async)
                         {
@@ -1095,6 +1099,8 @@ namespace Azure.Storage.Blobs.Specialized
                     if (BlobClient != null)
                     {
                         Response blobClientResponse;
+                        Argument.AssertNotNull(LeaseId, nameof(LeaseId));
+                        Argument.AssertNotNull(proposedId, nameof(proposedId));
 
                         if (async)
                         {
@@ -1130,6 +1136,8 @@ namespace Azure.Storage.Blobs.Specialized
                             parameterName: nameof(conditions));
 
                         Response containerClientResponse;
+                        Argument.AssertNotNull(LeaseId, nameof(LeaseId));
+                        Argument.AssertNotNull(proposedId, nameof(proposedId));
 
                         if (async)
                         {

@@ -925,6 +925,8 @@ namespace Azure.Storage.Blobs.Specialized
                         disposableBucket.Add(Shared.StorageExtensions.CreateClientSideEncryptionScope(ClientSideEncryption.EncryptionVersion));
                     }
 
+                    Argument.AssertNotNull(content, nameof(content));
+
                     if (async)
                     {
                         response = await BlockBlobRestClient.UploadAsync(
@@ -1398,6 +1400,9 @@ namespace Azure.Storage.Blobs.Specialized
                             cancellationToken).ConfigureAwait(false);
                         content = content.WithNoDispose().WithProgress(progressHandler);
                     }
+
+                    Argument.AssertNotNull(content, nameof(content));
+                    Argument.AssertNotNullOrEmpty(base64BlockId, nameof(base64BlockId));
 
                     Response response;
 
@@ -1880,6 +1885,8 @@ namespace Azure.Storage.Blobs.Specialized
                 try
                 {
                     scope.Start();
+                    Argument.AssertNotNullOrEmpty(base64BlockId, nameof(base64BlockId));
+                    Argument.AssertNotNull(sourceUri, nameof(sourceUri));
                     Response response;
 
                     if (async)
@@ -3272,6 +3279,7 @@ namespace Azure.Storage.Blobs.Specialized
                 try
                 {
                     scope.Start();
+                    Argument.AssertNotNull(copySource, nameof(copySource));
                     Response response;
 
                     if (async)
