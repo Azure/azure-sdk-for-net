@@ -829,6 +829,75 @@ public class SampleEndToEndTests
     }
 
     // ═══════════════════════════════════════════════════════════════════
+    //  Sample 14 — File Inputs
+    // ═══════════════════════════════════════════════════════════════════
+
+    [Test]
+    public async Task Sample14_FileBase64Handler_DecodesInlineFile()
+    {
+        // "Hello World" as base64 = "SGVsbG8gV29ybGQ="
+        using var factory = new TestWebApplicationFactory(
+            configureTestServices: services =>
+            {
+                services.AddSingleton<ResponseHandler, Sample14Snippets.FileBase64Handler>();
+            });
+        using var client = factory.CreateClient();
+
+        var body = await PostJsonAsync(client, """
+            {
+              "model": "test",
+              "input": [
+                {
+                  "type": "message",
+                  "role": "user",
+                  "content": [
+                    {"type": "input_text", "text": "Summarize this"},
+                    {"type": "input_file", "filename": "notes.txt", "file_data": "data:text/plain;base64,SGVsbG8gV29ybGQ="}
+                  ]
+                }
+              ]
+            }
+            """);
+
+        using var doc = JsonDocument.Parse(body);
+        var text = GetOutputText(doc.RootElement);
+        Assert.That(text, Does.Contain("notes.txt"));
+        Assert.That(text, Does.Contain("11 bytes")); // "Hello World" = 11 bytes
+    }
+
+    [Test]
+    public async Task Sample14_FileUrlHandler_ExtractsFileUrl()
+    {
+        using var factory = new TestWebApplicationFactory(
+            configureTestServices: services =>
+            {
+                services.AddSingleton<ResponseHandler, Sample14Snippets.FileUrlHandler>();
+            });
+        using var client = factory.CreateClient();
+
+        var body = await PostJsonAsync(client, """
+            {
+              "model": "test",
+              "input": [
+                {
+                  "type": "message",
+                  "role": "user",
+                  "content": [
+                    {"type": "input_text", "text": "Analyze this"},
+                    {"type": "input_file", "filename": "data.csv", "file_url": "https://example.com/data.csv"}
+                  ]
+                }
+              ]
+            }
+            """);
+
+        using var doc = JsonDocument.Parse(body);
+        var text = GetOutputText(doc.RootElement);
+        Assert.That(text, Does.Contain("data.csv"));
+        Assert.That(text, Does.Contain("https://example.com/data.csv"));
+    }
+
+    // ═══════════════════════════════════════════════════════════════════
     //  Helpers
     // ═══════════════════════════════════════════════════════════════════
 

@@ -23,3 +23,4 @@ description: Samples for the Azure.AI.AgentServer.Responses client library.
 - [Non-Streaming OpenAI Upstream](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/samples/Sample11_NonStreamingOpenAIUpstream.md) — Call upstream OpenAI-compatible server and build event stream
 - [Image Generation](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/samples/Sample12_ImageGeneration.md) — Return base64-encoded images with optional streaming partial renders
 - [Image Input](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/samples/Sample13_ImageInput.md) — Receive images via URL or base64 data URL
+- [File Inputs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/samples/Sample14_FileInputs.md) — Receive files via base64 inline data or URL

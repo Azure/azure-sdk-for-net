@@ -1,6 +1,6 @@
 # Sample 12: Image generation
 
-This sample shows how to build a handler that returns generated images using the `image_generation_call` output item type. The result is delivered as **base64-encoded image data** — clients decode it to get the raw bytes (PNG, JPEG, WebP, etc.).
+This sample shows how to build a handler that returns generated images using the `image_generation_call` output item type. The result can be delivered as **base64-encoded image data** — clients decode it to get the raw bytes (PNG, JPEG, WebP, etc.).
 
 The sample demonstrates three patterns:
 1. **Simple** — return a complete image in one shot
