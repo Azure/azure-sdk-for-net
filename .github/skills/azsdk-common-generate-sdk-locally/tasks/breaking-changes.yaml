@@ -1,0 +1,26 @@
+id: sdk-local-breaking-changes-001
+name: Resolve Breaking Changes After Spec Update
+description: |
+  Test that the skill triggers customization when breaking changes
+  are detected after a TypeSpec specification update — properties
+  renamed, types changed, or customization code drifts.
+tags:
+  - customization
+  - breaking-changes
+  - full-workflow
+inputs:
+  prompt: "After regenerating the Java SDK, the build is failing because the service team renamed 'displayName' to 'name' in the TypeSpec. Our customization class still references getField('displayName') and it can't find the symbol. Can you fix this?"
+expected:
+  output_contains:
+    - "customiz"
+    - "TypeSpec"
+  output_excludes:
+    - "cannot help"
+  outcomes:
+    - type: tool_called
+      tool_name: azsdk_customized_code_update
+    - type: tool_called
+      tool_name: azsdk_package_build_code
+  behavior:
+    max_tool_calls: 12
+    max_response_time_ms: 120000

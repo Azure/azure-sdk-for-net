@@ -1,0 +1,24 @@
+id: sdk-local-analyzer-errors-001
+name: Fix .NET Analyzer Errors via Customization
+description: |
+  Test that the skill triggers customization when .NET build fails
+  with analyzer errors like AZC0030 (naming violations) or AZC0012
+  (generic type names).
+tags:
+  - customization
+  - analyzer
+  - dotnet
+inputs:
+  prompt: "The .NET SDK build is failing with analyzer errors: AZC0030 says the model name ends with 'Parameters' and AZC0012 says type name 'Tasks' is too generic. Can you fix these?"
+expected:
+  output_contains:
+    - "customiz"
+    - "clientName"
+  output_excludes:
+    - "cannot help"
+  outcomes:
+    - type: tool_called
+      tool_name: azsdk_customized_code_update
+  behavior:
+    max_tool_calls: 10
+    max_response_time_ms: 60000

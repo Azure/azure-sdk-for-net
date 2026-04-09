@@ -1,0 +1,26 @@
+id: sdk-local-customization-001
+name: Duplicate Field Conflict After TypeSpec Addition
+description: |
+  Test that the skill triggers TypeSpec customization when SDK build
+  fails because TypeSpec now generates a field that already exists
+  in manual customization code, causing a duplicate field error.
+tags:
+  - customization
+  - error-handling
+  - full-workflow
+inputs:
+  prompt: "The Java SDK build is failing after regeneration. The error says 'variable operationId is already defined in class AnalyzeOperationDetails'. It looks like the service team added operationId to the TypeSpec, but our DocumentIntelligenceCustomizations.java already injects that field manually. Can you fix this?"
+expected:
+  output_contains:
+    - "customiz"
+    - "duplicate"
+  output_excludes:
+    - "cannot help"
+  outcomes:
+    - type: tool_called
+      tool_name: azsdk_customized_code_update
+    - type: tool_called
+      tool_name: azsdk_package_build_code
+  behavior:
+    max_tool_calls: 12
+    max_response_time_ms: 120000
