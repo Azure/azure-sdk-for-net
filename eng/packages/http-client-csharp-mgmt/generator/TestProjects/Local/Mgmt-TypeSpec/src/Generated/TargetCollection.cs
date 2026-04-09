@@ -309,7 +309,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 _parentResourceType,
                 _parentResourceName,
                 continuationToken,
-                context), data => new TargetResource(Client, data));
+                context,
+                "TargetCollection.GetAll"), data => new TargetResource(Client, data));
         }
 
         /// <summary>
@@ -346,7 +347,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 _parentResourceType,
                 _parentResourceName,
                 continuationToken,
-                context), data => new TargetResource(Client, data));
+                context,
+                "TargetCollection.GetAll"), data => new TargetResource(Client, data));
         }
 
         /// <summary>

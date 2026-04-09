@@ -141,6 +141,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             };
 
             arguments.AddRange(_parameterMappings.PopulateArguments(This.As<ArmResource>().Id(), requestMethod.Signature.Parameters, contextVariable, _signature.Parameters));
+            arguments.Add(Literal(diagnosticScope));
 
             // Handle ResourceData type conversion if needed
             if (_itemResourceClient != null)

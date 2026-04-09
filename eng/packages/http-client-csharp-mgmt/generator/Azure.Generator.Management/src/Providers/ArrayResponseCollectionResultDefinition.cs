@@ -115,6 +115,13 @@ namespace Azure.Generator.Management.Providers
                 "_context",
                 this));
 
+            // Add _diagnosticScope field
+            fields.Add(new FieldProvider(
+                FieldModifiers.Private | FieldModifiers.ReadOnly,
+                typeof(string),
+                "_diagnosticScope",
+                this));
+
             return [.. fields];
         }
 
@@ -126,8 +133,10 @@ namespace Azure.Generator.Management.Providers
             };
             parameters.AddRange(_constructorParameters);
             parameters.Add(new ParameterProvider("context", $"The request options, which can override default behaviors of the client pipeline on a per-call basis.", typeof(RequestContext)));
+            parameters.Add(new ParameterProvider("diagnosticScope", $"The diagnostic scope name.", typeof(string)));
 
-            var contextParam = parameters.Last();
+            var contextParam = parameters[parameters.Count - 2];
+            var diagnosticScopeParam = parameters.Last();
 
             var signature = new ConstructorSignature(
                 Type,
@@ -146,6 +155,7 @@ namespace Azure.Generator.Management.Providers
             }
 
             bodyStatements.Add(This.Property("_context").Assign(contextParam).Terminate());
+            bodyStatements.Add(This.Property("_diagnosticScope").Assign(diagnosticScopeParam).Terminate());
 
             return [new ConstructorProvider(signature, bodyStatements.ToArray(), this)];
         }
@@ -239,7 +249,7 @@ namespace Azure.Generator.Management.Providers
                     This.Property("_client").Invoke(createRequestMethodName, requestArgs),
                     out var messageVariable),
                 UsingDeclare("scope", typeof(DiagnosticScope),
-                    This.Property("_client").Property("ClientDiagnostics").Invoke("CreateScope", [Literal(_scopeName)]),
+                    This.Property("_client").Property("ClientDiagnostics").Invoke("CreateScope", [This.Property("_diagnosticScope")]),
                     out var scopeVariable),
                 scopeVariable.Invoke("Start").Terminate()
             };

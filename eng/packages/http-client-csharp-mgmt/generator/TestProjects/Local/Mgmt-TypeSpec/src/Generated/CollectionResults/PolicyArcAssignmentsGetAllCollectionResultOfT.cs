@@ -21,6 +21,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         private readonly string _resourceGroupName;
         private readonly string _machineName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of PolicyArcAssignmentsGetAllCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The PolicyArcAssignments client used to send requests. </param>
@@ -28,13 +29,15 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="machineName"></param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public PolicyArcAssignmentsGetAllCollectionResultOfT(PolicyArcAssignments client, Guid subscriptionId, string resourceGroupName, string machineName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public PolicyArcAssignmentsGetAllCollectionResultOfT(PolicyArcAssignments client, Guid subscriptionId, string resourceGroupName, string machineName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
             _machineName = machineName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of PolicyArcAssignmentsGetAllCollectionResultOfT as an enumerable collection. </summary>
