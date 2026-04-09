@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.EventHubs
         {
             if (id.ResourceType != EventHubsNamespaceResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, EventHubsNamespaceResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, EventHubsNamespaceResource.ResourceType), nameof(id));
             }
         }
 
@@ -287,7 +287,13 @@ namespace Azure.ResourceManager.EventHubs
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EventHubsDisasterRecoveryData, EventHubsDisasterRecoveryResource>(new EventHubsDisasterRecoveryAuthorizationRuleGetAllAsyncCollectionResultOfT(_eventHubsDisasterRecoveryAuthorizationRuleRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new EventHubsDisasterRecoveryResource(Client, data));
+            return new AsyncPageableWrapper<EventHubsDisasterRecoveryData, EventHubsDisasterRecoveryResource>(new EventHubsDisasterRecoveryAuthorizationRuleGetAllAsyncCollectionResultOfT(
+                _eventHubsDisasterRecoveryAuthorizationRuleRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "EventHubsDisasterRecoveryCollection.GetAll"), data => new EventHubsDisasterRecoveryResource(Client, data));
         }
 
         /// <summary>
@@ -315,7 +321,13 @@ namespace Azure.ResourceManager.EventHubs
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EventHubsDisasterRecoveryData, EventHubsDisasterRecoveryResource>(new EventHubsDisasterRecoveryAuthorizationRuleGetAllCollectionResultOfT(_eventHubsDisasterRecoveryAuthorizationRuleRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new EventHubsDisasterRecoveryResource(Client, data));
+            return new PageableWrapper<EventHubsDisasterRecoveryData, EventHubsDisasterRecoveryResource>(new EventHubsDisasterRecoveryAuthorizationRuleGetAllCollectionResultOfT(
+                _eventHubsDisasterRecoveryAuthorizationRuleRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "EventHubsDisasterRecoveryCollection.GetAll"), data => new EventHubsDisasterRecoveryResource(Client, data));
         }
 
         /// <summary>

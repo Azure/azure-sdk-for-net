@@ -195,7 +195,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 _vaultName,
                 filter,
                 skipToken,
-                context), data => new BackupEngineResource(Client, data));
+                context,
+                "BackupEngineCollection.GetAll"), data => new BackupEngineResource(Client, data));
         }
 
         /// <summary>
@@ -232,7 +233,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 _vaultName,
                 filter,
                 skipToken,
-                context), data => new BackupEngineResource(Client, data));
+                context,
+                "BackupEngineCollection.GetAll"), data => new BackupEngineResource(Client, data));
         }
 
         /// <summary>

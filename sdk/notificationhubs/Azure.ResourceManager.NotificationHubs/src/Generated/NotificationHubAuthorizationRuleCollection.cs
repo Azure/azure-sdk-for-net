@@ -293,7 +293,8 @@ namespace Azure.ResourceManager.NotificationHubs
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new NotificationHubAuthorizationRuleResource(Client, data));
+                context,
+                "NotificationHubAuthorizationRuleCollection.GetAll"), data => new NotificationHubAuthorizationRuleResource(Client, data));
         }
 
         /// <summary>
@@ -327,7 +328,8 @@ namespace Azure.ResourceManager.NotificationHubs
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new NotificationHubAuthorizationRuleResource(Client, data));
+                context,
+                "NotificationHubAuthorizationRuleCollection.GetAll"), data => new NotificationHubAuthorizationRuleResource(Client, data));
         }
 
         /// <summary>

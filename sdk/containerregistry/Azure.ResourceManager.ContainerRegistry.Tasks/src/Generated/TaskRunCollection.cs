@@ -298,7 +298,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<TaskRunData, TaskRunResource>(new TaskRunsGetAllAsyncCollectionResultOfT(_taskRunsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _registryName, context), data => new TaskRunResource(Client, data));
+            return new AsyncPageableWrapper<TaskRunData, TaskRunResource>(new TaskRunsGetAllAsyncCollectionResultOfT(
+                _taskRunsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                _registryName,
+                context,
+                "TaskRunCollection.GetAll"), data => new TaskRunResource(Client, data));
         }
 
         /// <summary>
@@ -326,7 +332,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<TaskRunData, TaskRunResource>(new TaskRunsGetAllCollectionResultOfT(_taskRunsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _registryName, context), data => new TaskRunResource(Client, data));
+            return new PageableWrapper<TaskRunData, TaskRunResource>(new TaskRunsGetAllCollectionResultOfT(
+                _taskRunsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                _registryName,
+                context,
+                "TaskRunCollection.GetAll"), data => new TaskRunResource(Client, data));
         }
 
         /// <summary>

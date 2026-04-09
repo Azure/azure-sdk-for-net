@@ -84,6 +84,34 @@ namespace Azure.ResourceManager.Quota.Mocking
             return new SubscriptionQuotaAllocationsListResource(Client, id);
         }
 
+        /// <summary> Gets a collection of <see cref="SubscriptionQuotaAllocationsListCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="SubscriptionQuotaAllocationsListResource"/> objects. </returns>
+        public virtual SubscriptionQuotaAllocationsListCollection GetSubscriptionQuotaAllocationsLists(ResourceIdentifier scope)
+        {
+            return new SubscriptionQuotaAllocationsListCollection(Client, scope);
+        }
+
+        /// <summary> Gets all the quota allocated to a subscription for the specified resource provider and location for resource names passed in $filter=resourceName eq {SKU}. This will include the GroupQuota and total quota allocated to the subscription. Only the Group quota allocated to the subscription can be allocated back to the MG Group Quota. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual Response<SubscriptionQuotaAllocationsListResource> GetSubscriptionQuotaAllocationsList(ResourceIdentifier scope, AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionQuotaAllocationsLists(scope).Get(location, cancellationToken);
+        }
+
+        /// <summary> Gets all the quota allocated to a subscription for the specified resource provider and location for resource names passed in $filter=resourceName eq {SKU}. This will include the GroupQuota and total quota allocated to the subscription. Only the Group quota allocated to the subscription can be allocated back to the MG Group Quota. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SubscriptionQuotaAllocationsListResource>> GetSubscriptionQuotaAllocationsListAsync(ResourceIdentifier scope, AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            return await GetSubscriptionQuotaAllocationsLists(scope).GetAsync(location, cancellationToken).ConfigureAwait(false);
+        }
+
         /// <summary> Gets an object representing a <see cref="QuotaAllocationRequestStatusResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="QuotaAllocationRequestStatusResource"/> object. </returns>
@@ -91,6 +119,42 @@ namespace Azure.ResourceManager.Quota.Mocking
         {
             QuotaAllocationRequestStatusResource.ValidateResourceId(id);
             return new QuotaAllocationRequestStatusResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="QuotaAllocationRequestStatusCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="QuotaAllocationRequestStatusResource"/> objects. </returns>
+        public virtual QuotaAllocationRequestStatusCollection GetQuotaAllocationRequestStatuses(ResourceIdentifier scope)
+        {
+            return new QuotaAllocationRequestStatusCollection(Client, scope);
+        }
+
+        /// <summary> Get the quota allocation request status for the subscriptionId by allocationId. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="allocationId"> Request Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="allocationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="allocationId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<QuotaAllocationRequestStatusResource> GetQuotaAllocationRequestStatus(ResourceIdentifier scope, string allocationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(allocationId, nameof(allocationId));
+
+            return GetQuotaAllocationRequestStatuses(scope).Get(allocationId, cancellationToken);
+        }
+
+        /// <summary> Get the quota allocation request status for the subscriptionId by allocationId. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="allocationId"> Request Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="allocationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="allocationId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<QuotaAllocationRequestStatusResource>> GetQuotaAllocationRequestStatusAsync(ResourceIdentifier scope, string allocationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(allocationId, nameof(allocationId));
+
+            return await GetQuotaAllocationRequestStatuses(scope).GetAsync(allocationId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets an object representing a <see cref="GroupQuotasEnforcementStatusResource"/> along with the instance operations that can be performed on it but with no data. </summary>

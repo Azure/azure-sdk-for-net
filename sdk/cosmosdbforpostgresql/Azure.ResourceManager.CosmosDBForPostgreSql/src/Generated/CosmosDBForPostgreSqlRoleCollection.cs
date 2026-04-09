@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         {
             if (id.ResourceType != CosmosDBForPostgreSqlClusterResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, CosmosDBForPostgreSqlClusterResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, CosmosDBForPostgreSqlClusterResource.ResourceType), nameof(id));
             }
         }
 
@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CosmosDBForPostgreSqlRoleData, CosmosDBForPostgreSqlRoleResource>(new RolesGetByClusterAsyncCollectionResultOfT(_rolesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new CosmosDBForPostgreSqlRoleResource(Client, data));
+            return new AsyncPageableWrapper<CosmosDBForPostgreSqlRoleData, CosmosDBForPostgreSqlRoleResource>(new RolesGetByClusterAsyncCollectionResultOfT(
+                _rolesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "CosmosDBForPostgreSqlRoleCollection.GetAll"), data => new CosmosDBForPostgreSqlRoleResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CosmosDBForPostgreSqlRoleData, CosmosDBForPostgreSqlRoleResource>(new RolesGetByClusterCollectionResultOfT(_rolesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new CosmosDBForPostgreSqlRoleResource(Client, data));
+            return new PageableWrapper<CosmosDBForPostgreSqlRoleData, CosmosDBForPostgreSqlRoleResource>(new RolesGetByClusterCollectionResultOfT(
+                _rolesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "CosmosDBForPostgreSqlRoleCollection.GetAll"), data => new CosmosDBForPostgreSqlRoleResource(Client, data));
         }
 
         /// <summary>

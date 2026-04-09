@@ -1,6 +1,6 @@
 # Azure SDK for .NET Libraries Inventory
 
-> **Auto-generated** by `Library_Inventory` on 2026-04-03 19:07:48 UTC.
+> **Auto-generated** by `Library_Inventory` on 2026-04-03 23:43:21 UTC.
 > Run that script to refresh this file.
 
 ## Table of Contents
@@ -23,8 +23,8 @@
   - Old TypeSpec: 0
 - Data Plane (DPG): 128
   - Autorest/Swagger: 37
-  - New Emitter (TypeSpec): 40
-  - Old TypeSpec: 3
+  - New Emitter (TypeSpec): 41
+  - Old TypeSpec: 2
 - Provisioning: 38
   - Reflection-based generator: 34
   - TypeSpec-based generator: 2
@@ -36,7 +36,7 @@
 
 Libraries that provide client APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 40 / 43 (93%)
+**Migration Status**: 41 / 43 (95.3%)
 
 | Service | Library | New Emitter | Using SCM |
 | ------- | ------- | ----------- | --------- |
@@ -79,7 +79,7 @@ Libraries that provide client APIs for Azure services and have been migrated to 
 | search | Azure.Search.Documents | ✅ |  |
 | template | Azure.Template | ✅ |  |
 | transcription | Azure.AI.Speech.Transcription | ✅ | ✅ |
-| translation | Azure.AI.Translation.Document |  |  |
+| translation | Azure.AI.Translation.Document | ✅ |  |
 | translation | Azure.AI.Translation.Text | ✅ |  |
 | vision | Azure.AI.Vision.ImageAnalysis | ✅ |  |
 | voicelive | Azure.AI.VoiceLive | ✅ |  |

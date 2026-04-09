@@ -24,6 +24,7 @@ namespace Azure.ResourceManager.NetworkCloud
         private readonly int? _top;
         private readonly string _skipToken;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of BmcKeySetsGetByClusterAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The BmcKeySets client used to send requests. </param>
@@ -33,7 +34,8 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public BmcKeySetsGetByClusterAsyncCollectionResultOfT(BmcKeySets client, Guid subscriptionId, string resourceGroupName, string clusterName, int? top, string skipToken, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public BmcKeySetsGetByClusterAsyncCollectionResultOfT(BmcKeySets client, Guid subscriptionId, string resourceGroupName, string clusterName, int? top, string skipToken, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -42,6 +44,7 @@ namespace Azure.ResourceManager.NetworkCloud
             _top = top;
             _skipToken = skipToken;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of BmcKeySetsGetByClusterAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -74,7 +77,7 @@ namespace Azure.ResourceManager.NetworkCloud
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByClusterRequest(nextLink, _subscriptionId, _resourceGroupName, _clusterName, _top, _skipToken, _context) : _client.CreateGetByClusterRequest(_subscriptionId, _resourceGroupName, _clusterName, _top, _skipToken, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("NetworkCloudBmcKeySetCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

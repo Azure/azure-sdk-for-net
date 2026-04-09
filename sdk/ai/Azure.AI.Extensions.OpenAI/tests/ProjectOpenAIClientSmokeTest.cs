@@ -31,7 +31,7 @@ public class ProjectOpenAIClientSmokeTest : ProjectsOpenAITestBase
             {
                 if (message.Request.Headers.TryGetValues("User-Agent", out IEnumerable<string> headers))
                 {
-                    userAgentsFetched = [..headers];
+                    userAgentsFetched = [.. headers];
                 }
                 else
                 {

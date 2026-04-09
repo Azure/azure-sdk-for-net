@@ -32,7 +32,9 @@ namespace Azure.AI.Projects.Agents;
 [CodeGenSuppress("UpdateAgentFromManifestAsync", typeof(string), typeof(string), typeof(IDictionary<string, BinaryData>), typeof(IDictionary<string, string>), typeof(string), typeof(CancellationToken))]
 public partial class AgentAdministrationClient
 {
-   public AgentAdministrationClient(Uri endpoint, AuthenticationTokenProvider tokenProvider, AgentAdministrationClientOptions options =null)
+    private AgentToolboxes _cachedAgentsToolboxes;
+
+    public AgentAdministrationClient(Uri endpoint, AuthenticationTokenProvider tokenProvider, AgentAdministrationClientOptions options =null)
     {
         Argument.AssertNotNull(endpoint, nameof(endpoint));
         Argument.AssertNotNull(tokenProvider, nameof(tokenProvider));
@@ -387,5 +389,10 @@ public partial class AgentAdministrationClient
 
         ClientResult result = await DeleteAgentVersionAsync(agentName, agentVersion, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
         return result;
+    }
+
+    public virtual AgentToolboxes GetAgentToolboxes()
+    {
+        return Volatile.Read(ref _cachedAgentsToolboxes) ?? Interlocked.CompareExchange(ref _cachedAgentsToolboxes, new AgentToolboxes(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentsToolboxes;
     }
 }

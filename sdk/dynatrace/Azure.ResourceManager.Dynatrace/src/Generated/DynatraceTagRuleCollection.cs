@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.Dynatrace
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DynatraceTagRuleData, DynatraceTagRuleResource>(new TagRulesGetAllAsyncCollectionResultOfT(_tagRulesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new DynatraceTagRuleResource(Client, data));
+            return new AsyncPageableWrapper<DynatraceTagRuleData, DynatraceTagRuleResource>(new TagRulesGetAllAsyncCollectionResultOfT(
+                _tagRulesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DynatraceTagRuleCollection.GetAll"), data => new DynatraceTagRuleResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.Dynatrace
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DynatraceTagRuleData, DynatraceTagRuleResource>(new TagRulesGetAllCollectionResultOfT(_tagRulesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new DynatraceTagRuleResource(Client, data));
+            return new PageableWrapper<DynatraceTagRuleData, DynatraceTagRuleResource>(new TagRulesGetAllCollectionResultOfT(
+                _tagRulesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DynatraceTagRuleCollection.GetAll"), data => new DynatraceTagRuleResource(Client, data));
         }
 
         /// <summary>

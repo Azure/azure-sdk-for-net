@@ -184,7 +184,8 @@ namespace Azure.ResourceManager.DevCenter
                 Id.ResourceGroupName,
                 Id.Name,
                 top,
-                context), data => new AllowedEnvironmentTypeResource(Client, data));
+                context,
+                "AllowedEnvironmentTypeCollection.GetAll"), data => new AllowedEnvironmentTypeResource(Client, data));
         }
 
         /// <summary>
@@ -219,7 +220,8 @@ namespace Azure.ResourceManager.DevCenter
                 Id.ResourceGroupName,
                 Id.Name,
                 top,
-                context), data => new AllowedEnvironmentTypeResource(Client, data));
+                context,
+                "AllowedEnvironmentTypeCollection.GetAll"), data => new AllowedEnvironmentTypeResource(Client, data));
         }
 
         /// <summary>

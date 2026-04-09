@@ -21,4 +21,3 @@ extends:
     Artifacts:
     - name: Azure.Messaging.ServiceBus
       safeName: AzureMessagingServiceBus
-    TestDependsOnDependency: Azure.Messaging.ServiceBus

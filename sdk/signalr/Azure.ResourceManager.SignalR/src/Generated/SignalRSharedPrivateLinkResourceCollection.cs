@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.SignalR
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SignalRSharedPrivateLinkResourceData, SignalRSharedPrivateLinkResource>(new SignalRSharedPrivateLinkResourcesGetAllAsyncCollectionResultOfT(_signalRSharedPrivateLinkResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new SignalRSharedPrivateLinkResource(Client, data));
+            return new AsyncPageableWrapper<SignalRSharedPrivateLinkResourceData, SignalRSharedPrivateLinkResource>(new SignalRSharedPrivateLinkResourcesGetAllAsyncCollectionResultOfT(
+                _signalRSharedPrivateLinkResourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "SignalRSharedPrivateLinkResourceCollection.GetAll"), data => new SignalRSharedPrivateLinkResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.SignalR
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SignalRSharedPrivateLinkResourceData, SignalRSharedPrivateLinkResource>(new SignalRSharedPrivateLinkResourcesGetAllCollectionResultOfT(_signalRSharedPrivateLinkResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new SignalRSharedPrivateLinkResource(Client, data));
+            return new PageableWrapper<SignalRSharedPrivateLinkResourceData, SignalRSharedPrivateLinkResource>(new SignalRSharedPrivateLinkResourcesGetAllCollectionResultOfT(
+                _signalRSharedPrivateLinkResourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "SignalRSharedPrivateLinkResourceCollection.GetAll"), data => new SignalRSharedPrivateLinkResource(Client, data));
         }
 
         /// <summary>

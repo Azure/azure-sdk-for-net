@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.CloudHealth
         private readonly string _healthModelName;
         private readonly DateTimeOffset? _timestamp;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of DiscoveryRulesGetByHealthModelCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The DiscoveryRules client used to send requests. </param>
@@ -30,7 +31,8 @@ namespace Azure.ResourceManager.CloudHealth
         /// <param name="healthModelName"> Name of health model resource. </param>
         /// <param name="timestamp"> Timestamp to use for the operation. When specified, the version of the resource at this point in time is retrieved. If not specified, the latest version is used. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public DiscoveryRulesGetByHealthModelCollectionResultOfT(DiscoveryRules client, Guid subscriptionId, string resourceGroupName, string healthModelName, DateTimeOffset? timestamp, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public DiscoveryRulesGetByHealthModelCollectionResultOfT(DiscoveryRules client, Guid subscriptionId, string resourceGroupName, string healthModelName, DateTimeOffset? timestamp, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -38,6 +40,7 @@ namespace Azure.ResourceManager.CloudHealth
             _healthModelName = healthModelName;
             _timestamp = timestamp;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of DiscoveryRulesGetByHealthModelCollectionResultOfT as an enumerable collection. </summary>
@@ -70,7 +73,7 @@ namespace Azure.ResourceManager.CloudHealth
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByHealthModelRequest(nextLink, _subscriptionId, _resourceGroupName, _healthModelName, _timestamp, _context) : _client.CreateGetByHealthModelRequest(_subscriptionId, _resourceGroupName, _healthModelName, _timestamp, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("HealthModelDiscoveryRuleCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

@@ -445,7 +445,8 @@ namespace Azure.ResourceManager.SignalR
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context);
+                context,
+                "SignalRReplicaResource.GetReplicaSkus");
         }
 
         /// <summary>
@@ -483,7 +484,8 @@ namespace Azure.ResourceManager.SignalR
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context);
+                context,
+                "SignalRReplicaResource.GetReplicaSkus");
         }
 
         /// <summary>

@@ -300,7 +300,13 @@ namespace Azure.ResourceManager.Support
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SupportTicketData, SubscriptionSupportTicketResource>(new SubscriptionSupportTicketGetAllAsyncCollectionResultOfT(_subscriptionSupportTicketRestClient, Guid.Parse(Id.SubscriptionId), top, filter, context), data => new SubscriptionSupportTicketResource(Client, data));
+            return new AsyncPageableWrapper<SupportTicketData, SubscriptionSupportTicketResource>(new SubscriptionSupportTicketGetAllAsyncCollectionResultOfT(
+                _subscriptionSupportTicketRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                top,
+                filter,
+                context,
+                "SubscriptionSupportTicketCollection.GetAll"), data => new SubscriptionSupportTicketResource(Client, data));
         }
 
         /// <summary>
@@ -330,7 +336,13 @@ namespace Azure.ResourceManager.Support
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SupportTicketData, SubscriptionSupportTicketResource>(new SubscriptionSupportTicketGetAllCollectionResultOfT(_subscriptionSupportTicketRestClient, Guid.Parse(Id.SubscriptionId), top, filter, context), data => new SubscriptionSupportTicketResource(Client, data));
+            return new PageableWrapper<SupportTicketData, SubscriptionSupportTicketResource>(new SubscriptionSupportTicketGetAllCollectionResultOfT(
+                _subscriptionSupportTicketRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                top,
+                filter,
+                context,
+                "SubscriptionSupportTicketCollection.GetAll"), data => new SubscriptionSupportTicketResource(Client, data));
         }
 
         /// <summary>

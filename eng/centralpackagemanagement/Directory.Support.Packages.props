@@ -46,6 +46,7 @@
     <PackageVersion Include="CommandLineParser" Version="2.9.1" />
     <PackageVersion Include="GitHub.Copilot.SDK" Version="0.1.24" />
     <PackageVersion Include="Microsoft.ApplicationInsights" Version="2.23.0" />
+    <PackageVersion Include="ModelContextProtocol" Version="1.1.0" />
     <PackageVersion Include="Microsoft.AspNetCore" Version="$(MicrosoftAspNetCoreVersion)" />
     <PackageVersion Include="Microsoft.AspNetCore.Http" Version="$(MicrosoftAspNetCoreHttpVersion)" />
 

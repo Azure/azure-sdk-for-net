@@ -300,7 +300,8 @@ namespace Azure.ResourceManager.Sphere
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new SphereDeviceResource(Client, data));
+                context,
+                "SphereDeviceCollection.GetAll"), data => new SphereDeviceResource(Client, data));
         }
 
         /// <summary>
@@ -335,7 +336,8 @@ namespace Azure.ResourceManager.Sphere
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new SphereDeviceResource(Client, data));
+                context,
+                "SphereDeviceCollection.GetAll"), data => new SphereDeviceResource(Client, data));
         }
 
         /// <summary>

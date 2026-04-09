@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataProtectionBackupVaultData, DataProtectionBackupVaultResource>(new BackupVaultOperationResultsGetInResourceGroupAsyncCollectionResultOfT(_backupVaultOperationResultsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new DataProtectionBackupVaultResource(Client, data));
+            return new AsyncPageableWrapper<DataProtectionBackupVaultData, DataProtectionBackupVaultResource>(new BackupVaultOperationResultsGetInResourceGroupAsyncCollectionResultOfT(_backupVaultOperationResultsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DataProtectionBackupVaultCollection.GetAll"), data => new DataProtectionBackupVaultResource(Client, data));
         }
 
         /// <summary>
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataProtectionBackupVaultData, DataProtectionBackupVaultResource>(new BackupVaultOperationResultsGetInResourceGroupCollectionResultOfT(_backupVaultOperationResultsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new DataProtectionBackupVaultResource(Client, data));
+            return new PageableWrapper<DataProtectionBackupVaultData, DataProtectionBackupVaultResource>(new BackupVaultOperationResultsGetInResourceGroupCollectionResultOfT(_backupVaultOperationResultsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DataProtectionBackupVaultCollection.GetAll"), data => new DataProtectionBackupVaultResource(Client, data));
         }
 
         /// <summary>

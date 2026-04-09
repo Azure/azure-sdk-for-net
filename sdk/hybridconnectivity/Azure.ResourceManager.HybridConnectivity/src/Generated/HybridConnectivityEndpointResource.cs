@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -696,7 +696,7 @@ namespace Azure.ResourceManager.HybridConnectivity
             }
         }
 
-        /// <summary> Gets a collection of HybridConnectivityServiceConfigurations in the <see cref="ArmResource"/>. </summary>
+        /// <summary> Gets a collection of HybridConnectivityServiceConfigurations in the <see cref="HybridConnectivityEndpointResource"/>. </summary>
         /// <returns> An object representing collection of HybridConnectivityServiceConfigurations and their operations over a HybridConnectivityServiceConfigurationResource. </returns>
         public virtual HybridConnectivityServiceConfigurationCollection GetHybridConnectivityServiceConfigurations()
         {

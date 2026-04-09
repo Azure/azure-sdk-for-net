@@ -180,7 +180,13 @@ namespace Azure.ResourceManager.NotificationHubs
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NotificationHubsPrivateLinkResourceData, NotificationHubsPrivateLinkResource>(new PrivateEndpointConnectionsGetGroupIdsAsyncCollectionResultOfT(_privateEndpointConnectionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new NotificationHubsPrivateLinkResource(Client, data));
+            return new AsyncPageableWrapper<NotificationHubsPrivateLinkResourceData, NotificationHubsPrivateLinkResource>(new PrivateEndpointConnectionsGetGroupIdsAsyncCollectionResultOfT(
+                _privateEndpointConnectionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "NotificationHubsPrivateLinkResourceCollection.GetAll"), data => new NotificationHubsPrivateLinkResource(Client, data));
         }
 
         /// <summary>
@@ -209,7 +215,13 @@ namespace Azure.ResourceManager.NotificationHubs
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NotificationHubsPrivateLinkResourceData, NotificationHubsPrivateLinkResource>(new PrivateEndpointConnectionsGetGroupIdsCollectionResultOfT(_privateEndpointConnectionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new NotificationHubsPrivateLinkResource(Client, data));
+            return new PageableWrapper<NotificationHubsPrivateLinkResourceData, NotificationHubsPrivateLinkResource>(new PrivateEndpointConnectionsGetGroupIdsCollectionResultOfT(
+                _privateEndpointConnectionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "NotificationHubsPrivateLinkResourceCollection.GetAll"), data => new NotificationHubsPrivateLinkResource(Client, data));
         }
 
         /// <summary>

@@ -174,11 +174,23 @@ namespace Azure.Generator.Management.Visitors
                 a.Type?.FrameworkType == typeof(System.ComponentModel.EditorBrowsableAttribute));
         }
 
+        /// <summary>
+        /// Checks if a property has the [Obsolete] attribute. Properties marked obsolete
+        /// in custom code (partial classes) should be skipped during flattening to avoid
+        /// generating code that references obsolete members, which causes CS0618 warnings.
+        /// </summary>
+        internal static bool IsObsoleteProperty(PropertyProvider property)
+        {
+            return property.Attributes.Any(a =>
+                a.Type?.FrameworkType == typeof(System.ObsoleteAttribute));
+        }
+
         private bool TryGetFlattenPropertyInfo(CSharpType returnType, [NotNullWhen(true)] out Dictionary<string, List<FlattenPropertyInfo>>? propertyNameMap)
         {
             Dictionary<string, List<FlattenPropertyInfo>>? mergedPropertyNameMap = null;
             var currentType = returnType;
             var foundFlattenedProperties = false;
+            var visited = new HashSet<CSharpType>(new CSharpTypeNameComparer());
 
             void MergeFlattenedProperties(Dictionary<string, List<FlattenPropertyInfo>> source)
             {
@@ -202,6 +214,14 @@ namespace Azure.Generator.Management.Visitors
             ModelProvider? currentModel;
             do
             {
+                // Guard against cycles in the BaseType chain (e.g., ResourceData → ResourceData
+                // when a Custom/ partial class forces a plain model to inherit from ResourceData
+                // and KnownManagementTypes maps multiple TypeSpec types to the same CSharpType).
+                if (!visited.Add(currentType))
+                {
+                    break;
+                }
+
                 if (_flattenedModelTypes.TryGetValue(currentType, out var value))
                 {
                     MergeFlattenedProperties(value);
@@ -584,8 +604,8 @@ namespace Azure.Generator.Management.Visitors
                 // safe flatten single property
                 else
                 {
-                    // only safe flatten single public property
-                    var publicPropertyCount = innerProperties.Count(p => p.Modifiers.HasFlag(MethodSignatureModifiers.Public));
+                    // only safe flatten single public property (excluding obsolete ones)
+                    var publicPropertyCount = innerProperties.Count(p => p.Modifiers.HasFlag(MethodSignatureModifiers.Public) && !IsObsoleteProperty(p));
                     if (publicPropertyCount != 1)
                     {
                         continue;
@@ -626,6 +646,11 @@ namespace Azure.Generator.Management.Visitors
             foreach (var innerProperty in innerProperties)
             {
                 if (!innerProperty.Modifiers.HasFlag(MethodSignatureModifiers.Public))
+                {
+                    continue;
+                }
+                // skip properties marked [Obsolete] in custom code to avoid CS0618
+                if (IsObsoleteProperty(innerProperty))
                 {
                     continue;
                 }
@@ -689,8 +714,8 @@ namespace Azure.Generator.Management.Visitors
         private bool SafeFlatten(ModelProvider model, IReadOnlyList<PropertyProvider> innerProperties, Dictionary<PropertyProvider, List<FlattenPropertyInfo>> propertyMap, PropertyProvider internalProperty, ModelProvider modelProvider)
         {
             bool isFlattened;
-            // Get the single public property from innerProperties
-            var innerProperty = innerProperties.Single(p => p.Modifiers.HasFlag(MethodSignatureModifiers.Public));
+            // Get the single public non-obsolete property from innerProperties
+            var innerProperty = innerProperties.Single(p => p.Modifiers.HasFlag(MethodSignatureModifiers.Public) && !IsObsoleteProperty(p));
             isFlattened = true;
 
             // flatten the single property to public and associate it with the internal property

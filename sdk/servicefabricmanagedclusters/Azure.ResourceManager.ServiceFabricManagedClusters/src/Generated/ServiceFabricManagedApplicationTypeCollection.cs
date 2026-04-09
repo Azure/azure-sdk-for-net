@@ -287,7 +287,13 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ServiceFabricManagedApplicationTypeData, ServiceFabricManagedApplicationTypeResource>(new ApplicationTypesGetAllAsyncCollectionResultOfT(_applicationTypesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new ServiceFabricManagedApplicationTypeResource(Client, data));
+            return new AsyncPageableWrapper<ServiceFabricManagedApplicationTypeData, ServiceFabricManagedApplicationTypeResource>(new ApplicationTypesGetAllAsyncCollectionResultOfT(
+                _applicationTypesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ServiceFabricManagedApplicationTypeCollection.GetAll"), data => new ServiceFabricManagedApplicationTypeResource(Client, data));
         }
 
         /// <summary>
@@ -315,7 +321,13 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ServiceFabricManagedApplicationTypeData, ServiceFabricManagedApplicationTypeResource>(new ApplicationTypesGetAllCollectionResultOfT(_applicationTypesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new ServiceFabricManagedApplicationTypeResource(Client, data));
+            return new PageableWrapper<ServiceFabricManagedApplicationTypeData, ServiceFabricManagedApplicationTypeResource>(new ApplicationTypesGetAllCollectionResultOfT(
+                _applicationTypesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ServiceFabricManagedApplicationTypeCollection.GetAll"), data => new ServiceFabricManagedApplicationTypeResource(Client, data));
         }
 
         /// <summary>
