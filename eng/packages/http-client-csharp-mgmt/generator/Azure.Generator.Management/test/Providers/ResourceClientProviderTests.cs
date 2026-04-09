@@ -265,5 +265,47 @@ namespace Azure.Generator.Management.Tests.Providers
             public string NestedTypeName { get; }
             public FakeCollection(string nestedTypeName) => NestedTypeName = nestedTypeName;
         }
+
+        /// <summary>
+        /// Verifies that when @@clientName is applied to a resource model, the Resource class
+        /// uses the model's client name, not the original TypeSpec model name from metadata.
+        /// </summary>
+        [TestCase]
+        public void Verify_ClientName_RenamesResourceClass()
+        {
+            var (client, models) = InputResourceData.ClientWithResourceClientName();
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
+            var resourceProvider = plugin.Object.OutputLibrary.TypeProviders
+                .OfType<ResourceClientProvider>()
+                .FirstOrDefault();
+            Assert.NotNull(resourceProvider);
+
+            // The model name is "ServiceFabricCluster" (client name after @@clientName)
+            // The metadata resourceName is "Cluster" (original TypeSpec name)
+            // The Resource class should use the model's name: "ServiceFabricClusterResource"
+            Assert.AreEqual("ServiceFabricClusterResource", resourceProvider!.Name,
+                "Resource class should use the model's client name, not the metadata resourceName");
+            Assert.AreEqual("ServiceFabricCluster", resourceProvider.ResourceName,
+                "ResourceName should use the model's client name");
+        }
+
+        /// <summary>
+        /// Verifies that when @@clientName is applied to a resource model, the Collection class
+        /// uses the model's client name, not the original TypeSpec model name from metadata.
+        /// </summary>
+        [TestCase]
+        public void Verify_ClientName_RenamesCollectionClass()
+        {
+            var (client, models) = InputResourceData.ClientWithResourceClientName();
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
+            var collectionProvider = plugin.Object.OutputLibrary.TypeProviders
+                .OfType<ResourceCollectionClientProvider>()
+                .FirstOrDefault();
+            Assert.NotNull(collectionProvider);
+
+            // The Collection class should use the model's name: "ServiceFabricClusterCollection"
+            Assert.AreEqual("ServiceFabricClusterCollection", collectionProvider!.Name,
+                "Collection class should use the model's client name, not the metadata resourceName");
+        }
     }
 }

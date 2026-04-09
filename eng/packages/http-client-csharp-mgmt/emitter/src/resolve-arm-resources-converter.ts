@@ -460,10 +460,23 @@ function convertResolvedResourceToMetadata(
   // Build resource type string
   const resourceType = formatResourceType(resolvedResource.resourceType);
 
+  // Extract RBAC roles from @@clientOption decorator and get the SDK model name
+  // (which includes @@clientName renames from TCGC)
+  const sdkModel = getClientType(
+    sdkContext,
+    resolvedResource.type
+  ) as SdkModelType;
+  const rbacRoles = extractRbacRoles(sdkModel);
+
+  // Use the SDK model name (which includes @@clientName renames) as the default resource name,
+  // falling back to the TypeSpec model name from resolvedResource if the SDK model is not available.
+  // This ensures that @@clientName applied to resource models correctly renames
+  // the Resource and Collection classes, not just the Data and Patch classes.
+  let resourceName = sdkModel?.name ?? resolvedResource.resourceName;
+
   // Use the explicit ResourceName if provided via the OverrideResourceName template parameter.
   // The spec should always define unique resource names for extension resources targeting
   // different parent types — the emitter should not auto-generate disambiguated names.
-  let resourceName = resolvedResource.resourceName;
   const explicitName = getExplicitResourceNameFromOperations(resolvedResource);
   if (explicitName) {
     resourceName = explicitName;
@@ -482,13 +495,6 @@ function convertResolvedResourceToMetadata(
 
   // API versions will be computed after post-processing when methods are finalized
   const apiVersions: string[] = [];
-
-  // Extract RBAC roles from @@clientOption decorator
-  const sdkModel = getClientType(
-    sdkContext,
-    resolvedResource.type
-  ) as SdkModelType;
-  const rbacRoles = extractRbacRoles(sdkModel);
 
   return {
     // we only assign resourceIdPattern when this resource has a read operation, otherwise this is empty
