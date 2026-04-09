@@ -89,7 +89,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (FooData item in Value)
+            foreach (MgmtFooData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             {
                 return null;
             }
-            IList<FooData> value = default;
+            IList<MgmtFooData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<FooData> array = new List<FooData>();
+                    List<MgmtFooData> array = new List<MgmtFooData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(FooData.DeserializeFooData(item, options));
+                        array.Add(MgmtFooData.DeserializeMgmtFooData(item, options));
                     }
                     value = array;
                     continue;

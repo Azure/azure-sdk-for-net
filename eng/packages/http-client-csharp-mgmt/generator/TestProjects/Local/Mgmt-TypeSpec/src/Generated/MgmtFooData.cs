@@ -16,18 +16,18 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
-    public partial class FooData : TrackedResourceData
+    public partial class MgmtFooData : TrackedResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="FooData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MgmtFooData"/>. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="something"> something. </param>
         /// <param name="prop1"> Gets the Prop1. </param>
         /// <param name="nestedPropertyProperties"> Gets or sets the Properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="something"/>, <paramref name="prop1"/> or <paramref name="nestedPropertyProperties"/> is null. </exception>
-        public FooData(AzureLocation location, ManagedServiceIdentity something, IEnumerable<string> prop1, FooProperties nestedPropertyProperties) : base(location)
+        public MgmtFooData(AzureLocation location, ManagedServiceIdentity something, IEnumerable<string> prop1, FooProperties nestedPropertyProperties) : base(location)
         {
             Argument.AssertNotNull(something, nameof(something));
             Argument.AssertNotNull(prop1, nameof(prop1));
@@ -36,7 +36,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             Properties = new FooProperties(something, prop1, nestedPropertyProperties);
         }
 
-        /// <summary> Initializes a new instance of <see cref="FooData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MgmtFooData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -48,7 +48,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="extendedLocation"></param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="plan"> Details of the resource plan. </param>
-        internal FooData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, FooProperties properties, ExtendedLocation extendedLocation, ManagedServiceIdentity identity, ArmPlan plan) : base(id, name, resourceType, systemData, tags, location)
+        internal MgmtFooData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, FooProperties properties, ExtendedLocation extendedLocation, ManagedServiceIdentity identity, ArmPlan plan) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;

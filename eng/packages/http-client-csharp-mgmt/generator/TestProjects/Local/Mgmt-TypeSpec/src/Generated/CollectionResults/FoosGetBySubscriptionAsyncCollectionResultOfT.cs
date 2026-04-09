@@ -15,7 +15,7 @@ using Azure.Generator.MgmtTypeSpec.Tests.Models;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests
 {
-    internal partial class FoosGetBySubscriptionAsyncCollectionResultOfT : AsyncPageable<FooData>
+    internal partial class FoosGetBySubscriptionAsyncCollectionResultOfT : AsyncPageable<MgmtFooData>
     {
         private readonly Foos _client;
         private readonly Guid _subscriptionId;
@@ -36,7 +36,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of FoosGetBySubscriptionAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<FooData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<MgmtFooData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -47,7 +47,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     yield break;
                 }
                 FooListResult result = FooListResult.FromResponse(response);
-                yield return Page<FooData>.FromValues((IReadOnlyList<FooData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<MgmtFooData>.FromValues((IReadOnlyList<MgmtFooData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -62,7 +62,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetBySubscriptionRequest(nextLink, _subscriptionId, _context) : _client.CreateGetBySubscriptionRequest(_subscriptionId, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource.GetFoos");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource.GetMgmtFoos");
             scope.Start();
             try
             {

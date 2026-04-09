@@ -19,10 +19,10 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
-    public partial class FooData : TrackedResourceData, IJsonModel<FooData>
+    public partial class MgmtFooData : TrackedResourceData, IJsonModel<MgmtFooData>
     {
-        /// <summary> Initializes a new instance of <see cref="FooData"/> for deserialization. </summary>
-        internal FooData()
+        /// <summary> Initializes a new instance of <see cref="MgmtFooData"/> for deserialization. </summary>
+        internal MgmtFooData()
         {
         }
 
@@ -30,62 +30,62 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FooData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MgmtFooData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeFooData(document.RootElement, options);
+                        return DeserializeMgmtFooData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FooData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MgmtFooData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FooData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MgmtFooData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(FooData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MgmtFooData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<FooData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<MgmtFooData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        FooData IPersistableModel<FooData>.Create(BinaryData data, ModelReaderWriterOptions options) => (FooData)PersistableModelCreateCore(data, options);
+        MgmtFooData IPersistableModel<MgmtFooData>.Create(BinaryData data, ModelReaderWriterOptions options) => (MgmtFooData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<FooData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MgmtFooData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="fooData"> The <see cref="FooData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(FooData fooData)
+        /// <param name="mgmtFooData"> The <see cref="MgmtFooData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(MgmtFooData mgmtFooData)
         {
-            if (fooData == null)
+            if (mgmtFooData == null)
             {
                 return null;
             }
-            return RequestContent.Create(fooData, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(mgmtFooData, ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="FooData"/> from. </param>
-        internal static FooData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="MgmtFooData"/> from. </param>
+        internal static MgmtFooData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeFooData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeMgmtFooData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<FooData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MgmtFooData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -96,10 +96,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FooData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MgmtFooData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FooData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MgmtFooData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
@@ -123,24 +123,24 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        FooData IJsonModel<FooData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (FooData)JsonModelCreateCore(ref reader, options);
+        MgmtFooData IJsonModel<MgmtFooData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (MgmtFooData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FooData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MgmtFooData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FooData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MgmtFooData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeFooData(document.RootElement, options);
+            return DeserializeMgmtFooData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static FooData DeserializeFooData(JsonElement element, ModelReaderWriterOptions options)
+        internal static MgmtFooData DeserializeMgmtFooData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -254,7 +254,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new FooData(
+            return new MgmtFooData(
                 id,
                 name,
                 resourceType,

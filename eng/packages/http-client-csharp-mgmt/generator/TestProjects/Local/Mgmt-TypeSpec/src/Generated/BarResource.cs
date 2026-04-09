@@ -22,7 +22,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     /// <summary>
     /// A class representing a Bar along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BarResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="FooResource"/> using the GetBars method.
+    /// Otherwise you can get one from its parent resource <see cref="MgmtFooResource"/> using the GetBars method.
     /// </summary>
     public partial class BarResource : ArmResource
     {

@@ -105,11 +105,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             return GetStorageSyncServices().Get(storageSyncServiceName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of Foos in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of Foos and their operations over a FooResource. </returns>
-        public virtual FooCollection GetFoos()
+        /// <summary> Gets a collection of MgmtFoos in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of MgmtFoos and their operations over a MgmtFooResource. </returns>
+        public virtual MgmtFooCollection GetMgmtFoos()
         {
-            return GetCachedClient(client => new FooCollection(client, Id));
+            return GetCachedClient(client => new MgmtFooCollection(client, Id));
         }
 
         /// <summary>
@@ -134,11 +134,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="fooName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fooName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<FooResource>> GetFooAsync(string fooName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MgmtFooResource>> GetMgmtFooAsync(string fooName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fooName, nameof(fooName));
 
-            return await GetFoos().GetAsync(fooName, cancellationToken).ConfigureAwait(false);
+            return await GetMgmtFoos().GetAsync(fooName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -163,11 +163,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="fooName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fooName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<FooResource> GetFoo(string fooName, CancellationToken cancellationToken = default)
+        public virtual Response<MgmtFooResource> GetMgmtFoo(string fooName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fooName, nameof(fooName));
 
-            return GetFoos().Get(fooName, cancellationToken);
+            return GetMgmtFoos().Get(fooName, cancellationToken);
         }
 
         /// <summary>

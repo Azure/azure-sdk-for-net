@@ -20,8 +20,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary>
     /// A class representing a collection of <see cref="BarResource"/> and their operations.
-    /// Each <see cref="BarResource"/> in the collection will belong to the same instance of <see cref="FooResource"/>.
-    /// To get a <see cref="BarCollection"/> instance call the GetBars method from an instance of <see cref="FooResource"/>.
+    /// Each <see cref="BarResource"/> in the collection will belong to the same instance of <see cref="MgmtFooResource"/>.
+    /// To get a <see cref="BarCollection"/> instance call the GetBars method from an instance of <see cref="MgmtFooResource"/>.
     /// </summary>
     public partial class BarCollection : ArmCollection, IEnumerable<BarResource>, IAsyncEnumerable<BarResource>
     {
@@ -56,9 +56,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != FooResource.ResourceType)
+            if (id.ResourceType != MgmtFooResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, FooResource.ResourceType), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, MgmtFooResource.ResourceType), nameof(id));
             }
         }
 

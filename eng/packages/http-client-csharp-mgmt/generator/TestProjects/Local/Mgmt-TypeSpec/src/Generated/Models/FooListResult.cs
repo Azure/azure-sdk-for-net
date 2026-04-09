@@ -20,7 +20,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 
         /// <summary> Initializes a new instance of <see cref="FooListResult"/>. </summary>
         /// <param name="value"> The Foo items on this page. </param>
-        internal FooListResult(IEnumerable<FooData> value)
+        internal FooListResult(IEnumerable<MgmtFooData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="value"> The Foo items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FooListResult(IList<FooData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FooListResult(IList<MgmtFooData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -38,7 +38,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 
         /// <summary> The Foo items on this page. </summary>
         [WirePath("value")]
-        public IList<FooData> Value { get; }
+        public IList<MgmtFooData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         [WirePath("nextLink")]

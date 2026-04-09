@@ -19,7 +19,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     /// <summary>
     /// A class representing a MultiFlattenTest along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MultiFlattenTestResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="FooResource"/> using the GetMultiFlattenTests method.
+    /// Otherwise you can get one from its parent resource <see cref="MgmtFooResource"/> using the GetMultiFlattenTests method.
     /// </summary>
     public partial class MultiFlattenTestResource : ArmResource
     {

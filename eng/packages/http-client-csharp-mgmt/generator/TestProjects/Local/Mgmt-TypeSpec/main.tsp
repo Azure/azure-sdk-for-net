@@ -59,6 +59,9 @@ namespace MgmtTypeSpec {
 
   @@clientName(Joos.createOrUpdate::parameters.resource, "parameters");
 
+  // Test: @@clientName on resource model should rename Resource/Collection classes
+  @@clientName(MgmtTypeSpec.Foo, "MgmtFoo", "csharp");
+
   @@clientLocation(WorkloadNetworkVmGroups.get, "WorkloadNetworks");
   @@clientLocation(WorkloadNetworkVmGroups.delete, "WorkloadNetworks");
   @@clientLocation(WorkloadNetworkSegments.get, "WorkloadNetworks");

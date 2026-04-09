@@ -63,13 +63,13 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             return new StorageSyncServiceResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="FooResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="MgmtFooResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="FooResource"/> object. </returns>
-        public virtual FooResource GetFooResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MgmtFooResource"/> object. </returns>
+        public virtual MgmtFooResource GetMgmtFooResource(ResourceIdentifier id)
         {
-            FooResource.ValidateResourceId(id);
-            return new FooResource(Client, id);
+            MgmtFooResource.ValidateResourceId(id);
+            return new MgmtFooResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="FooSettingsResource"/> along with the instance operations that can be performed on it but with no data. </summary>

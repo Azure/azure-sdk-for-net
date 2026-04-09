@@ -8244,7 +8244,7 @@
     {
       "$id": "809",
       "kind": "model",
-      "name": "Foo",
+      "name": "MgmtFoo",
       "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
       "crossLanguageDefinitionId": "MgmtTypeSpec.Foo",
       "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
@@ -23166,7 +23166,7 @@
                   }
                 ],
                 "resourceScope": "ResourceGroup",
-                "resourceName": "Foo",
+                "resourceName": "MgmtFoo",
                 "nameConstraints": {
                   "pattern": "^[a-zA-Z0-9-]{3,24}$"
                 },
