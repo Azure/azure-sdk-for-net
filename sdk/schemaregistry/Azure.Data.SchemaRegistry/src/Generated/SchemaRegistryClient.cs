@@ -72,7 +72,7 @@ namespace Azure.Data.SchemaRegistry
         /// <returns> The response returned from the service. </returns>
         internal virtual Pageable<BinaryData> GetSchemaGroups(RequestContext context)
         {
-            return new SchemaRegistryClientGetSchemaGroupsCollectionResult(this, context);
+            return new SchemaRegistryClientGetSchemaGroupsCollectionResult(this, context, "SchemaRegistryClient.GetSchemaGroups");
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Azure.Data.SchemaRegistry
         /// <returns> The response returned from the service. </returns>
         internal virtual AsyncPageable<BinaryData> GetSchemaGroupsAsync(RequestContext context)
         {
-            return new SchemaRegistryClientGetSchemaGroupsAsyncCollectionResult(this, context);
+            return new SchemaRegistryClientGetSchemaGroupsAsyncCollectionResult(this, context, "SchemaRegistryClient.GetSchemaGroups");
         }
 
         /// <summary> Gets the list of schema groups user is authorized to access. </summary>
@@ -96,7 +96,7 @@ namespace Azure.Data.SchemaRegistry
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual Pageable<string> GetSchemaGroups(CancellationToken cancellationToken = default)
         {
-            return new SchemaRegistryClientGetSchemaGroupsCollectionResultOfT(this, cancellationToken.ToRequestContext());
+            return new SchemaRegistryClientGetSchemaGroupsCollectionResultOfT(this, cancellationToken.ToRequestContext(), "SchemaRegistryClient.GetSchemaGroups");
         }
 
         /// <summary> Gets the list of schema groups user is authorized to access. </summary>
@@ -104,7 +104,7 @@ namespace Azure.Data.SchemaRegistry
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual AsyncPageable<string> GetSchemaGroupsAsync(CancellationToken cancellationToken = default)
         {
-            return new SchemaRegistryClientGetSchemaGroupsAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext());
+            return new SchemaRegistryClientGetSchemaGroupsAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext(), "SchemaRegistryClient.GetSchemaGroups");
         }
 
         /// <summary>
@@ -122,7 +122,7 @@ namespace Azure.Data.SchemaRegistry
         /// <returns> The response returned from the service. </returns>
         internal virtual Pageable<BinaryData> GetSchemaVersions(string groupName, string schemaName, RequestContext context)
         {
-            return new SchemaRegistryClientGetSchemaVersionsCollectionResult(this, groupName, schemaName, context);
+            return new SchemaRegistryClientGetSchemaVersionsCollectionResult(this, groupName, schemaName, context, "SchemaRegistryClient.GetSchemaVersions");
         }
 
         /// <summary>
@@ -140,7 +140,7 @@ namespace Azure.Data.SchemaRegistry
         /// <returns> The response returned from the service. </returns>
         internal virtual AsyncPageable<BinaryData> GetSchemaVersionsAsync(string groupName, string schemaName, RequestContext context)
         {
-            return new SchemaRegistryClientGetSchemaVersionsAsyncCollectionResult(this, groupName, schemaName, context);
+            return new SchemaRegistryClientGetSchemaVersionsAsyncCollectionResult(this, groupName, schemaName, context, "SchemaRegistryClient.GetSchemaVersions");
         }
 
         /// <summary> Gets the list of all versions of one schema. </summary>
@@ -150,7 +150,7 @@ namespace Azure.Data.SchemaRegistry
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual Pageable<int> GetSchemaVersions(string groupName, string schemaName, CancellationToken cancellationToken = default)
         {
-            return new SchemaRegistryClientGetSchemaVersionsCollectionResultOfT(this, groupName, schemaName, cancellationToken.ToRequestContext());
+            return new SchemaRegistryClientGetSchemaVersionsCollectionResultOfT(this, groupName, schemaName, cancellationToken.ToRequestContext(), "SchemaRegistryClient.GetSchemaVersions");
         }
 
         /// <summary> Gets the list of all versions of one schema. </summary>
@@ -160,7 +160,7 @@ namespace Azure.Data.SchemaRegistry
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual AsyncPageable<int> GetSchemaVersionsAsync(string groupName, string schemaName, CancellationToken cancellationToken = default)
         {
-            return new SchemaRegistryClientGetSchemaVersionsAsyncCollectionResultOfT(this, groupName, schemaName, cancellationToken.ToRequestContext());
+            return new SchemaRegistryClientGetSchemaVersionsAsyncCollectionResultOfT(this, groupName, schemaName, cancellationToken.ToRequestContext(), "SchemaRegistryClient.GetSchemaVersions");
         }
 
         /// <summary>

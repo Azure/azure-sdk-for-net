@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Text;
 using Azure.AI.AgentServer.Responses.Models;
 
 namespace Azure.AI.AgentServer.Responses;
@@ -62,6 +63,52 @@ public class OutputItemReasoningItemBuilder : OutputItemBuilder<OutputItemReason
     {
         _completedSummaries.Add(new SummaryTextContent(
             text: summaryPart.FinalText ?? string.Empty));
+    }
+
+    // ── Sub-Item Convenience Generators (S-053/S-054/S-055) ────
+
+    /// <summary>
+    /// Convenience generator that yields the complete summary part sub-item
+    /// event sequence from a single string (S-053, complete-text mode per S-054).
+    /// </summary>
+    /// <param name="text">The complete summary text.</param>
+    /// <returns>An enumerable of events: <c>reasoning_summary_part.added</c> → <c>reasoning_summary_text.delta</c> → <c>reasoning_summary_text.done</c> → <c>reasoning_summary_part.done</c>.</returns>
+    public virtual IEnumerable<ResponseStreamEvent> SummaryPart(string text)
+    {
+        var builder = AddSummaryPart();
+        yield return builder.EmitAdded();
+        yield return builder.EmitTextDelta(text);
+        yield return builder.EmitTextDone(text);
+        yield return builder.EmitDone();
+        EmitSummaryPartDone(builder);
+    }
+
+    /// <summary>
+    /// Convenience generator that yields the complete summary part sub-item
+    /// event sequence from streaming chunks (S-053, streaming mode per S-054).
+    /// Each chunk is emitted as a delta immediately (S-055).
+    /// </summary>
+    /// <param name="chunks">An async enumerable of summary text chunks.</param>
+    /// <param name="cancellationToken">A token to cancel iteration.</param>
+    /// <returns>An async enumerable of events: <c>reasoning_summary_part.added</c> → N × <c>reasoning_summary_text.delta</c> → <c>reasoning_summary_text.done</c> → <c>reasoning_summary_part.done</c>.</returns>
+    public virtual async IAsyncEnumerable<ResponseStreamEvent> SummaryPart(
+        IAsyncEnumerable<string> chunks,
+        [System.Runtime.CompilerServices.EnumeratorCancellation] CancellationToken cancellationToken = default)
+    {
+        var builder = AddSummaryPart();
+        yield return builder.EmitAdded();
+
+        var sb = new StringBuilder();
+        await foreach (var chunk in chunks.WithCancellation(cancellationToken).ConfigureAwait(false))
+        {
+            sb.Append(chunk);
+            yield return builder.EmitTextDelta(chunk);
+        }
+
+        var finalText = sb.ToString();
+        yield return builder.EmitTextDone(finalText);
+        yield return builder.EmitDone();
+        EmitSummaryPartDone(builder);
     }
 
     /// <summary>

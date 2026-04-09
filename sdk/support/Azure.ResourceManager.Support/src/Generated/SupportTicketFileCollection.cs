@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Support
         {
             if (id.ResourceType != SubscriptionFileWorkspaceResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionFileWorkspaceResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionFileWorkspaceResource.ResourceType), nameof(id));
             }
         }
 
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Support
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SupportFileDetailData, SupportTicketFileResource>(new SupportTicketFileGetAllAsyncCollectionResultOfT(_supportTicketFileRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context), data => new SupportTicketFileResource(Client, data));
+            return new AsyncPageableWrapper<SupportFileDetailData, SupportTicketFileResource>(new SupportTicketFileGetAllAsyncCollectionResultOfT(_supportTicketFileRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "SupportTicketFileCollection.GetAll"), data => new SupportTicketFileResource(Client, data));
         }
 
         /// <summary>
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.Support
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SupportFileDetailData, SupportTicketFileResource>(new SupportTicketFileGetAllCollectionResultOfT(_supportTicketFileRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context), data => new SupportTicketFileResource(Client, data));
+            return new PageableWrapper<SupportFileDetailData, SupportTicketFileResource>(new SupportTicketFileGetAllCollectionResultOfT(_supportTicketFileRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "SupportTicketFileCollection.GetAll"), data => new SupportTicketFileResource(Client, data));
         }
 
         /// <summary>

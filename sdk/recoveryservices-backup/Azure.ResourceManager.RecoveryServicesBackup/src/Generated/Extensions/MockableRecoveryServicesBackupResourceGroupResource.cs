@@ -721,7 +721,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
                 Id.SubscriptionId,
                 filter,
                 skipToken,
-                context), data => new BackupProtectionIntentResource(Client, data));
+                context,
+                "MockableRecoveryServicesBackupResourceGroupResource.GetBackupProtectionIntents"), data => new BackupProtectionIntentResource(Client, data));
         }
 
         /// <summary>
@@ -763,7 +764,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
                 Id.SubscriptionId,
                 filter,
                 skipToken,
-                context), data => new BackupProtectionIntentResource(Client, data));
+                context,
+                "MockableRecoveryServicesBackupResourceGroupResource.GetBackupProtectionIntents"), data => new BackupProtectionIntentResource(Client, data));
         }
 
         /// <summary>
@@ -805,7 +807,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
                 Id.SubscriptionId,
                 filter,
                 skipToken,
-                context);
+                context,
+                "MockableRecoveryServicesBackupResourceGroupResource.GetBackupUsageSummaries");
         }
 
         /// <summary>
@@ -847,7 +850,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
                 Id.SubscriptionId,
                 filter,
                 skipToken,
-                context);
+                context,
+                "MockableRecoveryServicesBackupResourceGroupResource.GetBackupUsageSummaries");
         }
 
         /// <summary>
@@ -979,7 +983,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
                 Id.SubscriptionId,
                 filter,
                 skipToken,
-                context), data => new BackupProtectedItemResource(Client, data));
+                context,
+                "MockableRecoveryServicesBackupResourceGroupResource.GetBackupProtectedItems"), data => new BackupProtectedItemResource(Client, data));
         }
 
         /// <summary>
@@ -1021,7 +1026,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
                 Id.SubscriptionId,
                 filter,
                 skipToken,
-                context), data => new BackupProtectedItemResource(Client, data));
+                context,
+                "MockableRecoveryServicesBackupResourceGroupResource.GetBackupProtectedItems"), data => new BackupProtectedItemResource(Client, data));
         }
 
         /// <summary>
@@ -1064,7 +1070,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
                 Id.SubscriptionId,
                 fabricName,
                 filter,
-                context);
+                context,
+                "MockableRecoveryServicesBackupResourceGroupResource.GetProtectableContainers");
         }
 
         /// <summary>
@@ -1107,7 +1114,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
                 Id.SubscriptionId,
                 fabricName,
                 filter,
-                context);
+                context,
+                "MockableRecoveryServicesBackupResourceGroupResource.GetProtectableContainers");
         }
 
         /// <summary>
@@ -1246,7 +1254,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
                 Id.SubscriptionId,
                 filter,
                 skipToken,
-                context);
+                context,
+                "MockableRecoveryServicesBackupResourceGroupResource.GetBackupProtectableItems");
         }
 
         /// <summary>
@@ -1289,7 +1298,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
                 Id.SubscriptionId,
                 filter,
                 skipToken,
-                context);
+                context,
+                "MockableRecoveryServicesBackupResourceGroupResource.GetBackupProtectableItems");
         }
 
         /// <summary>
@@ -1329,7 +1339,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
                 Id.ResourceGroupName,
                 Id.SubscriptionId,
                 filter,
-                context), data => new BackupProtectionContainerResource(Client, data));
+                context,
+                "MockableRecoveryServicesBackupResourceGroupResource.GetBackupProtectionContainers"), data => new BackupProtectionContainerResource(Client, data));
         }
 
         /// <summary>
@@ -1369,7 +1380,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
                 Id.ResourceGroupName,
                 Id.SubscriptionId,
                 filter,
-                context), data => new BackupProtectionContainerResource(Client, data));
+                context,
+                "MockableRecoveryServicesBackupResourceGroupResource.GetBackupProtectionContainers"), data => new BackupProtectionContainerResource(Client, data));
         }
 
         /// <summary>
@@ -1409,7 +1421,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
                 Id.ResourceGroupName,
                 vaultName,
                 filter,
-                context), data => new BackupProtectionContainerResource(Client, data));
+                context,
+                "MockableRecoveryServicesBackupResourceGroupResource.GetSoftDeletedProtectionContainers"), data => new BackupProtectionContainerResource(Client, data));
         }
 
         /// <summary>
@@ -1449,7 +1462,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
                 Id.ResourceGroupName,
                 vaultName,
                 filter,
-                context), data => new BackupProtectionContainerResource(Client, data));
+                context,
+                "MockableRecoveryServicesBackupResourceGroupResource.GetSoftDeletedProtectionContainers"), data => new BackupProtectionContainerResource(Client, data));
         }
 
         /// <summary>

@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.TrafficManager
         {
             if (id.ResourceType != TrafficManagerProfileResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, TrafficManagerProfileResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, TrafficManagerProfileResource.ResourceType), nameof(id));
             }
         }
 

@@ -271,7 +271,7 @@ namespace Azure.AI.AnomalyDetector
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetMultivariateModels(int? skip, int? maxCount, RequestContext context)
         {
-            return new MultivariateGetMultivariateModelsCollectionResult(this, skip, maxCount, context);
+            return new MultivariateGetMultivariateModelsCollectionResult(this, skip, maxCount, context, "Multivariate.GetMultivariateModels");
         }
 
         /// <summary>
@@ -289,7 +289,7 @@ namespace Azure.AI.AnomalyDetector
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetMultivariateModelsAsync(int? skip, int? maxCount, RequestContext context)
         {
-            return new MultivariateGetMultivariateModelsAsyncCollectionResult(this, skip, maxCount, context);
+            return new MultivariateGetMultivariateModelsAsyncCollectionResult(this, skip, maxCount, context, "Multivariate.GetMultivariateModels");
         }
 
         /// <summary> List models of a resource. </summary>
@@ -299,7 +299,7 @@ namespace Azure.AI.AnomalyDetector
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<AnomalyDetectionModel> GetMultivariateModels(int? skip = default, int? maxCount = default, CancellationToken cancellationToken = default)
         {
-            return new MultivariateGetMultivariateModelsCollectionResultOfT(this, skip, maxCount, cancellationToken.ToRequestContext());
+            return new MultivariateGetMultivariateModelsCollectionResultOfT(this, skip, maxCount, cancellationToken.ToRequestContext(), "Multivariate.GetMultivariateModels");
         }
 
         /// <summary> List models of a resource. </summary>
@@ -309,7 +309,7 @@ namespace Azure.AI.AnomalyDetector
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<AnomalyDetectionModel> GetMultivariateModelsAsync(int? skip = default, int? maxCount = default, CancellationToken cancellationToken = default)
         {
-            return new MultivariateGetMultivariateModelsAsyncCollectionResultOfT(this, skip, maxCount, cancellationToken.ToRequestContext());
+            return new MultivariateGetMultivariateModelsAsyncCollectionResultOfT(this, skip, maxCount, cancellationToken.ToRequestContext(), "Multivariate.GetMultivariateModels");
         }
 
         /// <summary>

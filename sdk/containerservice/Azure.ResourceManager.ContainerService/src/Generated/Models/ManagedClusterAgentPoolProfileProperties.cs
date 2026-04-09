@@ -26,6 +26,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             Tags = new ChangeTrackingDictionary<string, string>();
             NodeLabels = new ChangeTrackingDictionary<string, string>();
             NodeTaints = new ChangeTrackingList<string>();
+            NodeInitializationTaints = new ChangeTrackingList<string>();
             VirtualMachineNodesStatus = new ChangeTrackingList<AgentPoolVirtualMachineNodes>();
         }
 
@@ -53,7 +54,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="orchestratorVersion"> The version of Kubernetes specified by the user. Both patch version &lt;major.minor.patch&gt; (e.g. 1.20.13) and &lt;major.minor&gt; (e.g. 1.20) are supported. When &lt;major.minor&gt; is specified, the latest supported GA patch version is chosen automatically. Updating the cluster with the same &lt;major.minor&gt; once it has been created (e.g. 1.14.x -&gt; 1.14) will not trigger an upgrade, even if a newer patch version is available. As a best practice, you should upgrade all node pools in an AKS cluster to the same Kubernetes version. The node pool version must have the same major version as the control plane. The node pool minor version must be within two minor versions of the control plane version. The node pool version cannot be greater than the control plane version. For more information see [upgrading a node pool](https://docs.microsoft.com/azure/aks/use-multiple-node-pools#upgrade-a-node-pool). </param>
         /// <param name="currentOrchestratorVersion"> The version of Kubernetes the Agent Pool is running. If orchestratorVersion is a fully specified version &lt;major.minor.patch&gt;, this field will be exactly equal to it. If orchestratorVersion is &lt;major.minor&gt;, this field will contain the full &lt;major.minor.patch&gt; version being used. </param>
         /// <param name="nodeImageVersion"> The version of node image. </param>
+        /// <param name="upgradeStrategy"> Defines the upgrade strategy for the agent pool. The default is Rolling. </param>
+        /// <param name="isOSDiskFullCachingEnabled"> Whether to enable the full-cache ephemeral OS disk feature. When this feature is enabled, the entire operating system will be locally cached on the ephemeral OS disk, preventing E17 events caused by network failures. </param>
         /// <param name="upgradeSettings"> Settings for upgrading the agentpool. </param>
+        /// <param name="upgradeSettingsBlueGreen"> Settings for Blue-Green upgrade on the agentpool. Applies when upgrade strategy is set to BlueGreen. </param>
         /// <param name="provisioningState"> The current deployment or provisioning state. </param>
         /// <param name="powerState"> Whether the Agent Pool is running or stopped. When an Agent Pool is first created it is initially Running. The Agent Pool can be stopped by setting this field to Stopped. A stopped Agent Pool stops all of its VMs and does not accrue billing charges. An Agent Pool can only be stopped if it is Running and provisioning state is Succeeded. </param>
         /// <param name="availabilityZones"> The list of Availability zones to use for nodes. This can only be specified if the AgentPoolType property is 'VirtualMachineScaleSets'. </param>
@@ -65,6 +69,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="tags"> The tags to be persisted on the agent pool virtual machine scale set. </param>
         /// <param name="nodeLabels"> The node labels to be persisted across all nodes in agent pool. </param>
         /// <param name="nodeTaints"> The taints added to new nodes during node pool create and scale. For example, key=value:NoSchedule. </param>
+        /// <param name="nodeInitializationTaints"> Taints added on the nodes during creation that will not be reconciled by AKS. These taints will not be reconciled by AKS and can be removed with a kubectl call. This field can be modified after node pool is created, but nodes will not be recreated with new taints until another operation that requires recreation (e.g. node image upgrade) happens. These taints allow for required configuration to run before the node is ready to accept workloads, for example 'key1=value1:NoSchedule' that then can be removed with `kubectl taint nodes node1 key1=value1:NoSchedule-`. </param>
         /// <param name="proximityPlacementGroupId"> The ID for Proximity Placement Group. </param>
         /// <param name="kubeletConfig"> The Kubelet configuration on the agent pool nodes. </param>
         /// <param name="linuxOSConfig"> The OS configuration of Linux agent nodes. </param>
@@ -80,12 +85,14 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="securityProfile"> The security settings of an agent pool. </param>
         /// <param name="gpuProfile"> GPU settings for the Agent Pool. </param>
         /// <param name="gatewayProfile"> Profile specific to a managed agent pool in Gateway mode. This field cannot be set if agent pool mode is not Gateway. </param>
+        /// <param name="artifactStreamingProfile"> Configuration for using artifact streaming on AKS. </param>
         /// <param name="virtualMachinesProfile"> Specifications on VirtualMachines agent pool. </param>
         /// <param name="virtualMachineNodesStatus"> The status of nodes in a VirtualMachines agent pool. </param>
         /// <param name="status"> Contains read-only information about the Agent Pool. </param>
         /// <param name="localDnsProfile"> Configures the per-node local DNS, with VnetDNS and KubeDNS overrides. LocalDNS helps improve performance and reliability of DNS resolution in an AKS cluster. For more details see aka.ms/aks/localdns. </param>
+        /// <param name="nodeCustomizationProfile"> Settings to determine the node customization used to provision nodes in a pool. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterAgentPoolProfileProperties(ETag? eTag, int? count, string vmSize, int? osDiskSizeInGB, ContainerServiceOSDiskType? osDiskType, KubeletDiskType? kubeletDiskType, WorkloadRuntime? workloadRuntime, string messageOfTheDay, ResourceIdentifier vnetSubnetId, ResourceIdentifier podSubnetId, PodIPAllocationMode? podIPAllocationMode, int? maxPods, ContainerServiceOSType? osType, ContainerServiceOSSku? osSku, int? maxCount, int? minCount, bool? isAutoScalingEnabled, ScaleDownMode? scaleDownMode, AgentPoolType? agentPoolType, AgentPoolMode? mode, string orchestratorVersion, string currentOrchestratorVersion, string nodeImageVersion, AgentPoolUpgradeSettings upgradeSettings, string provisioningState, ContainerServicePowerState powerState, IList<string> availabilityZones, bool? isNodePublicIpEnabled, ResourceIdentifier nodePublicIPPrefixId, ScaleSetPriority? scaleSetPriority, ScaleSetEvictionPolicy? scaleSetEvictionPolicy, float? spotMaxPrice, IDictionary<string, string> tags, IDictionary<string, string> nodeLabels, IList<string> nodeTaints, ResourceIdentifier proximityPlacementGroupId, KubeletConfig kubeletConfig, LinuxOSConfig linuxOSConfig, bool? isEncryptionAtHostEnabled, bool? isUltraSsdEnabled, bool? isFipsEnabled, GpuInstanceProfile? gpuInstanceProfile, ContainerServiceCreationData creationData, ResourceIdentifier capacityReservationGroupId, ResourceIdentifier hostGroupId, AgentPoolNetworkProfile networkProfile, AgentPoolWindowsProfile windowsProfile, AgentPoolSecurityProfile securityProfile, AgentPoolGpuProfile gpuProfile, AgentPoolGatewayProfile gatewayProfile, VirtualMachinesProfile virtualMachinesProfile, IList<AgentPoolVirtualMachineNodes> virtualMachineNodesStatus, AgentPoolStatus status, LocalDnsProfile localDnsProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedClusterAgentPoolProfileProperties(ETag? eTag, int? count, string vmSize, int? osDiskSizeInGB, ContainerServiceOSDiskType? osDiskType, KubeletDiskType? kubeletDiskType, WorkloadRuntime? workloadRuntime, string messageOfTheDay, ResourceIdentifier vnetSubnetId, ResourceIdentifier podSubnetId, PodIPAllocationMode? podIPAllocationMode, int? maxPods, ContainerServiceOSType? osType, ContainerServiceOSSku? osSku, int? maxCount, int? minCount, bool? isAutoScalingEnabled, ScaleDownMode? scaleDownMode, AgentPoolType? agentPoolType, AgentPoolMode? mode, string orchestratorVersion, string currentOrchestratorVersion, string nodeImageVersion, AgentPoolUpgradeStrategy? upgradeStrategy, bool? isOSDiskFullCachingEnabled, AgentPoolUpgradeSettings upgradeSettings, AgentPoolBlueGreenUpgradeSettings upgradeSettingsBlueGreen, string provisioningState, ContainerServicePowerState powerState, IList<string> availabilityZones, bool? isNodePublicIpEnabled, ResourceIdentifier nodePublicIPPrefixId, ScaleSetPriority? scaleSetPriority, ScaleSetEvictionPolicy? scaleSetEvictionPolicy, float? spotMaxPrice, IDictionary<string, string> tags, IDictionary<string, string> nodeLabels, IList<string> nodeTaints, IList<string> nodeInitializationTaints, ResourceIdentifier proximityPlacementGroupId, KubeletConfig kubeletConfig, LinuxOSConfig linuxOSConfig, bool? isEncryptionAtHostEnabled, bool? isUltraSsdEnabled, bool? isFipsEnabled, GpuInstanceProfile? gpuInstanceProfile, ContainerServiceCreationData creationData, ResourceIdentifier capacityReservationGroupId, ResourceIdentifier hostGroupId, AgentPoolNetworkProfile networkProfile, AgentPoolWindowsProfile windowsProfile, AgentPoolSecurityProfile securityProfile, AgentPoolGpuProfile gpuProfile, AgentPoolGatewayProfile gatewayProfile, AgentPoolArtifactStreamingProfile artifactStreamingProfile, VirtualMachinesProfile virtualMachinesProfile, IList<AgentPoolVirtualMachineNodes> virtualMachineNodesStatus, AgentPoolStatus status, LocalDnsProfile localDnsProfile, NodeCustomizationProfile nodeCustomizationProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ETag = eTag;
             Count = count;
@@ -110,7 +117,10 @@ namespace Azure.ResourceManager.ContainerService.Models
             OrchestratorVersion = orchestratorVersion;
             CurrentOrchestratorVersion = currentOrchestratorVersion;
             NodeImageVersion = nodeImageVersion;
+            UpgradeStrategy = upgradeStrategy;
+            IsOSDiskFullCachingEnabled = isOSDiskFullCachingEnabled;
             UpgradeSettings = upgradeSettings;
+            UpgradeSettingsBlueGreen = upgradeSettingsBlueGreen;
             ProvisioningState = provisioningState;
             PowerState = powerState;
             AvailabilityZones = availabilityZones;
@@ -122,6 +132,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             Tags = tags;
             NodeLabels = nodeLabels;
             NodeTaints = nodeTaints;
+            NodeInitializationTaints = nodeInitializationTaints;
             ProximityPlacementGroupId = proximityPlacementGroupId;
             KubeletConfig = kubeletConfig;
             LinuxOSConfig = linuxOSConfig;
@@ -137,10 +148,12 @@ namespace Azure.ResourceManager.ContainerService.Models
             SecurityProfile = securityProfile;
             GpuProfile = gpuProfile;
             GatewayProfile = gatewayProfile;
+            ArtifactStreamingProfile = artifactStreamingProfile;
             VirtualMachinesProfile = virtualMachinesProfile;
             VirtualMachineNodesStatus = virtualMachineNodesStatus;
             Status = status;
             LocalDnsProfile = localDnsProfile;
+            NodeCustomizationProfile = nodeCustomizationProfile;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -236,9 +249,21 @@ namespace Azure.ResourceManager.ContainerService.Models
         [WirePath("nodeImageVersion")]
         public string NodeImageVersion { get; }
 
+        /// <summary> Defines the upgrade strategy for the agent pool. The default is Rolling. </summary>
+        [WirePath("upgradeStrategy")]
+        public AgentPoolUpgradeStrategy? UpgradeStrategy { get; set; }
+
+        /// <summary> Whether to enable the full-cache ephemeral OS disk feature. When this feature is enabled, the entire operating system will be locally cached on the ephemeral OS disk, preventing E17 events caused by network failures. </summary>
+        [WirePath("enableOSDiskFullCaching")]
+        public bool? IsOSDiskFullCachingEnabled { get; set; }
+
         /// <summary> Settings for upgrading the agentpool. </summary>
         [WirePath("upgradeSettings")]
         public AgentPoolUpgradeSettings UpgradeSettings { get; set; }
+
+        /// <summary> Settings for Blue-Green upgrade on the agentpool. Applies when upgrade strategy is set to BlueGreen. </summary>
+        [WirePath("upgradeSettingsBlueGreen")]
+        public AgentPoolBlueGreenUpgradeSettings UpgradeSettingsBlueGreen { get; set; }
 
         /// <summary> The current deployment or provisioning state. </summary>
         [WirePath("provisioningState")]
@@ -283,6 +308,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> The taints added to new nodes during node pool create and scale. For example, key=value:NoSchedule. </summary>
         [WirePath("nodeTaints")]
         public IList<string> NodeTaints { get; } = new ChangeTrackingList<string>();
+
+        /// <summary> Taints added on the nodes during creation that will not be reconciled by AKS. These taints will not be reconciled by AKS and can be removed with a kubectl call. This field can be modified after node pool is created, but nodes will not be recreated with new taints until another operation that requires recreation (e.g. node image upgrade) happens. These taints allow for required configuration to run before the node is ready to accept workloads, for example 'key1=value1:NoSchedule' that then can be removed with `kubectl taint nodes node1 key1=value1:NoSchedule-`. </summary>
+        [WirePath("nodeInitializationTaints")]
+        public IList<string> NodeInitializationTaints { get; } = new ChangeTrackingList<string>();
 
         /// <summary> The ID for Proximity Placement Group. </summary>
         [WirePath("proximityPlacementGroupID")]
@@ -338,11 +367,15 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> GPU settings for the Agent Pool. </summary>
         [WirePath("gpuProfile")]
-        internal AgentPoolGpuProfile GpuProfile { get; set; }
+        public AgentPoolGpuProfile GpuProfile { get; set; }
 
         /// <summary> Profile specific to a managed agent pool in Gateway mode. This field cannot be set if agent pool mode is not Gateway. </summary>
         [WirePath("gatewayProfile")]
         internal AgentPoolGatewayProfile GatewayProfile { get; set; }
+
+        /// <summary> Configuration for using artifact streaming on AKS. </summary>
+        [WirePath("artifactStreamingProfile")]
+        internal AgentPoolArtifactStreamingProfile ArtifactStreamingProfile { get; set; }
 
         /// <summary> Specifications on VirtualMachines agent pool. </summary>
         [WirePath("virtualMachinesProfile")]
@@ -359,6 +392,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Configures the per-node local DNS, with VnetDNS and KubeDNS overrides. LocalDNS helps improve performance and reliability of DNS resolution in an AKS cluster. For more details see aka.ms/aks/localdns. </summary>
         [WirePath("localDNSProfile")]
         public LocalDnsProfile LocalDnsProfile { get; set; }
+
+        /// <summary> Settings to determine the node customization used to provision nodes in a pool. </summary>
+        [WirePath("nodeCustomizationProfile")]
+        internal NodeCustomizationProfile NodeCustomizationProfile { get; set; }
 
         /// <summary> Tells whether the cluster is Running or Stopped. </summary>
         [WirePath("powerState.code")]
@@ -432,17 +469,39 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
         }
 
-        /// <summary> Specifications on how to scale the VirtualMachines agent pool to a fixed size. </summary>
-        [WirePath("virtualMachinesProfile.scale.manual")]
-        public IList<ManualScaleProfile> VirtualMachinesScaleManual
+        /// <summary> Artifact streaming speeds up the cold-start of containers on a node through on-demand image loading. To use this feature, container images must also enable artifact streaming on ACR. If not specified, the default is false. </summary>
+        [WirePath("artifactStreamingProfile.enabled")]
+        public bool? IsArtifactStreamingEnabled
         {
             get
+            {
+                return ArtifactStreamingProfile is null ? default : ArtifactStreamingProfile.IsArtifactStreamingEnabled;
+            }
+            set
+            {
+                if (ArtifactStreamingProfile is null)
+                {
+                    ArtifactStreamingProfile = new AgentPoolArtifactStreamingProfile();
+                }
+                ArtifactStreamingProfile.IsArtifactStreamingEnabled = value;
+            }
+        }
+
+        /// <summary> Specifications on how to scale a VirtualMachines agent pool. </summary>
+        [WirePath("virtualMachinesProfile.scale")]
+        public AgentPoolScaleProfile VirtualMachinesScale
+        {
+            get
+            {
+                return VirtualMachinesProfile is null ? default : VirtualMachinesProfile.Scale;
+            }
+            set
             {
                 if (VirtualMachinesProfile is null)
                 {
                     VirtualMachinesProfile = new VirtualMachinesProfile();
                 }
-                return VirtualMachinesProfile.ScaleManual;
+                VirtualMachinesProfile.Scale = value;
             }
         }
 
@@ -453,6 +512,24 @@ namespace Azure.ResourceManager.ContainerService.Models
             get
             {
                 return Status is null ? default : Status.ProvisioningError;
+            }
+        }
+
+        /// <summary> The resource ID of the node customization resource to use. This can be a version. Omitting the version will use the latest version of the node customization. </summary>
+        [WirePath("nodeCustomizationProfile.nodeCustomizationId")]
+        public ResourceIdentifier NodeCustomizationId
+        {
+            get
+            {
+                return NodeCustomizationProfile is null ? default : NodeCustomizationProfile.NodeCustomizationId;
+            }
+            set
+            {
+                if (NodeCustomizationProfile is null)
+                {
+                    NodeCustomizationProfile = new NodeCustomizationProfile();
+                }
+                NodeCustomizationProfile.NodeCustomizationId = value;
             }
         }
     }

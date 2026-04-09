@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Storage
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.Storage
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<StorageAccountData, StorageAccountResource>(new StorageAccountsGetByResourceGroupAsyncCollectionResultOfT(_storageAccountsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new StorageAccountResource(Client, data));
+            return new AsyncPageableWrapper<StorageAccountData, StorageAccountResource>(new StorageAccountsGetByResourceGroupAsyncCollectionResultOfT(_storageAccountsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "StorageAccountCollection.GetAll"), data => new StorageAccountResource(Client, data));
         }
 
         /// <summary>
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.Storage
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<StorageAccountData, StorageAccountResource>(new StorageAccountsGetByResourceGroupCollectionResultOfT(_storageAccountsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new StorageAccountResource(Client, data));
+            return new PageableWrapper<StorageAccountData, StorageAccountResource>(new StorageAccountsGetByResourceGroupCollectionResultOfT(_storageAccountsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "StorageAccountCollection.GetAll"), data => new StorageAccountResource(Client, data));
         }
 
         /// <summary>

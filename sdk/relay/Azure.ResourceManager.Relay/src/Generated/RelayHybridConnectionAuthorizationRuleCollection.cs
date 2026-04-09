@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Relay
         {
             if (id.ResourceType != RelayHybridConnectionResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, RelayHybridConnectionResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, RelayHybridConnectionResource.ResourceType), nameof(id));
             }
         }
 
@@ -293,7 +293,8 @@ namespace Azure.ResourceManager.Relay
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new RelayHybridConnectionAuthorizationRuleResource(Client, data));
+                context,
+                "RelayHybridConnectionAuthorizationRuleCollection.GetAll"), data => new RelayHybridConnectionAuthorizationRuleResource(Client, data));
         }
 
         /// <summary>
@@ -327,7 +328,8 @@ namespace Azure.ResourceManager.Relay
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new RelayHybridConnectionAuthorizationRuleResource(Client, data));
+                context,
+                "RelayHybridConnectionAuthorizationRuleCollection.GetAll"), data => new RelayHybridConnectionAuthorizationRuleResource(Client, data));
         }
 
         /// <summary>

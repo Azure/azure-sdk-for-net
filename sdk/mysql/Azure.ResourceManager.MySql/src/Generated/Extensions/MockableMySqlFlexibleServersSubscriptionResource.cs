@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MySqlFlexibleServerData, MySqlFlexibleServerResource>(new ServersGetAllAsyncCollectionResultOfT(ServersRestClient, Guid.Parse(Id.SubscriptionId), context), data => new MySqlFlexibleServerResource(Client, data));
+            return new AsyncPageableWrapper<MySqlFlexibleServerData, MySqlFlexibleServerResource>(new ServersGetAllAsyncCollectionResultOfT(ServersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMySqlFlexibleServersSubscriptionResource.GetMySqlFlexibleServers"), data => new MySqlFlexibleServerResource(Client, data));
         }
 
         /// <summary>
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MySqlFlexibleServerData, MySqlFlexibleServerResource>(new ServersGetAllCollectionResultOfT(ServersRestClient, Guid.Parse(Id.SubscriptionId), context), data => new MySqlFlexibleServerResource(Client, data));
+            return new PageableWrapper<MySqlFlexibleServerData, MySqlFlexibleServerResource>(new ServersGetAllCollectionResultOfT(ServersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMySqlFlexibleServersSubscriptionResource.GetMySqlFlexibleServers"), data => new MySqlFlexibleServerResource(Client, data));
         }
 
         /// <summary>
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new LocationBasedCapabilitiesGetLocationBasedCapabilitiesAsyncCollectionResultOfT(LocationBasedCapabilitiesRestClient, Guid.Parse(Id.SubscriptionId), locationName, context);
+            return new LocationBasedCapabilitiesGetLocationBasedCapabilitiesAsyncCollectionResultOfT(LocationBasedCapabilitiesRestClient, Guid.Parse(Id.SubscriptionId), locationName, context, "MockableMySqlFlexibleServersSubscriptionResource.GetLocationBasedCapabilities");
         }
 
         /// <summary>
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new LocationBasedCapabilitiesGetLocationBasedCapabilitiesCollectionResultOfT(LocationBasedCapabilitiesRestClient, Guid.Parse(Id.SubscriptionId), locationName, context);
+            return new LocationBasedCapabilitiesGetLocationBasedCapabilitiesCollectionResultOfT(LocationBasedCapabilitiesRestClient, Guid.Parse(Id.SubscriptionId), locationName, context, "MockableMySqlFlexibleServersSubscriptionResource.GetLocationBasedCapabilities");
         }
 
         /// <summary>

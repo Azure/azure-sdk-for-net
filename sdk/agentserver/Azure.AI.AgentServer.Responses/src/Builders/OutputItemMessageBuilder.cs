@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Text;
 using Azure.AI.AgentServer.Responses.Internal;
 using Azure.AI.AgentServer.Responses.Models;
 
@@ -99,6 +100,92 @@ public class OutputItemMessageBuilder : OutputItemBuilder<OutputItemMessage>
             refusal: refusalContent.FinalRefusal ?? string.Empty));
         return new ResponseContentPartDoneEvent(
             _stream.NextSequenceNumber(), _itemId, _outputIndex, refusalContent.ContentIndex, part);
+    }
+
+    // ── Sub-Item Convenience Generators (S-053/S-054/S-055) ────
+
+    /// <summary>
+    /// Convenience generator that yields the complete text content sub-item
+    /// event sequence from a single string (S-053, complete-text mode per S-054).
+    /// </summary>
+    /// <param name="text">The complete text to emit.</param>
+    /// <returns>An enumerable of events: <c>content_part.added</c> → <c>output_text.delta</c> → <c>output_text.done</c> → <c>content_part.done</c>.</returns>
+    public virtual IEnumerable<ResponseStreamEvent> TextContent(string text)
+    {
+        var builder = AddTextContent();
+        yield return builder.EmitAdded();
+        yield return builder.EmitDelta(text);
+        yield return builder.EmitDone(text);
+        yield return EmitContentDone(builder);
+    }
+
+    /// <summary>
+    /// Convenience generator that yields the complete text content sub-item
+    /// event sequence from streaming chunks (S-053, streaming mode per S-054).
+    /// Each chunk is emitted as a delta immediately (S-055).
+    /// </summary>
+    /// <param name="chunks">An async enumerable of text chunks.</param>
+    /// <param name="cancellationToken">A token to cancel iteration.</param>
+    /// <returns>An async enumerable of events: <c>content_part.added</c> → N × <c>output_text.delta</c> → <c>output_text.done</c> → <c>content_part.done</c>.</returns>
+    public virtual async IAsyncEnumerable<ResponseStreamEvent> TextContent(
+        IAsyncEnumerable<string> chunks,
+        [System.Runtime.CompilerServices.EnumeratorCancellation] CancellationToken cancellationToken = default)
+    {
+        var builder = AddTextContent();
+        yield return builder.EmitAdded();
+
+        var sb = new StringBuilder();
+        await foreach (var chunk in chunks.WithCancellation(cancellationToken).ConfigureAwait(false))
+        {
+            sb.Append(chunk);
+            yield return builder.EmitDelta(chunk);
+        }
+
+        var finalText = sb.ToString();
+        yield return builder.EmitDone(finalText);
+        yield return EmitContentDone(builder);
+    }
+
+    /// <summary>
+    /// Convenience generator that yields the complete refusal content sub-item
+    /// event sequence from a single string (S-053, complete-text mode per S-054).
+    /// </summary>
+    /// <param name="text">The complete refusal text to emit.</param>
+    /// <returns>An enumerable of events: <c>content_part.added</c> → <c>refusal.delta</c> → <c>refusal.done</c> → <c>content_part.done</c>.</returns>
+    public virtual IEnumerable<ResponseStreamEvent> RefusalContent(string text)
+    {
+        var builder = AddRefusalContent();
+        yield return builder.EmitAdded();
+        yield return builder.EmitDelta(text);
+        yield return builder.EmitDone(text);
+        yield return EmitContentDone(builder);
+    }
+
+    /// <summary>
+    /// Convenience generator that yields the complete refusal content sub-item
+    /// event sequence from streaming chunks (S-053, streaming mode per S-054).
+    /// Each chunk is emitted as a delta immediately (S-055).
+    /// </summary>
+    /// <param name="chunks">An async enumerable of refusal text chunks.</param>
+    /// <param name="cancellationToken">A token to cancel iteration.</param>
+    /// <returns>An async enumerable of events: <c>content_part.added</c> → N × <c>refusal.delta</c> → <c>refusal.done</c> → <c>content_part.done</c>.</returns>
+    public virtual async IAsyncEnumerable<ResponseStreamEvent> RefusalContent(
+        IAsyncEnumerable<string> chunks,
+        [System.Runtime.CompilerServices.EnumeratorCancellation] CancellationToken cancellationToken = default)
+    {
+        var builder = AddRefusalContent();
+        yield return builder.EmitAdded();
+
+        var sb = new StringBuilder();
+        await foreach (var chunk in chunks.WithCancellation(cancellationToken).ConfigureAwait(false))
+        {
+            sb.Append(chunk);
+            yield return builder.EmitDelta(chunk);
+        }
+
+        var finalText = sb.ToString();
+        yield return builder.EmitDone(finalText);
+        yield return EmitContentDone(builder);
     }
 
     /// <summary>

@@ -13,87 +13,236 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevCenter
 {
-    /// <summary>
-    /// A class representing the DevCenterProject data model.
-    /// Represents a project resource.
-    /// </summary>
+    /// <summary> Represents a project resource. </summary>
     public partial class DevCenterProjectData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DevCenterProjectData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public DevCenterProjectData(AzureLocation location) : base(location)
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="DevCenterProjectData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="devCenterId"> Resource Id of an associated DevCenter. </param>
-        /// <param name="description"> Description of the project. </param>
-        /// <param name="maxDevBoxesPerUser"> When specified, limits the maximum number of Dev Boxes a single user can create across all pools in the project. This will have no effect on existing Dev Boxes when reduced. </param>
-        /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        /// <param name="devCenterUri"> The URI of the Dev Center resource this project is associated with. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevCenterProjectData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceIdentifier devCenterId, string description, int? maxDevBoxesPerUser, DevCenterProvisioningState? provisioningState, Uri devCenterUri, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Properties of a project. </param>
+        /// <param name="identity"> Managed identity properties. </param>
+        internal DevCenterProjectData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, ProjectProperties properties, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
         {
-            DevCenterId = devCenterId;
-            Description = description;
-            MaxDevBoxesPerUser = maxDevBoxesPerUser;
-            ProvisioningState = provisioningState;
-            DevCenterUri = devCenterUri;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
+            Identity = identity;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DevCenterProjectData"/> for deserialization. </summary>
-        internal DevCenterProjectData()
-        {
-        }
+        /// <summary> Properties of a project. </summary>
+        internal ProjectProperties Properties { get; set; }
+
+        /// <summary> Managed identity properties. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> Resource Id of an associated DevCenter. </summary>
-        public ResourceIdentifier DevCenterId { get; set; }
+        public ResourceIdentifier DevCenterId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DevCenterId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProjectProperties();
+                }
+                Properties.DevCenterId = value;
+            }
+        }
+
         /// <summary> Description of the project. </summary>
-        public string Description { get; set; }
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProjectProperties();
+                }
+                Properties.Description = value;
+            }
+        }
+
         /// <summary> When specified, limits the maximum number of Dev Boxes a single user can create across all pools in the project. This will have no effect on existing Dev Boxes when reduced. </summary>
-        public int? MaxDevBoxesPerUser { get; set; }
+        public int? MaxDevBoxesPerUser
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MaxDevBoxesPerUser;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProjectProperties();
+                }
+                Properties.MaxDevBoxesPerUser = value.Value;
+            }
+        }
+
+        /// <summary> The display name of the project. </summary>
+        public string DisplayName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisplayName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProjectProperties();
+                }
+                Properties.DisplayName = value;
+            }
+        }
+
+        /// <summary> Settings to be used for customizations. </summary>
+        public DevCenterProjectCustomizationSettings CustomizationSettings
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CustomizationSettings;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProjectProperties();
+                }
+                Properties.CustomizationSettings = value;
+            }
+        }
+
+        /// <summary> Dev Box Schedule Delete settings. </summary>
+        public DevCenterDevBoxScheduleDeleteSettings DevBoxScheduleDeleteSettings
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DevBoxScheduleDeleteSettings;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProjectProperties();
+                }
+                Properties.DevBoxScheduleDeleteSettings = value;
+            }
+        }
+
+        /// <summary> Settings to be used for serverless GPU. </summary>
+        public DevCenterServerlessGpuSessionsSettings ServerlessGpuSessionsSettings
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ServerlessGpuSessionsSettings;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProjectProperties();
+                }
+                Properties.ServerlessGpuSessionsSettings = value;
+            }
+        }
+
+        /// <summary> List of Entra ID group assignments associated with this project. </summary>
+        public IList<DevCenterAssignedGroup> AssignedGroups
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProjectProperties();
+                }
+                return Properties.AssignedGroups;
+            }
+        }
+
+        /// <summary> Indicates catalog item types that can be synced. </summary>
+        public IList<DevCenterCatalogItemType> CatalogItemSyncTypes
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProjectProperties();
+                }
+                return Properties.CatalogItemSyncTypes;
+            }
+        }
+
+        /// <summary> The property indicates whether Azure AI services is enabled. </summary>
+        public AzureAiServicesMode? AzureAiServicesMode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AzureAiServicesMode;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProjectProperties();
+                }
+                Properties.AzureAiServicesMode = value.Value;
+            }
+        }
+
+        /// <summary> Indicates whether workspace storage is enabled. </summary>
+        public DevCenterWorkspaceStorageMode? WorkspaceStorageMode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.WorkspaceStorageMode;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProjectProperties();
+                }
+                Properties.WorkspaceStorageMode = value.Value;
+            }
+        }
+
         /// <summary> The provisioning state of the resource. </summary>
-        public DevCenterProvisioningState? ProvisioningState { get; }
+        public DevCenterProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> The URI of the Dev Center resource this project is associated with. </summary>
-        public Uri DevCenterUri { get; }
+        public Uri DevCenterUri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DevCenterUri;
+            }
+        }
     }
 }

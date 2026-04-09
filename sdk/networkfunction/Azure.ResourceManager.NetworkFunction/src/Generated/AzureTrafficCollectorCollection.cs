@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.NetworkFunction
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.NetworkFunction
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AzureTrafficCollectorData, AzureTrafficCollectorResource>(new AzureTrafficCollectorsByResourceGroupGetAllAsyncCollectionResultOfT(_azureTrafficCollectorsByResourceGroupRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new AzureTrafficCollectorResource(Client, data));
+            return new AsyncPageableWrapper<AzureTrafficCollectorData, AzureTrafficCollectorResource>(new AzureTrafficCollectorsByResourceGroupGetAllAsyncCollectionResultOfT(_azureTrafficCollectorsByResourceGroupRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "AzureTrafficCollectorCollection.GetAll"), data => new AzureTrafficCollectorResource(Client, data));
         }
 
         /// <summary>
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.NetworkFunction
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AzureTrafficCollectorData, AzureTrafficCollectorResource>(new AzureTrafficCollectorsByResourceGroupGetAllCollectionResultOfT(_azureTrafficCollectorsByResourceGroupRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new AzureTrafficCollectorResource(Client, data));
+            return new PageableWrapper<AzureTrafficCollectorData, AzureTrafficCollectorResource>(new AzureTrafficCollectorsByResourceGroupGetAllCollectionResultOfT(_azureTrafficCollectorsByResourceGroupRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "AzureTrafficCollectorCollection.GetAll"), data => new AzureTrafficCollectorResource(Client, data));
         }
 
         /// <summary>

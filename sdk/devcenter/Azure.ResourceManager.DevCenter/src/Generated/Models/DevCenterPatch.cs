@@ -23,14 +23,104 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <summary> Initializes a new instance of <see cref="DevCenterPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="identity"> Managed identity properties. </param>
-        internal DevCenterPatch(IDictionary<string, string> tags, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData, ManagedServiceIdentity identity) : base(tags, location, serializedAdditionalRawData)
+        /// <param name="properties"> Properties of a Dev Center to be updated. </param>
+        internal DevCenterPatch(IDictionary<string, string> tags, AzureLocation? location, IDictionary<string, BinaryData> additionalBinaryDataProperties, ManagedServiceIdentity identity, DevCenterUpdateProperties properties) : base(tags, location, additionalBinaryDataProperties)
         {
             Identity = identity;
+            Properties = properties;
         }
 
         /// <summary> Managed identity properties. </summary>
         public ManagedServiceIdentity Identity { get; set; }
+
+        /// <summary> Properties of a Dev Center to be updated. </summary>
+        internal DevCenterUpdateProperties Properties { get; set; }
+
+        /// <summary> The display name of the devcenter. </summary>
+        public string DisplayName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisplayName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DevCenterUpdateProperties();
+                }
+                Properties.DisplayName = value;
+            }
+        }
+
+        /// <summary> All Customer-managed key encryption properties for the resource. </summary>
+        public DevCenterCustomerManagedKeyEncryption CustomerManagedKeyEncryption
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CustomerManagedKeyEncryption;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DevCenterUpdateProperties();
+                }
+                Properties.CustomerManagedKeyEncryption = value;
+            }
+        }
+
+        /// <summary> Whether project catalogs associated with projects in this dev center can be configured to sync catalog items. </summary>
+        public DevCenterCatalogItemSyncEnableStatus? CatalogItemSyncEnableStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CatalogItemSyncEnableStatus;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DevCenterUpdateProperties();
+                }
+                Properties.CatalogItemSyncEnableStatus = value.Value;
+            }
+        }
+
+        /// <summary> Indicates whether pools in this Dev Center can use Microsoft Hosted Networks. Defaults to Enabled if not set. </summary>
+        public DevCenterMicrosoftHostedNetworkEnableStatus? MicrosoftHostedNetworkEnableStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MicrosoftHostedNetworkEnableStatus;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DevCenterUpdateProperties();
+                }
+                Properties.MicrosoftHostedNetworkEnableStatus = value.Value;
+            }
+        }
+
+        /// <summary> Indicates whether to install the Azure Monitor Agent service on Dev Boxes that belong to this dev center. </summary>
+        public DevCenterInstallAzureMonitorAgentEnableStatus? DevBoxProvisioningInstallAzureMonitorAgentEnableStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DevBoxProvisioningInstallAzureMonitorAgentEnableStatus;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DevCenterUpdateProperties();
+                }
+                Properties.DevBoxProvisioningInstallAzureMonitorAgentEnableStatus = value.Value;
+            }
+        }
     }
 }

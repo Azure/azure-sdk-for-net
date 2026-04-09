@@ -180,7 +180,8 @@ namespace Azure.ResourceManager.Quota
                 filter,
                 top,
                 skiptoken,
-                context), data => new QuotaRequestDetailResource(Client, data));
+                context,
+                "QuotaRequestDetailCollection.GetAll"), data => new QuotaRequestDetailResource(Client, data));
         }
 
         /// <summary>
@@ -223,7 +224,8 @@ namespace Azure.ResourceManager.Quota
                 filter,
                 top,
                 skiptoken,
-                context), data => new QuotaRequestDetailResource(Client, data));
+                context,
+                "QuotaRequestDetailCollection.GetAll"), data => new QuotaRequestDetailResource(Client, data));
         }
 
         /// <summary>
