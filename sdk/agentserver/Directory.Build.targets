@@ -1,0 +1,13 @@
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!--
+    Add any shared targets you want for the projects under this package directory that need to be set after the auto imported Directory.Build.targets
+  -->
+  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory).., Directory.Build.targets))\Directory.Build.targets" />
+
+  <!-- The Responses package uses a custom generation pipeline (Generate-Contracts.ps1), not the
+       standard tsp-client workflow. Clear TypeSpecInput AFTER the repo-wide CodeGeneration.targets
+       sets it (based on tsp-location.yaml auto-discovery) to prevent tsp-client from running. -->
+  <PropertyGroup Condition="'$(MSBuildProjectName)' == 'Azure.AI.AgentServer.Responses'">
+    <TypeSpecInput />
+  </PropertyGroup>
+</Project>

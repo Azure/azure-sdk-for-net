@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ConnectedClusterStorageClassData, ConnectedClusterStorageClassResource>(new StorageClassGetAllAsyncCollectionResultOfT(_storageClassRestClient, Id, context), data => new ConnectedClusterStorageClassResource(Client, data));
+            return new AsyncPageableWrapper<ConnectedClusterStorageClassData, ConnectedClusterStorageClassResource>(new StorageClassGetAllAsyncCollectionResultOfT(_storageClassRestClient, Id, context, "ConnectedClusterStorageClassCollection.GetAll"), data => new ConnectedClusterStorageClassResource(Client, data));
         }
 
         /// <summary>
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ConnectedClusterStorageClassData, ConnectedClusterStorageClassResource>(new StorageClassGetAllCollectionResultOfT(_storageClassRestClient, Id, context), data => new ConnectedClusterStorageClassResource(Client, data));
+            return new PageableWrapper<ConnectedClusterStorageClassData, ConnectedClusterStorageClassResource>(new StorageClassGetAllCollectionResultOfT(_storageClassRestClient, Id, context, "ConnectedClusterStorageClassCollection.GetAll"), data => new ConnectedClusterStorageClassResource(Client, data));
         }
 
         /// <summary>

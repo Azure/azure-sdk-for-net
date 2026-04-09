@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.NotificationHubs
 {
@@ -24,31 +25,33 @@ namespace Azure.ResourceManager.NotificationHubs
     /// </summary>
     public partial class NotificationHubsPrivateLinkResourceCollection : ArmCollection, IEnumerable<NotificationHubsPrivateLinkResource>, IAsyncEnumerable<NotificationHubsPrivateLinkResource>
     {
-        private readonly ClientDiagnostics _notificationHubsPrivateLinkResourcePrivateEndpointConnectionsClientDiagnostics;
-        private readonly PrivateEndpointConnectionsRestOperations _notificationHubsPrivateLinkResourcePrivateEndpointConnectionsRestClient;
+        private readonly ClientDiagnostics _privateEndpointConnectionsClientDiagnostics;
+        private readonly PrivateEndpointConnections _privateEndpointConnectionsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="NotificationHubsPrivateLinkResourceCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of NotificationHubsPrivateLinkResourceCollection for mocking. </summary>
         protected NotificationHubsPrivateLinkResourceCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="NotificationHubsPrivateLinkResourceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationHubsPrivateLinkResourceCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NotificationHubsPrivateLinkResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _notificationHubsPrivateLinkResourcePrivateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NotificationHubs", NotificationHubsPrivateLinkResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(NotificationHubsPrivateLinkResource.ResourceType, out string notificationHubsPrivateLinkResourcePrivateEndpointConnectionsApiVersion);
-            _notificationHubsPrivateLinkResourcePrivateEndpointConnectionsRestClient = new PrivateEndpointConnectionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, notificationHubsPrivateLinkResourcePrivateEndpointConnectionsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(NotificationHubsPrivateLinkResource.ResourceType, out string notificationHubsPrivateLinkResourceApiVersion);
+            _privateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NotificationHubs", NotificationHubsPrivateLinkResource.ResourceType.Namespace, Diagnostics);
+            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, notificationHubsPrivateLinkResourceApiVersion ?? "2023-10-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != NotificationHubNamespaceResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, NotificationHubNamespaceResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, NotificationHubNamespaceResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
@@ -56,38 +59,42 @@ namespace Azure.ResourceManager.NotificationHubs
         /// That's why we don't send it to the sibling RP, but process it directly in the scale unit that received the request.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/privateLinkResources/{subResourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/privateLinkResources/{subResourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnections_GetGroupId</description>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateLinkResources_GetGroupId. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NotificationHubsPrivateLinkResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="subResourceName"> Name of the Private Link sub-resource. The only supported sub-resource is "namespace". </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="subResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<NotificationHubsPrivateLinkResource>> GetAsync(string subResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subResourceName, nameof(subResourceName));
 
-            using var scope = _notificationHubsPrivateLinkResourcePrivateEndpointConnectionsClientDiagnostics.CreateScope("NotificationHubsPrivateLinkResourceCollection.Get");
+            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("NotificationHubsPrivateLinkResourceCollection.Get");
             scope.Start();
             try
             {
-                var response = await _notificationHubsPrivateLinkResourcePrivateEndpointConnectionsRestClient.GetGroupIdAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, subResourceName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetGroupIdRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, subResourceName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<NotificationHubsPrivateLinkResourceData> response = Response.FromValue(NotificationHubsPrivateLinkResourceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new NotificationHubsPrivateLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -102,38 +109,42 @@ namespace Azure.ResourceManager.NotificationHubs
         /// That's why we don't send it to the sibling RP, but process it directly in the scale unit that received the request.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/privateLinkResources/{subResourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/privateLinkResources/{subResourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnections_GetGroupId</description>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateLinkResources_GetGroupId. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NotificationHubsPrivateLinkResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="subResourceName"> Name of the Private Link sub-resource. The only supported sub-resource is "namespace". </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="subResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<NotificationHubsPrivateLinkResource> Get(string subResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subResourceName, nameof(subResourceName));
 
-            using var scope = _notificationHubsPrivateLinkResourcePrivateEndpointConnectionsClientDiagnostics.CreateScope("NotificationHubsPrivateLinkResourceCollection.Get");
+            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("NotificationHubsPrivateLinkResourceCollection.Get");
             scope.Start();
             try
             {
-                var response = _notificationHubsPrivateLinkResourcePrivateEndpointConnectionsRestClient.GetGroupId(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, subResourceName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetGroupIdRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, subResourceName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<NotificationHubsPrivateLinkResourceData> response = Response.FromValue(NotificationHubsPrivateLinkResourceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new NotificationHubsPrivateLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -148,29 +159,34 @@ namespace Azure.ResourceManager.NotificationHubs
         /// That's why we don't send it to the sibling RP, but process it directly in the scale unit that received the request.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/privateLinkResources</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/privateLinkResources. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnections_ListGroupIds</description>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateLinkResources_ListGroupIds. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NotificationHubsPrivateLinkResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NotificationHubsPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NotificationHubsPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NotificationHubsPrivateLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _notificationHubsPrivateLinkResourcePrivateEndpointConnectionsRestClient.CreateListGroupIdsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new NotificationHubsPrivateLinkResource(Client, NotificationHubsPrivateLinkResourceData.DeserializeNotificationHubsPrivateLinkResourceData(e)), _notificationHubsPrivateLinkResourcePrivateEndpointConnectionsClientDiagnostics, Pipeline, "NotificationHubsPrivateLinkResourceCollection.GetAll", "value", null, cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<NotificationHubsPrivateLinkResourceData, NotificationHubsPrivateLinkResource>(new PrivateEndpointConnectionsGetGroupIdsAsyncCollectionResultOfT(
+                _privateEndpointConnectionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "NotificationHubsPrivateLinkResourceCollection.GetAll"), data => new NotificationHubsPrivateLinkResource(Client, data));
         }
 
         /// <summary>
@@ -178,20 +194,16 @@ namespace Azure.ResourceManager.NotificationHubs
         /// That's why we don't send it to the sibling RP, but process it directly in the scale unit that received the request.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/privateLinkResources</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/privateLinkResources. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnections_ListGroupIds</description>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateLinkResources_ListGroupIds. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NotificationHubsPrivateLinkResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -199,44 +211,67 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <returns> A collection of <see cref="NotificationHubsPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NotificationHubsPrivateLinkResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _notificationHubsPrivateLinkResourcePrivateEndpointConnectionsRestClient.CreateListGroupIdsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new NotificationHubsPrivateLinkResource(Client, NotificationHubsPrivateLinkResourceData.DeserializeNotificationHubsPrivateLinkResourceData(e)), _notificationHubsPrivateLinkResourcePrivateEndpointConnectionsClientDiagnostics, Pipeline, "NotificationHubsPrivateLinkResourceCollection.GetAll", "value", null, cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<NotificationHubsPrivateLinkResourceData, NotificationHubsPrivateLinkResource>(new PrivateEndpointConnectionsGetGroupIdsCollectionResultOfT(
+                _privateEndpointConnectionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "NotificationHubsPrivateLinkResourceCollection.GetAll"), data => new NotificationHubsPrivateLinkResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/privateLinkResources/{subResourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/privateLinkResources/{subResourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnections_GetGroupId</description>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateLinkResources_GetGroupId. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NotificationHubsPrivateLinkResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="subResourceName"> Name of the Private Link sub-resource. The only supported sub-resource is "namespace". </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="subResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string subResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subResourceName, nameof(subResourceName));
 
-            using var scope = _notificationHubsPrivateLinkResourcePrivateEndpointConnectionsClientDiagnostics.CreateScope("NotificationHubsPrivateLinkResourceCollection.Exists");
+            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("NotificationHubsPrivateLinkResourceCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _notificationHubsPrivateLinkResourcePrivateEndpointConnectionsRestClient.GetGroupIdAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, subResourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetGroupIdRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, subResourceName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<NotificationHubsPrivateLinkResourceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NotificationHubsPrivateLinkResourceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NotificationHubsPrivateLinkResourceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -250,36 +285,50 @@ namespace Azure.ResourceManager.NotificationHubs
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/privateLinkResources/{subResourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/privateLinkResources/{subResourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnections_GetGroupId</description>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateLinkResources_GetGroupId. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NotificationHubsPrivateLinkResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="subResourceName"> Name of the Private Link sub-resource. The only supported sub-resource is "namespace". </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="subResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string subResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subResourceName, nameof(subResourceName));
 
-            using var scope = _notificationHubsPrivateLinkResourcePrivateEndpointConnectionsClientDiagnostics.CreateScope("NotificationHubsPrivateLinkResourceCollection.Exists");
+            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("NotificationHubsPrivateLinkResourceCollection.Exists");
             scope.Start();
             try
             {
-                var response = _notificationHubsPrivateLinkResourcePrivateEndpointConnectionsRestClient.GetGroupId(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, subResourceName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetGroupIdRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, subResourceName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<NotificationHubsPrivateLinkResourceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NotificationHubsPrivateLinkResourceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NotificationHubsPrivateLinkResourceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -293,38 +342,54 @@ namespace Azure.ResourceManager.NotificationHubs
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/privateLinkResources/{subResourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/privateLinkResources/{subResourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnections_GetGroupId</description>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateLinkResources_GetGroupId. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NotificationHubsPrivateLinkResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="subResourceName"> Name of the Private Link sub-resource. The only supported sub-resource is "namespace". </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="subResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<NotificationHubsPrivateLinkResource>> GetIfExistsAsync(string subResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subResourceName, nameof(subResourceName));
 
-            using var scope = _notificationHubsPrivateLinkResourcePrivateEndpointConnectionsClientDiagnostics.CreateScope("NotificationHubsPrivateLinkResourceCollection.GetIfExists");
+            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("NotificationHubsPrivateLinkResourceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _notificationHubsPrivateLinkResourcePrivateEndpointConnectionsRestClient.GetGroupIdAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, subResourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetGroupIdRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, subResourceName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<NotificationHubsPrivateLinkResourceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NotificationHubsPrivateLinkResourceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NotificationHubsPrivateLinkResourceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<NotificationHubsPrivateLinkResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new NotificationHubsPrivateLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -338,38 +403,54 @@ namespace Azure.ResourceManager.NotificationHubs
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/privateLinkResources/{subResourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/privateLinkResources/{subResourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnections_GetGroupId</description>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateLinkResources_GetGroupId. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NotificationHubsPrivateLinkResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="subResourceName"> Name of the Private Link sub-resource. The only supported sub-resource is "namespace". </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="subResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<NotificationHubsPrivateLinkResource> GetIfExists(string subResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subResourceName, nameof(subResourceName));
 
-            using var scope = _notificationHubsPrivateLinkResourcePrivateEndpointConnectionsClientDiagnostics.CreateScope("NotificationHubsPrivateLinkResourceCollection.GetIfExists");
+            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("NotificationHubsPrivateLinkResourceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _notificationHubsPrivateLinkResourcePrivateEndpointConnectionsRestClient.GetGroupId(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, subResourceName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetGroupIdRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, subResourceName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<NotificationHubsPrivateLinkResourceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NotificationHubsPrivateLinkResourceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NotificationHubsPrivateLinkResourceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<NotificationHubsPrivateLinkResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new NotificationHubsPrivateLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -389,6 +470,7 @@ namespace Azure.ResourceManager.NotificationHubs
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<NotificationHubsPrivateLinkResource> IAsyncEnumerable<NotificationHubsPrivateLinkResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

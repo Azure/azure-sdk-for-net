@@ -304,13 +304,13 @@ public partial class AgentAdministrationClient
     /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="agentVersion"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="agentVersion"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual ClientResult<AgentVersion> GetAgentVersion(string agentName, string agentVersion, CancellationToken cancellationToken = default)
+    public virtual ClientResult<ProjectsAgentVersion> GetAgentVersion(string agentName, string agentVersion, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
         Argument.AssertNotNullOrEmpty(agentVersion, nameof(agentVersion));
 
         ClientResult result = GetAgentVersion(agentName, agentVersion, cancellationToken.ToRequestOptions());
-        return result.ToProjectAgentsResult<AgentVersion>();
+        return result.ToProjectAgentsResult<ProjectsAgentVersion>();
     }
 
     /// <summary> Retrieves a specific version of an agent. </summary>
@@ -320,13 +320,13 @@ public partial class AgentAdministrationClient
     /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="agentVersion"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="agentVersion"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual async Task<ClientResult<AgentVersion>> GetAgentVersionAsync(string agentName, string agentVersion, CancellationToken cancellationToken = default)
+    public virtual async Task<ClientResult<ProjectsAgentVersion>> GetAgentVersionAsync(string agentName, string agentVersion, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
         Argument.AssertNotNullOrEmpty(agentVersion, nameof(agentVersion));
 
         ClientResult result = await GetAgentVersionAsync(agentName, agentVersion, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-        return result.ToProjectAgentsResult<AgentVersion>();
+        return result.ToProjectAgentsResult<ProjectsAgentVersion>();
     }
 
     /// <summary>

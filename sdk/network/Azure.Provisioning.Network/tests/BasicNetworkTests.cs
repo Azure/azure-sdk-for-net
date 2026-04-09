@@ -670,4 +670,439 @@ public class BasicNetworkTests
             }
             """);
     }
+
+    internal static Trycep CreateBastionHubSpokeTest()
+    {
+        return new Trycep().Define(
+            ctx =>
+            {
+                Infrastructure infra = new();
+
+                ProvisioningParameter vNetHubName = new(nameof(vNetHubName), typeof(string))
+                {
+                    Description = "The name of the Hub vNet",
+                    Value = "vnet-hub"
+                };
+                infra.Add(vNetHubName);
+
+                ProvisioningParameter vNetSpokeName = new(nameof(vNetSpokeName), typeof(string))
+                {
+                    Description = "The name of the Spoke vNet",
+                    Value = "vnet-spoke"
+                };
+                infra.Add(vNetSpokeName);
+
+                ProvisioningParameter bastionHostName = new(nameof(bastionHostName), typeof(string))
+                {
+                    Description = "The name of the Azure Bastion host",
+                    Value = "bastion1"
+                };
+                infra.Add(bastionHostName);
+
+                VirtualNetwork vNetHub = new(nameof(vNetHub))
+                {
+                    Name = vNetHubName,
+                    AddressSpace = new VirtualNetworkAddressSpace()
+                    {
+                        AddressPrefixes = ["10.0.0.0/16"]
+                    },
+                    Subnets =
+                    [
+                        new SubnetResource("bastionSubnet")
+                        {
+                            Name = "AzureBastionSubnet",
+                            AddressPrefix = "10.0.0.0/26"
+                        }
+                    ]
+                };
+                infra.Add(vNetHub);
+
+                VirtualNetwork vNetSpoke = new(nameof(vNetSpoke))
+                {
+                    Name = vNetSpokeName,
+                    AddressSpace = new VirtualNetworkAddressSpace()
+                    {
+                        AddressPrefixes = ["10.1.0.0/16"]
+                    },
+                    Subnets =
+                    [
+                        new SubnetResource("spokeSubnet")
+                        {
+                            Name = "Subnet-1",
+                            AddressPrefix = "10.1.0.0/24"
+                        }
+                    ]
+                };
+                infra.Add(vNetSpoke);
+
+                VirtualNetworkPeering hubToSpoke = new(nameof(hubToSpoke))
+                {
+                    Name = BicepFunction.Interpolate($"peering-to-{vNetSpokeName}"),
+                    Parent = vNetHub,
+                    AllowVirtualNetworkAccess = true,
+                    AllowForwardedTraffic = false,
+                    AllowGatewayTransit = false,
+                    UseRemoteGateways = false,
+                    RemoteVirtualNetworkId = vNetSpoke.Id
+                };
+                infra.Add(hubToSpoke);
+
+                VirtualNetworkPeering spokeToHub = new(nameof(spokeToHub))
+                {
+                    Name = BicepFunction.Interpolate($"peering-to-{vNetHubName}"),
+                    Parent = vNetSpoke,
+                    AllowVirtualNetworkAccess = true,
+                    AllowForwardedTraffic = false,
+                    AllowGatewayTransit = false,
+                    UseRemoteGateways = false,
+                    RemoteVirtualNetworkId = vNetHub.Id
+                };
+                infra.Add(spokeToHub);
+
+                PublicIPAddress bastionPublicIP = new(nameof(bastionPublicIP))
+                {
+                    Name = BicepFunction.Interpolate($"{bastionHostName}-pip"),
+                    PublicIPAllocationMethod = NetworkIPAllocationMethod.Static,
+                    Sku = new PublicIPAddressSku()
+                    {
+                        Name = PublicIPAddressSkuName.Standard
+                    }
+                };
+                infra.Add(bastionPublicIP);
+
+                BastionHost bastionHost = new(nameof(bastionHost))
+                {
+                    Name = bastionHostName,
+                    IPConfigurations =
+                    [
+                        new BastionHostIPConfiguration()
+                        {
+                            Name = "ipconfig1",
+                            PublicIPAddressId = bastionPublicIP.Id,
+                            PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic
+                        }
+                    ]
+                };
+                infra.Add(bastionHost);
+
+                return infra;
+            });
+    }
+
+    [Test]
+    [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.network/bastion-hub-spoke-vnet/main.bicep")]
+    public async Task BastionHubSpoke()
+    {
+        await using Trycep test = CreateBastionHubSpokeTest();
+        test.Compare(
+            """
+            @description('The name of the Hub vNet')
+            param vNetHubName string = 'vnet-hub'
+
+            @description('The name of the Spoke vNet')
+            param vNetSpokeName string = 'vnet-spoke'
+
+            @description('The name of the Azure Bastion host')
+            param bastionHostName string = 'bastion1'
+
+            @description('The location for the resource(s) to be deployed.')
+            param location string = resourceGroup().location
+
+            resource vNetHub 'Microsoft.Network/virtualNetworks@2025-05-01' = {
+              name: vNetHubName
+              properties: {
+                addressSpace: {
+                  addressPrefixes: [
+                    '10.0.0.0/16'
+                  ]
+                }
+                subnets: [
+                  {
+                    name: 'AzureBastionSubnet'
+                    properties: {
+                      addressPrefix: '10.0.0.0/26'
+                    }
+                  }
+                ]
+              }
+              location: location
+            }
+
+            resource vNetSpoke 'Microsoft.Network/virtualNetworks@2025-05-01' = {
+              name: vNetSpokeName
+              properties: {
+                addressSpace: {
+                  addressPrefixes: [
+                    '10.1.0.0/16'
+                  ]
+                }
+                subnets: [
+                  {
+                    name: 'Subnet-1'
+                    properties: {
+                      addressPrefix: '10.1.0.0/24'
+                    }
+                  }
+                ]
+              }
+              location: location
+            }
+
+            resource hubToSpoke 'Microsoft.Network/virtualNetworks/virtualNetworkPeerings@2025-05-01' = {
+              name: 'peering-to-${vNetSpokeName}'
+              properties: {
+                allowForwardedTraffic: false
+                allowGatewayTransit: false
+                allowVirtualNetworkAccess: true
+                remoteVirtualNetwork: {
+                  id: vNetSpoke.id
+                }
+                useRemoteGateways: false
+              }
+              parent: vNetHub
+            }
+
+            resource spokeToHub 'Microsoft.Network/virtualNetworks/virtualNetworkPeerings@2025-05-01' = {
+              name: 'peering-to-${vNetHubName}'
+              properties: {
+                allowForwardedTraffic: false
+                allowGatewayTransit: false
+                allowVirtualNetworkAccess: true
+                remoteVirtualNetwork: {
+                  id: vNetHub.id
+                }
+                useRemoteGateways: false
+              }
+              parent: vNetSpoke
+            }
+
+            resource bastionPublicIP 'Microsoft.Network/publicIPAddresses@2025-05-01' = {
+              name: '${bastionHostName}-pip'
+              location: location
+              properties: {
+                publicIPAllocationMethod: 'Static'
+              }
+              sku: {
+                name: 'Standard'
+              }
+            }
+
+            resource bastionHost 'Microsoft.Network/bastionHosts@2025-05-01' = {
+              name: bastionHostName
+              properties: {
+                ipConfigurations: [
+                  {
+                    properties: {
+                      publicIPAddress: {
+                        id: bastionPublicIP.id
+                      }
+                      privateIPAllocationMethod: 'Dynamic'
+                    }
+                    name: 'ipconfig1'
+                  }
+                ]
+              }
+              location: location
+            }
+            """);
+    }
+
+    internal static Trycep CreateFirewallWithPolicyTest()
+    {
+        return new Trycep().Define(
+            ctx =>
+            {
+                Infrastructure infra = new();
+
+                ProvisioningParameter virtualNetworkName = new(nameof(virtualNetworkName), typeof(string))
+                {
+                    Description = "Virtual network name",
+                    Value = BicepFunction.Interpolate($"vnet{BicepFunction.GetUniqueString(BicepFunction.GetResourceGroup().Id)}")
+                };
+                infra.Add(virtualNetworkName);
+
+                ProvisioningParameter firewallName = new(nameof(firewallName), typeof(string))
+                {
+                    Description = "Azure Firewall name",
+                    Value = BicepFunction.Interpolate($"fw{BicepFunction.GetUniqueString(BicepFunction.GetResourceGroup().Id)}")
+                };
+                infra.Add(firewallName);
+
+                ProvisioningVariable firewallPolicyName = new(nameof(firewallPolicyName), typeof(string))
+                {
+                    Value = BicepFunction.Interpolate($"{firewallName}-firewallPolicy")
+                };
+                infra.Add(firewallPolicyName);
+
+                IPGroup workloadIpGroup = new(nameof(workloadIpGroup))
+                {
+                    Name = BicepFunction.Interpolate($"workload-ipgroup-{BicepFunction.GetUniqueString(BicepFunction.GetResourceGroup().Id)}"),
+                    IPAddresses = ["10.20.0.0/24", "10.30.0.0/24"]
+                };
+                infra.Add(workloadIpGroup);
+
+                IPGroup infraIpGroup = new(nameof(infraIpGroup))
+                {
+                    Name = BicepFunction.Interpolate($"infra-ipgroup-{BicepFunction.GetUniqueString(BicepFunction.GetResourceGroup().Id)}"),
+                    IPAddresses = ["10.40.0.0/24", "10.50.0.0/24"]
+                };
+                infra.Add(infraIpGroup);
+
+                VirtualNetwork vnet = new(nameof(vnet))
+                {
+                    Name = virtualNetworkName,
+                    AddressSpace = new VirtualNetworkAddressSpace()
+                    {
+                        AddressPrefixes = ["10.10.0.0/24"]
+                    },
+                    Subnets =
+                    [
+                        new SubnetResource("firewallSubnet")
+                        {
+                            Name = "AzureFirewallSubnet",
+                            AddressPrefix = "10.10.0.0/25"
+                        }
+                    ]
+                };
+                infra.Add(vnet);
+
+                PublicIPAddress publicIP = new(nameof(publicIP))
+                {
+                    Name = "publicIP1",
+                    PublicIPAllocationMethod = NetworkIPAllocationMethod.Static,
+                    PublicIPAddressVersion = NetworkIPVersion.IPv4,
+                    Sku = new PublicIPAddressSku()
+                    {
+                        Name = PublicIPAddressSkuName.Standard
+                    }
+                };
+                infra.Add(publicIP);
+
+                FirewallPolicy firewallPolicy = new(nameof(firewallPolicy))
+                {
+                    Name = firewallPolicyName,
+                    ThreatIntelMode = AzureFirewallThreatIntelMode.Alert
+                };
+                infra.Add(firewallPolicy);
+
+                AzureFirewall firewall = new(nameof(firewall))
+                {
+                    Name = firewallName,
+                    FirewallPolicyId = firewallPolicy.Id,
+                    IPConfigurations =
+                    [
+                        new AzureFirewallIPConfiguration()
+                        {
+                            Name = "IpConf0",
+                            PublicIPAddressId = publicIP.Id
+                        }
+                    ]
+                };
+                infra.Add(firewall);
+
+                return infra;
+            });
+    }
+
+    [Test]
+    [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.network/azurefirewall-create-with-firewallpolicy-apprule-netrule-ipgroups/main.bicep")]
+    public async Task FirewallWithPolicy()
+    {
+        await using Trycep test = CreateFirewallWithPolicyTest();
+        test.Compare(
+            """
+            @description('Virtual network name')
+            param virtualNetworkName string = 'vnet${uniqueString(resourceGroup().id)}'
+
+            @description('Azure Firewall name')
+            param firewallName string = 'fw${uniqueString(resourceGroup().id)}'
+
+            @description('The location for the resource(s) to be deployed.')
+            param location string = resourceGroup().location
+
+            var firewallPolicyName = '${firewallName}-firewallPolicy'
+
+            resource workloadIpGroup 'Microsoft.Network/ipGroups@2025-05-01' = {
+              name: 'workload-ipgroup-${uniqueString(resourceGroup().id)}'
+              properties: {
+                ipAddresses: [
+                  '10.20.0.0/24'
+                  '10.30.0.0/24'
+                ]
+              }
+              location: location
+            }
+
+            resource infraIpGroup 'Microsoft.Network/ipGroups@2025-05-01' = {
+              name: 'infra-ipgroup-${uniqueString(resourceGroup().id)}'
+              properties: {
+                ipAddresses: [
+                  '10.40.0.0/24'
+                  '10.50.0.0/24'
+                ]
+              }
+              location: location
+            }
+
+            resource vnet 'Microsoft.Network/virtualNetworks@2025-05-01' = {
+              name: virtualNetworkName
+              properties: {
+                addressSpace: {
+                  addressPrefixes: [
+                    '10.10.0.0/24'
+                  ]
+                }
+                subnets: [
+                  {
+                    name: 'AzureFirewallSubnet'
+                    properties: {
+                      addressPrefix: '10.10.0.0/25'
+                    }
+                  }
+                ]
+              }
+              location: location
+            }
+
+            resource publicIP 'Microsoft.Network/publicIPAddresses@2025-05-01' = {
+              name: 'publicIP1'
+              location: location
+              properties: {
+                publicIPAddressVersion: 'IPv4'
+                publicIPAllocationMethod: 'Static'
+              }
+              sku: {
+                name: 'Standard'
+              }
+            }
+
+            resource firewallPolicy 'Microsoft.Network/firewallPolicies@2025-05-01' = {
+              name: firewallPolicyName
+              location: location
+              properties: {
+                threatIntelMode: 'Alert'
+              }
+            }
+
+            resource firewall 'Microsoft.Network/azureFirewalls@2025-05-01' = {
+              name: firewallName
+              properties: {
+                firewallPolicy: {
+                  id: firewallPolicy.id
+                }
+                ipConfigurations: [
+                  {
+                    properties: {
+                      publicIPAddress: {
+                        id: publicIP.id
+                      }
+                    }
+                    name: 'IpConf0'
+                  }
+                ]
+              }
+              location: location
+            }
+            """);
+    }
 }

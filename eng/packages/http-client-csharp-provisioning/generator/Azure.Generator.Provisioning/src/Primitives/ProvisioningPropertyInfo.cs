@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Microsoft.TypeSpec.Generator.Primitives;
+
 namespace Azure.Generator.Provisioning.Primitives
 {
     /// <summary>
@@ -11,5 +13,6 @@ namespace Azure.Generator.Provisioning.Primitives
         bool IsOutput,
         bool IsRequired,
         string[] BicepPath,
-        string? DefaultValue = null);
+        string? DefaultValue = null,
+        CSharpType? TypeOverride = null);
 }

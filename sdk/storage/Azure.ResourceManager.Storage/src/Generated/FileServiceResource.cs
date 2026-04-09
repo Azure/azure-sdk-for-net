@@ -6,45 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Storage
 {
     /// <summary>
-    /// A Class representing a FileService along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="FileServiceResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetFileServiceResource method.
+    /// A class representing a FileService along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="FileServiceResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
     /// Otherwise you can get one from its parent resource <see cref="StorageAccountResource"/> using the GetFileService method.
     /// </summary>
     public partial class FileServiceResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="FileServiceResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="accountName"> The accountName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/fileServices/default";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _fileServiceClientDiagnostics;
-        private readonly FileServicesRestOperations _fileServiceRestClient;
+        private readonly ClientDiagnostics _fileServicesClientDiagnostics;
+        private readonly FileServices _fileServicesRestClient;
         private readonly FileServiceData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Storage/storageAccounts/fileServices";
 
-        /// <summary> Initializes a new instance of the <see cref="FileServiceResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of FileServiceResource for mocking. </summary>
         protected FileServiceResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="FileServiceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileServiceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal FileServiceResource(ArmClient client, FileServiceData data) : this(client, data.Id)
@@ -53,197 +43,50 @@ namespace Azure.ResourceManager.Storage
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="FileServiceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileServiceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal FileServiceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _fileServiceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string fileServiceApiVersion);
-            _fileServiceRestClient = new FileServicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, fileServiceApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _fileServicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", ResourceType.Namespace, Diagnostics);
+            _fileServicesRestClient = new FileServices(_fileServicesClientDiagnostics, Pipeline, Endpoint, fileServiceApiVersion ?? "2025-06-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual FileServiceData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="accountName"> The accountName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/fileServices/default";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-        }
-
-        /// <summary> Gets an object representing a FileServiceUsageResource along with the instance operations that can be performed on it in the FileService. </summary>
-        /// <returns> Returns a <see cref="FileServiceUsageResource"/> object. </returns>
-        public virtual FileServiceUsageResource GetFileServiceUsage()
-        {
-            return new FileServiceUsageResource(Client, Id.AppendChildResource("usages", "default"));
-        }
-
-        /// <summary> Gets a collection of FileShareResources in the FileService. </summary>
-        /// <returns> An object representing collection of FileShareResources and their operations over a FileShareResource. </returns>
-        public virtual FileShareCollection GetFileShares()
-        {
-            return GetCachedClient(client => new FileShareCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets properties of a specified share.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/fileServices/default/shares/{shareName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FileShares_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FileShareResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="shareName"> The name of the file share within the specified storage account. File share names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
-        /// <param name="expand"> Optional, used to expand the properties within share's properties. Valid values are: stats. Should be passed as a string with delimiter ','. </param>
-        /// <param name="xMsSnapshot"> Optional, used to retrieve properties of a snapshot. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="shareName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="shareName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<FileShareResource>> GetFileShareAsync(string shareName, string expand = null, string xMsSnapshot = null, CancellationToken cancellationToken = default)
-        {
-            return await GetFileShares().GetAsync(shareName, expand, xMsSnapshot, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets properties of a specified share.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/fileServices/default/shares/{shareName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FileShares_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FileShareResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="shareName"> The name of the file share within the specified storage account. File share names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
-        /// <param name="expand"> Optional, used to expand the properties within share's properties. Valid values are: stats. Should be passed as a string with delimiter ','. </param>
-        /// <param name="xMsSnapshot"> Optional, used to retrieve properties of a snapshot. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="shareName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="shareName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<FileShareResource> GetFileShare(string shareName, string expand = null, string xMsSnapshot = null, CancellationToken cancellationToken = default)
-        {
-            return GetFileShares().Get(shareName, expand, xMsSnapshot, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets the properties of file services in storage accounts, including CORS (Cross-Origin Resource Sharing) rules.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/fileServices/{FileServicesName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FileServices_GetServiceProperties</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FileServiceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<FileServiceResource>> GetAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _fileServiceClientDiagnostics.CreateScope("FileServiceResource.Get");
-            scope.Start();
-            try
             {
-                var response = await _fileServiceRestClient.GetServicePropertiesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new FileServiceResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets the properties of file services in storage accounts, including CORS (Cross-Origin Resource Sharing) rules.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/fileServices/{FileServicesName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FileServices_GetServiceProperties</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FileServiceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<FileServiceResource> Get(CancellationToken cancellationToken = default)
-        {
-            using var scope = _fileServiceClientDiagnostics.CreateScope("FileServiceResource.Get");
-            scope.Start();
-            try
-            {
-                var response = _fileServiceRestClient.GetServiceProperties(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
-                if (response.Value == null)
-                    throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new FileServiceResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -251,20 +94,20 @@ namespace Azure.ResourceManager.Storage
         /// Sets the properties of file services in storage accounts, including CORS (Cross-Origin Resource Sharing) rules.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/fileServices/{FileServicesName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/fileServices/default. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FileServices_SetServiceProperties</description>
+        /// <term> Operation Id. </term>
+        /// <description> FileServices_SetServiceProperties. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FileServiceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="FileServiceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -276,16 +119,24 @@ namespace Azure.ResourceManager.Storage
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _fileServiceClientDiagnostics.CreateScope("FileServiceResource.CreateOrUpdate");
+            using DiagnosticScope scope = _fileServicesClientDiagnostics.CreateScope("FileServiceResource.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _fileServiceRestClient.SetServicePropertiesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken).ConfigureAwait(false);
-                var uri = _fileServiceRestClient.CreateSetServicePropertiesRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new StorageArmOperation<FileServiceResource>(Response.FromValue(new FileServiceResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _fileServicesRestClient.CreateSetServicePropertiesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, FileServiceData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<FileServiceData> response = Response.FromValue(FileServiceData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                StorageArmOperation<FileServiceResource> operation = new StorageArmOperation<FileServiceResource>(Response.FromValue(new FileServiceResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -299,20 +150,20 @@ namespace Azure.ResourceManager.Storage
         /// Sets the properties of file services in storage accounts, including CORS (Cross-Origin Resource Sharing) rules.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/fileServices/{FileServicesName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/fileServices/default. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FileServices_SetServiceProperties</description>
+        /// <term> Operation Id. </term>
+        /// <description> FileServices_SetServiceProperties. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FileServiceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="FileServiceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -324,16 +175,24 @@ namespace Azure.ResourceManager.Storage
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _fileServiceClientDiagnostics.CreateScope("FileServiceResource.CreateOrUpdate");
+            using DiagnosticScope scope = _fileServicesClientDiagnostics.CreateScope("FileServiceResource.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _fileServiceRestClient.SetServiceProperties(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken);
-                var uri = _fileServiceRestClient.CreateSetServicePropertiesRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new StorageArmOperation<FileServiceResource>(Response.FromValue(new FileServiceResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _fileServicesRestClient.CreateSetServicePropertiesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, FileServiceData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<FileServiceData> response = Response.FromValue(FileServiceData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                StorageArmOperation<FileServiceResource> operation = new StorageArmOperation<FileServiceResource>(Response.FromValue(new FileServiceResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -341,6 +200,146 @@ namespace Azure.ResourceManager.Storage
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Gets the properties of file services in storage accounts, including CORS (Cross-Origin Resource Sharing) rules.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/fileServices/default. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> FileServices_GetServiceProperties. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="FileServiceResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<FileServiceResource>> GetAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _fileServicesClientDiagnostics.CreateScope("FileServiceResource.Get");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _fileServicesRestClient.CreateGetServicePropertiesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<FileServiceData> response = Response.FromValue(FileServiceData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new FileServiceResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the properties of file services in storage accounts, including CORS (Cross-Origin Resource Sharing) rules.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/fileServices/default. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> FileServices_GetServiceProperties. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="FileServiceResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<FileServiceResource> Get(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _fileServicesClientDiagnostics.CreateScope("FileServiceResource.Get");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _fileServicesRestClient.CreateGetServicePropertiesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<FileServiceData> response = Response.FromValue(FileServiceData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new FileServiceResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets a collection of FileShares in the <see cref="FileServiceResource"/>. </summary>
+        /// <returns> An object representing collection of FileShares and their operations over a FileShareResource. </returns>
+        public virtual FileShareCollection GetFileShares()
+        {
+            return GetCachedClient(client => new FileShareCollection(client, Id));
+        }
+
+        /// <summary> Gets properties of a specified share. </summary>
+        /// <param name="shareName"> The name of the file share within the specified storage account. File share names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
+        /// <param name="expand"> Optional, used to expand the properties within share's properties. Valid values are: stats. Should be passed as a string with delimiter ','. </param>
+        /// <param name="xMsSnapshot"> Optional, used to retrieve properties of a snapshot. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="shareName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="shareName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<FileShareResource>> GetFileShareAsync(string shareName, string expand = default, string xMsSnapshot = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(shareName, nameof(shareName));
+
+            return await GetFileShares().GetAsync(shareName, expand, xMsSnapshot, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets properties of a specified share. </summary>
+        /// <param name="shareName"> The name of the file share within the specified storage account. File share names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
+        /// <param name="expand"> Optional, used to expand the properties within share's properties. Valid values are: stats. Should be passed as a string with delimiter ','. </param>
+        /// <param name="xMsSnapshot"> Optional, used to retrieve properties of a snapshot. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="shareName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="shareName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<FileShareResource> GetFileShare(string shareName, string expand = default, string xMsSnapshot = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(shareName, nameof(shareName));
+
+            return GetFileShares().Get(shareName, expand, xMsSnapshot, cancellationToken);
+        }
+
+        /// <summary> Gets an object representing a <see cref="FileServiceUsageResource"/> along with the instance operations that can be performed on it in the <see cref="FileServiceResource"/>. </summary>
+        /// <returns> Returns a <see cref="FileServiceUsageResource"/> object. </returns>
+        public virtual FileServiceUsageResource GetFileServiceUsage()
+        {
+            return new FileServiceUsageResource(Client, Id.AppendChildResource("usages", "default"));
         }
     }
 }

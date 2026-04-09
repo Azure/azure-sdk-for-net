@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         private readonly string _resourceGroupName;
         private readonly string _deidServiceName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of PrivateEndpointConnectionsGetByDeidServiceAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The PrivateEndpointConnections client used to send requests. </param>
@@ -29,13 +30,15 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="deidServiceName"> The name of the deid service. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public PrivateEndpointConnectionsGetByDeidServiceAsyncCollectionResultOfT(PrivateEndpointConnections client, Guid subscriptionId, string resourceGroupName, string deidServiceName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public PrivateEndpointConnectionsGetByDeidServiceAsyncCollectionResultOfT(PrivateEndpointConnections client, Guid subscriptionId, string resourceGroupName, string deidServiceName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
             _deidServiceName = deidServiceName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of PrivateEndpointConnectionsGetByDeidServiceAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -68,7 +71,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByDeidServiceRequest(nextLink, _subscriptionId, _resourceGroupName, _deidServiceName, _context) : _client.CreateGetByDeidServiceRequest(_subscriptionId, _resourceGroupName, _deidServiceName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("HealthDataAIServicesPrivateEndpointConnectionResourceCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Initializes a new instance of <see cref="CacheList"/>. </summary>
         /// <param name="value"> The Cache items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal CacheList(IEnumerable<CacheData> value)
+        internal CacheList(IEnumerable<NetAppCacheData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="value"> The Cache items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CacheList(IReadOnlyList<CacheData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CacheList(IReadOnlyList<NetAppCacheData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> The Cache items on this page. </summary>
-        public IReadOnlyList<CacheData> Value { get; }
+        public IReadOnlyList<NetAppCacheData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

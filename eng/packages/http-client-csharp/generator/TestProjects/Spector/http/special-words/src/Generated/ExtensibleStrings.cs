@@ -12,7 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace SpecialWords
+namespace SpecialWords._ExtensibleStrings
 {
     public partial class ExtensibleStrings
     {
@@ -22,12 +22,12 @@ namespace SpecialWords
 
         public virtual HttpPipeline Pipeline => throw null;
 
-        public virtual Response PutExtensibleStringValue(string accept, RequestContent content, RequestContext context = null) => throw null;
+        public virtual Response PutExtensibleStringValue(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> PutExtensibleStringValueAsync(string accept, RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<Response> PutExtensibleStringValueAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response<string> PutExtensibleStringValue(string accept, ExtensibleString body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<ExtensibleString> PutExtensibleStringValue(ExtensibleString body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<string>> PutExtensibleStringValueAsync(string accept, ExtensibleString body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<Response<ExtensibleString>> PutExtensibleStringValueAsync(ExtensibleString body, CancellationToken cancellationToken = default) => throw null;
     }
 }

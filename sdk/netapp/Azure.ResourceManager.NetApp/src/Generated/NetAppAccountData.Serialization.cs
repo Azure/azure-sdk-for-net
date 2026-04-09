@@ -142,12 +142,12 @@ namespace Azure.ResourceManager.NetApp
             SystemData systemData = default;
             string provisioningState = default;
             IList<NetAppAccountActiveDirectory> activeDirectories = default;
-            EntraIdConfig entraIdConfig = default;
+            NetAppEntraIdConfig entraIdConfig = default;
             NetAppAccountEncryption encryption = default;
             bool? disableShowmount = default;
             string nfsV4IdDomain = default;
             MultiAdStatus? multiAdStatus = default;
-            LdapConfiguration ldapConfiguration = default;
+            NetAppLdapConfiguration ldapConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.NetApp
                             {
                                 continue;
                             }
-                            entraIdConfig = EntraIdConfig.DeserializeEntraIdConfig(property0.Value, options);
+                            entraIdConfig = NetAppEntraIdConfig.DeserializeNetAppEntraIdConfig(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("encryption"u8))
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.NetApp
                             {
                                 continue;
                             }
-                            ldapConfiguration = LdapConfiguration.DeserializeLdapConfiguration(property0.Value, options);
+                            ldapConfiguration = NetAppLdapConfiguration.DeserializeNetAppLdapConfiguration(property0.Value, options);
                             continue;
                         }
                     }

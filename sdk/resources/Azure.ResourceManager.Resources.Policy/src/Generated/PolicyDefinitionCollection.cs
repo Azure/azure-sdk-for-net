@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Resources.Policy
         {
             if (id.ResourceType != SubscriptionResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
             }
         }
 
@@ -294,7 +294,13 @@ namespace Azure.ResourceManager.Resources.Policy
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PolicyDefinitionData, PolicyDefinitionResource>(new PolicyDefinitionsGetAllAsyncCollectionResultOfT(_policyDefinitionsRestClient, Guid.Parse(Id.SubscriptionId), filter, top, context), data => new PolicyDefinitionResource(Client, data));
+            return new AsyncPageableWrapper<PolicyDefinitionData, PolicyDefinitionResource>(new PolicyDefinitionsGetAllAsyncCollectionResultOfT(
+                _policyDefinitionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                filter,
+                top,
+                context,
+                "PolicyDefinitionCollection.GetAll"), data => new PolicyDefinitionResource(Client, data));
         }
 
         /// <summary>
@@ -324,7 +330,13 @@ namespace Azure.ResourceManager.Resources.Policy
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PolicyDefinitionData, PolicyDefinitionResource>(new PolicyDefinitionsGetAllCollectionResultOfT(_policyDefinitionsRestClient, Guid.Parse(Id.SubscriptionId), filter, top, context), data => new PolicyDefinitionResource(Client, data));
+            return new PageableWrapper<PolicyDefinitionData, PolicyDefinitionResource>(new PolicyDefinitionsGetAllCollectionResultOfT(
+                _policyDefinitionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                filter,
+                top,
+                context,
+                "PolicyDefinitionCollection.GetAll"), data => new PolicyDefinitionResource(Client, data));
         }
 
         /// <summary>

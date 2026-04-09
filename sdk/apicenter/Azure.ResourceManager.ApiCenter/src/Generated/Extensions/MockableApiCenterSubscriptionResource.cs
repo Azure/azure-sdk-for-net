@@ -5,88 +5,87 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.ApiCenter;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ApiCenter.Mocking
 {
-    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableApiCenterSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _apiCenterServiceServicesClientDiagnostics;
-        private ServicesRestOperations _apiCenterServiceServicesRestClient;
+        private ClientDiagnostics _servicesClientDiagnostics;
+        private Services _servicesRestClient;
+        private ClientDiagnostics _deletedServicesClientDiagnostics;
+        private DeletedServices _deletedServicesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableApiCenterSubscriptionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableApiCenterSubscriptionResource for mocking. </summary>
         protected MockableApiCenterSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableApiCenterSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableApiCenterSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableApiCenterSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics ApiCenterServiceServicesClientDiagnostics => _apiCenterServiceServicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ApiCenter", ApiCenterServiceResource.ResourceType.Namespace, Diagnostics);
-        private ServicesRestOperations ApiCenterServiceServicesRestClient => _apiCenterServiceServicesRestClient ??= new ServicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ApiCenterServiceResource.ResourceType));
+        private ClientDiagnostics ServicesClientDiagnostics => _servicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ApiCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private Services ServicesRestClient => _servicesRestClient ??= new Services(ServicesClientDiagnostics, Pipeline, Endpoint, "2024-06-01-preview");
+
+        private ClientDiagnostics DeletedServicesClientDiagnostics => _deletedServicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ApiCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private DeletedServices DeletedServicesRestClient => _deletedServicesRestClient ??= new DeletedServices(DeletedServicesClientDiagnostics, Pipeline, Endpoint, "2024-06-01-preview");
 
         /// <summary>
         /// Lists services within an Azure subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ApiCenter/services</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ApiCenter/services. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Services_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> Services_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiCenterServiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApiCenterServiceResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ApiCenterServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ApiCenterServiceResource> GetApiCenterServicesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ApiCenterServiceServicesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ApiCenterServiceServicesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiCenterServiceResource(Client, ApiCenterServiceData.DeserializeApiCenterServiceData(e)), ApiCenterServiceServicesClientDiagnostics, Pipeline, "MockableApiCenterSubscriptionResource.GetApiCenterServices", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ApiCenterServiceData, ApiCenterServiceResource>(new ServicesGetBySubscriptionAsyncCollectionResultOfT(ServicesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableApiCenterSubscriptionResource.GetApiCenterServices"), data => new ApiCenterServiceResource(Client, data));
         }
 
         /// <summary>
         /// Lists services within an Azure subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ApiCenter/services</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ApiCenter/services. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Services_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> Services_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiCenterServiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -94,9 +93,67 @@ namespace Azure.ResourceManager.ApiCenter.Mocking
         /// <returns> A collection of <see cref="ApiCenterServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ApiCenterServiceResource> GetApiCenterServices(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ApiCenterServiceServicesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ApiCenterServiceServicesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiCenterServiceResource(Client, ApiCenterServiceData.DeserializeApiCenterServiceData(e)), ApiCenterServiceServicesClientDiagnostics, Pipeline, "MockableApiCenterSubscriptionResource.GetApiCenterServices", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ApiCenterServiceData, ApiCenterServiceResource>(new ServicesGetBySubscriptionCollectionResultOfT(ServicesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableApiCenterSubscriptionResource.GetApiCenterServices"), data => new ApiCenterServiceResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists services within an Azure subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ApiCenter/deletedServices. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DeletedServices_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ApiCenterDeletedServiceResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ApiCenterDeletedServiceResource> GetApiCenterDeletedServicesAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ApiCenterDeletedServiceData, ApiCenterDeletedServiceResource>(new DeletedServicesGetBySubscriptionAsyncCollectionResultOfT(DeletedServicesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableApiCenterSubscriptionResource.GetApiCenterDeletedServices"), data => new ApiCenterDeletedServiceResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists services within an Azure subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ApiCenter/deletedServices. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DeletedServices_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ApiCenterDeletedServiceResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ApiCenterDeletedServiceResource> GetApiCenterDeletedServices(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ApiCenterDeletedServiceData, ApiCenterDeletedServiceResource>(new DeletedServicesGetBySubscriptionCollectionResultOfT(DeletedServicesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableApiCenterSubscriptionResource.GetApiCenterDeletedServices"), data => new ApiCenterDeletedServiceResource(Client, data));
         }
     }
 }

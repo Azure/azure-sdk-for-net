@@ -7,6 +7,7 @@ using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 using Microsoft.TypeSpec.Generator.Input;
 using NUnit.Framework;
+using System.Collections.Generic;
 
 namespace Azure.Generator.Mgmt.Tests
 {

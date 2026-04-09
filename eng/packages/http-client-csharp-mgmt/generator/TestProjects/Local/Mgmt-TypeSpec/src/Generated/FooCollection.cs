@@ -30,6 +30,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         private readonly Foos _foosRestClient;
         private readonly ClientDiagnostics _entityResourceReproClientDiagnostics;
         private readonly EntityResourceRepro _entityResourceReproRestClient;
+        private readonly ClientDiagnostics _sharedParamReproClientDiagnostics;
+        private readonly SharedParamRepro _sharedParamReproRestClient;
 
         /// <summary> Initializes a new instance of FooCollection for mocking. </summary>
         protected FooCollection()
@@ -46,6 +48,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             _foosRestClient = new Foos(_foosClientDiagnostics, Pipeline, Endpoint, fooApiVersion ?? "2024-05-01");
             _entityResourceReproClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", FooResource.ResourceType.Namespace, Diagnostics);
             _entityResourceReproRestClient = new EntityResourceRepro(_entityResourceReproClientDiagnostics, Pipeline, Endpoint, fooApiVersion ?? "2024-05-01");
+            _sharedParamReproClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", FooResource.ResourceType.Namespace, Diagnostics);
+            _sharedParamReproRestClient = new SharedParamRepro(_sharedParamReproClientDiagnostics, Pipeline, Endpoint, fooApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 
@@ -55,7 +59,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -103,7 +107,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     Pipeline,
                     message.Request,
                     response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                    OperationFinalStateVia.AzureAsyncOperation,
+                    true);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -161,7 +166,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     Pipeline,
                     message.Request,
                     response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                    OperationFinalStateVia.AzureAsyncOperation,
+                    true);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);
@@ -298,7 +304,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<FooData, FooResource>(new FoosGetAllAsyncCollectionResultOfT(_foosRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new FooResource(Client, data));
+            return new AsyncPageableWrapper<FooData, FooResource>(new FoosGetAllAsyncCollectionResultOfT(_foosRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "FooCollection.GetAll"), data => new FooResource(Client, data));
         }
 
         /// <summary>
@@ -326,7 +332,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<FooData, FooResource>(new FoosGetAllCollectionResultOfT(_foosRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new FooResource(Client, data));
+            return new PageableWrapper<FooData, FooResource>(new FoosGetAllCollectionResultOfT(_foosRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "FooCollection.GetAll"), data => new FooResource(Client, data));
         }
 
         /// <summary>

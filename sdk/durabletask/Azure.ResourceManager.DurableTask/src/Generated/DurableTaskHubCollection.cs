@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DurableTask
         {
             if (id.ResourceType != DurableTaskSchedulerResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DurableTaskSchedulerResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DurableTaskSchedulerResource.ResourceType), nameof(id));
             }
         }
 
@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.DurableTask
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DurableTaskHubData, DurableTaskHubResource>(new TaskHubsGetBySchedulerAsyncCollectionResultOfT(_taskHubsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new DurableTaskHubResource(Client, data));
+            return new AsyncPageableWrapper<DurableTaskHubData, DurableTaskHubResource>(new TaskHubsGetBySchedulerAsyncCollectionResultOfT(
+                _taskHubsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DurableTaskHubCollection.GetAll"), data => new DurableTaskHubResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.DurableTask
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DurableTaskHubData, DurableTaskHubResource>(new TaskHubsGetBySchedulerCollectionResultOfT(_taskHubsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new DurableTaskHubResource(Client, data));
+            return new PageableWrapper<DurableTaskHubData, DurableTaskHubResource>(new TaskHubsGetBySchedulerCollectionResultOfT(
+                _taskHubsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DurableTaskHubCollection.GetAll"), data => new DurableTaskHubResource(Client, data));
         }
 
         /// <summary>

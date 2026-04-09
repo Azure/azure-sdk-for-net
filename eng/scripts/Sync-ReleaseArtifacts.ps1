@@ -1,19 +1,20 @@
 <#
 .SYNOPSIS
-Syncs release artifacts (csproj + changelog) from a release commit into the
-current working tree which is expected to be on main.
+Syncs release artifacts (csproj + changelog) between the current working tree
+and a target branch (typically main).
 
 .DESCRIPTION
 When the release pipeline runs from a release/* branch the sparse checkout
-lands on main.  This script:
+lands on the release commit.  This script:
   1. Syncs the csproj version — takes the higher of main vs release so that
      hotfix releases (where main has already advanced) do not downgrade.
-  2. Merges changelog entries from the release commit into main's changelog
-     so new release entries are inserted in the correct version order without
-     losing entries that only exist on main.
+  2. Merges changelog entries from main into the release changelog so that
+     entries from both branches are preserved in the correct version order.
 
-When the pipeline runs on main both operations are no-ops because the release
-commit IS the current checkout.
+When the pipeline runs on main the versions and changelog entries will
+typically match, making this effectively a no-op.  If main has advanced
+since the build started, the script still produces the correct result by
+taking the higher version and merging changelog entries from both sides.
 
 .PARAMETER PackageName
 The name of the package (e.g. Azure.Core).
@@ -21,11 +22,12 @@ The name of the package (e.g. Azure.Core).
 .PARAMETER ServiceDirectory
 The service directory name under sdk/ (e.g. core).
 
-.PARAMETER SourceCommit
-The git commit SHA to sync from (typically $(Build.SourceVersion)).
+.PARAMETER MainRef
+A git ref pointing to main (e.g. origin/main or FETCH_HEAD) used to read
+main's csproj and changelog via git show.
 
 .EXAMPLE
-eng/scripts/Sync-ReleaseArtifacts.ps1 -PackageName Azure.Core -ServiceDirectory core -SourceCommit abc123
+eng/scripts/Sync-ReleaseArtifacts.ps1 -PackageName Azure.Core -ServiceDirectory core -MainRef origin/main
 #>
 
 [CmdletBinding()]
@@ -37,7 +39,7 @@ param(
   [string]$ServiceDirectory,
 
   [Parameter(Mandatory = $true)]
-  [string]$SourceCommit
+  [string]$MainRef
 )
 
 . (Join-Path $PSScriptRoot ".." "common" "scripts" "common.ps1")
@@ -112,8 +114,12 @@ function Resolve-CsprojVersion {
     Write-Host "  Release version $ReleaseVersion > main version $MainVersion — using release"
     return $ReleaseVersion
   }
+  elseif ($mainSemVer.CompareTo($releaseSemVer) -gt 0) {
+    Write-Host "  Main version $MainVersion > release version $ReleaseVersion — using main"
+    return $MainVersion
+  }
   else {
-    Write-Host "  Main version $MainVersion >= release version $ReleaseVersion — keeping main"
+    Write-Host "  Versions equal ($MainVersion) — no change needed"
     return $MainVersion
   }
 }
@@ -127,40 +133,39 @@ $csprojPath = Join-Path $pkgProperties.DirectoryPath "src" "$PackageName.csproj"
 # Sync csproj — take the higher version between main and release
 $csprojGitPath = (Resolve-Path -Relative $csprojPath) -replace '\\', '/'
 
-$mainCsproj = [xml](Get-Content -LiteralPath $csprojPath -Raw)
-$mainVersion = ($mainCsproj | Select-Xml "Project/PropertyGroup/Version").Node.InnerText
+# Read the release csproj from the working tree (we are on the release branch)
+$releaseCsproj = [xml](Get-Content -LiteralPath $csprojPath -Raw)
+$releaseVersion = ($releaseCsproj | Select-Xml "Project/PropertyGroup/Version").Node.InnerText
 
-$releaseCsprojContent = (git show "${SourceCommit}:${csprojGitPath}") -join "`n"
+# Read main's csproj via git show
+$mainCsprojContent = (git show "${MainRef}:${csprojGitPath}") -join "`n"
 if ($LASTEXITCODE -ne 0) {
-  Write-Error "Failed to read csproj from $SourceCommit"
+  Write-Error "Failed to read csproj from $MainRef"
   exit 1
 }
-$releaseCsproj = [xml]$releaseCsprojContent
-$releaseVersion = ($releaseCsproj | Select-Xml "Project/PropertyGroup/Version").Node.InnerText
+$mainCsproj = [xml]$mainCsprojContent
+$mainVersion = ($mainCsproj | Select-Xml "Project/PropertyGroup/Version").Node.InnerText
 
 $resolvedVersion = Resolve-CsprojVersion -MainVersion $mainVersion -ReleaseVersion $releaseVersion
 
-if ($resolvedVersion -ne $mainVersion) {
-  git checkout $SourceCommit -- $csprojGitPath
-  if ($LASTEXITCODE -ne 0) {
-    Write-Error "Failed to checkout csproj from $SourceCommit"
-    exit 1
-  }
-  Write-Host "Synced $csprojGitPath from $SourceCommit"
+if ($resolvedVersion -ne $releaseVersion) {
+  # Main version is higher (hotfix scenario) — overwrite working tree with main's csproj
+  [System.IO.File]::WriteAllText($csprojPath, $mainCsprojContent + "`n", [System.Text.Encoding]::UTF8)
+  Write-Host "Synced $csprojGitPath from $MainRef (version $mainVersion)"
 }
 else {
-  Write-Host "Kept main csproj at $csprojGitPath (version $mainVersion)"
+  Write-Host "Kept release csproj at $csprojGitPath (version $releaseVersion)"
 }
 
-# Merge changelog
-$mainEntries = Get-ChangeLogEntries -ChangeLogLocation $changelogPath
+# Merge changelog — read release from working tree, main from git show
+$releaseEntries = Get-ChangeLogEntries -ChangeLogLocation $changelogPath
 $changelogGitPath = (Resolve-Path -Relative $changelogPath) -replace '\\', '/'
-$releaseContent = git show "${SourceCommit}:${changelogGitPath}"
+$mainChangelogContent = git show "${MainRef}:${changelogGitPath}"
 if ($LASTEXITCODE -ne 0) {
-  Write-Error "Failed to read changelog from $SourceCommit"
+  Write-Error "Failed to read changelog from $MainRef"
   exit 1
 }
-$releaseEntries = Get-ChangeLogEntriesFromContent $releaseContent
+$mainEntries = Get-ChangeLogEntriesFromContent $mainChangelogContent
 
 $mergedEntries = Merge-ChangeLogEntries -MainEntries $mainEntries -ReleaseEntries $releaseEntries
 
