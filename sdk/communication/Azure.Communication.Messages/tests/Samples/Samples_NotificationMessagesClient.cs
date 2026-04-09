@@ -20,7 +20,7 @@ namespace Azure.Communication.Messages.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_NotificationMessagesClient_Send_ShortVersion()
         {
-            NotificationMessagesClient client = new NotificationMessagesClient(null);
+            NotificationMessagesClient client = new NotificationMessagesClient((string)null);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -43,7 +43,7 @@ namespace Azure.Communication.Messages.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_NotificationMessagesClient_Send_ShortVersion_Async()
         {
-            NotificationMessagesClient client = new NotificationMessagesClient(null);
+            NotificationMessagesClient client = new NotificationMessagesClient((string)null);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -66,7 +66,7 @@ namespace Azure.Communication.Messages.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_NotificationMessagesClient_Send_ShortVersion_Convenience()
         {
-            NotificationMessagesClient client = new NotificationMessagesClient(null);
+            NotificationMessagesClient client = new NotificationMessagesClient((string)null);
 
             NotificationContent notificationContent = new TextNotificationContent(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), new string[] { "<to>" }, "<content>");
             Response<SendMessageResult> response = client.Send(notificationContent);
@@ -76,7 +76,7 @@ namespace Azure.Communication.Messages.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_NotificationMessagesClient_Send_ShortVersion_Convenience_Async()
         {
-            NotificationMessagesClient client = new NotificationMessagesClient(null);
+            NotificationMessagesClient client = new NotificationMessagesClient((string)null);
 
             NotificationContent notificationContent = new TextNotificationContent(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), new string[] { "<to>" }, "<content>");
             Response<SendMessageResult> response = await client.SendAsync(notificationContent);
@@ -86,7 +86,7 @@ namespace Azure.Communication.Messages.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_NotificationMessagesClient_Send_AllParameters()
         {
-            NotificationMessagesClient client = new NotificationMessagesClient(null);
+            NotificationMessagesClient client = new NotificationMessagesClient((string)null);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -109,7 +109,7 @@ namespace Azure.Communication.Messages.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_NotificationMessagesClient_Send_AllParameters_Async()
         {
-            NotificationMessagesClient client = new NotificationMessagesClient(null);
+            NotificationMessagesClient client = new NotificationMessagesClient((string)null);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -132,7 +132,7 @@ namespace Azure.Communication.Messages.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_NotificationMessagesClient_Send_AllParameters_Convenience()
         {
-            NotificationMessagesClient client = new NotificationMessagesClient(null);
+            NotificationMessagesClient client = new NotificationMessagesClient((string)null);
 
             NotificationContent notificationContent = new TextNotificationContent(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), new string[] { "<to>" }, "<content>");
             Response<SendMessageResult> response = client.Send(notificationContent);
@@ -142,7 +142,7 @@ namespace Azure.Communication.Messages.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_NotificationMessagesClient_Send_AllParameters_Convenience_Async()
         {
-            NotificationMessagesClient client = new NotificationMessagesClient(null);
+            NotificationMessagesClient client = new NotificationMessagesClient((string)null);
 
             NotificationContent notificationContent = new TextNotificationContent(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), new string[] { "<to>" }, "<content>");
             Response<SendMessageResult> response = await client.SendAsync(notificationContent);
@@ -152,7 +152,7 @@ namespace Azure.Communication.Messages.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_NotificationMessagesClient_SendReadReceipt_SendsAReadReceipt()
         {
-            NotificationMessagesClient client = new NotificationMessagesClient(null);
+            NotificationMessagesClient client = new NotificationMessagesClient((string)null);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -169,7 +169,7 @@ namespace Azure.Communication.Messages.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_NotificationMessagesClient_SendReadReceipt_SendsAReadReceipt_Async()
         {
-            NotificationMessagesClient client = new NotificationMessagesClient(null);
+            NotificationMessagesClient client = new NotificationMessagesClient((string)null);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -186,7 +186,7 @@ namespace Azure.Communication.Messages.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_NotificationMessagesClient_SendReadReceipt_SendsAReadReceipt_Convenience()
         {
-            NotificationMessagesClient client = new NotificationMessagesClient(null);
+            NotificationMessagesClient client = new NotificationMessagesClient((string)null);
 
             ReadReceiptContent readReceiptContent = new ReadReceiptContent("320fc2a1-4c4b-4387-9c1a-bd38b57795de", Guid.Parse("0f0eb78e-a576-1dfc-b414-0f0756de3338"))
             {
@@ -199,7 +199,7 @@ namespace Azure.Communication.Messages.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_NotificationMessagesClient_SendReadReceipt_SendsAReadReceipt_Convenience_Async()
         {
-            NotificationMessagesClient client = new NotificationMessagesClient(null);
+            NotificationMessagesClient client = new NotificationMessagesClient((string)null);
 
             ReadReceiptContent readReceiptContent = new ReadReceiptContent("320fc2a1-4c4b-4387-9c1a-bd38b57795de", Guid.Parse("0f0eb78e-a576-1dfc-b414-0f0756de3338"))
             {
