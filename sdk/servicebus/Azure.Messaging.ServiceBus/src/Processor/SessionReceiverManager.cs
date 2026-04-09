@@ -370,7 +370,7 @@ namespace Azure.Messaging.ServiceBus
             // persistent errors occur, without blocking session resource release.
             if (caughtException != null)
             {
-                await DelayAfterErrorAsync(caughtException, processorCancellationToken).ConfigureAwait(false);
+                await DelayAfterErrorAsync(processorCancellationToken).ConfigureAwait(false);
             }
         }
 

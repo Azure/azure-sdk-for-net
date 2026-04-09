@@ -33,9 +33,7 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Retry policy consulted to calculate backoff delays between processor-level
         /// error recovery attempts. Uses <see cref="ServiceBusRetryOptions.CustomRetryPolicy"/>
-        /// when set; otherwise uses a <see cref="BasicRetryPolicy"/>. If the configured
-        /// retry policy does not return a delay, recovery falls back to the built-in
-        /// error-recovery delay calculation based on the retry options.
+        /// when set; otherwise uses a <see cref="BasicRetryPolicy"/>.
         /// </summary>
         private readonly ServiceBusRetryPolicy _errorRecoveryRetryPolicy;
 
@@ -45,6 +43,17 @@ namespace Azure.Messaging.ServiceBus
         /// Reset to zero on each successful receive iteration.
         /// </summary>
         private int _consecutiveErrorCount;
+
+        /// <summary>
+        /// A static dummy exception used to calculate error recovery delays via the
+        /// retry policy. Marked as transient so that <see cref="ServiceBusRetryPolicy.CalculateRetryDelay"/>
+        /// is not short-circuited by non-retriable exceptions. When the policy still
+        /// returns <c>null</c> (e.g., <c>MaxRetries</c> is 0), <see cref="DelayAfterErrorAsync"/>
+        /// falls back to <see cref="ServiceBusRetryOptions.Delay"/>.
+        /// </summary>
+        private static readonly ServiceBusException s_transientException = new ServiceBusException(
+            isTransient: true,
+            message: "Error recovery delay");
 
         private static int s_randomSeed = Environment.TickCount;
         private static readonly ThreadLocal<Random> RandomNumberGenerator = new ThreadLocal<Random>(() => new Random(Interlocked.Increment(ref s_randomSeed)), false);
@@ -144,7 +153,7 @@ namespace Azure.Messaging.ServiceBus
                         cancellationToken))
                     .ConfigureAwait(false);
 
-                await DelayAfterErrorAsync(ex, cancellationToken).ConfigureAwait(false);
+                await DelayAfterErrorAsync(cancellationToken).ConfigureAwait(false);
             }
         }
 
@@ -152,12 +161,12 @@ namespace Azure.Messaging.ServiceBus
         /// Applies a delay after a receive loop error to prevent a tight retry
         /// loop when persistent errors occur (e.g., DNS resolution failures,
         /// unreachable endpoints). The delay uses the configured retry policy
-        /// to calculate an appropriate backoff duration that respects the
-        /// retry mode (exponential or fixed) and maximum delay settings.
+        /// with a static transient exception to calculate an appropriate backoff
+        /// duration that respects the retry mode (exponential or fixed) and
+        /// maximum delay settings.
         /// </summary>
-        /// <param name="lastException">The exception that triggered the error recovery.</param>
         /// <param name="cancellationToken">The cancellation token to observe while delaying.</param>
-        protected async Task DelayAfterErrorAsync(Exception lastException, CancellationToken cancellationToken)
+        protected async Task DelayAfterErrorAsync(CancellationToken cancellationToken)
         {
             if (cancellationToken.IsCancellationRequested)
             {
@@ -166,13 +175,19 @@ namespace Azure.Messaging.ServiceBus
 
             int consecutiveErrorCount = Interlocked.Increment(ref _consecutiveErrorCount);
 
-            // Use the retry policy to calculate the appropriate delay. This respects
-            // the user's configured retry mode (exponential/fixed), delay, and max delay.
-            // CalculateRetryDelay may return null if the exception is non-retriable or
-            // retries are exhausted; in that case, calculate the delay directly from the
-            // retry options to still provide exponential backoff for terminal errors.
-            TimeSpan delay = _errorRecoveryRetryPolicy.CalculateRetryDelay(lastException, consecutiveErrorCount)
-                ?? CalculateErrorRecoveryDelay(consecutiveErrorCount);
+            // Use the retry policy to calculate the appropriate delay. A static
+            // transient exception is used so the policy always calculates a delay
+            // regardless of the actual exception's retriability — for processor-level
+            // error recovery, we always want to delay between attempts.
+            // The attempt count is capped to MaxRetries so the delay plateaus at the
+            // highest computed exponential level rather than jumping straight to
+            // MaxDelay once retries are exhausted. When MaxRetries is 0, the base
+            // Delay is used as a fixed recovery interval.
+            int effectiveAttempt = Math.Min(
+                consecutiveErrorCount,
+                Math.Max(Processor.Connection.RetryOptions.MaxRetries, 1));
+            TimeSpan delay = _errorRecoveryRetryPolicy.CalculateRetryDelay(s_transientException, effectiveAttempt)
+                ?? Processor.Connection.RetryOptions.Delay;
 
             try
             {
@@ -183,42 +198,6 @@ namespace Azure.Messaging.ServiceBus
                 // The processor is shutting down or the token source was disposed;
                 // allow the method to return promptly.
             }
-        }
-
-        /// <summary>
-        /// Calculates the error recovery delay directly from <see cref="ServiceBusRetryOptions"/>
-        /// without checking exception retriability. This is used as the fallback when
-        /// <see cref="ServiceBusRetryPolicy.CalculateRetryDelay"/> returns <c>null</c>
-        /// for non-retriable exceptions (e.g., DNS resolution failures), ensuring
-        /// exponential backoff is still applied for persistent terminal errors.
-        /// </summary>
-        /// <param name="attemptCount">The consecutive error count to use for exponential calculation.</param>
-        /// <returns>The delay to apply before the next receive attempt.</returns>
-        private TimeSpan CalculateErrorRecoveryDelay(int attemptCount)
-        {
-            ServiceBusRetryOptions options = Processor.Connection.RetryOptions;
-            double baseDelaySeconds = options.Delay.TotalSeconds;
-            double baseJitterSeconds = baseDelaySeconds * 0.08;
-            double maxTimeSpanSeconds = TimeSpan.MaxValue.TotalSeconds;
-
-            double delaySeconds = options.Mode switch
-            {
-                ServiceBusRetryMode.Fixed =>
-                    baseDelaySeconds + (RandomNumberGenerator.Value.NextDouble() * baseJitterSeconds),
-                ServiceBusRetryMode.Exponential =>
-                    (Math.Pow(2, attemptCount) * baseDelaySeconds) +
-                    (RandomNumberGenerator.Value.NextDouble() * baseJitterSeconds),
-                _ => baseDelaySeconds
-            };
-
-            // Guard against overflow: Math.Pow(2, attemptCount) can produce
-            // Infinity for large attempt counts, which would throw in
-            // TimeSpan.FromSeconds. This matches BasicRetryPolicy's pattern.
-            TimeSpan delay = delaySeconds > maxTimeSpanSeconds
-                ? TimeSpan.MaxValue
-                : TimeSpan.FromSeconds(delaySeconds);
-
-            return delay > options.MaxDelay ? options.MaxDelay : delay;
         }
 
         /// <summary>
