@@ -75,10 +75,10 @@ public class EchoHandler : ResponseHandler
         CancellationToken cancellationToken)
     {
         return new TextResponse(context, request,
-            createText: ct =>
+            createText: async ct =>
             {
-                var input = request.GetInputText();
-                return Task.FromResult($"Echo: {input}");
+                var input = await context.GetInputTextAsync(cancellationToken: ct);
+                return $"Echo: {input}";
             });
     }
 }
@@ -111,7 +111,7 @@ public override IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
     return new TextResponse(context, request,
         createText: async ct =>
         {
-            var answer = await _model.GenerateAsync(request.GetInputText(), ct);
+            var answer = await _model.GenerateAsync(await context.GetInputTextAsync(cancellationToken: ct), ct);
             return answer;
         });
 }
@@ -454,8 +454,10 @@ public class ResponseContext
     public string ResponseId { get; }
     public bool IsShutdownRequested { get; set; }
     public virtual BinaryData? RawBody { get; }
-    public virtual Task<IReadOnlyList<OutputItem>> GetInputItemsAsync(CancellationToken cancellationToken = default);
+    public virtual Task<IReadOnlyList<Item>> GetInputItemsAsync(bool resolveReferences = true, CancellationToken cancellationToken = default);
+    public virtual Task<string> GetInputTextAsync(bool resolveReferences = true, CancellationToken cancellationToken = default);
     public virtual Task<IReadOnlyList<OutputItem>> GetHistoryAsync(CancellationToken cancellationToken = default);
+    public virtual IsolationContext Isolation { get; }
     public virtual IReadOnlyDictionary<string, string> ClientHeaders { get; }
     public virtual IReadOnlyDictionary<string, StringValues> QueryParameters { get; }
 }
@@ -465,22 +467,39 @@ Provides the library-generated response ID, shutdown signalling, access to resol
 
 ### Input Items — `GetInputItemsAsync()`
 
-Returns the caller's input items fully resolved and converted to `OutputItem` types:
+Returns the caller's input items as their `Item` subtypes:
 
 ```csharp
 public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
     CreateResponse request, ResponseContext context, CancellationToken ct)
 {
-    var inputItems = await context.GetInputItemsAsync(ct);
-    // inputItems contains OutputItemMessage instances with generated IDs
-    // Inline items are converted; item references are resolved via the provider
+    var inputItems = await context.GetInputItemsAsync(cancellationToken: ct);
+    // inputItems contains ItemMessage, FunctionCallOutputItemParam, etc.
+    // Inline items are returned directly; item references are resolved via the provider
 }
 ```
 
-- **Inline items** are converted to their corresponding `OutputItem` subtypes with a generated type-specific ID and `status: completed`. For example, a `{"type":"message","role":"user","content":"Hi"}` becomes an `OutputItemMessage` with a `msg_` prefixed ID, a function call output becomes `OutputItemFunctionCallOutput` with an `fco_` prefixed ID, and so on for all 24+ supported item types.
-- **Item references** (e.g., `{"type":"item_reference","id":"msg_123"}`) are batch-resolved via `ResponsesProvider.GetItemsAsync`.
+- **Inline items** are returned as-is — the same `Item` subtypes from the original request (e.g., `ItemMessage`, `FunctionCallOutputItemParam`, `ItemFunctionToolCall`).
+- **Item references** (e.g., `{"type":"item_reference","id":"msg_123"}`) are batch-resolved via `ResponsesProvider.GetItemsAsync` and converted back to their corresponding `Item` subtypes.
+- **`resolveReferences` parameter** — pass `false` to skip reference resolution and receive `ItemReferenceParam` instances as-is: `await context.GetInputItemsAsync(resolveReferences: false, cancellationToken: ct)`.
 - **Input order is preserved** — items are returned in the same order as in the request.
-- **Lazy singleton** — the result is computed once on first call and cached. Subsequent calls return the same instance. Thread-safe.
+- **Lazy singleton** — the result is computed once on first call and cached per `resolveReferences` mode. Subsequent calls return the same instance. Thread-safe.
+
+### Input Text — `GetInputTextAsync()`
+
+A convenience that resolves input items and extracts all text content as a single string:
+
+```csharp
+var text = await context.GetInputTextAsync(cancellationToken: ct);
+// Equivalent to: (await context.GetInputItemsAsync(cancellationToken: ct)).GetInputText()
+```
+
+You can also use the `GetInputText()` extension on any `IEnumerable<Item>`:
+
+```csharp
+var items = await context.GetInputItemsAsync(cancellationToken: ct);
+var text = items.GetInputText(); // filters for ItemMessage, joins text content
+```
 
 ### Conversation History — `GetHistoryAsync()`
 
@@ -672,7 +691,7 @@ public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
 {
     await Task.CompletedTask;
     var stream = new ResponseEventStream(context, request);
-    var inputItems = request.GetInputExpanded();
+    var inputItems = await context.GetInputItemsAsync(cancellationToken: cancellationToken);
 
     // Check if this is a follow-up with function output
     var toolOutput = inputItems.OfType<FunctionCallOutputItemParam>().FirstOrDefault();
@@ -807,14 +826,20 @@ yield return mcp.EmitDone();       // Output item has Status = Failed
 
 ## Handling Input
 
-Access the client's input via `request.GetInputExpanded()`:
+Access the client's input via `context.GetInputItemsAsync()`:
 
 ```csharp
-var inputItems = request.GetInputExpanded();
+var inputItems = await context.GetInputItemsAsync(cancellationToken: ct);
 
 // Check for specific input types
-var textInputs = inputItems.OfType<EasyInputMessageItemParam>();
+var textMessages = inputItems.OfType<ItemMessage>();
 var functionOutputs = inputItems.OfType<FunctionCallOutputItemParam>();
+```
+
+Or use `context.GetInputTextAsync()` when you only need the text content:
+
+```csharp
+var text = await context.GetInputTextAsync(cancellationToken: ct);
 ```
 
 The `CreateResponse` object also provides:
@@ -845,7 +870,7 @@ foreach (var item in inputItems.OfType<ItemMessage>())
 }
 ```
 
-This complements the request-level helpers (`GetInputExpanded`, `GetInputText`, `GetToolChoiceExpanded`) — they operate on the `CreateResponse` request, while `GetContentExpanded` operates on individual `ItemMessage` instances.
+This complements the context-level helpers (`GetInputItemsAsync`, `GetInputTextAsync`) — they resolve and return input items from the `ResponseContext`, while `GetContentExpanded` operates on individual `ItemMessage` instances.
 
 ---
 

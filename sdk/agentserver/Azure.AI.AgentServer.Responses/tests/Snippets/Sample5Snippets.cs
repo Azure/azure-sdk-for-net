@@ -54,7 +54,7 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
                         // Returns empty list if no previous_response_id is set.
                         var history = await context.GetHistoryAsync(ct);
 
-                        var currentInput = request.GetInputText();
+                        var currentInput = await context.GetInputTextAsync(cancellationToken: ct);
                         var turnNumber = history.OfType<OutputItemMessage>().Count() + 1;
 
                         // In a real agent, pass the history + current question to a model.

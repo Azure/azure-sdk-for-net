@@ -229,7 +229,7 @@ public static class GeneratedSnapshotTool
 
     private static string? FindGeneratedDirectory(string projectPath)
     {
-        var dir = File.Exists(projectPath) ? Path.GetDirectoryName(projectPath)! : projectPath;
+        var dir = File.Exists(projectPath) ? (Path.GetDirectoryName(projectPath) ?? projectPath) : projectPath;
 
         var candidate = Path.Combine(dir, "src", "Generated");
         if (Directory.Exists(candidate))

@@ -89,7 +89,7 @@ public static class BuildAndClassifyTool
 
     private static async Task<(string Output, int ExitCode)> RunBuildAsync(string projectPath)
     {
-        var workDir = Directory.Exists(projectPath) ? projectPath : Path.GetDirectoryName(projectPath)!;
+        var workDir = Directory.Exists(projectPath) ? projectPath : (Path.GetDirectoryName(projectPath) ?? projectPath);
 
         // If the path is the package root (contains a src/ subdirectory), build from src/
         var srcDir = Path.Combine(workDir, "src");
