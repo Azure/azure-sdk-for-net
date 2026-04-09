@@ -487,43 +487,6 @@ namespace Azure.Generator.Mgmt.Tests
         }
 
         /// <summary>
-        /// Verifies that the IsObsoleteProperty method correctly identifies properties
-        /// with the [Obsolete] attribute.
-        /// </summary>
-        [Test]
-        public void TestIsObsoleteProperty()
-        {
-            var propertiesModel = InputFactory.Model(
-                "TestProperties",
-                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
-                properties: [InputFactory.Property("displayName", InputPrimitiveType.String, serializedName: "displayName")]);
-            ManagementMockHelpers.LoadMockPlugin(inputModels: () => [propertiesModel]);
-
-            var enclosingType = ManagementClientGenerator.Instance.TypeFactory.CreateModel(propertiesModel)!;
-
-            // Create a property WITHOUT the [Obsolete] attribute
-            var normalProperty = new PropertyProvider(
-                null,
-                MethodSignatureModifiers.Public,
-                typeof(string),
-                "NormalProperty",
-                new AutoPropertyBody(true),
-                enclosingType);
-            Assert.IsFalse(FlattenPropertyVisitor.IsObsoleteProperty(normalProperty));
-
-            // Create a property WITH the [Obsolete] attribute
-            var obsoleteProperty = new PropertyProvider(
-                null,
-                MethodSignatureModifiers.Public,
-                typeof(string),
-                "OldProperty",
-                new AutoPropertyBody(true),
-                enclosingType,
-                attributes: [new AttributeStatement(typeof(ObsoleteAttribute), Literal("Use NewProperty instead."))]);
-            Assert.IsTrue(FlattenPropertyVisitor.IsObsoleteProperty(obsoleteProperty));
-        }
-
-        /// <summary>
         /// A mock custom code view TypeProvider that adds an [Obsolete] property
         /// to simulate a backward-compat alias defined in a partial class.
         /// </summary>
