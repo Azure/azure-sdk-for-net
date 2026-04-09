@@ -48,7 +48,7 @@ namespace Azure.AI.VoiceLive.Tests
                 serverLabel: TestConstants.MicrosoftLearnMcpServerLabel,
                 serverUrl: TestConstants.MicrosoftLearnMcpServerUrl)
             {
-                RequireApproval = BinaryData.FromObjectAsJson(requireApproval ?? MCPApprovalType.Never)
+                RequireApproval = requireApproval ?? MCPApprovalType.Never
             };
         }
 
