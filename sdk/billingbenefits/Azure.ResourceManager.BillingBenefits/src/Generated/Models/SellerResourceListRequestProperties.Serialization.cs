@@ -87,15 +87,15 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 writer.WritePropertyName("$filter"u8);
                 writer.WriteStringValue(Filter);
             }
-            if (Optional.IsDefined(Contributors))
+            if (Optional.IsDefined(IncludeContributors))
             {
                 writer.WritePropertyName("contributors"u8);
-                writer.WriteBooleanValue(Contributors.Value);
+                writer.WriteBooleanValue(IncludeContributors.Value);
             }
-            if (Optional.IsDefined(Milestones))
+            if (Optional.IsDefined(IncludeMilestones))
             {
                 writer.WritePropertyName("milestones"u8);
-                writer.WriteBooleanValue(Milestones.Value);
+                writer.WriteBooleanValue(IncludeMilestones.Value);
             }
             if (Optional.IsDefined(PrimaryResourceId))
             {
@@ -146,8 +146,8 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             }
             ResourceIdentifier billingAccountResourceId = default;
             string filter = default;
-            bool? contributors = default;
-            bool? milestones = default;
+            bool? includeContributors = default;
+            bool? includeMilestones = default;
             ResourceIdentifier primaryResourceId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     {
                         continue;
                     }
-                    contributors = prop.Value.GetBoolean();
+                    includeContributors = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("milestones"u8))
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     {
                         continue;
                     }
-                    milestones = prop.Value.GetBoolean();
+                    includeMilestones = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("primaryResourceId"u8))
@@ -197,8 +197,8 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             return new SellerResourceListRequestProperties(
                 billingAccountResourceId,
                 filter,
-                contributors,
-                milestones,
+                includeContributors,
+                includeMilestones,
                 primaryResourceId,
                 additionalBinaryDataProperties);
         }

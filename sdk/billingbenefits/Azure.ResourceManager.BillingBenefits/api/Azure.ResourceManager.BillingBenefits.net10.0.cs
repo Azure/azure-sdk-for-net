@@ -2671,9 +2671,9 @@ namespace Azure.ResourceManager.BillingBenefits.Models
     {
         public SellerResourceListRequest() { }
         public Azure.Core.ResourceIdentifier BillingAccountResourceId { get { throw null; } }
-        public bool? Contributors { get { throw null; } set { } }
         public string Filter { get { throw null; } set { } }
-        public bool? Milestones { get { throw null; } set { } }
+        public bool? IncludeContributors { get { throw null; } set { } }
+        public bool? IncludeMilestones { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier PrimaryResourceId { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.BillingBenefits.Models.SellerResourceListRequest JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }

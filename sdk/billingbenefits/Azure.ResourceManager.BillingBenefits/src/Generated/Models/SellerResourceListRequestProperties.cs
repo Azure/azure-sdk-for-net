@@ -31,16 +31,16 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <summary> Initializes a new instance of <see cref="SellerResourceListRequestProperties"/>. </summary>
         /// <param name="billingAccountResourceId"> Fully-qualified billing account resource identifier where the benefit is applied. Present only for Enterprise Agreement customers. </param>
         /// <param name="filter"> This is an OData expresssion to filter the list of MACCs based on the properties of MACC passed in the filter. </param>
-        /// <param name="contributors"> Setting it to true will return the list of contributors associated with the MACC. </param>
-        /// <param name="milestones"> Setting it to true will return the list of milestones associated with the MACC. </param>
+        /// <param name="includeContributors"> Setting it to true will return the list of contributors associated with the MACC. </param>
+        /// <param name="includeMilestones"> Setting it to true will return the list of milestones associated with the MACC. </param>
         /// <param name="primaryResourceId"> Fully-qualified resource identifier of the primary MACC. Format: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BillingBenefits/maccs/{maccName}. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SellerResourceListRequestProperties(ResourceIdentifier billingAccountResourceId, string filter, bool? contributors, bool? milestones, ResourceIdentifier primaryResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SellerResourceListRequestProperties(ResourceIdentifier billingAccountResourceId, string filter, bool? includeContributors, bool? includeMilestones, ResourceIdentifier primaryResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BillingAccountResourceId = billingAccountResourceId;
             Filter = filter;
-            Contributors = contributors;
-            Milestones = milestones;
+            IncludeContributors = includeContributors;
+            IncludeMilestones = includeMilestones;
             PrimaryResourceId = primaryResourceId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -52,10 +52,10 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         public string Filter { get; set; }
 
         /// <summary> Setting it to true will return the list of contributors associated with the MACC. </summary>
-        public bool? Contributors { get; set; }
+        public bool? IncludeContributors { get; set; }
 
         /// <summary> Setting it to true will return the list of milestones associated with the MACC. </summary>
-        public bool? Milestones { get; set; }
+        public bool? IncludeMilestones { get; set; }
 
         /// <summary> Fully-qualified resource identifier of the primary MACC. Format: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BillingBenefits/maccs/{maccName}. </summary>
         public ResourceIdentifier PrimaryResourceId { get; set; }

@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         }
 
         /// <summary> Setting it to true will return the list of contributors associated with the MACC. </summary>
-        public bool? Contributors
+        public bool? IncludeContributors
         {
             get
             {
-                return Properties is null ? default : Properties.Contributors;
+                return Properties is null ? default : Properties.IncludeContributors;
             }
             set
             {
@@ -73,16 +73,16 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 {
                     Properties = new SellerResourceListRequestProperties();
                 }
-                Properties.Contributors = value.Value;
+                Properties.IncludeContributors = value.Value;
             }
         }
 
         /// <summary> Setting it to true will return the list of milestones associated with the MACC. </summary>
-        public bool? Milestones
+        public bool? IncludeMilestones
         {
             get
             {
-                return Properties is null ? default : Properties.Milestones;
+                return Properties is null ? default : Properties.IncludeMilestones;
             }
             set
             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 {
                     Properties = new SellerResourceListRequestProperties();
                 }
-                Properties.Milestones = value.Value;
+                Properties.IncludeMilestones = value.Value;
             }
         }
 
