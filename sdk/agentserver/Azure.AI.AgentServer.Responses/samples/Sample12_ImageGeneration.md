@@ -1,6 +1,6 @@
 # Sample 12: Image generation
 
-This sample shows how to build a handler that returns generated images. When the OpenAI Responses API uses the `image_generation` tool, the result is always **base64-encoded image data** — clients decode it to get the raw bytes (PNG, JPEG, or WebP).
+This sample shows how to build a handler that returns generated images using the `image_generation_call` output item type. The result is delivered as **base64-encoded image data** — clients decode it to get the raw bytes (PNG, JPEG, WebP, etc.).
 
 The sample demonstrates three patterns:
 1. **Simple** — return a complete image in one shot
@@ -187,7 +187,7 @@ curl -X POST http://localhost:8088/responses \
   --no-buffer
 ```
 
-The SSE stream will contain an `image_generation_call` output item. The `result` field in the `response.output_item.done` event holds the base64-encoded image. Clients decode it to get the image bytes:
+The SSE stream will contain an `image_generation_call` output item. The `result` field in the `response.output_item.done` event holds the base64-encoded image. Clients decode it to get the raw image bytes:
 
 ```python
 import base64

@@ -1,6 +1,6 @@
-# Sample 13: Image input (vision)
+# Sample 13: Image inputs
 
-This sample shows how to build handlers that receive images as input — for example, a "describe this image" or "what's in this photo?" experience. The OpenAI Responses API supports three ways to send images:
+This sample shows how to build handlers that receive images as input. The Responses protocol supports three ways to send images:
 
 1. **URL** — a public `https://` link to the image
 2. **Base64 data URL** — the image bytes inline as `data:image/<format>;base64,<data>`
@@ -173,4 +173,4 @@ curl -X POST http://localhost:8088/responses \
   --no-buffer
 ```
 
-> **Tip**: The `detail` field is optional and defaults to `"auto"`. Use `"high"` for fine-grained analysis or `"low"` for faster processing with fewer tokens. See the [OpenAI vision guide](https://platform.openai.com/docs/guides/images-vision) for details.
+> **Tip**: The `detail` field is optional and defaults to `"auto"`. Use `"high"` for fine-grained analysis or `"low"` for faster processing with fewer tokens.

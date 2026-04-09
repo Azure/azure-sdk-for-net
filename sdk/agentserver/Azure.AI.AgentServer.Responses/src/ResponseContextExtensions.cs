@@ -159,4 +159,10 @@ public static class ResponseContextExtensions
     /// <returns>A workflow action item ID in the format <c>wfa_{partitionKey}{entropy}</c>.</returns>
     public static string NewWorkflowActionItemId(this ResponseContext context)
         => IdGenerator.NewWorkflowActionItemId(context.ResponseId);
+
+    /// <summary>Generates a new generic item ID sharing the response's partition key.</summary>
+    /// <param name="context">The response context.</param>
+    /// <returns>A generic item ID in the format <c>item_{partitionKey}{entropy}</c>.</returns>
+    public static string NewItemId(this ResponseContext context)
+        => IdGenerator.NewGenericItemId(context.ResponseId);
 }
