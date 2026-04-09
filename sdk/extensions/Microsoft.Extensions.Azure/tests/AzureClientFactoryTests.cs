@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
@@ -12,6 +11,7 @@ using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
+using static Azure.Core.Extensions.Tests.ReflectionHelpers;
 
 namespace Azure.Core.Extensions.Tests
 {
@@ -283,9 +283,9 @@ namespace Azure.Core.Extensions.Tests
             Assert.IsInstanceOf<ClientSecretCredential>(client.Credential);
             var clientSecretCredential = (ClientSecretCredential)client.Credential;
 
-            Assert.AreEqual("ConfigurationClientId", typeof(ClientSecretCredential).GetProperty("ClientId", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(clientSecretCredential));
-            Assert.AreEqual("ConfigurationClientSecret", typeof(ClientSecretCredential).GetProperty("ClientSecret", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(clientSecretCredential));
-            Assert.AreEqual("ConfigurationTenantId", typeof(ClientSecretCredential).GetProperty("TenantId", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(clientSecretCredential));
+            Assert.AreEqual("ConfigurationClientId", GetNonPublicPropertyValue(typeof(ClientSecretCredential), clientSecretCredential, "ClientId"));
+            Assert.AreEqual("ConfigurationClientSecret", GetNonPublicPropertyValue(typeof(ClientSecretCredential), clientSecretCredential, "ClientSecret"));
+            Assert.AreEqual("ConfigurationTenantId", GetNonPublicPropertyValue(typeof(ClientSecretCredential), clientSecretCredential, "TenantId"));
         }
 
         [Test]
@@ -308,9 +308,9 @@ namespace Azure.Core.Extensions.Tests
             var clientSecretCredential = (ClientSecretCredential)client.Credential;
 
             Assert.AreEqual("http://localhost/", client.Uri.ToString());
-            Assert.AreEqual("ConfigurationClientId", typeof(ClientSecretCredential).GetProperty("ClientId", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(clientSecretCredential));
-            Assert.AreEqual("ConfigurationClientSecret", typeof(ClientSecretCredential).GetProperty("ClientSecret", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(clientSecretCredential));
-            Assert.AreEqual("ConfigurationTenantId", typeof(ClientSecretCredential).GetProperty("TenantId", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(clientSecretCredential));
+            Assert.AreEqual("ConfigurationClientId", GetNonPublicPropertyValue(typeof(ClientSecretCredential), clientSecretCredential, "ClientId"));
+            Assert.AreEqual("ConfigurationClientSecret", GetNonPublicPropertyValue(typeof(ClientSecretCredential), clientSecretCredential, "ClientSecret"));
+            Assert.AreEqual("ConfigurationTenantId", GetNonPublicPropertyValue(typeof(ClientSecretCredential), clientSecretCredential, "TenantId"));
         }
 
         [Test]

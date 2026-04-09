@@ -2,13 +2,13 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using System.Reflection;
 using Azure.Core.Diagnostics;
 using Azure.Identity;
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
+using static Azure.Core.Extensions.Tests.ReflectionHelpers;
 
 namespace Azure.Core.Extensions.Tests
 {
@@ -49,9 +49,9 @@ namespace Azure.Core.Extensions.Tests
             Assert.IsInstanceOf<ClientSecretCredential>(credential);
             var clientSecretCredential = (ClientSecretCredential)credential;
 
-            Assert.AreEqual("ConfigurationClientId", typeof(ClientSecretCredential).GetProperty("ClientId", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(clientSecretCredential));
-            Assert.AreEqual("ConfigurationClientSecret", typeof(ClientSecretCredential).GetProperty("ClientSecret", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(clientSecretCredential));
-            Assert.AreEqual("ConfigurationTenantId", typeof(ClientSecretCredential).GetProperty("TenantId", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(clientSecretCredential));
+            Assert.AreEqual("ConfigurationClientId", GetNonPublicPropertyValue(typeof(ClientSecretCredential), clientSecretCredential, "ClientId"));
+            Assert.AreEqual("ConfigurationClientSecret", GetNonPublicPropertyValue(typeof(ClientSecretCredential), clientSecretCredential, "ClientSecret"));
+            Assert.AreEqual("ConfigurationTenantId", GetNonPublicPropertyValue(typeof(ClientSecretCredential), clientSecretCredential, "TenantId"));
         }
 
         [Test]
@@ -170,10 +170,7 @@ namespace Azure.Core.Extensions.Tests
             Assert.IsInstanceOf<EnvironmentCredential>(client.Credential);
 
             AzureEventSourceLogForwarder forwarder = provider.GetService<AzureEventSourceLogForwarder>();
-            var listener = (AzureEventSourceListener) forwarder.GetType().GetField(
-                    "_listener",
-                    System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)!
-                .GetValue(forwarder);
+            var listener = (AzureEventSourceListener)GetNonPublicFieldValue(forwarder, "_listener");
             Assert.AreEqual(enableLogging, listener != null);
         }
 
