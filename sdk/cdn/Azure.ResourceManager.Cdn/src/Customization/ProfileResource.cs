@@ -7,6 +7,8 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.ResourceManager.Cdn.Models;
 
 namespace Azure.ResourceManager.Cdn
@@ -65,7 +67,28 @@ namespace Azure.ResourceManager.Cdn
                     options.CountryOrRegions.Add(item);
                 }
             }
-            return await GetLogAnalyticsMetricsAsync(options, cancellationToken).ConfigureAwait(false);
+            return await GetLogAnalyticsMetricsDirectAsync(metrics, dateTimeBegin, dateTimeEnd, granularity, customDomains, protocols, groupBy, continents, countryOrRegions, cancellationToken).ConfigureAwait(false);
+        }
+
+        private async Task<Response<MetricsResponse>> GetLogAnalyticsMetricsDirectAsync(IEnumerable<LogMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, LogMetricsGranularity granularity, IEnumerable<string> customDomains, IEnumerable<string> protocols, IEnumerable<LogMetricsGroupBy> groupBy, IEnumerable<string> continents, IEnumerable<string> countryOrRegions, CancellationToken cancellationToken)
+        {
+            using DiagnosticScope scope = _logAnalyticsClientDiagnostics.CreateScope("ProfileResource.GetLogAnalyticsMetrics");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+                HttpMessage message = _logAnalyticsRestClient.CreateGetLogAnalyticsMetricsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, metrics, dateTimeBegin, dateTimeEnd, granularity.ToString(), customDomains, protocols, groupBy, continents, countryOrRegions, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<MetricsResponse> response = Response.FromValue(MetricsResponse.FromResponse(result), result);
+                if (response.Value == null)
+                    throw new RequestFailedException(response.GetRawResponse());
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -120,7 +143,28 @@ namespace Azure.ResourceManager.Cdn
                     options.CountryOrRegions.Add(item);
                 }
             }
-            return GetLogAnalyticsMetrics(options, cancellationToken);
+            return GetLogAnalyticsMetricsDirect(metrics, dateTimeBegin, dateTimeEnd, granularity, customDomains, protocols, groupBy, continents, countryOrRegions, cancellationToken);
+        }
+
+        private Response<MetricsResponse> GetLogAnalyticsMetricsDirect(IEnumerable<LogMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, LogMetricsGranularity granularity, IEnumerable<string> customDomains, IEnumerable<string> protocols, IEnumerable<LogMetricsGroupBy> groupBy, IEnumerable<string> continents, IEnumerable<string> countryOrRegions, CancellationToken cancellationToken)
+        {
+            using DiagnosticScope scope = _logAnalyticsClientDiagnostics.CreateScope("ProfileResource.GetLogAnalyticsMetrics");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+                HttpMessage message = _logAnalyticsRestClient.CreateGetLogAnalyticsMetricsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, metrics, dateTimeBegin, dateTimeEnd, granularity.ToString(), customDomains, protocols, groupBy, continents, countryOrRegions, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<MetricsResponse> response = Response.FromValue(MetricsResponse.FromResponse(result), result);
+                if (response.Value == null)
+                    throw new RequestFailedException(response.GetRawResponse());
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -157,7 +201,28 @@ namespace Azure.ResourceManager.Cdn
                     options.CustomDomains.Add(item);
                 }
             }
-            return await GetLogAnalyticsRankingsAsync(options, cancellationToken).ConfigureAwait(false);
+            return await GetLogAnalyticsRankingsDirectAsync(rankings, metrics, maxRanking, dateTimeBegin, dateTimeEnd, customDomains, cancellationToken).ConfigureAwait(false);
+        }
+
+        private async Task<Response<RankingsResponse>> GetLogAnalyticsRankingsDirectAsync(IEnumerable<LogRanking> rankings, IEnumerable<LogRankingMetric> metrics, int maxRanking, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, IEnumerable<string> customDomains, CancellationToken cancellationToken)
+        {
+            using DiagnosticScope scope = _logAnalyticsClientDiagnostics.CreateScope("ProfileResource.GetLogAnalyticsRankings");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+                HttpMessage message = _logAnalyticsRestClient.CreateGetLogAnalyticsRankingsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, rankings, metrics, maxRanking, dateTimeBegin, dateTimeEnd, customDomains, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<RankingsResponse> response = Response.FromValue(RankingsResponse.FromResponse(result), result);
+                if (response.Value == null)
+                    throw new RequestFailedException(response.GetRawResponse());
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -194,7 +259,28 @@ namespace Azure.ResourceManager.Cdn
                     options.CustomDomains.Add(item);
                 }
             }
-            return GetLogAnalyticsRankings(options, cancellationToken);
+            return GetLogAnalyticsRankingsDirect(rankings, metrics, maxRanking, dateTimeBegin, dateTimeEnd, customDomains, cancellationToken);
+        }
+
+        private Response<RankingsResponse> GetLogAnalyticsRankingsDirect(IEnumerable<LogRanking> rankings, IEnumerable<LogRankingMetric> metrics, int maxRanking, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, IEnumerable<string> customDomains, CancellationToken cancellationToken)
+        {
+            using DiagnosticScope scope = _logAnalyticsClientDiagnostics.CreateScope("ProfileResource.GetLogAnalyticsRankings");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+                HttpMessage message = _logAnalyticsRestClient.CreateGetLogAnalyticsRankingsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, rankings, metrics, maxRanking, dateTimeBegin, dateTimeEnd, customDomains, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<RankingsResponse> response = Response.FromValue(RankingsResponse.FromResponse(result), result);
+                if (response.Value == null)
+                    throw new RequestFailedException(response.GetRawResponse());
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -245,7 +331,28 @@ namespace Azure.ResourceManager.Cdn
                     options.RuleTypes.Add(item);
                 }
             }
-            return await GetWafLogAnalyticsMetricsAsync(options, cancellationToken).ConfigureAwait(false);
+            return await GetWafLogAnalyticsMetricsDirectAsync(metrics, dateTimeBegin, dateTimeEnd, granularity, actions, groupBy, ruleTypes, cancellationToken).ConfigureAwait(false);
+        }
+
+        private async Task<Response<WafMetricsResponse>> GetWafLogAnalyticsMetricsDirectAsync(IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, WafGranularity granularity, IEnumerable<WafAction> actions, IEnumerable<WafRankingGroupBy> groupBy, IEnumerable<WafRuleType> ruleTypes, CancellationToken cancellationToken)
+        {
+            using DiagnosticScope scope = _logAnalyticsClientDiagnostics.CreateScope("ProfileResource.GetWafLogAnalyticsMetrics");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+                HttpMessage message = _logAnalyticsRestClient.CreateGetWafLogAnalyticsMetricsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, metrics, dateTimeBegin, dateTimeEnd, granularity.ToString(), actions, groupBy, ruleTypes, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<WafMetricsResponse> response = Response.FromValue(WafMetricsResponse.FromResponse(result), result);
+                if (response.Value == null)
+                    throw new RequestFailedException(response.GetRawResponse());
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -296,7 +403,28 @@ namespace Azure.ResourceManager.Cdn
                     options.RuleTypes.Add(item);
                 }
             }
-            return GetWafLogAnalyticsMetrics(options, cancellationToken);
+            return GetWafLogAnalyticsMetricsDirect(metrics, dateTimeBegin, dateTimeEnd, granularity, actions, groupBy, ruleTypes, cancellationToken);
+        }
+
+        private Response<WafMetricsResponse> GetWafLogAnalyticsMetricsDirect(IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, WafGranularity granularity, IEnumerable<WafAction> actions, IEnumerable<WafRankingGroupBy> groupBy, IEnumerable<WafRuleType> ruleTypes, CancellationToken cancellationToken)
+        {
+            using DiagnosticScope scope = _logAnalyticsClientDiagnostics.CreateScope("ProfileResource.GetWafLogAnalyticsMetrics");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+                HttpMessage message = _logAnalyticsRestClient.CreateGetWafLogAnalyticsMetricsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, metrics, dateTimeBegin, dateTimeEnd, granularity.ToString(), actions, groupBy, ruleTypes, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<WafMetricsResponse> response = Response.FromValue(WafMetricsResponse.FromResponse(result), result);
+                if (response.Value == null)
+                    throw new RequestFailedException(response.GetRawResponse());
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -341,7 +469,28 @@ namespace Azure.ResourceManager.Cdn
                     options.RuleTypes.Add(item);
                 }
             }
-            return await GetWafLogAnalyticsRankingsAsync(options, cancellationToken).ConfigureAwait(false);
+            return await GetWafLogAnalyticsRankingsDirectAsync(metrics, dateTimeBegin, dateTimeEnd, maxRanking, rankings, actions, ruleTypes, cancellationToken).ConfigureAwait(false);
+        }
+
+        private async Task<Response<WafRankingsResponse>> GetWafLogAnalyticsRankingsDirectAsync(IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, int maxRanking, IEnumerable<WafRankingType> rankings, IEnumerable<WafAction> actions, IEnumerable<WafRuleType> ruleTypes, CancellationToken cancellationToken)
+        {
+            using DiagnosticScope scope = _logAnalyticsClientDiagnostics.CreateScope("ProfileResource.GetWafLogAnalyticsRankings");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+                HttpMessage message = _logAnalyticsRestClient.CreateGetWafLogAnalyticsRankingsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, metrics, dateTimeBegin, dateTimeEnd, maxRanking, rankings, actions, ruleTypes, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<WafRankingsResponse> response = Response.FromValue(WafRankingsResponse.FromResponse(result), result);
+                if (response.Value == null)
+                    throw new RequestFailedException(response.GetRawResponse());
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -386,7 +535,28 @@ namespace Azure.ResourceManager.Cdn
                     options.RuleTypes.Add(item);
                 }
             }
-            return GetWafLogAnalyticsRankings(options, cancellationToken);
+            return GetWafLogAnalyticsRankingsDirect(metrics, dateTimeBegin, dateTimeEnd, maxRanking, rankings, actions, ruleTypes, cancellationToken);
+        }
+
+        private Response<WafRankingsResponse> GetWafLogAnalyticsRankingsDirect(IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, int maxRanking, IEnumerable<WafRankingType> rankings, IEnumerable<WafAction> actions, IEnumerable<WafRuleType> ruleTypes, CancellationToken cancellationToken)
+        {
+            using DiagnosticScope scope = _logAnalyticsClientDiagnostics.CreateScope("ProfileResource.GetWafLogAnalyticsRankings");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+                HttpMessage message = _logAnalyticsRestClient.CreateGetWafLogAnalyticsRankingsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, metrics, dateTimeBegin, dateTimeEnd, maxRanking, rankings, actions, ruleTypes, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<WafRankingsResponse> response = Response.FromValue(WafRankingsResponse.FromResponse(result), result);
+                if (response.Value == null)
+                    throw new RequestFailedException(response.GetRawResponse());
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }
