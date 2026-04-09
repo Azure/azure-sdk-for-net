@@ -49,23 +49,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceTypeRegistrationProperties"/>. </summary>
-        /// <param name="extensionOptions"></param>
-        /// <param name="featuresRule"></param>
-        /// <param name="subscriptionLifecycleNotificationSpecifications"></param>
-        /// <param name="identityManagement"></param>
-        /// <param name="checkNameAvailabilitySpecifications"></param>
-        /// <param name="requestHeaderOptions"></param>
-        /// <param name="templateDeploymentOptions"></param>
-        /// <param name="resourceMovePolicy"></param>
-        /// <param name="resourceGraphConfiguration"></param>
-        /// <param name="management"></param>
-        /// <param name="templateDeploymentPolicy"></param>
-        /// <param name="dstsConfiguration"></param>
         /// <param name="routingType"> The resource routing type. </param>
         /// <param name="additionalOptions"> The additional options. </param>
         /// <param name="crossTenantTokenValidation"> The cross tenant token validation. </param>
         /// <param name="regionality"> The regionality. </param>
         /// <param name="endpoints"> The extensions. </param>
+        /// <param name="extensionOptions"> The extension options. </param>
         /// <param name="marketplaceType"> The marketplace type. </param>
         /// <param name="swaggerSpecifications"> The swagger specifications. </param>
         /// <param name="allowedUnauthorizedActions"> The allowed unauthorized actions. </param>
@@ -76,16 +65,25 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="loggingRules"> The logging rules. </param>
         /// <param name="throttlingRules"> The throttling rules. </param>
         /// <param name="requiredFeatures"> The required features. </param>
+        /// <param name="featuresRule"> The features rule. </param>
         /// <param name="isAsyncOperationEnabled"> Whether async operation is enabled. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="isThirdPartyS2SEnabled"> Whether third party S2S is enabled. </param>
+        /// <param name="subscriptionLifecycleNotificationSpecifications"> The subscription lifecycle notification specifications. </param>
         /// <param name="isPureProxy"> Whether it is pure proxy. </param>
+        /// <param name="identityManagement"> The identity management. </param>
+        /// <param name="checkNameAvailabilitySpecifications"> The check name availability specifications. </param>
         /// <param name="disallowedActionVerbs"> The disallowed action verbs. </param>
         /// <param name="serviceTreeInfos"> The service tree infos. </param>
+        /// <param name="requestHeaderOptions"> The request header options. </param>
         /// <param name="subscriptionStateRules"> The subscription state rules. </param>
+        /// <param name="templateDeploymentOptions"> The template deployment options. </param>
         /// <param name="extendedLocations"> The extended locations. </param>
+        /// <param name="resourceMovePolicy"> The resource move policy. </param>
         /// <param name="resourceDeletionPolicy"> The resource deletion policy. </param>
         /// <param name="resourceConcurrencyControlOptions"> The resource concurrency control options. </param>
+        /// <param name="resourceGraphConfiguration"> The resource graph configuration. </param>
+        /// <param name="management"> The resource provider management. </param>
         /// <param name="openApiConfiguration"> The open api configuration. </param>
         /// <param name="onBehalfOfTokens"> The on behalf of tokens. </param>
         /// <param name="category"> The category. </param>
@@ -98,9 +96,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="linkedNotificationRules"> The linked notification rules. </param>
         /// <param name="resourceProviderAuthorizationRules"> The resource provider authorization rules. </param>
         /// <param name="tokenAuthConfiguration"> The token auth configuration. </param>
+        /// <param name="templateDeploymentPolicy"> The template deployment policy. </param>
         /// <param name="isEmptyRoleAssignmentsAllowed"> The allow empty role assignments. </param>
         /// <param name="policyExecutionType"> The policy execution type. </param>
         /// <param name="availabilityZoneRule"> The availability zone rule. </param>
+        /// <param name="dstsConfiguration"> The dsts configuration. </param>
         /// <param name="asyncTimeoutRules"> Async timeout rules. </param>
         /// <param name="commonApiVersions"> Common API versions for the resource type. </param>
         /// <param name="apiProfiles"> The api profiles. </param>
@@ -125,25 +125,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="resourceSubType"> The resource sub type. </param>
         /// <param name="asyncOperationResourceTypeName"> The async operation resource type name. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceTypeRegistrationProperties(ResourceTypeExtensionOptions extensionOptions, ProviderFeaturesRule featuresRule, SubscriptionLifecycleNotificationSpecifications subscriptionLifecycleNotificationSpecifications, IdentityManagementProperties identityManagement, CheckNameAvailabilitySpecifications checkNameAvailabilitySpecifications, ProviderRequestHeaderOptions requestHeaderOptions, TemplateDeploymentOptions templateDeploymentOptions, ResourceMovePolicy resourceMovePolicy, ResourceGraphConfiguration resourceGraphConfiguration, ResourceProviderManagement management, TemplateDeploymentPolicy templateDeploymentPolicy, ProviderDstsConfiguration dstsConfiguration, ResourceRoutingType? routingType, AdditionalOptionResourceTypeRegistration? additionalOptions, CrossTenantTokenValidation? crossTenantTokenValidation, ResourceTypeRegistrationRegionality? regionality, IList<ResourceTypeEndpoint> endpoints, MarketplaceType? marketplaceType, IList<SwaggerSpecification> swaggerSpecifications, IList<string> allowedUnauthorizedActions, IList<AllowedUnauthorizedActionsExtension> allowedUnauthorizedActionsExtensions, IList<AuthorizationActionMapping> authorizationActionMappings, IList<LinkedAccessCheck> linkedAccessChecks, string defaultApiVersion, IList<LoggingRule> loggingRules, IList<ThrottlingRule> throttlingRules, IList<string> requiredFeatures, bool? isAsyncOperationEnabled, ProviderHubProvisioningState? provisioningState, bool? isThirdPartyS2SEnabled, bool? isPureProxy, IList<string> disallowedActionVerbs, IList<ServiceTreeInfo> serviceTreeInfos, IList<ProviderSubscriptionStateRule> subscriptionStateRules, IList<ProviderHubExtendedLocationOptions> extendedLocations, ResourceDeletionPolicy? resourceDeletionPolicy, IDictionary<string, ResourceConcurrencyControlOption> resourceConcurrencyControlOptions, OpenApiConfiguration openApiConfiguration, ResourceTypeOnBehalfOfToken onBehalfOfTokens, ResourceTypeCategory? category, ResourceValidation? resourceValidation, IList<string> disallowedEndUserOperations, IDictionary<string, BinaryData> metadata, string skuLink, ProviderQuotaRule quotaRule, IList<ProviderNotification> notifications, IList<LinkedNotificationRule> linkedNotificationRules, ResourceProviderAuthorizationRules resourceProviderAuthorizationRules, TokenAuthConfiguration tokenAuthConfiguration, bool? isEmptyRoleAssignmentsAllowed, PolicyExecutionType? policyExecutionType, ResourceTypeRegistrationAvailabilityZoneRule availabilityZoneRule, IList<AsyncTimeoutRule> asyncTimeoutRules, IList<string> commonApiVersions, IList<ResourceTypeRegistrationApiProfile> apiProfiles, IList<LinkedOperationRule> linkedOperationRules, string legacyName, IList<string> legacyNames, IList<string> allowedTemplateDeploymentReferenceActions, ResourceTypeRegistrationLegacyPolicy legacyPolicy, string manifestLink, ResourceTypeRegistrationCapacityRule capacityRule, ResourceTypeRegistrationMarketplaceOptions marketplaceOptions, IList<AllowedResourceName> allowedResourceNames, ResourceTypeRegistrationResourceCache resourceCache, ProviderResourceQueryManagement resourceQueryManagement, bool? areTagsSupported, ResourceTypeRegistrationResourceManagementOptions resourceManagementOptions, string groupingTag, bool? isAddResourceListTargetLocationsAllowed, ResourceTypeCommonAttributeManagement resourceTypeCommonAttributeManagement, ResourceTypeRegistrationRoutingRule routingRule, FrontdoorRequestMode? frontdoorRequestMode, ProviderResourceSubType? resourceSubType, string asyncOperationResourceTypeName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResourceTypeRegistrationProperties(ResourceRoutingType? routingType, AdditionalOptionResourceTypeRegistration? additionalOptions, CrossTenantTokenValidation? crossTenantTokenValidation, ResourceTypeRegistrationRegionality? regionality, IList<ResourceTypeEndpoint> endpoints, ResourceTypeExtensionOptions extensionOptions, MarketplaceType? marketplaceType, IList<SwaggerSpecification> swaggerSpecifications, IList<string> allowedUnauthorizedActions, IList<AllowedUnauthorizedActionsExtension> allowedUnauthorizedActionsExtensions, IList<AuthorizationActionMapping> authorizationActionMappings, IList<LinkedAccessCheck> linkedAccessChecks, string defaultApiVersion, IList<LoggingRule> loggingRules, IList<ThrottlingRule> throttlingRules, IList<string> requiredFeatures, ProviderFeaturesRule featuresRule, bool? isAsyncOperationEnabled, ProviderHubProvisioningState? provisioningState, bool? isThirdPartyS2SEnabled, SubscriptionLifecycleNotificationSpecifications subscriptionLifecycleNotificationSpecifications, bool? isPureProxy, IdentityManagementProperties identityManagement, CheckNameAvailabilitySpecifications checkNameAvailabilitySpecifications, IList<string> disallowedActionVerbs, IList<ServiceTreeInfo> serviceTreeInfos, ProviderRequestHeaderOptions requestHeaderOptions, IList<ProviderSubscriptionStateRule> subscriptionStateRules, TemplateDeploymentOptions templateDeploymentOptions, IList<ProviderHubExtendedLocationOptions> extendedLocations, ResourceMovePolicy resourceMovePolicy, ResourceDeletionPolicy? resourceDeletionPolicy, IDictionary<string, ResourceConcurrencyControlOption> resourceConcurrencyControlOptions, ResourceGraphConfiguration resourceGraphConfiguration, ResourceProviderManagement management, OpenApiConfiguration openApiConfiguration, ResourceTypeOnBehalfOfToken onBehalfOfTokens, ResourceTypeCategory? category, ResourceValidation? resourceValidation, IList<string> disallowedEndUserOperations, IDictionary<string, BinaryData> metadata, string skuLink, ProviderQuotaRule quotaRule, IList<ProviderNotification> notifications, IList<LinkedNotificationRule> linkedNotificationRules, ResourceProviderAuthorizationRules resourceProviderAuthorizationRules, TokenAuthConfiguration tokenAuthConfiguration, TemplateDeploymentPolicy templateDeploymentPolicy, bool? isEmptyRoleAssignmentsAllowed, PolicyExecutionType? policyExecutionType, ResourceTypeRegistrationAvailabilityZoneRule availabilityZoneRule, ProviderDstsConfiguration dstsConfiguration, IList<AsyncTimeoutRule> asyncTimeoutRules, IList<string> commonApiVersions, IList<ResourceTypeRegistrationApiProfile> apiProfiles, IList<LinkedOperationRule> linkedOperationRules, string legacyName, IList<string> legacyNames, IList<string> allowedTemplateDeploymentReferenceActions, ResourceTypeRegistrationLegacyPolicy legacyPolicy, string manifestLink, ResourceTypeRegistrationCapacityRule capacityRule, ResourceTypeRegistrationMarketplaceOptions marketplaceOptions, IList<AllowedResourceName> allowedResourceNames, ResourceTypeRegistrationResourceCache resourceCache, ProviderResourceQueryManagement resourceQueryManagement, bool? areTagsSupported, ResourceTypeRegistrationResourceManagementOptions resourceManagementOptions, string groupingTag, bool? isAddResourceListTargetLocationsAllowed, ResourceTypeCommonAttributeManagement resourceTypeCommonAttributeManagement, ResourceTypeRegistrationRoutingRule routingRule, FrontdoorRequestMode? frontdoorRequestMode, ProviderResourceSubType? resourceSubType, string asyncOperationResourceTypeName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ExtensionOptions = extensionOptions;
-            FeaturesRule = featuresRule;
-            SubscriptionLifecycleNotificationSpecifications = subscriptionLifecycleNotificationSpecifications;
-            IdentityManagement = identityManagement;
-            CheckNameAvailabilitySpecifications = checkNameAvailabilitySpecifications;
-            RequestHeaderOptions = requestHeaderOptions;
-            TemplateDeploymentOptions = templateDeploymentOptions;
-            ResourceMovePolicy = resourceMovePolicy;
-            ResourceGraphConfiguration = resourceGraphConfiguration;
-            Management = management;
-            TemplateDeploymentPolicy = templateDeploymentPolicy;
-            DstsConfiguration = dstsConfiguration;
             RoutingType = routingType;
             AdditionalOptions = additionalOptions;
             CrossTenantTokenValidation = crossTenantTokenValidation;
             Regionality = regionality;
             Endpoints = endpoints;
+            ExtensionOptions = extensionOptions;
             MarketplaceType = marketplaceType;
             SwaggerSpecifications = swaggerSpecifications;
             AllowedUnauthorizedActions = allowedUnauthorizedActions;
@@ -154,16 +143,25 @@ namespace Azure.ResourceManager.ProviderHub.Models
             LoggingRules = loggingRules;
             ThrottlingRules = throttlingRules;
             RequiredFeatures = requiredFeatures;
+            FeaturesRule = featuresRule;
             IsAsyncOperationEnabled = isAsyncOperationEnabled;
             ProvisioningState = provisioningState;
             IsThirdPartyS2SEnabled = isThirdPartyS2SEnabled;
+            SubscriptionLifecycleNotificationSpecifications = subscriptionLifecycleNotificationSpecifications;
             IsPureProxy = isPureProxy;
+            IdentityManagement = identityManagement;
+            CheckNameAvailabilitySpecifications = checkNameAvailabilitySpecifications;
             DisallowedActionVerbs = disallowedActionVerbs;
             ServiceTreeInfos = serviceTreeInfos;
+            RequestHeaderOptions = requestHeaderOptions;
             SubscriptionStateRules = subscriptionStateRules;
+            TemplateDeploymentOptions = templateDeploymentOptions;
             ExtendedLocations = extendedLocations;
+            ResourceMovePolicy = resourceMovePolicy;
             ResourceDeletionPolicy = resourceDeletionPolicy;
             ResourceConcurrencyControlOptions = resourceConcurrencyControlOptions;
+            ResourceGraphConfiguration = resourceGraphConfiguration;
+            Management = management;
             OpenApiConfiguration = openApiConfiguration;
             OnBehalfOfTokens = onBehalfOfTokens;
             Category = category;
@@ -176,9 +174,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
             LinkedNotificationRules = linkedNotificationRules;
             ResourceProviderAuthorizationRules = resourceProviderAuthorizationRules;
             TokenAuthConfiguration = tokenAuthConfiguration;
+            TemplateDeploymentPolicy = templateDeploymentPolicy;
             IsEmptyRoleAssignmentsAllowed = isEmptyRoleAssignmentsAllowed;
             PolicyExecutionType = policyExecutionType;
             AvailabilityZoneRule = availabilityZoneRule;
+            DstsConfiguration = dstsConfiguration;
             AsyncTimeoutRules = asyncTimeoutRules;
             CommonApiVersions = commonApiVersions;
             ApiProfiles = apiProfiles;
@@ -205,42 +205,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets or sets the ExtensionOptions. </summary>
-        internal ResourceTypeExtensionOptions ExtensionOptions { get; set; }
-
-        /// <summary> Gets or sets the FeaturesRule. </summary>
-        internal ProviderFeaturesRule FeaturesRule { get; set; }
-
-        /// <summary> Gets or sets the SubscriptionLifecycleNotificationSpecifications. </summary>
-        public SubscriptionLifecycleNotificationSpecifications SubscriptionLifecycleNotificationSpecifications { get; set; }
-
-        /// <summary> Gets or sets the IdentityManagement. </summary>
-        public IdentityManagementProperties IdentityManagement { get; set; }
-
-        /// <summary> Gets or sets the CheckNameAvailabilitySpecifications. </summary>
-        public CheckNameAvailabilitySpecifications CheckNameAvailabilitySpecifications { get; set; }
-
-        /// <summary> Gets or sets the RequestHeaderOptions. </summary>
-        public ProviderRequestHeaderOptions RequestHeaderOptions { get; set; }
-
-        /// <summary> Gets or sets the TemplateDeploymentOptions. </summary>
-        public TemplateDeploymentOptions TemplateDeploymentOptions { get; set; }
-
-        /// <summary> Gets or sets the ResourceMovePolicy. </summary>
-        public ResourceMovePolicy ResourceMovePolicy { get; set; }
-
-        /// <summary> Gets or sets the ResourceGraphConfiguration. </summary>
-        public ResourceGraphConfiguration ResourceGraphConfiguration { get; set; }
-
-        /// <summary> Gets or sets the Management. </summary>
-        public ResourceProviderManagement Management { get; set; }
-
-        /// <summary> Gets or sets the TemplateDeploymentPolicy. </summary>
-        public TemplateDeploymentPolicy TemplateDeploymentPolicy { get; set; }
-
-        /// <summary> Gets or sets the DstsConfiguration. </summary>
-        public ProviderDstsConfiguration DstsConfiguration { get; set; }
-
         /// <summary> The resource routing type. </summary>
         public ResourceRoutingType? RoutingType { get; set; }
 
@@ -255,6 +219,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> The extensions. </summary>
         public IList<ResourceTypeEndpoint> Endpoints { get; }
+
+        /// <summary> The extension options. </summary>
+        internal ResourceTypeExtensionOptions ExtensionOptions { get; set; }
 
         /// <summary> The marketplace type. </summary>
         public MarketplaceType? MarketplaceType { get; set; }
@@ -286,14 +253,26 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <summary> The required features. </summary>
         public IList<string> RequiredFeatures { get; }
 
+        /// <summary> The features rule. </summary>
+        internal ProviderFeaturesRule FeaturesRule { get; set; }
+
         /// <summary> Whether async operation is enabled. </summary>
         public bool? IsAsyncOperationEnabled { get; set; }
 
         /// <summary> Whether third party S2S is enabled. </summary>
         public bool? IsThirdPartyS2SEnabled { get; set; }
 
+        /// <summary> The subscription lifecycle notification specifications. </summary>
+        public SubscriptionLifecycleNotificationSpecifications SubscriptionLifecycleNotificationSpecifications { get; set; }
+
         /// <summary> Whether it is pure proxy. </summary>
         public bool? IsPureProxy { get; set; }
+
+        /// <summary> The identity management. </summary>
+        public IdentityManagementProperties IdentityManagement { get; set; }
+
+        /// <summary> The check name availability specifications. </summary>
+        public CheckNameAvailabilitySpecifications CheckNameAvailabilitySpecifications { get; set; }
 
         /// <summary> The disallowed action verbs. </summary>
         public IList<string> DisallowedActionVerbs { get; }
@@ -301,17 +280,32 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <summary> The service tree infos. </summary>
         public IList<ServiceTreeInfo> ServiceTreeInfos { get; }
 
+        /// <summary> The request header options. </summary>
+        public ProviderRequestHeaderOptions RequestHeaderOptions { get; set; }
+
         /// <summary> The subscription state rules. </summary>
         public IList<ProviderSubscriptionStateRule> SubscriptionStateRules { get; }
 
+        /// <summary> The template deployment options. </summary>
+        public TemplateDeploymentOptions TemplateDeploymentOptions { get; set; }
+
         /// <summary> The extended locations. </summary>
         public IList<ProviderHubExtendedLocationOptions> ExtendedLocations { get; }
+
+        /// <summary> The resource move policy. </summary>
+        public ResourceMovePolicy ResourceMovePolicy { get; set; }
 
         /// <summary> The resource deletion policy. </summary>
         public ResourceDeletionPolicy? ResourceDeletionPolicy { get; set; }
 
         /// <summary> The resource concurrency control options. </summary>
         public IDictionary<string, ResourceConcurrencyControlOption> ResourceConcurrencyControlOptions { get; }
+
+        /// <summary> The resource graph configuration. </summary>
+        public ResourceGraphConfiguration ResourceGraphConfiguration { get; set; }
+
+        /// <summary> The resource provider management. </summary>
+        public ResourceProviderManagement Management { get; set; }
 
         /// <summary> The open api configuration. </summary>
         internal OpenApiConfiguration OpenApiConfiguration { get; set; }
@@ -374,6 +368,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <summary> The token auth configuration. </summary>
         public TokenAuthConfiguration TokenAuthConfiguration { get; set; }
 
+        /// <summary> The template deployment policy. </summary>
+        public TemplateDeploymentPolicy TemplateDeploymentPolicy { get; set; }
+
         /// <summary> The allow empty role assignments. </summary>
         public bool? IsEmptyRoleAssignmentsAllowed { get; set; }
 
@@ -382,6 +379,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> The availability zone rule. </summary>
         internal ResourceTypeRegistrationAvailabilityZoneRule AvailabilityZoneRule { get; set; }
+
+        /// <summary> The dsts configuration. </summary>
+        public ProviderDstsConfiguration DstsConfiguration { get; set; }
 
         /// <summary> Async timeout rules. </summary>
         public IList<AsyncTimeoutRule> AsyncTimeoutRules { get; }

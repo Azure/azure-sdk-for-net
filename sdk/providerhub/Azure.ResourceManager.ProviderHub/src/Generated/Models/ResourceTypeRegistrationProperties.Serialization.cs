@@ -74,66 +74,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 throw new FormatException($"The model {nameof(ResourceTypeRegistrationProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(ExtensionOptions))
-            {
-                writer.WritePropertyName("extensionOptions"u8);
-                writer.WriteObjectValue(ExtensionOptions, options);
-            }
-            if (Optional.IsDefined(FeaturesRule))
-            {
-                writer.WritePropertyName("featuresRule"u8);
-                writer.WriteObjectValue(FeaturesRule, options);
-            }
-            if (Optional.IsDefined(SubscriptionLifecycleNotificationSpecifications))
-            {
-                writer.WritePropertyName("subscriptionLifecycleNotificationSpecifications"u8);
-                writer.WriteObjectValue(SubscriptionLifecycleNotificationSpecifications, options);
-            }
-            if (Optional.IsDefined(IdentityManagement))
-            {
-                writer.WritePropertyName("identityManagement"u8);
-                writer.WriteObjectValue(IdentityManagement, options);
-            }
-            if (Optional.IsDefined(CheckNameAvailabilitySpecifications))
-            {
-                writer.WritePropertyName("checkNameAvailabilitySpecifications"u8);
-                writer.WriteObjectValue(CheckNameAvailabilitySpecifications, options);
-            }
-            if (Optional.IsDefined(RequestHeaderOptions))
-            {
-                writer.WritePropertyName("requestHeaderOptions"u8);
-                writer.WriteObjectValue(RequestHeaderOptions, options);
-            }
-            if (Optional.IsDefined(TemplateDeploymentOptions))
-            {
-                writer.WritePropertyName("templateDeploymentOptions"u8);
-                writer.WriteObjectValue(TemplateDeploymentOptions, options);
-            }
-            if (Optional.IsDefined(ResourceMovePolicy))
-            {
-                writer.WritePropertyName("resourceMovePolicy"u8);
-                writer.WriteObjectValue(ResourceMovePolicy, options);
-            }
-            if (Optional.IsDefined(ResourceGraphConfiguration))
-            {
-                writer.WritePropertyName("resourceGraphConfiguration"u8);
-                writer.WriteObjectValue(ResourceGraphConfiguration, options);
-            }
-            if (Optional.IsDefined(Management))
-            {
-                writer.WritePropertyName("management"u8);
-                writer.WriteObjectValue(Management, options);
-            }
-            if (Optional.IsDefined(TemplateDeploymentPolicy))
-            {
-                writer.WritePropertyName("templateDeploymentPolicy"u8);
-                writer.WriteObjectValue(TemplateDeploymentPolicy, options);
-            }
-            if (Optional.IsDefined(DstsConfiguration))
-            {
-                writer.WritePropertyName("dstsConfiguration"u8);
-                writer.WriteObjectValue(DstsConfiguration, options);
-            }
             if (Optional.IsDefined(RoutingType))
             {
                 writer.WritePropertyName("routingType"u8);
@@ -163,6 +103,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(ExtensionOptions))
+            {
+                writer.WritePropertyName("extensionOptions"u8);
+                writer.WriteObjectValue(ExtensionOptions, options);
             }
             if (Optional.IsDefined(MarketplaceType))
             {
@@ -264,6 +209,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(FeaturesRule))
+            {
+                writer.WritePropertyName("featuresRule"u8);
+                writer.WriteObjectValue(FeaturesRule, options);
+            }
             if (Optional.IsDefined(IsAsyncOperationEnabled))
             {
                 writer.WritePropertyName("enableAsyncOperation"u8);
@@ -279,10 +229,25 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WritePropertyName("enableThirdPartyS2S"u8);
                 writer.WriteBooleanValue(IsThirdPartyS2SEnabled.Value);
             }
+            if (Optional.IsDefined(SubscriptionLifecycleNotificationSpecifications))
+            {
+                writer.WritePropertyName("subscriptionLifecycleNotificationSpecifications"u8);
+                writer.WriteObjectValue(SubscriptionLifecycleNotificationSpecifications, options);
+            }
             if (Optional.IsDefined(IsPureProxy))
             {
                 writer.WritePropertyName("isPureProxy"u8);
                 writer.WriteBooleanValue(IsPureProxy.Value);
+            }
+            if (Optional.IsDefined(IdentityManagement))
+            {
+                writer.WritePropertyName("identityManagement"u8);
+                writer.WriteObjectValue(IdentityManagement, options);
+            }
+            if (Optional.IsDefined(CheckNameAvailabilitySpecifications))
+            {
+                writer.WritePropertyName("checkNameAvailabilitySpecifications"u8);
+                writer.WriteObjectValue(CheckNameAvailabilitySpecifications, options);
             }
             if (Optional.IsCollectionDefined(DisallowedActionVerbs))
             {
@@ -309,6 +274,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(RequestHeaderOptions))
+            {
+                writer.WritePropertyName("requestHeaderOptions"u8);
+                writer.WriteObjectValue(RequestHeaderOptions, options);
+            }
             if (Optional.IsCollectionDefined(SubscriptionStateRules))
             {
                 writer.WritePropertyName("subscriptionStateRules"u8);
@@ -319,6 +289,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(TemplateDeploymentOptions))
+            {
+                writer.WritePropertyName("templateDeploymentOptions"u8);
+                writer.WriteObjectValue(TemplateDeploymentOptions, options);
+            }
             if (Optional.IsCollectionDefined(ExtendedLocations))
             {
                 writer.WritePropertyName("extendedLocations"u8);
@@ -328,6 +303,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(ResourceMovePolicy))
+            {
+                writer.WritePropertyName("resourceMovePolicy"u8);
+                writer.WriteObjectValue(ResourceMovePolicy, options);
             }
             if (Optional.IsDefined(ResourceDeletionPolicy))
             {
@@ -344,6 +324,16 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(ResourceGraphConfiguration))
+            {
+                writer.WritePropertyName("resourceGraphConfiguration"u8);
+                writer.WriteObjectValue(ResourceGraphConfiguration, options);
+            }
+            if (Optional.IsDefined(Management))
+            {
+                writer.WritePropertyName("management"u8);
+                writer.WriteObjectValue(Management, options);
             }
             if (Optional.IsDefined(OpenApiConfiguration))
             {
@@ -443,6 +433,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WritePropertyName("tokenAuthConfiguration"u8);
                 writer.WriteObjectValue(TokenAuthConfiguration, options);
             }
+            if (Optional.IsDefined(TemplateDeploymentPolicy))
+            {
+                writer.WritePropertyName("templateDeploymentPolicy"u8);
+                writer.WriteObjectValue(TemplateDeploymentPolicy, options);
+            }
             if (Optional.IsDefined(IsEmptyRoleAssignmentsAllowed))
             {
                 writer.WritePropertyName("allowEmptyRoleAssignments"u8);
@@ -457,6 +452,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 writer.WritePropertyName("availabilityZoneRule"u8);
                 writer.WriteObjectValue(AvailabilityZoneRule, options);
+            }
+            if (Optional.IsDefined(DstsConfiguration))
+            {
+                writer.WritePropertyName("dstsConfiguration"u8);
+                writer.WriteObjectValue(DstsConfiguration, options);
             }
             if (Optional.IsCollectionDefined(AsyncTimeoutRules))
             {
@@ -665,23 +665,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            ResourceTypeExtensionOptions extensionOptions = default;
-            ProviderFeaturesRule featuresRule = default;
-            SubscriptionLifecycleNotificationSpecifications subscriptionLifecycleNotificationSpecifications = default;
-            IdentityManagementProperties identityManagement = default;
-            CheckNameAvailabilitySpecifications checkNameAvailabilitySpecifications = default;
-            ProviderRequestHeaderOptions requestHeaderOptions = default;
-            TemplateDeploymentOptions templateDeploymentOptions = default;
-            ResourceMovePolicy resourceMovePolicy = default;
-            ResourceGraphConfiguration resourceGraphConfiguration = default;
-            ResourceProviderManagement management = default;
-            TemplateDeploymentPolicy templateDeploymentPolicy = default;
-            ProviderDstsConfiguration dstsConfiguration = default;
             ResourceRoutingType? routingType = default;
             AdditionalOptionResourceTypeRegistration? additionalOptions = default;
             CrossTenantTokenValidation? crossTenantTokenValidation = default;
             ResourceTypeRegistrationRegionality? regionality = default;
             IList<ResourceTypeEndpoint> endpoints = default;
+            ResourceTypeExtensionOptions extensionOptions = default;
             MarketplaceType? marketplaceType = default;
             IList<SwaggerSpecification> swaggerSpecifications = default;
             IList<string> allowedUnauthorizedActions = default;
@@ -692,16 +681,25 @@ namespace Azure.ResourceManager.ProviderHub.Models
             IList<LoggingRule> loggingRules = default;
             IList<ThrottlingRule> throttlingRules = default;
             IList<string> requiredFeatures = default;
+            ProviderFeaturesRule featuresRule = default;
             bool? isAsyncOperationEnabled = default;
             ProviderHubProvisioningState? provisioningState = default;
             bool? isThirdPartyS2SEnabled = default;
+            SubscriptionLifecycleNotificationSpecifications subscriptionLifecycleNotificationSpecifications = default;
             bool? isPureProxy = default;
+            IdentityManagementProperties identityManagement = default;
+            CheckNameAvailabilitySpecifications checkNameAvailabilitySpecifications = default;
             IList<string> disallowedActionVerbs = default;
             IList<ServiceTreeInfo> serviceTreeInfos = default;
+            ProviderRequestHeaderOptions requestHeaderOptions = default;
             IList<ProviderSubscriptionStateRule> subscriptionStateRules = default;
+            TemplateDeploymentOptions templateDeploymentOptions = default;
             IList<ProviderHubExtendedLocationOptions> extendedLocations = default;
+            ResourceMovePolicy resourceMovePolicy = default;
             ResourceDeletionPolicy? resourceDeletionPolicy = default;
             IDictionary<string, ResourceConcurrencyControlOption> resourceConcurrencyControlOptions = default;
+            ResourceGraphConfiguration resourceGraphConfiguration = default;
+            ResourceProviderManagement management = default;
             OpenApiConfiguration openApiConfiguration = default;
             ResourceTypeOnBehalfOfToken onBehalfOfTokens = default;
             ResourceTypeCategory? category = default;
@@ -714,9 +712,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
             IList<LinkedNotificationRule> linkedNotificationRules = default;
             ResourceProviderAuthorizationRules resourceProviderAuthorizationRules = default;
             TokenAuthConfiguration tokenAuthConfiguration = default;
+            TemplateDeploymentPolicy templateDeploymentPolicy = default;
             bool? isEmptyRoleAssignmentsAllowed = default;
             PolicyExecutionType? policyExecutionType = default;
             ResourceTypeRegistrationAvailabilityZoneRule availabilityZoneRule = default;
+            ProviderDstsConfiguration dstsConfiguration = default;
             IList<AsyncTimeoutRule> asyncTimeoutRules = default;
             IList<string> commonApiVersions = default;
             IList<ResourceTypeRegistrationApiProfile> apiProfiles = default;
@@ -743,114 +743,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("extensionOptions"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    extensionOptions = ResourceTypeExtensionOptions.DeserializeResourceTypeExtensionOptions(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("featuresRule"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    featuresRule = ProviderFeaturesRule.DeserializeProviderFeaturesRule(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("subscriptionLifecycleNotificationSpecifications"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    subscriptionLifecycleNotificationSpecifications = SubscriptionLifecycleNotificationSpecifications.DeserializeSubscriptionLifecycleNotificationSpecifications(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("identityManagement"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    identityManagement = IdentityManagementProperties.DeserializeIdentityManagementProperties(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("checkNameAvailabilitySpecifications"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    checkNameAvailabilitySpecifications = CheckNameAvailabilitySpecifications.DeserializeCheckNameAvailabilitySpecifications(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("requestHeaderOptions"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    requestHeaderOptions = ProviderRequestHeaderOptions.DeserializeProviderRequestHeaderOptions(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("templateDeploymentOptions"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    templateDeploymentOptions = TemplateDeploymentOptions.DeserializeTemplateDeploymentOptions(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("resourceMovePolicy"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    resourceMovePolicy = ResourceMovePolicy.DeserializeResourceMovePolicy(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("resourceGraphConfiguration"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    resourceGraphConfiguration = ResourceGraphConfiguration.DeserializeResourceGraphConfiguration(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("management"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    management = ResourceProviderManagement.DeserializeResourceProviderManagement(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("templateDeploymentPolicy"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    templateDeploymentPolicy = TemplateDeploymentPolicy.DeserializeTemplateDeploymentPolicy(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("dstsConfiguration"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    dstsConfiguration = ProviderDstsConfiguration.DeserializeProviderDstsConfiguration(prop.Value, options);
-                    continue;
-                }
                 if (prop.NameEquals("routingType"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -899,6 +791,15 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         array.Add(ResourceTypeEndpoint.DeserializeResourceTypeEndpoint(item, options));
                     }
                     endpoints = array;
+                    continue;
+                }
+                if (prop.NameEquals("extensionOptions"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    extensionOptions = ResourceTypeExtensionOptions.DeserializeResourceTypeExtensionOptions(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("marketplaceType"u8))
@@ -1041,6 +942,15 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     requiredFeatures = array;
                     continue;
                 }
+                if (prop.NameEquals("featuresRule"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    featuresRule = ProviderFeaturesRule.DeserializeProviderFeaturesRule(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("enableAsyncOperation"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -1068,6 +978,15 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     isThirdPartyS2SEnabled = prop.Value.GetBoolean();
                     continue;
                 }
+                if (prop.NameEquals("subscriptionLifecycleNotificationSpecifications"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    subscriptionLifecycleNotificationSpecifications = SubscriptionLifecycleNotificationSpecifications.DeserializeSubscriptionLifecycleNotificationSpecifications(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("isPureProxy"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -1075,6 +994,24 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         continue;
                     }
                     isPureProxy = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("identityManagement"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identityManagement = IdentityManagementProperties.DeserializeIdentityManagementProperties(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("checkNameAvailabilitySpecifications"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    checkNameAvailabilitySpecifications = CheckNameAvailabilitySpecifications.DeserializeCheckNameAvailabilitySpecifications(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("disallowedActionVerbs"u8))
@@ -1112,6 +1049,15 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     serviceTreeInfos = array;
                     continue;
                 }
+                if (prop.NameEquals("requestHeaderOptions"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    requestHeaderOptions = ProviderRequestHeaderOptions.DeserializeProviderRequestHeaderOptions(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("subscriptionStateRules"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -1126,6 +1072,15 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     subscriptionStateRules = array;
                     continue;
                 }
+                if (prop.NameEquals("templateDeploymentOptions"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    templateDeploymentOptions = TemplateDeploymentOptions.DeserializeTemplateDeploymentOptions(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("extendedLocations"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -1138,6 +1093,15 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         array.Add(ProviderHubExtendedLocationOptions.DeserializeProviderHubExtendedLocationOptions(item, options));
                     }
                     extendedLocations = array;
+                    continue;
+                }
+                if (prop.NameEquals("resourceMovePolicy"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceMovePolicy = ResourceMovePolicy.DeserializeResourceMovePolicy(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("resourceDeletionPolicy"u8))
@@ -1161,6 +1125,24 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         dictionary.Add(prop0.Name, ResourceConcurrencyControlOption.DeserializeResourceConcurrencyControlOption(prop0.Value, options));
                     }
                     resourceConcurrencyControlOptions = dictionary;
+                    continue;
+                }
+                if (prop.NameEquals("resourceGraphConfiguration"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceGraphConfiguration = ResourceGraphConfiguration.DeserializeResourceGraphConfiguration(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("management"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    management = ResourceProviderManagement.DeserializeResourceProviderManagement(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("openApiConfiguration"u8))
@@ -1301,6 +1283,15 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     tokenAuthConfiguration = TokenAuthConfiguration.DeserializeTokenAuthConfiguration(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("templateDeploymentPolicy"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    templateDeploymentPolicy = TemplateDeploymentPolicy.DeserializeTemplateDeploymentPolicy(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("allowEmptyRoleAssignments"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -1326,6 +1317,15 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         continue;
                     }
                     availabilityZoneRule = ResourceTypeRegistrationAvailabilityZoneRule.DeserializeResourceTypeRegistrationAvailabilityZoneRule(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("dstsConfiguration"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    dstsConfiguration = ProviderDstsConfiguration.DeserializeProviderDstsConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("asyncTimeoutRules"u8))
@@ -1581,23 +1581,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             return new ResourceTypeRegistrationProperties(
-                extensionOptions,
-                featuresRule,
-                subscriptionLifecycleNotificationSpecifications,
-                identityManagement,
-                checkNameAvailabilitySpecifications,
-                requestHeaderOptions,
-                templateDeploymentOptions,
-                resourceMovePolicy,
-                resourceGraphConfiguration,
-                management,
-                templateDeploymentPolicy,
-                dstsConfiguration,
                 routingType,
                 additionalOptions,
                 crossTenantTokenValidation,
                 regionality,
                 endpoints ?? new ChangeTrackingList<ResourceTypeEndpoint>(),
+                extensionOptions,
                 marketplaceType,
                 swaggerSpecifications ?? new ChangeTrackingList<SwaggerSpecification>(),
                 allowedUnauthorizedActions ?? new ChangeTrackingList<string>(),
@@ -1608,16 +1597,25 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 loggingRules ?? new ChangeTrackingList<LoggingRule>(),
                 throttlingRules ?? new ChangeTrackingList<ThrottlingRule>(),
                 requiredFeatures ?? new ChangeTrackingList<string>(),
+                featuresRule,
                 isAsyncOperationEnabled,
                 provisioningState,
                 isThirdPartyS2SEnabled,
+                subscriptionLifecycleNotificationSpecifications,
                 isPureProxy,
+                identityManagement,
+                checkNameAvailabilitySpecifications,
                 disallowedActionVerbs ?? new ChangeTrackingList<string>(),
                 serviceTreeInfos ?? new ChangeTrackingList<ServiceTreeInfo>(),
+                requestHeaderOptions,
                 subscriptionStateRules ?? new ChangeTrackingList<ProviderSubscriptionStateRule>(),
+                templateDeploymentOptions,
                 extendedLocations ?? new ChangeTrackingList<ProviderHubExtendedLocationOptions>(),
+                resourceMovePolicy,
                 resourceDeletionPolicy,
                 resourceConcurrencyControlOptions ?? new ChangeTrackingDictionary<string, ResourceConcurrencyControlOption>(),
+                resourceGraphConfiguration,
+                management,
                 openApiConfiguration,
                 onBehalfOfTokens,
                 category,
@@ -1630,9 +1628,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 linkedNotificationRules ?? new ChangeTrackingList<LinkedNotificationRule>(),
                 resourceProviderAuthorizationRules,
                 tokenAuthConfiguration,
+                templateDeploymentPolicy,
                 isEmptyRoleAssignmentsAllowed,
                 policyExecutionType,
                 availabilityZoneRule,
+                dstsConfiguration,
                 asyncTimeoutRules ?? new ChangeTrackingList<AsyncTimeoutRule>(),
                 commonApiVersions ?? new ChangeTrackingList<string>(),
                 apiProfiles ?? new ChangeTrackingList<ResourceTypeRegistrationApiProfile>(),

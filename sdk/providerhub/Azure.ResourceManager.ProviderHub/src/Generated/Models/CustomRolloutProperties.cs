@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CustomRolloutProperties"/>. </summary>
-        /// <param name="provisioningState"></param>
+        /// <param name="provisioningState"> The provisioned state of the resource. </param>
         /// <param name="specification"> The specification. </param>
         /// <param name="status"> The status. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
