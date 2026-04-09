@@ -12,37 +12,23 @@ using Azure.ResourceManager.DesktopVirtualization;
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     /// <summary> Marketplace image information. </summary>
-    public partial class MarketplaceInfoProperties
+    public partial class DesktopVirtualizationMarketplaceInfoPatchProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MarketplaceInfoProperties"/>. </summary>
-        /// <param name="offer"> The offer of the image. </param>
-        /// <param name="publisher"> The publisher of the image. </param>
-        /// <param name="sku"> The SKU of the image. </param>
-        /// <param name="exactVersion"> The version of the image. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="offer"/>, <paramref name="publisher"/>, <paramref name="sku"/> or <paramref name="exactVersion"/> is null. </exception>
-        public MarketplaceInfoProperties(string offer, string publisher, string sku, string exactVersion)
+        /// <summary> Initializes a new instance of <see cref="DesktopVirtualizationMarketplaceInfoPatchProperties"/>. </summary>
+        public DesktopVirtualizationMarketplaceInfoPatchProperties()
         {
-            Argument.AssertNotNull(offer, nameof(offer));
-            Argument.AssertNotNull(publisher, nameof(publisher));
-            Argument.AssertNotNull(sku, nameof(sku));
-            Argument.AssertNotNull(exactVersion, nameof(exactVersion));
-
-            Offer = offer;
-            Publisher = publisher;
-            Sku = sku;
-            ExactVersion = exactVersion;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MarketplaceInfoProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DesktopVirtualizationMarketplaceInfoPatchProperties"/>. </summary>
         /// <param name="offer"> The offer of the image. </param>
         /// <param name="publisher"> The publisher of the image. </param>
         /// <param name="sku"> The SKU of the image. </param>
         /// <param name="exactVersion"> The version of the image. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MarketplaceInfoProperties(string offer, string publisher, string sku, string exactVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DesktopVirtualizationMarketplaceInfoPatchProperties(string offer, string publisher, string sku, string exactVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Offer = offer;
             Publisher = publisher;

@@ -12,21 +12,21 @@ using Azure.ResourceManager.DesktopVirtualization;
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     /// <summary> Boot Diagnostics is a debugging feature which allows you to view Console Output and Screenshot to diagnose VM status. &lt;br&gt;&lt;br&gt; You can easily view the output of your console log. &lt;br&gt;&lt;br&gt; Azure also enables you to see a screenshot of the VM from the hypervisor. </summary>
-    public partial class BootDiagnosticsInfoProperties
+    public partial class DesktopVirtualizationBootDiagnosticsInfoProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BootDiagnosticsInfoProperties"/>. </summary>
-        public BootDiagnosticsInfoProperties()
+        /// <summary> Initializes a new instance of <see cref="DesktopVirtualizationBootDiagnosticsInfoProperties"/>. </summary>
+        public DesktopVirtualizationBootDiagnosticsInfoProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="BootDiagnosticsInfoProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DesktopVirtualizationBootDiagnosticsInfoProperties"/>. </summary>
         /// <param name="isEnabled"> Whether boot diagnostics should be enabled on the Virtual Machine. </param>
         /// <param name="storageUri"> Uri of the storage account to use for placing the console output and screenshot. &lt;br&gt;&lt;br&gt;If storageUri is not specified while enabling boot diagnostics, managed storage will be used. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BootDiagnosticsInfoProperties(bool? isEnabled, Uri storageUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DesktopVirtualizationBootDiagnosticsInfoProperties(bool? isEnabled, Uri storageUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsEnabled = isEnabled;
             StorageUri = storageUri;

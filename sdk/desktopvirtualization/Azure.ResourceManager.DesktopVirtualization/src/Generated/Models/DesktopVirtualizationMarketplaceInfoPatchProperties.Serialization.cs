@@ -14,56 +14,51 @@ using Azure.ResourceManager.DesktopVirtualization;
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     /// <summary> Marketplace image information. </summary>
-    public partial class MarketplaceInfoProperties : IJsonModel<MarketplaceInfoProperties>
+    public partial class DesktopVirtualizationMarketplaceInfoPatchProperties : IJsonModel<DesktopVirtualizationMarketplaceInfoPatchProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="MarketplaceInfoProperties"/> for deserialization. </summary>
-        internal MarketplaceInfoProperties()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MarketplaceInfoProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual DesktopVirtualizationMarketplaceInfoPatchProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MarketplaceInfoProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DesktopVirtualizationMarketplaceInfoPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeMarketplaceInfoProperties(document.RootElement, options);
+                        return DeserializeDesktopVirtualizationMarketplaceInfoPatchProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MarketplaceInfoProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DesktopVirtualizationMarketplaceInfoPatchProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MarketplaceInfoProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DesktopVirtualizationMarketplaceInfoPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDesktopVirtualizationContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(MarketplaceInfoProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DesktopVirtualizationMarketplaceInfoPatchProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MarketplaceInfoProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<DesktopVirtualizationMarketplaceInfoPatchProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MarketplaceInfoProperties IPersistableModel<MarketplaceInfoProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        DesktopVirtualizationMarketplaceInfoPatchProperties IPersistableModel<DesktopVirtualizationMarketplaceInfoPatchProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MarketplaceInfoProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DesktopVirtualizationMarketplaceInfoPatchProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<MarketplaceInfoProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DesktopVirtualizationMarketplaceInfoPatchProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,19 +69,31 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MarketplaceInfoProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DesktopVirtualizationMarketplaceInfoPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MarketplaceInfoProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DesktopVirtualizationMarketplaceInfoPatchProperties)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("offer"u8);
-            writer.WriteStringValue(Offer);
-            writer.WritePropertyName("publisher"u8);
-            writer.WriteStringValue(Publisher);
-            writer.WritePropertyName("sku"u8);
-            writer.WriteStringValue(Sku);
-            writer.WritePropertyName("exactVersion"u8);
-            writer.WriteStringValue(ExactVersion);
+            if (Optional.IsDefined(Offer))
+            {
+                writer.WritePropertyName("offer"u8);
+                writer.WriteStringValue(Offer);
+            }
+            if (Optional.IsDefined(Publisher))
+            {
+                writer.WritePropertyName("publisher"u8);
+                writer.WriteStringValue(Publisher);
+            }
+            if (Optional.IsDefined(Sku))
+            {
+                writer.WritePropertyName("sku"u8);
+                writer.WriteStringValue(Sku);
+            }
+            if (Optional.IsDefined(ExactVersion))
+            {
+                writer.WritePropertyName("exactVersion"u8);
+                writer.WriteStringValue(ExactVersion);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -106,24 +113,24 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MarketplaceInfoProperties IJsonModel<MarketplaceInfoProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        DesktopVirtualizationMarketplaceInfoPatchProperties IJsonModel<DesktopVirtualizationMarketplaceInfoPatchProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MarketplaceInfoProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual DesktopVirtualizationMarketplaceInfoPatchProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MarketplaceInfoProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DesktopVirtualizationMarketplaceInfoPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MarketplaceInfoProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DesktopVirtualizationMarketplaceInfoPatchProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMarketplaceInfoProperties(document.RootElement, options);
+            return DeserializeDesktopVirtualizationMarketplaceInfoPatchProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static MarketplaceInfoProperties DeserializeMarketplaceInfoProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static DesktopVirtualizationMarketplaceInfoPatchProperties DeserializeDesktopVirtualizationMarketplaceInfoPatchProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -161,7 +168,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MarketplaceInfoProperties(offer, publisher, sku, exactVersion, additionalBinaryDataProperties);
+            return new DesktopVirtualizationMarketplaceInfoPatchProperties(offer, publisher, sku, exactVersion, additionalBinaryDataProperties);
         }
     }
 }

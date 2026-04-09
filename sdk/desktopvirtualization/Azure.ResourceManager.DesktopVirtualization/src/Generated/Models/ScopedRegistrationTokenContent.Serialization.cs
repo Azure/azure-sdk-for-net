@@ -15,66 +15,66 @@ using Azure.ResourceManager.DesktopVirtualization;
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     /// <summary> Request body for listing scoped registration tokens for a session host. </summary>
-    public partial class ScopedRegistrationTokenProperties : IJsonModel<ScopedRegistrationTokenProperties>
+    public partial class ScopedRegistrationTokenContent : IJsonModel<ScopedRegistrationTokenContent>
     {
-        /// <summary> Initializes a new instance of <see cref="ScopedRegistrationTokenProperties"/> for deserialization. </summary>
-        internal ScopedRegistrationTokenProperties()
+        /// <summary> Initializes a new instance of <see cref="ScopedRegistrationTokenContent"/> for deserialization. </summary>
+        internal ScopedRegistrationTokenContent()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ScopedRegistrationTokenProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ScopedRegistrationTokenContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ScopedRegistrationTokenProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ScopedRegistrationTokenContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeScopedRegistrationTokenProperties(document.RootElement, options);
+                        return DeserializeScopedRegistrationTokenContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ScopedRegistrationTokenProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScopedRegistrationTokenContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ScopedRegistrationTokenProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ScopedRegistrationTokenContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDesktopVirtualizationContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ScopedRegistrationTokenProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScopedRegistrationTokenContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ScopedRegistrationTokenProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ScopedRegistrationTokenContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ScopedRegistrationTokenProperties IPersistableModel<ScopedRegistrationTokenProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ScopedRegistrationTokenContent IPersistableModel<ScopedRegistrationTokenContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ScopedRegistrationTokenProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ScopedRegistrationTokenContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="scopedRegistrationTokenProperties"> The <see cref="ScopedRegistrationTokenProperties"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(ScopedRegistrationTokenProperties scopedRegistrationTokenProperties)
+        /// <param name="scopedRegistrationTokenContent"> The <see cref="ScopedRegistrationTokenContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ScopedRegistrationTokenContent scopedRegistrationTokenContent)
         {
-            if (scopedRegistrationTokenProperties == null)
+            if (scopedRegistrationTokenContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(scopedRegistrationTokenProperties, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(scopedRegistrationTokenContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ScopedRegistrationTokenProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ScopedRegistrationTokenContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -85,13 +85,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ScopedRegistrationTokenProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ScopedRegistrationTokenContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScopedRegistrationTokenProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ScopedRegistrationTokenContent)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("expirationTimeInUtc"u8);
-            writer.WriteStringValue(ExpirationTimeInUtc, "O");
+            writer.WriteStringValue(ExpirationOn, "O");
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -111,36 +111,36 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ScopedRegistrationTokenProperties IJsonModel<ScopedRegistrationTokenProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ScopedRegistrationTokenContent IJsonModel<ScopedRegistrationTokenContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ScopedRegistrationTokenProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ScopedRegistrationTokenContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ScopedRegistrationTokenProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ScopedRegistrationTokenContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScopedRegistrationTokenProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ScopedRegistrationTokenContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeScopedRegistrationTokenProperties(document.RootElement, options);
+            return DeserializeScopedRegistrationTokenContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ScopedRegistrationTokenProperties DeserializeScopedRegistrationTokenProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static ScopedRegistrationTokenContent DeserializeScopedRegistrationTokenContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            DateTimeOffset expirationTimeInUtc = default;
+            DateTimeOffset expirationOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("expirationTimeInUtc"u8))
                 {
-                    expirationTimeInUtc = prop.Value.GetDateTimeOffset("O");
+                    expirationOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ScopedRegistrationTokenProperties(expirationTimeInUtc, additionalBinaryDataProperties);
+            return new ScopedRegistrationTokenContent(expirationOn, additionalBinaryDataProperties);
         }
     }
 }

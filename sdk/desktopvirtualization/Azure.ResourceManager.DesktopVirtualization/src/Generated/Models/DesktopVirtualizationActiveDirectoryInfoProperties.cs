@@ -12,16 +12,16 @@ using Azure.ResourceManager.DesktopVirtualization;
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     /// <summary> Active directory info. Only one should be populated based on the join type. </summary>
-    public partial class ActiveDirectoryInfoProperties
+    public partial class DesktopVirtualizationActiveDirectoryInfoProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ActiveDirectoryInfoProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DesktopVirtualizationActiveDirectoryInfoProperties"/>. </summary>
         /// <param name="domainCredentials"> Credentials needed to create the virtual machine. </param>
         /// <param name="ouPath"> The organizational unit(OU) path. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="domainCredentials"/> or <paramref name="ouPath"/> is null. </exception>
-        public ActiveDirectoryInfoProperties(DesktopVirtualizationKeyVaultCredentialsProperties domainCredentials, string ouPath)
+        public DesktopVirtualizationActiveDirectoryInfoProperties(DesktopVirtualizationKeyVaultCredentialsProperties domainCredentials, string ouPath)
         {
             Argument.AssertNotNull(domainCredentials, nameof(domainCredentials));
             Argument.AssertNotNull(ouPath, nameof(ouPath));
@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             OuPath = ouPath;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ActiveDirectoryInfoProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DesktopVirtualizationActiveDirectoryInfoProperties"/>. </summary>
         /// <param name="domainCredentials"> Credentials needed to create the virtual machine. </param>
         /// <param name="ouPath"> The organizational unit(OU) path. </param>
         /// <param name="domainName"> The domain a virtual machine connected to a hostpool will join. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ActiveDirectoryInfoProperties(DesktopVirtualizationKeyVaultCredentialsProperties domainCredentials, string ouPath, string domainName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DesktopVirtualizationActiveDirectoryInfoProperties(DesktopVirtualizationKeyVaultCredentialsProperties domainCredentials, string ouPath, string domainName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DomainCredentials = domainCredentials;
             OuPath = ouPath;

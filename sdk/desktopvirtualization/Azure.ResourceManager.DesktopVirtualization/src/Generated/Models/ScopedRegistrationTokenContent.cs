@@ -12,29 +12,29 @@ using Azure.ResourceManager.DesktopVirtualization;
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     /// <summary> Request body for listing scoped registration tokens for a session host. </summary>
-    public partial class ScopedRegistrationTokenProperties
+    public partial class ScopedRegistrationTokenContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ScopedRegistrationTokenProperties"/>. </summary>
-        /// <param name="expirationTimeInUtc"> Expiration time of the registration token in UTC. </param>
-        public ScopedRegistrationTokenProperties(DateTimeOffset expirationTimeInUtc)
+        /// <summary> Initializes a new instance of <see cref="ScopedRegistrationTokenContent"/>. </summary>
+        /// <param name="expirationOn"> Expiration time of the registration token in UTC. </param>
+        public ScopedRegistrationTokenContent(DateTimeOffset expirationOn)
         {
-            ExpirationTimeInUtc = expirationTimeInUtc;
+            ExpirationOn = expirationOn;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ScopedRegistrationTokenProperties"/>. </summary>
-        /// <param name="expirationTimeInUtc"> Expiration time of the registration token in UTC. </param>
+        /// <summary> Initializes a new instance of <see cref="ScopedRegistrationTokenContent"/>. </summary>
+        /// <param name="expirationOn"> Expiration time of the registration token in UTC. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ScopedRegistrationTokenProperties(DateTimeOffset expirationTimeInUtc, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ScopedRegistrationTokenContent(DateTimeOffset expirationOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ExpirationTimeInUtc = expirationTimeInUtc;
+            ExpirationOn = expirationOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Expiration time of the registration token in UTC. </summary>
         [WirePath("expirationTimeInUtc")]
-        public DateTimeOffset ExpirationTimeInUtc { get; }
+        public DateTimeOffset ExpirationOn { get; }
     }
 }

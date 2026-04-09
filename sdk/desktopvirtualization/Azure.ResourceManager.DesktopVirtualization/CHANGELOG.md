@@ -4,9 +4,9 @@
 
 ### Features Added
 
-- Upgraded api-version to `2026-01-01-preview`.
+- Upgraded API version to `2026-01-01-preview`.
 - Added `SessionHostConfigurationResource` for managing session host configurations on a host pool.
-- Added `SessionHostManagementResource` for managing session host lifecycle, including initiating updates, controlling provisioning, and controlling updates.
+- Added `SessionHostManagementResource` for managing session host lifecycle, including initiating updates and controlling provisioning and updates.
 - Added `ActiveSessionHostConfigurationResource` for retrieving the active session host configuration.
 - Added `GetRegistrationTokens` and `GetSingleSessionHostRegistrationTokens` operations on `HostPoolResource` and `SessionHostCollection`.
 - Added `RetryProvisioning` operation on `SessionHostResource`.
