@@ -9,10 +9,10 @@
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
     <ProjectReference Include="..\src\Azure.AI.VoiceLive.csproj" />
+    <ProjectReference Include="..\..\..\identity\Azure.Identity\src\Azure.Identity.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Identity" />
     <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
