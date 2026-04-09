@@ -6,10 +6,13 @@
     <PackageId>Azure.ResourceManager.Hci</PackageId>
     <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.AzureStackHCI.</Description>
     <PackageTags>azure;management;arm;resource manager;azurestackhci</PackageTags>
-    <!-- AZC0032/AZC0030: Generated names retain spec naming that triggers Azure SDK analyzers (e.g. Data/Request suffixes);
-         renamed via @@clientName where possible but some analyzer triggers remain.
-         CS0108: Generated HciClusterUpdateRunData.Name hides inherited ResourceData.Name (tunnels to Properties.Name).
-         CS0618: Backward-compat custom code intentionally references [Obsolete] types/members it wraps. -->
-    <NoWarn>$(NoWarn);AZC0032;AZC0030;CS0108;CS0618</NoWarn>
+    <!-- CS0108: Generated HciClusterUpdateRunData.Name hides ResourceData.Name
+         (from flattened properties.progress.name — generator limitation).
+         CS0618: Generated code (constructors/serialization) references [Obsolete] members
+         that we declared in custom code for backward compat (HciUpdateStep.StartTimeUtc,
+         PerNodeExtensionState with HciExtensionInstanceView, etc.).
+         Both are in generated files that cannot use #pragma — project-level suppression required. -->
+    <NoWarn>$(NoWarn);CS0108;CS0618</NoWarn>
   </PropertyGroup>
 </Project>
+
