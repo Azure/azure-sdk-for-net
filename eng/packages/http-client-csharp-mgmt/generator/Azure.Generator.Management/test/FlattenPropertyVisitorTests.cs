@@ -461,7 +461,7 @@ namespace Azure.Generator.Mgmt.Tests
 
             // Set up a custom code view on the Step model that has an [Obsolete] property.
             var customCodeView = new ObsoletePropertyCustomCodeView(stepModelProvider!);
-            SetCustomCodeView(stepModelProvider!, customCodeView);
+            ManagementMockHelpers.SetCustomCodeView(stepModelProvider!, customCodeView);
 
             // Run all visitors on the parent model.
             var visitTypeCore = typeof(LibraryVisitor).GetMethod(
@@ -521,14 +521,6 @@ namespace Azure.Generator.Mgmt.Tests
                 enclosingType,
                 attributes: [new AttributeStatement(typeof(ObsoleteAttribute), Literal("Use NewProperty instead."))]);
             Assert.IsTrue(FlattenPropertyVisitor.IsObsoleteProperty(obsoleteProperty));
-        }
-
-        private static void SetCustomCodeView(TypeProvider typeProvider, TypeProvider customCodeTypeProvider)
-        {
-            typeProvider.GetType().BaseType!.GetField(
-                    "_customCodeView",
-                    BindingFlags.NonPublic | BindingFlags.Instance)?
-                .SetValue(typeProvider, new Lazy<TypeProvider>(() => customCodeTypeProvider));
         }
 
         /// <summary>
