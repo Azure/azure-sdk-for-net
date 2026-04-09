@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="expand"> The expand expression to apply on the operation. 'InstanceView' will retrieve the list of instance views of the dedicated host. 'UserData' is not supported for dedicated host. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DedicatedHostResource>> GetAsync(InstanceViewTypes? expand = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DedicatedHostResource>> GetAsync(InstanceViewType? expand = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _dedicatedHostsClientDiagnostics.CreateScope("DedicatedHostResource.Get");
             scope.Start();
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="expand"> The expand expression to apply on the operation. 'InstanceView' will retrieve the list of instance views of the dedicated host. 'UserData' is not supported for dedicated host. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DedicatedHostResource> Get(InstanceViewTypes? expand = default, CancellationToken cancellationToken = default)
+        public virtual Response<DedicatedHostResource> Get(InstanceViewType? expand = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _dedicatedHostsClientDiagnostics.CreateScope("DedicatedHostResource.Get");
             scope.Start();

@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="content"> Parameters supplied to generate the SSH public key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SshPublicKeyGenerateKeyPairResult>> GenerateKeyPairAsync(SshGenerateKeyPairInputParameters content = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SshPublicKeyGenerateKeyPairResult>> GenerateKeyPairAsync(SshGenerateKeyPairInputContent content = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _sshPublicKeyResourcesClientDiagnostics.CreateScope("SshPublicKeyResource.GenerateKeyPair");
             scope.Start();
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sshPublicKeyResourcesRestClient.CreateGenerateKeyPairRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, SshGenerateKeyPairInputParameters.ToRequestContent(content), context);
+                HttpMessage message = _sshPublicKeyResourcesRestClient.CreateGenerateKeyPairRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, SshGenerateKeyPairInputContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SshPublicKeyGenerateKeyPairResult> response = Response.FromValue(SshPublicKeyGenerateKeyPairResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="content"> Parameters supplied to generate the SSH public key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SshPublicKeyGenerateKeyPairResult> GenerateKeyPair(SshGenerateKeyPairInputParameters content = default, CancellationToken cancellationToken = default)
+        public virtual Response<SshPublicKeyGenerateKeyPairResult> GenerateKeyPair(SshGenerateKeyPairInputContent content = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _sshPublicKeyResourcesClientDiagnostics.CreateScope("SshPublicKeyResource.GenerateKeyPair");
             scope.Start();
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sshPublicKeyResourcesRestClient.CreateGenerateKeyPairRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, SshGenerateKeyPairInputParameters.ToRequestContent(content), context);
+                HttpMessage message = _sshPublicKeyResourcesRestClient.CreateGenerateKeyPairRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, SshGenerateKeyPairInputContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SshPublicKeyGenerateKeyPairResult> response = Response.FromValue(SshPublicKeyGenerateKeyPairResult.FromResponse(result), result);
                 if (response.Value == null)

@@ -25,14 +25,14 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="MigrateToVirtualMachineScaleSetInput"/>. </summary>
         /// <param name="virtualMachineScaleSetFlexible"> Specifies information about the Virtual Machine Scale Set that the Availability Set should be migrated to. Minimum api‐version: 2024‐11‐01. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MigrateToVirtualMachineScaleSetInput(SubResource virtualMachineScaleSetFlexible, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MigrateToVirtualMachineScaleSetInput(ComputeSubResourceData virtualMachineScaleSetFlexible, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VirtualMachineScaleSetFlexible = virtualMachineScaleSetFlexible;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Specifies information about the Virtual Machine Scale Set that the Availability Set should be migrated to. Minimum api‐version: 2024‐11‐01. </summary>
-        internal SubResource VirtualMachineScaleSetFlexible { get; }
+        internal ComputeSubResourceData VirtualMachineScaleSetFlexible { get; }
 
         /// <summary> Resource Id. </summary>
         public string VirtualMachineScaleSetFlexibleId

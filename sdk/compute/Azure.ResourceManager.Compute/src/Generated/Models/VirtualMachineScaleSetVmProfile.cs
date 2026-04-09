@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="securityPostureReference"> Specifies the security posture to be used in the scale set. Minimum api-version: 2023-03-01. </param>
         /// <param name="timeCreated"> Specifies the time in which this VM profile for the Virtual Machine Scale Set was created. This value will be added to VMSS Flex VM tags when creating/updating the VMSS VM Profile. Minimum API version for this property is 2023-09-01. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineScaleSetVmProfile(VirtualMachineScaleSetOSProfile osProfile, VirtualMachineScaleSetStorageProfile storageProfile, VirtualMachineScaleSetNetworkProfile networkProfile, SecurityProfile securityProfile, DiagnosticsProfile diagnosticsProfile, VirtualMachineScaleSetExtensionProfile extensionProfile, string licenseType, VirtualMachinePriorityType? priority, VirtualMachineEvictionPolicyType? evictionPolicy, BillingProfile billingProfile, ComputeScheduledEventsProfile scheduledEventsProfile, string userData, CapacityReservationProfile capacityReservation, ApplicationProfile applicationProfile, VirtualMachineScaleSetHardwareProfile hardwareProfile, ServiceArtifactReference serviceArtifactReference, SecurityPostureReference securityPostureReference, DateTimeOffset? timeCreated, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineScaleSetVmProfile(VirtualMachineScaleSetOSProfile osProfile, VirtualMachineScaleSetStorageProfile storageProfile, VirtualMachineScaleSetNetworkProfile networkProfile, SecurityProfile securityProfile, DiagnosticsProfile diagnosticsProfile, VirtualMachineScaleSetExtensionProfile extensionProfile, string licenseType, VirtualMachinePriorityType? priority, VirtualMachineEvictionPolicyType? evictionPolicy, BillingProfile billingProfile, ComputeScheduledEventsProfile scheduledEventsProfile, string userData, CapacityReservationProfile capacityReservation, ApplicationProfile applicationProfile, VirtualMachineScaleSetHardwareProfile hardwareProfile, ServiceArtifactReference serviceArtifactReference, ComputeSecurityPostureReference securityPostureReference, DateTimeOffset? timeCreated, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OsProfile = osProfile;
             StorageProfile = storageProfile;
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal ServiceArtifactReference ServiceArtifactReference { get; set; }
 
         /// <summary> Specifies the security posture to be used in the scale set. Minimum api-version: 2023-03-01. </summary>
-        public SecurityPostureReference SecurityPostureReference { get; set; }
+        public ComputeSecurityPostureReference SecurityPostureReference { get; set; }
 
         /// <summary> Specifies the time in which this VM profile for the Virtual Machine Scale Set was created. This value will be added to VMSS Flex VM tags when creating/updating the VMSS VM Profile. Minimum API version for this property is 2023-09-01. </summary>
         public DateTimeOffset? TimeCreated { get; }
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Specifies the properties for customizing the size of the virtual machine. Minimum api-version: 2021-11-01. Please follow the instructions in [VM Customization](https://aka.ms/vmcustomization) for more details. </summary>
-        public VMSizeProperties HardwareVmSizeProperties
+        public VirtualMachineSizeProperties HardwareVmSizeProperties
         {
             get
             {

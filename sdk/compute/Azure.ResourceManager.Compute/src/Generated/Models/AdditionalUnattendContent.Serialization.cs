@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             PassNames? passName = default;
             ComponentNames? componentName = default;
-            SettingNames? settingName = default;
+            SettingName? settingName = default;
             string content = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    settingName = prop.Value.GetString().ToSettingNames();
+                    settingName = prop.Value.GetString().ToSettingName();
                     continue;
                 }
                 if (prop.NameEquals("content"u8))

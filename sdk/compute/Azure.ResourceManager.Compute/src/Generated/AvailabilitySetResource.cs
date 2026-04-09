@@ -505,7 +505,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> Parameters supplied to the migrate operation on the availability set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> ConvertToVirtualMachineScaleSetAsync(WaitUntil waitUntil, ConvertToVirtualMachineScaleSetInput content = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> ConvertToVirtualMachineScaleSetAsync(WaitUntil waitUntil, ConvertToVirtualMachineScaleSetContent content = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _availabilitySetsClientDiagnostics.CreateScope("AvailabilitySetResource.ConvertToVirtualMachineScaleSet");
             scope.Start();
@@ -515,7 +515,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _availabilitySetsRestClient.CreateConvertToVirtualMachineScaleSetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ConvertToVirtualMachineScaleSetInput.ToRequestContent(content), context);
+                HttpMessage message = _availabilitySetsRestClient.CreateConvertToVirtualMachineScaleSetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ConvertToVirtualMachineScaleSetContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ComputeArmOperation operation = new ComputeArmOperation(_availabilitySetsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -555,7 +555,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> Parameters supplied to the migrate operation on the availability set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation ConvertToVirtualMachineScaleSet(WaitUntil waitUntil, ConvertToVirtualMachineScaleSetInput content = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation ConvertToVirtualMachineScaleSet(WaitUntil waitUntil, ConvertToVirtualMachineScaleSetContent content = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _availabilitySetsClientDiagnostics.CreateScope("AvailabilitySetResource.ConvertToVirtualMachineScaleSet");
             scope.Start();
@@ -565,7 +565,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _availabilitySetsRestClient.CreateConvertToVirtualMachineScaleSetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ConvertToVirtualMachineScaleSetInput.ToRequestContent(content), context);
+                HttpMessage message = _availabilitySetsRestClient.CreateConvertToVirtualMachineScaleSetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ConvertToVirtualMachineScaleSetContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ComputeArmOperation operation = new ComputeArmOperation(_availabilitySetsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)

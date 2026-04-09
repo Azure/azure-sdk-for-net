@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The application gateway backend address pools. </summary>
-        public IList<SubResource> ApplicationGatewayBackendAddressPools
+        public IList<ComputeSubResourceData> ApplicationGatewayBackendAddressPools
         {
             get
             {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Specifies an array of references to application security group. </summary>
-        public IList<SubResource> ApplicationSecurityGroups
+        public IList<ComputeSubResourceData> ApplicationSecurityGroups
         {
             get
             {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The load balancer backend address pools. </summary>
-        public IList<SubResource> LoadBalancerBackendAddressPools
+        public IList<ComputeSubResourceData> LoadBalancerBackendAddressPools
         {
             get
             {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The load balancer inbound nat pools. </summary>
-        public IList<SubResource> LoadBalancerInboundNatPools
+        public IList<ComputeSubResourceData> LoadBalancerInboundNatPools
         {
             get
             {

@@ -21,14 +21,14 @@ namespace Azure.ResourceManager.Compute.Models
         internal CapacityReservationGroupInstanceView()
         {
             CapacityReservations = new ChangeTrackingList<CapacityReservationInstanceViewWithName>();
-            SharedSubscriptionIds = new ChangeTrackingList<SubResourceReadOnly>();
+            SharedSubscriptionIds = new ChangeTrackingList<ComputeWriteableSubResourceData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CapacityReservationGroupInstanceView"/>. </summary>
         /// <param name="capacityReservations"> List of instance view of the capacity reservations under the capacity reservation group. </param>
         /// <param name="sharedSubscriptionIds"> List of the subscriptions that the capacity reservation group is shared with. <b>Note:</b> Minimum api-version: 2023-09-01. Please refer to https://aka.ms/computereservationsharing for more details. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CapacityReservationGroupInstanceView(IReadOnlyList<CapacityReservationInstanceViewWithName> capacityReservations, IReadOnlyList<SubResourceReadOnly> sharedSubscriptionIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CapacityReservationGroupInstanceView(IReadOnlyList<CapacityReservationInstanceViewWithName> capacityReservations, IReadOnlyList<ComputeWriteableSubResourceData> sharedSubscriptionIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CapacityReservations = capacityReservations;
             SharedSubscriptionIds = sharedSubscriptionIds;
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.Compute.Models
         public IReadOnlyList<CapacityReservationInstanceViewWithName> CapacityReservations { get; }
 
         /// <summary> List of the subscriptions that the capacity reservation group is shared with. <b>Note:</b> Minimum api-version: 2023-09-01. Please refer to https://aka.ms/computereservationsharing for more details. </summary>
-        public IReadOnlyList<SubResourceReadOnly> SharedSubscriptionIds { get; }
+        public IReadOnlyList<ComputeWriteableSubResourceData> SharedSubscriptionIds { get; }
     }
 }

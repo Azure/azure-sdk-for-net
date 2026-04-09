@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Specifies an array of references to application security group. </summary>
-        public IList<SubResource> ApplicationSecurityGroups
+        public IList<ComputeSubResourceData> ApplicationSecurityGroups
         {
             get
             {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Specifies an array of references to backend address pools of application gateways. A virtual machine can reference backend address pools of multiple application gateways. Multiple virtual machines cannot use the same application gateway. </summary>
-        public IList<SubResource> ApplicationGatewayBackendAddressPools
+        public IList<ComputeSubResourceData> ApplicationGatewayBackendAddressPools
         {
             get
             {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Specifies an array of references to backend address pools of load balancers. A virtual machine can reference backend address pools of one public and one internal load balancer. [Multiple virtual machines cannot use the same basic sku load balancer]. </summary>
-        public IList<SubResource> LoadBalancerBackendAddressPools
+        public IList<ComputeSubResourceData> LoadBalancerBackendAddressPools
         {
             get
             {

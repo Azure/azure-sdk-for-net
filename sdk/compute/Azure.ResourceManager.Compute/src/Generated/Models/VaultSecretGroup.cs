@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="sourceVault"> The relative URL of the Key Vault containing all of the certificates in VaultCertificates. </param>
         /// <param name="vaultCertificates"> The list of key vault references in SourceVault which contain certificates. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VaultSecretGroup(SubResource sourceVault, IList<VaultCertificate> vaultCertificates, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VaultSecretGroup(ComputeSubResourceData sourceVault, IList<VaultCertificate> vaultCertificates, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SourceVault = sourceVault;
             VaultCertificates = vaultCertificates;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The relative URL of the Key Vault containing all of the certificates in VaultCertificates. </summary>
-        internal SubResource SourceVault { get; set; }
+        internal ComputeSubResourceData SourceVault { get; set; }
 
         /// <summary> The list of key vault references in SourceVault which contain certificates. </summary>
         public IList<VaultCertificate> VaultCertificates { get; }
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (SourceVault is null)
                 {
-                    SourceVault = new SubResource();
+                    SourceVault = new ComputeSubResourceData();
                 }
                 SourceVault.Id = value;
             }

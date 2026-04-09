@@ -151,8 +151,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            SubResource snapshot = default;
-            SubResource managedDisk = default;
+            ComputeSubResourceData snapshot = default;
+            ComputeSubResourceData managedDisk = default;
             string blobUri = default;
             CachingType? caching = default;
             int? diskSizeGB = default;
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    snapshot = SubResource.DeserializeSubResource(prop.Value, options);
+                    snapshot = ComputeSubResourceData.DeserializeComputeSubResourceData(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("managedDisk"u8))
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    managedDisk = SubResource.DeserializeSubResource(prop.Value, options);
+                    managedDisk = ComputeSubResourceData.DeserializeComputeSubResourceData(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("blobUri"u8))

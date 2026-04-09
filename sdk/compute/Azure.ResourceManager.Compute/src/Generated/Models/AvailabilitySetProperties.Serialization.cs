@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 writer.WritePropertyName("virtualMachines"u8);
                 writer.WriteStartArray();
-                foreach (SubResource item in VirtualMachines)
+                foreach (ComputeSubResourceData item in VirtualMachines)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -163,8 +163,8 @@ namespace Azure.ResourceManager.Compute.Models
             }
             int? platformUpdateDomainCount = default;
             int? platformFaultDomainCount = default;
-            IList<SubResource> virtualMachines = default;
-            SubResource proximityPlacementGroup = default;
+            IList<ComputeSubResourceData> virtualMachines = default;
+            ComputeSubResourceData proximityPlacementGroup = default;
             IReadOnlyList<InstanceViewStatus> statuses = default;
             ScheduledEventsPolicy scheduledEventsPolicy = default;
             VirtualMachineScaleSetMigrationInfo virtualMachineScaleSetMigrationInfo = default;
@@ -195,10 +195,10 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    List<SubResource> array = new List<SubResource>();
+                    List<ComputeSubResourceData> array = new List<ComputeSubResourceData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SubResource.DeserializeSubResource(item, options));
+                        array.Add(ComputeSubResourceData.DeserializeComputeSubResourceData(item, options));
                     }
                     virtualMachines = array;
                     continue;
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    proximityPlacementGroup = SubResource.DeserializeSubResource(prop.Value, options);
+                    proximityPlacementGroup = ComputeSubResourceData.DeserializeComputeSubResourceData(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("statuses"u8))
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Compute.Models
             return new AvailabilitySetProperties(
                 platformUpdateDomainCount,
                 platformFaultDomainCount,
-                virtualMachines ?? new ChangeTrackingList<SubResource>(),
+                virtualMachines ?? new ChangeTrackingList<ComputeSubResourceData>(),
                 proximityPlacementGroup,
                 statuses ?? new ChangeTrackingList<InstanceViewStatus>(),
                 scheduledEventsPolicy,

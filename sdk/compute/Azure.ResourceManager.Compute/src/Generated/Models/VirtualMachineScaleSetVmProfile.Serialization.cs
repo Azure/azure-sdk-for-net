@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Compute.Models
             ApplicationProfile applicationProfile = default;
             VirtualMachineScaleSetHardwareProfile hardwareProfile = default;
             ServiceArtifactReference serviceArtifactReference = default;
-            SecurityPostureReference securityPostureReference = default;
+            ComputeSecurityPostureReference securityPostureReference = default;
             DateTimeOffset? timeCreated = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    securityPostureReference = SecurityPostureReference.DeserializeSecurityPostureReference(prop.Value, options);
+                    securityPostureReference = ComputeSecurityPostureReference.DeserializeComputeSecurityPostureReference(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("timeCreated"u8))

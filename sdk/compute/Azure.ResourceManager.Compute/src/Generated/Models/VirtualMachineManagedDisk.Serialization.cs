@@ -14,11 +14,11 @@ using Azure.ResourceManager.Compute;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The parameters of a managed disk. </summary>
-    public partial class VirtualMachineManagedDisk : SubResource, IJsonModel<VirtualMachineManagedDisk>
+    public partial class VirtualMachineManagedDisk : ComputeSubResourceData, IJsonModel<VirtualMachineManagedDisk>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override SubResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override ComputeSubResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineManagedDisk>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override SubResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override ComputeSubResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineManagedDisk>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Compute.Models
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             StorageAccountTypes? storageAccountType = default;
             DiskEncryptionSetParameters diskEncryptionSet = default;
-            VMDiskSecurityProfile securityProfile = default;
+            VirtualMachineDiskSecurityProfile securityProfile = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    securityProfile = VMDiskSecurityProfile.DeserializeVMDiskSecurityProfile(prop.Value, options);
+                    securityProfile = VirtualMachineDiskSecurityProfile.DeserializeVirtualMachineDiskSecurityProfile(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

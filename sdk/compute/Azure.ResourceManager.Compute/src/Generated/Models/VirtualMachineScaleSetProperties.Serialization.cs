@@ -247,8 +247,8 @@ namespace Azure.ResourceManager.Compute.Models
             bool? singlePlacementGroup = default;
             bool? zoneBalance = default;
             int? platformFaultDomainCount = default;
-            SubResource proximityPlacementGroup = default;
-            SubResource hostGroup = default;
+            ComputeSubResourceData proximityPlacementGroup = default;
+            ComputeSubResourceData hostGroup = default;
             AdditionalCapabilities additionalCapabilities = default;
             ScaleInPolicy scaleInPolicy = default;
             OrchestrationMode? orchestrationMode = default;
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    proximityPlacementGroup = SubResource.DeserializeSubResource(prop.Value, options);
+                    proximityPlacementGroup = ComputeSubResourceData.DeserializeComputeSubResourceData(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("hostGroup"u8))
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    hostGroup = SubResource.DeserializeSubResource(prop.Value, options);
+                    hostGroup = ComputeSubResourceData.DeserializeComputeSubResourceData(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("additionalCapabilities"u8))

@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            SubResource sourceVirtualMachine = default;
+            ComputeSubResourceData sourceVirtualMachine = default;
             ImageStorageProfile storageProfile = default;
             string provisioningState = default;
             HyperVGenerationTypes? hyperVGeneration = default;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    sourceVirtualMachine = SubResource.DeserializeSubResource(prop.Value, options);
+                    sourceVirtualMachine = ComputeSubResourceData.DeserializeComputeSubResourceData(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("storageProfile"u8))

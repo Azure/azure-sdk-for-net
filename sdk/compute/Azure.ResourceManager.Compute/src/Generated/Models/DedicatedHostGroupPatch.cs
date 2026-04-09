@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> A list of references to all dedicated hosts in the dedicated host group. </summary>
-        public IReadOnlyList<SubResourceReadOnly> Hosts
+        public IReadOnlyList<ComputeWriteableSubResourceData> Hosts
         {
             get
             {

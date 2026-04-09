@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 writer.WritePropertyName("virtualMachinesAssociated"u8);
                 writer.WriteStartArray();
-                foreach (SubResourceReadOnly item in VirtualMachinesAssociated)
+                foreach (ComputeWriteableSubResourceData item in VirtualMachinesAssociated)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             string reservationId = default;
             int? platformFaultDomainCount = default;
-            IReadOnlyList<SubResourceReadOnly> virtualMachinesAssociated = default;
+            IReadOnlyList<ComputeWriteableSubResourceData> virtualMachinesAssociated = default;
             DateTimeOffset? provisioningOn = default;
             string provisioningState = default;
             CapacityReservationInstanceView instanceView = default;
@@ -192,10 +192,10 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    List<SubResourceReadOnly> array = new List<SubResourceReadOnly>();
+                    List<ComputeWriteableSubResourceData> array = new List<ComputeWriteableSubResourceData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SubResourceReadOnly.DeserializeSubResourceReadOnly(item, options));
+                        array.Add(ComputeWriteableSubResourceData.DeserializeComputeWriteableSubResourceData(item, options));
                     }
                     virtualMachinesAssociated = array;
                     continue;
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Compute.Models
             return new CapacityReservationProperties(
                 reservationId,
                 platformFaultDomainCount,
-                virtualMachinesAssociated ?? new ChangeTrackingList<SubResourceReadOnly>(),
+                virtualMachinesAssociated ?? new ChangeTrackingList<ComputeWriteableSubResourceData>(),
                 provisioningOn,
                 provisioningState,
                 instanceView,

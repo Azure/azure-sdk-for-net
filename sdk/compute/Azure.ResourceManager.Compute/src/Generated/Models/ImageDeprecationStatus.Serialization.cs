@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             ImageState? imageState = default;
             DateTimeOffset? scheduledDeprecationOn = default;
-            AlternativeOption alternativeOption = default;
+            ImageAlternativeOption alternativeOption = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    alternativeOption = AlternativeOption.DeserializeAlternativeOption(prop.Value, options);
+                    alternativeOption = ImageAlternativeOption.DeserializeImageAlternativeOption(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

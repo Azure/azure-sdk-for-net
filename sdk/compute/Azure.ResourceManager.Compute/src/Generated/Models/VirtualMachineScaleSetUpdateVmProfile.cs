@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Specifies the properties for customizing the size of the virtual machine. Minimum api-version: 2021-11-01. Please follow the instructions in [VM Customization](https://aka.ms/vmcustomization) for more details. </summary>
-        public VMSizeProperties HardwareVmSizeProperties
+        public VirtualMachineSizeProperties HardwareVmSizeProperties
         {
             get
             {

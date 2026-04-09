@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="sku"> Describes the public IP Sku. It can only be set with OrchestrationMode as Flexible. </param>
         /// <param name="tags"> Resource tags applied to the publicIP address created by this PublicIPAddressConfiguration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachinePublicIPAddressConfiguration(string name, VirtualMachinePublicIPAddressConfigurationProperties properties, PublicIPAddressSku sku, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachinePublicIPAddressConfiguration(string name, VirtualMachinePublicIPAddressConfigurationProperties properties, ComputePublicIPAddressSku sku, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Properties = properties;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal VirtualMachinePublicIPAddressConfigurationProperties Properties { get; set; }
 
         /// <summary> Describes the public IP Sku. It can only be set with OrchestrationMode as Flexible. </summary>
-        public PublicIPAddressSku Sku { get; set; }
+        public ComputePublicIPAddressSku Sku { get; set; }
 
         /// <summary> Resource tags applied to the publicIP address created by this PublicIPAddressConfiguration. </summary>
         public IDictionary<string, string> Tags { get; }

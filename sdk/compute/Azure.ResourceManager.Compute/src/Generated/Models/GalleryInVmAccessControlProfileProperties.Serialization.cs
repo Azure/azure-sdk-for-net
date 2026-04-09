@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Compute.Models
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string description = default;
             OperatingSystemTypes osType = default;
-            EndpointTypes applicableHostEndpoint = default;
+            ComputeGalleryEndpointType applicableHostEndpoint = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("provisioningState"u8))
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (prop.NameEquals("applicableHostEndpoint"u8))
                 {
-                    applicableHostEndpoint = prop.Value.GetString().ToEndpointTypes();
+                    applicableHostEndpoint = prop.Value.GetString().ToComputeGalleryEndpointType();
                     continue;
                 }
                 if (options.Format != "W")

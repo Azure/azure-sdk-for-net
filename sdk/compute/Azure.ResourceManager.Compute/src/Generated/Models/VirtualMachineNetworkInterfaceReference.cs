@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a network interface reference. </summary>
-    public partial class VirtualMachineNetworkInterfaceReference : SubResource
+    public partial class VirtualMachineNetworkInterfaceReference : ComputeSubResourceData
     {
         /// <summary> Initializes a new instance of <see cref="VirtualMachineNetworkInterfaceReference"/>. </summary>
         public VirtualMachineNetworkInterfaceReference()

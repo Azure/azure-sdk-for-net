@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="expand"> The expand expression to apply on the operation. 'InstanceView' will retrieve the list of instance views of the dedicated hosts under the dedicated host group. 'UserData' is not supported for dedicated host group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DedicatedHostGroupResource>> GetAsync(InstanceViewTypes? expand = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DedicatedHostGroupResource>> GetAsync(InstanceViewType? expand = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _dedicatedHostGroupsClientDiagnostics.CreateScope("DedicatedHostGroupResource.Get");
             scope.Start();
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="expand"> The expand expression to apply on the operation. 'InstanceView' will retrieve the list of instance views of the dedicated hosts under the dedicated host group. 'UserData' is not supported for dedicated host group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DedicatedHostGroupResource> Get(InstanceViewTypes? expand = default, CancellationToken cancellationToken = default)
+        public virtual Response<DedicatedHostGroupResource> Get(InstanceViewType? expand = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _dedicatedHostGroupsClientDiagnostics.CreateScope("DedicatedHostGroupResource.Get");
             scope.Start();
@@ -685,7 +685,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="hostName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DedicatedHostResource>> GetDedicatedHostAsync(string hostName, InstanceViewTypes? expand = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DedicatedHostResource>> GetDedicatedHostAsync(string hostName, InstanceViewType? expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(hostName, nameof(hostName));
 
@@ -699,7 +699,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="hostName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DedicatedHostResource> GetDedicatedHost(string hostName, InstanceViewTypes? expand = default, CancellationToken cancellationToken = default)
+        public virtual Response<DedicatedHostResource> GetDedicatedHost(string hostName, InstanceViewType? expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(hostName, nameof(hostName));
 

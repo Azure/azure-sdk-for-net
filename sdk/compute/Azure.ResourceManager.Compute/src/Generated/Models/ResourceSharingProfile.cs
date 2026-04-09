@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="ResourceSharingProfile"/>. </summary>
         public ResourceSharingProfile()
         {
-            SubscriptionIds = new ChangeTrackingList<SubResource>();
+            SubscriptionIds = new ChangeTrackingList<ComputeSubResourceData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceSharingProfile"/>. </summary>
         /// <param name="subscriptionIds"> Specifies an array of subscription resource IDs that capacity reservation group is shared with. Block Capacity Reservations does not support sharing across subscriptions. <b>Note:</b> Minimum api-version: 2023-09-01. Please refer to https://aka.ms/computereservationsharing for more details. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceSharingProfile(IList<SubResource> subscriptionIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResourceSharingProfile(IList<ComputeSubResourceData> subscriptionIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SubscriptionIds = subscriptionIds;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Specifies an array of subscription resource IDs that capacity reservation group is shared with. Block Capacity Reservations does not support sharing across subscriptions. <b>Note:</b> Minimum api-version: 2023-09-01. Please refer to https://aka.ms/computereservationsharing for more details. </summary>
-        public IList<SubResource> SubscriptionIds { get; }
+        public IList<ComputeSubResourceData> SubscriptionIds { get; }
     }
 }

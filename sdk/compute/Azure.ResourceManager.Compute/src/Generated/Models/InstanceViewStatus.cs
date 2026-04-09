@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="message"> The detailed status message, including for alerts and error messages. </param>
         /// <param name="time"> The time of the status. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InstanceViewStatus(string code, StatusLevelTypes? level, string displayStatus, string message, DateTimeOffset? time, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InstanceViewStatus(string code, ComputeStatusLevelType? level, string displayStatus, string message, DateTimeOffset? time, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Code = code;
             Level = level;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Compute.Models
         public string Code { get; set; }
 
         /// <summary> The level code. </summary>
-        public StatusLevelTypes? Level { get; set; }
+        public ComputeStatusLevelType? Level { get; set; }
 
         /// <summary> The short localizable label for the status. </summary>
         public string DisplayStatus { get; set; }

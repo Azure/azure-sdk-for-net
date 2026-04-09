@@ -259,14 +259,14 @@ namespace Azure.ResourceManager.Compute.Models
             VirtualMachineNetworkProfile networkProfile = default;
             SecurityProfile securityProfile = default;
             DiagnosticsProfile diagnosticsProfile = default;
-            SubResource availabilitySet = default;
-            SubResource virtualMachineScaleSet = default;
-            SubResource proximityPlacementGroup = default;
+            ComputeSubResourceData availabilitySet = default;
+            ComputeSubResourceData virtualMachineScaleSet = default;
+            ComputeSubResourceData proximityPlacementGroup = default;
             VirtualMachinePriorityType? priority = default;
             VirtualMachineEvictionPolicyType? evictionPolicy = default;
             BillingProfile billingProfile = default;
-            SubResource host = default;
-            SubResource hostGroup = default;
+            ComputeSubResourceData host = default;
+            ComputeSubResourceData hostGroup = default;
             string provisioningState = default;
             VirtualMachineInstanceView instanceView = default;
             string licenseType = default;
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    availabilitySet = SubResource.DeserializeSubResource(prop.Value, options);
+                    availabilitySet = ComputeSubResourceData.DeserializeComputeSubResourceData(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("virtualMachineScaleSet"u8))
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    virtualMachineScaleSet = SubResource.DeserializeSubResource(prop.Value, options);
+                    virtualMachineScaleSet = ComputeSubResourceData.DeserializeComputeSubResourceData(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("proximityPlacementGroup"u8))
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    proximityPlacementGroup = SubResource.DeserializeSubResource(prop.Value, options);
+                    proximityPlacementGroup = ComputeSubResourceData.DeserializeComputeSubResourceData(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("priority"u8))
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    host = SubResource.DeserializeSubResource(prop.Value, options);
+                    host = ComputeSubResourceData.DeserializeComputeSubResourceData(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("hostGroup"u8))
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    hostGroup = SubResource.DeserializeSubResource(prop.Value, options);
+                    hostGroup = ComputeSubResourceData.DeserializeComputeSubResourceData(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))

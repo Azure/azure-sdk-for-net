@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="vmSize"> Specifies the size of the virtual machine. The enum data type is currently deprecated and will be removed by December 23rd 2023. The recommended way to get the list of available sizes is using these APIs: [List all available virtual machine sizes in an availability set](https://docs.microsoft.com/rest/api/compute/availabilitysets/listavailablesizes), [List all available virtual machine sizes in a region]( https://docs.microsoft.com/rest/api/compute/resourceskus/list), [List all available virtual machine sizes for resizing](https://docs.microsoft.com/rest/api/compute/virtualmachines/listavailablesizes). For more information about virtual machine sizes, see [Sizes for virtual machines](https://docs.microsoft.com/azure/virtual-machines/sizes). The available VM sizes depend on region and availability set. </param>
         /// <param name="vmSizeProperties"> Specifies the properties for customizing the size of the virtual machine. Minimum api-version: 2021-07-01. This feature is still in preview mode and is not supported for VirtualMachineScaleSet. Please follow the instructions in [VM Customization](https://aka.ms/vmcustomization) for more details. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineHardwareProfile(VirtualMachineSizeTypes? vmSize, VMSizeProperties vmSizeProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineHardwareProfile(VirtualMachineSizeTypes? vmSize, VirtualMachineSizeProperties vmSizeProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VmSize = vmSize;
             VmSizeProperties = vmSizeProperties;
@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.Compute.Models
         public VirtualMachineSizeTypes? VmSize { get; set; }
 
         /// <summary> Specifies the properties for customizing the size of the virtual machine. Minimum api-version: 2021-07-01. This feature is still in preview mode and is not supported for VirtualMachineScaleSet. Please follow the instructions in [VM Customization](https://aka.ms/vmcustomization) for more details. </summary>
-        public VMSizeProperties VmSizeProperties { get; set; }
+        public VirtualMachineSizeProperties VmSizeProperties { get; set; }
     }
 }

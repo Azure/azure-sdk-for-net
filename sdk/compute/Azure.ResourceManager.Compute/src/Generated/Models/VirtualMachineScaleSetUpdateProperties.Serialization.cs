@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Compute.Models
             bool? singlePlacementGroup = default;
             AdditionalCapabilities additionalCapabilities = default;
             ScaleInPolicy scaleInPolicy = default;
-            SubResource proximityPlacementGroup = default;
+            ComputeSubResourceData proximityPlacementGroup = default;
             VirtualMachineScaleSetPriorityMixPolicy priorityMixPolicy = default;
             SpotRestorePolicy spotRestorePolicy = default;
             ResiliencyPolicy resiliencyPolicy = default;
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    proximityPlacementGroup = SubResource.DeserializeSubResource(prop.Value, options);
+                    proximityPlacementGroup = ComputeSubResourceData.DeserializeComputeSubResourceData(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("priorityMixPolicy"u8))

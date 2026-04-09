@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="scheduledDeprecationOn"> The time, in future, at which this image will be marked as deprecated. This scheduled time is chosen by the Publisher. </param>
         /// <param name="alternativeOption"> Describes the alternative option specified by the Publisher for this image when this image is deprecated. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ImageDeprecationStatus(ImageState? imageState, DateTimeOffset? scheduledDeprecationOn, AlternativeOption alternativeOption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ImageDeprecationStatus(ImageState? imageState, DateTimeOffset? scheduledDeprecationOn, ImageAlternativeOption alternativeOption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ImageState = imageState;
             ScheduledDeprecationOn = scheduledDeprecationOn;
@@ -41,6 +41,6 @@ namespace Azure.ResourceManager.Compute.Models
         public DateTimeOffset? ScheduledDeprecationOn { get; }
 
         /// <summary> Describes the alternative option specified by the Publisher for this image when this image is deprecated. </summary>
-        public AlternativeOption AlternativeOption { get; }
+        public ImageAlternativeOption AlternativeOption { get; }
     }
 }

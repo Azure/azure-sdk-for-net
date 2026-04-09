@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="publicIPPrefix"> The PublicIPPrefix from which to allocate publicIP addresses. </param>
         /// <param name="deleteOption"> Specify what happens to the public IP when the VM is deleted. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineScaleSetUpdatePublicIPAddressConfigurationProperties(int? idleTimeoutInMinutes, VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings dnsSettings, SubResource publicIPPrefix, DeleteOptions? deleteOption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineScaleSetUpdatePublicIPAddressConfigurationProperties(int? idleTimeoutInMinutes, VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings dnsSettings, ComputeSubResourceData publicIPPrefix, DeleteOptions? deleteOption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IdleTimeoutInMinutes = idleTimeoutInMinutes;
             DnsSettings = dnsSettings;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Compute.Models
         public VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings DnsSettings { get; set; }
 
         /// <summary> The PublicIPPrefix from which to allocate publicIP addresses. </summary>
-        internal SubResource PublicIPPrefix { get; set; }
+        internal ComputeSubResourceData PublicIPPrefix { get; set; }
 
         /// <summary> Specify what happens to the public IP when the VM is deleted. </summary>
         public DeleteOptions? DeleteOption { get; set; }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (PublicIPPrefix is null)
                 {
-                    PublicIPPrefix = new SubResource();
+                    PublicIPPrefix = new ComputeSubResourceData();
                 }
                 PublicIPPrefix.Id = value;
             }

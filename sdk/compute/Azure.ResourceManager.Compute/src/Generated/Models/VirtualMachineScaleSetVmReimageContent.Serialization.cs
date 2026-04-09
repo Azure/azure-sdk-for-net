@@ -15,11 +15,11 @@ using Azure.ResourceManager.Compute;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a Virtual Machine Scale Set VM Reimage Parameters. </summary>
-    public partial class VirtualMachineScaleSetVmReimageContent : VirtualMachineReimageParameters, IJsonModel<VirtualMachineScaleSetVmReimageContent>
+    public partial class VirtualMachineScaleSetVmReimageContent : VirtualMachineReimageContent, IJsonModel<VirtualMachineScaleSetVmReimageContent>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override VirtualMachineReimageParameters PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override VirtualMachineReimageContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetVmReimageContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override VirtualMachineReimageParameters JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override VirtualMachineReimageContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetVmReimageContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

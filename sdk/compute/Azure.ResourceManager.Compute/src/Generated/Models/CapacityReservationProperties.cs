@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="CapacityReservationProperties"/>. </summary>
         public CapacityReservationProperties()
         {
-            VirtualMachinesAssociated = new ChangeTrackingList<SubResourceReadOnly>();
+            VirtualMachinesAssociated = new ChangeTrackingList<ComputeWriteableSubResourceData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CapacityReservationProperties"/>. </summary>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="timeCreated"> Specifies the time at which the Capacity Reservation resource was created. Minimum api-version: 2021-11-01. </param>
         /// <param name="scheduleProfile"> Defines the schedule for Block-type capacity reservations. Specifies the schedule during which capacity reservation is active and VM or VMSS resource can be allocated using reservation. This property is required and only supported when the capacity reservation group type is 'Block'. The scheduleProfile, start, and end fields are immutable after creation. Minimum API version: 2025-04-01. Please refer to https://aka.ms/blockcapacityreservation for more details. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CapacityReservationProperties(string reservationId, int? platformFaultDomainCount, IReadOnlyList<SubResourceReadOnly> virtualMachinesAssociated, DateTimeOffset? provisioningOn, string provisioningState, CapacityReservationInstanceView instanceView, DateTimeOffset? timeCreated, ScheduleProfile scheduleProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CapacityReservationProperties(string reservationId, int? platformFaultDomainCount, IReadOnlyList<ComputeWriteableSubResourceData> virtualMachinesAssociated, DateTimeOffset? provisioningOn, string provisioningState, CapacityReservationInstanceView instanceView, DateTimeOffset? timeCreated, ScheduleProfile scheduleProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ReservationId = reservationId;
             PlatformFaultDomainCount = platformFaultDomainCount;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Compute.Models
         public int? PlatformFaultDomainCount { get; }
 
         /// <summary> A list of all virtual machine resource ids that are associated with the capacity reservation. </summary>
-        public IReadOnlyList<SubResourceReadOnly> VirtualMachinesAssociated { get; } = new ChangeTrackingList<SubResourceReadOnly>();
+        public IReadOnlyList<ComputeWriteableSubResourceData> VirtualMachinesAssociated { get; } = new ChangeTrackingList<ComputeWriteableSubResourceData>();
 
         /// <summary> The date time when the capacity reservation was last updated. </summary>
         public DateTimeOffset? ProvisioningOn { get; }

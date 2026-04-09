@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (GallerySoftDeletedResource item in Value)
+            foreach (GallerySoftDeletedResourceDetails item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            IList<GallerySoftDeletedResource> value = default;
+            IList<GallerySoftDeletedResourceDetails> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<GallerySoftDeletedResource> array = new List<GallerySoftDeletedResource>();
+                    List<GallerySoftDeletedResourceDetails> array = new List<GallerySoftDeletedResourceDetails>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(GallerySoftDeletedResource.DeserializeGallerySoftDeletedResource(item, options));
+                        array.Add(GallerySoftDeletedResourceDetails.DeserializeGallerySoftDeletedResourceDetails(item, options));
                     }
                     value = array;
                     continue;

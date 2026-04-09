@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             ImageReference imageReference = default;
-            OSDisk osDisk = default;
+            VirtualMachineOSDisk osDisk = default;
             IList<VirtualMachineDataDisk> dataDisks = default;
             DiskControllerTypes? diskControllerType = default;
             bool? alignRegionalDisksToVMZone = default;
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    osDisk = OSDisk.DeserializeOSDisk(prop.Value, options);
+                    osDisk = VirtualMachineOSDisk.DeserializeVirtualMachineOSDisk(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("dataDisks"u8))

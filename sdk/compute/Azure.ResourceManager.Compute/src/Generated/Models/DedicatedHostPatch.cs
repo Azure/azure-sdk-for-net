@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> A list of references to all virtual machines in the Dedicated Host. </summary>
-        public IReadOnlyList<SubResourceReadOnly> VirtualMachines
+        public IReadOnlyList<ComputeWriteableSubResourceData> VirtualMachines
         {
             get
             {

@@ -14,11 +14,11 @@ using Azure.ResourceManager.Compute;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The ComputeSubResourceDataWithColocationStatus. </summary>
-    public partial class ComputeSubResourceDataWithColocationStatus : SubResource, IJsonModel<ComputeSubResourceDataWithColocationStatus>
+    public partial class ComputeSubResourceDataWithColocationStatus : ComputeSubResourceData, IJsonModel<ComputeSubResourceDataWithColocationStatus>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override SubResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override ComputeSubResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ComputeSubResourceDataWithColocationStatus>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override SubResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override ComputeSubResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ComputeSubResourceDataWithColocationStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

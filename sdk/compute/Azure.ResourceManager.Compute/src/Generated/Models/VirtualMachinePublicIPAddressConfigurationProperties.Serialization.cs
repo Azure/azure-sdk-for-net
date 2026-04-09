@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Compute.Models
             DeleteOptions? deleteOption = default;
             VirtualMachinePublicIPAddressDnsSettingsConfiguration dnsSettings = default;
             IList<VirtualMachineIpTag> ipTags = default;
-            SubResource publicIPPrefix = default;
+            ComputeSubResourceData publicIPPrefix = default;
             IPVersions? publicIPAddressVersion = default;
             PublicIPAllocationMethod? publicIPAllocationMethod = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    publicIPPrefix = SubResource.DeserializeSubResource(prop.Value, options);
+                    publicIPPrefix = ComputeSubResourceData.DeserializeComputeSubResourceData(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("publicIPAddressVersion"u8))

@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Compute.Models
             int? idleTimeoutInMinutes = default;
             VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings dnsSettings = default;
             IList<VirtualMachineScaleSetIpTag> ipTags = default;
-            SubResource publicIPPrefix = default;
+            ComputeSubResourceData publicIPPrefix = default;
             IPVersion? publicIPAddressVersion = default;
             DeleteOptions? deleteOption = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    publicIPPrefix = SubResource.DeserializeSubResource(prop.Value, options);
+                    publicIPPrefix = ComputeSubResourceData.DeserializeComputeSubResourceData(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("publicIPAddressVersion"u8))

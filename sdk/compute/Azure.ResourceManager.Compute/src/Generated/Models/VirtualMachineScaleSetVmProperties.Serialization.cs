@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Compute.Models
             VirtualMachineNetworkProfile networkProfile = default;
             VirtualMachineScaleSetVmNetworkProfileConfiguration networkProfileConfiguration = default;
             DiagnosticsProfile diagnosticsProfile = default;
-            SubResource availabilitySet = default;
+            ComputeSubResourceData availabilitySet = default;
             string provisioningState = default;
             string licenseType = default;
             string modelDefinitionApplied = default;
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    availabilitySet = SubResource.DeserializeSubResource(prop.Value, options);
+                    availabilitySet = ComputeSubResourceData.DeserializeComputeSubResourceData(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))

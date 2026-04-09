@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 writer.WritePropertyName("capacityReservations"u8);
                 writer.WriteStartArray();
-                foreach (SubResourceReadOnly item in CapacityReservations)
+                foreach (ComputeWriteableSubResourceData item in CapacityReservations)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 writer.WritePropertyName("virtualMachinesAssociated"u8);
                 writer.WriteStartArray();
-                foreach (SubResourceReadOnly item in VirtualMachinesAssociated)
+                foreach (ComputeWriteableSubResourceData item in VirtualMachinesAssociated)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -151,8 +151,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            IReadOnlyList<SubResourceReadOnly> capacityReservations = default;
-            IReadOnlyList<SubResourceReadOnly> virtualMachinesAssociated = default;
+            IReadOnlyList<ComputeWriteableSubResourceData> capacityReservations = default;
+            IReadOnlyList<ComputeWriteableSubResourceData> virtualMachinesAssociated = default;
             CapacityReservationGroupInstanceView instanceView = default;
             ResourceSharingProfile sharingProfile = default;
             CapacityReservationType? reservationType = default;
@@ -165,10 +165,10 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    List<SubResourceReadOnly> array = new List<SubResourceReadOnly>();
+                    List<ComputeWriteableSubResourceData> array = new List<ComputeWriteableSubResourceData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SubResourceReadOnly.DeserializeSubResourceReadOnly(item, options));
+                        array.Add(ComputeWriteableSubResourceData.DeserializeComputeWriteableSubResourceData(item, options));
                     }
                     capacityReservations = array;
                     continue;
@@ -179,10 +179,10 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    List<SubResourceReadOnly> array = new List<SubResourceReadOnly>();
+                    List<ComputeWriteableSubResourceData> array = new List<ComputeWriteableSubResourceData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SubResourceReadOnly.DeserializeSubResourceReadOnly(item, options));
+                        array.Add(ComputeWriteableSubResourceData.DeserializeComputeWriteableSubResourceData(item, options));
                     }
                     virtualMachinesAssociated = array;
                     continue;
@@ -220,8 +220,8 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             return new CapacityReservationGroupProperties(
-                capacityReservations ?? new ChangeTrackingList<SubResourceReadOnly>(),
-                virtualMachinesAssociated ?? new ChangeTrackingList<SubResourceReadOnly>(),
+                capacityReservations ?? new ChangeTrackingList<ComputeWriteableSubResourceData>(),
+                virtualMachinesAssociated ?? new ChangeTrackingList<ComputeWriteableSubResourceData>(),
                 instanceView,
                 sharingProfile,
                 reservationType,

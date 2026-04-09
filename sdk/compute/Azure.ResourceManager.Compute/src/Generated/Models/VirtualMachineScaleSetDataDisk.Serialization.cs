@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Compute.Models
             bool? writeAcceleratorEnabled = default;
             DiskCreateOptionType createOption = default;
             int? diskSizeGB = default;
-            VirtualMachineScaleSetManagedDiskParameters managedDisk = default;
+            VirtualMachineScaleSetManagedDisk managedDisk = default;
             long? diskIOPSReadWrite = default;
             long? diskMBpsReadWrite = default;
             DiskDeleteOptionType? deleteOption = default;
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    managedDisk = VirtualMachineScaleSetManagedDiskParameters.DeserializeVirtualMachineScaleSetManagedDiskParameters(prop.Value, options);
+                    managedDisk = VirtualMachineScaleSetManagedDisk.DeserializeVirtualMachineScaleSetManagedDisk(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("diskIOPSReadWrite"u8))

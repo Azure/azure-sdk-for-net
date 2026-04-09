@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="expand"> The expand expression to apply on the operation. 'InstanceView' retrieves a snapshot of the runtime properties of the virtual machine that is managed by the platform and can change outside of control plane operations. 'UserData' retrieves the UserData property as part of the VM model view that was provided by the user during the VM Create/Update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<VirtualMachineResource>> GetAsync(InstanceViewTypes? expand = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VirtualMachineResource>> GetAsync(InstanceViewType? expand = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _virtualMachinesClientDiagnostics.CreateScope("VirtualMachineResource.Get");
             scope.Start();
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="expand"> The expand expression to apply on the operation. 'InstanceView' retrieves a snapshot of the runtime properties of the virtual machine that is managed by the platform and can change outside of control plane operations. 'UserData' retrieves the UserData property as part of the VM model view that was provided by the user during the VM Create/Update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<VirtualMachineResource> Get(InstanceViewTypes? expand = default, CancellationToken cancellationToken = default)
+        public virtual Response<VirtualMachineResource> Get(InstanceViewType? expand = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _virtualMachinesClientDiagnostics.CreateScope("VirtualMachineResource.Get");
             scope.Start();
@@ -668,7 +668,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="content"> Parameters supplied to the Capture Virtual Machine operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<VirtualMachineCaptureResult>> CaptureAsync(WaitUntil waitUntil, VirtualMachineCaptureParameters content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<VirtualMachineCaptureResult>> CaptureAsync(WaitUntil waitUntil, VirtualMachineCaptureContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -680,7 +680,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachinesRestClient.CreateCaptureRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, VirtualMachineCaptureParameters.ToRequestContent(content), context);
+                HttpMessage message = _virtualMachinesRestClient.CreateCaptureRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, VirtualMachineCaptureContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ComputeArmOperation<VirtualMachineCaptureResult> operation = new ComputeArmOperation<VirtualMachineCaptureResult>(
                     new VirtualMachineCaptureResultOperationSource(),
@@ -727,7 +727,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="content"> Parameters supplied to the Capture Virtual Machine operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<VirtualMachineCaptureResult> Capture(WaitUntil waitUntil, VirtualMachineCaptureParameters content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<VirtualMachineCaptureResult> Capture(WaitUntil waitUntil, VirtualMachineCaptureContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -739,7 +739,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachinesRestClient.CreateCaptureRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, VirtualMachineCaptureParameters.ToRequestContent(content), context);
+                HttpMessage message = _virtualMachinesRestClient.CreateCaptureRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, VirtualMachineCaptureContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ComputeArmOperation<VirtualMachineCaptureResult> operation = new ComputeArmOperation<VirtualMachineCaptureResult>(
                     new VirtualMachineCaptureResultOperationSource(),
@@ -1070,7 +1070,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="content"> Input for InstallPatches as directly received by the API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<VirtualMachineInstallPatchesResult>> InstallPatchesAsync(WaitUntil waitUntil, VirtualMachineInstallPatchesParameters content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<VirtualMachineInstallPatchesResult>> InstallPatchesAsync(WaitUntil waitUntil, VirtualMachineInstallPatchesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -1082,7 +1082,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachinesRestClient.CreateInstallPatchesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, VirtualMachineInstallPatchesParameters.ToRequestContent(content), context);
+                HttpMessage message = _virtualMachinesRestClient.CreateInstallPatchesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, VirtualMachineInstallPatchesContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ComputeArmOperation<VirtualMachineInstallPatchesResult> operation = new ComputeArmOperation<VirtualMachineInstallPatchesResult>(
                     new VirtualMachineInstallPatchesResultOperationSource(),
@@ -1129,7 +1129,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="content"> Input for InstallPatches as directly received by the API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<VirtualMachineInstallPatchesResult> InstallPatches(WaitUntil waitUntil, VirtualMachineInstallPatchesParameters content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<VirtualMachineInstallPatchesResult> InstallPatches(WaitUntil waitUntil, VirtualMachineInstallPatchesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -1141,7 +1141,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachinesRestClient.CreateInstallPatchesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, VirtualMachineInstallPatchesParameters.ToRequestContent(content), context);
+                HttpMessage message = _virtualMachinesRestClient.CreateInstallPatchesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, VirtualMachineInstallPatchesContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ComputeArmOperation<VirtualMachineInstallPatchesResult> operation = new ComputeArmOperation<VirtualMachineInstallPatchesResult>(
                     new VirtualMachineInstallPatchesResultOperationSource(),
@@ -1359,7 +1359,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> Parameters supplied to the Migrate Virtual Machine operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> MigrateToVMScaleSetAsync(WaitUntil waitUntil, MigrateVMToVirtualMachineScaleSetInput content = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> MigrateToVMScaleSetAsync(WaitUntil waitUntil, MigrateVmToVirtualMachineScaleSetContent content = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _virtualMachinesClientDiagnostics.CreateScope("VirtualMachineResource.MigrateToVMScaleSet");
             scope.Start();
@@ -1369,7 +1369,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachinesRestClient.CreateMigrateToVMScaleSetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, MigrateVMToVirtualMachineScaleSetInput.ToRequestContent(content), context);
+                HttpMessage message = _virtualMachinesRestClient.CreateMigrateToVMScaleSetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, MigrateVmToVirtualMachineScaleSetContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ComputeArmOperation operation = new ComputeArmOperation(_virtualMachinesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1409,7 +1409,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> Parameters supplied to the Migrate Virtual Machine operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation MigrateToVMScaleSet(WaitUntil waitUntil, MigrateVMToVirtualMachineScaleSetInput content = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation MigrateToVMScaleSet(WaitUntil waitUntil, MigrateVmToVirtualMachineScaleSetContent content = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _virtualMachinesClientDiagnostics.CreateScope("VirtualMachineResource.MigrateToVMScaleSet");
             scope.Start();
@@ -1419,7 +1419,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachinesRestClient.CreateMigrateToVMScaleSetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, MigrateVMToVirtualMachineScaleSetInput.ToRequestContent(content), context);
+                HttpMessage message = _virtualMachinesRestClient.CreateMigrateToVMScaleSetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, MigrateVmToVirtualMachineScaleSetContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ComputeArmOperation operation = new ComputeArmOperation(_virtualMachinesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1853,7 +1853,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> Parameters supplied to the Reimage Virtual Machine operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> ReimageAsync(WaitUntil waitUntil, VirtualMachineReimageParameters content = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> ReimageAsync(WaitUntil waitUntil, VirtualMachineReimageContent content = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _virtualMachinesClientDiagnostics.CreateScope("VirtualMachineResource.Reimage");
             scope.Start();
@@ -1863,7 +1863,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachinesRestClient.CreateReimageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, VirtualMachineReimageParameters.ToRequestContent(content), context);
+                HttpMessage message = _virtualMachinesRestClient.CreateReimageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, VirtualMachineReimageContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ComputeArmOperation operation = new ComputeArmOperation(_virtualMachinesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1903,7 +1903,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> Parameters supplied to the Reimage Virtual Machine operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Reimage(WaitUntil waitUntil, VirtualMachineReimageParameters content = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Reimage(WaitUntil waitUntil, VirtualMachineReimageContent content = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _virtualMachinesClientDiagnostics.CreateScope("VirtualMachineResource.Reimage");
             scope.Start();
@@ -1913,7 +1913,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachinesRestClient.CreateReimageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, VirtualMachineReimageParameters.ToRequestContent(content), context);
+                HttpMessage message = _virtualMachinesRestClient.CreateReimageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, VirtualMachineReimageContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ComputeArmOperation operation = new ComputeArmOperation(_virtualMachinesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -2150,7 +2150,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="content"> Parameters supplied to the Run command operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<RunCommandResult>> RunCommandAsync(WaitUntil waitUntil, RunCommandInput content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<VirtualMachineRunCommandResult>> RunCommandAsync(WaitUntil waitUntil, RunCommandInput content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -2164,8 +2164,8 @@ namespace Azure.ResourceManager.Compute
                 };
                 HttpMessage message = _virtualMachinesRestClient.CreateRunCommandRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, RunCommandInput.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ComputeArmOperation<RunCommandResult> operation = new ComputeArmOperation<RunCommandResult>(
-                    new RunCommandResultOperationSource(),
+                ComputeArmOperation<VirtualMachineRunCommandResult> operation = new ComputeArmOperation<VirtualMachineRunCommandResult>(
+                    new VirtualMachineRunCommandResultOperationSource(),
                     _virtualMachinesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -2209,7 +2209,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="content"> Parameters supplied to the Run command operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<RunCommandResult> RunCommand(WaitUntil waitUntil, RunCommandInput content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<VirtualMachineRunCommandResult> RunCommand(WaitUntil waitUntil, RunCommandInput content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -2223,8 +2223,8 @@ namespace Azure.ResourceManager.Compute
                 };
                 HttpMessage message = _virtualMachinesRestClient.CreateRunCommandRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, RunCommandInput.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ComputeArmOperation<RunCommandResult> operation = new ComputeArmOperation<RunCommandResult>(
-                    new RunCommandResultOperationSource(),
+                ComputeArmOperation<VirtualMachineRunCommandResult> operation = new ComputeArmOperation<VirtualMachineRunCommandResult>(
+                    new VirtualMachineRunCommandResultOperationSource(),
                     _virtualMachinesClientDiagnostics,
                     Pipeline,
                     message.Request,

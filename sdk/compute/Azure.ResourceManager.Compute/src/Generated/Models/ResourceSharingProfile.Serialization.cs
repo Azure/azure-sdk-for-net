@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 writer.WritePropertyName("subscriptionIds"u8);
                 writer.WriteStartArray();
-                foreach (SubResource item in SubscriptionIds)
+                foreach (ComputeSubResourceData item in SubscriptionIds)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            IList<SubResource> subscriptionIds = default;
+            IList<ComputeSubResourceData> subscriptionIds = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -136,10 +136,10 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    List<SubResource> array = new List<SubResource>();
+                    List<ComputeSubResourceData> array = new List<ComputeSubResourceData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SubResource.DeserializeSubResource(item, options));
+                        array.Add(ComputeSubResourceData.DeserializeComputeSubResourceData(item, options));
                     }
                     subscriptionIds = array;
                     continue;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ResourceSharingProfile(subscriptionIds ?? new ChangeTrackingList<SubResource>(), additionalBinaryDataProperties);
+            return new ResourceSharingProfile(subscriptionIds ?? new ChangeTrackingList<ComputeSubResourceData>(), additionalBinaryDataProperties);
         }
     }
 }

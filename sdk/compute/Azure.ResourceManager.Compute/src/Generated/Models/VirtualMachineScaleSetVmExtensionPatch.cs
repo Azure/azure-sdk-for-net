@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a VMSS VM Extension. </summary>
-    public partial class VirtualMachineScaleSetVmExtensionPatch : SubResourceReadOnly
+    public partial class VirtualMachineScaleSetVmExtensionPatch : ComputeWriteableSubResourceData
     {
         /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetVmExtensionPatch"/>. </summary>
         public VirtualMachineScaleSetVmExtensionPatch()

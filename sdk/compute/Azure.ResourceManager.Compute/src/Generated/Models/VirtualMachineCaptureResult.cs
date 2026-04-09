@@ -13,7 +13,7 @@ using Azure.ResourceManager.Compute;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Output of virtual machine capture operation. </summary>
-    public partial class VirtualMachineCaptureResult : SubResource
+    public partial class VirtualMachineCaptureResult : ComputeSubResourceData
     {
         /// <summary> Initializes a new instance of <see cref="VirtualMachineCaptureResult"/>. </summary>
         internal VirtualMachineCaptureResult()

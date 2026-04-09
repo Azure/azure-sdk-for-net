@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (ComputePrivateLinkResource item in Value)
+                foreach (ComputePrivateLinkResourceData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            IList<ComputePrivateLinkResource> value = default;
+            IList<ComputePrivateLinkResourceData> value = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -144,10 +144,10 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    List<ComputePrivateLinkResource> array = new List<ComputePrivateLinkResource>();
+                    List<ComputePrivateLinkResourceData> array = new List<ComputePrivateLinkResourceData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ComputePrivateLinkResource.DeserializeComputePrivateLinkResource(item, options));
+                        array.Add(ComputePrivateLinkResourceData.DeserializeComputePrivateLinkResourceData(item, options));
                     }
                     value = array;
                     continue;
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ComputePrivateLinkResourceListResult(value ?? new ChangeTrackingList<ComputePrivateLinkResource>(), additionalBinaryDataProperties);
+            return new ComputePrivateLinkResourceListResult(value ?? new ChangeTrackingList<ComputePrivateLinkResourceData>(), additionalBinaryDataProperties);
         }
     }
 }

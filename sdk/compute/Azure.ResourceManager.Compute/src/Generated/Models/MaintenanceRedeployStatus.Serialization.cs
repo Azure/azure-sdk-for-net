@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Compute.Models
             DateTimeOffset? preMaintenanceWindowEndOn = default;
             DateTimeOffset? maintenanceWindowStartOn = default;
             DateTimeOffset? maintenanceWindowEndOn = default;
-            MaintenanceOperationResultCodeTypes? lastOperationResultCode = default;
+            MaintenanceOperationResultCodeType? lastOperationResultCode = default;
             string lastOperationMessage = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    lastOperationResultCode = prop.Value.GetString().ToMaintenanceOperationResultCodeTypes();
+                    lastOperationResultCode = prop.Value.GetString().ToMaintenanceOperationResultCodeType();
                     continue;
                 }
                 if (prop.NameEquals("lastOperationMessage"u8))

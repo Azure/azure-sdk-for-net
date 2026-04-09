@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            ProtocolTypes? protocol = default;
+            WinRMListenerProtocolType? protocol = default;
             string certificateUri = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    protocol = prop.Value.GetString().ToProtocolTypes();
+                    protocol = prop.Value.GetString().ToWinRMListenerProtocolType();
                     continue;
                 }
                 if (prop.NameEquals("certificateUrl"u8))

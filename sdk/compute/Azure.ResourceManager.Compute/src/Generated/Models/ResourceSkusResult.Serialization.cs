@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (ResourceSku item in Value)
+            foreach (ComputeResourceSku item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            IList<ResourceSku> value = default;
+            IList<ComputeResourceSku> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<ResourceSku> array = new List<ResourceSku>();
+                    List<ComputeResourceSku> array = new List<ComputeResourceSku>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ResourceSku.DeserializeResourceSku(item, options));
+                        array.Add(ComputeResourceSku.DeserializeComputeResourceSku(item, options));
                     }
                     value = array;
                     continue;

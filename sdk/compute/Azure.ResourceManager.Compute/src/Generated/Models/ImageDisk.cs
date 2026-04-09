@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="storageAccountType"> Specifies the storage account type for the managed disk. NOTE: UltraSSD_LRS can only be used with data disks, it cannot be used with OS Disk. </param>
         /// <param name="diskEncryptionSet"> Specifies the customer managed disk encryption set resource id for the managed image disk. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ImageDisk(SubResource snapshot, SubResource managedDisk, string blobUri, CachingType? caching, int? diskSizeGB, StorageAccountTypes? storageAccountType, DiskEncryptionSetParameters diskEncryptionSet, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ImageDisk(ComputeSubResourceData snapshot, ComputeSubResourceData managedDisk, string blobUri, CachingType? caching, int? diskSizeGB, StorageAccountTypes? storageAccountType, DiskEncryptionSetParameters diskEncryptionSet, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Snapshot = snapshot;
             ManagedDisk = managedDisk;
@@ -43,10 +43,10 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The snapshot. </summary>
-        internal SubResource Snapshot { get; set; }
+        internal ComputeSubResourceData Snapshot { get; set; }
 
         /// <summary> The managedDisk. </summary>
-        internal SubResource ManagedDisk { get; set; }
+        internal ComputeSubResourceData ManagedDisk { get; set; }
 
         /// <summary> The Virtual Hard Disk. </summary>
         public string BlobUri { get; set; }
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (Snapshot is null)
                 {
-                    Snapshot = new SubResource();
+                    Snapshot = new ComputeSubResourceData();
                 }
                 Snapshot.Id = value;
             }
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (ManagedDisk is null)
                 {
-                    ManagedDisk = new SubResource();
+                    ManagedDisk = new ComputeSubResourceData();
                 }
                 ManagedDisk.Id = value;
             }

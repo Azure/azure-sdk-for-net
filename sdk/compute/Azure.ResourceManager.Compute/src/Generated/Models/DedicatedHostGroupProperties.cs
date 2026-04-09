@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Compute.Models
         public DedicatedHostGroupProperties(int platformFaultDomainCount)
         {
             PlatformFaultDomainCount = platformFaultDomainCount;
-            Hosts = new ChangeTrackingList<SubResourceReadOnly>();
+            Hosts = new ChangeTrackingList<ComputeWriteableSubResourceData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DedicatedHostGroupProperties"/>. </summary>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="supportAutomaticPlacement"> Specifies whether virtual machines or virtual machine scale sets can be placed automatically on the dedicated host group. Automatic placement means resources are allocated on dedicated hosts, that are chosen by Azure, under the dedicated host group. The value is defaulted to 'false' when not provided. Minimum api-version: 2020-06-01. </param>
         /// <param name="additionalCapabilities"> Enables or disables a capability on the dedicated host group. Minimum api-version: 2022-03-01. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DedicatedHostGroupProperties(int platformFaultDomainCount, IReadOnlyList<SubResourceReadOnly> hosts, DedicatedHostGroupInstanceView instanceView, bool? supportAutomaticPlacement, DedicatedHostGroupPropertiesAdditionalCapabilities additionalCapabilities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DedicatedHostGroupProperties(int platformFaultDomainCount, IReadOnlyList<ComputeWriteableSubResourceData> hosts, DedicatedHostGroupInstanceView instanceView, bool? supportAutomaticPlacement, DedicatedHostGroupPropertiesAdditionalCapabilities additionalCapabilities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PlatformFaultDomainCount = platformFaultDomainCount;
             Hosts = hosts;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Compute.Models
         public int PlatformFaultDomainCount { get; set; }
 
         /// <summary> A list of references to all dedicated hosts in the dedicated host group. </summary>
-        public IReadOnlyList<SubResourceReadOnly> Hosts { get; } = new ChangeTrackingList<SubResourceReadOnly>();
+        public IReadOnlyList<ComputeWriteableSubResourceData> Hosts { get; } = new ChangeTrackingList<ComputeWriteableSubResourceData>();
 
         /// <summary> The dedicated host group instance view, which has the list of instance view of the dedicated hosts under the dedicated host group. </summary>
         internal DedicatedHostGroupInstanceView InstanceView { get; }

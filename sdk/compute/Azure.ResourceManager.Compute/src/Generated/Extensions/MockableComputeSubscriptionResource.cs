@@ -2547,7 +2547,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<LogAnalyticsOperationResult>> ExportLogAnalyticsRequestRateByIntervalAsync(WaitUntil waitUntil, string location, RequestRateByIntervalInput content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<LogAnalytics>> ExportLogAnalyticsRequestRateByIntervalAsync(WaitUntil waitUntil, string location, RequestRateByIntervalContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNull(content, nameof(content));
@@ -2560,10 +2560,10 @@ namespace Azure.ResourceManager.Compute.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = LogAnalyticsOperationGroupRestClient.CreateExportLogAnalyticsRequestRateByIntervalRequest(Id.SubscriptionId, location, RequestRateByIntervalInput.ToRequestContent(content), context);
+                HttpMessage message = LogAnalyticsOperationGroupRestClient.CreateExportLogAnalyticsRequestRateByIntervalRequest(Id.SubscriptionId, location, RequestRateByIntervalContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ComputeArmOperation<LogAnalyticsOperationResult> operation = new ComputeArmOperation<LogAnalyticsOperationResult>(
-                    new LogAnalyticsOperationResultOperationSource(),
+                ComputeArmOperation<LogAnalytics> operation = new ComputeArmOperation<LogAnalytics>(
+                    new LogAnalyticsOperationSource(),
                     LogAnalyticsOperationGroupClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -2605,7 +2605,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<LogAnalyticsOperationResult> ExportLogAnalyticsRequestRateByInterval(WaitUntil waitUntil, string location, RequestRateByIntervalInput content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<LogAnalytics> ExportLogAnalyticsRequestRateByInterval(WaitUntil waitUntil, string location, RequestRateByIntervalContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNull(content, nameof(content));
@@ -2618,10 +2618,10 @@ namespace Azure.ResourceManager.Compute.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = LogAnalyticsOperationGroupRestClient.CreateExportLogAnalyticsRequestRateByIntervalRequest(Id.SubscriptionId, location, RequestRateByIntervalInput.ToRequestContent(content), context);
+                HttpMessage message = LogAnalyticsOperationGroupRestClient.CreateExportLogAnalyticsRequestRateByIntervalRequest(Id.SubscriptionId, location, RequestRateByIntervalContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ComputeArmOperation<LogAnalyticsOperationResult> operation = new ComputeArmOperation<LogAnalyticsOperationResult>(
-                    new LogAnalyticsOperationResultOperationSource(),
+                ComputeArmOperation<LogAnalytics> operation = new ComputeArmOperation<LogAnalytics>(
+                    new LogAnalyticsOperationSource(),
                     LogAnalyticsOperationGroupClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -2663,7 +2663,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<LogAnalyticsOperationResult>> ExportLogAnalyticsThrottledRequestsAsync(WaitUntil waitUntil, string location, ThrottledRequestsInput content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<LogAnalytics>> ExportLogAnalyticsThrottledRequestsAsync(WaitUntil waitUntil, string location, ThrottledRequestsContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNull(content, nameof(content));
@@ -2676,10 +2676,10 @@ namespace Azure.ResourceManager.Compute.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = LogAnalyticsOperationGroupRestClient.CreateExportLogAnalyticsThrottledRequestsRequest(Id.SubscriptionId, location, ThrottledRequestsInput.ToRequestContent(content), context);
+                HttpMessage message = LogAnalyticsOperationGroupRestClient.CreateExportLogAnalyticsThrottledRequestsRequest(Id.SubscriptionId, location, ThrottledRequestsContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ComputeArmOperation<LogAnalyticsOperationResult> operation = new ComputeArmOperation<LogAnalyticsOperationResult>(
-                    new LogAnalyticsOperationResultOperationSource(),
+                ComputeArmOperation<LogAnalytics> operation = new ComputeArmOperation<LogAnalytics>(
+                    new LogAnalyticsOperationSource(),
                     LogAnalyticsOperationGroupClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -2721,7 +2721,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<LogAnalyticsOperationResult> ExportLogAnalyticsThrottledRequests(WaitUntil waitUntil, string location, ThrottledRequestsInput content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<LogAnalytics> ExportLogAnalyticsThrottledRequests(WaitUntil waitUntil, string location, ThrottledRequestsContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNull(content, nameof(content));
@@ -2734,10 +2734,10 @@ namespace Azure.ResourceManager.Compute.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = LogAnalyticsOperationGroupRestClient.CreateExportLogAnalyticsThrottledRequestsRequest(Id.SubscriptionId, location, ThrottledRequestsInput.ToRequestContent(content), context);
+                HttpMessage message = LogAnalyticsOperationGroupRestClient.CreateExportLogAnalyticsThrottledRequestsRequest(Id.SubscriptionId, location, ThrottledRequestsContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ComputeArmOperation<LogAnalyticsOperationResult> operation = new ComputeArmOperation<LogAnalyticsOperationResult>(
-                    new LogAnalyticsOperationResultOperationSource(),
+                ComputeArmOperation<LogAnalytics> operation = new ComputeArmOperation<LogAnalytics>(
+                    new LogAnalyticsOperationSource(),
                     LogAnalyticsOperationGroupClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -3978,8 +3978,8 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <param name="filter"> The filter to apply on the operation. Only <b>location</b> filter is supported currently. </param>
         /// <param name="includeExtendedLocations"> To Include Extended Locations information or not in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ResourceSku"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ResourceSku> GetAllAsync(string filter = default, string includeExtendedLocations = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ComputeResourceSku"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ComputeResourceSku> GetAllAsync(string filter = default, string includeExtendedLocations = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -4014,8 +4014,8 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <param name="filter"> The filter to apply on the operation. Only <b>location</b> filter is supported currently. </param>
         /// <param name="includeExtendedLocations"> To Include Extended Locations information or not in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ResourceSku"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ResourceSku> GetAll(string filter = default, string includeExtendedLocations = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ComputeResourceSku"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ComputeResourceSku> GetAll(string filter = default, string includeExtendedLocations = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {

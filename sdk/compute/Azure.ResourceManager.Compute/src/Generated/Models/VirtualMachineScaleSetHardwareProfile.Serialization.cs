@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            VMSizeProperties vmSizeProperties = default;
+            VirtualMachineSizeProperties vmSizeProperties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    vmSizeProperties = VMSizeProperties.DeserializeVMSizeProperties(prop.Value, options);
+                    vmSizeProperties = VirtualMachineSizeProperties.DeserializeVirtualMachineSizeProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

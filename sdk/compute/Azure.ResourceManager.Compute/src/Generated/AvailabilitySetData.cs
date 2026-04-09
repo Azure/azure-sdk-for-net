@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> A list of references to all virtual machines in the availability set. </summary>
-        public IList<SubResource> VirtualMachines
+        public IList<ComputeSubResourceData> VirtualMachines
         {
             get
             {

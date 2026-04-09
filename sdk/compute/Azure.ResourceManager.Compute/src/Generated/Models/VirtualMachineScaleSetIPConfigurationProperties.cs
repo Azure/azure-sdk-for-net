@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetIPConfigurationProperties"/>. </summary>
         public VirtualMachineScaleSetIPConfigurationProperties()
         {
-            ApplicationGatewayBackendAddressPools = new ChangeTrackingList<SubResource>();
-            ApplicationSecurityGroups = new ChangeTrackingList<SubResource>();
-            LoadBalancerBackendAddressPools = new ChangeTrackingList<SubResource>();
-            LoadBalancerInboundNatPools = new ChangeTrackingList<SubResource>();
+            ApplicationGatewayBackendAddressPools = new ChangeTrackingList<ComputeSubResourceData>();
+            ApplicationSecurityGroups = new ChangeTrackingList<ComputeSubResourceData>();
+            LoadBalancerBackendAddressPools = new ChangeTrackingList<ComputeSubResourceData>();
+            LoadBalancerInboundNatPools = new ChangeTrackingList<ComputeSubResourceData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetIPConfigurationProperties"/>. </summary>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="loadBalancerBackendAddressPools"> Specifies an array of references to backend address pools of load balancers. A scale set can reference backend address pools of one public and one internal load balancer. Multiple scale sets cannot use the same basic sku load balancer. </param>
         /// <param name="loadBalancerInboundNatPools"> Specifies an array of references to inbound Nat pools of the load balancers. A scale set can reference inbound nat pools of one public and one internal load balancer. Multiple scale sets cannot use the same basic sku load balancer. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineScaleSetIPConfigurationProperties(ApiEntityReference subnet, bool? primary, VirtualMachineScaleSetPublicIPAddressConfiguration publicIPAddressConfiguration, IPVersion? privateIPAddressVersion, IList<SubResource> applicationGatewayBackendAddressPools, IList<SubResource> applicationSecurityGroups, IList<SubResource> loadBalancerBackendAddressPools, IList<SubResource> loadBalancerInboundNatPools, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineScaleSetIPConfigurationProperties(ApiEntityReference subnet, bool? primary, VirtualMachineScaleSetPublicIPAddressConfiguration publicIPAddressConfiguration, IPVersion? privateIPAddressVersion, IList<ComputeSubResourceData> applicationGatewayBackendAddressPools, IList<ComputeSubResourceData> applicationSecurityGroups, IList<ComputeSubResourceData> loadBalancerBackendAddressPools, IList<ComputeSubResourceData> loadBalancerInboundNatPools, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Subnet = subnet;
             Primary = primary;
@@ -62,16 +62,16 @@ namespace Azure.ResourceManager.Compute.Models
         public IPVersion? PrivateIPAddressVersion { get; set; }
 
         /// <summary> Specifies an array of references to backend address pools of application gateways. A scale set can reference backend address pools of multiple application gateways. Multiple scale sets cannot use the same application gateway. </summary>
-        public IList<SubResource> ApplicationGatewayBackendAddressPools { get; } = new ChangeTrackingList<SubResource>();
+        public IList<ComputeSubResourceData> ApplicationGatewayBackendAddressPools { get; } = new ChangeTrackingList<ComputeSubResourceData>();
 
         /// <summary> Specifies an array of references to application security group. </summary>
-        public IList<SubResource> ApplicationSecurityGroups { get; } = new ChangeTrackingList<SubResource>();
+        public IList<ComputeSubResourceData> ApplicationSecurityGroups { get; } = new ChangeTrackingList<ComputeSubResourceData>();
 
         /// <summary> Specifies an array of references to backend address pools of load balancers. A scale set can reference backend address pools of one public and one internal load balancer. Multiple scale sets cannot use the same basic sku load balancer. </summary>
-        public IList<SubResource> LoadBalancerBackendAddressPools { get; } = new ChangeTrackingList<SubResource>();
+        public IList<ComputeSubResourceData> LoadBalancerBackendAddressPools { get; } = new ChangeTrackingList<ComputeSubResourceData>();
 
         /// <summary> Specifies an array of references to inbound Nat pools of the load balancers. A scale set can reference inbound nat pools of one public and one internal load balancer. Multiple scale sets cannot use the same basic sku load balancer. </summary>
-        public IList<SubResource> LoadBalancerInboundNatPools { get; } = new ChangeTrackingList<SubResource>();
+        public IList<ComputeSubResourceData> LoadBalancerInboundNatPools { get; } = new ChangeTrackingList<ComputeSubResourceData>();
 
         /// <summary> The ARM resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/... </summary>
         public string SubnetId

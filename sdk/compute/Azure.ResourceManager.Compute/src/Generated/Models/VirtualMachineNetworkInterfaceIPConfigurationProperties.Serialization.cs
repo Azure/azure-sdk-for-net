@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 writer.WritePropertyName("applicationSecurityGroups"u8);
                 writer.WriteStartArray();
-                foreach (SubResource item in ApplicationSecurityGroups)
+                foreach (ComputeSubResourceData item in ApplicationSecurityGroups)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 writer.WritePropertyName("applicationGatewayBackendAddressPools"u8);
                 writer.WriteStartArray();
-                foreach (SubResource item in ApplicationGatewayBackendAddressPools)
+                foreach (ComputeSubResourceData item in ApplicationGatewayBackendAddressPools)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 writer.WritePropertyName("loadBalancerBackendAddressPools"u8);
                 writer.WriteStartArray();
-                foreach (SubResource item in LoadBalancerBackendAddressPools)
+                foreach (ComputeSubResourceData item in LoadBalancerBackendAddressPools)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -166,13 +166,13 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            SubResource subnet = default;
+            ComputeSubResourceData subnet = default;
             bool? primary = default;
             VirtualMachinePublicIPAddressConfiguration publicIPAddressConfiguration = default;
             IPVersions? privateIPAddressVersion = default;
-            IList<SubResource> applicationSecurityGroups = default;
-            IList<SubResource> applicationGatewayBackendAddressPools = default;
-            IList<SubResource> loadBalancerBackendAddressPools = default;
+            IList<ComputeSubResourceData> applicationSecurityGroups = default;
+            IList<ComputeSubResourceData> applicationGatewayBackendAddressPools = default;
+            IList<ComputeSubResourceData> loadBalancerBackendAddressPools = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    subnet = SubResource.DeserializeSubResource(prop.Value, options);
+                    subnet = ComputeSubResourceData.DeserializeComputeSubResourceData(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("primary"u8))
@@ -218,10 +218,10 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    List<SubResource> array = new List<SubResource>();
+                    List<ComputeSubResourceData> array = new List<ComputeSubResourceData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SubResource.DeserializeSubResource(item, options));
+                        array.Add(ComputeSubResourceData.DeserializeComputeSubResourceData(item, options));
                     }
                     applicationSecurityGroups = array;
                     continue;
@@ -232,10 +232,10 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    List<SubResource> array = new List<SubResource>();
+                    List<ComputeSubResourceData> array = new List<ComputeSubResourceData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SubResource.DeserializeSubResource(item, options));
+                        array.Add(ComputeSubResourceData.DeserializeComputeSubResourceData(item, options));
                     }
                     applicationGatewayBackendAddressPools = array;
                     continue;
@@ -246,10 +246,10 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    List<SubResource> array = new List<SubResource>();
+                    List<ComputeSubResourceData> array = new List<ComputeSubResourceData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SubResource.DeserializeSubResource(item, options));
+                        array.Add(ComputeSubResourceData.DeserializeComputeSubResourceData(item, options));
                     }
                     loadBalancerBackendAddressPools = array;
                     continue;
@@ -264,9 +264,9 @@ namespace Azure.ResourceManager.Compute.Models
                 primary,
                 publicIPAddressConfiguration,
                 privateIPAddressVersion,
-                applicationSecurityGroups ?? new ChangeTrackingList<SubResource>(),
-                applicationGatewayBackendAddressPools ?? new ChangeTrackingList<SubResource>(),
-                loadBalancerBackendAddressPools ?? new ChangeTrackingList<SubResource>(),
+                applicationSecurityGroups ?? new ChangeTrackingList<ComputeSubResourceData>(),
+                applicationGatewayBackendAddressPools ?? new ChangeTrackingList<ComputeSubResourceData>(),
+                loadBalancerBackendAddressPools ?? new ChangeTrackingList<ComputeSubResourceData>(),
                 additionalBinaryDataProperties);
         }
     }

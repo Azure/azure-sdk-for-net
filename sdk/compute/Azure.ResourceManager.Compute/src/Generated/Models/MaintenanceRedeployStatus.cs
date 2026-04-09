@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="lastOperationResultCode"> The Last Maintenance Operation Result Code. </param>
         /// <param name="lastOperationMessage"> Message returned for the last Maintenance Operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MaintenanceRedeployStatus(bool? isCustomerInitiatedMaintenanceAllowed, DateTimeOffset? preMaintenanceWindowStartOn, DateTimeOffset? preMaintenanceWindowEndOn, DateTimeOffset? maintenanceWindowStartOn, DateTimeOffset? maintenanceWindowEndOn, MaintenanceOperationResultCodeTypes? lastOperationResultCode, string lastOperationMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MaintenanceRedeployStatus(bool? isCustomerInitiatedMaintenanceAllowed, DateTimeOffset? preMaintenanceWindowStartOn, DateTimeOffset? preMaintenanceWindowEndOn, DateTimeOffset? maintenanceWindowStartOn, DateTimeOffset? maintenanceWindowEndOn, MaintenanceOperationResultCodeType? lastOperationResultCode, string lastOperationMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsCustomerInitiatedMaintenanceAllowed = isCustomerInitiatedMaintenanceAllowed;
             PreMaintenanceWindowStartOn = preMaintenanceWindowStartOn;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Compute.Models
         public DateTimeOffset? MaintenanceWindowEndOn { get; }
 
         /// <summary> The Last Maintenance Operation Result Code. </summary>
-        public MaintenanceOperationResultCodeTypes? LastOperationResultCode { get; }
+        public MaintenanceOperationResultCodeType? LastOperationResultCode { get; }
 
         /// <summary> Message returned for the last Maintenance Operation. </summary>
         public string LastOperationMessage { get; }

@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             bool? constrainedMaximumCapacity = default;
-            SubResource defaultVirtualMachineScaleSet = default;
+            ComputeSubResourceData defaultVirtualMachineScaleSet = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    defaultVirtualMachineScaleSet = SubResource.DeserializeSubResource(prop.Value, options);
+                    defaultVirtualMachineScaleSet = ComputeSubResourceData.DeserializeComputeSubResourceData(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

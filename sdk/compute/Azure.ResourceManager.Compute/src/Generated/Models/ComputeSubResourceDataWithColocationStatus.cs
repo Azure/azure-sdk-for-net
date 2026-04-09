@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The ComputeSubResourceDataWithColocationStatus. </summary>
-    public partial class ComputeSubResourceDataWithColocationStatus : SubResource
+    public partial class ComputeSubResourceDataWithColocationStatus : ComputeSubResourceData
     {
         /// <summary> Initializes a new instance of <see cref="ComputeSubResourceDataWithColocationStatus"/>. </summary>
         internal ComputeSubResourceDataWithColocationStatus()

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="auxiliaryMode"> Specifies whether the Auxiliary mode is enabled for the Network Interface resource. </param>
         /// <param name="auxiliarySku"> Specifies whether the Auxiliary sku is enabled for the Network Interface resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineScaleSetUpdateNetworkConfigurationProperties(bool? primary, bool? enableAcceleratedNetworking, bool? disableTcpStateTracking, bool? enableFpga, SubResource networkSecurityGroup, VirtualMachineScaleSetNetworkConfigurationDnsSettings dnsSettings, IList<VirtualMachineScaleSetUpdateIPConfiguration> ipConfigurations, bool? enableIPForwarding, DeleteOptions? deleteOption, NetworkInterfaceAuxiliaryMode? auxiliaryMode, NetworkInterfaceAuxiliarySku? auxiliarySku, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineScaleSetUpdateNetworkConfigurationProperties(bool? primary, bool? enableAcceleratedNetworking, bool? disableTcpStateTracking, bool? enableFpga, ComputeSubResourceData networkSecurityGroup, VirtualMachineScaleSetNetworkConfigurationDnsSettings dnsSettings, IList<VirtualMachineScaleSetUpdateIPConfiguration> ipConfigurations, bool? enableIPForwarding, DeleteOptions? deleteOption, NetworkInterfaceAuxiliaryMode? auxiliaryMode, NetworkInterfaceAuxiliarySku? auxiliarySku, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Primary = primary;
             EnableAcceleratedNetworking = enableAcceleratedNetworking;
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Compute.Models
         public bool? EnableFpga { get; set; }
 
         /// <summary> The network security group. </summary>
-        internal SubResource NetworkSecurityGroup { get; set; }
+        internal ComputeSubResourceData NetworkSecurityGroup { get; set; }
 
         /// <summary> The dns settings to be applied on the network interfaces. </summary>
         internal VirtualMachineScaleSetNetworkConfigurationDnsSettings DnsSettings { get; set; }
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (NetworkSecurityGroup is null)
                 {
-                    NetworkSecurityGroup = new SubResource();
+                    NetworkSecurityGroup = new ComputeSubResourceData();
                 }
                 NetworkSecurityGroup.Id = value;
             }

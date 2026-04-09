@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 writer.WritePropertyName("applicationGatewayBackendAddressPools"u8);
                 writer.WriteStartArray();
-                foreach (SubResource item in ApplicationGatewayBackendAddressPools)
+                foreach (ComputeSubResourceData item in ApplicationGatewayBackendAddressPools)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 writer.WritePropertyName("applicationSecurityGroups"u8);
                 writer.WriteStartArray();
-                foreach (SubResource item in ApplicationSecurityGroups)
+                foreach (ComputeSubResourceData item in ApplicationSecurityGroups)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 writer.WritePropertyName("loadBalancerBackendAddressPools"u8);
                 writer.WriteStartArray();
-                foreach (SubResource item in LoadBalancerBackendAddressPools)
+                foreach (ComputeSubResourceData item in LoadBalancerBackendAddressPools)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 writer.WritePropertyName("loadBalancerInboundNatPools"u8);
                 writer.WriteStartArray();
-                foreach (SubResource item in LoadBalancerInboundNatPools)
+                foreach (ComputeSubResourceData item in LoadBalancerInboundNatPools)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -180,10 +180,10 @@ namespace Azure.ResourceManager.Compute.Models
             bool? primary = default;
             VirtualMachineScaleSetUpdatePublicIPAddressConfiguration publicIPAddressConfiguration = default;
             IPVersion? privateIPAddressVersion = default;
-            IList<SubResource> applicationGatewayBackendAddressPools = default;
-            IList<SubResource> applicationSecurityGroups = default;
-            IList<SubResource> loadBalancerBackendAddressPools = default;
-            IList<SubResource> loadBalancerInboundNatPools = default;
+            IList<ComputeSubResourceData> applicationGatewayBackendAddressPools = default;
+            IList<ComputeSubResourceData> applicationSecurityGroups = default;
+            IList<ComputeSubResourceData> loadBalancerBackendAddressPools = default;
+            IList<ComputeSubResourceData> loadBalancerInboundNatPools = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -229,10 +229,10 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    List<SubResource> array = new List<SubResource>();
+                    List<ComputeSubResourceData> array = new List<ComputeSubResourceData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SubResource.DeserializeSubResource(item, options));
+                        array.Add(ComputeSubResourceData.DeserializeComputeSubResourceData(item, options));
                     }
                     applicationGatewayBackendAddressPools = array;
                     continue;
@@ -243,10 +243,10 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    List<SubResource> array = new List<SubResource>();
+                    List<ComputeSubResourceData> array = new List<ComputeSubResourceData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SubResource.DeserializeSubResource(item, options));
+                        array.Add(ComputeSubResourceData.DeserializeComputeSubResourceData(item, options));
                     }
                     applicationSecurityGroups = array;
                     continue;
@@ -257,10 +257,10 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    List<SubResource> array = new List<SubResource>();
+                    List<ComputeSubResourceData> array = new List<ComputeSubResourceData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SubResource.DeserializeSubResource(item, options));
+                        array.Add(ComputeSubResourceData.DeserializeComputeSubResourceData(item, options));
                     }
                     loadBalancerBackendAddressPools = array;
                     continue;
@@ -271,10 +271,10 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    List<SubResource> array = new List<SubResource>();
+                    List<ComputeSubResourceData> array = new List<ComputeSubResourceData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SubResource.DeserializeSubResource(item, options));
+                        array.Add(ComputeSubResourceData.DeserializeComputeSubResourceData(item, options));
                     }
                     loadBalancerInboundNatPools = array;
                     continue;
@@ -289,10 +289,10 @@ namespace Azure.ResourceManager.Compute.Models
                 primary,
                 publicIPAddressConfiguration,
                 privateIPAddressVersion,
-                applicationGatewayBackendAddressPools ?? new ChangeTrackingList<SubResource>(),
-                applicationSecurityGroups ?? new ChangeTrackingList<SubResource>(),
-                loadBalancerBackendAddressPools ?? new ChangeTrackingList<SubResource>(),
-                loadBalancerInboundNatPools ?? new ChangeTrackingList<SubResource>(),
+                applicationGatewayBackendAddressPools ?? new ChangeTrackingList<ComputeSubResourceData>(),
+                applicationSecurityGroups ?? new ChangeTrackingList<ComputeSubResourceData>(),
+                loadBalancerBackendAddressPools ?? new ChangeTrackingList<ComputeSubResourceData>(),
+                loadBalancerInboundNatPools ?? new ChangeTrackingList<ComputeSubResourceData>(),
                 additionalBinaryDataProperties);
         }
     }

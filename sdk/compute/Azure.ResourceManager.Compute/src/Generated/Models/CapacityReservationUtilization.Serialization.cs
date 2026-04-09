@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 writer.WritePropertyName("virtualMachinesAllocated"u8);
                 writer.WriteStartArray();
-                foreach (SubResourceReadOnly item in VirtualMachinesAllocated)
+                foreach (ComputeWriteableSubResourceData item in VirtualMachinesAllocated)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             int? currentCapacity = default;
-            IReadOnlyList<SubResourceReadOnly> virtualMachinesAllocated = default;
+            IReadOnlyList<ComputeWriteableSubResourceData> virtualMachinesAllocated = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -151,10 +151,10 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    List<SubResourceReadOnly> array = new List<SubResourceReadOnly>();
+                    List<ComputeWriteableSubResourceData> array = new List<ComputeWriteableSubResourceData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SubResourceReadOnly.DeserializeSubResourceReadOnly(item, options));
+                        array.Add(ComputeWriteableSubResourceData.DeserializeComputeWriteableSubResourceData(item, options));
                     }
                     virtualMachinesAllocated = array;
                     continue;
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CapacityReservationUtilization(currentCapacity, virtualMachinesAllocated ?? new ChangeTrackingList<SubResourceReadOnly>(), additionalBinaryDataProperties);
+            return new CapacityReservationUtilization(currentCapacity, virtualMachinesAllocated ?? new ChangeTrackingList<ComputeWriteableSubResourceData>(), additionalBinaryDataProperties);
         }
     }
 }

@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            UpgradeMode? mode = default;
+            VirtualMachineScaleSetUpgradeMode? mode = default;
             RollingUpgradePolicy rollingUpgradePolicy = default;
             AutomaticOSUpgradePolicy automaticOSUpgradePolicy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    mode = prop.Value.GetString().ToUpgradeMode();
+                    mode = prop.Value.GetString().ToVirtualMachineScaleSetUpgradeMode();
                     continue;
                 }
                 if (prop.NameEquals("rollingUpgradePolicy"u8))

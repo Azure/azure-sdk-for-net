@@ -553,8 +553,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="artifactType"/> or <paramref name="artifactName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="artifactType"/> or <paramref name="artifactName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="GallerySoftDeletedResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<GallerySoftDeletedResource> GetByArtifactNameAsync(string artifactType, string artifactName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="GallerySoftDeletedResourceDetails"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<GallerySoftDeletedResourceDetails> GetByArtifactNameAsync(string artifactType, string artifactName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(artifactType, nameof(artifactType));
             Argument.AssertNotNullOrEmpty(artifactName, nameof(artifactName));
@@ -600,8 +600,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="artifactType"/> or <paramref name="artifactName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="artifactType"/> or <paramref name="artifactName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="GallerySoftDeletedResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<GallerySoftDeletedResource> GetByArtifactName(string artifactType, string artifactName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="GallerySoftDeletedResourceDetails"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<GallerySoftDeletedResourceDetails> GetByArtifactName(string artifactType, string artifactName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(artifactType, nameof(artifactType));
             Argument.AssertNotNullOrEmpty(artifactName, nameof(artifactName));
