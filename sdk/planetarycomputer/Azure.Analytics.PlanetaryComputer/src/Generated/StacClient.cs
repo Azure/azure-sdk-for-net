@@ -3549,47 +3549,19 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary> List all queryables in the GeoCatalog instance. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<IReadOnlyDictionary<string, BinaryData>> GetQueryables(CancellationToken cancellationToken = default)
+        public virtual Response<QueryableDefinitionsResponse> GetQueryables(CancellationToken cancellationToken = default)
         {
             Response result = GetQueryables(cancellationToken.ToRequestContext());
-            IDictionary<string, BinaryData> value = new Dictionary<string, BinaryData>();
-            BinaryData data = result.Content;
-            using JsonDocument document = JsonDocument.Parse(data);
-            foreach (var item in document.RootElement.EnumerateObject())
-            {
-                if (item.Value.ValueKind == JsonValueKind.Null)
-                {
-                    value.Add(item.Name, null);
-                }
-                else
-                {
-                    value.Add(item.Name, BinaryData.FromString(item.Value.GetRawText()));
-                }
-            }
-            return Response.FromValue((IReadOnlyDictionary<string, BinaryData>)value, result);
+            return Response.FromValue((QueryableDefinitionsResponse)result, result);
         }
 
         /// <summary> List all queryables in the GeoCatalog instance. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<IReadOnlyDictionary<string, BinaryData>>> GetQueryablesAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<QueryableDefinitionsResponse>> GetQueryablesAsync(CancellationToken cancellationToken = default)
         {
             Response result = await GetQueryablesAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            IDictionary<string, BinaryData> value = new Dictionary<string, BinaryData>();
-            BinaryData data = result.Content;
-            using JsonDocument document = JsonDocument.Parse(data);
-            foreach (var item in document.RootElement.EnumerateObject())
-            {
-                if (item.Value.ValueKind == JsonValueKind.Null)
-                {
-                    value.Add(item.Name, null);
-                }
-                else
-                {
-                    value.Add(item.Name, BinaryData.FromString(item.Value.GetRawText()));
-                }
-            }
-            return Response.FromValue((IReadOnlyDictionary<string, BinaryData>)value, result);
+            return Response.FromValue((QueryableDefinitionsResponse)result, result);
         }
 
         /// <summary>
@@ -3662,26 +3634,12 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<IReadOnlyDictionary<string, BinaryData>> GetCollectionQueryables(string collectionId, CancellationToken cancellationToken = default)
+        public virtual Response<QueryableDefinitionsResponse> GetCollectionQueryables(string collectionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
             Response result = GetCollectionQueryables(collectionId, cancellationToken.ToRequestContext());
-            IDictionary<string, BinaryData> value = new Dictionary<string, BinaryData>();
-            BinaryData data = result.Content;
-            using JsonDocument document = JsonDocument.Parse(data);
-            foreach (var item in document.RootElement.EnumerateObject())
-            {
-                if (item.Value.ValueKind == JsonValueKind.Null)
-                {
-                    value.Add(item.Name, null);
-                }
-                else
-                {
-                    value.Add(item.Name, BinaryData.FromString(item.Value.GetRawText()));
-                }
-            }
-            return Response.FromValue((IReadOnlyDictionary<string, BinaryData>)value, result);
+            return Response.FromValue((QueryableDefinitionsResponse)result, result);
         }
 
         /// <summary> List all queryables in a given collection. </summary>
@@ -3690,26 +3648,12 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<IReadOnlyDictionary<string, BinaryData>>> GetCollectionQueryablesAsync(string collectionId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<QueryableDefinitionsResponse>> GetCollectionQueryablesAsync(string collectionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
             Response result = await GetCollectionQueryablesAsync(collectionId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            IDictionary<string, BinaryData> value = new Dictionary<string, BinaryData>();
-            BinaryData data = result.Content;
-            using JsonDocument document = JsonDocument.Parse(data);
-            foreach (var item in document.RootElement.EnumerateObject())
-            {
-                if (item.Value.ValueKind == JsonValueKind.Null)
-                {
-                    value.Add(item.Name, null);
-                }
-                else
-                {
-                    value.Add(item.Name, BinaryData.FromString(item.Value.GetRawText()));
-                }
-            }
-            return Response.FromValue((IReadOnlyDictionary<string, BinaryData>)value, result);
+            return Response.FromValue((QueryableDefinitionsResponse)result, result);
         }
 
         /// <summary>

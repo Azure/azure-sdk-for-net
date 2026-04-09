@@ -1,6 +1,6 @@
 # Release History
 
-## 12.26.0-beta.2 (Unreleased)
+## 12.27.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,13 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 12.27.0-beta.1 (2026-03-24)
+
+### Features Added
+- Added support for service version 2026-06-06.
+- Added DataLakePathClient, DataLakeFileClient, and DataLakeDirectoryClient.GetSystemProperties() and .GetSystemPropertiesAsync().
+- Added DataLakePathClient, DataLakeFileClient, and DataLakeDirectoryClient.GetTags(), .GetTagsAsync(), .SetTags(), and .SetTagsAsync().
 
 ## 12.26.0-beta.1 (2026-01-20)
 
@@ -32,6 +39,9 @@
 - Added support for service version 2026-02-06.
 - Added support for Principal-Bound Identity User Delegation SAS
 - Added support for the StartFrom parameter on DataLakeFileSystemClient.GetPaths() and .GetPathsAsync().
+
+### Breaking Changes
+- All parameters for the existing DataLakeFileSystemClient.GetPaths() and .GetPathsAsync() overloads are now required, as these overloads are being phased out and hidden from IntelliSense.  We recommend switching to the new overloads taking optional DataLakeGetPathsOptions.
 
 ## 12.24.0 (2025-10-13)
 

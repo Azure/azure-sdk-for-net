@@ -3,8 +3,8 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.NetApp
         /// <summary> ResourceId used to identify the backup policy. </summary>
         public string BackupPolicyResourceId
         {
-            get { return BackupPolicyArmResourceId?.ToString();}
+            get { return BackupPolicyArmResourceId?.ToString(); }
         }
     }
 }

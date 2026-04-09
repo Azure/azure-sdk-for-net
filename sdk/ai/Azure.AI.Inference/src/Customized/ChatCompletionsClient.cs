@@ -123,7 +123,8 @@ namespace Azure.AI.Inference
                 chatCompletions = ChatCompletions.FromResponse(response);
                 otelScope?.RecordResponse(chatCompletions);
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 otelScope?.RecordError(ex);
                 throw;
             }

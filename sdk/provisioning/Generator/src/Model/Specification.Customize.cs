@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 
 namespace Azure.Provisioning.Generator.Model;
@@ -68,10 +69,17 @@ public abstract partial class Specification : ModelBase
 
     private static void CustomizeProperty(ModelBase model, string propertyName, Action<Property> action)
     {
-        TypeModel typeModel = model as TypeModel ??
-            throw new InvalidOperationException($"Failed to find {model.Name} to customize property!");
-        Property? property = typeModel.Properties.FirstOrDefault(p => p.Name == propertyName) ??
-            throw new InvalidOperationException($"Failed to find {model.Name}.{propertyName} to customize!");
+        if (model is not TypeModel typeModel)
+        {
+            Console.WriteLine($"  >> Warning: Failed to find {model.Name} to customize property {propertyName}.");
+            return;
+        }
+        Property? property = typeModel.Properties.FirstOrDefault(p => p.Name == propertyName);
+        if (property is null)
+        {
+            Console.WriteLine($"  >> Warning: Failed to find {model.Name}.{propertyName} to customize.");
+            return;
+        }
         action(property);
     }
 
@@ -87,9 +95,15 @@ public abstract partial class Specification : ModelBase
     {
         TypeModel model = GetModel<T>() as TypeModel ??
             throw new InvalidOperationException($"Failed to find {typeof(T).FullName} to remove property!");
-        Property property = model.Properties.FirstOrDefault(p => p.Name == propertyName) ??
-            throw new InvalidOperationException($"Failed to find property {propertyName} on type {typeof(T).FullName} to remove!");
-        model.Properties.Remove(property);
+        Property? property = model.Properties.FirstOrDefault(p => p.Name == propertyName);
+        if (property is not null)
+        {
+            model.Properties.Remove(property);
+        }
+        else
+        {
+            Console.WriteLine($"  >> Warning: Failed to find property {propertyName} on type {typeof(T).FullName} to remove.");
+        }
     }
 
     public void AddNameRequirements<T>(
@@ -115,13 +129,53 @@ public abstract partial class Specification : ModelBase
         }
     }
 
+    public EnumModel IncludeEnum<T>()
+    {
+        // If the enum already exists, just return it
+        ModelBase? existing = ModelArmTypeMapping.GetValueOrDefault(typeof(T));
+        if (existing is EnumModel existingEnum) { return existingEnum; }
+
+        Type armType = typeof(T);
+        EnumModel model = new(armType, armType.Name, Namespace, DocComments.GetSummary(armType))
+        {
+            Spec = this
+        };
+        ModelNameMapping[model.Name] = model;
+        ModelArmTypeMapping[model.ArmType!] = model;
+
+        if (armType.IsEnum)
+        {
+            foreach (FieldInfo field in armType.GetFields())
+            {
+                if (field.IsSpecialName) { continue; }
+                string? summary = DocComments.GetSummary(field);
+                string? value = summary?.TrimEnd('.');
+                model.AddValue(field.Name, value, summary);
+            }
+        }
+        else
+        {
+            foreach (PropertyInfo property in armType.GetProperties()
+                .Where(p => p.CanRead && !p.CanWrite && p.GetMethod!.IsStatic && p.PropertyType == armType))
+            {
+                string? value = null;
+                try { value = property.GetValue(null)?.ToString(); }
+                catch (Exception) { }
+                model.AddValue(property.Name, value, DocComments.GetSummary(property));
+            }
+        }
+
+        return model;
+    }
+
     public void IncludeVersions<T>(params string[] apiVersions)
     {
         Resource resource = GetResource<T>();
+        resource.ResourceVersions ??= [];
         for (int i = apiVersions.Length - 1; i >= 0; i--)
         {
-            if (resource.ResourceVersions!.Contains(apiVersions[i])) { continue; }
-            resource.ResourceVersions!.Insert(0, apiVersions[i]);
+            if (resource.ResourceVersions.Contains(apiVersions[i])) { continue; }
+            resource.ResourceVersions.Insert(0, apiVersions[i]);
         }
     }
 

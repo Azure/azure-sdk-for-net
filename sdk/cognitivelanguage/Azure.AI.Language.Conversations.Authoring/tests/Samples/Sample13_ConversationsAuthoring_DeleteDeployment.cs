@@ -2,12 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading.Tasks;
 using Azure;
 using Azure.AI.Language.Conversations.Authoring;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
-using System.Threading.Tasks;
 
 namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
 {
@@ -19,16 +19,12 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
+            ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential);
 
             #region Snippet:Sample13_ConversationsAuthoring_DeleteDeployment
             string projectName = "{projectName}";
             string deploymentName = "{deploymentName}";
-            ConversationAuthoringDeployment deploymentClient = client.GetDeployment(projectName, deploymentName);
-
-            Operation operation = deploymentClient.DeleteDeployment(
-                waitUntil: WaitUntil.Completed
-            );
+            Operation operation = client.DeleteDeployment(WaitUntil.Completed, projectName, deploymentName);
 
             // Extract operation-location from response headers
             string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out string location) ? location : "Not found";
@@ -43,16 +39,12 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
+            ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential);
 
             #region Snippet:Sample13_ConversationsAuthoring_DeleteDeploymentAsync
             string projectName = "{projectName}";
             string deploymentName = "{deploymentName}";
-            ConversationAuthoringDeployment deploymentClient = client.GetDeployment(projectName, deploymentName);
-
-            Operation operation = await deploymentClient.DeleteDeploymentAsync(
-                waitUntil: WaitUntil.Completed
-            );
+            Operation operation = await client.DeleteDeploymentAsync(WaitUntil.Completed, projectName, deploymentName);
 
             // Extract operation-location from response headers
             string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out string location) ? location : "Not found";

@@ -51,3 +51,45 @@ export function getSharedSegmentCount(left: string, right: string): number {
   }
   return count;
 }
+
+/**
+ * Counts the number of "providers" segments in a path.
+ * Direct resources have 1, extension resources have 2+.
+ * E.g., ".../providers/Microsoft.Compute/.../providers/Microsoft.GuestConfiguration/..." returns 2.
+ */
+export function countProviderSegments(path: string): number {
+  const segments = path.split("/").filter((s) => s !== "");
+  return segments.filter((s) => s === "providers").length;
+}
+
+/**
+ * Finds the candidate whose path is the longest prefix match against the target path.
+ * @param targetPath the path to match against
+ * @param candidates the list of candidates to search
+ * @param getPath extracts the path from a candidate; return undefined to skip
+ * @param properPrefix if true, requires the candidate path to be a proper prefix (not equal)
+ * @returns the best matching candidate, or undefined if no match
+ */
+export function findLongestPrefixMatch<T>(
+  targetPath: string,
+  candidates: T[],
+  getPath: (candidate: T) => string | undefined,
+  properPrefix: boolean = false
+): T | undefined {
+  let bestMatch: T | undefined;
+  let bestSegmentCount = 0;
+
+  for (const candidate of candidates) {
+    const candidatePath = getPath(candidate);
+    if (!candidatePath) continue;
+    if (!isPrefix(candidatePath, targetPath)) continue;
+    if (properPrefix && isPrefix(targetPath, candidatePath)) continue;
+
+    const segmentCount = getSharedSegmentCount(candidatePath, targetPath);
+    if (segmentCount > bestSegmentCount) {
+      bestSegmentCount = segmentCount;
+      bestMatch = candidate;
+    }
+  }
+  return bestMatch;
+}

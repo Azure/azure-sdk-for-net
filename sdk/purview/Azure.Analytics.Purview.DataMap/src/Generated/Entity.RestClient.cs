@@ -17,9 +17,9 @@ namespace Azure.Analytics.Purview.DataMap
         private static ResponseClassifier _pipelineMessageClassifier200;
         private static ResponseClassifier _pipelineMessageClassifier204;
 
-        private static ResponseClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 = new StatusCodeClassifier(stackalloc ushort[] { 200 });
+        private static ResponseClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
 
-        private static ResponseClassifier PipelineMessageClassifier204 => _pipelineMessageClassifier204 = new StatusCodeClassifier(stackalloc ushort[] { 204 });
+        private static ResponseClassifier PipelineMessageClassifier204 => _pipelineMessageClassifier204 ??= new StatusCodeClassifier(stackalloc ushort[] { 204 });
 
         internal HttpMessage CreateCreateOrUpdateRequest(RequestContent content, string businessAttributeUpdateBehavior, string collectionId, RequestContext context)
         {
@@ -589,7 +589,7 @@ namespace Azure.Analytics.Purview.DataMap
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Delete;
-            if ("application/json" != null)
+            if (content != null)
             {
                 request.Headers.SetValue("Content-Type", "application/json");
             }
@@ -609,7 +609,7 @@ namespace Azure.Analytics.Purview.DataMap
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
-            if ("application/json" != null)
+            if (content != null)
             {
                 request.Headers.SetValue("Content-Type", "application/json");
             }
@@ -629,7 +629,7 @@ namespace Azure.Analytics.Purview.DataMap
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Put;
-            if ("application/json" != null)
+            if (content != null)
             {
                 request.Headers.SetValue("Content-Type", "application/json");
             }
@@ -653,7 +653,7 @@ namespace Azure.Analytics.Purview.DataMap
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Delete;
-            if ("application/json" != null)
+            if (content != null)
             {
                 request.Headers.SetValue("Content-Type", "application/json");
             }
@@ -677,7 +677,7 @@ namespace Azure.Analytics.Purview.DataMap
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
-            if ("application/json" != null)
+            if (content != null)
             {
                 request.Headers.SetValue("Content-Type", "application/json");
             }
@@ -701,7 +701,7 @@ namespace Azure.Analytics.Purview.DataMap
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Put;
-            if ("application/json" != null)
+            if (content != null)
             {
                 request.Headers.SetValue("Content-Type", "application/json");
             }

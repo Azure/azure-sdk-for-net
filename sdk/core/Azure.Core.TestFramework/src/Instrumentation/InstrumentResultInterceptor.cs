@@ -54,7 +54,7 @@ namespace Azure.Core.TestFramework
                 return;
             }
 
-            if (type is {IsGenericType: true, GenericTypeArguments: {} arguments } &&
+            if (type is { IsGenericType: true, GenericTypeArguments: { } arguments } &&
                 type.GetGenericTypeDefinition() == typeof(Task<>) &&
                 typeof(Operation).IsAssignableFrom(arguments[0]))
             {
@@ -131,7 +131,7 @@ namespace Azure.Core.TestFramework
 
         internal async ValueTask<T> InstrumentOperationInterceptor<T>(IInvocation invocation, Func<ValueTask<T>> innerTask)
         {
-            return (T) _testBase.InstrumentOperation(typeof(T), await innerTask());
+            return (T)_testBase.InstrumentOperation(typeof(T), await innerTask());
         }
 
         private bool IsNullResult(IInvocation invocation)

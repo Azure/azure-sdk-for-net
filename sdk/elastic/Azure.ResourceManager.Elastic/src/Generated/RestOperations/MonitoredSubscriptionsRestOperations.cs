@@ -53,7 +53,10 @@ namespace Azure.ResourceManager.Elastic
             uri.AppendPath(monitorName, true);
             uri.AppendPath("/monitoredSubscriptions/", false);
             uri.AppendPath(configurationName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -74,12 +77,15 @@ namespace Azure.ResourceManager.Elastic
             uri.AppendPath(monitorName, true);
             uri.AppendPath("/monitoredSubscriptions/", false);
             uri.AppendPath(configurationName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Put;
-            if ("application/json" != null)
+            if (content != null)
             {
                 request.Headers.SetValue("Content-Type", "application/json");
             }
@@ -100,12 +106,15 @@ namespace Azure.ResourceManager.Elastic
             uri.AppendPath(monitorName, true);
             uri.AppendPath("/monitoredSubscriptions/", false);
             uri.AppendPath(configurationName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Patch;
-            if ("application/json" != null)
+            if (content != null)
             {
                 request.Headers.SetValue("Content-Type", "application/json");
             }
@@ -126,7 +135,10 @@ namespace Azure.ResourceManager.Elastic
             uri.AppendPath(monitorName, true);
             uri.AppendPath("/monitoredSubscriptions/", false);
             uri.AppendPath(configurationName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -145,7 +157,10 @@ namespace Azure.ResourceManager.Elastic
             uri.AppendPath("/providers/Microsoft.Elastic/monitors/", false);
             uri.AppendPath(monitorName, true);
             uri.AppendPath("/monitoredSubscriptions", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -157,7 +172,18 @@ namespace Azure.ResourceManager.Elastic
         internal HttpMessage CreateNextGetAllRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string monitorName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

@@ -1,13 +1,14 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 #nullable disable
 
 using System;
-using Azure.Core;
 
+using Microsoft.TypeSpec.Generator.Customizations;
 namespace Azure.AI.Agents.Persistent
 {
     [CodeGenSuppress("AzureFunctionToolDefinition", typeof(InternalAzureFunctionDefinition))]
+    [CodeGenSuppress("InternalAzureFunction")]
     public partial class AzureFunctionToolDefinition
     {
         /// <inheritdoc cref="InternalFunctionDefinition.Name"/>
@@ -32,7 +33,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="parameters"> The parameters the Azure functions accepts, described as a JSON Schema object. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="description"/> or <paramref name="parameters"/> is null. </exception>
         public AzureFunctionToolDefinition(string name, string description, AzureFunctionBinding inputBinding, AzureFunctionBinding outputBinding, BinaryData parameters)
-            : this(type: "azure_function", serializedAdditionalRawData: null, new InternalAzureFunctionDefinition(new InternalFunctionDefinition(name, description, parameters, serializedAdditionalRawData: null), inputBinding: inputBinding, outputBinding: outputBinding))
+            : this(type: "azure_function", additionalBinaryDataProperties: null, new InternalAzureFunctionDefinition(new InternalFunctionDefinition(name, description, parameters, additionalBinaryDataProperties: null), inputBinding: inputBinding, outputBinding: outputBinding))
         {
         }
 

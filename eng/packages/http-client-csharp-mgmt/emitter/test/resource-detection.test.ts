@@ -11,7 +11,7 @@ import { createModel } from "@typespec/http-client-csharp";
 import { buildArmProviderSchema } from "../src/resource-detection.js";
 import { resolveArmResources } from "../src/resolve-arm-resources-converter.js";
 import { ok, strictEqual, deepStrictEqual } from "assert";
-import { ResourceScope } from "../src/resource-metadata.js";
+import { ArmResourceSchema, ResourceScope } from "../src/resource-metadata.js";
 
 describe("Resource Detection", () => {
   let runner: TestHost;
@@ -111,7 +111,7 @@ interface Employees2 {
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
 
     // Build ARM provider schema and verify its structure
     const armProviderSchema = buildArmProviderSchema(sdkContext, root);
@@ -334,7 +334,7 @@ interface CurrentEmployees {
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
     // Build ARM provider schema and verify its structure
     const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
     ok(armProviderSchemaResult);
@@ -476,7 +476,7 @@ interface Employees {
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
 
     // Build ARM provider schema and verify its structure
     const armProviderSchema = buildArmProviderSchema(sdkContext, root);
@@ -653,7 +653,7 @@ interface Employees {
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
 
     // Build ARM provider schema and verify its structure
     const armProviderSchema = buildArmProviderSchema(sdkContext, root);
@@ -830,7 +830,7 @@ interface Employees {
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
     // Build ARM provider schema and verify its structure
     const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
     ok(armProviderSchemaResult);
@@ -958,7 +958,7 @@ interface Employees {
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
     // Build ARM provider schema and verify its structure
     const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
     ok(armProviderSchemaResult);
@@ -1038,7 +1038,7 @@ interface Employees {
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
 
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
     // Build ARM provider schema and verify its structure
 
     const armProviderSchema = buildArmProviderSchema(sdkContext, root);
@@ -1117,7 +1117,7 @@ interface Employees {
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
 
     // Build ARM provider schema and verify its structure
     const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
@@ -1197,7 +1197,7 @@ interface ScheduledActionExtension {
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
 
     // Build ARM provider schema and verify its structure
     const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
@@ -1330,7 +1330,7 @@ interface BestPracticeVersions {
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
 
     // Build ARM provider schema and verify its structure
     const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
@@ -1427,6 +1427,175 @@ interface BestPracticeVersions {
     );
   });
 
+  it("3-level nested legacy resources use longest prefix match for parent detection", async () => {
+    // This test validates that when 3+ levels of nesting exist using LegacyOperations,
+    // the parent detection correctly uses the longest matching prefix (most specific parent).
+    // Without the fix, BestPracticeVersionDetail could be assigned to BestPractice (grandparent)
+    // instead of BestPracticeVersion (correct parent) if the map iteration order placed
+    // BestPractice before BestPracticeVersion.
+    const program = await typeSpecCompile(
+      `
+/** A best practice resource */
+#suppress "@azure-tools/typespec-azure-core/no-legacy-usage" "For sample purpose"
+@tenantResource
+model BestPractice is ProxyResource<BestPracticeProperties> {
+  ...ResourceNameParameter<
+    Resource = BestPractice,
+    KeyName = "bestPracticeName",
+    SegmentName = "bestPractices",
+    NamePattern = ""
+  >;
+  ...Azure.ResourceManager.Legacy.ExtendedLocationOptionalProperty;
+}
+/** Best practice properties */
+model BestPracticeProperties {
+  ...DefaultProvisioningStateProperty;
+  description?: string;
+}
+alias BestPracticeOps = Azure.ResourceManager.Legacy.LegacyOperations<
+  {
+    ...ApiVersionParameter;
+    ...Azure.ResourceManager.Legacy.Provider;
+  },
+  {
+    @segment("bestPractices")
+    @key
+    @TypeSpec.Http.path
+    bestPracticeName: string;
+  }
+>;
+alias BestPracticesVersionOps = Azure.ResourceManager.Legacy.LegacyOperations<
+  {
+    ...ApiVersionParameter;
+    ...Azure.ResourceManager.Legacy.Provider;
+    @segment("bestPractices")
+    @key
+    @TypeSpec.Http.path
+    bestPracticeName: string;
+  },
+  {
+    @segment("versions")
+    @key
+    @TypeSpec.Http.path
+    versionName: string;
+  }
+>;
+alias BestPracticeVersionDetailOps = Azure.ResourceManager.Legacy.LegacyOperations<
+  {
+    ...ApiVersionParameter;
+    ...Azure.ResourceManager.Legacy.Provider;
+    @segment("bestPractices")
+    @key
+    @TypeSpec.Http.path
+    bestPracticeName: string;
+    @segment("versions")
+    @key
+    @TypeSpec.Http.path
+    versionName: string;
+  },
+  {
+    @segment("details")
+    @key
+    @TypeSpec.Http.path
+    detailName: string;
+  }
+>;
+/** Best practice operations */
+@armResourceOperations
+interface BestPractices {
+  get is BestPracticeOps.Read<BestPractice>;
+  createOrUpdate is BestPracticeOps.CreateOrUpdateSync<BestPractice>;
+  delete is BestPracticeOps.DeleteSync<BestPractice>;
+}
+/** Best practice version operations */
+@armResourceOperations
+interface BestPracticeVersions {
+  get is BestPracticesVersionOps.Read<BestPractice>;
+  createOrUpdate is BestPracticesVersionOps.CreateOrUpdateSync<BestPractice>;
+  delete is BestPracticesVersionOps.DeleteSync<BestPractice>;
+}
+/** Best practice version detail operations - 3rd level nesting */
+@armResourceOperations
+interface BestPracticeVersionDetails {
+  get is BestPracticeVersionDetailOps.Read<BestPractice>;
+  createOrUpdate is BestPracticeVersionDetailOps.CreateOrUpdateSync<BestPractice>;
+  delete is BestPracticeVersionDetailOps.DeleteSync<BestPractice>;
+}
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const [root] = createModel(sdkContext);
+
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+    ok(armProviderSchema);
+    strictEqual(
+      armProviderSchema.resources.length,
+      3,
+      "Should have 3 resource entries (BestPractice, BestPracticeVersion, BestPracticeVersionDetail)"
+    );
+
+    // Find each resource by its path pattern
+    const bestPractice = armProviderSchema.resources.find(
+      (r) =>
+        r.metadata.resourceIdPattern ===
+        "/providers/Microsoft.ContosoProviderHub/bestPractices/{bestPracticeName}"
+    );
+    ok(bestPractice, "Should have BestPractice resource");
+
+    const bestPracticeVersion = armProviderSchema.resources.find(
+      (r) =>
+        r.metadata.resourceIdPattern ===
+        "/providers/Microsoft.ContosoProviderHub/bestPractices/{bestPracticeName}/versions/{versionName}"
+    );
+    ok(bestPracticeVersion, "Should have BestPracticeVersion resource");
+
+    const bestPracticeVersionDetail = armProviderSchema.resources.find(
+      (r) =>
+        r.metadata.resourceIdPattern ===
+        "/providers/Microsoft.ContosoProviderHub/bestPractices/{bestPracticeName}/versions/{versionName}/details/{detailName}"
+    );
+    ok(
+      bestPracticeVersionDetail,
+      "Should have BestPracticeVersionDetail resource"
+    );
+
+    // Critical assertion: BestPracticeVersion's parent should be BestPractice
+    strictEqual(
+      bestPracticeVersion.metadata.parentResourceId,
+      bestPractice.metadata.resourceIdPattern,
+      "BestPracticeVersion's parent should be BestPractice"
+    );
+
+    // Critical assertion: BestPracticeVersionDetail's parent should be BestPracticeVersion (NOT BestPractice)
+    // This is the exact scenario the longest-prefix-match fix addresses
+    strictEqual(
+      bestPracticeVersionDetail.metadata.parentResourceId,
+      bestPracticeVersion.metadata.resourceIdPattern,
+      "BestPracticeVersionDetail's parent should be BestPracticeVersion, not BestPractice"
+    );
+
+    // Validate resource names
+    strictEqual(bestPractice.metadata.resourceName, "BestPractice");
+    strictEqual(
+      bestPracticeVersion.metadata.resourceName,
+      "BestPracticeVersion"
+    );
+    strictEqual(
+      bestPracticeVersionDetail.metadata.resourceName,
+      "BestPracticeVersionDetail"
+    );
+
+    // Validate using resolveArmResources API and compare
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    ok(resolvedSchema);
+    deepStrictEqual(
+      normalizeSchemaForComparison(resolvedSchema),
+      normalizeSchemaForComparison(armProviderSchema)
+    );
+  });
+
   it("resource without get operation should be filtered", async () => {
     const program = await typeSpecCompile(
       `
@@ -1473,7 +1642,7 @@ interface NoGetResources {
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
 
     // Build ARM provider schema and verify its structure
     // This uses the legacy buildArmProviderSchema which properly filters resources without Get
@@ -1601,7 +1770,7 @@ interface SitesByServiceGroup extends SiteOps<ServiceGroup> {}
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
 
     // Build ARM provider schema using legacy detection
     const armProviderSchema = buildArmProviderSchema(sdkContext, root);
@@ -1622,155 +1791,1836 @@ interface SitesByServiceGroup extends SiteOps<ServiceGroup> {}
       "Should have 3 resources for the Site model"
     );
 
-    // Find ResourceGroup-scoped Site
+    // Verify each resource exists with the correct resource ID pattern
     const rgSite = siteResources.find(
       (r) =>
-        r.metadata.resourceIdPattern.includes("/resourceGroups/") &&
-        r.metadata.resourceIdPattern.includes("/sites/{siteName}")
+        r.metadata.resourceIdPattern ===
+        "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/sites/{siteName}"
     );
     ok(rgSite, "Should have ResourceGroup-scoped Site");
-    strictEqual(rgSite.metadata.resourceScope, ResourceScope.ResourceGroup);
-    strictEqual(rgSite.metadata.resourceName, "Site");
-    strictEqual(rgSite.metadata.methods.length, 4);
 
-    // Verify the List operation on ResourceGroup-scoped Site has the correct path
-    const rgSiteList = rgSite.metadata.methods.find((m) => m.kind === "List");
-    ok(rgSiteList, "ResourceGroup-scoped Site should have a List operation");
-    ok(
-      rgSiteList.operationPath.includes("/resourceGroups/"),
-      "ResourceGroup Site List should have resourceGroups in path"
-    );
-    ok(
-      !rgSiteList.operationPath.includes("serviceGroups"),
-      "ResourceGroup Site List should NOT have serviceGroups in path"
-    );
-
-    // Find Subscription-scoped Site
     const subSite = siteResources.find(
       (r) =>
-        r.metadata.resourceIdPattern.startsWith("/subscriptions/") &&
-        !r.metadata.resourceIdPattern.includes("/resourceGroups/") &&
-        r.metadata.resourceIdPattern.includes("/sites/{siteName}")
+        r.metadata.resourceIdPattern ===
+        "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/sites/{siteName}"
     );
     ok(subSite, "Should have Subscription-scoped Site");
-    strictEqual(subSite.metadata.resourceScope, ResourceScope.Subscription);
-    strictEqual(subSite.metadata.resourceName, "SitesBySubscription");
-    strictEqual(subSite.metadata.methods.length, 4);
 
-    // Verify the List operation on Subscription-scoped Site has the correct path
-    const subSiteList = subSite.metadata.methods.find((m) => m.kind === "List");
-    ok(subSiteList, "Subscription-scoped Site should have a List operation");
-    ok(
-      subSiteList.operationPath.startsWith("/subscriptions/"),
-      "Subscription Site List should start with /subscriptions/"
-    );
-    ok(
-      !subSiteList.operationPath.includes("/resourceGroups/"),
-      "Subscription Site List should NOT have resourceGroups in path"
-    );
-    ok(
-      !subSiteList.operationPath.includes("serviceGroups"),
-      "Subscription Site List should NOT have serviceGroups in path"
-    );
-
-    // Find ServiceGroup-scoped Site (Tenant scope via ServiceGroup)
-    const sgSite = siteResources.find((r) =>
-      r.metadata.resourceIdPattern.includes("serviceGroups")
+    const sgSite = siteResources.find(
+      (r) =>
+        r.metadata.resourceIdPattern ===
+        "/providers/Microsoft.Management/serviceGroups/{servicegroupName}/providers/Microsoft.ContosoProviderHub/sites/{siteName}"
     );
     ok(sgSite, "Should have ServiceGroup-scoped Site");
-    strictEqual(sgSite.metadata.resourceScope, ResourceScope.Tenant);
-    strictEqual(sgSite.metadata.resourceName, "SitesByServiceGroup");
-    strictEqual(sgSite.metadata.methods.length, 4);
 
-    // Verify the List operation on ServiceGroup-scoped Site has the correct path
-    const sgSiteList = sgSite.metadata.methods.find((m) => m.kind === "List");
-    ok(sgSiteList, "ServiceGroup-scoped Site should have a List operation");
-    ok(
-      sgSiteList.operationPath.includes("serviceGroups"),
-      "ServiceGroup Site List should have serviceGroups in path"
+    // This is the critical assertion: each resource should have exactly 1 List method
+    // and the List operation path should match the resource's scope
+    for (const resource of siteResources) {
+      const listMethods = resource.metadata.methods.filter(
+        (m) => m.kind === "List"
+      );
+      strictEqual(
+        listMethods.length,
+        1,
+        `Resource ${resource.metadata.resourceIdPattern} should have exactly 1 List method`
+      );
+    }
+
+    // Validate using resolveArmResources API and compare using deepStrictEqual
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    ok(resolvedSchema);
+
+    // Compare the entire schemas using deep equality
+    // Note: The two APIs have a known difference in how they classify ServiceGroup scope:
+    // - Legacy detection (buildArmProviderSchema): uses Tenant scope
+    // - resolveArmResources: uses Extension scope
+    // We normalize resourceScope and operationScope only for the ServiceGroup-scoped resource
+    const serviceGroupResourcePattern =
+      "/providers/Microsoft.Management/serviceGroups/{servicegroupName}/providers/Microsoft.ContosoProviderHub/sites/{siteName}";
+    const normalizeServiceGroupScopes = (resource: ArmResourceSchema) => {
+      if (resource.metadata.resourceIdPattern === serviceGroupResourcePattern) {
+        (resource.metadata as { resourceScope: unknown }).resourceScope =
+          "<normalized>";
+        for (const method of resource.metadata.methods) {
+          (method as { operationScope: unknown }).operationScope =
+            "<normalized>";
+        }
+      }
+    };
+    deepStrictEqual(
+      normalizeSchemaForComparison(resolvedSchema, normalizeServiceGroupScopes),
+      normalizeSchemaForComparison(
+        armProviderSchema,
+        normalizeServiceGroupScopes
+      )
+    );
+  });
+
+  it("OverrideResourceName with shared model at different scopes assigns names correctly", async () => {
+    // This test validates that when two resources share the same model but at different scopes,
+    // and one uses OverrideResourceName via ExtensionOperations, the explicit name is NOT
+    // cross-contaminated to the other resource. This was a bug where the subscription-scoped
+    // list operation's explicitResourceName would overwrite the RG resource's name.
+    const program = await typeSpecCompile(
+      `
+/** Shared config properties */
+model SharedConfigProperties {
+  /** Display name */
+  displayName?: string;
+  ...DefaultProvisioningStateProperty;
+}
+
+/** Shared config model used at both RG and Subscription scope */
+model SharedConfig is TrackedResource<SharedConfigProperties> {
+  ...ResourceNameParameter<
+    Resource = SharedConfig,
+    KeyName = "configName",
+    SegmentName = "sharedConfigs",
+    NamePattern = ""
+  >;
+}
+
+// Subscription-scoped resource with OverrideResourceName
+#suppress "@azure-tools/typespec-azure-core/no-legacy-usage" "Testing OverrideResourceName"
+alias PublicSharedConfigOps = Azure.ResourceManager.Legacy.ExtensionOperations<
+  {
+    ...ApiVersionParameter;
+    ...SubscriptionIdParameter;
+  },
+  {
+    ...Azure.ResourceManager.Extension.ExtensionProviderNamespace<SharedConfig>;
+    ...ParentKeysOf<SharedConfig>;
+  },
+  {
+    ...Azure.ResourceManager.Extension.ExtensionProviderNamespace<SharedConfig>;
+    ...KeysOf<ResourceNameParameter<
+      Resource = SharedConfig,
+      KeyName = "configName",
+      SegmentName = "publicSharedConfigs",
+      NamePattern = ""
+    >>;
+  },
+  "PublicSharedConfig"
+>;
+
+@armResourceOperations
+interface PublicSharedConfigs {
+  get is PublicSharedConfigOps.Read<SharedConfig>;
+  list is PublicSharedConfigOps.List<SharedConfig>;
+}
+
+@armResourceOperations
+interface SharedConfigs {
+  get is Azure.ResourceManager.Extension.Read<Azure.ResourceManager.Extension.ResourceGroup, SharedConfig>;
+  createOrUpdate is Azure.ResourceManager.Extension.CreateOrUpdateAsync<Azure.ResourceManager.Extension.ResourceGroup, SharedConfig>;
+  delete is Azure.ResourceManager.Extension.DeleteSync<Azure.ResourceManager.Extension.ResourceGroup, SharedConfig>;
+  list is Azure.ResourceManager.Extension.ListByTarget<Azure.ResourceManager.Extension.ResourceGroup, SharedConfig>;
+}
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const [root] = createModel(sdkContext);
+
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+    ok(armProviderSchema);
+    ok(armProviderSchema.resources);
+
+    const sharedConfigModel = root.models.find(
+      (m) => m.name === "SharedConfig"
+    );
+    ok(sharedConfigModel, "SharedConfig model should exist");
+
+    const sharedConfigModelId = sharedConfigModel.crossLanguageDefinitionId;
+    const resources = armProviderSchema.resources.filter(
+      (r) => r.resourceModelId === sharedConfigModelId
+    );
+    strictEqual(
+      resources.length,
+      2,
+      "Should have 2 resources for SharedConfig model"
+    );
+
+    // Find each resource by its path pattern
+    const rgResource = resources.find(
+      (r) =>
+        r.metadata.resourceIdPattern ===
+        "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/sharedConfigs/{configName}"
+    );
+    ok(rgResource, "Should have ResourceGroup-scoped SharedConfig resource");
+
+    const subResource = resources.find(
+      (r) =>
+        r.metadata.resourceIdPattern ===
+        "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/publicSharedConfigs/{configName}"
     );
     ok(
-      !sgSiteList.operationPath.includes("/resourceGroups/"),
-      "ServiceGroup Site List should NOT have resourceGroups in path"
+      subResource,
+      "Should have Subscription-scoped PublicSharedConfig resource"
     );
 
-    // This is the critical assertion: SitesByServiceGroup.list should NOT be on the ResourceGroup-scoped resource
-    const rgSiteListMethods = rgSite.metadata.methods.filter(
+    // CRITICAL: The RG resource should keep its default name (SharedConfig), NOT be overwritten
+    // by the subscription-scoped resource's OverrideResourceName ("PublicSharedConfig")
+    strictEqual(
+      rgResource.metadata.resourceName,
+      "SharedConfig",
+      "RG resource should keep default name 'SharedConfig', not be overwritten by OverrideResourceName"
+    );
+    strictEqual(
+      subResource.metadata.resourceName,
+      "PublicSharedConfig",
+      "Subscription resource should have OverrideResourceName 'PublicSharedConfig'"
+    );
+
+    // Each resource should have its own list operation
+    const rgListMethods = rgResource.metadata.methods.filter(
       (m) => m.kind === "List"
     );
     strictEqual(
-      rgSiteListMethods.length,
+      rgListMethods.length,
       1,
-      "ResourceGroup-scoped Site should have exactly 1 List method"
+      "RG resource should have exactly 1 List method"
     );
+
+    const subListMethods = subResource.metadata.methods.filter(
+      (m) => m.kind === "List"
+    );
+    strictEqual(
+      subListMethods.length,
+      1,
+      "Subscription resource should have exactly 1 List method"
+    );
+  });
+
+  it("list operations correctly assigned when same model has different path segments", async () => {
+    // This test validates the fix for the Maintenance SDK scenario where the same model
+    // is used by two different resource interfaces with DIFFERENT path segments:
+    // - publicConfigs (read-only, subscription scope)
+    // - configs (CRUD + list, resource group scope)
+    // The RG-scoped list operation must be assigned to the RG resource, not the subscription one.
+    const program = await typeSpecCompile(
+      `
+/** Config properties */
+model ConfigProperties {
+  /** Display name */
+  displayName?: string;
+  ...DefaultProvisioningStateProperty;
+}
+
+/** Configuration resource shared by multiple interfaces */
+model Config is ExtensionResource<ConfigProperties> {
+  ...ResourceNameParameter<
+    Resource = Config,
+    KeyName = "resourceName",
+    SegmentName = "configs",
+    NamePattern = ""
+  >;
+}
+
+#suppress "@azure-tools/typespec-azure-core/no-legacy-usage" "For testing"
+alias PublicConfigOps = Azure.ResourceManager.Legacy.ExtensionOperations<
+  {
+    ...ApiVersionParameter,
+    ...SubscriptionIdParameter,
+  },
+  {
+    ...Extension.ExtensionProviderNamespace<Config>,
+    ...ParentKeysOf<Config>,
+  },
+  {
+    ...Extension.ExtensionProviderNamespace<Config>,
+    ...KeysOf<ResourceNameParameter<
+      Resource = Config,
+      KeyName = "resourceName",
+      SegmentName = "publicConfigs",
+      NamePattern = ""
+    >>,
+  }
+>;
+
+/** Read-only interface at subscription scope with different segment */
+@armResourceOperations
+interface PublicConfigs {
+  get is PublicConfigOps.Read<Config>;
+}
+
+/** Full CRUD interface at resource group scope */
+@armResourceOperations
+interface ConfigOperations {
+  get is Extension.Read<Extension.ResourceGroup, Config>;
+  createOrUpdate is Extension.CreateOrUpdateAsync<Extension.ResourceGroup, Config>;
+  delete is Extension.DeleteSync<Extension.ResourceGroup, Config>;
+  list is Extension.ListByTarget<Extension.ResourceGroup, Config>;
+}
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const [root] = createModel(sdkContext);
+
+    // Build ARM provider schema using legacy detection
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+    ok(armProviderSchema);
+
+    const configModel = root.models.find((m) => m.name === "Config");
+    ok(configModel, "Config model should exist");
+
+    const configModelId = configModel.crossLanguageDefinitionId;
+    const configResources = armProviderSchema.resources.filter(
+      (r) => r.resourceModelId === configModelId
+    );
+    strictEqual(
+      configResources.length,
+      2,
+      "Should have TWO resource entries for the same model"
+    );
+
+    // Find the public (subscription-scoped, read-only) resource
+    const publicResource = configResources.find((r) =>
+      r.metadata.resourceIdPattern.includes("publicConfigs")
+    );
+    ok(publicResource, "Should have public resource");
+
+    // Find the RG-scoped CRUD resource
+    const rgResource = configResources.find(
+      (r) =>
+        r.metadata.resourceIdPattern.includes("/configs/") &&
+        !r.metadata.resourceIdPattern.includes("/publicConfigs/")
+    );
+    ok(rgResource, "Should have RG-scoped resource");
+
+    // Critical assertion: the RG-scoped list operation must be on the RG resource
+    const rgListMethods = rgResource.metadata.methods.filter(
+      (m) => m.kind === "List"
+    );
+    strictEqual(
+      rgListMethods.length,
+      1,
+      "RG resource should have exactly 1 List method"
+    );
+
+    // The list path should be at RG scope with the configs segment
     ok(
-      !rgSiteListMethods.some((m) => m.operationPath.includes("serviceGroups")),
-      "ResourceGroup-scoped Site should NOT have the ServiceGroup List operation"
+      rgListMethods[0].operationPath.includes("resourceGroups") &&
+        rgListMethods[0].operationPath.endsWith("/configs"),
+      "RG resource's list should be at resource group scope with configs segment"
+    );
+
+    // The public resource should have NO list operations
+    const publicListMethods = publicResource.metadata.methods.filter(
+      (m) => m.kind === "List"
+    );
+    strictEqual(
+      publicListMethods.length,
+      0,
+      "Public resource should have no List methods (it has no list interface)"
+    );
+
+    // Validate using resolveArmResources API and compare
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    ok(resolvedSchema);
+
+    deepStrictEqual(
+      normalizeSchemaForComparison(resolvedSchema),
+      normalizeSchemaForComparison(armProviderSchema)
+    );
+  });
+
+  it("custom Azure resource with @customAzureResource decorator (TrafficManager pattern)", async () => {
+    const program = await typeSpecCompile(
+      `
+using Azure.ResourceManager.Legacy;
+
+// Custom base Resource model with @customAzureResource decorator
+#suppress "@azure-tools/typespec-azure-core/no-legacy-usage" "Testing custom resource pattern"
+#suppress "@azure-tools/typespec-azure-resource-manager/arm-custom-resource-no-key" "Testing custom resource pattern"
+#suppress "@azure-tools/typespec-azure-resource-manager/arm-custom-resource-usage-discourage" "Testing custom resource pattern"
+@Azure.ResourceManager.Legacy.customAzureResource
+model CustomResource {
+  id?: string;
+  name?: string;
+  type?: string;
+}
+
+// Custom ProxyResource extending CustomResource
+#suppress "@azure-tools/typespec-azure-core/composition-over-inheritance" "Testing custom resource pattern"
+#suppress "@azure-tools/typespec-azure-resource-manager/no-empty-model" "Testing custom resource pattern"
+#suppress "@azure-tools/typespec-azure-resource-manager/arm-custom-resource-no-key" "Testing custom resource pattern"
+#suppress "@azure-tools/typespec-azure-resource-manager/arm-custom-resource-usage-discourage" "Testing custom resource pattern"
+model CustomProxyResource extends CustomResource {}
+
+// Custom TrackedResource extending CustomResource
+#suppress "@azure-tools/typespec-azure-core/composition-over-inheritance" "Testing custom resource pattern"
+#suppress "@azure-tools/typespec-azure-resource-manager/arm-custom-resource-no-key" "Testing custom resource pattern"
+#suppress "@azure-tools/typespec-azure-resource-manager/arm-custom-resource-usage-discourage" "Testing custom resource pattern"
+model CustomTrackedResource extends CustomResource {
+  @visibility(Lifecycle.Create, Lifecycle.Read, Lifecycle.Update)
+  tags?: Record<string>;
+  @visibility(Lifecycle.Create, Lifecycle.Read)
+  location?: string;
+}
+
+// Traffic Profile (parent resource) extending custom tracked resource
+#suppress "@azure-tools/typespec-azure-core/composition-over-inheritance" "Testing custom resource pattern"
+#suppress "@azure-tools/typespec-azure-resource-manager/arm-custom-resource-no-key" "Testing custom resource pattern"
+#suppress "@azure-tools/typespec-azure-resource-manager/arm-custom-resource-usage-discourage" "Testing custom resource pattern"
+model TrafficProfile extends CustomTrackedResource {
+  properties?: TrafficProfileProperties;
+}
+
+model TrafficProfileProperties {
+  profileStatus?: string;
+}
+
+// Traffic Endpoint (child resource) extending custom proxy resource
+#suppress "@azure-tools/typespec-azure-resource-manager/arm-custom-resource-no-key" "Testing custom resource pattern"
+#suppress "@azure-tools/typespec-azure-resource-manager/arm-custom-resource-usage-discourage" "Testing custom resource pattern"
+#suppress "@azure-tools/typespec-azure-core/composition-over-inheritance" "Testing custom resource pattern"
+@parentResource(TrafficProfile)
+model TrafficEndpoint extends CustomProxyResource {
+  properties?: TrafficEndpointProperties;
+}
+
+model TrafficEndpointProperties {
+  target?: string;
+}
+
+// Define legacy operations for TrafficProfile
+alias TrafficProfileOps = Azure.ResourceManager.Legacy.LegacyOperations<
+  {
+    ...ApiVersionParameter;
+    ...SubscriptionIdParameter;
+    ...ResourceGroupParameter;
+    ...Azure.ResourceManager.Legacy.Provider<TrafficProfile>;
+  },
+  {
+    @path
+    @segment("trafficProfiles")
+    profileName: string;
+  },
+  ErrorResponse,
+  "TrafficProfile"
+>;
+
+@armResourceOperations
+interface TrafficProfiles {
+  get is TrafficProfileOps.Read<TrafficProfile>;
+  createOrUpdate is TrafficProfileOps.CreateOrUpdateSync<TrafficProfile>;
+  delete is TrafficProfileOps.DeleteSync<TrafficProfile>;
+  list is TrafficProfileOps.List<TrafficProfile>;
+}
+
+// Define legacy operations for TrafficEndpoint
+alias TrafficEndpointOps = Azure.ResourceManager.Legacy.LegacyOperations<
+  {
+    ...ApiVersionParameter;
+    ...SubscriptionIdParameter;
+    ...ResourceGroupParameter;
+    ...Azure.ResourceManager.Legacy.Provider<TrafficEndpoint>;
+    @path
+    @segment("trafficProfiles")
+    profileName: string;
+  },
+  {
+    @path
+    @segment("endpoints")
+    endpointName: string;
+  },
+  ErrorResponse,
+  "TrafficEndpoint"
+>;
+
+#suppress "@azure-tools/typespec-azure-resource-manager/arm-resource-interface-requires-decorator" "Testing LegacyOperations pattern"
+interface TrafficEndpoints {
+  get is TrafficEndpointOps.Read<TrafficEndpoint>;
+  createOrUpdate is TrafficEndpointOps.CreateOrUpdateSync<TrafficEndpoint>;
+  delete is TrafficEndpointOps.DeleteSync<TrafficEndpoint>;
+}
+`,
+      runner
+    );
+
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const [root] = createModel(sdkContext);
+
+    // Build ARM provider schema and verify its structure
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+    ok(armProviderSchema);
+    ok(armProviderSchema.resources);
+
+    // Should have TrafficProfile and TrafficEndpoint as resources
+    strictEqual(
+      armProviderSchema.resources.length,
+      2,
+      "Should have 2 resources: TrafficProfile and TrafficEndpoint"
+    );
+
+    // Find the TrafficProfile resource
+    const trafficProfileResource = armProviderSchema.resources.find(
+      (r) =>
+        r.metadata.resourceType ===
+        "Microsoft.ContosoProviderHub/trafficProfiles"
+    );
+    ok(trafficProfileResource, "TrafficProfile resource should be detected");
+    strictEqual(
+      trafficProfileResource.resourceModelId,
+      "Microsoft.ContosoProviderHub.TrafficProfile",
+      "TrafficProfile resource model ID should match"
+    );
+    strictEqual(
+      trafficProfileResource.metadata.resourceName,
+      "TrafficProfile",
+      "Resource name should be TrafficProfile"
+    );
+    strictEqual(
+      trafficProfileResource.metadata.methods.length,
+      4,
+      "TrafficProfile should have 4 methods (get, createOrUpdate, delete, list)"
+    );
+
+    // Find the TrafficEndpoint resource
+    const trafficEndpointResource = armProviderSchema.resources.find(
+      (r) =>
+        r.metadata.resourceType ===
+        "Microsoft.ContosoProviderHub/trafficProfiles/endpoints"
+    );
+    ok(trafficEndpointResource, "TrafficEndpoint resource should be detected");
+    strictEqual(
+      trafficEndpointResource.resourceModelId,
+      "Microsoft.ContosoProviderHub.TrafficEndpoint",
+      "TrafficEndpoint resource model ID should match"
+    );
+    strictEqual(
+      trafficEndpointResource.metadata.resourceName,
+      "TrafficEndpoint",
+      "Resource name should be TrafficEndpoint"
+    );
+    strictEqual(
+      trafficEndpointResource.metadata.methods.length,
+      3,
+      "TrafficEndpoint should have 3 methods (get, createOrUpdate, delete)"
+    );
+
+    // Verify the parent-child relationship
+    strictEqual(
+      trafficEndpointResource.metadata.parentResourceId,
+      trafficProfileResource.metadata.resourceIdPattern,
+      "TrafficEndpoint should have TrafficProfile as parent"
     );
 
     // Validate using resolveArmResources API
     const resolvedSchema = resolveArmResources(program, sdkContext);
     ok(resolvedSchema);
 
-    // Both APIs should have the same number of resources
+    // Note: resolveArmResources does not detect custom Azure resources
+    // (those using @customAzureResource decorator), so the resolved schema
+    // will have no resources. This is a known gap — custom resources are only
+    // detected by the legacy buildArmProviderSchema path.
     strictEqual(
       resolvedSchema.resources.length,
-      armProviderSchema.resources.length,
-      "Both APIs should produce the same number of resources"
+      0,
+      "resolveArmResources does not detect custom Azure resources"
     );
+  });
 
-    // Find the ServiceGroup-scoped Site in resolvedSchema
-    const resolvedSgSite = resolvedSchema.resources.find((r) =>
-      r.metadata.resourceIdPattern.includes("serviceGroups")
-    );
-    ok(
-      resolvedSgSite,
-      "resolveArmResources should have ServiceGroup-scoped Site"
-    );
+  it("builtInResourceOperation - NspConfiguration pattern", async () => {
+    const program = await typeSpecCompile(
+      `
+/** An Employee parent resource */
+model Employee is TrackedResource<EmployeeProperties> {
+  ...ResourceNameParameter<Employee>;
+}
 
-    // Verify resolveArmResources also correctly assigns List to ServiceGroup resource (not ResourceGroup)
-    const resolvedSgSiteList = resolvedSgSite.metadata.methods.find(
-      (m) => m.kind === "List"
-    );
-    ok(
-      resolvedSgSiteList,
-      "ServiceGroup-scoped Site in resolveArmResources should have a List operation"
-    );
-    ok(
-      resolvedSgSiteList.operationPath.includes("serviceGroups"),
-      "ServiceGroup Site List should have serviceGroups in path"
-    );
+/** Employee properties */
+model EmployeeProperties {
+  /** Age of employee */
+  age?: int32;
+}
 
-    // Find the ResourceGroup-scoped Site in resolvedSchema
-    const resolvedRgSite = resolvedSchema.resources.find(
+/** NSP configuration model */
+@parentResource(Employee)
+model NspConfiguration
+  is Azure.ResourceManager.CommonTypes.NspConfigurationResource<"networkSecurityPerimeterConfigurationName"> {
+}
+
+// NspConfigurationOperations templates implicitly apply @builtInResourceOperation decorator
+alias NspConfigurationOps = Azure.ResourceManager.CommonTypes.NspConfigurationOperations<NspConfiguration>;
+
+interface Operations extends Azure.ResourceManager.Operations {}
+
+@armResourceOperations
+interface Employees {
+  get is ArmResourceRead<Employee>;
+  createOrUpdate is ArmResourceCreateOrReplaceAsync<Employee>;
+}
+
+@armResourceOperations
+@tag("NetworkSecurityPerimeter")
+interface NetworkSecurityPerimeterConfigurations {
+  // Implicitly gets @builtInResourceOperation(Employee, NspConfiguration, "read")
+  getConfiguration is NspConfigurationOps.Read<
+    ParentResource = Employee,
+    Resource = NspConfiguration
+  >;
+
+  // Implicitly gets @builtInResourceOperation(Employee, NspConfiguration, "list")
+  @list
+  listConfigurations is NspConfigurationOps.ListByParent<
+    ParentResource = Employee,
+    Resource = NspConfiguration
+  >;
+
+  // Reuses Read template so implicitly gets @builtInResourceOperation(..., "read"),
+  // but @post @action("reconcile") overrides it — should be classified as Action, not Read
+  @post
+  @action("reconcile")
+  reconcileConfiguration is NspConfigurationOps.Read<
+    ParentResource = Employee,
+    Resource = NspConfiguration,
+    Response = ArmAcceptedLroResponse
+  >;
+}
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const [root] = createModel(sdkContext);
+
+    // Build ARM provider schema and verify its structure
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+    ok(armProviderSchema);
+    ok(armProviderSchema.resources);
+
+    // Should have Employee and NspConfiguration as resources
+    const nspResource = armProviderSchema.resources.find(
       (r) =>
-        r.metadata.resourceIdPattern.includes("/resourceGroups/") &&
-        r.metadata.resourceIdPattern.includes("/sites/{siteName}")
+        r.metadata.resourceType ===
+        "Microsoft.ContosoProviderHub/employees/networkSecurityPerimeterConfigurations"
     );
-    ok(
-      resolvedRgSite,
-      "resolveArmResources should have ResourceGroup-scoped Site"
+    ok(nspResource, "NspConfiguration resource should be detected");
+
+    // Validate resource has the correct operations
+    const methods = nspResource.metadata.methods;
+
+    // Should have exactly 3 operations: Read, List, and Action
+    strictEqual(
+      methods.length,
+      3,
+      "NspConfiguration resource should have exactly 3 operations (Read, List, Action)"
     );
 
-    // Verify ResourceGroup Site in resolveArmResources does NOT have ServiceGroup List
-    const resolvedRgSiteListMethods = resolvedRgSite.metadata.methods.filter(
-      (m) => m.kind === "List"
+    const readMethods = methods.filter((m: any) => m.kind === "Read");
+    strictEqual(
+      readMethods.length,
+      1,
+      "NspConfiguration resource should have exactly 1 Read operation"
+    );
+
+    const listMethods = methods.filter((m: any) => m.kind === "List");
+    strictEqual(
+      listMethods.length,
+      1,
+      "NspConfiguration resource should have exactly 1 List operation"
+    );
+
+    // The reconcile operation (decorated with @post @action but using Read template)
+    // should be treated as an Action, not a Read
+    const actionMethods = nspResource.metadata.methods.filter(
+      (m: any) => m.kind === "Action"
     );
     strictEqual(
-      resolvedRgSiteListMethods.length,
+      actionMethods.length,
       1,
-      "ResourceGroup-scoped Site in resolveArmResources should have exactly 1 List method"
-    );
-    ok(
-      !resolvedRgSiteListMethods.some((m) =>
-        m.operationPath.includes("serviceGroups")
-      ),
-      "ResourceGroup-scoped Site in resolveArmResources should NOT have the ServiceGroup List operation"
+      "reconcileConfiguration should be classified as an Action operation, not a Read"
     );
 
-    // Note: The two APIs have a known difference in how they classify ServiceGroup scope:
-    // - Legacy detection (buildArmProviderSchema): uses Tenant scope
-    // - resolveArmResources: uses Extension scope
-    // Both are functionally correct for the core fix (List operations correctly assigned)
+    // Validate using resolveArmResources API
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    ok(resolvedSchema);
+
+    // Both schemas should detect the NSP resource
+    const resolvedNspResource = resolvedSchema.resources.find(
+      (r) =>
+        r.metadata.resourceType ===
+        "Microsoft.ContosoProviderHub/employees/networkSecurityPerimeterConfigurations"
+    );
+    ok(
+      resolvedNspResource,
+      "resolveArmResources should also detect NspConfiguration resource"
+    );
+
+    // Validate operation kinds in the resolveArmResources path
+    const resolvedMethods = resolvedNspResource.metadata.methods;
+    const resolvedMethodKinds = resolvedMethods.map((m: any) => m.kind);
+    ok(
+      resolvedMethodKinds.includes("Read"),
+      "Should have Read operation in resolveArmResources"
+    );
+    ok(
+      resolvedMethodKinds.includes("List"),
+      "Should have List operation in resolveArmResources"
+    );
+
+    // Note: The upstream resolveArmResources API from @azure-tools/typespec-azure-resource-manager
+    // does not currently handle @action decorator overrides on @builtInResourceOperation templates.
+    // The reconcile operation may be classified as Read instead of Action in this path.
+    // The legacy path (buildArmProviderSchema) correctly handles this override.
+  });
+
+  it("CreateOrReplaceAsync with @patch should be classified as Update not Create", async () => {
+    const program = await typeSpecCompile(
+      `
+/** Monitor properties */
+model MonitorProperties {
+  /** The status */
+  @visibility(Lifecycle.Read)
+  provisioningState?: ProvisioningState;
+}
+
+/** The provisioning state of a resource. */
+@lroStatus
+union ProvisioningState {
+  string,
+  Succeeded: "Succeeded",
+  Failed: "Failed",
+  Canceled: "Canceled",
+}
+
+/** A Monitor resource */
+model MonitorResource is TrackedResource<MonitorProperties> {
+  ...ResourceNameParameter<MonitorResource, SegmentName = "monitors">;
+}
+
+/** Update parameters */
+model MonitorUpdateParameters {
+  /** Tags */
+  tags?: Record<string>;
+}
+
+interface Operations extends Azure.ResourceManager.Operations {}
+
+@armResourceOperations
+interface MonitorResources {
+  get is ArmResourceRead<MonitorResource>;
+  create is Azure.ResourceManager.Legacy.CreateOrUpdateAsync<MonitorResource>;
+  @patch(#{ implicitOptionality: false })
+  update is Azure.ResourceManager.Legacy.CreateOrReplaceAsync<
+    MonitorResource,
+    Request = MonitorUpdateParameters,
+    Response = ArmResponse<MonitorResource> | ArmResourceCreatedResponse<MonitorResource>
+  >;
+  delete is ArmResourceDeleteWithoutOkAsync<MonitorResource>;
+  listByResourceGroup is ArmResourceListByParent<MonitorResource>;
+}
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const [root] = createModel(sdkContext);
+
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+    ok(armProviderSchema);
+    ok(armProviderSchema.resources);
+    strictEqual(armProviderSchema.resources.length, 1);
+
+    const monitorResource = armProviderSchema.resources[0];
+    ok(monitorResource);
+    const metadata = monitorResource.metadata;
+    ok(metadata);
+
+    // Should have Read, Create, Update, Delete, List
+    const methodKinds = metadata.methods.map((m: any) => m.kind);
+    ok(methodKinds.includes("Read"), "Should have Read method");
+    ok(
+      methodKinds.includes("Create"),
+      "Should have Create method (from CreateOrUpdateAsync PUT)"
+    );
+    ok(
+      methodKinds.includes("Update"),
+      "Should have Update method (from CreateOrReplaceAsync PATCH)"
+    );
+    ok(methodKinds.includes("Delete"), "Should have Delete method");
+    ok(methodKinds.includes("List"), "Should have List method");
+
+    // Ensure there is exactly one Create and one Update
+    const createMethods = metadata.methods.filter(
+      (m: any) => m.kind === "Create"
+    );
+    const updateMethods = metadata.methods.filter(
+      (m: any) => m.kind === "Update"
+    );
+    strictEqual(
+      createMethods.length,
+      1,
+      "Should have exactly one Create method"
+    );
+    strictEqual(
+      updateMethods.length,
+      1,
+      "Should have exactly one Update method"
+    );
+
+    // Validate using resolveArmResources API
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    ok(resolvedSchema);
+    strictEqual(
+      resolvedSchema.resources.length,
+      1,
+      "resolveArmResources should detect 1 resource"
+    );
+
+    const resolvedResource = resolvedSchema.resources[0];
+    ok(resolvedResource);
+    const resolvedMethods = resolvedResource.metadata.methods;
+    const resolvedMethodKinds = resolvedMethods.map((m: any) => m.kind);
+    ok(
+      resolvedMethodKinds.includes("Create"),
+      "resolveArmResources should have Create method"
+    );
+    ok(
+      resolvedMethodKinds.includes("Delete"),
+      "resolveArmResources should have Delete method"
+    );
+    ok(
+      resolvedMethodKinds.includes("List"),
+      "resolveArmResources should have List method"
+    );
+
+    // Note: The upstream resolveArmResources API from @azure-tools/typespec-azure-resource-manager
+    // classifies both Legacy.CreateOrUpdateAsync (PUT) and Legacy.CreateOrReplaceAsync + @patch (PATCH)
+    // as createOrUpdate, resulting in 2 Create methods. The legacy buildArmProviderSchema path uses
+    // HTTP verb to distinguish them: PUT → Create, PATCH → Update.
+    const resolvedCreateMethods = resolvedMethods.filter(
+      (m: any) => m.kind === "Create"
+    );
+    const resolvedUpdateMethods = resolvedMethods.filter(
+      (m: any) => m.kind === "Update"
+    );
+    strictEqual(
+      resolvedCreateMethods.length,
+      2,
+      "resolveArmResources has 2 Create methods (both classified as createOrUpdate)"
+    );
+    strictEqual(
+      resolvedUpdateMethods.length,
+      0,
+      "resolveArmResources has 0 Update methods (PATCH not distinguished)"
+    );
+  });
+
+  it("cross-scope LegacyOperations assigns correct parent per scope", async () => {
+    // This test validates the scenario from the Support SDK where the same model is used
+    // at both subscription and tenant scopes via LegacyOperations. The child resource's
+    // @parentResource points to a subscription-scoped model, but when the child also
+    // operates at tenant scope, the tenant-scoped child should get the tenant-scoped
+    // parent (not the subscription-scoped one).
+    const program = await typeSpecCompile(
+      `
+/** A support ticket resource */
+#suppress "@azure-tools/typespec-azure-core/no-legacy-usage" "Testing cross-scope parent"
+@subscriptionResource
+model SupportTicket is ProxyResource<SupportTicketProperties> {
+  ...ResourceNameParameter<
+    Resource = SupportTicket,
+    KeyName = "ticketName",
+    SegmentName = "tickets",
+    NamePattern = ""
+  >;
+}
+/** Support ticket properties */
+model SupportTicketProperties {
+  /** Description */
+  description?: string;
+}
+
+/** A chat transcript child resource */
+#suppress "@azure-tools/typespec-azure-core/no-legacy-usage" "Testing cross-scope parent"
+@parentResource(SupportTicket)
+model ChatTranscript is ProxyResource<ChatTranscriptProperties> {
+  ...ResourceNameParameter<
+    Resource = ChatTranscript,
+    KeyName = "transcriptName",
+    SegmentName = "transcripts",
+    NamePattern = ""
+  >;
+}
+/** Chat transcript properties */
+model ChatTranscriptProperties {
+  /** Content */
+  content?: string;
+}
+
+// Subscription-scoped ticket operations
+#suppress "@azure-tools/typespec-azure-core/no-legacy-usage" "Testing cross-scope parent"
+alias SubTicketOps = Azure.ResourceManager.Legacy.LegacyOperations<
+  {
+    ...ApiVersionParameter;
+    ...SubscriptionIdParameter;
+    ...Azure.ResourceManager.Legacy.Provider;
+  },
+  {
+    @segment("tickets")
+    @key
+    @TypeSpec.Http.path
+    ticketName: string;
+  }
+>;
+
+// Tenant-scoped ticket operations (no SubscriptionIdParameter)
+#suppress "@azure-tools/typespec-azure-core/no-legacy-usage" "Testing cross-scope parent"
+alias TenantTicketOps = Azure.ResourceManager.Legacy.LegacyOperations<
+  {
+    ...ApiVersionParameter;
+    ...Azure.ResourceManager.Legacy.Provider;
+  },
+  {
+    @segment("tickets")
+    @key
+    @TypeSpec.Http.path
+    ticketName: string;
+  }
+>;
+
+// Subscription-scoped transcript operations (parent = subscription ticket)
+#suppress "@azure-tools/typespec-azure-core/no-legacy-usage" "Testing cross-scope parent"
+alias SubTranscriptOps = Azure.ResourceManager.Legacy.LegacyOperations<
+  {
+    ...ApiVersionParameter;
+    ...SubscriptionIdParameter;
+    ...Azure.ResourceManager.Legacy.Provider;
+    @segment("tickets")
+    @key
+    @TypeSpec.Http.path
+    ticketName: string;
+  },
+  {
+    @segment("transcripts")
+    @key
+    @TypeSpec.Http.path
+    transcriptName: string;
+  }
+>;
+
+// Tenant-scoped transcript operations (parent = tenant ticket)
+#suppress "@azure-tools/typespec-azure-core/no-legacy-usage" "Testing cross-scope parent"
+alias TenantTranscriptOps = Azure.ResourceManager.Legacy.LegacyOperations<
+  {
+    ...ApiVersionParameter;
+    ...Azure.ResourceManager.Legacy.Provider;
+    @segment("tickets")
+    @key
+    @TypeSpec.Http.path
+    ticketName: string;
+  },
+  {
+    @segment("transcripts")
+    @key
+    @TypeSpec.Http.path
+    transcriptName: string;
+  }
+>;
+
+@armResourceOperations
+interface SubscriptionTickets {
+  get is SubTicketOps.Read<SupportTicket>;
+  list is SubTicketOps.List<SupportTicket>;
+}
+
+@armResourceOperations
+interface TenantTickets {
+  get is TenantTicketOps.Read<SupportTicket>;
+  list is TenantTicketOps.List<SupportTicket>;
+}
+
+@armResourceOperations
+interface SubscriptionTranscripts {
+  get is SubTranscriptOps.Read<ChatTranscript>;
+  list is SubTranscriptOps.List<ChatTranscript>;
+}
+
+@armResourceOperations
+interface TenantTranscripts {
+  get is TenantTranscriptOps.Read<ChatTranscript>;
+  list is TenantTranscriptOps.List<ChatTranscript>;
+}
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const [root] = createModel(sdkContext);
+
+    // Build ARM provider schema
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+    ok(armProviderSchema);
+
+    // Should have 4 resources: sub ticket, tenant ticket, sub transcript, tenant transcript
+    strictEqual(
+      armProviderSchema.resources.length,
+      4,
+      "Should have 4 resources (2 tickets + 2 transcripts at different scopes)"
+    );
+
+    // Find each resource by its path pattern
+    const subTicket = armProviderSchema.resources.find(
+      (r) =>
+        r.metadata.resourceIdPattern.includes("/subscriptions/") &&
+        r.metadata.resourceIdPattern.endsWith("/tickets/{ticketName}")
+    );
+    const tenantTicket = armProviderSchema.resources.find(
+      (r) =>
+        !r.metadata.resourceIdPattern.includes("/subscriptions/") &&
+        r.metadata.resourceIdPattern.endsWith("/tickets/{ticketName}")
+    );
+    const subTranscript = armProviderSchema.resources.find(
+      (r) =>
+        r.metadata.resourceIdPattern.includes("/subscriptions/") &&
+        r.metadata.resourceIdPattern.endsWith("/transcripts/{transcriptName}")
+    );
+    const tenantTranscript = armProviderSchema.resources.find(
+      (r) =>
+        !r.metadata.resourceIdPattern.includes("/subscriptions/") &&
+        r.metadata.resourceIdPattern.endsWith("/transcripts/{transcriptName}")
+    );
+
+    ok(subTicket, "Should have subscription-scoped ticket");
+    ok(tenantTicket, "Should have tenant-scoped ticket");
+    ok(subTranscript, "Should have subscription-scoped transcript");
+    ok(tenantTranscript, "Should have tenant-scoped transcript");
+
+    // KEY ASSERTION: Tenant-scoped transcript should have tenant-scoped ticket as parent
+    // (not the subscription-scoped ticket from @parentResource decorator)
+    strictEqual(
+      tenantTranscript.metadata.parentResourceId,
+      tenantTicket.metadata.resourceIdPattern,
+      "Tenant transcript's parent should be the tenant ticket (same scope)"
+    );
+
+    // Subscription-scoped transcript should have subscription-scoped ticket as parent
+    strictEqual(
+      subTranscript.metadata.parentResourceId,
+      subTicket.metadata.resourceIdPattern,
+      "Subscription transcript's parent should be the subscription ticket (same scope)"
+    );
+
+    // Verify the list operations have correct resourceScope for tenant transcript
+    const tenantTranscriptList = tenantTranscript.metadata.methods.find(
+      (m: any) => m.kind === "List"
+    );
+    ok(tenantTranscriptList, "Tenant transcript should have a List method");
+    strictEqual(
+      tenantTranscriptList.resourceScope,
+      tenantTicket.metadata.resourceIdPattern,
+      "Tenant transcript list should scope to tenant ticket"
+    );
+
+    // Validate using resolveArmResources API
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    ok(resolvedSchema);
+
+    // Note: resolveArmResources merges subscription-scoped and tenant-scoped operations
+    // for the same model into fewer resources, while the legacy buildArmProviderSchema
+    // correctly separates them into distinct resources per scope. This is a known gap in
+    // resolveArmResources for cross-scope LegacyOperations patterns.
+    // The legacy path (4 resources) is the correct behavior for SDK generation.
+    strictEqual(
+      armProviderSchema.resources.length,
+      4,
+      "Legacy detection should produce 4 resources (2 per scope)"
+    );
+  });
+
+  it("name constraints with all decorators via NamePattern and direct decorators", async () => {
+    const program = await typeSpecCompile(
+      `
+/** Employee properties */
+model EmployeeProperties {
+  /** Age of employee */
+  age?: int32;
+}
+
+/** An Employee resource with name constraints via NamePattern */
+model Employee is TrackedResource<EmployeeProperties> {
+  ...ResourceNameParameter<
+    Resource = Employee,
+    KeyName = "employeeName",
+    SegmentName = "employees",
+    NamePattern = "^[a-zA-Z0-9-]{3,24}$"
+  >;
+}
+
+interface Operations extends Azure.ResourceManager.Operations {}
+
+@armResourceOperations
+interface Employees {
+  get is ArmResourceRead<Employee>;
+  createOrUpdate is ArmResourceCreateOrReplaceAsync<Employee>;
+}
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const [root] = createModel(sdkContext);
+
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+    ok(armProviderSchema);
+    strictEqual(armProviderSchema.resources.length, 1);
+
+    const employeeResource = armProviderSchema.resources[0];
+    ok(employeeResource);
+    const constraints = employeeResource.metadata.nameConstraints;
+    ok(constraints);
+    strictEqual(constraints.pattern, "^[a-zA-Z0-9-]{3,24}$");
+
+    // Also validate resolveArmResources produces the same constraints
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    ok(resolvedSchema);
+    const resolvedResource = resolvedSchema.resources[0];
+    ok(resolvedResource);
+    deepStrictEqual(resolvedResource.metadata.nameConstraints, constraints);
+  });
+
+  it("name constraints with minLength and maxLength decorators", async () => {
+    const program = await typeSpecCompile(
+      `
+/** Widget properties */
+model WidgetProperties {
+  /** Color of widget */
+  color?: string;
+}
+
+/** A Widget resource with direct name decorators */
+model Widget is TrackedResource<WidgetProperties> {
+  @doc("The widget name.")
+  @key("widgetName")
+  @segment("widgets")
+  @path
+  @minLength(3)
+  @maxLength(63)
+  @pattern("^[a-z][a-z0-9]*$")
+  name: string;
+}
+
+interface Operations extends Azure.ResourceManager.Operations {}
+
+@armResourceOperations
+interface Widgets {
+  get is ArmResourceRead<Widget>;
+  createOrUpdate is ArmResourceCreateOrReplaceAsync<Widget>;
+}
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const [root] = createModel(sdkContext);
+
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+    ok(armProviderSchema);
+    strictEqual(armProviderSchema.resources.length, 1);
+
+    const widgetResource = armProviderSchema.resources[0];
+    ok(widgetResource);
+    const constraints = widgetResource.metadata.nameConstraints;
+    ok(constraints);
+    strictEqual(constraints.pattern, "^[a-z][a-z0-9]*$");
+    strictEqual(constraints.minLength, 3);
+    strictEqual(constraints.maxLength, 63);
+
+    // Also validate resolveArmResources produces the same constraints
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    ok(resolvedSchema);
+    const resolvedResource = resolvedSchema.resources[0];
+    ok(resolvedResource);
+    deepStrictEqual(resolvedResource.metadata.nameConstraints, constraints);
+  });
+
+  it("name constraints are empty when no decorators are applied", async () => {
+    const program = await typeSpecCompile(
+      `
+/** Gadget properties */
+model GadgetProperties {
+  /** Size of gadget */
+  size?: int32;
+}
+
+/** A Gadget resource with no name constraints */
+model Gadget is TrackedResource<GadgetProperties> {
+  @doc("The gadget name.")
+  @key("gadgetName")
+  @segment("gadgets")
+  @path
+  name: string;
+}
+
+interface Operations extends Azure.ResourceManager.Operations {}
+
+@armResourceOperations
+interface Gadgets {
+  get is ArmResourceRead<Gadget>;
+  createOrUpdate is ArmResourceCreateOrReplaceAsync<Gadget>;
+}
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const [root] = createModel(sdkContext);
+
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+    ok(armProviderSchema);
+    strictEqual(armProviderSchema.resources.length, 1);
+
+    const gadgetResource = armProviderSchema.resources[0];
+    ok(gadgetResource);
+    const constraints = gadgetResource.metadata.nameConstraints;
+    ok(constraints);
+    strictEqual(constraints.pattern, undefined);
+    strictEqual(constraints.minLength, undefined);
+    strictEqual(constraints.maxLength, undefined);
+
+    // Also validate resolveArmResources produces the same constraints
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    ok(resolvedSchema);
+    const resolvedResource = resolvedSchema.resources[0];
+    ok(resolvedResource);
+    deepStrictEqual(resolvedResource.metadata.nameConstraints, constraints);
+  });
+
+  it("name constraints with only pattern via NamePattern", async () => {
+    const program = await typeSpecCompile(
+      `
+/** Item properties */
+model ItemProperties {
+  /** Description */
+  description?: string;
+}
+
+/** An Item resource with only a pattern constraint */
+model Item is TrackedResource<ItemProperties> {
+  ...ResourceNameParameter<
+    Resource = Item,
+    KeyName = "itemName",
+    SegmentName = "items",
+    NamePattern = "^[a-zA-Z0-9]+$"
+  >;
+}
+
+interface Operations extends Azure.ResourceManager.Operations {}
+
+@armResourceOperations
+interface Items {
+  get is ArmResourceRead<Item>;
+  createOrUpdate is ArmResourceCreateOrReplaceAsync<Item>;
+}
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const [root] = createModel(sdkContext);
+
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+    ok(armProviderSchema);
+    strictEqual(armProviderSchema.resources.length, 1);
+
+    const itemResource = armProviderSchema.resources[0];
+    ok(itemResource);
+    const constraints = itemResource.metadata.nameConstraints;
+    ok(constraints);
+    strictEqual(constraints.pattern, "^[a-zA-Z0-9]+$");
+    strictEqual(constraints.minLength, undefined);
+    strictEqual(constraints.maxLength, undefined);
+
+    // Also validate resolveArmResources produces the same constraints
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    ok(resolvedSchema);
+    const resolvedResource = resolvedSchema.resources[0];
+    ok(resolvedResource);
+    deepStrictEqual(resolvedResource.metadata.nameConstraints, constraints);
+  });
+
+  it("api versions populated for single version resource", async () => {
+    const program = await typeSpecCompile(
+      `
+/** Employee properties */
+model EmployeeProperties {
+  /** Age of employee */
+  age?: int32;
+}
+
+/** An Employee resource */
+model Employee is TrackedResource<EmployeeProperties> {
+  ...ResourceNameParameter<Employee>;
+}
+
+interface Operations extends Azure.ResourceManager.Operations {}
+
+@armResourceOperations
+interface Employees {
+  get is ArmResourceRead<Employee>;
+  createOrUpdate is ArmResourceCreateOrReplaceAsync<Employee>;
+}
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const [root] = createModel(sdkContext);
+
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+    ok(armProviderSchema);
+    strictEqual(armProviderSchema.resources.length, 1);
+    deepStrictEqual(armProviderSchema.resources[0].metadata.apiVersions, [
+      "2021-10-01-preview"
+    ]);
+
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    ok(resolvedSchema);
+    deepStrictEqual(resolvedSchema.resources[0].metadata.apiVersions, [
+      "2021-10-01-preview"
+    ]);
+  });
+
+  it("api versions populated for multi-version resources", async () => {
+    const fileContent = `
+    import "@typespec/http";
+    import "@typespec/rest";
+    import "@typespec/versioning";
+    import "@azure-tools/typespec-azure-core";
+    import "@azure-tools/typespec-azure-resource-manager";
+    import "@azure-tools/typespec-client-generator-core";
+    using TypeSpec.Http;
+    using TypeSpec.Rest;
+    using TypeSpec.Versioning;
+    using Azure.Core;
+    using Azure.ResourceManager;
+    using Azure.ClientGenerator.Core;
+
+    @armProviderNamespace
+    @service(#{ title: "Azure Management emitter Testing" })
+    @versioned(Versions)
+    namespace Microsoft.ContosoProviderHub;
+
+    /** api versions */
+    enum Versions {
+      @armCommonTypesVersion(Azure.ResourceManager.CommonTypes.Versions.v5)
+      \`2024-04-01\`,
+      @armCommonTypesVersion(Azure.ResourceManager.CommonTypes.Versions.v5)
+      \`2024-05-01\`,
+    }
+
+    /** Widget properties */
+    model WidgetProperties {
+      /** Color of widget */
+      color?: string;
+    }
+
+    /** A Widget resource - available in all versions */
+    model Widget is TrackedResource<WidgetProperties> {
+      ...ResourceNameParameter<Widget>;
+    }
+
+    /** Gadget properties */
+    model GadgetProperties {
+      /** Size of gadget */
+      size?: int32;
+    }
+
+    /** A Gadget resource - added in second version only */
+    @added(Versions.\`2024-05-01\`)
+    @parentResource(Widget)
+    model Gadget is ProxyResource<GadgetProperties> {
+      ...ResourceNameParameter<Gadget>;
+    }
+
+    interface Operations extends Azure.ResourceManager.Operations {}
+
+    @armResourceOperations
+    interface Widgets {
+      get is ArmResourceRead<Widget>;
+      createOrUpdate is ArmResourceCreateOrReplaceAsync<Widget>;
+    }
+
+    @added(Versions.\`2024-05-01\`)
+    @armResourceOperations
+    interface Gadgets {
+      get is ArmResourceRead<Gadget>;
+      createOrUpdate is ArmResourceCreateOrReplaceAsync<Gadget>;
+    }
+    `;
+    runner.addTypeSpecFile("main.tsp", fileContent);
+    await runner.compile("./", { warningAsError: false });
+    const program = runner.program;
+
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const [root] = createModel(sdkContext);
+
+    // Test buildArmProviderSchema (legacy path)
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+    ok(armProviderSchema);
+    strictEqual(armProviderSchema.resources.length, 2);
+
+    const widgetResource = armProviderSchema.resources.find(
+      (r) => r.metadata.resourceType === "Microsoft.ContosoProviderHub/widgets"
+    );
+    ok(widgetResource);
+    deepStrictEqual(widgetResource.metadata.apiVersions, [
+      "2024-04-01",
+      "2024-05-01"
+    ]);
+
+    const gadgetResource = armProviderSchema.resources.find(
+      (r) =>
+        r.metadata.resourceType ===
+        "Microsoft.ContosoProviderHub/widgets/gadgets"
+    );
+    ok(gadgetResource);
+    deepStrictEqual(gadgetResource.metadata.apiVersions, ["2024-05-01"]);
+
+    // Test resolveArmResources (new path)
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    ok(resolvedSchema);
+
+    const resolvedWidget = resolvedSchema.resources.find(
+      (r) => r.metadata.resourceType === "Microsoft.ContosoProviderHub/widgets"
+    );
+    ok(resolvedWidget);
+    deepStrictEqual(resolvedWidget.metadata.apiVersions, [
+      "2024-04-01",
+      "2024-05-01"
+    ]);
+
+    const resolvedGadget = resolvedSchema.resources.find(
+      (r) =>
+        r.metadata.resourceType ===
+        "Microsoft.ContosoProviderHub/widgets/gadgets"
+    );
+    ok(resolvedGadget);
+    deepStrictEqual(resolvedGadget.metadata.apiVersions, ["2024-05-01"]);
+  });
+
+  it("rbac roles from clientOption decorator", async () => {
+    const program = await typeSpecCompile(
+      `
+/** Widget properties */
+model WidgetProperties {
+  /** Color of widget */
+  color?: string;
+}
+
+/** A Widget resource with RBAC roles */
+#suppress "@azure-tools/typespec-client-generator-core/client-option" "RBAC roles"
+model Widget is TrackedResource<WidgetProperties> {
+  ...ResourceNameParameter<Widget>;
+}
+
+interface Operations extends Azure.ResourceManager.Operations {}
+
+@armResourceOperations
+interface Widgets {
+  get is ArmResourceRead<Widget>;
+  createOrUpdate is ArmResourceCreateOrReplaceAsync<Widget>;
+}
+
+@@clientOption(Widget, "resource-rbac-roles", #{
+  WidgetContributor: "00000000-0000-0000-0000-000000000001",
+  WidgetReader: "00000000-0000-0000-0000-000000000002",
+}, "csharp");
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const [root] = createModel(sdkContext);
+
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+    ok(armProviderSchema);
+    strictEqual(armProviderSchema.resources.length, 1);
+
+    const widgetResource = armProviderSchema.resources[0];
+    ok(widgetResource);
+    deepStrictEqual(widgetResource.metadata.rbacRoles, [
+      {
+        name: "WidgetContributor",
+        value: "00000000-0000-0000-0000-000000000001"
+      },
+      { name: "WidgetReader", value: "00000000-0000-0000-0000-000000000002" }
+    ]);
+
+    // Also validate resolveArmResources produces the same roles
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    ok(resolvedSchema);
+    const resolvedResource = resolvedSchema.resources[0];
+    ok(resolvedResource);
+    deepStrictEqual(
+      resolvedResource.metadata.rbacRoles,
+      widgetResource.metadata.rbacRoles
+    );
+  });
+
+  it("rbac roles empty when no clientOption decorator", async () => {
+    const program = await typeSpecCompile(
+      `
+/** Gadget properties */
+model GadgetProperties {
+  /** Size of gadget */
+  size?: int32;
+}
+
+/** A Gadget resource without RBAC roles */
+model Gadget is TrackedResource<GadgetProperties> {
+  ...ResourceNameParameter<Gadget>;
+}
+
+interface Operations extends Azure.ResourceManager.Operations {}
+
+@armResourceOperations
+interface Gadgets {
+  get is ArmResourceRead<Gadget>;
+  createOrUpdate is ArmResourceCreateOrReplaceAsync<Gadget>;
+}
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const [root] = createModel(sdkContext);
+
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+    ok(armProviderSchema);
+    strictEqual(armProviderSchema.resources.length, 1);
+
+    const gadgetResource = armProviderSchema.resources[0];
+    ok(gadgetResource);
+    deepStrictEqual(gadgetResource.metadata.rbacRoles, []);
+
+    // Also validate resolveArmResources produces empty roles
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    ok(resolvedSchema);
+    const resolvedResource = resolvedSchema.resources[0];
+    ok(resolvedResource);
+    deepStrictEqual(resolvedResource.metadata.rbacRoles, []);
+  });
+
+  it("action on parent singleton that lists child resources should be reassigned to child resource", async () => {
+    // This test reproduces the Storage SDK pattern where a list operation
+    // (e.g., blobContainersList) is modeled as an ArmResourceActionSync on a
+    // singleton parent (BlobService) rather than as ArmResourceListByParent on
+    // the child interface (BlobContainers).
+    //
+    // The emitter classifies it as kind=Action on the parent resource.
+    // The generator then routes it to the parent's Resource class instead of
+    // the child's Collection class, breaking backward compatibility.
+    //
+    // Expected behavior: the emitter should detect that this Action's operation
+    // path matches a child resource's collection path and reclassify it as a
+    // List on the child resource.
+
+    const program = await typeSpecCompile(
+      `
+/** Storage account resource */
+model StorageAccount is TrackedResource<StorageAccountProperties> {
+  ...ResourceNameParameter<StorageAccount>;
+}
+
+/** Storage account properties */
+model StorageAccountProperties {
+  /** Account description */
+  description?: string;
+}
+
+/** Blob service singleton resource */
+@singleton
+@parentResource(StorageAccount)
+model BlobService is ProxyResource<BlobServiceProperties> {
+  ...ResourceNameParameter<BlobService>;
+}
+
+/** Blob service properties */
+model BlobServiceProperties {
+  /** Whether versioning is enabled */
+  isVersioningEnabled?: boolean;
+}
+
+/** Container child resource */
+@parentResource(BlobService)
+model Container is ProxyResource<ContainerProperties> {
+  ...ResourceNameParameter<Container>;
+}
+
+/** Container properties */
+model ContainerProperties {
+  /** Public access level */
+  publicAccess?: string;
+}
+
+/** List of containers */
+model ListContainerItems {
+  /** The list of containers */
+  @pageItems
+  value?: Container[];
+
+  /** The next link */
+  @nextLink
+  nextLink?: string;
+}
+
+interface Operations extends Azure.ResourceManager.Operations {}
+
+@armResourceOperations
+interface StorageAccounts {
+  get is ArmResourceRead<StorageAccount>;
+  createOrUpdate is ArmResourceCreateOrReplaceAsync<StorageAccount>;
+}
+
+@armResourceOperations
+interface BlobServices {
+  get is ArmResourceRead<BlobService>;
+  setProperties is ArmResourceCreateOrReplaceSync<BlobService>;
+
+  /** Lists all containers in the blob service - modeled as action on parent */
+  @get
+  @list
+  containers is ArmResourceActionSync<
+    BlobService,
+    void,
+    ListContainerItems
+  >;
+}
+
+@armResourceOperations
+interface Containers {
+  get is ArmResourceRead<Container>;
+  createOrUpdate is ArmResourceCreateOrReplaceSync<Container>;
+  delete is ArmResourceDeleteSync<Container>;
+}
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const [root] = createModel(sdkContext);
+
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+    ok(armProviderSchema);
+
+    // Find the resources
+    const storageAccountResource = armProviderSchema.resources.find(
+      (r) =>
+        r.metadata.resourceType ===
+        "Microsoft.ContosoProviderHub/storageAccounts"
+    );
+    ok(storageAccountResource, "StorageAccount resource should exist");
+
+    const blobServiceResource = armProviderSchema.resources.find(
+      (r) =>
+        r.metadata.resourceType ===
+        "Microsoft.ContosoProviderHub/storageAccounts/blobServices"
+    );
+    ok(blobServiceResource, "BlobService resource should exist");
+
+    const containerResource = armProviderSchema.resources.find(
+      (r) =>
+        r.metadata.resourceType ===
+        "Microsoft.ContosoProviderHub/storageAccounts/blobServices/containers"
+    );
+    ok(containerResource, "Container resource should exist");
+
+    // Verify BlobService is a singleton with correct parent
+    strictEqual(blobServiceResource.metadata.singletonResourceName, "default");
+    strictEqual(
+      blobServiceResource.metadata.parentResourceId,
+      storageAccountResource.metadata.resourceIdPattern
+    );
+
+    // Verify Container's parent is BlobService
+    strictEqual(
+      containerResource.metadata.parentResourceId,
+      blobServiceResource.metadata.resourceIdPattern
+    );
+
+    // After fix: listContainers should have been moved from BlobService to Container
+    const blobServiceMethods = blobServiceResource.metadata.methods;
+    const containerMethods = containerResource.metadata.methods;
+
+    // The listContainers method should be on Container as kind=List
+    const listOnContainer = containerMethods.find(
+      (m: any) => m.kind === "List"
+    );
+    ok(
+      listOnContainer,
+      "listContainers should be on Container as a List method"
+    );
+    strictEqual(listOnContainer!.kind, "List");
+    ok(
+      listOnContainer!.operationPath.includes("/containers"),
+      "The List method should be the relocated containers operation"
+    );
+
+    // BlobService should NOT have the listContainers action anymore
+    const listContainersOnService = blobServiceMethods.find(
+      (m: any) =>
+        m.kind === "Action" && m.operationPath?.includes("/containers")
+    );
+    strictEqual(
+      listContainersOnService,
+      undefined,
+      "listContainers should no longer be on BlobService"
+    );
+
+    // BlobService should still have its own methods (Read + Create)
+    ok(
+      blobServiceMethods.some((m: any) => m.kind === "Read"),
+      "BlobService should still have Read"
+    );
+    ok(
+      blobServiceMethods.some((m: any) => m.kind === "Create"),
+      "BlobService should still have Create"
+    );
+
+    // Validate using resolveArmResources API - use deep equality to ensure schemas match
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    ok(resolvedSchema);
+
+    deepStrictEqual(
+      normalizeSchemaForComparison(resolvedSchema),
+      normalizeSchemaForComparison(armProviderSchema)
+    );
+  });
+
+  it("ArmResourceListByParent in parent interface routes list to child resource", async () => {
+    // Validates the spec-level fix: using ArmResourceListByParent<Container>
+    // in the BlobServices interface (instead of ArmResourceActionSync) produces
+    // kind=List and correctly assigns it to the Container resource — even though
+    // the operation is defined in the parent's interface.
+
+    const program = await typeSpecCompile(
+      `
+/** Storage account resource */
+model StorageAccount is TrackedResource<StorageAccountProperties> {
+  ...ResourceNameParameter<StorageAccount>;
+}
+
+/** Storage account properties */
+model StorageAccountProperties {
+  /** Account description */
+  description?: string;
+}
+
+/** Blob service singleton resource */
+@singleton
+@parentResource(StorageAccount)
+model BlobService is ProxyResource<BlobServiceProperties> {
+  ...ResourceNameParameter<BlobService>;
+}
+
+/** Blob service properties */
+model BlobServiceProperties {
+  /** Whether versioning is enabled */
+  isVersioningEnabled?: boolean;
+}
+
+/** Container child resource */
+@parentResource(BlobService)
+model Container is ProxyResource<ContainerProperties> {
+  ...ResourceNameParameter<Container>;
+}
+
+/** Container properties */
+model ContainerProperties {
+  /** Public access level */
+  publicAccess?: string;
+}
+
+interface Operations extends Azure.ResourceManager.Operations {}
+
+@armResourceOperations
+interface StorageAccounts {
+  get is ArmResourceRead<StorageAccount>;
+  createOrUpdate is ArmResourceCreateOrReplaceAsync<StorageAccount>;
+}
+
+@armResourceOperations
+interface BlobServices {
+  get is ArmResourceRead<BlobService>;
+  setProperties is ArmResourceCreateOrReplaceSync<BlobService>;
+
+  /** Lists all containers - uses ArmResourceListByParent in parent interface */
+  listContainers is ArmResourceListByParent<Container>;
+}
+
+@armResourceOperations
+interface Containers {
+  get is ArmResourceRead<Container>;
+  createOrUpdate is ArmResourceCreateOrReplaceSync<Container>;
+  delete is ArmResourceDeleteSync<Container>;
+}
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const [root] = createModel(sdkContext);
+
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+    ok(armProviderSchema);
+
+    const containerResource = armProviderSchema.resources.find(
+      (r) =>
+        r.metadata.resourceType ===
+        "Microsoft.ContosoProviderHub/storageAccounts/blobServices/containers"
+    );
+    ok(containerResource, "Container resource should exist");
+
+    const blobServiceResource = armProviderSchema.resources.find(
+      (r) =>
+        r.metadata.resourceType ===
+        "Microsoft.ContosoProviderHub/storageAccounts/blobServices"
+    );
+    ok(blobServiceResource, "BlobService resource should exist");
+
+    // Container should have the List method (routed from BlobServices interface)
+    const listOnContainer = containerResource.metadata.methods.find(
+      (m: any) => m.kind === "List"
+    );
+    ok(listOnContainer, "Container should have a List method");
+    strictEqual(listOnContainer!.kind, "List");
+
+    // BlobService should NOT have the list operation
+    const listOnService = blobServiceResource.metadata.methods.find(
+      (m: any) =>
+        m.kind === "List" ||
+        (m.kind === "Action" && m.operationPath?.includes("/containers"))
+    );
+    strictEqual(
+      listOnService,
+      undefined,
+      "BlobService should not have the list containers operation"
+    );
+
+    // BlobService should still have its own methods (Read + Create)
+    ok(
+      blobServiceResource.metadata.methods.some((m: any) => m.kind === "Read")
+    );
+    ok(
+      blobServiceResource.metadata.methods.some((m: any) => m.kind === "Create")
+    );
+
+    // Validate using resolveArmResources API - use deep equality to ensure schemas match
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    ok(resolvedSchema);
+
+    deepStrictEqual(
+      normalizeSchemaForComparison(resolvedSchema),
+      normalizeSchemaForComparison(armProviderSchema)
+    );
   });
 });

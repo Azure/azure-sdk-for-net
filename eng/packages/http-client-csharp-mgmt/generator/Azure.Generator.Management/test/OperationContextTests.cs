@@ -3,6 +3,7 @@
 
 using Azure.Core;
 using Azure.Generator.Management.Models;
+using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Snippets;
@@ -611,15 +612,15 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.AreEqual("parentProviderNamespace", contextualParameters[2].VariableName);
             Assert.AreEqual("id.Parent.ResourceType.Namespace", contextualParameters[2].BuildValueExpression(_idVariable).ToDisplayString());
 
-            // parentResourceName uses the variable key - appears first due to stack order
-            Assert.AreEqual("parentResourceName", contextualParameters[3].Key);
-            Assert.AreEqual("parentResourceName", contextualParameters[3].VariableName);
-            Assert.AreEqual("id.Parent.Name", contextualParameters[3].BuildValueExpression(_idVariable).ToDisplayString());
-
             // parentResourceType is a variable key - should use ResourceType().Type()
-            Assert.AreEqual("parentResourceType", contextualParameters[4].Key);
-            Assert.AreEqual("parentResourceType", contextualParameters[4].VariableName);
-            Assert.AreEqual("id.Parent.ResourceType.Type", contextualParameters[4].BuildValueExpression(_idVariable).ToDisplayString());
+            Assert.AreEqual("parentResourceType", contextualParameters[3].Key);
+            Assert.AreEqual("parentResourceType", contextualParameters[3].VariableName);
+            Assert.AreEqual("id.Parent.ResourceType.Type", contextualParameters[3].BuildValueExpression(_idVariable).ToDisplayString());
+
+            // parentResourceName uses Name
+            Assert.AreEqual("parentResourceName", contextualParameters[4].Key);
+            Assert.AreEqual("parentResourceName", contextualParameters[4].VariableName);
+            Assert.AreEqual("id.Parent.Name", contextualParameters[4].BuildValueExpression(_idVariable).ToDisplayString());
 
             Assert.AreEqual("targets", contextualParameters[5].Key);
             Assert.AreEqual("targetName", contextualParameters[5].VariableName);
@@ -648,15 +649,15 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.AreEqual("parentProviderNamespace", contextualParameters[2].VariableName);
             Assert.AreEqual("id.ResourceType.Namespace", contextualParameters[2].BuildValueExpression(_idVariable).ToDisplayString());
 
-            // parentResourceName uses the variable key - appears first due to stack order
-            Assert.AreEqual("parentResourceName", contextualParameters[3].Key);
-            Assert.AreEqual("parentResourceName", contextualParameters[3].VariableName);
-            Assert.AreEqual("id.Name", contextualParameters[3].BuildValueExpression(_idVariable).ToDisplayString());
-
             // parentResourceType is a variable key
-            Assert.AreEqual("parentResourceType", contextualParameters[4].Key);
-            Assert.AreEqual("parentResourceType", contextualParameters[4].VariableName);
-            Assert.AreEqual("id.ResourceType.Type", contextualParameters[4].BuildValueExpression(_idVariable).ToDisplayString());
+            Assert.AreEqual("parentResourceType", contextualParameters[3].Key);
+            Assert.AreEqual("parentResourceType", contextualParameters[3].VariableName);
+            Assert.AreEqual("id.ResourceType.Type", contextualParameters[3].BuildValueExpression(_idVariable).ToDisplayString());
+
+            // parentResourceName uses Name
+            Assert.AreEqual("parentResourceName", contextualParameters[4].Key);
+            Assert.AreEqual("parentResourceName", contextualParameters[4].VariableName);
+            Assert.AreEqual("id.Name", contextualParameters[4].BuildValueExpression(_idVariable).ToDisplayString());
         }
 
         [Test]
@@ -701,6 +702,324 @@ namespace Azure.Generator.Mgmt.Tests
 
             Assert.AreEqual("targets", operationContext.SecondaryContextualPathParameters[3].Key);
             Assert.AreEqual("targetName", operationContext.SecondaryContextualPathParameters[3].VariableName);
+        }
+
+        [TestCase]
+        public void PopulateArguments_NullableEnumToString_UsesNullConditional()
+        {
+            // Set up a pass-through parameter mapping (ContextualParameter is null)
+            var mapping = new ParameterContextMapping("testParam", null);
+            var registry = new ParameterContextRegistry(new List<ParameterContextMapping> { mapping });
+
+            // Request parameter expects string type with matching serialized name
+            var requestParam = new ParameterProvider("testParam", $"", typeof(string));
+            requestParam.Update(wireInfo: new WireInformation(default, "testParam"));
+
+            // Method parameter is a nullable enum type
+            var nullableEnumType = new CSharpType(typeof(DayOfWeek), isNullable: true);
+            var methodParam = new ParameterProvider("testParam", $"", nullableEnumType);
+            methodParam.Update(wireInfo: new WireInformation(default, "testParam"));
+
+            var contextVariable = new VariableExpression(typeof(RequestContext), "context");
+
+            var arguments = registry.PopulateArguments(
+                _idVariable,
+                new List<ParameterProvider> { requestParam },
+                contextVariable,
+                new List<ParameterProvider> { methodParam });
+
+            Assert.AreEqual(1, arguments.Count);
+            // Should use null-conditional: testParam?.ToString()
+            Assert.That(arguments[0].ToDisplayString(), Does.Contain("?.ToString()"));
+        }
+
+        [TestCase]
+        public void PopulateArguments_NonNullableEnumToString_UsesDirectToString()
+        {
+            // Set up a pass-through parameter mapping (ContextualParameter is null)
+            var mapping = new ParameterContextMapping("testParam", null);
+            var registry = new ParameterContextRegistry(new List<ParameterContextMapping> { mapping });
+
+            // Request parameter expects string type
+            var requestParam = new ParameterProvider("testParam", $"", typeof(string));
+            requestParam.Update(wireInfo: new WireInformation(default, "testParam"));
+
+            // Method parameter is a non-nullable enum type
+            var methodParam = new ParameterProvider("testParam", $"", typeof(DayOfWeek));
+            methodParam.Update(wireInfo: new WireInformation(default, "testParam"));
+
+            var contextVariable = new VariableExpression(typeof(RequestContext), "context");
+
+            var arguments = registry.PopulateArguments(
+                _idVariable,
+                new List<ParameterProvider> { requestParam },
+                contextVariable,
+                new List<ParameterProvider> { methodParam });
+
+            Assert.AreEqual(1, arguments.Count);
+            // Should use direct ToString without null-conditional: testParam.ToString()
+            var displayString = arguments[0].ToDisplayString();
+            Assert.That(displayString, Does.Contain(".ToString()"));
+            Assert.That(displayString, Does.Not.Contain("?.ToString()"));
+        }
+
+        [TestCase]
+        public void PopulateArguments_NullableResourceIdentifierToString_UsesNullConditional()
+        {
+            // Set up a pass-through parameter mapping (ContextualParameter is null)
+            var mapping = new ParameterContextMapping("testParam", null);
+            var registry = new ParameterContextRegistry(new List<ParameterContextMapping> { mapping });
+
+            // Request parameter expects string type with matching serialized name
+            var requestParam = new ParameterProvider("testParam", $"", typeof(string));
+            requestParam.Update(wireInfo: new WireInformation(default, "testParam"));
+
+            // Method parameter is a nullable ResourceIdentifier type
+            var nullableResourceIdType = new CSharpType(typeof(ResourceIdentifier), isNullable: true);
+            var methodParam = new ParameterProvider("testParam", $"", nullableResourceIdType);
+            methodParam.Update(wireInfo: new WireInformation(default, "testParam"));
+
+            var contextVariable = new VariableExpression(typeof(RequestContext), "context");
+
+            var arguments = registry.PopulateArguments(
+                _idVariable,
+                new List<ParameterProvider> { requestParam },
+                contextVariable,
+                new List<ParameterProvider> { methodParam });
+
+            Assert.AreEqual(1, arguments.Count);
+            // Should use null-conditional: testParam?.ToString()
+            Assert.That(arguments[0].ToDisplayString(), Does.Contain("?.ToString()"));
+        }
+
+        [TestCase]
+        public void PopulateArguments_NonNullableResourceIdentifierToString_UsesDirectToString()
+        {
+            // Set up a pass-through parameter mapping (ContextualParameter is null)
+            var mapping = new ParameterContextMapping("testParam", null);
+            var registry = new ParameterContextRegistry(new List<ParameterContextMapping> { mapping });
+
+            // Request parameter expects string type
+            var requestParam = new ParameterProvider("testParam", $"", typeof(string));
+            requestParam.Update(wireInfo: new WireInformation(default, "testParam"));
+
+            // Method parameter is a non-nullable ResourceIdentifier type
+            var methodParam = new ParameterProvider("testParam", $"", typeof(ResourceIdentifier));
+            methodParam.Update(wireInfo: new WireInformation(default, "testParam"));
+
+            var contextVariable = new VariableExpression(typeof(RequestContext), "context");
+
+            var arguments = registry.PopulateArguments(
+                _idVariable,
+                new List<ParameterProvider> { requestParam },
+                contextVariable,
+                new List<ParameterProvider> { methodParam });
+
+            Assert.AreEqual(1, arguments.Count);
+            // Should use direct ToString without null-conditional: testParam.ToString()
+            var displayString = arguments[0].ToDisplayString();
+            Assert.That(displayString, Does.Contain(".ToString()"));
+            Assert.That(displayString, Does.Not.Contain("?.ToString()"));
+        }
+
+        [TestCase]
+        public void PopulateArguments_MatchConditionsType_FindsMethodParameterByType()
+        {
+            // When the request parameter is a MatchConditions type (processed by MatchConditionsHeadersVisitor),
+            // it should find the corresponding MatchConditions method parameter by type
+            var registry = new ParameterContextRegistry(new List<ParameterContextMapping>());
+
+            // Request parameter is MatchConditions with empty serialized name (set by visitor)
+            var requestMatchConditions = new ParameterProvider("matchConditions", $"",
+                new CSharpType(typeof(MatchConditions)).WithNullable(true));
+            requestMatchConditions.Update(wireInfo: new WireInformation(default, string.Empty));
+
+            // Method parameter is also MatchConditions (set by visitor on convenience method)
+            var methodMatchConditions = new ParameterProvider("matchConditions", $"",
+                new CSharpType(typeof(MatchConditions)).WithNullable(true));
+            methodMatchConditions.Update(wireInfo: new WireInformation(default, string.Empty));
+
+            var contextVariable = new VariableExpression(typeof(RequestContext), "context");
+
+            var arguments = registry.PopulateArguments(
+                _idVariable,
+                new List<ParameterProvider> { requestMatchConditions },
+                contextVariable,
+                new List<ParameterProvider> { methodMatchConditions });
+
+            Assert.AreEqual(1, arguments.Count);
+            Assert.That(arguments[0].ToDisplayString(), Does.Contain("matchConditions"));
+        }
+
+        [TestCase]
+        public void PopulateArguments_RequestConditionsType_FindsMethodParameterByType()
+        {
+            // When the request parameter is a RequestConditions type, it should find the
+            // corresponding RequestConditions method parameter by type
+            var registry = new ParameterContextRegistry(new List<ParameterContextMapping>());
+
+            var requestConditions = new ParameterProvider("requestConditions", $"",
+                new CSharpType(typeof(RequestConditions)).WithNullable(true));
+            requestConditions.Update(wireInfo: new WireInformation(default, string.Empty));
+
+            var methodConditions = new ParameterProvider("requestConditions", $"",
+                new CSharpType(typeof(RequestConditions)).WithNullable(true));
+            methodConditions.Update(wireInfo: new WireInformation(default, string.Empty));
+
+            var contextVariable = new VariableExpression(typeof(RequestContext), "context");
+
+            var arguments = registry.PopulateArguments(
+                _idVariable,
+                new List<ParameterProvider> { requestConditions },
+                contextVariable,
+                new List<ParameterProvider> { methodConditions });
+
+            Assert.AreEqual(1, arguments.Count);
+            Assert.That(arguments[0].ToDisplayString(), Does.Contain("requestConditions"));
+        }
+
+        [TestCase]
+        public void PopulateArguments_MatchConditionsType_ReturnsDefaultWhenNoMethodParameter()
+        {
+            // When the request parameter is a MatchConditions type but no matching method parameter exists,
+            // it should return default
+            var registry = new ParameterContextRegistry(new List<ParameterContextMapping>());
+
+            var requestMatchConditions = new ParameterProvider("matchConditions", $"",
+                new CSharpType(typeof(MatchConditions)).WithNullable(true));
+            requestMatchConditions.Update(wireInfo: new WireInformation(default, string.Empty));
+
+            var contextVariable = new VariableExpression(typeof(RequestContext), "context");
+
+            var arguments = registry.PopulateArguments(
+                _idVariable,
+                new List<ParameterProvider> { requestMatchConditions },
+                contextVariable,
+                new List<ParameterProvider>());
+
+            Assert.AreEqual(1, arguments.Count);
+            Assert.That(arguments[0].ToDisplayString(), Does.Contain("default"));
+        }
+        [TestCase]
+        public void PopulateArguments_StringBodyParameter_UsesRequestContentCreate()
+        {
+            // When the body parameter is a string (framework type), should generate
+            // RequestContent.Create(BinaryData.FromObjectAsJson(body)) instead of
+            // string.ToRequestContent(body) which doesn't exist.
+            var registry = new ParameterContextRegistry(new List<ParameterContextMapping>());
+
+            var requestContentParam = new ParameterProvider("content", $"", typeof(RequestContent));
+            requestContentParam.Update(wireInfo: new WireInformation(default, string.Empty));
+
+            var contextVariable = new VariableExpression(typeof(RequestContext), "context");
+
+            var bodyParam = new ParameterProvider("body", $"", new CSharpType(typeof(string), isNullable: true));
+            bodyParam.Update(wireInfo: new WireInformation(default, string.Empty), location: ParameterLocation.Body);
+
+            var arguments = registry.PopulateArguments(
+                _idVariable,
+                new List<ParameterProvider> { requestContentParam },
+                contextVariable,
+                new List<ParameterProvider> { bodyParam });
+
+            Assert.AreEqual(1, arguments.Count);
+            var displayString = arguments[0].ToDisplayString();
+            // Should use RequestContent.Create(body), not string.ToRequestContent(body)
+            Assert.That(displayString, Does.Not.Contain("string.ToRequestContent"));
+            Assert.That(displayString, Does.Contain("RequestContent"));
+            Assert.That(displayString, Does.Not.Contain("FromObjectAsJson"));
+        }
+
+        [TestCase]
+        public void PopulateArguments_NonNullableFixedEnumToString_UsesToSerialString()
+        {
+            // Set up a pass-through parameter mapping (ContextualParameter is null)
+            var mapping = new ParameterContextMapping("testParam", null);
+            var registry = new ParameterContextRegistry(new List<ParameterContextMapping> { mapping });
+
+            // Request parameter expects string type
+            var requestParam = new ParameterProvider("testParam", $"", typeof(string));
+            requestParam.Update(wireInfo: new WireInformation(default, "testParam"));
+
+            // Method parameter is a non-nullable fixed enum type (IsStruct=false)
+            // Create a CSharpType with IsEnum=true and IsStruct=false to simulate a generated fixed enum
+            var fixedEnumType = CreateFixedEnumCSharpType("TestFixedEnum", "TestNs", isNullable: false);
+            var methodParam = new ParameterProvider("testParam", $"", fixedEnumType);
+            methodParam.Update(wireInfo: new WireInformation(default, "testParam"));
+
+            var contextVariable = new VariableExpression(typeof(RequestContext), "context");
+
+            var arguments = registry.PopulateArguments(
+                _idVariable,
+                new List<ParameterProvider> { requestParam },
+                contextVariable,
+                new List<ParameterProvider> { methodParam });
+
+            Assert.AreEqual(1, arguments.Count);
+            // Fixed enums should use ToSerialString() instead of ToString()
+            var displayString = arguments[0].ToDisplayString();
+            Assert.That(displayString, Does.Contain(".ToSerialString()"));
+            Assert.That(displayString, Does.Not.Contain("?.ToSerialString()"));
+        }
+
+        [TestCase]
+        public void PopulateArguments_NullableFixedEnumToString_UsesNullConditionalToSerialString()
+        {
+            // Set up a pass-through parameter mapping (ContextualParameter is null)
+            var mapping = new ParameterContextMapping("testParam", null);
+            var registry = new ParameterContextRegistry(new List<ParameterContextMapping> { mapping });
+
+            // Request parameter expects string type with matching serialized name
+            var requestParam = new ParameterProvider("testParam", $"", typeof(string));
+            requestParam.Update(wireInfo: new WireInformation(default, "testParam"));
+
+            // Method parameter is a nullable fixed enum type (IsStruct=false)
+            var fixedEnumType = CreateFixedEnumCSharpType("TestFixedEnum", "TestNs", isNullable: true);
+            var methodParam = new ParameterProvider("testParam", $"", fixedEnumType);
+            methodParam.Update(wireInfo: new WireInformation(default, "testParam"));
+
+            var contextVariable = new VariableExpression(typeof(RequestContext), "context");
+
+            var arguments = registry.PopulateArguments(
+                _idVariable,
+                new List<ParameterProvider> { requestParam },
+                contextVariable,
+                new List<ParameterProvider> { methodParam });
+
+            Assert.AreEqual(1, arguments.Count);
+            // Nullable fixed enums should use null-conditional ToSerialString(): testParam?.ToSerialString()
+            Assert.That(arguments[0].ToDisplayString(), Does.Contain("?.ToSerialString()"));
+        }
+
+        /// <summary>
+        /// Creates a CSharpType that simulates a generated fixed enum (IsEnum=true, IsStruct=false).
+        /// Uses reflection because the multi-param CSharpType constructor is internal.
+        /// </summary>
+        private static CSharpType CreateFixedEnumCSharpType(string name, string ns, bool isNullable)
+        {
+            // The internal CSharpType constructor signature:
+            // CSharpType(string name, string ns, bool isValueType, bool isNullable,
+            //            CSharpType declaringType, IReadOnlyList<CSharpType> args,
+            //            bool isPublic, bool isStruct, CSharpType baseType, Type underlyingEnumType)
+            var ctor = typeof(CSharpType).GetConstructor(
+                System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance,
+                null,
+                new[] { typeof(string), typeof(string), typeof(bool), typeof(bool), typeof(CSharpType),
+                        typeof(IReadOnlyList<CSharpType>), typeof(bool), typeof(bool), typeof(CSharpType), typeof(Type) },
+                null);
+
+            bool isValueType = true;
+            CSharpType? declaringType = null;
+            IReadOnlyList<CSharpType> args = Array.Empty<CSharpType>();
+            bool isPublic = true;
+            bool isStruct = false; // false = fixed enum (C# enum), true = extensible enum (readonly struct)
+            CSharpType? baseType = null;
+            Type underlyingEnumType = typeof(string); // non-null marks this as an enum type
+
+            return (CSharpType)ctor!.Invoke(new object?[] {
+                name, ns, isValueType, isNullable, declaringType,
+                args, isPublic, isStruct, baseType, underlyingEnumType
+            });
         }
     }
 }

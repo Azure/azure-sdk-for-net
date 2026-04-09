@@ -73,6 +73,15 @@ export const armResourceInternalName = "@armResourceInternal";
 const armResourceInternalRegex =
   "Azure\\.ResourceManager\\.Private\\.@armResourceInternal";
 
+// Custom Azure resource decorator for legacy/converted specs.
+// Used by services like TrafficManager that were converted from Swagger to TypeSpec
+// and don't use standard ARM resource templates (TrackedResource<T>, ProxyResource<T>).
+// Docs: https://github.com/Azure/typespec-azure/blob/main/packages/typespec-azure-resource-manager/README.md#customazureresource
+export const customAzureResource =
+  "Azure.ResourceManager.Legacy.@customAzureResource";
+const customAzureResourceRegex =
+  "Azure\\.ResourceManager\\.Legacy\\.@customAzureResource";
+
 // https://github.com/Azure/typespec-azure/blob/main/packages/typespec-azure-resource-manager/README.md#subscriptionresource
 export const subscriptionResource =
   "Azure.ResourceManager.@subscriptionResource";
@@ -105,6 +114,11 @@ export const armProviderSchema =
 export const flattenPropertyDecorator =
   "Azure.ResourceManager.@flattenProperty";
 
+// TypeSpec validation decorators for resource name constraints
+const patternRegex = "TypeSpec\\.@pattern";
+const minLengthRegex = "TypeSpec\\.@minLength";
+const maxLengthRegex = "TypeSpec\\.@maxLength";
+
 export const azureSDKContextOptions: CreateSdkContextOptions = {
   versioning: {
     previewStringRegex: /-preview$/
@@ -126,6 +140,10 @@ export const azureSDKContextOptions: CreateSdkContextOptions = {
     singletonRegex,
     subscriptionResourceRegex,
     tenantResourceRegex,
-    armResourceWithParameterRegex
+    armResourceWithParameterRegex,
+    customAzureResourceRegex,
+    patternRegex,
+    minLengthRegex,
+    maxLengthRegex
   ]
 };

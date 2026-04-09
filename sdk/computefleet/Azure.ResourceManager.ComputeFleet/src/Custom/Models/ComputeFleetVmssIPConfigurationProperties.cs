@@ -14,7 +14,7 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
-    [CodeGenSerialization(nameof(ApplicationGatewayBackendAddressPools),DeserializationValueHook = nameof(DeserializeApplicationGatewayBackendAddressPools))]
+    [CodeGenSerialization(nameof(ApplicationGatewayBackendAddressPools), DeserializationValueHook = nameof(DeserializeApplicationGatewayBackendAddressPools))]
     [CodeGenSerialization(nameof(ApplicationSecurityGroups), DeserializationValueHook = nameof(DeserializeApplicationSecurityGroups))]
     [CodeGenSerialization(nameof(LoadBalancerBackendAddressPools), DeserializationValueHook = nameof(DeserializeLoadBalancerBackendAddressPools))]
     [CodeGenSerialization(nameof(LoadBalancerInboundNatPools), DeserializationValueHook = nameof(DeserializeLoadBalancerInboundNatPools))]

@@ -1,3 +1,5 @@
 {
-  "apiVersion": "2025-06-01-preview"
+  "apiVersions": {
+    "Microsoft.FileShares": "2025-09-01-preview"
+  }
 }

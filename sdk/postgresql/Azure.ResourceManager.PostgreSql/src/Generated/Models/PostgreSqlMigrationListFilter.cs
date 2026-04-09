@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary>
-    /// The PostgreSqlMigrationListFilter.
-    /// Serialized Name: MigrationListFilter
-    /// </summary>
+    /// <summary> The PostgreSqlMigrationListFilter. </summary>
     public readonly partial struct PostgreSqlMigrationListFilter : IEquatable<PostgreSqlMigrationListFilter>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string ActiveValue = "Active";
         private const string AllValue = "All";
 
-        /// <summary>
-        /// Active
-        /// Serialized Name: MigrationListFilter.Active
-        /// </summary>
+        /// <summary> Active. </summary>
         public static PostgreSqlMigrationListFilter Active { get; } = new PostgreSqlMigrationListFilter(ActiveValue);
-        /// <summary>
-        /// All
-        /// Serialized Name: MigrationListFilter.All
-        /// </summary>
+        /// <summary> All. </summary>
         public static PostgreSqlMigrationListFilter All { get; } = new PostgreSqlMigrationListFilter(AllValue);
         /// <summary> Determines if two <see cref="PostgreSqlMigrationListFilter"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlMigrationListFilter left, PostgreSqlMigrationListFilter right) => left.Equals(right);

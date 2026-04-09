@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.FileShares.Mocking
 
         private ClientDiagnostics FileSharesInterfaceClientDiagnostics => _fileSharesInterfaceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.FileShares.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private FileSharesInterface FileSharesInterfaceRestClient => _fileSharesInterfaceRestClient ??= new FileSharesInterface(FileSharesInterfaceClientDiagnostics, Pipeline, Endpoint, "2025-06-01-preview");
+        private FileSharesInterface FileSharesInterfaceRestClient => _fileSharesInterfaceRestClient ??= new FileSharesInterface(FileSharesInterfaceClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
 
         private ClientDiagnostics InformationalOperationsClientDiagnostics => _informationalOperationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.FileShares.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private InformationalOperations InformationalOperationsRestClient => _informationalOperationsRestClient ??= new InformationalOperations(InformationalOperationsClientDiagnostics, Pipeline, Endpoint, "2025-06-01-preview");
+        private InformationalOperations InformationalOperationsRestClient => _informationalOperationsRestClient ??= new InformationalOperations(InformationalOperationsClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
 
         /// <summary>
         /// List FileShare resources by subscription ID
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.FileShares.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.FileShares.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<FileShareData, FileShareResource>(new FileSharesInterfaceGetBySubscriptionAsyncCollectionResultOfT(FileSharesInterfaceRestClient, Guid.Parse(Id.SubscriptionId), context), data => new FileShareResource(Client, data));
+            return new AsyncPageableWrapper<FileShareData, FileShareResource>(new FileSharesInterfaceGetBySubscriptionAsyncCollectionResultOfT(FileSharesInterfaceRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableFileSharesSubscriptionResource.GetFileShares"), data => new FileShareResource(Client, data));
         }
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.FileShares.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.FileShares.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<FileShareData, FileShareResource>(new FileSharesInterfaceGetBySubscriptionCollectionResultOfT(FileSharesInterfaceRestClient, Guid.Parse(Id.SubscriptionId), context), data => new FileShareResource(Client, data));
+            return new PageableWrapper<FileShareData, FileShareResource>(new FileSharesInterfaceGetBySubscriptionCollectionResultOfT(FileSharesInterfaceRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableFileSharesSubscriptionResource.GetFileShares"), data => new FileShareResource(Client, data));
         }
 
         /// <summary>
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.FileShares.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.FileShares.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.FileShares.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.FileShares.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.FileShares.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.FileShares.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.FileShares.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.FileShares.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

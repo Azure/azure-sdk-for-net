@@ -33,7 +33,8 @@ namespace Azure.ResourceManager.Redis.Tests
             await SetCollectionsAsync();
 
             var redisCacheName = Recording.GenerateAssetName("RedisBegin");
-            var parameter = new RedisCreateOrUpdateContent(DefaultLocation, new RedisSku(RedisSkuName.Premium, RedisSkuFamily.Premium, 1)) {
+            var parameter = new RedisCreateOrUpdateContent(DefaultLocation, new RedisSku(RedisSkuName.Premium, RedisSkuFamily.Premium, 1))
+            {
                 MinimumTlsVersion = RedisTlsVersion.Tls1_2,
                 ReplicasPerMaster = 2,
                 RedisVersion = "latest",

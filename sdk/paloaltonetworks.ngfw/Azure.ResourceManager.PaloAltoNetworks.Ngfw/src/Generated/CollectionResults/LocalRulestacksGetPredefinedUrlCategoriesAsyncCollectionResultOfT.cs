@@ -22,8 +22,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         private readonly string _resourceGroupName;
         private readonly string _localRulestackName;
         private readonly string _skip;
-        private readonly int? _top;
+        private readonly int? _maxCount;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of LocalRulestacksGetPredefinedUrlCategoriesAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The LocalRulestacks client used to send requests. </param>
@@ -31,17 +32,19 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="localRulestackName"> LocalRulestack resource name. </param>
         /// <param name="skip"></param>
-        /// <param name="top"></param>
+        /// <param name="maxCount"></param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public LocalRulestacksGetPredefinedUrlCategoriesAsyncCollectionResultOfT(LocalRulestacks client, string subscriptionId, string resourceGroupName, string localRulestackName, string skip, int? top, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public LocalRulestacksGetPredefinedUrlCategoriesAsyncCollectionResultOfT(LocalRulestacks client, string subscriptionId, string resourceGroupName, string localRulestackName, string skip, int? maxCount, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
             _localRulestackName = localRulestackName;
             _skip = skip;
-            _top = top;
+            _maxCount = maxCount;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of LocalRulestacksGetPredefinedUrlCategoriesAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -59,7 +62,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                     yield break;
                 }
                 PredefinedUrlCategoryListResult result = PredefinedUrlCategoryListResult.FromResponse(response);
-                yield return Page<PredefinedUrlCategory>.FromValues((IReadOnlyList<PredefinedUrlCategory>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<PredefinedUrlCategory>.FromValues((IReadOnlyList<PredefinedUrlCategory>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -73,8 +76,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetPredefinedUrlCategoriesRequest(nextLink, _subscriptionId, _resourceGroupName, _localRulestackName, _skip, _top, _context) : _client.CreateGetPredefinedUrlCategoriesRequest(_subscriptionId, _resourceGroupName, _localRulestackName, _skip, _top, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("LocalRulestackResource.GetPredefinedUrlCategories");
+            HttpMessage message = nextLink != null ? _client.CreateNextGetPredefinedUrlCategoriesRequest(nextLink, _subscriptionId, _resourceGroupName, _localRulestackName, _skip, _maxCount, _context) : _client.CreateGetPredefinedUrlCategoriesRequest(_subscriptionId, _resourceGroupName, _localRulestackName, _skip, _maxCount, _context);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

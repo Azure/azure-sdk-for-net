@@ -13,43 +13,11 @@ using Azure.ResourceManager.ServiceBus.Models;
 
 namespace Azure.ResourceManager.ServiceBus
 {
-    /// <summary>
-    /// A class representing the ServiceBusSubscription data model.
-    /// Description of subscription resource.
-    /// </summary>
+    /// <summary> Description of subscription resource. </summary>
     public partial class ServiceBusSubscriptionData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ServiceBusSubscriptionData"/>. </summary>
         public ServiceBusSubscriptionData()
@@ -57,120 +25,346 @@ namespace Azure.ResourceManager.ServiceBus
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceBusSubscriptionData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties of subscriptions resource. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="messageCount"> Number of messages. </param>
-        /// <param name="createdOn"> Exact time the message was created. </param>
-        /// <param name="accessedOn"> Last time there was a receive request to this subscription. </param>
-        /// <param name="updatedOn"> The exact time the message was updated. </param>
-        /// <param name="countDetails"> Message count details. </param>
-        /// <param name="lockDuration"> ISO 8061 lock duration timespan for the subscription. The default value is 1 minute. </param>
-        /// <param name="requiresSession"> Value indicating if a subscription supports the concept of sessions. </param>
-        /// <param name="defaultMessageTimeToLive"> ISO 8061 Default message timespan to live value. This is the duration after which the message expires, starting from when the message is sent to Service Bus. This is the default value used when TimeToLive is not set on a message itself. </param>
-        /// <param name="deadLetteringOnFilterEvaluationExceptions"> Value that indicates whether a subscription has dead letter support on filter evaluation exceptions. </param>
-        /// <param name="deadLetteringOnMessageExpiration"> Value that indicates whether a subscription has dead letter support when a message expires. </param>
-        /// <param name="duplicateDetectionHistoryTimeWindow"> ISO 8601 timeSpan structure that defines the duration of the duplicate detection history. The default value is 10 minutes. </param>
-        /// <param name="maxDeliveryCount"> Number of maximum deliveries. </param>
-        /// <param name="status"> Enumerates the possible values for the status of a messaging entity. </param>
-        /// <param name="enableBatchedOperations"> Value that indicates whether server-side batched operations are enabled. </param>
-        /// <param name="autoDeleteOnIdle"> ISO 8061 timeSpan idle interval after which the topic is automatically deleted. The minimum duration is 5 minutes. </param>
-        /// <param name="forwardTo"> Queue/Topic name to forward the messages. </param>
-        /// <param name="forwardDeadLetteredMessagesTo"> Queue/Topic name to forward the Dead Letter message. </param>
-        /// <param name="isClientAffine"> Value that indicates whether the subscription has an affinity to the client id. </param>
-        /// <param name="userMetadata"> Gets and Sets Metadata of User. </param>
-        /// <param name="clientAffineProperties"> Properties specific to client affine subscriptions. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceBusSubscriptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, long? messageCount, DateTimeOffset? createdOn, DateTimeOffset? accessedOn, DateTimeOffset? updatedOn, MessageCountDetails countDetails, TimeSpan? lockDuration, bool? requiresSession, TimeSpan? defaultMessageTimeToLive, bool? deadLetteringOnFilterEvaluationExceptions, bool? deadLetteringOnMessageExpiration, TimeSpan? duplicateDetectionHistoryTimeWindow, int? maxDeliveryCount, ServiceBusMessagingEntityStatus? status, bool? enableBatchedOperations, TimeSpan? autoDeleteOnIdle, string forwardTo, string forwardDeadLetteredMessagesTo, bool? isClientAffine, string userMetadata, ServiceBusClientAffineProperties clientAffineProperties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ServiceBusSubscriptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, SBSubscriptionProperties properties, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
             Location = location;
-            MessageCount = messageCount;
-            CreatedOn = createdOn;
-            AccessedOn = accessedOn;
-            UpdatedOn = updatedOn;
-            CountDetails = countDetails;
-            LockDuration = lockDuration;
-            RequiresSession = requiresSession;
-            DefaultMessageTimeToLive = defaultMessageTimeToLive;
-            DeadLetteringOnFilterEvaluationExceptions = deadLetteringOnFilterEvaluationExceptions;
-            DeadLetteringOnMessageExpiration = deadLetteringOnMessageExpiration;
-            DuplicateDetectionHistoryTimeWindow = duplicateDetectionHistoryTimeWindow;
-            MaxDeliveryCount = maxDeliveryCount;
-            Status = status;
-            EnableBatchedOperations = enableBatchedOperations;
-            AutoDeleteOnIdle = autoDeleteOnIdle;
-            ForwardTo = forwardTo;
-            ForwardDeadLetteredMessagesTo = forwardDeadLetteredMessagesTo;
-            IsClientAffine = isClientAffine;
-            UserMetadata = userMetadata;
-            ClientAffineProperties = clientAffineProperties;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
+
+        /// <summary> Properties of subscriptions resource. </summary>
+        [WirePath("properties")]
+        internal SBSubscriptionProperties Properties { get; set; }
 
         /// <summary> The geo-location where the resource lives. </summary>
         [WirePath("location")]
         public AzureLocation? Location { get; }
+
         /// <summary> Number of messages. </summary>
         [WirePath("properties.messageCount")]
-        public long? MessageCount { get; }
+        public long? MessageCount
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MessageCount;
+            }
+        }
+
         /// <summary> Exact time the message was created. </summary>
         [WirePath("properties.createdAt")]
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTimeOffset? CreatedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreatedOn;
+            }
+        }
+
         /// <summary> Last time there was a receive request to this subscription. </summary>
         [WirePath("properties.accessedAt")]
-        public DateTimeOffset? AccessedOn { get; }
+        public DateTimeOffset? AccessedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AccessedOn;
+            }
+        }
+
         /// <summary> The exact time the message was updated. </summary>
         [WirePath("properties.updatedAt")]
-        public DateTimeOffset? UpdatedOn { get; }
+        public DateTimeOffset? UpdatedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UpdatedOn;
+            }
+        }
+
         /// <summary> Message count details. </summary>
         [WirePath("properties.countDetails")]
-        public MessageCountDetails CountDetails { get; }
+        public MessageCountDetails CountDetails
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CountDetails;
+            }
+        }
+
         /// <summary> ISO 8061 lock duration timespan for the subscription. The default value is 1 minute. </summary>
         [WirePath("properties.lockDuration")]
-        public TimeSpan? LockDuration { get; set; }
+        public TimeSpan? LockDuration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LockDuration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SBSubscriptionProperties();
+                }
+                Properties.LockDuration = value.Value;
+            }
+        }
+
         /// <summary> Value indicating if a subscription supports the concept of sessions. </summary>
         [WirePath("properties.requiresSession")]
-        public bool? RequiresSession { get; set; }
+        public bool? RequiresSession
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RequiresSession;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SBSubscriptionProperties();
+                }
+                Properties.RequiresSession = value.Value;
+            }
+        }
+
         /// <summary> ISO 8061 Default message timespan to live value. This is the duration after which the message expires, starting from when the message is sent to Service Bus. This is the default value used when TimeToLive is not set on a message itself. </summary>
         [WirePath("properties.defaultMessageTimeToLive")]
-        public TimeSpan? DefaultMessageTimeToLive { get; set; }
+        public TimeSpan? DefaultMessageTimeToLive
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DefaultMessageTimeToLive;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SBSubscriptionProperties();
+                }
+                Properties.DefaultMessageTimeToLive = value.Value;
+            }
+        }
+
         /// <summary> Value that indicates whether a subscription has dead letter support on filter evaluation exceptions. </summary>
         [WirePath("properties.deadLetteringOnFilterEvaluationExceptions")]
-        public bool? DeadLetteringOnFilterEvaluationExceptions { get; set; }
+        public bool? DeadLetteringOnFilterEvaluationExceptions
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DeadLetteringOnFilterEvaluationExceptions;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SBSubscriptionProperties();
+                }
+                Properties.DeadLetteringOnFilterEvaluationExceptions = value.Value;
+            }
+        }
+
         /// <summary> Value that indicates whether a subscription has dead letter support when a message expires. </summary>
         [WirePath("properties.deadLetteringOnMessageExpiration")]
-        public bool? DeadLetteringOnMessageExpiration { get; set; }
+        public bool? DeadLetteringOnMessageExpiration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DeadLetteringOnMessageExpiration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SBSubscriptionProperties();
+                }
+                Properties.DeadLetteringOnMessageExpiration = value.Value;
+            }
+        }
+
         /// <summary> ISO 8601 timeSpan structure that defines the duration of the duplicate detection history. The default value is 10 minutes. </summary>
         [WirePath("properties.duplicateDetectionHistoryTimeWindow")]
-        public TimeSpan? DuplicateDetectionHistoryTimeWindow { get; set; }
+        public TimeSpan? DuplicateDetectionHistoryTimeWindow
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DuplicateDetectionHistoryTimeWindow;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SBSubscriptionProperties();
+                }
+                Properties.DuplicateDetectionHistoryTimeWindow = value.Value;
+            }
+        }
+
         /// <summary> Number of maximum deliveries. </summary>
         [WirePath("properties.maxDeliveryCount")]
-        public int? MaxDeliveryCount { get; set; }
+        public int? MaxDeliveryCount
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MaxDeliveryCount;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SBSubscriptionProperties();
+                }
+                Properties.MaxDeliveryCount = value.Value;
+            }
+        }
+
         /// <summary> Enumerates the possible values for the status of a messaging entity. </summary>
         [WirePath("properties.status")]
-        public ServiceBusMessagingEntityStatus? Status { get; set; }
+        public ServiceBusMessagingEntityStatus? Status
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Status;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SBSubscriptionProperties();
+                }
+                Properties.Status = value.Value;
+            }
+        }
+
         /// <summary> Value that indicates whether server-side batched operations are enabled. </summary>
         [WirePath("properties.enableBatchedOperations")]
-        public bool? EnableBatchedOperations { get; set; }
+        public bool? EnableBatchedOperations
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnableBatchedOperations;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SBSubscriptionProperties();
+                }
+                Properties.EnableBatchedOperations = value.Value;
+            }
+        }
+
         /// <summary> ISO 8061 timeSpan idle interval after which the topic is automatically deleted. The minimum duration is 5 minutes. </summary>
         [WirePath("properties.autoDeleteOnIdle")]
-        public TimeSpan? AutoDeleteOnIdle { get; set; }
+        public TimeSpan? AutoDeleteOnIdle
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AutoDeleteOnIdle;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SBSubscriptionProperties();
+                }
+                Properties.AutoDeleteOnIdle = value.Value;
+            }
+        }
+
         /// <summary> Queue/Topic name to forward the messages. </summary>
         [WirePath("properties.forwardTo")]
-        public string ForwardTo { get; set; }
+        public string ForwardTo
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ForwardTo;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SBSubscriptionProperties();
+                }
+                Properties.ForwardTo = value;
+            }
+        }
+
         /// <summary> Queue/Topic name to forward the Dead Letter message. </summary>
         [WirePath("properties.forwardDeadLetteredMessagesTo")]
-        public string ForwardDeadLetteredMessagesTo { get; set; }
+        public string ForwardDeadLetteredMessagesTo
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ForwardDeadLetteredMessagesTo;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SBSubscriptionProperties();
+                }
+                Properties.ForwardDeadLetteredMessagesTo = value;
+            }
+        }
+
         /// <summary> Value that indicates whether the subscription has an affinity to the client id. </summary>
         [WirePath("properties.isClientAffine")]
-        public bool? IsClientAffine { get; set; }
+        public bool? IsClientAffine
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsClientAffine;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SBSubscriptionProperties();
+                }
+                Properties.IsClientAffine = value.Value;
+            }
+        }
+
         /// <summary> Gets and Sets Metadata of User. </summary>
         [WirePath("properties.userMetadata")]
-        public string UserMetadata { get; set; }
+        public string UserMetadata
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UserMetadata;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SBSubscriptionProperties();
+                }
+                Properties.UserMetadata = value;
+            }
+        }
+
         /// <summary> Properties specific to client affine subscriptions. </summary>
         [WirePath("properties.clientAffineProperties")]
-        public ServiceBusClientAffineProperties ClientAffineProperties { get; set; }
+        public ServiceBusClientAffineProperties ClientAffineProperties
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ClientAffineProperties;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SBSubscriptionProperties();
+                }
+                Properties.ClientAffineProperties = value;
+            }
+        }
     }
 }

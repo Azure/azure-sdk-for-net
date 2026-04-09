@@ -77,6 +77,12 @@ namespace Azure.Generator.Primitives
             "VoidValue.cs"
         ];
 
+        private static readonly IReadOnlyList<string> _xmlSerializationSharedFiles =
+        [
+            "IXmlSerializable.cs",
+            "XmlWriterContent.cs",
+        ];
+
         private static void TraverseInput(InputClient rootClient, ref bool hasOperation, ref bool hasLongRunningOperation)
         {
             if (hasOperation && hasLongRunningOperation)
@@ -141,6 +147,10 @@ namespace Azure.Generator.Primitives
         {
             var compileIncludes = new List<CSharpProjectCompileInclude>();
 
+            // ExperimentalAttribute polyfill is needed for netstandard2.0 and pre-.NET 8 targets
+            // since the generated code uses [Experimental] on Settings types and constructors.
+            compileIncludes.Add(new CSharpProjectCompileInclude(GetCompileInclude("ExperimentalAttribute.cs"), SharedSourceLinkBase));
+
             // Add API key credential policy if API key authentication is configured
             if (AzureClientGenerator.Instance.InputLibrary.InputNamespace.Auth?.ApiKey is not null)
             {
@@ -177,6 +187,15 @@ namespace Azure.Generator.Primitives
             if (!hasLongRunningOperation && AzureClientGenerator.Instance.InputLibrary.HasMultipartFormDataOperation)
             {
                 compileIncludes.Add(new CSharpProjectCompileInclude(GetCompileInclude("TaskExtensions.cs"), SharedSourceLinkBase));
+            }
+
+            // Add IXmlSerializable if any model supports XML serialization
+            if (AzureClientGenerator.Instance.InputLibrary.HasXmlModelSerialization)
+            {
+                foreach (var file in _xmlSerializationSharedFiles)
+                {
+                    compileIncludes.Add(new CSharpProjectCompileInclude(GetCompileInclude(file), SharedSourceLinkBase));
+                }
             }
 
             return compileIncludes;

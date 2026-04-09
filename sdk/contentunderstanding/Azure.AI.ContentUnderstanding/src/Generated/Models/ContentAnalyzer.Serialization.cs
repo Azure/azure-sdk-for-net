@@ -18,6 +18,63 @@ namespace Azure.AI.ContentUnderstanding
     /// <summary> Analyzer that extracts content and fields from multimodal documents. </summary>
     public partial class ContentAnalyzer : IJsonModel<ContentAnalyzer>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ContentAnalyzer PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ContentAnalyzer>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeContentAnalyzer(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ContentAnalyzer)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ContentAnalyzer>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAIContentUnderstandingContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ContentAnalyzer)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ContentAnalyzer>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ContentAnalyzer IPersistableModel<ContentAnalyzer>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ContentAnalyzer>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="contentAnalyzer"> The <see cref="ContentAnalyzer"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(ContentAnalyzer contentAnalyzer)
+        {
+            if (contentAnalyzer == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(contentAnalyzer, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ContentAnalyzer"/> from. </param>
+        public static explicit operator ContentAnalyzer(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeContentAnalyzer(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ContentAnalyzer>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -107,10 +164,10 @@ namespace Azure.AI.ContentUnderstanding
                 writer.WritePropertyName("fieldSchema"u8);
                 writer.WriteObjectValue(FieldSchema, options);
             }
-            if (Optional.IsDefined(DynamicFieldSchema))
+            if (Optional.IsDefined(HasDynamicFieldSchema))
             {
                 writer.WritePropertyName("dynamicFieldSchema"u8);
-                writer.WriteBooleanValue(DynamicFieldSchema.Value);
+                writer.WriteBooleanValue(HasDynamicFieldSchema.Value);
             }
             if (Optional.IsDefined(ProcessingLocation))
             {
@@ -200,7 +257,7 @@ namespace Azure.AI.ContentUnderstanding
             string baseAnalyzerId = default;
             ContentAnalyzerConfig config = default;
             ContentFieldSchema fieldSchema = default;
-            bool? dynamicFieldSchema = default;
+            bool? hasDynamicFieldSchema = default;
             ProcessingLocation? processingLocation = default;
             IList<KnowledgeSource> knowledgeSources = default;
             IDictionary<string, string> models = default;
@@ -304,7 +361,7 @@ namespace Azure.AI.ContentUnderstanding
                     {
                         continue;
                     }
-                    dynamicFieldSchema = prop.Value.GetBoolean();
+                    hasDynamicFieldSchema = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("processingLocation"u8))
@@ -376,71 +433,12 @@ namespace Azure.AI.ContentUnderstanding
                 baseAnalyzerId,
                 config,
                 fieldSchema,
-                dynamicFieldSchema,
+                hasDynamicFieldSchema,
                 processingLocation,
                 knowledgeSources ?? new ChangeTrackingList<KnowledgeSource>(),
                 models ?? new ChangeTrackingDictionary<string, string>(),
                 supportedModels,
                 additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ContentAnalyzer>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ContentAnalyzer>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIContentUnderstandingContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ContentAnalyzer)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ContentAnalyzer IPersistableModel<ContentAnalyzer>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ContentAnalyzer PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ContentAnalyzer>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeContentAnalyzer(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ContentAnalyzer)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ContentAnalyzer>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="contentAnalyzer"> The <see cref="ContentAnalyzer"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(ContentAnalyzer contentAnalyzer)
-        {
-            if (contentAnalyzer == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(contentAnalyzer, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ContentAnalyzer"/> from. </param>
-        public static explicit operator ContentAnalyzer(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeContentAnalyzer(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <summary> Converts a response to a ContentAnalyzer using the LRO result path. </summary>

@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary>
-    /// State of migration.
-    /// Serialized Name: MigrationStatus
-    /// </summary>
+    /// <summary> State of migration. </summary>
     public partial class PostgreSqlMigrationStatus
     {
         /// <summary>
@@ -54,18 +51,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlMigrationStatus"/>. </summary>
-        /// <param name="state">
-        /// State of migration.
-        /// Serialized Name: MigrationStatus.state
-        /// </param>
-        /// <param name="error">
-        /// Error message, if any, for the migration state.
-        /// Serialized Name: MigrationStatus.error
-        /// </param>
-        /// <param name="currentSubStateDetails">
-        /// Current migration sub state details.
-        /// Serialized Name: MigrationStatus.currentSubStateDetails
-        /// </param>
+        /// <param name="state"> State of migration. </param>
+        /// <param name="error"> Error message, if any, for the migration state. </param>
+        /// <param name="currentSubStateDetails"> Current migration sub state details. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PostgreSqlMigrationStatus(PostgreSqlMigrationState? state, string error, PostgreSqlMigrationSubStateDetails currentSubStateDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -75,22 +63,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// State of migration.
-        /// Serialized Name: MigrationStatus.state
-        /// </summary>
+        /// <summary> State of migration. </summary>
         [WirePath("state")]
         public PostgreSqlMigrationState? State { get; }
-        /// <summary>
-        /// Error message, if any, for the migration state.
-        /// Serialized Name: MigrationStatus.error
-        /// </summary>
+        /// <summary> Error message, if any, for the migration state. </summary>
         [WirePath("error")]
         public string Error { get; }
-        /// <summary>
-        /// Current migration sub state details.
-        /// Serialized Name: MigrationStatus.currentSubStateDetails
-        /// </summary>
+        /// <summary> Current migration sub state details. </summary>
         [WirePath("currentSubStateDetails")]
         public PostgreSqlMigrationSubStateDetails CurrentSubStateDetails { get; }
     }

@@ -21,6 +21,20 @@ import "./resourcedata.tsp";
 import "./scheduledaction.tsp";
 import "./vmgroup.tsp";
 import "./chaos.tsp";
+import "./redisenterprise.tsp";
+import "./propertyoverride.tsp";
+import "./sitemanager.tsp";
+import "./trafficmanager.tsp";
+import "./extensionresources.tsp";
+import "./flatten-with-customized-property.tsp";
+import "./extensionresourcename.tsp";
+import "./testcertificate.tsp";
+import "./sharedmodel.tsp";
+import "./entityresource.tsp";
+import "./sharedparamrepro.tsp";
+import "./discriminatedextensionresource.tsp";
+import "./inherited-flatten-grandparent.tsp";
+import "./basetype-cycle-proxy-resource.tsp";
 using TypeSpec.Versioning;
 using Azure.ClientGenerator.Core;
 using Azure.ResourceManager;
@@ -37,11 +51,14 @@ namespace MgmtTypeSpec {
 
   /** The available API versions. */
   enum Versions {
+    v2024_04_01: "2024-04-01",
     v2024_05_01: "2024-05-01",
   }
 
   @@clientLocation(Bars.get, "Bar");
   @@clientLocation(Bars.update, "Bar");
+
+  @@clientName(Joos.createOrUpdate::parameters.resource, "parameters");
 
   @@clientLocation(WorkloadNetworkVmGroups.get, "WorkloadNetworks");
   @@clientLocation(WorkloadNetworkVmGroups.delete, "WorkloadNetworks");
@@ -58,12 +75,23 @@ namespace MgmtTypeSpec {
   #suppress "deprecated"
   @@Azure.ClientGenerator.Core.Legacy.flattenProperty(BarSettingsResource.flattenedNestedProperty);
   @@Azure.ClientGenerator.Core.Legacy.flattenProperty(Foo.properties);
+  #suppress "deprecated"
+  @@Azure.ClientGenerator.Core.Legacy.flattenProperty(MultiFlattenTest.properties);
+  #suppress "deprecated"
+  @@Azure.ClientGenerator.Core.Legacy.flattenProperty(CycleTestConnectionReference.properties);
 
   @@alternateType(FooProperties.something, Azure.ResourceManager.Foundations.ManagedServiceIdentity, "csharp");
   @@clientName(Employees.listByParent, "GetEmployees", "csharp");
   @@alternateType(ZooAddressListListResult.value, Azure.ResourceManager.Models.SubResource[], "csharp");
   @@alternateType(Azure.ResourceManager.CommonTypes.PrivateEndpointConnectionProperties.privateEndpoint, Azure.ResourceManager.Models.SubResource, "csharp");
   @@alternateType(FooProperties.writableSubResourceProp, Azure.ResourceManager.Models.WritableSubResource, "csharp");
+
+  // Override client names for legacy ARM types to resolve duplicate-client-name errors
+  // with their CommonTypes counterparts.
+  // ExtendedLocationOptional has @friendlyName("ExtendedLocation") conflicting with CommonTypes.ExtendedLocation.
+  // ManagedServiceIdentityType in Legacy conflicts with CommonTypes.ManagedServiceIdentityType.
+  @@clientName(Azure.ResourceManager.Legacy.ExtendedLocationOptional, "ExtendedLocationOptionalModel", "csharp");
+  @@clientName(Azure.ResourceManager.Legacy.ManagedServiceIdentityType, "ManagedServiceIdentityTypeV4", "csharp");
 }
 
 // We define this model here to test if the generated code would be replaced by Azure.ResourceManager.Models.SubResource and WritableSubResource via alternateType

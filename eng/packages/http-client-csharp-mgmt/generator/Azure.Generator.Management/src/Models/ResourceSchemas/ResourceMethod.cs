@@ -7,7 +7,20 @@ using System.Text.Json;
 
 namespace Azure.Generator.Management.Models;
 
-internal record ResourceMethod(ResourceOperationKind Kind, InputServiceMethod InputMethod, string OperationPath, ResourceScope OperationScope, string? ResourceScope, InputClient InputClient)
+/// <summary> Represents a method associated with an ARM resource. </summary>
+/// <param name="Kind"> The kind of resource operation. </param>
+/// <param name="InputMethod"> The input service method. </param>
+/// <param name="OperationPath"> The operation path. </param>
+/// <param name="OperationScope"> The scope of the operation. </param>
+/// <param name="ResourceScopeIdPattern"> The resource ID pattern specifying the scope, if applicable. </param>
+/// <param name="InputClient"> The input client. </param>
+public record ResourceMethod(
+    ResourceOperationKind Kind,
+    InputServiceMethod InputMethod,
+    string OperationPath,
+    ResourceScope OperationScope,
+    string? ResourceScopeIdPattern,
+    InputClient InputClient)
 {
     internal static ResourceMethod DeserializeResourceMethod(JsonElement element)
     {
@@ -15,7 +28,7 @@ internal record ResourceMethod(ResourceOperationKind Kind, InputServiceMethod In
         ResourceOperationKind? operationKind = null;
         string? operationPath = null;
         ResourceScope? operationScope = null;
-        string? resourceScope = null;
+        string? resourceScopeIdPattern = null;
         foreach (var prop in element.EnumerateObject())
         {
             if (prop.NameEquals("methodId"u8))
@@ -37,7 +50,7 @@ internal record ResourceMethod(ResourceOperationKind Kind, InputServiceMethod In
             }
             if (prop.NameEquals("resourceScope"u8))
             {
-                resourceScope = prop.Value.GetString();
+                resourceScopeIdPattern = prop.Value.GetString();
             }
         }
         var inputMethod = ManagementClientGenerator.Instance.InputLibrary.GetMethodByCrossLanguageDefinitionId(methodId ?? throw new JsonException("id cannot be null"));
@@ -48,7 +61,7 @@ internal record ResourceMethod(ResourceOperationKind Kind, InputServiceMethod In
             inputMethod,
             operationPath ?? throw new JsonException("operationPath cannot be null"),
             operationScope ?? throw new JsonException("operationScope cannot be null"),
-            resourceScope,
+            resourceScopeIdPattern,
             inputClient ?? throw new JsonException($"cannot find method {inputMethod.CrossLanguageDefinitionId}'s client"));
     }
 }

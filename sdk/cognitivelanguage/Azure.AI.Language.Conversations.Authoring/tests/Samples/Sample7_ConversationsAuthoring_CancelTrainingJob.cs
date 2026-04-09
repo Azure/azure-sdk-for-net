@@ -2,13 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading.Tasks;
 using Azure;
 using Azure.AI.Language.Conversations.Authoring;
 using Azure.AI.Language.Conversations.Authoring.Tests;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
-using System.Threading.Tasks;
 
 namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
 {
@@ -20,19 +20,18 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
+            ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential);
 
             #region Snippet:Sample7_ConversationsAuthoring_CancelTrainingJob
             string projectName = "{projectName}";
             string jobId = "{jobId}";
-            ConversationAuthoringProject projectClient = client.GetProject(projectName);
-
-            Operation<ConversationAuthoringTrainingJobResult> cancelOperation = projectClient.CancelTrainingJob(
+            Operation<ConversationAuthoringTrainingJobResult> cancelOperation = client.CancelTrainingJob(
                 waitUntil: WaitUntil.Completed,
+                projectName: projectName,
                 jobId: jobId
             );
 
-             // Extract the operation-location header
+            // Extract the operation-location header
             string operationLocation = cancelOperation.GetRawResponse().Headers.TryGetValue("operation-location", out string location) ? location : null;
             Console.WriteLine($"Operation Location: {operationLocation}");
 
@@ -46,15 +45,14 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
+            ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential);
 
             #region Snippet:Sample7_ConversationsAuthoring_CancelTrainingJobAsync
             string projectName = "{projectName}";
             string jobId = "{jobId}";
-            ConversationAuthoringProject projectClient = client.GetProject(projectName);
-
-            Operation<ConversationAuthoringTrainingJobResult> cancelOperation = await projectClient.CancelTrainingJobAsync(
+            Operation<ConversationAuthoringTrainingJobResult> cancelOperation = await client.CancelTrainingJobAsync(
                 waitUntil: WaitUntil.Completed,
+                projectName: projectName,
                 jobId: jobId
             );
 

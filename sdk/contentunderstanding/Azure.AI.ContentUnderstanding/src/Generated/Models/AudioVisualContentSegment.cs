@@ -20,31 +20,31 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="segmentId"> Segment identifier. </param>
         /// <param name="category"> Classified content category. </param>
         /// <param name="span"> Span of the segment in the markdown content. </param>
-        /// <param name="startTimeMs"> Start time of the segment in milliseconds. </param>
-        /// <param name="endTimeMs"> End time of the segment in milliseconds. </param>
-        internal AudioVisualContentSegment(string segmentId, string category, ContentSpan span, long startTimeMs, long endTimeMs)
+        /// <param name="startTimeMsValue"> Start time of the segment in milliseconds. </param>
+        /// <param name="endTimeMsValue"> End time of the segment in milliseconds. </param>
+        internal AudioVisualContentSegment(string segmentId, string category, ContentSpan span, long startTimeMsValue, long endTimeMsValue)
         {
             SegmentId = segmentId;
             Category = category;
             Span = span;
-            StartTimeMs = startTimeMs;
-            EndTimeMs = endTimeMs;
+            StartTimeMsValue = startTimeMsValue;
+            EndTimeMsValue = endTimeMsValue;
         }
 
         /// <summary> Initializes a new instance of <see cref="AudioVisualContentSegment"/>. </summary>
         /// <param name="segmentId"> Segment identifier. </param>
         /// <param name="category"> Classified content category. </param>
         /// <param name="span"> Span of the segment in the markdown content. </param>
-        /// <param name="startTimeMs"> Start time of the segment in milliseconds. </param>
-        /// <param name="endTimeMs"> End time of the segment in milliseconds. </param>
+        /// <param name="startTimeMsValue"> Start time of the segment in milliseconds. </param>
+        /// <param name="endTimeMsValue"> End time of the segment in milliseconds. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AudioVisualContentSegment(string segmentId, string category, ContentSpan span, long startTimeMs, long endTimeMs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AudioVisualContentSegment(string segmentId, string category, ContentSpan span, long startTimeMsValue, long endTimeMsValue, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SegmentId = segmentId;
             Category = category;
             Span = span;
-            StartTimeMs = startTimeMs;
-            EndTimeMs = endTimeMs;
+            StartTimeMsValue = startTimeMsValue;
+            EndTimeMsValue = endTimeMsValue;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -56,11 +56,5 @@ namespace Azure.AI.ContentUnderstanding
 
         /// <summary> Span of the segment in the markdown content. </summary>
         public ContentSpan Span { get; }
-
-        /// <summary> Start time of the segment in milliseconds. </summary>
-        public long StartTimeMs { get; }
-
-        /// <summary> End time of the segment in milliseconds. </summary>
-        public long EndTimeMs { get; }
     }
 }

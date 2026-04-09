@@ -22,7 +22,7 @@ namespace Azure.Identity.Tests
             int tryCount = 0;
             var options = new DefaultAzureCredentialOptions();
             options.Retry.MaxRetries = 7;
-            HttpPipelinePolicy policy = new DefaultAzureCredentialImdsRetryPolicy(options.Retry, new MockDelayStrategy((resp, count) => TimeSpan.Zero));
+            HttpPipelinePolicy policy = new DefaultAzureCredentialImdsRetryPolicy(options.Retry, delayStrategy: new MockDelayStrategy((resp, count) => TimeSpan.Zero));
             MockTransport mockTransport = CreateMockTransport(req =>
             {
                 tryCount++;
@@ -68,7 +68,7 @@ namespace Azure.Identity.Tests
             int tryCount = 0;
             var options = new DefaultAzureCredentialOptions();
             options.Retry.MaxRetries = 7;
-            HttpPipelinePolicy policy = new DefaultAzureCredentialImdsRetryPolicy(options.Retry, new MockDelayStrategy((resp, count) => TimeSpan.Zero));
+            HttpPipelinePolicy policy = new DefaultAzureCredentialImdsRetryPolicy(options.Retry, delayStrategy: new MockDelayStrategy((resp, count) => TimeSpan.Zero));
             MockTransport mockTransport = CreateMockTransport(req =>
             {
                 tryCount++;

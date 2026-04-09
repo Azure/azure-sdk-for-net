@@ -94,6 +94,15 @@ namespace Azure.Storage.DataMovement.Tests
             CancellationToken cancellationToken = default);
 
         /// <summary>
+        /// Gets a service-specific disposing container with AzureSasCredential for use with tests in this class.
+        /// </summary>
+        /// <param name="service">Optionally specified service client to get container from.</param>
+        /// <param name="containerName">Optional container name specification.</param>
+        protected abstract Task<IDisposingContainer<TSourceContainerClient>> GetSourceDisposingContainerAzureSasCredentialAsync(
+            string containerName = default,
+            CancellationToken cancellationToken = default);
+
+        /// <summary>
         /// Gets the specific storage resource from the given TDestinationObjectClient
         /// e.g. ShareFileClient to a ShareFileStorageResource, BlockBlobClient to a BlockBlobStorageResource.
         /// </summary>
@@ -145,6 +154,15 @@ namespace Azure.Storage.DataMovement.Tests
         /// <param name="containerName">Optional container name specification.</param>
         protected abstract Task<IDisposingContainer<TDestinationContainerClient>> GetDestinationDisposingContainerAsync(
             TDestinationServiceClient service = default,
+            string containerName = default,
+            CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Gets a service-specific disposing container with AzureSasCredential for use with tests in this class.
+        /// </summary>
+        /// <param name="service">Optionally specified service client to get container from.</param>
+        /// <param name="containerName">Optional container name specification.</param>
+        protected abstract Task<IDisposingContainer<TDestinationContainerClient>> GetDestinationDisposingContainerAzureSasCredentialAsync(
             string containerName = default,
             CancellationToken cancellationToken = default);
 
@@ -949,10 +967,10 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [RecordedTest]
-        [TestCase((int) TransferPropertiesTestType.Default)]
-        [TestCase((int) TransferPropertiesTestType.Preserve)]
-        [TestCase((int) TransferPropertiesTestType.NoPreserve)]
-        [TestCase((int) TransferPropertiesTestType.NewProperties)]
+        [TestCase((int)TransferPropertiesTestType.Default)]
+        [TestCase((int)TransferPropertiesTestType.Preserve)]
+        [TestCase((int)TransferPropertiesTestType.NoPreserve)]
+        [TestCase((int)TransferPropertiesTestType.NewProperties)]
         public async Task CopyRemoteObjects_VerifyProperties(int propertiesType)
         {
             // Arrange
@@ -963,8 +981,22 @@ namespace Azure.Storage.DataMovement.Tests
             await CopyRemoteObjects_VerifyProperties(
                 source.Container,
                 destination.Container,
-                (TransferPropertiesTestType) propertiesType).ConfigureAwait(false);
+                (TransferPropertiesTestType)propertiesType).ConfigureAwait(false);
         }
         #endregion Properties
+
+        [RecordedTest]
+        public async Task CopyRemoteObjects_AzureSasCredential()
+        {
+            // Arrange
+            await using IDisposingContainer<TSourceContainerClient> source = await GetSourceDisposingContainerAzureSasCredentialAsync();
+            await using IDisposingContainer<TDestinationContainerClient> destination = await GetDestinationDisposingContainerAzureSasCredentialAsync();
+
+            // Act
+            await CopyRemoteObjects_VerifyProperties(
+                source.Container,
+                destination.Container,
+                TransferPropertiesTestType.Default).ConfigureAwait(false);
+        }
     }
 }

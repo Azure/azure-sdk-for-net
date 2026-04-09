@@ -35,6 +35,7 @@ namespace Azure.Data.SchemaRegistry
     public partial class SchemaRegistryClient
     {
         protected SchemaRegistryClient() { }
+        public SchemaRegistryClient(Azure.Data.SchemaRegistry.SchemaRegistryClientSettings settings) { }
         public SchemaRegistryClient(string fullyQualifiedNamespace, Azure.Core.TokenCredential credential) { }
         public SchemaRegistryClient(string fullyQualifiedNamespace, Azure.Core.TokenCredential credential, Azure.Data.SchemaRegistry.SchemaRegistryClientOptions options) { }
         public string FullyQualifiedNamespace { get { throw null; } }
@@ -57,6 +58,13 @@ namespace Azure.Data.SchemaRegistry
             V2022_10 = 2,
             V2023_07_01 = 3,
         }
+    }
+    public partial class SchemaRegistryClientSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public SchemaRegistryClientSettings() { }
+        public string FullyQualifiedNamespace { get { throw null; } set { } }
+        public Azure.Data.SchemaRegistry.SchemaRegistryClientOptions Options { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
     public static partial class SchemaRegistryModelFactory
     {

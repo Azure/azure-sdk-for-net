@@ -18,14 +18,17 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     {
         private readonly BestPractices _client;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of BestPracticesGetAllCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The BestPractices client used to send requests. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public BestPracticesGetAllCollectionResultOfT(BestPractices client, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public BestPracticesGetAllCollectionResultOfT(BestPractices client, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of BestPracticesGetAllCollectionResultOfT as an enumerable collection. </summary>
@@ -43,7 +46,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     yield break;
                 }
                 BestPracticeListResult result = BestPracticeListResult.FromResponse(response);
-                yield return Page<BestPracticeData>.FromValues((IReadOnlyList<BestPracticeData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<BestPracticeData>.FromValues((IReadOnlyList<BestPracticeData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -58,7 +61,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _context) : _client.CreateGetAllRequest(_context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("BestPracticeCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

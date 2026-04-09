@@ -327,6 +327,71 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             return GetZoos().Get(zooName, cancellationToken);
         }
 
+        /// <summary> Gets a collection of IssueTestResources in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of IssueTestResources and their operations over a IssueTestResource. </returns>
+        public virtual IssueTestResourceCollection GetIssueTestResources()
+        {
+            return GetCachedClient(client => new IssueTestResourceCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a IssueTestResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/issueTests/{issueTestResourceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> IssueTestResources_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="issueTestResourceName"> The name of the IssueTestResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="issueTestResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="issueTestResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<IssueTestResource>> GetIssueTestResourceAsync(string issueTestResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(issueTestResourceName, nameof(issueTestResourceName));
+
+            return await GetIssueTestResources().GetAsync(issueTestResourceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a IssueTestResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/issueTests/{issueTestResourceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> IssueTestResources_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="issueTestResourceName"> The name of the IssueTestResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="issueTestResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="issueTestResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<IssueTestResource> GetIssueTestResource(string issueTestResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(issueTestResourceName, nameof(issueTestResourceName));
+
+            return GetIssueTestResources().Get(issueTestResourceName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of JobResources in the <see cref="ResourceGroupResource"/>. </summary>
         /// <returns> An object representing collection of JobResources and their operations over a JobResource. </returns>
         public virtual JobResourceCollection GetJobResources()
@@ -853,26 +918,23 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             return GetWorkloadNetworkSegments().Get(segmentId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of Targets in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <param name="parentProviderNamespace"> The parentProviderNamespace for the resource. </param>
-        /// <param name="parentResourceType"> The parentResourceType for the resource. </param>
-        /// <param name="parentResourceName"> The parentResourceName for the resource. </param>
-        /// <returns> An object representing collection of Targets and their operations over a TargetResource. </returns>
-        public virtual TargetCollection GetTargets(string parentProviderNamespace, string parentResourceType, string parentResourceName)
+        /// <summary> Gets a collection of Clusters in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of Clusters and their operations over a ClusterResource. </returns>
+        public virtual ClusterCollection GetClusters()
         {
-            return GetCachedClient(client => new TargetCollection(client, Id, parentProviderNamespace, parentResourceType, parentResourceName));
+            return GetCachedClient(client => new ClusterCollection(client, Id));
         }
 
         /// <summary>
-        /// Get a Target resource that extends a tracked regional resource.
+        /// Get a Cluster
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/MgmtTypeSpec/targets/{targetName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/clusters/{clusterName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Targets_Get. </description>
+        /// <description> Clusters_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -880,31 +942,28 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="parentProviderNamespace"> The parentProviderNamespace for the resource. </param>
-        /// <param name="parentResourceType"> The parentResourceType for the resource. </param>
-        /// <param name="parentResourceName"> The parentResourceName for the resource. </param>
-        /// <param name="targetName"> String that represents a Target resource name. </param>
+        /// <param name="clusterName"> The name of the Cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="targetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<TargetResource>> GetTargetAsync(string parentProviderNamespace, string parentResourceType, string parentResourceName, string targetName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ClusterResource>> GetClusterAsync(string clusterName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(targetName, nameof(targetName));
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
-            return await GetTargets(parentProviderNamespace, parentResourceType, parentResourceName).GetAsync(targetName, cancellationToken).ConfigureAwait(false);
+            return await GetClusters().GetAsync(clusterName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Get a Target resource that extends a tracked regional resource.
+        /// Get a Cluster
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/MgmtTypeSpec/targets/{targetName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/clusters/{clusterName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Targets_Get. </description>
+        /// <description> Clusters_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -912,19 +971,341 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="parentProviderNamespace"> The parentProviderNamespace for the resource. </param>
-        /// <param name="parentResourceType"> The parentResourceType for the resource. </param>
-        /// <param name="parentResourceName"> The parentResourceName for the resource. </param>
-        /// <param name="targetName"> String that represents a Target resource name. </param>
+        /// <param name="clusterName"> The name of the Cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="targetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<TargetResource> GetTarget(string parentProviderNamespace, string parentResourceType, string parentResourceName, string targetName, CancellationToken cancellationToken = default)
+        public virtual Response<ClusterResource> GetCluster(string clusterName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(targetName, nameof(targetName));
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
-            return GetTargets(parentProviderNamespace, parentResourceType, parentResourceName).Get(targetName, cancellationToken);
+            return GetClusters().Get(clusterName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of DuplicatePropertyTests in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of DuplicatePropertyTests and their operations over a DuplicatePropertyTestResource. </returns>
+        public virtual DuplicatePropertyTestCollection GetDuplicatePropertyTests()
+        {
+            return GetCachedClient(client => new DuplicatePropertyTestCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a DuplicatePropertyTest
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/duplicatePropertyTests/{duplicatePropertyTestName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DuplicatePropertyTests_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="duplicatePropertyTestName"> The name of the DuplicatePropertyTest. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="duplicatePropertyTestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="duplicatePropertyTestName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DuplicatePropertyTestResource>> GetDuplicatePropertyTestAsync(string duplicatePropertyTestName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(duplicatePropertyTestName, nameof(duplicatePropertyTestName));
+
+            return await GetDuplicatePropertyTests().GetAsync(duplicatePropertyTestName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a DuplicatePropertyTest
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/duplicatePropertyTests/{duplicatePropertyTestName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DuplicatePropertyTests_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="duplicatePropertyTestName"> The name of the DuplicatePropertyTest. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="duplicatePropertyTestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="duplicatePropertyTestName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DuplicatePropertyTestResource> GetDuplicatePropertyTest(string duplicatePropertyTestName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(duplicatePropertyTestName, nameof(duplicatePropertyTestName));
+
+            return GetDuplicatePropertyTests().Get(duplicatePropertyTestName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of TrafficProfiles in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of TrafficProfiles and their operations over a TrafficProfileResource. </returns>
+        public virtual TrafficProfileCollection GetTrafficProfiles()
+        {
+            return GetCachedClient(client => new TrafficProfileCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a TrafficProfile
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/trafficProfiles/{profileName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> TrafficProfiles_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="profileName"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="profileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<TrafficProfileResource>> GetTrafficProfileAsync(string profileName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
+
+            return await GetTrafficProfiles().GetAsync(profileName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a TrafficProfile
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/trafficProfiles/{profileName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> TrafficProfiles_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="profileName"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="profileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<TrafficProfileResource> GetTrafficProfile(string profileName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
+
+            return GetTrafficProfiles().Get(profileName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of TestCertificates in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of TestCertificates and their operations over a TestCertificateResource. </returns>
+        public virtual TestCertificateCollection GetTestCertificates()
+        {
+            return GetCachedClient(client => new TestCertificateCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets information about the specified certificate.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/certificates/{certificateName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> TestCertificates_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="certificateName"> The name of the TestCertificate. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<TestCertificateResource>> GetTestCertificateAsync(string certificateName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
+
+            return await GetTestCertificates().GetAsync(certificateName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets information about the specified certificate.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/certificates/{certificateName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> TestCertificates_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="certificateName"> The name of the TestCertificate. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<TestCertificateResource> GetTestCertificate(string certificateName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
+
+            return GetTestCertificates().Get(certificateName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SharedConfigs in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of SharedConfigs and their operations over a SharedConfigResource. </returns>
+        public virtual SharedConfigCollection GetSharedConfigs()
+        {
+            return GetCachedClient(client => new SharedConfigCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a SharedConfig
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/sharedConfigs/{configName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SharedConfigs_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="configName"> The name of the SharedConfig. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="configName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SharedConfigResource>> GetSharedConfigAsync(string configName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(configName, nameof(configName));
+
+            return await GetSharedConfigs().GetAsync(configName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a SharedConfig
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/sharedConfigs/{configName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SharedConfigs_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="configName"> The name of the SharedConfig. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="configName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SharedConfigResource> GetSharedConfig(string configName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(configName, nameof(configName));
+
+            return GetSharedConfigs().Get(configName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of CycleTestStores in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of CycleTestStores and their operations over a CycleTestStoreResource. </returns>
+        public virtual CycleTestStoreCollection GetCycleTestStores()
+        {
+            return GetCachedClient(client => new CycleTestStoreCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a CycleTestStore
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/cycleTestStores/{cycleTestStoreName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CycleTestStores_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cycleTestStoreName"> The name of the CycleTestStore. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="cycleTestStoreName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="cycleTestStoreName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<CycleTestStoreResource>> GetCycleTestStoreAsync(string cycleTestStoreName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(cycleTestStoreName, nameof(cycleTestStoreName));
+
+            return await GetCycleTestStores().GetAsync(cycleTestStoreName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a CycleTestStore
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/cycleTestStores/{cycleTestStoreName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CycleTestStores_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cycleTestStoreName"> The name of the CycleTestStore. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="cycleTestStoreName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="cycleTestStoreName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<CycleTestStoreResource> GetCycleTestStore(string cycleTestStoreName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(cycleTestStoreName, nameof(cycleTestStoreName));
+
+            return GetCycleTestStores().Get(cycleTestStoreName, cancellationToken);
         }
 
         /// <summary>
@@ -952,7 +1333,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PrivateLinksGetAllPrivateLinkResourcesAsyncCollectionResultOfT(PrivateLinksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context);
+            return new PrivateLinksGetAllPrivateLinkResourcesAsyncCollectionResultOfT(PrivateLinksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetAllPrivateLinkResources");
         }
 
         /// <summary>
@@ -980,7 +1361,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PrivateLinksGetAllPrivateLinkResourcesCollectionResultOfT(PrivateLinksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context);
+            return new PrivateLinksGetAllPrivateLinkResourcesCollectionResultOfT(PrivateLinksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetAllPrivateLinkResources");
         }
     }
 }

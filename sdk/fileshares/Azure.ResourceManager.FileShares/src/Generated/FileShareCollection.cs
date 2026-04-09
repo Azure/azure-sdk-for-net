@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.FileShares
         {
             TryGetApiVersion(FileShareResource.ResourceType, out string fileShareApiVersion);
             _fileSharesInterfaceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.FileShares", FileShareResource.ResourceType.Namespace, Diagnostics);
-            _fileSharesInterfaceRestClient = new FileSharesInterface(_fileSharesInterfaceClientDiagnostics, Pipeline, Endpoint, fileShareApiVersion ?? "2025-06-01-preview");
+            _fileSharesInterfaceRestClient = new FileSharesInterface(_fileSharesInterfaceClientDiagnostics, Pipeline, Endpoint, fileShareApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.FileShares
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.FileShares
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.FileShares
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.FileShares
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.FileShares
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.FileShares
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.FileShares
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<FileShareData, FileShareResource>(new FileSharesInterfaceGetByParentAsyncCollectionResultOfT(_fileSharesInterfaceRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new FileShareResource(Client, data));
+            return new AsyncPageableWrapper<FileShareData, FileShareResource>(new FileSharesInterfaceGetByParentAsyncCollectionResultOfT(_fileSharesInterfaceRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "FileShareCollection.GetAll"), data => new FileShareResource(Client, data));
         }
 
         /// <summary>
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.FileShares
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.FileShares
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<FileShareData, FileShareResource>(new FileSharesInterfaceGetByParentCollectionResultOfT(_fileSharesInterfaceRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new FileShareResource(Client, data));
+            return new PageableWrapper<FileShareData, FileShareResource>(new FileSharesInterfaceGetByParentCollectionResultOfT(_fileSharesInterfaceRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "FileShareCollection.GetAll"), data => new FileShareResource(Client, data));
         }
 
         /// <summary>
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.FileShares
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.FileShares
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.FileShares
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -513,7 +513,7 @@ namespace Azure.ResourceManager.FileShares
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

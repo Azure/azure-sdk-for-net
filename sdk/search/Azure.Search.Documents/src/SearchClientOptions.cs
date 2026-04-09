@@ -3,9 +3,12 @@
 
 using System;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.Serialization;
+using Microsoft.Extensions.Configuration;
+using Typespec = Microsoft.TypeSpec.Generator.Customizations;
 
 #pragma warning disable SA1402 // File may only contain a single type
 
@@ -15,7 +18,8 @@ namespace Azure.Search.Documents
     /// Provides the client configuration options for connecting to Azure
     /// Cognitive Search.
     /// </summary>
-    public class SearchClientOptions : ClientOptions
+    [Typespec.CodeGenType("DocumentsClientOptions")]
+    public partial class SearchClientOptions : ClientOptions
     {
         /// <summary>
         /// The versions of Azure Cognitive Search supported by this client
@@ -61,9 +65,12 @@ namespace Azure.Search.Documents
         /// <summary>
         /// The service version to use when creating continuation tokens that
         /// can be passed between different client libraries.  Changing this
-        /// value requires updating <see cref="Azure.Search.Documents.Models.SearchContinuationToken"/>.
+        /// value requires updating <see cref="Documents.Models.SearchContinuationToken"/>.
         /// </summary>
         internal const ServiceVersion ContinuationTokenVersion = ServiceVersion.V2020_06_30;
+
+        [Typespec.CodeGenMember("Version")]
+        internal string RawVersion { get; }
 
         /// <summary>
         /// Gets the <see cref="ServiceVersion"/> of the service API used when
@@ -109,6 +116,26 @@ namespace Azure.Search.Documents
         public SearchClientOptions(ServiceVersion version = LatestVersion)
         {
             Version = version.Validate();
+            AddLoggingHeaders();
+            AddLoggingQueryParameters();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="SearchClientOptions"/> from configuration.
+        /// </summary>
+        /// <param name="section">The configuration section.</param>
+        [Experimental("SCME0002")]
+        internal SearchClientOptions(IConfigurationSection section) : base(section, null)
+        {
+            Version = LatestVersion;
+            if (section is null || !section.Exists())
+            {
+                return;
+            }
+            if (section["Version"] is string version && TryGetServiceVersion(version, out ServiceVersion serviceVersion))
+            {
+                Version = serviceVersion;
+            }
             AddLoggingHeaders();
             AddLoggingQueryParameters();
         }
@@ -185,6 +212,37 @@ namespace Azure.Search.Documents
         {
             Diagnostics.LoggedQueryParameters.Add("allowIndexDowntime");
         }
+
+        /// <summary>
+        /// Attempts to parse a version string into a <see cref="ServiceVersion"/> value.
+        /// </summary>
+        /// <param name="version">The version string to parse (e.g. "2024-07-01").</param>
+        /// <param name="serviceVersion">When this method returns <c>true</c>, the parsed <see cref="ServiceVersion"/>.</param>
+        /// <returns><c>true</c> if the version string corresponds to a valid API version; otherwise, <c>false</c>.</returns>
+        internal static bool TryGetServiceVersion(string version, out ServiceVersion serviceVersion)
+        {
+            serviceVersion = default;
+            switch (version)
+            {
+                case "2020-06-30":
+                    serviceVersion = ServiceVersion.V2020_06_30;
+                    return true;
+                case "2023-11-01":
+                    serviceVersion = ServiceVersion.V2023_11_01;
+                    return true;
+                case "2024-07-01":
+                    serviceVersion = ServiceVersion.V2024_07_01;
+                    return true;
+                case "2025-09-01":
+                    serviceVersion = ServiceVersion.V2025_09_01;
+                    return true;
+                case "2025-11-01-preview":
+                    serviceVersion = ServiceVersion.V2025_11_01_Preview;
+                    return true;
+                default:
+                    return false;
+            }
+        }
     }
 
     /// <summary>
@@ -240,6 +298,23 @@ namespace Azure.Search.Documents
                 SearchClientOptions.ServiceVersion.V2025_09_01 => "2025-09-01",
                 SearchClientOptions.ServiceVersion.V2025_11_01_Preview => "2025-11-01-preview",
                 _ => throw CreateInvalidVersionException(version)
+            };
+
+        /// <summary>
+        /// Convert a version string into a <see cref="SearchClientOptions.ServiceVersion"/>.
+        /// </summary>
+        public static SearchClientOptions.ServiceVersion ToServiceVersion(this string version) =>
+            version switch
+            {
+                "2020-06-30" => SearchClientOptions.ServiceVersion.V2020_06_30,
+                "2023-11-01" => SearchClientOptions.ServiceVersion.V2023_11_01,
+                "2024-07-01" => SearchClientOptions.ServiceVersion.V2024_07_01,
+                "2025-09-01" => SearchClientOptions.ServiceVersion.V2025_09_01,
+                "2025-11-01-preview" => SearchClientOptions.ServiceVersion.V2025_11_01_Preview,
+                _ => throw new ArgumentOutOfRangeException(
+                    nameof(version),
+                    version,
+                    $"The version string specified is not supported by this library.")
             };
 
         /// <summary>

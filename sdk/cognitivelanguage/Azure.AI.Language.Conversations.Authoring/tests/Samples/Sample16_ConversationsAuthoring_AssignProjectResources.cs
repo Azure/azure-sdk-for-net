@@ -1,15 +1,15 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Azure;
 using Azure.AI.Language.Conversations.Authoring;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
-using System.Threading.Tasks;
 
 namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
 {
@@ -21,27 +21,26 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             DefaultAzureCredential credential = new DefaultAzureCredential();
-            ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
+            ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential);
 
             #region Snippet:Sample16_ConversationsAuthoring_AssignProjectResources
             // Arrange
             string sampleProjectName = "{projectName}";
-            ConversationAuthoringProject sampleProjectClient = client.GetProject(sampleProjectName);
-
             var sampleResourceMetadata = new ConversationAuthoringResourceMetadata(
                 azureResourceId: "/subscriptions/{subscription}/resourceGroups/{resourcegroup}/providers/Microsoft.CognitiveServices/accounts/{sampleAccount}",
                 customDomain: "{customDomain}",
                 region: "{region}"
             );
 
-            var sampleAssignDetails = new ConversationAuthoringAssignProjectResourcesDetails(
+            var sampleAssignDetails = new ConversationAuthoringAssignDeploymentResourcesDetails(
                 new List<ConversationAuthoringResourceMetadata> { sampleResourceMetadata }
             );
 
             // Act
-            Operation sampleOperation = sampleProjectClient.AssignProjectResources(
-                waitUntil: WaitUntil.Started,
-                details: sampleAssignDetails
+            Operation sampleOperation = client.AssignProjectResources(
+                WaitUntil.Started,
+                sampleProjectName,
+                sampleAssignDetails
             );
 
             // Output operation details
@@ -72,27 +71,26 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             DefaultAzureCredential credential = new DefaultAzureCredential();
-            ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
+            ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential);
 
             #region Snippet:Sample16_ConversationsAuthoring_AssignProjectResourcesAsync
             // Arrange
             string sampleProjectName = "{projectName}";
-            ConversationAuthoringProject sampleProjectClient = client.GetProject(sampleProjectName);
-
             var sampleResourceMetadata = new ConversationAuthoringResourceMetadata(
                 azureResourceId: "/subscriptions/{subscription}/resourceGroups/{resourcegroup}/providers/Microsoft.CognitiveServices/accounts/{sampleAccount}",
                 customDomain: "{customDomain}",
                 region: "{region}"
             );
 
-            var sampleAssignDetails = new ConversationAuthoringAssignProjectResourcesDetails(
+            var sampleAssignDetails = new ConversationAuthoringAssignDeploymentResourcesDetails(
                 new List<ConversationAuthoringResourceMetadata> { sampleResourceMetadata }
             );
 
             // Act
-            Operation sampleOperation = await sampleProjectClient.AssignProjectResourcesAsync(
-                waitUntil: WaitUntil.Started,
-                details: sampleAssignDetails
+            Operation sampleOperation = await client.AssignProjectResourcesAsync(
+                WaitUntil.Started,
+                sampleProjectName,
+                sampleAssignDetails
             );
 
             // Output operation details

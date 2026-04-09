@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 extern alias BaseShares;
 extern alias DMShare;
-
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -12,15 +11,15 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Core.TestFramework.Models;
+using Azure.Storage.Test;
 using BaseShares::Azure.Storage.Files.Shares;
 using BaseShares::Azure.Storage.Files.Shares.Models;
 using BaseShares::Azure.Storage.Files.Shares.Specialized;
-using Azure.Storage.Test;
+using DMShare::Azure.Storage.DataMovement.Files.Shares;
 using Moq;
 using Moq.Protected;
 using NUnit.Framework;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
-using DMShare::Azure.Storage.DataMovement.Files.Shares;
 
 namespace Azure.Storage.DataMovement.Files.Shares.Tests
 {
@@ -43,7 +42,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
         private readonly string DefaultSourceGroup = "123";
         private readonly NfsFileMode DefaultSourceFileMode = NfsFileMode.ParseOctalFileMode("1777");
         private readonly NfsFileType DefaultFileType = NfsFileType.Regular;
-        private readonly Dictionary<string,string> DefaultFileMetadata = new(StringComparer.OrdinalIgnoreCase)
+        private readonly Dictionary<string, string> DefaultFileMetadata = new(StringComparer.OrdinalIgnoreCase)
         {
             { "fkey", "fvalue" },
             { "fi", "le" },
@@ -822,9 +821,13 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             ShareFileStorageResource destinationResource = new ShareFileStorageResource(mockDestination.Object);
 
             int length = 1024;
-            await destinationResource.CopyFromUriInternalAsync(sourceResource.Object, false, length);
+            StorageResourceCopyFromUriOptions options = new()
+            {
+                SourceUri = sourceResource.Object.Uri
+            };
+            await destinationResource.CopyFromUriInternalAsync(sourceResource.Object, false, length, options);
 
-            sourceResource.Verify(b => b.Uri, Times.Once());
+            sourceResource.Verify(b => b.Uri, Times.Exactly(1));
             sourceResource.VerifyNoOtherCalls();
             mockDestination.Verify(b => b.UploadRangeFromUriAsync(
                 sourceResource.Object.Uri,
@@ -924,10 +927,11 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 length,
                 new StorageResourceCopyFromUriOptions()
                 {
-                    SourceProperties = sourceProperties
+                    SourceProperties = sourceProperties,
+                    SourceUri = mockSource.Object.Uri
                 });
 
-            mockSource.Verify(b => b.Uri, Times.Once());
+            mockSource.Verify(b => b.Uri, Times.Exactly(1));
             mockSource.VerifyNoOtherCalls();
 
             return new Tuple<Mock<StorageResourceItem>, Mock<ShareFileClient>>(mockSource, mockDestination);
@@ -1348,9 +1352,10 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
         {
             // Arrange
             int length = 1024;
+            Uri sourceUri = new Uri("https://storageaccount.file.core.windows.net/container/sourcefile");
             Mock<StorageResourceItem> sourceResource = new();
             sourceResource.Setup(b => b.Uri)
-                .Returns(new Uri("https://storageaccount.file.core.windows.net/container/sourcefile"));
+                .Returns(sourceUri);
 
             Mock<ShareFileClient> mockDestination = new(
                 new Uri("https://storageaccount.file.core.windows.net/container/destinationfile"),
@@ -1365,7 +1370,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                         isServerEncrypted: false),
                     new MockResponse(200))));
             mockDestination.Setup(b => b.ExistsAsync(It.IsAny<CancellationToken>()))
-                .Returns(Task.FromResult(Response.FromValue(false,new MockResponse(200))));
+                .Returns(Task.FromResult(Response.FromValue(false, new MockResponse(200))));
             mockDestination.Setup(b => b.CreateAsync(It.IsAny<long>(), It.IsAny<ShareFileCreateOptions>(), It.IsAny<ShareFileRequestConditions>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(Response.FromValue(
                     FilesModelFactory.StorageFileInfo(
@@ -1383,16 +1388,20 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             ShareFileStorageResource destinationResource = new ShareFileStorageResource(mockDestination.Object);
 
             // Act
+            StorageResourceCopyFromUriOptions options = new StorageResourceCopyFromUriOptions()
+            {
+                SourceUri = sourceUri
+            };
             await destinationResource.CopyBlockFromUriInternalAsync(
                 sourceResource: sourceResource.Object,
                 overwrite: false,
                 range: new HttpRange(0, length),
-                completeLength: length);
+                completeLength: length,
+                options: options);
 
-            sourceResource.Verify(b => b.Uri, Times.Once());
             sourceResource.VerifyNoOtherCalls();
             mockDestination.Verify(b => b.UploadRangeFromUriAsync(
-                sourceResource.Object.Uri,
+                sourceUri,
                 new HttpRange(0, length),
                 new HttpRange(0, length),
                 It.IsAny<ShareFileUploadRangeFromUriOptions>(),
@@ -1490,7 +1499,8 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 length,
                 new StorageResourceCopyFromUriOptions()
                 {
-                    SourceProperties = sourceProperties
+                    SourceProperties = sourceProperties,
+                    SourceUri = mockSource.Object.Uri
                 });
 
             mockSource.Verify(b => b.Uri, Times.Once());
@@ -1969,17 +1979,17 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             // Assert
             Assert.NotNull(result);
             Assert.AreEqual(length, result.ResourceLength);
-            Assert.AreEqual(DefaultFileMetadata, (Metadata) metadataObject);
-            Assert.AreEqual(DefaultCacheControl, (string) cacheControlObject);
-            Assert.AreEqual(DefaultContentDisposition, (string) contentDispositionObject);
-            Assert.AreEqual(DefaultContentEncoding, (string[]) contentEncodingObject);
-            Assert.AreEqual(DefaultContentLanguage, (string[]) contentLanguageObject);
-            Assert.AreEqual(DefaultContentType, (string) contentTypeObject);
-            Assert.AreEqual(DefaultFileAttributes, (NtfsFileAttributes) fileAttributesObject);
-            Assert.AreEqual(DefaultFileCreatedOn, (DateTimeOffset) createdOnObject);
+            Assert.AreEqual(DefaultFileMetadata, (Metadata)metadataObject);
+            Assert.AreEqual(DefaultCacheControl, (string)cacheControlObject);
+            Assert.AreEqual(DefaultContentDisposition, (string)contentDispositionObject);
+            Assert.AreEqual(DefaultContentEncoding, (string[])contentEncodingObject);
+            Assert.AreEqual(DefaultContentLanguage, (string[])contentLanguageObject);
+            Assert.AreEqual(DefaultContentType, (string)contentTypeObject);
+            Assert.AreEqual(DefaultFileAttributes, (NtfsFileAttributes)fileAttributesObject);
+            Assert.AreEqual(DefaultFileCreatedOn, (DateTimeOffset)createdOnObject);
             Assert.AreEqual(DefaultLastWrittenOn, result.LastModifiedTime);
-            Assert.AreEqual(DefaultFileChangedOn, (DateTimeOffset) changedOnObject);
-            Assert.AreEqual(DefaultFilePermissionKey, (string) permissionKeyObject);
+            Assert.AreEqual(DefaultFileChangedOn, (DateTimeOffset)changedOnObject);
+            Assert.AreEqual(DefaultFilePermissionKey, (string)permissionKeyObject);
 
             mock.Verify(b => b.GetPropertiesAsync(It.IsAny<ShareFileRequestConditions>(), It.IsAny<CancellationToken>()),
                 Times.Once());

@@ -20,9 +20,9 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> Whether or not this tag can be deleted. </summary>
         public bool? CanDelete { get; set; }
         /// <summary> Whether or not this tag can be written to. </summary>
-        public bool? CanWrite { get; set;  }
+        public bool? CanWrite { get; set; }
         /// <summary> Whether or not to include this artifact in the collection returned from <see cref="ContainerRepository.GetAllManifestProperties"/>. </summary>
-        public bool? CanList { get; set;  }
+        public bool? CanList { get; set; }
         /// <summary> Whether or not this tag can be read. </summary>
         public bool? CanRead { get; set; }
         /// <summary> Image size. </summary>

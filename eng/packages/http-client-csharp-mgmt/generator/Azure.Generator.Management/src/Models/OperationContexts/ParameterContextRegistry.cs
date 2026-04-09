@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
+using Azure.Generator.Management.Utilities;
 using Azure.Generator.Management.Visitors;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Primitives;
@@ -13,6 +14,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
+using TernaryConditionalExpression = Microsoft.TypeSpec.Generator.Expressions.TernaryConditionalExpression;
 
 namespace Azure.Generator.Management.Models;
 
@@ -95,7 +97,26 @@ internal class ParameterContextRegistry : IReadOnlyDictionary<string, ParameterC
                 var bodyParameter = methodParameters.SingleOrDefault(p => p.Location == ParameterLocation.Body);
                 if (bodyParameter is not null)
                 {
-                    arguments.Add(Static(bodyParameter.Type).Invoke(SerializationVisitor.ToRequestContentMethodName, [bodyParameter]));
+                    if (bodyParameter.Type.CanCreateRequestContent())
+                    {
+                        // For primitive types (string, BinaryData, Stream, byte[]) that have a direct
+                        // RequestContent.Create overload, use it instead of ToRequestContent.
+                        var createContent = Static(typeof(RequestContent)).Invoke(
+                            nameof(RequestContent.Create),
+                            [bodyParameter]);
+                        if (bodyParameter.Type.IsNullable)
+                        {
+                            arguments.Add(new TernaryConditionalExpression(bodyParameter.NotEqual(Null), createContent, Null));
+                        }
+                        else
+                        {
+                            arguments.Add(createContent);
+                        }
+                    }
+                    else
+                    {
+                        arguments.Add(Static(bodyParameter.Type).Invoke(SerializationVisitor.ToRequestContentMethodName, [bodyParameter]));
+                    }
                 }
                 else
                 {
@@ -105,6 +126,14 @@ internal class ParameterContextRegistry : IReadOnlyDictionary<string, ParameterC
             else if (parameter.Type.Equals(typeof(RequestContext)))
             {
                 arguments.Add(requestContext);
+            }
+            else if (IsMatchConditionType(parameter.Type))
+            {
+                // Find the corresponding MatchConditions/RequestConditions parameter in the method parameters.
+                // This handles the case where the MatchConditionsHeadersVisitor has merged separate
+                // conditional header parameters into a single MatchConditions/RequestConditions parameter.
+                var matchConditionsParam = methodParameters.FirstOrDefault(p => IsMatchConditionType(p.Type));
+                arguments.Add(matchConditionsParam ?? (ValueExpression)Default);
             }
             else
             {
@@ -140,17 +169,28 @@ internal class ParameterContextRegistry : IReadOnlyDictionary<string, ParameterC
 
             if (fromType.IsEnum && toType.FrameworkType == typeof(string))
             {
-                return expression.InvokeToString();
+                if (!fromType.IsStruct)
+                {
+                    // Fixed enums (IsStruct=false) have a ToSerialString() extension method
+                    return fromType.IsNullable ? expression.NullConditional().Invoke("ToSerialString") : expression.Invoke("ToSerialString");
+                }
+                // Extensible enums (IsStruct=true, readonly structs) use ToString()
+                return fromType.IsNullable ? expression.NullConditional().InvokeToString() : expression.InvokeToString();
             }
 
             // Convert ResourceIdentifier to string by calling ToString()
             if (fromType.Equals(typeof(ResourceIdentifier)) && toType.IsFrameworkType && toType.FrameworkType == typeof(string))
             {
-                return expression.InvokeToString();
+                return fromType.IsNullable ? expression.NullConditional().InvokeToString() : expression.InvokeToString();
             }
 
             // other unhandled cases, we will add when we need them in the future.
             return expression;
         }
+    }
+
+    private static bool IsMatchConditionType(CSharpType type)
+    {
+        return type.Equals(typeof(MatchConditions)) || type.Equals(typeof(RequestConditions));
     }
 }

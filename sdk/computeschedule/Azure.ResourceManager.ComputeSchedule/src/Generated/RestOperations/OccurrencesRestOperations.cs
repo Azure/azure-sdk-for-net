@@ -53,7 +53,10 @@ namespace Azure.ResourceManager.ComputeSchedule
             uri.AppendPath(scheduledActionName, true);
             uri.AppendPath("/occurrences/", false);
             uri.AppendPath(occurrenceId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -73,7 +76,10 @@ namespace Azure.ResourceManager.ComputeSchedule
             uri.AppendPath("/providers/Microsoft.ComputeSchedule/scheduledActions/", false);
             uri.AppendPath(scheduledActionName, true);
             uri.AppendPath("/occurrences", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -85,7 +91,18 @@ namespace Azure.ResourceManager.ComputeSchedule
         internal HttpMessage CreateNextGetByScheduledActionRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string scheduledActionName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -107,7 +124,10 @@ namespace Azure.ResourceManager.ComputeSchedule
             uri.AppendPath("/occurrences/", false);
             uri.AppendPath(occurrenceId, true);
             uri.AppendPath("/resources", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -119,7 +139,18 @@ namespace Azure.ResourceManager.ComputeSchedule
         internal HttpMessage CreateNextGetAttachedResourcesRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string scheduledActionName, string occurrenceId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -141,7 +172,10 @@ namespace Azure.ResourceManager.ComputeSchedule
             uri.AppendPath("/occurrences/", false);
             uri.AppendPath(occurrenceId, true);
             uri.AppendPath("/cancel", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -165,7 +199,10 @@ namespace Azure.ResourceManager.ComputeSchedule
             uri.AppendPath("/occurrences/", false);
             uri.AppendPath(occurrenceId, true);
             uri.AppendPath("/delay", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

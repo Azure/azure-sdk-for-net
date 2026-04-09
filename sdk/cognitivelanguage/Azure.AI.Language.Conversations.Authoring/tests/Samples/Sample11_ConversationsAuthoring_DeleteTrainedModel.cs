@@ -2,12 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading.Tasks;
 using Azure;
 using Azure.AI.Language.Conversations.Authoring;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
-using System.Threading.Tasks;
 
 namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
 {
@@ -19,14 +19,12 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
+            ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential);
 
             #region Snippet:Sample11_ConversationsAuthoring_DeleteTrainedModel
             string projectName = "{projectName}";
             string trainedModelLabel = "{trainedModelLabel}";
-            ConversationAuthoringTrainedModel trainedModelClient = client.GetTrainedModel(projectName, trainedModelLabel);
-
-            Response response = trainedModelClient.DeleteTrainedModel();
+            Response response = client.DeleteTrainedModel(projectName, trainedModelLabel);
 
             Console.WriteLine($"Delete Trained Model Response Status: {response.Status}");
             #endregion
@@ -40,14 +38,12 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
+            ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential);
 
             #region Snippet:Sample11_ConversationsAuthoring_DeleteTrainedModelAsync
             string projectName = "{projectName}";
             string trainedModelLabel = "{trainedModelLabel}";
-            ConversationAuthoringTrainedModel trainedModelClient = client.GetTrainedModel(projectName, trainedModelLabel);
-
-            Response response = await trainedModelClient.DeleteTrainedModelAsync();
+            Response response = await client.DeleteTrainedModelAsync(projectName, trainedModelLabel);
 
             Console.WriteLine($"Delete Trained Model Async Response Status: {response.Status}");
             #endregion

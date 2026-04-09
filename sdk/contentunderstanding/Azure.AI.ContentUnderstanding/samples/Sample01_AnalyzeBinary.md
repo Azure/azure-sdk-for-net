@@ -4,7 +4,7 @@ This sample demonstrates how to analyze a PDF file from disk using the `prebuilt
 
 ## About analyzing documents from binary data
 
-One of the key values of Content Understanding is taking a content file and extracting the content for you in one call. The service returns an `AnalyzeResult` that contains an array of `MediaContent` items in `AnalyzeResult.Contents`. This sample starts with a document file, so each item is a `DocumentContent` (a subtype of `MediaContent`) that exposes markdown plus detailed structure such as pages, tables, figures, and paragraphs.
+One of the key values of Content Understanding is taking a content file and extracting the content for you in one call. The service returns an `AnalysisResult` that contains an array of `AnalysisContent` items in `AnalysisResult.Contents`. This sample starts with a document file, so each item is a `DocumentContent` (a subtype of `AnalysisContent`) that exposes markdown plus detailed structure such as pages, tables, figures, and paragraphs.
 
 This sample focuses on **document analysis**. For prebuilt RAG analyzers covering images, audio, and video, see [Sample 02: Analyze content from URLs][sample02-analyze-url].
 
@@ -45,7 +45,7 @@ var client = new ContentUnderstandingClient(new Uri(endpoint), new AzureKeyCrede
 
 The `prebuilt-documentSearch` analyzer transforms unstructured documents into structured, machine-readable data optimized for RAG scenarios.
 
-To analyze a document from binary data, use the `AnalyzeBinaryAsync` method. The returned value is an `AnalyzeResult` object containing data about the submitted document. Since we're analyzing a document, we'll pass the analyzer ID `prebuilt-documentSearch` to the method.
+To analyze a document from binary data, use the `AnalyzeBinaryAsync` method. The returned value is an `AnalysisResult` object containing data about the submitted document. Since we're analyzing a document, we'll pass the analyzer ID `prebuilt-documentSearch` to the method.
 
 > **Note:** Content Understanding operations are asynchronous long-running operations. The SDK handles polling automatically when using `WaitUntil.Completed`.
 
@@ -57,12 +57,66 @@ string filePath = "<localDocumentFilePath>";
 byte[] fileBytes = File.ReadAllBytes(filePath);
 BinaryData binaryData = BinaryData.FromBytes(fileBytes);
 
-Operation<AnalyzeResult> operation = await client.AnalyzeBinaryAsync(
+Operation<AnalysisResult> operation = await client.AnalyzeBinaryAsync(
     WaitUntil.Completed,
     "prebuilt-documentSearch",
     binaryData);
 
-AnalyzeResult result = operation.Value;
+AnalysisResult result = operation.Value;
+```
+
+## Analyze specific pages with ContentRange
+
+You can restrict analysis to specific pages by passing a `ContentRange` to the `contentRange` parameter. The `ContentRange` struct provides typed factory methods for documents:
+
+- `ContentRange.Page(1)` — single page
+- `ContentRange.Pages(1, 3)` — page range
+- `ContentRange.PagesFrom(9)` — from page 9 onward
+- `ContentRange.Combine(ContentRange.Pages(1, 3), ContentRange.Page(5), ContentRange.PagesFrom(9))` — combined ranges ("1-3,5,9-")
+
+For more `ContentRange` examples across documents, video, and audio, see [Sample 02: Analyze content from URLs][sample02-analyze-url].
+
+The following example extracts all pages starting from page 3 of a document using `ContentRange.PagesFrom(3)`:
+
+```C# Snippet:ContentUnderstandingAnalyzeBinaryWithContentRangeAsync
+// Analyze only pages 3 onward.
+Operation<AnalysisResult> rangeOperation = await client.AnalyzeBinaryAsync(
+    WaitUntil.Completed,
+    "prebuilt-documentSearch",
+    binaryData,
+    contentRange: ContentRange.PagesFrom(3));
+
+AnalysisResult rangeResult = rangeOperation.Value;
+```
+
+The following example uses `ContentRange.Combine` to analyze pages 1–3, page 5, and pages 9 onward in a single call:
+
+```C# Snippet:ContentUnderstandingAnalyzeBinaryWithCombinedContentRangeAsync
+// Analyze pages 1–3, page 5, and pages 9 onward.
+Operation<AnalysisResult> combineRangeOperation = await client.AnalyzeBinaryAsync(
+    WaitUntil.Completed,
+    "prebuilt-documentSearch",
+    binaryData,
+    contentRange: ContentRange.Combine(
+        ContentRange.Pages(1, 3),
+        ContentRange.Page(5),
+        ContentRange.PagesFrom(9)));
+
+AnalysisResult combineRangeResult = combineRangeOperation.Value;
+```
+
+You can also pass a range string directly to the `ContentRange` constructor. This is equivalent to using the factory methods and is useful for dynamically constructed or user-supplied ranges:
+
+```C# Snippet:ContentUnderstandingAnalyzeBinaryWithRawContentRangeAsync
+// Analyze pages 1–3, page 5, and pages 9 onward using a raw range string.
+// This is equivalent to: ContentRange.Combine(ContentRange.Pages(1, 3), ContentRange.Page(5), ContentRange.PagesFrom(9))
+Operation<AnalysisResult> rawRangeOperation = await client.AnalyzeBinaryAsync(
+    WaitUntil.Completed,
+    "prebuilt-documentSearch",
+    binaryData,
+    contentRange: new ContentRange("1-3,5,9-"));
+
+AnalysisResult rawRangeResult = rawRangeOperation.Value;
 ```
 
 ## Extract markdown content
@@ -79,13 +133,11 @@ Content Understanding generates rich GitHub Flavored Markdown that is ideal for 
 - **Mathematical formulas** encoded in LaTeX (inline and display)
 - **Hyperlinks, barcodes, annotations, and page metadata** for complete document representation (annotations require `returnDetails` configuration)
 
-The `AnalyzeResult.Contents` collection holds the extracted content as `MediaContent` items. A PDF produces a single `MediaContent` entry (even when it has multiple pages), and each `MediaContent` exposes a `Markdown` property so you can read the markdown directly.
-
-The `AnalyzeResult.Contents` collection holds the extracted content as `MediaContent` items. A PDF produces a single `MediaContent` entry (even when it has multiple pages), and each `MediaContent` exposes a `Markdown` property so you can read the markdown directly.
+The `AnalysisResult.Contents` collection holds the extracted content as `AnalysisContent` items. A PDF produces a single `AnalysisContent` entry (even when it has multiple pages), and each `AnalysisContent` exposes a `Markdown` property so you can read the markdown directly.
 
 ```C# Snippet:ContentUnderstandingExtractMarkdown
 // A PDF file has only one content element even if it contains multiple pages
-MediaContent content = result.Contents!.First();
+AnalysisContent content = result.Contents!.First();
 Console.WriteLine(content.Markdown);
 ```
 

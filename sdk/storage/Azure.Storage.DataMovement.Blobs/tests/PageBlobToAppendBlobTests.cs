@@ -1,25 +1,24 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-extern alias DMBlobs;
 extern alias BaseBlobs;
-
+extern alias DMBlobs;
 using System;
+using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Core.TestFramework;
+using Azure.Storage.DataMovement.Tests;
+using Azure.Storage.Shared;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
-using Azure.Storage.DataMovement.Tests;
-using DMBlobs::Azure.Storage.DataMovement.Blobs;
 using BaseBlobs::Azure.Storage.Blobs;
 using BaseBlobs::Azure.Storage.Blobs.Models;
 using BaseBlobs::Azure.Storage.Blobs.Specialized;
-using System.IO;
-using Azure.Core;
-using Azure.Core.TestFramework;
-using Azure.Storage.Shared;
+using DMBlobs::Azure.Storage.DataMovement.Blobs;
 using NUnit.Framework;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
-using System.Threading;
 
 namespace Azure.Storage.DataMovement.Blobs.Tests
 {
@@ -62,11 +61,25 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         protected override async Task<bool> DestinationExistsAsync(AppendBlobClient objectClient)
             => await objectClient.ExistsAsync();
 
-        protected override async Task<IDisposingContainer<BlobContainerClient>> GetSourceDisposingContainerAsync(BlobServiceClient service = null, string containerName = null)
+        protected override async Task<IDisposingContainer<BlobContainerClient>> GetSourceDisposingContainerAsync(
+            BlobServiceClient service = null,
+            string containerName = null)
             => await SourceClientBuilder.GetTestContainerAsync(service, containerName);
 
-        protected override async Task<IDisposingContainer<BlobContainerClient>> GetDestinationDisposingContainerAsync(BlobServiceClient service = null, string containerName = null)
+        protected override async Task<IDisposingContainer<BlobContainerClient>> GetSourceSasDisposingContainerAsync(
+            BlobServiceClient service = null,
+            string containerName = null)
+            => await SourceClientBuilder.GetAzureSasCredentialTestContainerAsync(service, containerName);
+
+        protected override async Task<IDisposingContainer<BlobContainerClient>> GetDestinationDisposingContainerAsync(
+            BlobServiceClient service = null,
+            string containerName = null)
             => await DestinationClientBuilder.GetTestContainerAsync(service, containerName);
+
+        protected override async Task<IDisposingContainer<BlobContainerClient>> GetDestinationSasDisposingContainerAsync(
+            BlobServiceClient service = null,
+            string containerName = null)
+            => await DestinationClientBuilder.GetAzureSasCredentialTestContainerAsync(service, containerName);
 
         protected override async Task<PageBlobClient> GetSourceObjectClientAsync(
             BlobContainerClient container,
@@ -76,6 +89,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             BlobClientOptions options = null,
             Stream contents = default,
             TransferPropertiesTestType propertiesTestType = default,
+            bool useContainerCredentials = false,
             CancellationToken cancellationToken = default)
         {
             objectName ??= GetNewObjectName();
@@ -90,20 +104,33 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
                 if (contents != default)
                 {
-                    await UploadPagesAsync(blobClient, contents);
+                    await UploadPagesAsync(
+                        blobClient,
+                        contents,
+                        cancellationToken: cancellationToken);
                 }
                 else
                 {
                     var data = GetRandomBuffer(objectLength.Value);
                     using Stream originalStream = await CreateLimitedMemoryStream(objectLength.Value);
-                    await UploadPagesAsync(blobClient, originalStream);
+                    await UploadPagesAsync(
+                        blobClient,
+                        originalStream,
+                        cancellationToken: cancellationToken);
                 }
+            }
+            if (useContainerCredentials)
+            {
+                return blobClient;
             }
             Uri sourceUri = blobClient.GenerateSasUri(BaseBlobs::Azure.Storage.Sas.BlobSasPermissions.All, Recording.UtcNow.AddDays(1));
             return InstrumentClient(new PageBlobClient(sourceUri, GetOptions()));
         }
 
-        private async Task UploadPagesAsync(PageBlobClient blobClient, Stream contents)
+        private async Task UploadPagesAsync(
+            PageBlobClient blobClient,
+            Stream contents,
+            CancellationToken cancellationToken)
         {
             long size = contents.Length;
             Assert.IsTrue(size % (KB / 2) == 0, "Cannot create page blob that's not a multiple of 512");
@@ -117,13 +144,14 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     ContentDisposition = _defaultContentDisposition,
                     CacheControl = _defaultCacheControl,
                 }
-            });
+            },
+            cancellationToken);
             long offset = 0;
             long blockSize = Math.Min(DefaultBufferSize, size);
             while (offset < size)
             {
                 Stream partStream = WindowStream.GetWindow(contents, blockSize);
-                await blobClient.UploadPagesAsync(partStream, offset);
+                await blobClient.UploadPagesAsync(partStream, offset, cancellationToken: cancellationToken);
                 offset += blockSize;
             }
         }
@@ -141,6 +169,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             string objectName = null,
             BlobClientOptions options = null,
             Stream contents = null,
+            bool useContainerCredentials = false,
             CancellationToken cancellationToken = default)
         {
             objectName ??= GetNewObjectName();
@@ -163,6 +192,10 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     using Stream originalStream = await CreateLimitedMemoryStream(objectLength.Value);
                     await UploadAppendBlocksAsync(blobClient, originalStream, cancellationToken);
                 }
+            }
+            if (useContainerCredentials)
+            {
+                return blobClient;
             }
             Uri sourceUri = blobClient.GenerateSasUri(BaseBlobs::Azure.Storage.Sas.BlobSasPermissions.All, Recording.UtcNow.AddDays(1));
             return InstrumentClient(new AppendBlobClient(sourceUri, GetOptions()));

@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -413,10 +413,10 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="expiresin"> The is how long the endpoint access token is valid (in seconds). </param>
         /// <param name="content"> Object of type ListCredentialsRequest. </param>
+        /// <param name="expiresin"> The is how long the endpoint access token is valid (in seconds). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<TargetResourceEndpointAccess>> GetCredentialsAsync(long? expiresin = default, ListCredentialsContent content = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TargetResourceEndpointAccess>> GetCredentialsAsync(ListCredentialsContent content = default, long? expiresin = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _endpointResourcesClientDiagnostics.CreateScope("HybridConnectivityEndpointResource.GetCredentials");
             scope.Start();
@@ -463,10 +463,10 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="expiresin"> The is how long the endpoint access token is valid (in seconds). </param>
         /// <param name="content"> Object of type ListCredentialsRequest. </param>
+        /// <param name="expiresin"> The is how long the endpoint access token is valid (in seconds). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<TargetResourceEndpointAccess> GetCredentials(long? expiresin = default, ListCredentialsContent content = default, CancellationToken cancellationToken = default)
+        public virtual Response<TargetResourceEndpointAccess> GetCredentials(ListCredentialsContent content = default, long? expiresin = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _endpointResourcesClientDiagnostics.CreateScope("HybridConnectivityEndpointResource.GetCredentials");
             scope.Start();
@@ -513,10 +513,10 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="expiresin"> The is how long the endpoint access token is valid (in seconds). </param>
         /// <param name="content"> Object of type ListIngressGatewayCredentialsRequest. </param>
+        /// <param name="expiresin"> The is how long the endpoint access token is valid (in seconds). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<IngressGatewayAsset>> GetIngressGatewayCredentialsAsync(long? expiresin = default, ListIngressGatewayCredentialsContent content = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IngressGatewayAsset>> GetIngressGatewayCredentialsAsync(ListIngressGatewayCredentialsContent content = default, long? expiresin = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _endpointResourcesClientDiagnostics.CreateScope("HybridConnectivityEndpointResource.GetIngressGatewayCredentials");
             scope.Start();
@@ -563,10 +563,10 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="expiresin"> The is how long the endpoint access token is valid (in seconds). </param>
         /// <param name="content"> Object of type ListIngressGatewayCredentialsRequest. </param>
+        /// <param name="expiresin"> The is how long the endpoint access token is valid (in seconds). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<IngressGatewayAsset> GetIngressGatewayCredentials(long? expiresin = default, ListIngressGatewayCredentialsContent content = default, CancellationToken cancellationToken = default)
+        public virtual Response<IngressGatewayAsset> GetIngressGatewayCredentials(ListIngressGatewayCredentialsContent content = default, long? expiresin = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _endpointResourcesClientDiagnostics.CreateScope("HybridConnectivityEndpointResource.GetIngressGatewayCredentials");
             scope.Start();
@@ -696,7 +696,7 @@ namespace Azure.ResourceManager.HybridConnectivity
             }
         }
 
-        /// <summary> Gets a collection of HybridConnectivityServiceConfigurations in the <see cref="ArmResource"/>. </summary>
+        /// <summary> Gets a collection of HybridConnectivityServiceConfigurations in the <see cref="HybridConnectivityEndpointResource"/>. </summary>
         /// <returns> An object representing collection of HybridConnectivityServiceConfigurations and their operations over a HybridConnectivityServiceConfigurationResource. </returns>
         public virtual HybridConnectivityServiceConfigurationCollection GetHybridConnectivityServiceConfigurations()
         {

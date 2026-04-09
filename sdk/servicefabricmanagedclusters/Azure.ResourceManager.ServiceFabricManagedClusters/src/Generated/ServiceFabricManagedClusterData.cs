@@ -107,7 +107,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             get
             {
-                return Properties is null ? default : Properties.ClusterCertificateThumbprints;
+                if (Properties is null)
+                {
+                    Properties = new ManagedClusterProperties();
+                }
+                return Properties.ClusterCertificateThumbprints;
             }
         }
 
@@ -184,7 +188,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             get
             {
-                return Properties is null ? default : Properties.LoadBalancingRules;
+                if (Properties is null)
+                {
+                    Properties = new ManagedClusterProperties();
+                }
+                return Properties.LoadBalancingRules;
             }
         }
 
@@ -210,7 +218,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             get
             {
-                return Properties is null ? default : Properties.NetworkSecurityRules;
+                if (Properties is null)
+                {
+                    Properties = new ManagedClusterProperties();
+                }
+                return Properties.NetworkSecurityRules;
             }
         }
 
@@ -219,7 +231,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             get
             {
-                return Properties is null ? default : Properties.Clients;
+                if (Properties is null)
+                {
+                    Properties = new ManagedClusterProperties();
+                }
+                return Properties.Clients;
             }
         }
 
@@ -245,7 +261,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             get
             {
-                return Properties is null ? default : Properties.FabricSettings;
+                if (Properties is null)
+                {
+                    Properties = new ManagedClusterProperties();
+                }
+                return Properties.FabricSettings;
             }
         }
 
@@ -314,7 +334,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             get
             {
-                return Properties is null ? default : Properties.AddOnFeatures;
+                if (Properties is null)
+                {
+                    Properties = new ManagedClusterProperties();
+                }
+                return Properties.AddOnFeatures;
             }
         }
 
@@ -391,7 +415,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             get
             {
-                return Properties is null ? default : Properties.IPTags;
+                if (Properties is null)
+                {
+                    Properties = new ManagedClusterProperties();
+                }
+                return Properties.IPTags;
             }
         }
 
@@ -426,7 +454,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             get
             {
-                return Properties is null ? default : Properties.AuxiliarySubnets;
+                if (Properties is null)
+                {
+                    Properties = new ManagedClusterProperties();
+                }
+                return Properties.AuxiliarySubnets;
             }
         }
 
@@ -435,7 +467,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             get
             {
-                return Properties is null ? default : Properties.ServiceEndpoints;
+                if (Properties is null)
+                {
+                    Properties = new ManagedClusterProperties();
+                }
+                return Properties.ServiceEndpoints;
             }
         }
 
@@ -640,6 +676,23 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                     Properties = new ManagedClusterProperties();
                 }
                 Properties.EnableOutboundOnlyNodeTypes = value.Value;
+            }
+        }
+
+        /// <summary> Determines whether to skip the assignment of the managed network security group (SF-NSG) to the cluster subnet when using a bring-your-own virtual network (BYOVNET) configuration. The default value is false. </summary>
+        public bool? SkipManagedNsgAssignment
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SkipManagedNsgAssignment;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedClusterProperties();
+                }
+                Properties.SkipManagedNsgAssignment = value.Value;
             }
         }
 

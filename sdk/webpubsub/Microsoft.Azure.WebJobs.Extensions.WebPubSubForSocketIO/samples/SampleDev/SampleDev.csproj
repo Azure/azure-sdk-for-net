@@ -6,7 +6,11 @@
     <IsPackable>true</IsPackable>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="4.1.1" />
+    <PackageReference Include="Microsoft.NET.Sdk.Functions" />
+  </ItemGroup>
+  <!-- Use decentralized package references when building outside https://github.com/Azure/azure-sdk-for-net -->
+  <ItemGroup Condition="'$(IsSamplesProject)' != 'true'">
+    <PackageReference Update="Microsoft.NET.Sdk.Functions" Version="4.1.1" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.csproj" />

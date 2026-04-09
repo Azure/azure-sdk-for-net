@@ -44,6 +44,11 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("userAssignedIdentity"u8);
                 writer.WriteStringValue(UserAssignedIdentity);
             }
+            if (Optional.IsDefined(FederatedClientId))
+            {
+                writer.WritePropertyName("federatedClientId"u8);
+                writer.WriteStringValue(FederatedClientId);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -83,6 +88,7 @@ namespace Azure.ResourceManager.NetApp.Models
             }
             string principalId = default;
             ResourceIdentifier userAssignedIdentity = default;
+            string federatedClientId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,13 +107,18 @@ namespace Azure.ResourceManager.NetApp.Models
                     userAssignedIdentity = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("federatedClientId"u8))
+                {
+                    federatedClientId = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ElasticEncryptionIdentity(principalId, userAssignedIdentity, serializedAdditionalRawData);
+            return new ElasticEncryptionIdentity(principalId, userAssignedIdentity, federatedClientId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ElasticEncryptionIdentity>.Write(ModelReaderWriterOptions options)

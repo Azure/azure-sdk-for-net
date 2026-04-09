@@ -262,6 +262,8 @@ namespace Azure.Compute.Batch
     public partial class BatchClient
     {
         protected BatchClient() { }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+        public BatchClient(Azure.Compute.Batch.BatchClientSettings settings) { }
         public BatchClient(System.Uri endpoint, Azure.AzureNamedKeyCredential credential) { }
         public BatchClient(System.Uri endpoint, Azure.AzureNamedKeyCredential credential, Azure.Compute.Batch.BatchClientOptions options) { }
         public BatchClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
@@ -529,6 +531,14 @@ namespace Azure.Compute.Batch
         {
             V2025_06_01 = 1,
         }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+    public partial class BatchClientSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public BatchClientSettings() { }
+        public System.Uri Endpoint { get { throw null; } set { } }
+        public Azure.Compute.Batch.BatchClientOptions Options { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
     public partial class BatchContainerConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchContainerConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchContainerConfiguration>
     {
@@ -3098,7 +3108,7 @@ namespace Azure.Compute.Batch
         public static Azure.Compute.Batch.CifsMountConfiguration CifsMountConfiguration(string username = null, string source = null, string relativeMountPath = null, string mountOptions = null, string password = null) { throw null; }
         public static Azure.Compute.Batch.ContainerHostBatchBindMountEntry ContainerHostBatchBindMountEntry(Azure.Compute.Batch.ContainerHostDataPath? source = default(Azure.Compute.Batch.ContainerHostDataPath?), bool? isReadOnly = default(bool?)) { throw null; }
         public static Azure.Compute.Batch.ContainerRegistryReference ContainerRegistryReference(string username = null, string password = null, System.Uri registryServerUri = null, Azure.Compute.Batch.BatchNodeIdentityReference identityReference = null) { throw null; }
-        public static Azure.Compute.Batch.DataDisk DataDisk(int logicalUnitNumber = 0, Azure.Compute.Batch.CachingType? caching = default(Azure.Compute.Batch.CachingType?), int diskSizeGb = 0, Azure.Compute.Batch.ManagedDisk managedDisk = null, Azure.Compute.Batch.StorageAccountType? storageAccountType = default(Azure.Compute.Batch.StorageAccountType?)) { throw null; }
+        public static Azure.Compute.Batch.DataDisk DataDisk(int logicalUnitNumber = 0, Azure.Compute.Batch.CachingType? caching = default(Azure.Compute.Batch.CachingType?), int diskSizeGb = 0, Azure.Compute.Batch.ManagedDisk managedDisk = null) { throw null; }
         public static Azure.Compute.Batch.DiskCustomerManagedKey DiskCustomerManagedKey(Azure.Compute.Batch.BatchPoolIdentityReference identityReference = null, string keyUrl = null, bool? rotationToLatestKeyVersionEnabled = default(bool?)) { throw null; }
         public static Azure.Compute.Batch.DiskEncryptionConfiguration DiskEncryptionConfiguration(Azure.Compute.Batch.DiskCustomerManagedKey customerManagedKey = null, System.Collections.Generic.IEnumerable<Azure.Compute.Batch.DiskEncryptionTarget> targets = null) { throw null; }
         public static Azure.Compute.Batch.DiskEncryptionSetParameters DiskEncryptionSetParameters(Azure.Core.ResourceIdentifier id = null) { throw null; }
@@ -3267,7 +3277,6 @@ namespace Azure.Compute.Batch
         public int DiskSizeGb { get { throw null; } set { } }
         public int LogicalUnitNumber { get { throw null; } set { } }
         public Azure.Compute.Batch.ManagedDisk ManagedDisk { get { throw null; } set { } }
-        public Azure.Compute.Batch.StorageAccountType? StorageAccountType { get { throw null; } set { } }
         protected virtual Azure.Compute.Batch.DataDisk JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.Compute.Batch.DataDisk PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

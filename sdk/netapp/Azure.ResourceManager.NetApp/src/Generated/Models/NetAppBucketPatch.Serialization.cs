@@ -39,11 +39,6 @@ namespace Azure.ResourceManager.NetApp.Models
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Path))
-            {
-                writer.WritePropertyName("path"u8);
-                writer.WriteStringValue(Path);
-            }
             if (Optional.IsDefined(FileSystemUser))
             {
                 writer.WritePropertyName("fileSystemUser"u8);
@@ -52,7 +47,7 @@ namespace Azure.ResourceManager.NetApp.Models
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             if (Optional.IsDefined(Server))
             {
@@ -63,6 +58,11 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 writer.WritePropertyName("permissions"u8);
                 writer.WriteStringValue(Permissions.Value.ToString());
+            }
+            if (Optional.IsDefined(KeyVaultDetails))
+            {
+                writer.WritePropertyName("akvDetails"u8);
+                writer.WriteObjectValue(KeyVaultDetails, options);
             }
             writer.WriteEndObject();
         }
@@ -91,11 +91,11 @@ namespace Azure.ResourceManager.NetApp.Models
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            string path = default;
-            NetAppBucketFileSystemUser fileSystemUser = default;
-            NetAppProvisioningState? provisioningState = default;
+            NetAppFileSystemUser fileSystemUser = default;
+            NetAppVolumeQuotaRuleProvisioningState? provisioningState = default;
             NetAppBucketServerPatchProperties server = default;
             NetAppBucketPatchPermission? permissions = default;
+            NetAppKeyVaultDetails akvDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -133,18 +133,13 @@ namespace Azure.ResourceManager.NetApp.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("path"u8))
-                        {
-                            path = property0.Value.GetString();
-                            continue;
-                        }
                         if (property0.NameEquals("fileSystemUser"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            fileSystemUser = NetAppBucketFileSystemUser.DeserializeNetAppBucketFileSystemUser(property0.Value, options);
+                            fileSystemUser = NetAppFileSystemUser.DeserializeNetAppFileSystemUser(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -153,7 +148,7 @@ namespace Azure.ResourceManager.NetApp.Models
                             {
                                 continue;
                             }
-                            provisioningState = property0.Value.GetString().ToNetAppProvisioningState();
+                            provisioningState = new NetAppVolumeQuotaRuleProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("server"u8))
@@ -174,6 +169,15 @@ namespace Azure.ResourceManager.NetApp.Models
                             permissions = new NetAppBucketPatchPermission(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("akvDetails"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            akvDetails = NetAppKeyVaultDetails.DeserializeNetAppKeyVaultDetails(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -188,11 +192,11 @@ namespace Azure.ResourceManager.NetApp.Models
                 name,
                 type,
                 systemData,
-                path,
                 fileSystemUser,
                 provisioningState,
                 server,
                 permissions,
+                akvDetails,
                 serializedAdditionalRawData);
         }
 

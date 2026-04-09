@@ -531,41 +531,64 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
             return result;
         }
 
-        #endregion
-/*
-        #region Recurring scheduledactions operations
-
-        public static async Task<Response<ScheduledActionResource>> GetScheduledActions(string subid, ArmClient client, string scheduledActionName, ResourceGroupResource rgResource, bool shouldThrow = false)
+        protected static async Task<CreateFlexResourceOperationResult> TestExecuteCreateFlexAsync(AzureLocation location, ExecuteCreateFlexContent executeCreateFlexRequest, string subid, ArmClient client)
         {
-            Response<ScheduledActionResource> saResource = null;
+            SubscriptionResource subscriptionResource = GenerateSubscriptionResource(client, subid);
+            ExecuteCreateFlexContent content = executeCreateFlexRequest;
+            CreateFlexResourceOperationResult result;
 
             try
             {
-                saResource = await rgResource.GetScheduledActionAsync(scheduledActionName);
+                result = await subscriptionResource.ExecuteVirtualMachineCreateFlexOperationAsync(location, content);
             }
-            catch (RequestFailedException ex) when (ex.ErrorCode == "ResourceNotFound")
+            catch (RequestFailedException ex)
             {
-                Console.WriteLine($" {scheduledActionName} scheduledaction deleted");
-
-                if (shouldThrow)
-                {
-                    throw;
-                }
+                Console.WriteLine($"Request failed with ErrorCode:{ex.ErrorCode} and ErrorMessage: {ex.Message}");
+                throw;
             }
-
-            return saResource;
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.InnerException?.Message);
+                throw;
+            }
+            return result;
         }
 
-        public static async Task DeleteScheduledAction(string subid, ArmClient client, string scheduledActionName, ResourceGroupResource rgResource, bool shouldThrow = false)
-        {
-            ResourceIdentifier scheduledActionResourceId = ScheduledActionResource.CreateResourceIdentifier(subid, rgResource.Id.Name, scheduledActionName);
-            ScheduledActionResource scheduledAction = client.GetScheduledActionResource(scheduledActionResourceId);
-
-            await scheduledAction.DeleteAsync(WaitUntil.Completed);
-
-            await GetScheduledActions(subid, client, scheduledActionName, rgResource, shouldThrow);
-        }
         #endregion
-*/
+        /*
+                #region Recurring scheduledactions operations
+
+                public static async Task<Response<ScheduledActionResource>> GetScheduledActions(string subid, ArmClient client, string scheduledActionName, ResourceGroupResource rgResource, bool shouldThrow = false)
+                {
+                    Response<ScheduledActionResource> saResource = null;
+
+                    try
+                    {
+                        saResource = await rgResource.GetScheduledActionAsync(scheduledActionName);
+                    }
+                    catch (RequestFailedException ex) when (ex.ErrorCode == "ResourceNotFound")
+                    {
+                        Console.WriteLine($" {scheduledActionName} scheduledaction deleted");
+
+                        if (shouldThrow)
+                        {
+                            throw;
+                        }
+                    }
+
+                    return saResource;
+                }
+
+                public static async Task DeleteScheduledAction(string subid, ArmClient client, string scheduledActionName, ResourceGroupResource rgResource, bool shouldThrow = false)
+                {
+                    ResourceIdentifier scheduledActionResourceId = ScheduledActionResource.CreateResourceIdentifier(subid, rgResource.Id.Name, scheduledActionName);
+                    ScheduledActionResource scheduledAction = client.GetScheduledActionResource(scheduledActionResourceId);
+
+                    await scheduledAction.DeleteAsync(WaitUntil.Completed);
+
+                    await GetScheduledActions(subid, client, scheduledActionName, rgResource, shouldThrow);
+                }
+                #endregion
+        */
     }
 }

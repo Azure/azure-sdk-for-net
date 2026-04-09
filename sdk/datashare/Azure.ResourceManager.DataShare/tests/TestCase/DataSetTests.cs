@@ -2,15 +2,15 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.DataShare.Models;
 using Azure.ResourceManager.DataShare.Tests.Helper;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
-using System.Security.Cryptography.X509Certificates;
 
 namespace Azure.ResourceManager.DataShare.Tests.TestCase
 {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataShare.Tests.TestCase
 
         private async Task<ShareDataSetResource> GetDataSetResourceAsync()
         {
-            var collection =await GetDataSetCollectionAsync();
+            var collection = await GetDataSetCollectionAsync();
             var setName = Recording.GenerateAssetName("TestSet-");
             var setInput = ResourceDataHelpers.GetDataSetData();
             var lros = await collection.CreateOrUpdateAsync(WaitUntil.Completed, setName, setInput);

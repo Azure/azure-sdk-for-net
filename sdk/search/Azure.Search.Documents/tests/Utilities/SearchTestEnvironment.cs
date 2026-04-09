@@ -8,7 +8,7 @@ namespace Azure.Search.Documents.Tests
     /// <summary>
     /// Gets variables created from test-resources.json.
     /// </summary>
-    public class SearchTestEnvironment: TestEnvironment
+    public class SearchTestEnvironment : TestEnvironment
     {
         /// <summary>
         /// The name of the variable for <see cref="RecordedClientSecret"/>.

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -18,11 +19,7 @@ namespace Azure.Data.AppConfiguration
     public partial class ConfigurationClient
     {
         private readonly Uri _endpoint;
-        /// <summary> A credential used to authenticate to the service. </summary>
-        private readonly AzureKeyCredential _keyCredential;
         private const string AuthorizationHeader = "Connection String";
-        /// <summary> A credential used to authenticate to the service. </summary>
-        private readonly TokenCredential _tokenCredential;
         private static readonly string[] AuthorizationScopes = new string[] { "https://azconfig.io/.default" };
         private readonly string _apiVersion;
 
@@ -37,6 +34,29 @@ namespace Azure.Data.AppConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public ConfigurationClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new ConfigurationClientOptions())
         {
+        }
+
+        /// <summary> Initializes a new instance of ConfigurationClient. </summary>
+        /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        internal ConfigurationClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, ConfigurationClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+
+            options ??= new ConfigurationClientOptions();
+
+            _endpoint = endpoint;
+            if (authenticationPolicy != null)
+            {
+                Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
+            }
+            else
+            {
+                Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
+            }
+            _apiVersion = options.Version;
+            ClientDiagnostics = new ClientDiagnostics(options, true);
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
@@ -367,6 +387,32 @@ namespace Azure.Data.AppConfiguration
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Creates a key-value snapshot. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="name"> The name of the key-value snapshot to create. </param>
+        /// <param name="contentType"> Content-Type header. </param>
+        /// <param name="entity"> The key-value snapshot to create. </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        internal virtual Operation<ConfigurationSnapshot> CreateSnapshot(WaitUntil waitUntil, string name, CreateSnapshotRequestContentType contentType, ConfigurationSnapshot entity, string syncToken = default, CancellationToken cancellationToken = default)
+        {
+            Operation<BinaryData> result = CreateSnapshot(waitUntil, name, contentType.ToSerialString(), entity, syncToken, cancellationToken.ToRequestContext());
+            return ProtocolOperationHelpers.Convert(result, response => (ConfigurationSnapshot)response, ClientDiagnostics, "ConfigurationClient.CreateSnapshot");
+        }
+
+        /// <summary> Creates a key-value snapshot. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="name"> The name of the key-value snapshot to create. </param>
+        /// <param name="contentType"> Content-Type header. </param>
+        /// <param name="entity"> The key-value snapshot to create. </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        internal virtual async Task<Operation<ConfigurationSnapshot>> CreateSnapshotAsync(WaitUntil waitUntil, string name, CreateSnapshotRequestContentType contentType, ConfigurationSnapshot entity, string syncToken = default, CancellationToken cancellationToken = default)
+        {
+            Operation<BinaryData> result = await CreateSnapshotAsync(waitUntil, name, contentType.ToSerialString(), entity, syncToken, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return ProtocolOperationHelpers.Convert(result, response => (ConfigurationSnapshot)response, ClientDiagnostics, "ConfigurationClient.CreateSnapshotAsync");
         }
 
         /// <summary>

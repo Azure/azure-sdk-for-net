@@ -2,8 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -12,6 +16,7 @@ using Azure.Generator.Management.Utilities;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
+using Microsoft.TypeSpec.Generator.Input.Extensions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Snippets;
@@ -29,12 +34,15 @@ namespace Azure.Generator.Management.Providers
         private readonly ClientProvider _restClient;
         private readonly InputServiceMethod _serviceMethod;
         private readonly CSharpType _itemType;
-        private readonly CSharpType _listType;
         private readonly bool _isAsync;
-        private readonly string _scopeName;
         private readonly IReadOnlyList<ParameterProvider> _constructorParameters;
         private readonly string _methodName;
         private readonly string _enclosingTypeName;
+
+        private readonly FieldProvider _clientField;
+        private readonly IReadOnlyList<FieldProvider> _parameterFields;
+        private readonly FieldProvider _contextField;
+        private readonly FieldProvider _diagnosticScopeField;
 
         private static readonly ParameterProvider ContinuationTokenParameter =
             new("continuationToken", $"A continuation token indicating where to resume paging.", new CSharpType(typeof(string)));
@@ -45,9 +53,7 @@ namespace Azure.Generator.Management.Providers
             ClientProvider restClient,
             InputServiceMethod serviceMethod,
             CSharpType itemType,
-            CSharpType listType,
             bool isAsync,
-            string scopeName,
             IReadOnlyList<ParameterProvider> constructorParameters,
             string methodName,
             string enclosingTypeName)
@@ -55,16 +61,35 @@ namespace Azure.Generator.Management.Providers
             _restClient = restClient;
             _serviceMethod = serviceMethod;
             _itemType = itemType;
-            _listType = listType;
             _isAsync = isAsync;
-            _scopeName = scopeName;
             _constructorParameters = constructorParameters;
             _methodName = methodName;
             _enclosingTypeName = enclosingTypeName;
+
+            _clientField = new FieldProvider(
+                FieldModifiers.Private | FieldModifiers.ReadOnly,
+                _restClient.Type,
+                "_client",
+                this);
+            _parameterFields = _constructorParameters.Select(p => new FieldProvider(
+                FieldModifiers.Private | FieldModifiers.ReadOnly,
+                p.Type,
+                ToFieldName(p.Name),
+                this)).ToArray();
+            _contextField = new FieldProvider(
+                FieldModifiers.Private | FieldModifiers.ReadOnly,
+                typeof(RequestContext),
+                "_context",
+                this);
+            _diagnosticScopeField = new FieldProvider(
+                FieldModifiers.Private | FieldModifiers.ReadOnly,
+                typeof(string),
+                "_diagnosticScope",
+                this);
         }
 
         protected override string BuildRelativeFilePath() =>
-            System.IO.Path.Combine("src", "Generated", "CollectionResults", $"{Name}.cs");
+            Path.Combine("src", "Generated", "CollectionResults", $"{Name}.cs");
 
         protected override string BuildName()
         {
@@ -84,35 +109,11 @@ namespace Azure.Generator.Management.Providers
             return [baseType];
         }
 
+        private static string ToFieldName(string paramName) => $"_{paramName.ToVariableName()}";
+
         protected override FieldProvider[] BuildFields()
         {
-            var fields = new List<FieldProvider>
-            {
-                new FieldProvider(
-                    FieldModifiers.Private | FieldModifiers.ReadOnly,
-                    _restClient.Type,
-                    "_client",
-                    this)
-            };
-
-            // Add fields for constructor parameters
-            foreach (var param in _constructorParameters)
-            {
-                fields.Add(new FieldProvider(
-                    FieldModifiers.Private | FieldModifiers.ReadOnly,
-                    param.Type,
-                    $"_{param.Name}",
-                    this));
-            }
-
-            // Add _context field
-            fields.Add(new FieldProvider(
-                FieldModifiers.Private | FieldModifiers.ReadOnly,
-                typeof(RequestContext),
-                "_context",
-                this));
-
-            return [.. fields];
+            return [_clientField, .. _parameterFields, _contextField, _diagnosticScopeField];
         }
 
         protected override ConstructorProvider[] BuildConstructors()
@@ -123,8 +124,10 @@ namespace Azure.Generator.Management.Providers
             };
             parameters.AddRange(_constructorParameters);
             parameters.Add(new ParameterProvider("context", $"The request options, which can override default behaviors of the client pipeline on a per-call basis.", typeof(RequestContext)));
+            parameters.Add(new ParameterProvider("diagnosticScope", $"The diagnostic scope name.", typeof(string)));
 
-            var contextParam = parameters.Last();
+            var contextParam = parameters[^2];
+            var scopeParam = parameters[^1];
 
             var signature = new ConstructorSignature(
                 Type,
@@ -134,15 +137,16 @@ namespace Azure.Generator.Management.Providers
 
             var bodyStatements = new List<MethodBodyStatement>
             {
-                This.Property("_client").Assign(parameters[0]).Terminate()
+                _clientField.Assign(parameters[0]).Terminate()
             };
 
-            foreach (var param in _constructorParameters)
+            for (int i = 0; i < _constructorParameters.Count; i++)
             {
-                bodyStatements.Add(This.Property($"_{param.Name}").Assign(param).Terminate());
+                bodyStatements.Add(_parameterFields[i].Assign(_constructorParameters[i]).Terminate());
             }
 
-            bodyStatements.Add(This.Property("_context").Assign(contextParam).Terminate());
+            bodyStatements.Add(_contextField.Assign(contextParam).Terminate());
+            bodyStatements.Add(_diagnosticScopeField.Assign(scopeParam).Terminate());
 
             return [new ConstructorProvider(signature, bodyStatements.ToArray(), this)];
         }
@@ -222,30 +226,30 @@ namespace Azure.Generator.Management.Providers
             var requestArgs = new List<ValueExpression>();
 
             // Add arguments from fields
-            foreach (var param in _constructorParameters)
+            foreach (var field in _parameterFields)
             {
-                requestArgs.Add(This.Property($"_{param.Name}"));
+                requestArgs.Add(field);
             }
 
             // Add context parameter
-            requestArgs.Add(This.Property("_context"));
+            requestArgs.Add(_contextField);
 
             var bodyStatements = new List<MethodBodyStatement>
             {
                 Declare("message", typeof(HttpMessage),
-                    This.Property("_client").Invoke(createRequestMethodName, requestArgs),
+                    _clientField.Invoke(createRequestMethodName, requestArgs),
                     out var messageVariable),
                 UsingDeclare("scope", typeof(DiagnosticScope),
-                    This.Property("_client").Property("ClientDiagnostics").Invoke("CreateScope", [Literal(_scopeName)]),
+                    _clientField.Property("ClientDiagnostics").Invoke("CreateScope", [_diagnosticScopeField]),
                     out var scopeVariable),
                 scopeVariable.Invoke("Start").Terminate()
             };
 
             var tryStatements = new List<MethodBodyStatement>
             {
-                Return(This.Property("_client").Property("Pipeline").Invoke(
+                Return(_clientField.Property("Pipeline").Invoke(
                     _isAsync ? "ProcessMessageAsync" : "ProcessMessage",
-                    [messageVariable, This.Property("_context")],
+                    [messageVariable, _contextField],
                     _isAsync))
             };
 
@@ -277,8 +281,8 @@ namespace Azure.Generator.Management.Providers
             var bodyStatements = new List<MethodBodyStatement>
             {
                 // using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-                UsingDeclare("document", typeof(System.Text.Json.JsonDocument),
-                    Static(typeof(System.Text.Json.JsonDocument)).Invoke("Parse",
+                UsingDeclare("document", typeof(JsonDocument),
+                    Static(typeof(JsonDocument)).Invoke("Parse",
                         new ValueExpression[]
                         {
                             responseParam.Property("Content"),
@@ -287,7 +291,7 @@ namespace Azure.Generator.Management.Providers
                     out var documentVariable),
 
                 // var array = document.RootElement;
-                Declare("array", typeof(System.Text.Json.JsonElement),
+                Declare("array", typeof(JsonElement),
                     documentVariable.Property("RootElement"),
                     out var arrayVariable),
 
@@ -297,8 +301,8 @@ namespace Azure.Generator.Management.Providers
                     out var resultVariable),
 
                 // foreach (var element in array.EnumerateArray())
-                new Microsoft.TypeSpec.Generator.Statements.ForEachStatement(
-                    typeof(System.Text.Json.JsonElement),
+                new ForEachStatement(
+                    typeof(JsonElement),
                     "element",
                     arrayVariable.Invoke("EnumerateArray"),
                     isAsync: false,
@@ -309,11 +313,11 @@ namespace Azure.Generator.Management.Providers
                     resultVariable.Invoke("Add",
                         new ValueExpression[]
                         {
-                            Static(new CSharpType(typeof(System.ClientModel.Primitives.ModelReaderWriter))).Invoke("Read",
+                            Static(new CSharpType(typeof(ModelReaderWriter))).Invoke("Read",
                                 new ValueExpression[]
                                 {
                                     New.Instance(typeof(BinaryData),
-                                        Static(typeof(System.Text.Encoding)).Property("UTF8").Invoke("GetBytes",
+                                        Static(typeof(Encoding)).Property("UTF8").Invoke("GetBytes",
                                             elementVariable.Invoke("GetRawText"))),
                                     Static<ModelSerializationExtensionsDefinition>().Property("WireOptions"),
                                     Static(ManagementClientGenerator.Instance.OutputLibrary.ModelReaderWriterContextType).Property("Default")

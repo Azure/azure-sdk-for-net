@@ -51,7 +51,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/", false);
             uri.AppendPath(cloudHsmClusterName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -70,7 +73,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/", false);
             uri.AppendPath(cloudHsmClusterName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -91,7 +97,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/", false);
             uri.AppendPath(cloudHsmClusterName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -112,7 +121,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/", false);
             uri.AppendPath(cloudHsmClusterName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -129,7 +141,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (skiptoken != null)
             {
                 uri.AppendQuery("$skiptoken", skiptoken, true);
@@ -145,7 +160,18 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         internal HttpMessage CreateNextGetByResourceGroupRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string skiptoken, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -161,7 +187,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (skiptoken != null)
             {
                 uri.AppendQuery("$skiptoken", skiptoken, true);
@@ -177,7 +206,18 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         internal HttpMessage CreateNextGetBySubscriptionRequest(Uri nextPage, Guid subscriptionId, string skiptoken, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -197,12 +237,15 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             uri.AppendPath("/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/", false);
             uri.AppendPath(cloudHsmClusterName, true);
             uri.AppendPath("/validateBackupProperties", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
-            if ("application/json" != null)
+            if (content != null)
             {
                 request.Headers.SetValue("Content-Type", "application/json");
             }
@@ -222,12 +265,15 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             uri.AppendPath("/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/", false);
             uri.AppendPath(cloudHsmClusterName, true);
             uri.AppendPath("/backup", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
-            if ("application/json" != null)
+            if (content != null)
             {
                 request.Headers.SetValue("Content-Type", "application/json");
             }
@@ -247,12 +293,15 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             uri.AppendPath("/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/", false);
             uri.AppendPath(cloudHsmClusterName, true);
             uri.AppendPath("/validateRestoreProperties", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
-            if ("application/json" != null)
+            if (content != null)
             {
                 request.Headers.SetValue("Content-Type", "application/json");
             }
@@ -272,7 +321,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             uri.AppendPath("/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/", false);
             uri.AppendPath(cloudHsmClusterName, true);
             uri.AppendPath("/restore", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

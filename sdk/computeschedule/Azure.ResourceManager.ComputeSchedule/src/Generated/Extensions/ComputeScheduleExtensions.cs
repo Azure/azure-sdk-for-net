@@ -206,46 +206,6 @@ namespace Azure.ResourceManager.ComputeSchedule
         }
 
         /// <summary>
-        /// List resources attached to Scheduled Actions for the given occurrence
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeScheduleResourceGroupResource.GetAttachedResourcesAsync(string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="scheduledActionName"> The name of the ScheduledAction. </param>
-        /// <param name="occurrenceId"> The name of the Occurrence. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="OccurrenceResourceData"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<OccurrenceResourceData> GetAttachedResourcesAsync(this ResourceGroupResource resourceGroupResource, string scheduledActionName, string occurrenceId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableComputeScheduleResourceGroupResource(resourceGroupResource).GetAttachedResourcesAsync(scheduledActionName, occurrenceId, cancellationToken);
-        }
-
-        /// <summary>
-        /// List resources attached to Scheduled Actions for the given occurrence
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeScheduleResourceGroupResource.GetAttachedResources(string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="scheduledActionName"> The name of the ScheduledAction. </param>
-        /// <param name="occurrenceId"> The name of the Occurrence. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="OccurrenceResourceData"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<OccurrenceResourceData> GetAttachedResources(this ResourceGroupResource resourceGroupResource, string scheduledActionName, string occurrenceId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableComputeScheduleResourceGroupResource(resourceGroupResource).GetAttachedResources(scheduledActionName, occurrenceId, cancellationToken);
-        }
-
-        /// <summary>
         /// List ScheduledAction resources by subscription ID
         /// <item>
         /// <term> Mocking. </term>
@@ -507,6 +467,44 @@ namespace Azure.ResourceManager.ComputeSchedule
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableComputeScheduleSubscriptionResource(subscriptionResource).ExecuteVirtualMachineStart(locationparameter, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// VirtualMachinesExecuteCreateFlex: Execute create operation for a batch of virtual machines with flex properties, this operation is triggered as soon as Computeschedule receives it.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeScheduleSubscriptionResource.ExecuteVirtualMachineCreateFlexOperationAsync(AzureLocation, ExecuteCreateFlexContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="locationparameter"> The location name. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        public static async Task<Response<CreateFlexResourceOperationResult>> ExecuteVirtualMachineCreateFlexOperationAsync(this SubscriptionResource subscriptionResource, AzureLocation locationparameter, ExecuteCreateFlexContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableComputeScheduleSubscriptionResource(subscriptionResource).ExecuteVirtualMachineCreateFlexOperationAsync(locationparameter, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// VirtualMachinesExecuteCreateFlex: Execute create operation for a batch of virtual machines with flex properties, this operation is triggered as soon as Computeschedule receives it.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeScheduleSubscriptionResource.ExecuteVirtualMachineCreateFlexOperation(AzureLocation, ExecuteCreateFlexContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="locationparameter"> The location name. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        public static Response<CreateFlexResourceOperationResult> ExecuteVirtualMachineCreateFlexOperation(this SubscriptionResource subscriptionResource, AzureLocation locationparameter, ExecuteCreateFlexContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableComputeScheduleSubscriptionResource(subscriptionResource).ExecuteVirtualMachineCreateFlexOperation(locationparameter, content, cancellationToken);
         }
 
         /// <summary>

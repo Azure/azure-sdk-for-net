@@ -61,13 +61,12 @@ namespace Azure.Security.CodeTransparency
             HttpPipelineTransportOptions transportOptions = CreateTlsCertAndTrustVerifier(name, certificateClient);
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
-            _keyCredential = credential;
             Pipeline = HttpPipelineBuilder.Build(
                 options,
-                Array.Empty<HttpPipelinePolicy>(),
-                _keyCredential == null ?
+                new HttpPipelinePolicy[] { new CodeTransparencyRedirectPolicy() },
+                credential == null ?
                     Array.Empty<HttpPipelinePolicy>() :
-                    new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader, AuthorizationApiKeyPrefix) },
+                    new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(credential, AuthorizationHeader, AuthorizationApiKeyPrefix) },
                 transportOptions,
                 new ResponseClassifier());
             _endpoint = endpoint;

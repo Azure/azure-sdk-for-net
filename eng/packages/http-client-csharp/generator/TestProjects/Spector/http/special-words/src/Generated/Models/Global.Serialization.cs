@@ -16,6 +16,19 @@ namespace SpecialWords._Models
     {
         internal Global() => throw null;
 
+        protected virtual Global PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+
+        BinaryData IPersistableModel<Global>.Write(ModelReaderWriterOptions options) => throw null;
+
+        Global IPersistableModel<Global>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        string IPersistableModel<Global>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+
+        /// <param name="global"> The <see cref="Global"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(Global @global) => throw null;
+
         void IJsonModel<Global>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -23,18 +36,5 @@ namespace SpecialWords._Models
         Global IJsonModel<Global>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual Global JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
-
-        BinaryData IPersistableModel<Global>.Write(ModelReaderWriterOptions options) => throw null;
-
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
-
-        Global IPersistableModel<Global>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
-        protected virtual Global PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
-        string IPersistableModel<Global>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
-
-        /// <param name="global"> The <see cref="Global"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(Global @global) => throw null;
     }
 }

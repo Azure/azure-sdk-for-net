@@ -15,21 +15,13 @@ namespace _Type.Property.Optional
 {
     public partial class UnionStringLiteralProperty : IJsonModel<UnionStringLiteralProperty>
     {
-        void IJsonModel<UnionStringLiteralProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
-
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
-
-        UnionStringLiteralProperty IJsonModel<UnionStringLiteralProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
-
-        protected virtual UnionStringLiteralProperty JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
-
-        BinaryData IPersistableModel<UnionStringLiteralProperty>.Write(ModelReaderWriterOptions options) => throw null;
+        protected virtual UnionStringLiteralProperty PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        UnionStringLiteralProperty IPersistableModel<UnionStringLiteralProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<UnionStringLiteralProperty>.Write(ModelReaderWriterOptions options) => throw null;
 
-        protected virtual UnionStringLiteralProperty PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        UnionStringLiteralProperty IPersistableModel<UnionStringLiteralProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<UnionStringLiteralProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
@@ -37,5 +29,13 @@ namespace _Type.Property.Optional
         public static implicit operator RequestContent(UnionStringLiteralProperty unionStringLiteralProperty) => throw null;
 
         public static explicit operator UnionStringLiteralProperty(Response response) => throw null;
+
+        void IJsonModel<UnionStringLiteralProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+
+        UnionStringLiteralProperty IJsonModel<UnionStringLiteralProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+
+        protected virtual UnionStringLiteralProperty JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }
 }

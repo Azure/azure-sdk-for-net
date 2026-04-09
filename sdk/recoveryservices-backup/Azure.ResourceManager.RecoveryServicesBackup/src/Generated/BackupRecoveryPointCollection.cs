@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup
 {
@@ -24,31 +25,41 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
     /// </summary>
     public partial class BackupRecoveryPointCollection : ArmCollection, IEnumerable<BackupRecoveryPointResource>, IAsyncEnumerable<BackupRecoveryPointResource>
     {
-        private readonly ClientDiagnostics _backupRecoveryPointRecoveryPointsClientDiagnostics;
-        private readonly RecoveryPointsRestOperations _backupRecoveryPointRecoveryPointsRestClient;
+        private readonly ClientDiagnostics _recoveryPointsClientDiagnostics;
+        private readonly RecoveryPoints _recoveryPointsRestClient;
+        private readonly ClientDiagnostics _itemLevelRecoveryConnectionsClientDiagnostics;
+        private readonly ItemLevelRecoveryConnections _itemLevelRecoveryConnectionsRestClient;
+        private readonly ClientDiagnostics _restoresClientDiagnostics;
+        private readonly Restores _restoresRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="BackupRecoveryPointCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of BackupRecoveryPointCollection for mocking. </summary>
         protected BackupRecoveryPointCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="BackupRecoveryPointCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupRecoveryPointCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal BackupRecoveryPointCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _backupRecoveryPointRecoveryPointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", BackupRecoveryPointResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(BackupRecoveryPointResource.ResourceType, out string backupRecoveryPointRecoveryPointsApiVersion);
-            _backupRecoveryPointRecoveryPointsRestClient = new RecoveryPointsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, backupRecoveryPointRecoveryPointsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(BackupRecoveryPointResource.ResourceType, out string backupRecoveryPointApiVersion);
+            _recoveryPointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", BackupRecoveryPointResource.ResourceType.Namespace, Diagnostics);
+            _recoveryPointsRestClient = new RecoveryPoints(_recoveryPointsClientDiagnostics, Pipeline, Endpoint, backupRecoveryPointApiVersion ?? "2026-01-01-preview");
+            _itemLevelRecoveryConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", BackupRecoveryPointResource.ResourceType.Namespace, Diagnostics);
+            _itemLevelRecoveryConnectionsRestClient = new ItemLevelRecoveryConnections(_itemLevelRecoveryConnectionsClientDiagnostics, Pipeline, Endpoint, backupRecoveryPointApiVersion ?? "2026-01-01-preview");
+            _restoresClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", BackupRecoveryPointResource.ResourceType.Namespace, Diagnostics);
+            _restoresRestClient = new Restores(_restoresClientDiagnostics, Pipeline, Endpoint, backupRecoveryPointApiVersion ?? "2026-01-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != BackupProtectedItemResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, BackupProtectedItemResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, BackupProtectedItemResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
@@ -56,38 +67,42 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// To know the status of the operation, call the GetProtectedItemOperationResult API.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}/protectedItems/{protectedItemName}/recoveryPoints/{recoveryPointId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}/protectedItems/{protectedItemName}/recoveryPoints/{recoveryPointId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RecoveryPoints_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> RecoveryPoints_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BackupRecoveryPointResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="recoveryPointId"> RecoveryPointID represents the backed up data to be fetched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="recoveryPointId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="recoveryPointId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="recoveryPointId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<BackupRecoveryPointResource>> GetAsync(string recoveryPointId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(recoveryPointId, nameof(recoveryPointId));
 
-            using var scope = _backupRecoveryPointRecoveryPointsClientDiagnostics.CreateScope("BackupRecoveryPointCollection.Get");
+            using DiagnosticScope scope = _recoveryPointsClientDiagnostics.CreateScope("BackupRecoveryPointCollection.Get");
             scope.Start();
             try
             {
-                var response = await _backupRecoveryPointRecoveryPointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, recoveryPointId, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _recoveryPointsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, recoveryPointId, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<BackupRecoveryPointData> response = Response.FromValue(BackupRecoveryPointData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new BackupRecoveryPointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -102,38 +117,42 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// To know the status of the operation, call the GetProtectedItemOperationResult API.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}/protectedItems/{protectedItemName}/recoveryPoints/{recoveryPointId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}/protectedItems/{protectedItemName}/recoveryPoints/{recoveryPointId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RecoveryPoints_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> RecoveryPoints_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BackupRecoveryPointResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="recoveryPointId"> RecoveryPointID represents the backed up data to be fetched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="recoveryPointId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="recoveryPointId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="recoveryPointId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<BackupRecoveryPointResource> Get(string recoveryPointId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(recoveryPointId, nameof(recoveryPointId));
 
-            using var scope = _backupRecoveryPointRecoveryPointsClientDiagnostics.CreateScope("BackupRecoveryPointCollection.Get");
+            using DiagnosticScope scope = _recoveryPointsClientDiagnostics.CreateScope("BackupRecoveryPointCollection.Get");
             scope.Start();
             try
             {
-                var response = _backupRecoveryPointRecoveryPointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, recoveryPointId, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _recoveryPointsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, recoveryPointId, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<BackupRecoveryPointData> response = Response.FromValue(BackupRecoveryPointData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new BackupRecoveryPointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -147,98 +166,128 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// Lists the backup copies for the backed up item.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}/protectedItems/{protectedItemName}/recoveryPoints</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}/protectedItems/{protectedItemName}/recoveryPoints. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RecoveryPoints_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> RecoveryPoints_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BackupRecoveryPointResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="filter"> OData filter options. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BackupRecoveryPointResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BackupRecoveryPointResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _backupRecoveryPointRecoveryPointsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _backupRecoveryPointRecoveryPointsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BackupRecoveryPointResource(Client, BackupRecoveryPointData.DeserializeBackupRecoveryPointData(e)), _backupRecoveryPointRecoveryPointsClientDiagnostics, Pipeline, "BackupRecoveryPointCollection.GetAll", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the backup copies for the backed up item.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}/protectedItems/{protectedItemName}/recoveryPoints</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RecoveryPoints_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BackupRecoveryPointResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> OData filter options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BackupRecoveryPointResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BackupRecoveryPointResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<BackupRecoveryPointResource> GetAllAsync(string filter = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _backupRecoveryPointRecoveryPointsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _backupRecoveryPointRecoveryPointsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BackupRecoveryPointResource(Client, BackupRecoveryPointData.DeserializeBackupRecoveryPointData(e)), _backupRecoveryPointRecoveryPointsClientDiagnostics, Pipeline, "BackupRecoveryPointCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<BackupRecoveryPointData, BackupRecoveryPointResource>(new RecoveryPointsGetAllAsyncCollectionResultOfT(
+                _recoveryPointsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Parent.Parent.Parent.Name,
+                Id.Parent.Parent.Name,
+                Id.Parent.Name,
+                Id.Name,
+                filter,
+                context,
+                "BackupRecoveryPointCollection.GetAll"), data => new BackupRecoveryPointResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists the backup copies for the backed up item.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}/protectedItems/{protectedItemName}/recoveryPoints. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> RecoveryPoints_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> OData filter options. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="BackupRecoveryPointResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<BackupRecoveryPointResource> GetAll(string filter = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<BackupRecoveryPointData, BackupRecoveryPointResource>(new RecoveryPointsGetAllCollectionResultOfT(
+                _recoveryPointsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Parent.Parent.Parent.Name,
+                Id.Parent.Parent.Name,
+                Id.Parent.Name,
+                Id.Name,
+                filter,
+                context,
+                "BackupRecoveryPointCollection.GetAll"), data => new BackupRecoveryPointResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}/protectedItems/{protectedItemName}/recoveryPoints/{recoveryPointId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}/protectedItems/{protectedItemName}/recoveryPoints/{recoveryPointId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RecoveryPoints_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> RecoveryPoints_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BackupRecoveryPointResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="recoveryPointId"> RecoveryPointID represents the backed up data to be fetched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="recoveryPointId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="recoveryPointId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="recoveryPointId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string recoveryPointId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(recoveryPointId, nameof(recoveryPointId));
 
-            using var scope = _backupRecoveryPointRecoveryPointsClientDiagnostics.CreateScope("BackupRecoveryPointCollection.Exists");
+            using DiagnosticScope scope = _recoveryPointsClientDiagnostics.CreateScope("BackupRecoveryPointCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _backupRecoveryPointRecoveryPointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, recoveryPointId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _recoveryPointsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, recoveryPointId, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<BackupRecoveryPointData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(BackupRecoveryPointData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((BackupRecoveryPointData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -252,36 +301,50 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}/protectedItems/{protectedItemName}/recoveryPoints/{recoveryPointId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}/protectedItems/{protectedItemName}/recoveryPoints/{recoveryPointId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RecoveryPoints_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> RecoveryPoints_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BackupRecoveryPointResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="recoveryPointId"> RecoveryPointID represents the backed up data to be fetched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="recoveryPointId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="recoveryPointId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="recoveryPointId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string recoveryPointId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(recoveryPointId, nameof(recoveryPointId));
 
-            using var scope = _backupRecoveryPointRecoveryPointsClientDiagnostics.CreateScope("BackupRecoveryPointCollection.Exists");
+            using DiagnosticScope scope = _recoveryPointsClientDiagnostics.CreateScope("BackupRecoveryPointCollection.Exists");
             scope.Start();
             try
             {
-                var response = _backupRecoveryPointRecoveryPointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, recoveryPointId, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _recoveryPointsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, recoveryPointId, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<BackupRecoveryPointData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(BackupRecoveryPointData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((BackupRecoveryPointData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -295,38 +358,54 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}/protectedItems/{protectedItemName}/recoveryPoints/{recoveryPointId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}/protectedItems/{protectedItemName}/recoveryPoints/{recoveryPointId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RecoveryPoints_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> RecoveryPoints_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BackupRecoveryPointResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="recoveryPointId"> RecoveryPointID represents the backed up data to be fetched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="recoveryPointId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="recoveryPointId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="recoveryPointId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<BackupRecoveryPointResource>> GetIfExistsAsync(string recoveryPointId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(recoveryPointId, nameof(recoveryPointId));
 
-            using var scope = _backupRecoveryPointRecoveryPointsClientDiagnostics.CreateScope("BackupRecoveryPointCollection.GetIfExists");
+            using DiagnosticScope scope = _recoveryPointsClientDiagnostics.CreateScope("BackupRecoveryPointCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _backupRecoveryPointRecoveryPointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, recoveryPointId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _recoveryPointsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, recoveryPointId, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<BackupRecoveryPointData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(BackupRecoveryPointData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((BackupRecoveryPointData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<BackupRecoveryPointResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new BackupRecoveryPointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -340,38 +419,54 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}/protectedItems/{protectedItemName}/recoveryPoints/{recoveryPointId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}/protectedItems/{protectedItemName}/recoveryPoints/{recoveryPointId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RecoveryPoints_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> RecoveryPoints_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BackupRecoveryPointResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="recoveryPointId"> RecoveryPointID represents the backed up data to be fetched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="recoveryPointId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="recoveryPointId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="recoveryPointId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<BackupRecoveryPointResource> GetIfExists(string recoveryPointId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(recoveryPointId, nameof(recoveryPointId));
 
-            using var scope = _backupRecoveryPointRecoveryPointsClientDiagnostics.CreateScope("BackupRecoveryPointCollection.GetIfExists");
+            using DiagnosticScope scope = _recoveryPointsClientDiagnostics.CreateScope("BackupRecoveryPointCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _backupRecoveryPointRecoveryPointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, recoveryPointId, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _recoveryPointsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, recoveryPointId, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<BackupRecoveryPointData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(BackupRecoveryPointData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((BackupRecoveryPointData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<BackupRecoveryPointResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new BackupRecoveryPointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -391,6 +486,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<BackupRecoveryPointResource> IAsyncEnumerable<BackupRecoveryPointResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

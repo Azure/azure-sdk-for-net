@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ArizeAIObservabilityEvalOrganizationData, ArizeAIObservabilityEvalOrganizationResource>(new OrganizationsGetBySubscriptionAsyncCollectionResultOfT(OrganizationsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new ArizeAIObservabilityEvalOrganizationResource(Client, data));
+            return new AsyncPageableWrapper<ArizeAIObservabilityEvalOrganizationData, ArizeAIObservabilityEvalOrganizationResource>(new OrganizationsGetBySubscriptionAsyncCollectionResultOfT(OrganizationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableArizeAIObservabilityEvalSubscriptionResource.GetArizeAIObservabilityEvalOrganizations"), data => new ArizeAIObservabilityEvalOrganizationResource(Client, data));
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ArizeAIObservabilityEvalOrganizationData, ArizeAIObservabilityEvalOrganizationResource>(new OrganizationsGetBySubscriptionCollectionResultOfT(OrganizationsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new ArizeAIObservabilityEvalOrganizationResource(Client, data));
+            return new PageableWrapper<ArizeAIObservabilityEvalOrganizationData, ArizeAIObservabilityEvalOrganizationResource>(new OrganizationsGetBySubscriptionCollectionResultOfT(OrganizationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableArizeAIObservabilityEvalSubscriptionResource.GetArizeAIObservabilityEvalOrganizations"), data => new ArizeAIObservabilityEvalOrganizationResource(Client, data));
         }
     }
 }

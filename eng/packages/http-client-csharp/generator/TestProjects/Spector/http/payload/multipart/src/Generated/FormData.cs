@@ -5,10 +5,12 @@
 
 #nullable disable
 
+using System;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Payload.MultiPart._FormData.File;
 using Payload.MultiPart._FormData.HttpParts;
 
 namespace Payload.MultiPart._FormData
@@ -16,6 +18,8 @@ namespace Payload.MultiPart._FormData
     public partial class FormData
     {
         protected FormData() => throw null;
+
+        internal FormData(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
@@ -56,5 +60,7 @@ namespace Payload.MultiPart._FormData
         public virtual Task<Response> AnonymousModelAsync(RequestContent content, string contentType, RequestContext context = null) => throw null;
 
         public virtual FormDataHttpParts GetFormDataHttpPartsClient() => throw null;
+
+        public virtual FormDataFile GetFormDataFileClient() => throw null;
     }
 }

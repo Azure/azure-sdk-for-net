@@ -109,14 +109,14 @@ namespace Azure.Storage.Blobs.Tests
             HttpHeaderParameters httpHeaders = default,
             IProgress<long> progressHandler = default)
             => await client.OpenWriteAsync(overwrite, new BlobOpenWriteOptions
-               {
-                   BufferSize = bufferSize,
-                   OpenConditions = conditions,
-                   Metadata = metadata,
-                   Tags = tags,
-                   HttpHeaders = httpHeaders.ToBlobHttpHeaders(),
-                   ProgressHandler = progressHandler
-               });
+            {
+                BufferSize = bufferSize,
+                OpenConditions = conditions,
+                Metadata = metadata,
+                Tags = tags,
+                HttpHeaders = httpHeaders.ToBlobHttpHeaders(),
+                ProgressHandler = progressHandler
+            });
         #endregion
 
         #region Tests

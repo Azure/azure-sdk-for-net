@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Text.Json;
 using System.Threading;
@@ -151,6 +152,17 @@ namespace Azure.Data.AppConfiguration
             ClientDiagnostics = new ClientDiagnostics(options, true);
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ConfigurationClient"/> class using the provided settings.
+        /// </summary>
+        /// <param name="settings">The <see cref="ConfigurationClientSettings"/> used to configure the client.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="settings"/> is null, or the endpoint or credential in the settings is null.</exception>
+        [Experimental("SCME0002")]
+        public ConfigurationClient(ConfigurationClientSettings settings)
+            : this(settings?.Endpoint, settings?.CredentialProvider as TokenCredential, settings?.Options ?? new ConfigurationClientOptions())
+        {
+        }
+
         /// <summary> Initializes a new instance of ConfigurationClient. </summary>
         /// <param name="endpoint"> The endpoint of the App Configuration instance to send requests to. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
@@ -172,8 +184,7 @@ namespace Azure.Data.AppConfiguration
             options ??= new ConfigurationClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
-            _keyCredential = credential;
-            Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader) }, new ResponseClassifier());
+            Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(credential, AuthorizationHeader) }, new ResponseClassifier());
             _endpoint = endpoint;
             _syncToken = syncToken;
             _apiVersion = options.Version;
@@ -192,8 +203,7 @@ namespace Azure.Data.AppConfiguration
             options ??= new ConfigurationClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
-            _tokenCredential = credential;
-            Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
+            Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes) }, new ResponseClassifier());
             _endpoint = endpoint;
             _syncToken = syncToken;
             _apiVersion = options.Version;
@@ -1269,7 +1279,7 @@ namespace Azure.Data.AppConfiguration
             Argument.AssertNotNull(selector, nameof(selector));
             var name = selector.NameFilter;
             IList<SnapshotFields> fields = selector.Fields?.Count > 0
-                ? [ .. selector.Fields]
+                ? [.. selector.Fields]
                 : null;
             var status = selector.Status;
 

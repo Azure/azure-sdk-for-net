@@ -7,48 +7,67 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Peering;
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    /// <summary> The LookingGlassCommand. </summary>
+    /// <summary></summary>
     public readonly partial struct LookingGlassCommand : IEquatable<LookingGlassCommand>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="LookingGlassCommand"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public LookingGlassCommand(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string TracerouteValue = "Traceroute";
         private const string PingValue = "Ping";
         private const string BgpRouteValue = "BgpRoute";
 
-        /// <summary> Traceroute. </summary>
+        /// <summary> Initializes a new instance of <see cref="LookingGlassCommand"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public LookingGlassCommand(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Traceroute. </summary>
         public static LookingGlassCommand Traceroute { get; } = new LookingGlassCommand(TracerouteValue);
-        /// <summary> Ping. </summary>
+
+        /// <summary> Gets the Ping. </summary>
         public static LookingGlassCommand Ping { get; } = new LookingGlassCommand(PingValue);
-        /// <summary> BgpRoute. </summary>
+
+        /// <summary> Gets the BgpRoute. </summary>
         public static LookingGlassCommand BgpRoute { get; } = new LookingGlassCommand(BgpRouteValue);
+
         /// <summary> Determines if two <see cref="LookingGlassCommand"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(LookingGlassCommand left, LookingGlassCommand right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="LookingGlassCommand"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(LookingGlassCommand left, LookingGlassCommand right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="LookingGlassCommand"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="LookingGlassCommand"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator LookingGlassCommand(string value) => new LookingGlassCommand(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="LookingGlassCommand"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator LookingGlassCommand?(string value) => value == null ? null : new LookingGlassCommand(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is LookingGlassCommand other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(LookingGlassCommand other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

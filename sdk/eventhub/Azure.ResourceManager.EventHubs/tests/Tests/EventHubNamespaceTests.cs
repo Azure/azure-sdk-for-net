@@ -4,19 +4,19 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using NUnit.Framework;
-using Azure.ResourceManager.Resources;
+using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.EventHubs.Models;
 using Azure.ResourceManager.EventHubs;
-using Azure.ResourceManager.Network;
-using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.EventHubs.Models;
 using Azure.ResourceManager.KeyVault;
 using Azure.ResourceManager.KeyVault.Models;
-using Azure.ResourceManager.Models;
-using Azure.Core;
 using Azure.ResourceManager.ManagedServiceIdentities;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.EventHubs.Tests
 {
@@ -633,9 +633,9 @@ namespace Azure.ResourceManager.EventHubs.Tests
                 DefaultAction = EventHubsNetworkRuleSetDefaultAction.Deny,
                 VirtualNetworkRules =
                 {
-                    new EventHubsNetworkRuleSetVirtualNetworkRules() { Subnet = new WritableSubResource(){Id=subnetId1} },
-                    new EventHubsNetworkRuleSetVirtualNetworkRules() { Subnet = new WritableSubResource(){Id=subnetId2} },
-                    new EventHubsNetworkRuleSetVirtualNetworkRules() { Subnet = new WritableSubResource(){Id=subnetId3} }
+                    new EventHubsNetworkRuleSetVirtualNetworkRules() { SubnetId = subnetId1 },
+                    new EventHubsNetworkRuleSetVirtualNetworkRules() { SubnetId = subnetId2 },
+                    new EventHubsNetworkRuleSetVirtualNetworkRules() { SubnetId = subnetId3 }
                 },
                 IPRules =
                     {

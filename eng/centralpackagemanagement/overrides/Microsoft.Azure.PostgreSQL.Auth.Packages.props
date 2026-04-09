@@ -1,0 +1,6 @@
+<Project>
+  <ItemGroup>
+    <!-- Most recent version that supports all Azure SDK targets -->
+    <PackageVersion Include="Npgsql" Version="8.0.7" />
+  </ItemGroup>
+</Project>

@@ -16,7 +16,7 @@ namespace Azure.Search.Documents.Perf.Infrastructure
     /// Base class for performance tests for the Azure Search service.
     /// </summary>
     /// <typeparam name="TOptions">An instance of type <see cref="PerfOptions"/>.</typeparam>
-    public abstract class SearchServiceTest<TOptions> : PerfTest<TOptions> where TOptions: PerfOptions
+    public abstract class SearchServiceTest<TOptions> : PerfTest<TOptions> where TOptions : PerfOptions
     {
         /// <summary>
         /// Name of the suggester.
@@ -66,7 +66,7 @@ namespace Azure.Search.Documents.Perf.Infrastructure
         /// <returns>Task representing the global cleanup work.</returns>
         public override async Task GlobalCleanupAsync()
         {
-            await _searchIndexClient.DeleteIndexAsync(_indexName);
+            await _searchIndexClient.DeleteIndexAsync(_indexName, CancellationToken.None);
         }
 
         /// <summary>

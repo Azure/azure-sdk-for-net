@@ -53,7 +53,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             uri.AppendPath(cloudHsmClusterName, true);
             uri.AppendPath("/restoreOperationStatus/", false);
             uri.AppendPath(jobId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

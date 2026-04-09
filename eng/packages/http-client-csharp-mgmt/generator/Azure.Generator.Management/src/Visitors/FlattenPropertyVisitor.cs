@@ -46,6 +46,7 @@ namespace Azure.Generator.Management.Visitors
 
         private void UpdateModelFactory(ModelFactoryProvider modelFactory)
         {
+            // First pass: update primary methods (replace 'properties' param with flattened params, fix body)
             foreach (var method in modelFactory.Methods)
             {
                 var returnType = method.Signature.ReturnType;
@@ -54,24 +55,193 @@ namespace Azure.Generator.Management.Visitors
                     UpdateModelFactoryMethod(method, propertyNameMap);
                 }
             }
+
+            // Second pass: fix backward-compat overloads whose bodies call primary methods
+            // via InvokeMethodExpression. The primary methods' parameter order may have changed
+            // after flattening, so positional arguments in overloads can be wrong.
+            FixBackwardCompatOverloads(modelFactory.Methods);
+        }
+
+        /// <summary>
+        /// Fixes backward-compat overload methods that call primary model factory methods.
+        /// After flattening reorders the primary method's parameters, the positional arguments
+        /// in these overloads may be in the wrong order. This method rebuilds the argument list
+        /// to match the primary method's current parameter order.
+        /// </summary>
+        internal static void FixBackwardCompatOverloads(IReadOnlyList<MethodProvider> methods)
+        {
+            // Build a lookup of primary methods by name
+            var primaryMethods = new Dictionary<string, MethodProvider>();
+            foreach (var method in methods)
+            {
+                if (!IsBackwardCompatMethod(method))
+                {
+                    var key = method.Signature.Name;
+                    // Use the one with the most parameters as the primary (latest) method
+                    if (!primaryMethods.TryGetValue(key, out var existing) || method.Signature.Parameters.Count > existing.Signature.Parameters.Count)
+                    {
+                        primaryMethods[key] = method;
+                    }
+                }
+            }
+
+            foreach (var method in methods)
+            {
+                if (!IsBackwardCompatMethod(method) || method.BodyStatements is null)
+                {
+                    continue;
+                }
+
+                // Look for backward-compat overloads that call another method via InvokeMethodExpression
+                var updatedBodyStatements = new List<MethodBodyStatement>();
+                var bodyUpdated = false;
+                foreach (var statement in method.BodyStatements)
+                {
+                    if (statement is ExpressionStatement expressionStatement
+                        && (expressionStatement.Expression as KeywordExpression)?.Expression is InvokeMethodExpression invokeExpression
+                        && (invokeExpression.MethodName ?? invokeExpression.MethodSignature?.Name) is string calledMethodName
+                        && primaryMethods.TryGetValue(calledMethodName, out var primaryMethod))
+                    {
+                        var primaryParams = primaryMethod.Signature.Parameters;
+                        var invokeArgs = invokeExpression.Arguments;
+                        var invokeSignatureParams = invokeExpression.MethodSignature?.Parameters;
+
+                        if (invokeSignatureParams is null || invokeSignatureParams.Count != invokeArgs.Count)
+                        {
+                            updatedBodyStatements.Add(statement);
+                            continue;
+                        }
+
+                        // Map: old param name -> argument expression
+                        var argsByName = new Dictionary<string, ValueExpression>(StringComparer.OrdinalIgnoreCase);
+                        for (int i = 0; i < invokeSignatureParams.Count; i++)
+                        {
+                            argsByName[invokeSignatureParams[i].Name] = invokeArgs[i];
+                        }
+
+                        // Rebuild arguments in the current primary method's parameter order,
+                        // tracking whether any reordering actually occurred.
+                        var newArgs = new List<ValueExpression>(primaryParams.Count);
+                        var changed = false;
+                        for (int i = 0; i < primaryParams.Count; i++)
+                        {
+                            if (argsByName.TryGetValue(primaryParams[i].Name, out var arg))
+                            {
+                                newArgs.Add(arg);
+                                if (!changed && (i >= invokeArgs.Count || !ReferenceEquals(arg, invokeArgs[i])))
+                                {
+                                    changed = true;
+                                }
+                            }
+                            else
+                            {
+                                // Parameter not in old call, use named default
+                                newArgs.Add(Snippet.PositionalReference(primaryParams[i], primaryParams[i].DefaultValue ?? Default));
+                                changed = true;
+                            }
+                        }
+
+                        if (changed)
+                        {
+                            updatedBodyStatements.Add(Return(new InvokeMethodExpression(null, primaryMethod.Signature, newArgs)));
+                            bodyUpdated = true;
+                        }
+                        else
+                        {
+                            updatedBodyStatements.Add(statement);
+                        }
+                    }
+                    else
+                    {
+                        updatedBodyStatements.Add(statement);
+                    }
+                }
+
+                if (bodyUpdated)
+                {
+                    method.Update(signature: method.Signature, bodyStatements: updatedBodyStatements);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Checks if a method is a backward-compatibility overload by looking for the
+        /// [EditorBrowsable(EditorBrowsableState.Never)] attribute on its signature.
+        /// </summary>
+        internal static bool IsBackwardCompatMethod(MethodProvider method)
+        {
+            return method.Signature.Attributes.Any(a =>
+                a.Type?.FrameworkType == typeof(System.ComponentModel.EditorBrowsableAttribute));
+        }
+
+        /// <summary>
+        /// Checks if a property has the [Obsolete] attribute. Properties marked obsolete
+        /// in custom code (partial classes) should be skipped during flattening to avoid
+        /// generating code that references obsolete members, which causes CS0618 warnings.
+        /// </summary>
+        internal static bool IsObsoleteProperty(PropertyProvider property)
+        {
+            return property.Attributes.Any(a =>
+                a.Type?.FrameworkType == typeof(System.ObsoleteAttribute));
         }
 
         private bool TryGetFlattenPropertyInfo(CSharpType returnType, [NotNullWhen(true)] out Dictionary<string, List<FlattenPropertyInfo>>? propertyNameMap)
         {
-            propertyNameMap = null;
-            if (_flattenedModelTypes.TryGetValue(returnType, out var value))
+            Dictionary<string, List<FlattenPropertyInfo>>? mergedPropertyNameMap = null;
+            var currentType = returnType;
+            var foundFlattenedProperties = false;
+            var visited = new HashSet<CSharpType>(new CSharpTypeNameComparer());
+
+            void MergeFlattenedProperties(Dictionary<string, List<FlattenPropertyInfo>> source)
             {
-                propertyNameMap = value;
-                return true;
+                mergedPropertyNameMap ??= new Dictionary<string, List<FlattenPropertyInfo>>();
+                foreach (var (parameterName, flattenInfoList) in source)
+                {
+                    if (mergedPropertyNameMap.TryGetValue(parameterName, out var existing))
+                    {
+                        existing.AddRange(flattenInfoList);
+                    }
+                    else
+                    {
+                        mergedPropertyNameMap[parameterName] = [.. flattenInfoList];
+                    }
+                }
+
+                foundFlattenedProperties = true;
             }
-            // handle the case where the return type is a derived type of a flattened model type
-            // we only deal with single level inheritance here to avoid complexity
-            else if (ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap.TryGetValue(returnType, out var typeProvider) && typeProvider is ModelProvider model && model.BaseType is not null && _flattenedModelTypes.TryGetValue(model.BaseType, out value))
+            // Walk up the inheritance chain because flattened properties can come from
+            // both the current leaf model and any ancestor model in the hierarchy.
+            ModelProvider? currentModel;
+            do
             {
-                propertyNameMap = value;
-                return true;
+                // Guard against cycles in the BaseType chain (e.g., ResourceData → ResourceData
+                // when a Custom/ partial class forces a plain model to inherit from ResourceData
+                // and KnownManagementTypes maps multiple TypeSpec types to the same CSharpType).
+                if (!visited.Add(currentType))
+                {
+                    break;
+                }
+
+                if (_flattenedModelTypes.TryGetValue(currentType, out var value))
+                {
+                    MergeFlattenedProperties(value);
+                }
+
+                currentModel = ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap.TryGetValue(currentType, out var typeProvider)
+                    && typeProvider is ModelProvider model
+                    && model.BaseType is not null
+                    ? model
+                    : null;
+
+                if (currentModel is not null)
+                {
+                    currentType = currentModel.BaseType!;
+                }
             }
-            return false;
+            while (currentModel is not null);
+
+            propertyNameMap = mergedPropertyNameMap;
+            return foundFlattenedProperties;
         }
 
         private void UpdateModelFactoryMethod(MethodProvider method, Dictionary<string, List<FlattenPropertyInfo>> propertyNameMap)
@@ -88,6 +258,12 @@ namespace Azure.Generator.Management.Visitors
                     {
                         // If the flattened property is a value type, we need to ensure that we handle the nullability correctly.
                         var propertyParameter = flattenedProperty.AsParameter;
+
+                        // Skip if we've already processed this parameter (can happen when multiple flattened properties share the same underlying parameter)
+                        if (parameterMap.ContainsKey(propertyParameter))
+                        {
+                            continue;
+                        }
 
                         // The same parameter is used in public constructor, we need a new copy for model factory method with different nullability.
                         var updatedParameter = new ParameterProvider(propertyParameter.Name, propertyParameter.Description, propertyParameter.Type.InputType, propertyParameter.DefaultValue,
@@ -131,11 +307,20 @@ namespace Azure.Generator.Management.Visitors
                                     // Flatten the property to the new instance parameters
                                     // If the property is null, we need to ensure that we create a new instance of the model type.
                                     // If the property is not null, we can use the existing value.
-                                    updatedInstanceParameters.Add(
-                                    new TernaryConditionalExpression(
-                                        BuildConditionExpression(value, parameterMap)!,
-                                        Default,
-                                        New.Instance(variable.Type, BuildConstructorParameters(variable.Type, value, parameterMap))));
+                                    var ctorParams = BuildConstructorParameters(variable.Type, value, parameterMap);
+                                    if (ctorParams is not null)
+                                    {
+                                        updatedInstanceParameters.Add(
+                                        new TernaryConditionalExpression(
+                                            BuildConditionExpression(value, parameterMap)!,
+                                            Default,
+                                            New.Instance(variable.Type, ctorParams)));
+                                    }
+                                    else
+                                    {
+                                        // Type not found in CSharpTypeMap, fall back to default to avoid referencing a removed parameter
+                                        updatedInstanceParameters.Add(Default);
+                                    }
                                 }
                                 else
                                 {
@@ -191,44 +376,37 @@ namespace Azure.Generator.Management.Visitors
         }
 
         // Use the flattened property as the parameter, if it is an overridden value type, we need to use the Value property.
-        private ValueExpression[] BuildConstructorParameters(CSharpType propertyType, List<FlattenPropertyInfo> flattenedProperties, IReadOnlyDictionary<ParameterProvider, ParameterProvider>? parameterMap = null, bool publicConstructor = false)
+        private ValueExpression[]? BuildConstructorParameters(CSharpType propertyType, List<FlattenPropertyInfo> flattenedProperties, IReadOnlyDictionary<ParameterProvider, ParameterProvider>? parameterMap = null, bool publicConstructor = false)
         {
-            var propertyModelType = ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap[propertyType] as ModelProvider;
+            if (!TryGetModelProvider(propertyType, out var propertyModelType))
+            {
+                return null;
+            }
             var constructorParameters = publicConstructor
-                ? propertyModelType!.Constructors.First(c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public)).Signature.Parameters
-                : propertyModelType!.FullConstructor.Signature.Parameters;
+                ? propertyModelType.Constructors.First(c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public)).Signature.Parameters
+                : propertyModelType.FullConstructor.Signature.Parameters;
 
             var parameters = new List<ValueExpression>();
             var additionalPropertyIndex = GetAdditionalPropertyIndex();
-            for (int flattenedPropertyIndex = 0, fullConstructorParameterIndex = 0; ; fullConstructorParameterIndex++)
+            var usedFlattenedPropertyIndices = new HashSet<int>();
+            for (int fullConstructorParameterIndex = 0; fullConstructorParameterIndex < constructorParameters.Count; fullConstructorParameterIndex++)
             {
-                // If we have processed all the flattened properties or all the constructor parameters, we can break the loop.
-                if (flattenedPropertyIndex >= flattenedProperties.Count || fullConstructorParameterIndex >= constructorParameters.Count)
-                {
-                    break;
-                }
-
                 if (fullConstructorParameterIndex == additionalPropertyIndex)
                 {
                     // If the additionalProperties parameter exists, we need to pass a new instance for it.
                     parameters.Add(Null);
-
-                    // If the additionalProperties parameter is the last parameter, we can break the loop.
-                    if (fullConstructorParameterIndex == constructorParameters.Count - 1)
-                    {
-                        break;
-                    }
-                    fullConstructorParameterIndex++;
+                    continue;
                 }
 
                 var constructorParameter = constructorParameters[fullConstructorParameterIndex];
                 var constructorParameterType = constructorParameter.Type;
 
-                // First, try to find a match by name (ignoring case) in remaining flattened properties
+                // First, try to find a match by name (ignoring case) in all unused flattened properties
                 var nameMatchIndex = -1;
-                for (int i = flattenedPropertyIndex; i < flattenedProperties.Count; i++)
+                for (int i = 0; i < flattenedProperties.Count; i++)
                 {
-                    if (string.Equals(constructorParameter.Name, flattenedProperties[i].FlattenedProperty.Name, StringComparison.OrdinalIgnoreCase))
+                    if (!usedFlattenedPropertyIndices.Contains(i) &&
+                        string.Equals(constructorParameter.Name, flattenedProperties[i].FlattenedProperty.Name, StringComparison.OrdinalIgnoreCase))
                     {
                         nameMatchIndex = i;
                         break;
@@ -252,18 +430,30 @@ namespace Azure.Generator.Management.Visitors
                         ? parameter.Property("Value")
                         : NeedNullCoalesce(parameter) ? parameter.NullCoalesce(New.Instance(ManagementClientGenerator.Instance.TypeFactory.ListInitializationType.MakeGenericType(parameter.Type.Arguments))).ToList() : parameter);
 
-                    // Move past the matched property
-                    flattenedPropertyIndex = nameMatchIndex + 1;
+                    usedFlattenedPropertyIndices.Add(nameMatchIndex);
                 }
                 else
                 {
-                    // No name match found, try to match by type with current flattened property
-                    var (flattenedProperty, _) = flattenedProperties[flattenedPropertyIndex];
-                    var flattenedPropertyType = flattenedProperty.Type;
-
-                    if (constructorParameterType.AreNamesEqual(flattenedPropertyType?.InputType) ||
-                        constructorParameterType.AreNamesEqual(flattenedPropertyType))
+                    // No name match found, try to match by type with unused flattened properties
+                    var typeMatchIndex = -1;
+                    for (int i = 0; i < flattenedProperties.Count; i++)
                     {
+                        if (usedFlattenedPropertyIndices.Contains(i))
+                        {
+                            continue;
+                        }
+                        var flattenedPropertyType = flattenedProperties[i].FlattenedProperty.Type;
+                        if (constructorParameterType.AreNamesEqual(flattenedPropertyType?.InputType) ||
+                            constructorParameterType.AreNamesEqual(flattenedPropertyType))
+                        {
+                            typeMatchIndex = i;
+                            break;
+                        }
+                    }
+
+                    if (typeMatchIndex >= 0)
+                    {
+                        var (flattenedProperty, _) = flattenedProperties[typeMatchIndex];
                         var propertyParameter = flattenedProperty.AsParameter;
                         var parameter = (parameterMap is not null && parameterMap.TryGetValue(propertyParameter, out var updatedParameter)
                             ? updatedParameter
@@ -275,15 +465,14 @@ namespace Azure.Generator.Management.Visitors
                             ? parameter.Property("Value")
                             : NeedNullCoalesce(parameter) ? parameter.NullCoalesce(New.Instance(ManagementClientGenerator.Instance.TypeFactory.ListInitializationType.MakeGenericType(parameter.Type.Arguments))).ToList() : parameter);
 
-                        // only increase flattenedPropertyIndex when we use a flattened property
-                        flattenedPropertyIndex++;
+                        usedFlattenedPropertyIndices.Add(typeMatchIndex);
                     }
                     else
                     {
                         // This is a nested flattened property case - the constructor parameter is a complex type
                         // We need to find the correct internal property by matching the constructor parameter name,
                         // then recursively collect all nested flattened properties for that specific internal property
-                        if (_flattenedModelTypes.TryGetValue(propertyType, out var propertyNameMap))
+                        if (TryGetFlattenedModelType(propertyType, out var propertyNameMap))
                         {
                             // Try to match the constructor parameter name with an internal property name
                             if (propertyNameMap.TryGetValue(constructorParameter.Name, out var list) && list.Count > 0)
@@ -297,13 +486,37 @@ namespace Azure.Generator.Management.Visitors
                                 if (innerFlattenedProperties.Count > 0)
                                 {
                                     var innerParameters = BuildConstructorParameters(constructorParameterType, innerFlattenedProperties, parameterMap);
-                                    parameters.Add(New.Instance(constructorParameterType, innerParameters));
+                                    if (innerParameters is not null)
+                                    {
+                                        parameters.Add(New.Instance(constructorParameterType, innerParameters));
+                                    }
+                                    else
+                                    {
+                                        parameters.Add(Default.CastTo(constructorParameterType));
+                                    }
                                 }
-                                // Note: If innerFlattenedProperties is empty, we skip adding this parameter.
-                                // This can happen when the nested model has no required properties, and all
-                                // flattened properties are optional. In such cases, the model factory will
-                                // not include this nested object in the constructor call.
+                                else
+                                {
+                                    // If innerFlattenedProperties is empty, we still need to add a parameter
+                                    // to maintain the correct parameter count for the constructor.
+                                    // This can happen when the nested model has no required properties, and all
+                                    // flattened properties are optional.
+                                    // Use Default.CastTo to handle both value types and reference types correctly.
+                                    parameters.Add(Default.CastTo(constructorParameterType));
+                                }
                             }
+                            else
+                            {
+                                // Constructor parameter not found in propertyNameMap, add default as parameter
+                                // Use Default.CastTo to handle both value types and reference types correctly.
+                                parameters.Add(Default.CastTo(constructorParameterType));
+                            }
+                        }
+                        else
+                        {
+                            // propertyType not found in _flattenedModelTypes, add default as parameter
+                            // Use Default.CastTo to handle both value types and reference types correctly.
+                            parameters.Add(Default.CastTo(constructorParameterType));
                         }
                     }
                 }
@@ -350,6 +563,14 @@ namespace Azure.Generator.Management.Visitors
             }
             _visitedModelTypes.Add(model.Type);
 
+            // Ensure base model types are flattened first so that inherited properties
+            // are in their final state (e.g., safe-flattened single-property models become internal)
+            // before this model processes them via GetAllProperties.
+            if (model.BaseModelProvider is ModelProvider baseModel && !_flattenedModelTypes.ContainsKey(baseModel.Type))
+            {
+                FlattenModel(baseModel);
+            }
+
             var isFlattenProperty = false;
             var isSafeFlatten = false;
             var propertyMap = new Dictionary<PropertyProvider, List<FlattenPropertyInfo>>();
@@ -357,7 +578,7 @@ namespace Azure.Generator.Management.Visitors
             {
                 // only flatten complex type properties
                 var propertyType = internalProperty.Type;
-                if (!(ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap.TryGetValue(propertyType, out var typeProvider) && typeProvider is ModelProvider modelProvider))
+                if (!TryGetModelProvider(propertyType, out var modelProvider))
                 {
                     continue;
                 }
@@ -371,7 +592,10 @@ namespace Azure.Generator.Management.Visitors
                 var innerProperties = PropertyHelpers.GetAllProperties(modelProvider);
 
                 // handle `@flattenProperty`
-                if (ManagementClientGenerator.Instance.OutputLibrary.OutputFlattenPropertyMap.TryGetValue(model, out var propertiesToFlatten) && propertiesToFlatten.Contains(internalProperty))
+                // Use name-based matching instead of reference equality because custom code
+                // may override the property, creating a different PropertyProvider instance
+                // than the one cached in OutputFlattenPropertyMap.
+                if (ManagementClientGenerator.Instance.OutputLibrary.OutputFlattenPropertyMap.TryGetValue(model, out var propertiesToFlatten) && propertiesToFlatten.Any(p => p.Name == internalProperty.Name))
                 {
                     isFlattenProperty = true;
                     PropertyFlatten(model, modelProvider, innerProperties, propertyMap, internalProperty);
@@ -380,22 +604,22 @@ namespace Azure.Generator.Management.Visitors
                 // safe flatten single property
                 else
                 {
-                    // only safe flatten single public property
-                    var publicPropertyCount = innerProperties.Count(p => p.Modifiers.HasFlag(MethodSignatureModifiers.Public));
+                    // only safe flatten single public property (excluding obsolete ones)
+                    var publicPropertyCount = innerProperties.Count(p => p.Modifiers.HasFlag(MethodSignatureModifiers.Public) && !IsObsoleteProperty(p));
                     if (publicPropertyCount != 1)
                     {
                         continue;
                     }
 
-                    // skip discriminator property
-                    if (internalProperty.IsDiscriminator)
+                    // skip if internal property type is base abstract discriminator model
+                    if (modelProvider.DeclarationModifiers.HasFlag(TypeSignatureModifiers.Abstract))
                     {
-                        ManagementClientGenerator.Instance.Emitter.ReportDiagnostic("general-warning", "Discriminator property should not be flattened.");
                         continue;
                     }
 
-                    // skip if internal property type is base abstract discriminator model
-                    if (modelProvider.DeclarationModifiers.HasFlag(TypeSignatureModifiers.Abstract))
+                    // skip if internal property type is a discriminator base model (has a discriminator property),
+                    // because flattening would make the base type internal, breaking the polymorphic hierarchy
+                    if (innerProperties.Any(p => p.IsDiscriminator))
                     {
                         continue;
                     }
@@ -422,6 +646,11 @@ namespace Azure.Generator.Management.Visitors
             foreach (var innerProperty in innerProperties)
             {
                 if (!innerProperty.Modifiers.HasFlag(MethodSignatureModifiers.Public))
+                {
+                    continue;
+                }
+                // skip properties marked [Obsolete] in custom code to avoid CS0618
+                if (IsObsoleteProperty(innerProperty))
                 {
                     continue;
                 }
@@ -485,8 +714,8 @@ namespace Azure.Generator.Management.Visitors
         private bool SafeFlatten(ModelProvider model, IReadOnlyList<PropertyProvider> innerProperties, Dictionary<PropertyProvider, List<FlattenPropertyInfo>> propertyMap, PropertyProvider internalProperty, ModelProvider modelProvider)
         {
             bool isFlattened;
-            // Get the single public property from innerProperties
-            var innerProperty = innerProperties.Single(p => p.Modifiers.HasFlag(MethodSignatureModifiers.Public));
+            // Get the single public non-obsolete property from innerProperties
+            var innerProperty = innerProperties.Single(p => p.Modifiers.HasFlag(MethodSignatureModifiers.Public) && !IsObsoleteProperty(p));
             isFlattened = true;
 
             // flatten the single property to public and associate it with the internal property
@@ -585,12 +814,19 @@ namespace Azure.Generator.Management.Visitors
 
             if (updated)
             {
-                // if the public constructor became parameterless, we need to remove it
                 if (updateParameters.Count == 0)
                 {
-                    var updatedConstructors = model.Constructors.ToList();
-                    updatedConstructors.Remove(publicConstructor);
-                    model.Update(constructors: updatedConstructors);
+                    // All flattened parameters were optional — the public constructor becomes
+                    // parameterless. This is valid: users create the object and set optional
+                    // properties via setters. Update the signature to remove the old parameters.
+                    publicConstructor.Signature.Update(parameters: updateParameters);
+                    publicConstructor.Update(signature: publicConstructor.Signature);
+
+                    // The serialization type may have already added an internal parameterless
+                    // constructor (for deserialization) before this visitor ran. Now that the
+                    // model has a public parameterless constructor, the internal one is redundant
+                    // and would cause CS0111. Remove it.
+                    RemoveDuplicateSerializationConstructor(model);
                 }
                 else
                 {
@@ -604,6 +840,26 @@ namespace Azure.Generator.Management.Visitors
         {
             // We only include the flattened property in the public constructor if it is required
             return flattenedProperty.WireInfo?.IsRequired == true;
+        }
+
+        /// <summary>
+        /// Removes the internal parameterless constructor from the serialization type if one exists.
+        /// The serialization type adds an internal parameterless constructor for deserialization
+        /// before the flatten visitor runs. When flattening makes the model's public constructor
+        /// parameterless, the serialization constructor becomes a duplicate and must be removed.
+        /// </summary>
+        private static void RemoveDuplicateSerializationConstructor(ModelProvider model)
+        {
+            foreach (var serializationType in model.SerializationProviders)
+            {
+                var ctors = serializationType.Constructors;
+                var parameterlessCtor = ctors.SingleOrDefault(c => !c.Signature.Parameters.Any());
+                if (parameterlessCtor is not null)
+                {
+                    var updatedCtors = ctors.Where(c => c != parameterlessCtor).ToList();
+                    serializationType.Update(constructors: updatedCtors);
+                }
+            }
         }
 
         private void UpdatePublicConstructorBody(ModelProvider model, Dictionary<string, List<FlattenPropertyInfo>> flattenPropertyMap, ConstructorProvider publicConstructor)
@@ -660,21 +916,38 @@ namespace Azure.Generator.Management.Visitors
                                 }
                             }
 
-                            // we should only construct the flattened properties in the public constructor when assigning to the internal property
+                            // Construct the nested flattened property model and assign it to the internal property.
+                            // When the nested model has a public constructor, use its parameters to match
+                            // flattened properties by name; otherwise fall back to FullConstructor for
+                            // Output-only models that only have internal constructors.
                             if (currentInternalProperty is not null)
                             {
                                 var properties = value.Where(x => flattenedProperties.Contains(x.FlattenedProperty)).ToList();
-                                var conditionExpression = BuildConditionExpression(properties, publicConstructor: true);
-                                var instanceExpression = New.Instance(variable.Type, BuildConstructorParameters(variable.Type, properties, publicConstructor: true));
-                                var assignmentExpression =
-                                    conditionExpression is null
-                                    ? instanceExpression
-                                    : new TernaryConditionalExpression(
-                                    conditionExpression,
-                                    Default,
-                                    instanceExpression
-                                    );
-                                updatedBodyStatements.Add(((MemberExpression)currentInternalProperty).Assign(assignmentExpression).Terminate());
+                                bool nestedHasPublicCtor = false;
+                                if (TryGetModelProvider(variable.Type, out var nestedModelType))
+                                {
+                                    nestedHasPublicCtor = nestedModelType.Constructors.Any(c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public));
+                                }
+                                var conditionExpression = BuildConditionExpression(properties, publicConstructor: nestedHasPublicCtor);
+                                var ctorParams = BuildConstructorParameters(variable.Type, properties, publicConstructor: nestedHasPublicCtor);
+                                if (ctorParams is not null)
+                                {
+                                    var instanceExpression = New.Instance(variable.Type, ctorParams);
+                                    var assignmentExpression =
+                                        conditionExpression is null
+                                        ? instanceExpression
+                                        : new TernaryConditionalExpression(
+                                        conditionExpression,
+                                        Default,
+                                        instanceExpression
+                                        );
+                                    updatedBodyStatements.Add(((MemberExpression)currentInternalProperty).Assign(assignmentExpression).Terminate());
+                                }
+                                else
+                                {
+                                    // Type not found in CSharpTypeMap; emit a safe assignment that does not reference the original parameter
+                                    updatedBodyStatements.Add(((MemberExpression)currentInternalProperty).Assign(Default).Terminate());
+                                }
                             }
                         }
                         else
@@ -689,6 +962,17 @@ namespace Azure.Generator.Management.Visitors
                 }
                 publicConstructor.Update(signature: publicConstructor.Signature, bodyStatements: updatedBodyStatements);
             }
+        }
+
+        private static bool TryGetModelProvider(CSharpType type, [NotNullWhen(true)] out ModelProvider? modelProvider)
+        {
+            if (ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap.TryGetValue(type, out var typeProvider) && typeProvider is ModelProvider model)
+            {
+                modelProvider = model;
+                return true;
+            }
+            modelProvider = null;
+            return false;
         }
 
         private class CSharpTypeNameComparer : IEqualityComparer<CSharpType>
@@ -719,6 +1003,32 @@ namespace Azure.Generator.Management.Visitors
 
         private bool IsOverriddenValueType(PropertyProvider flattenedProperty)
             => flattenedProperty.Type.IsValueType && !flattenedProperty.Type.IsNullable;
+
+        /// <summary>
+        /// Looks up the flattened model type map for the given type, also checking base types
+        /// when the type itself has no entry (handles inherited flattened properties).
+        /// </summary>
+        private bool TryGetFlattenedModelType(CSharpType type, [NotNullWhen(true)] out Dictionary<string, List<FlattenPropertyInfo>>? propertyNameMap)
+        {
+            if (_flattenedModelTypes.TryGetValue(type, out propertyNameMap))
+            {
+                return true;
+            }
+            // Check base types for inherited flattened properties
+            if (TryGetModelProvider(type, out var model))
+            {
+                var baseModel = model.BaseModelProvider;
+                while (baseModel is not null)
+                {
+                    if (_flattenedModelTypes.TryGetValue(baseModel.Type, out propertyNameMap))
+                    {
+                        return true;
+                    }
+                    baseModel = baseModel.BaseModelProvider;
+                }
+            }
+            return false;
+        }
 
         /// <summary>
         /// Recursively collects all nested flattened properties for a given internal property.

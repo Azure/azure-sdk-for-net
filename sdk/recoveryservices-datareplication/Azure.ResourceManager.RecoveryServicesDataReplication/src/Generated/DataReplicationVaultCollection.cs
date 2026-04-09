@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -295,7 +295,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataReplicationVaultData, DataReplicationVaultResource>(new VaultGetAllAsyncCollectionResultOfT(_vaultRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, continuationToken, context), data => new DataReplicationVaultResource(Client, data));
+            return new AsyncPageableWrapper<DataReplicationVaultData, DataReplicationVaultResource>(new VaultGetAllAsyncCollectionResultOfT(
+                _vaultRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                continuationToken,
+                context,
+                "DataReplicationVaultCollection.GetAll"), data => new DataReplicationVaultResource(Client, data));
         }
 
         /// <summary>
@@ -324,7 +330,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataReplicationVaultData, DataReplicationVaultResource>(new VaultGetAllCollectionResultOfT(_vaultRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, continuationToken, context), data => new DataReplicationVaultResource(Client, data));
+            return new PageableWrapper<DataReplicationVaultData, DataReplicationVaultResource>(new VaultGetAllCollectionResultOfT(
+                _vaultRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                continuationToken,
+                context,
+                "DataReplicationVaultCollection.GetAll"), data => new DataReplicationVaultResource(Client, data));
         }
 
         /// <summary>

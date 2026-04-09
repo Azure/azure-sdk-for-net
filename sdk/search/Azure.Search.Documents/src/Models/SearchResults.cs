@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -12,18 +13,14 @@ using System.Text.Json;
 using System.Text.Json.Serialization.Metadata;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.Serialization;
+using Azure.Search.Documents.Utilities;
 
 #pragma warning disable SA1402 // File may only contain a single type
 
 namespace Azure.Search.Documents.Models
 {
-    // Hide the untyped SearchDocumentsResult
-    [CodeGenModel("SearchDocumentsResult")]
-    internal partial class SearchDocumentsResult { }
-
     /// <summary>
     /// Response containing search results from an index.
     /// </summary>
@@ -140,7 +137,7 @@ namespace Azure.Search.Documents.Models
         /// <returns>The next page of SearchResults.</returns>
         internal abstract Task<SearchResults<T>> GetNextPageAsync(bool async, CancellationToken cancellationToken);
 
-        #pragma warning disable CS1572 // Not all parameters will be used depending on feature flags
+#pragma warning disable CS1572 // Not all parameters will be used depending on feature flags
         /// <summary>
         /// Deserialize the SearchResults.
         /// </summary>
@@ -161,7 +158,7 @@ namespace Azure.Search.Documents.Models
             ObjectSerializer serializer,
             bool async,
             CancellationToken cancellationToken)
-        #pragma warning restore CS1572
+#pragma warning restore CS1572
         {
             // Parse the JSON
             using JsonDocument doc = async ?
@@ -318,7 +315,7 @@ namespace Azure.Search.Documents.Models
                                             List<FacetResult> array = new List<FacetResult>();
                                             foreach (var item in property0.Value.EnumerateArray())
                                             {
-                                                array.Add(FacetResult.DeserializeFacetResult(item));
+                                                array.Add(FacetResult.DeserializeFacetResult(item, ModelReaderWriterOptions.Json));
                                             }
                                             dictionary.Add(property0.Name, array);
                                         }
@@ -332,7 +329,7 @@ namespace Azure.Search.Documents.Models
                                     facetValues[facetProperty.Name] = value;
                                 }
                             }
-                            facets.Add(new FacetResult(facetCount, facetAvg, facetMin, facetMax, facetSum, facetCardinality, searchFacets, facetValues));
+                            facets.Add(new FacetResult(facetCount, facetAvg, facetMin, facetMax, facetSum, facetCardinality, searchFacets, facetValues.ToBinaryDataDictionary()));
                         }
                         // Add the facet to the results
                         results.Facets[facetObject.Name] = facets;
@@ -344,7 +341,7 @@ namespace Azure.Search.Documents.Models
                 }
                 else if (prop.NameEquals(Constants.SearchNextPageKeyJson.EncodedUtf8Bytes))
                 {
-                    results.NextOptions = SearchOptions.DeserializeSearchOptions(prop.Value);
+                    results.NextOptions = SearchOptions.DeserializeSearchOptions(prop.Value, ModelReaderWriterOptions.Json);
                 }
                 else if (prop.NameEquals(Constants.SearchSemanticErrorReasonKeyJson.EncodedUtf8Bytes) &&
                     prop.Value.ValueKind != JsonValueKind.Null)
@@ -362,7 +359,7 @@ namespace Azure.Search.Documents.Models
                     List<QueryAnswerResult> answerResults = new List<QueryAnswerResult>();
                     foreach (JsonElement answerValue in prop.Value.EnumerateArray())
                     {
-                        answerResults.Add(QueryAnswerResult.DeserializeQueryAnswerResult(answerValue));
+                        answerResults.Add(QueryAnswerResult.DeserializeQueryAnswerResult(answerValue, ModelReaderWriterOptions.Json));
                     }
                     results.SemanticSearch.Answers = answerResults;
                 }
@@ -374,7 +371,7 @@ namespace Azure.Search.Documents.Models
                 if (prop.NameEquals(Constants.SearchDebugKeyJson.EncodedUtf8Bytes) &&
                     prop.Value.ValueKind != JsonValueKind.Null)
                 {
-                    results.DebugInfo = DebugInfo.DeserializeDebugInfo(prop.Value);
+                    results.DebugInfo = DebugInfo.DeserializeDebugInfo(prop.Value, ModelReaderWriterOptions.Json);
                 }
                 else if (prop.NameEquals(Constants.ValueKeyJson.EncodedUtf8Bytes))
                 {

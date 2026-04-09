@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         {
             if (id.ResourceType != MySqlFlexibleServerResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, MySqlFlexibleServerResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, MySqlFlexibleServerResource.ResourceType), nameof(id));
             }
         }
 
@@ -282,7 +282,13 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AdvancedThreatProtectionData, AdvancedThreatProtectionResource>(new AdvancedThreatProtectionSettingsGetAllAsyncCollectionResultOfT(_advancedThreatProtectionSettingsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new AdvancedThreatProtectionResource(Client, data));
+            return new AsyncPageableWrapper<AdvancedThreatProtectionData, AdvancedThreatProtectionResource>(new AdvancedThreatProtectionSettingsGetAllAsyncCollectionResultOfT(
+                _advancedThreatProtectionSettingsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "AdvancedThreatProtectionCollection.GetAll"), data => new AdvancedThreatProtectionResource(Client, data));
         }
 
         /// <summary>
@@ -310,7 +316,13 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AdvancedThreatProtectionData, AdvancedThreatProtectionResource>(new AdvancedThreatProtectionSettingsGetAllCollectionResultOfT(_advancedThreatProtectionSettingsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new AdvancedThreatProtectionResource(Client, data));
+            return new PageableWrapper<AdvancedThreatProtectionData, AdvancedThreatProtectionResource>(new AdvancedThreatProtectionSettingsGetAllCollectionResultOfT(
+                _advancedThreatProtectionSettingsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "AdvancedThreatProtectionCollection.GetAll"), data => new AdvancedThreatProtectionResource(Client, data));
         }
 
         /// <summary>

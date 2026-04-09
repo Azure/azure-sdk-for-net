@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.TrafficManager;
 
 namespace Azure.ResourceManager.TrafficManager.Models
 {
@@ -14,47 +15,67 @@ namespace Azure.ResourceManager.TrafficManager.Models
     public readonly partial struct TrafficManagerProfileMonitorStatus : IEquatable<TrafficManagerProfileMonitorStatus>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="TrafficManagerProfileMonitorStatus"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public TrafficManagerProfileMonitorStatus(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string CheckingEndpointsValue = "CheckingEndpoints";
         private const string OnlineValue = "Online";
         private const string DegradedValue = "Degraded";
         private const string DisabledValue = "Disabled";
         private const string InactiveValue = "Inactive";
 
-        /// <summary> CheckingEndpoints. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrafficManagerProfileMonitorStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public TrafficManagerProfileMonitorStatus(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the CheckingEndpoints. </summary>
         public static TrafficManagerProfileMonitorStatus CheckingEndpoints { get; } = new TrafficManagerProfileMonitorStatus(CheckingEndpointsValue);
-        /// <summary> Online. </summary>
+
+        /// <summary> Gets the Online. </summary>
         public static TrafficManagerProfileMonitorStatus Online { get; } = new TrafficManagerProfileMonitorStatus(OnlineValue);
-        /// <summary> Degraded. </summary>
+
+        /// <summary> Gets the Degraded. </summary>
         public static TrafficManagerProfileMonitorStatus Degraded { get; } = new TrafficManagerProfileMonitorStatus(DegradedValue);
-        /// <summary> Disabled. </summary>
+
+        /// <summary> Gets the Disabled. </summary>
         public static TrafficManagerProfileMonitorStatus Disabled { get; } = new TrafficManagerProfileMonitorStatus(DisabledValue);
-        /// <summary> Inactive. </summary>
+
+        /// <summary> Gets the Inactive. </summary>
         public static TrafficManagerProfileMonitorStatus Inactive { get; } = new TrafficManagerProfileMonitorStatus(InactiveValue);
+
         /// <summary> Determines if two <see cref="TrafficManagerProfileMonitorStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(TrafficManagerProfileMonitorStatus left, TrafficManagerProfileMonitorStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="TrafficManagerProfileMonitorStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(TrafficManagerProfileMonitorStatus left, TrafficManagerProfileMonitorStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="TrafficManagerProfileMonitorStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="TrafficManagerProfileMonitorStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator TrafficManagerProfileMonitorStatus(string value) => new TrafficManagerProfileMonitorStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="TrafficManagerProfileMonitorStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator TrafficManagerProfileMonitorStatus?(string value) => value == null ? null : new TrafficManagerProfileMonitorStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is TrafficManagerProfileMonitorStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(TrafficManagerProfileMonitorStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

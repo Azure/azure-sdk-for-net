@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetByDisconnectedOperationRequest(Guid subscriptionId, string resourceGroupName, string name, string filter, int? top, int? skip, RequestContext context)
+        internal HttpMessage CreateGetByDisconnectedOperationRequest(Guid subscriptionId, string resourceGroupName, string name, string filter, int? maxCount, int? skip, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -52,14 +52,17 @@ namespace Azure.ResourceManager.DisconnectedOperations
             uri.AppendPath("/providers/Microsoft.Edge/disconnectedOperations/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/images", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (filter != null)
             {
                 uri.AppendQuery("$filter", filter, true);
             }
-            if (top != null)
+            if (maxCount != null)
             {
-                uri.AppendQuery("$top", TypeFormatters.ConvertToString(top), true);
+                uri.AppendQuery("$top", TypeFormatters.ConvertToString(maxCount), true);
             }
             if (skip != null)
             {
@@ -73,10 +76,21 @@ namespace Azure.ResourceManager.DisconnectedOperations
             return message;
         }
 
-        internal HttpMessage CreateNextGetByDisconnectedOperationRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string name, string filter, int? top, int? skip, RequestContext context)
+        internal HttpMessage CreateNextGetByDisconnectedOperationRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string name, string filter, int? maxCount, int? skip, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -97,7 +111,10 @@ namespace Azure.ResourceManager.DisconnectedOperations
             uri.AppendPath(name, true);
             uri.AppendPath("/images/", false);
             uri.AppendPath(imageName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -119,7 +136,10 @@ namespace Azure.ResourceManager.DisconnectedOperations
             uri.AppendPath("/images/", false);
             uri.AppendPath(imageName, true);
             uri.AppendPath("/listDownloadUri", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

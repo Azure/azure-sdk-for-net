@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Logic.Tests
             string assemblyDefinitionName = SessionRecording.GenerateAssetName("assemblyDefinition");
             var assemblyDefinition = await CreateAssemblyDefinition(assemblyDefinitionName);
             Assert.IsNotNull(assemblyDefinition);
-            Assert.AreEqual(assemblyDefinitionName,assemblyDefinition.Data.Name);
+            Assert.AreEqual(assemblyDefinitionName, assemblyDefinition.Data.Name);
         }
 
         [RecordedTest]

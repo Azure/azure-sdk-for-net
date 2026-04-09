@@ -1,17 +1,18 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Synapse.Tests.Helpers;
 using NUnit.Framework;
-using System.Linq;
-using System;
-using System.IO;
 
 namespace Azure.ResourceManager.Synapse.Tests
 {
+    [Ignore("Test recordings need re-recording with current Storage SDK. See https://github.com/Azure/azure-sdk-for-net/issues/57594")]
     public class WorkspaceOperationTests : SynapseManagementTestBase
     {
         public WorkspaceOperationTests(bool async) : base(async)

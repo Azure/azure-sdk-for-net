@@ -14,8 +14,8 @@ This sample demonstrates how to create an Index for use as an Agent's AI Search 
 Start by initializing the necessary local variables based on preset environment variables, and initialize the `AIProjectClient`.
 
 ```C# Snippet:AI_Projects_AzureAISearchInitializeProjectClient
-var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-var modelDeploymentName = Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+var endpoint = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+var modelDeploymentName = Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
 var indexName = Environment.GetEnvironmentVariable("INDEX_NAME");
 var indexVersion = Environment.GetEnvironmentVariable("INDEX_VERSION");
 var aiSearchIndexName = Environment.GetEnvironmentVariable("AI_SEARCH_INDEX_NAME");

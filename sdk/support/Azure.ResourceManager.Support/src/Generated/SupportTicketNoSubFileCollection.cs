@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Support
 {
@@ -24,51 +25,49 @@ namespace Azure.ResourceManager.Support
     /// </summary>
     public partial class SupportTicketNoSubFileCollection : ArmCollection, IEnumerable<SupportTicketNoSubFileResource>, IAsyncEnumerable<SupportTicketNoSubFileResource>
     {
-        private readonly ClientDiagnostics _supportTicketNoSubFileFilesNoSubscriptionClientDiagnostics;
-        private readonly FilesNoSubscriptionRestOperations _supportTicketNoSubFileFilesNoSubscriptionRestClient;
+        private readonly ClientDiagnostics _supportTicketNoSubFileClientDiagnostics;
+        private readonly SupportTicketNoSubFile _supportTicketNoSubFileRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="SupportTicketNoSubFileCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of SupportTicketNoSubFileCollection for mocking. </summary>
         protected SupportTicketNoSubFileCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SupportTicketNoSubFileCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SupportTicketNoSubFileCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SupportTicketNoSubFileCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _supportTicketNoSubFileFilesNoSubscriptionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Support", SupportTicketNoSubFileResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(SupportTicketNoSubFileResource.ResourceType, out string supportTicketNoSubFileFilesNoSubscriptionApiVersion);
-            _supportTicketNoSubFileFilesNoSubscriptionRestClient = new FilesNoSubscriptionRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, supportTicketNoSubFileFilesNoSubscriptionApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(SupportTicketNoSubFileResource.ResourceType, out string supportTicketNoSubFileApiVersion);
+            _supportTicketNoSubFileClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Support", SupportTicketNoSubFileResource.ResourceType.Namespace, Diagnostics);
+            _supportTicketNoSubFileRestClient = new SupportTicketNoSubFile(_supportTicketNoSubFileClientDiagnostics, Pipeline, Endpoint, supportTicketNoSubFileApiVersion ?? "2025-06-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != "Microsoft.Support/fileWorkspaces")
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, "Microsoft.Support/fileWorkspaces"), nameof(id));
+            if (id.ResourceType != TenantFileWorkspaceResource.ResourceType)
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, TenantFileWorkspaceResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Creates a new file under a workspace.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}/files/{fileName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}/files/{fileName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FilesNoSubscription_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> FilesNoSubscription_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SupportTicketNoSubFileResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,23 +75,31 @@ namespace Azure.ResourceManager.Support
         /// <param name="fileName"> The name of the FileDetails. </param>
         /// <param name="data"> Create file object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="fileName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<SupportTicketNoSubFileResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string fileName, SupportFileDetailData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _supportTicketNoSubFileFilesNoSubscriptionClientDiagnostics.CreateScope("SupportTicketNoSubFileCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _supportTicketNoSubFileClientDiagnostics.CreateScope("SupportTicketNoSubFileCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _supportTicketNoSubFileFilesNoSubscriptionRestClient.CreateAsync(Id.Name, fileName, data, cancellationToken).ConfigureAwait(false);
-                var uri = _supportTicketNoSubFileFilesNoSubscriptionRestClient.CreateCreateRequestUri(Id.Name, fileName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SupportArmOperation<SupportTicketNoSubFileResource>(Response.FromValue(new SupportTicketNoSubFileResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _supportTicketNoSubFileRestClient.CreateCreateRequest(Id.Name, fileName, SupportFileDetailData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SupportFileDetailData> response = Response.FromValue(SupportFileDetailData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SupportArmOperation<SupportTicketNoSubFileResource> operation = new SupportArmOperation<SupportTicketNoSubFileResource>(Response.FromValue(new SupportTicketNoSubFileResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -106,20 +113,16 @@ namespace Azure.ResourceManager.Support
         /// Creates a new file under a workspace.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}/files/{fileName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}/files/{fileName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FilesNoSubscription_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> FilesNoSubscription_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SupportTicketNoSubFileResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -127,23 +130,31 @@ namespace Azure.ResourceManager.Support
         /// <param name="fileName"> The name of the FileDetails. </param>
         /// <param name="data"> Create file object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="fileName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<SupportTicketNoSubFileResource> CreateOrUpdate(WaitUntil waitUntil, string fileName, SupportFileDetailData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _supportTicketNoSubFileFilesNoSubscriptionClientDiagnostics.CreateScope("SupportTicketNoSubFileCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _supportTicketNoSubFileClientDiagnostics.CreateScope("SupportTicketNoSubFileCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _supportTicketNoSubFileFilesNoSubscriptionRestClient.Create(Id.Name, fileName, data, cancellationToken);
-                var uri = _supportTicketNoSubFileFilesNoSubscriptionRestClient.CreateCreateRequestUri(Id.Name, fileName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SupportArmOperation<SupportTicketNoSubFileResource>(Response.FromValue(new SupportTicketNoSubFileResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _supportTicketNoSubFileRestClient.CreateCreateRequest(Id.Name, fileName, SupportFileDetailData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SupportFileDetailData> response = Response.FromValue(SupportFileDetailData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SupportArmOperation<SupportTicketNoSubFileResource> operation = new SupportArmOperation<SupportTicketNoSubFileResource>(Response.FromValue(new SupportTicketNoSubFileResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -157,38 +168,42 @@ namespace Azure.ResourceManager.Support
         /// Returns details of a specific file in a work space.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}/files/{fileName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}/files/{fileName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FilesNoSubscription_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> FilesNoSubscription_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SupportTicketNoSubFileResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="fileName"> The name of the FileDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="fileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<SupportTicketNoSubFileResource>> GetAsync(string fileName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
 
-            using var scope = _supportTicketNoSubFileFilesNoSubscriptionClientDiagnostics.CreateScope("SupportTicketNoSubFileCollection.Get");
+            using DiagnosticScope scope = _supportTicketNoSubFileClientDiagnostics.CreateScope("SupportTicketNoSubFileCollection.Get");
             scope.Start();
             try
             {
-                var response = await _supportTicketNoSubFileFilesNoSubscriptionRestClient.GetAsync(Id.Name, fileName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _supportTicketNoSubFileRestClient.CreateGetRequest(Id.Name, fileName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SupportFileDetailData> response = Response.FromValue(SupportFileDetailData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SupportTicketNoSubFileResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -202,38 +217,42 @@ namespace Azure.ResourceManager.Support
         /// Returns details of a specific file in a work space.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}/files/{fileName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}/files/{fileName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FilesNoSubscription_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> FilesNoSubscription_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SupportTicketNoSubFileResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="fileName"> The name of the FileDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="fileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<SupportTicketNoSubFileResource> Get(string fileName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
 
-            using var scope = _supportTicketNoSubFileFilesNoSubscriptionClientDiagnostics.CreateScope("SupportTicketNoSubFileCollection.Get");
+            using DiagnosticScope scope = _supportTicketNoSubFileClientDiagnostics.CreateScope("SupportTicketNoSubFileCollection.Get");
             scope.Start();
             try
             {
-                var response = _supportTicketNoSubFileFilesNoSubscriptionRestClient.Get(Id.Name, fileName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _supportTicketNoSubFileRestClient.CreateGetRequest(Id.Name, fileName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SupportFileDetailData> response = Response.FromValue(SupportFileDetailData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SupportTicketNoSubFileResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -247,50 +266,44 @@ namespace Azure.ResourceManager.Support
         /// Lists all the Files information under a workspace for an Azure subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}/files</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}/files. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FilesNoSubscription_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> FilesNoSubscription_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SupportTicketNoSubFileResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SupportTicketNoSubFileResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SupportTicketNoSubFileResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SupportTicketNoSubFileResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _supportTicketNoSubFileFilesNoSubscriptionRestClient.CreateListRequest(Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _supportTicketNoSubFileFilesNoSubscriptionRestClient.CreateListNextPageRequest(nextLink, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SupportTicketNoSubFileResource(Client, SupportFileDetailData.DeserializeSupportFileDetailData(e)), _supportTicketNoSubFileFilesNoSubscriptionClientDiagnostics, Pipeline, "SupportTicketNoSubFileCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<SupportFileDetailData, SupportTicketNoSubFileResource>(new SupportTicketNoSubFileGetAllAsyncCollectionResultOfT(_supportTicketNoSubFileRestClient, Id.Name, context, "SupportTicketNoSubFileCollection.GetAll"), data => new SupportTicketNoSubFileResource(Client, data));
         }
 
         /// <summary>
         /// Lists all the Files information under a workspace for an Azure subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}/files</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}/files. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FilesNoSubscription_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> FilesNoSubscription_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SupportTicketNoSubFileResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -298,45 +311,61 @@ namespace Azure.ResourceManager.Support
         /// <returns> A collection of <see cref="SupportTicketNoSubFileResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SupportTicketNoSubFileResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _supportTicketNoSubFileFilesNoSubscriptionRestClient.CreateListRequest(Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _supportTicketNoSubFileFilesNoSubscriptionRestClient.CreateListNextPageRequest(nextLink, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SupportTicketNoSubFileResource(Client, SupportFileDetailData.DeserializeSupportFileDetailData(e)), _supportTicketNoSubFileFilesNoSubscriptionClientDiagnostics, Pipeline, "SupportTicketNoSubFileCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<SupportFileDetailData, SupportTicketNoSubFileResource>(new SupportTicketNoSubFileGetAllCollectionResultOfT(_supportTicketNoSubFileRestClient, Id.Name, context, "SupportTicketNoSubFileCollection.GetAll"), data => new SupportTicketNoSubFileResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}/files/{fileName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}/files/{fileName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FilesNoSubscription_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> FilesNoSubscription_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SupportTicketNoSubFileResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="fileName"> The name of the FileDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="fileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string fileName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
 
-            using var scope = _supportTicketNoSubFileFilesNoSubscriptionClientDiagnostics.CreateScope("SupportTicketNoSubFileCollection.Exists");
+            using DiagnosticScope scope = _supportTicketNoSubFileClientDiagnostics.CreateScope("SupportTicketNoSubFileCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _supportTicketNoSubFileFilesNoSubscriptionRestClient.GetAsync(Id.Name, fileName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _supportTicketNoSubFileRestClient.CreateGetRequest(Id.Name, fileName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SupportFileDetailData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SupportFileDetailData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SupportFileDetailData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -350,36 +379,50 @@ namespace Azure.ResourceManager.Support
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}/files/{fileName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}/files/{fileName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FilesNoSubscription_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> FilesNoSubscription_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SupportTicketNoSubFileResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="fileName"> The name of the FileDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="fileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string fileName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
 
-            using var scope = _supportTicketNoSubFileFilesNoSubscriptionClientDiagnostics.CreateScope("SupportTicketNoSubFileCollection.Exists");
+            using DiagnosticScope scope = _supportTicketNoSubFileClientDiagnostics.CreateScope("SupportTicketNoSubFileCollection.Exists");
             scope.Start();
             try
             {
-                var response = _supportTicketNoSubFileFilesNoSubscriptionRestClient.Get(Id.Name, fileName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _supportTicketNoSubFileRestClient.CreateGetRequest(Id.Name, fileName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SupportFileDetailData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SupportFileDetailData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SupportFileDetailData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -393,38 +436,54 @@ namespace Azure.ResourceManager.Support
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}/files/{fileName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}/files/{fileName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FilesNoSubscription_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> FilesNoSubscription_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SupportTicketNoSubFileResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="fileName"> The name of the FileDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="fileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<SupportTicketNoSubFileResource>> GetIfExistsAsync(string fileName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
 
-            using var scope = _supportTicketNoSubFileFilesNoSubscriptionClientDiagnostics.CreateScope("SupportTicketNoSubFileCollection.GetIfExists");
+            using DiagnosticScope scope = _supportTicketNoSubFileClientDiagnostics.CreateScope("SupportTicketNoSubFileCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _supportTicketNoSubFileFilesNoSubscriptionRestClient.GetAsync(Id.Name, fileName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _supportTicketNoSubFileRestClient.CreateGetRequest(Id.Name, fileName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SupportFileDetailData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SupportFileDetailData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SupportFileDetailData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SupportTicketNoSubFileResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SupportTicketNoSubFileResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -438,38 +497,54 @@ namespace Azure.ResourceManager.Support
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}/files/{fileName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}/files/{fileName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FilesNoSubscription_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> FilesNoSubscription_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SupportTicketNoSubFileResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="fileName"> The name of the FileDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="fileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<SupportTicketNoSubFileResource> GetIfExists(string fileName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
 
-            using var scope = _supportTicketNoSubFileFilesNoSubscriptionClientDiagnostics.CreateScope("SupportTicketNoSubFileCollection.GetIfExists");
+            using DiagnosticScope scope = _supportTicketNoSubFileClientDiagnostics.CreateScope("SupportTicketNoSubFileCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _supportTicketNoSubFileFilesNoSubscriptionRestClient.Get(Id.Name, fileName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _supportTicketNoSubFileRestClient.CreateGetRequest(Id.Name, fileName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SupportFileDetailData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SupportFileDetailData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SupportFileDetailData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SupportTicketNoSubFileResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SupportTicketNoSubFileResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -489,6 +564,7 @@ namespace Azure.ResourceManager.Support
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<SupportTicketNoSubFileResource> IAsyncEnumerable<SupportTicketNoSubFileResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             if (id.ResourceType != SubscriptionResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
             }
         }
 
@@ -193,13 +193,14 @@ namespace Azure.ResourceManager.OracleDatabase
                 _dbVersionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 _location,
-                dbSystemShape.ToString(),
+                dbSystemShape?.ToString(),
                 dbSystemId,
-                storageManagement.ToString(),
+                storageManagement?.ToString(),
                 isUpgradeSupported,
                 isDatabaseSoftwareImageSupported,
-                shapeFamily.ToString(),
-                context), data => new OracleDBVersionResource(Client, data));
+                shapeFamily?.ToString(),
+                context,
+                "OracleDBVersionCollection.GetAll"), data => new OracleDBVersionResource(Client, data));
         }
 
         /// <summary>
@@ -237,13 +238,14 @@ namespace Azure.ResourceManager.OracleDatabase
                 _dbVersionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 _location,
-                dbSystemShape.ToString(),
+                dbSystemShape?.ToString(),
                 dbSystemId,
-                storageManagement.ToString(),
+                storageManagement?.ToString(),
                 isUpgradeSupported,
                 isDatabaseSoftwareImageSupported,
-                shapeFamily.ToString(),
-                context), data => new OracleDBVersionResource(Client, data));
+                shapeFamily?.ToString(),
+                context,
+                "OracleDBVersionCollection.GetAll"), data => new OracleDBVersionResource(Client, data));
         }
 
         /// <summary>
