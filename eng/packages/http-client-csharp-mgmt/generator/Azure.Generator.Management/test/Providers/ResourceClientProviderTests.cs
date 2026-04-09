@@ -307,5 +307,54 @@ namespace Azure.Generator.Management.Tests.Providers
             Assert.AreEqual("ServiceFabricClusterCollection", collectionProvider!.Name,
                 "Collection class should use the model's client name, not the metadata resourceName");
         }
+
+        /// <summary>
+        /// Verifies that when two resources share the same name (e.g., ClusterVersions having both
+        /// 'get' and 'getByEnvironment' operations), the MockableArmClient does not generate
+        /// duplicate Get{ResourceName}(ResourceIdentifier) methods, which would cause CS0111.
+        /// </summary>
+        [TestCase]
+        public void Verify_DuplicateResourceNames_NoDuplicateMethods()
+        {
+            var (client, models) = InputResourceData.ClientWithDuplicateResourceNames();
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
+
+            // Find the MockableArmClientProvider
+            var mockableArmClient = plugin.Object.OutputLibrary.TypeProviders
+                .FirstOrDefault(p => p.Name.StartsWith("Mockable") && p.Name.EndsWith("ArmClient"));
+            Assert.NotNull(mockableArmClient, "MockableArmClient should be generated");
+
+            // Check for duplicate method signatures in MockableArmClient
+            var methodSignatures = mockableArmClient!.Methods
+                .Select(m => $"{m.Signature.Name}({string.Join(", ", m.Signature.Parameters.Select(p => p.Type.Name))})")
+                .ToList();
+
+            var duplicates = methodSignatures
+                .GroupBy(s => s)
+                .Where(g => g.Count() > 1)
+                .Select(g => g.Key)
+                .ToList();
+
+            Assert.IsEmpty(duplicates,
+                $"MockableArmClient should not have duplicate methods. Found duplicates: {string.Join(", ", duplicates)}");
+
+            // Also verify the Extensions class has no duplicates
+            var extensionProvider = plugin.Object.OutputLibrary.TypeProviders
+                .FirstOrDefault(p => p.Name.EndsWith("Extensions"));
+            Assert.NotNull(extensionProvider, "ExtensionProvider should be generated");
+
+            var extensionMethodSignatures = extensionProvider!.Methods
+                .Select(m => $"{m.Signature.Name}({string.Join(", ", m.Signature.Parameters.Select(p => p.Type.Name))})")
+                .ToList();
+
+            var extensionDuplicates = extensionMethodSignatures
+                .GroupBy(s => s)
+                .Where(g => g.Count() > 1)
+                .Select(g => g.Key)
+                .ToList();
+
+            Assert.IsEmpty(extensionDuplicates,
+                $"Extensions should not have duplicate methods. Found duplicates: {string.Join(", ", extensionDuplicates)}");
+        }
     }
 }

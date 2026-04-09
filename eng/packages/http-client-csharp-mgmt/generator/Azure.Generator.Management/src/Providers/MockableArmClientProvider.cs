@@ -41,10 +41,20 @@ namespace Azure.Generator.Management.Providers
         {
             var methods = new List<MethodProvider>(_resources.Count + _nonResourceMethods.Count * 2);
 
+            // Track resource names to avoid generating duplicate Get{ResourceName}(ResourceIdentifier) methods.
+            // Duplicate names can occur when multiple resources share the same model and name
+            // (e.g., ClusterVersions having both 'get' and 'getByEnvironment' operations with
+            // @@clientLocation set to the same value, creating two resource entries with the same name).
+            var processedResourceNames = new HashSet<string>();
+
             // Build methods for extension resources
             foreach (var resource in _resources)
             {
-                methods.Add(BuildGetResourceIdMethodForResource(resource));
+                // Only generate the Get{ResourceName}(ResourceIdentifier) method once per unique resource name
+                if (processedResourceNames.Add(resource.Name))
+                {
+                    methods.Add(BuildGetResourceIdMethodForResource(resource));
+                }
                 if (resource.IsExtensionResource)
                 {
                     if (resource.IsSingleton)

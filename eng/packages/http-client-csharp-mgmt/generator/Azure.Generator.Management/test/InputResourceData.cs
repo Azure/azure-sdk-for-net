@@ -618,6 +618,80 @@ namespace Azure.Generator.Management.Tests.Common
             return (client, [responseModel]);
         }
 
+        /// <summary>
+        /// Creates a client with two resources sharing the same model and name but with different resource paths.
+        /// This simulates the scenario where an operation group like ClusterVersions has both
+        /// 'get' and 'getByEnvironment' operations with @@clientLocation set to the same value,
+        /// creating two resource entries with the same name ("ClusterVersion") but different paths.
+        /// </summary>
+        public static (InputClient InputClient, IReadOnlyList<InputModelType> InputModels) ClientWithDuplicateResourceNames()
+        {
+            const string TestClientName = "TestClient";
+            const string ResourceModelName = "ClusterVersion";
+            var sharedModel = InputFactory.Model(ResourceModelName,
+                        usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json,
+                        properties:
+                        [
+                            InputFactory.Property("id", InputPrimitiveType.String, isReadOnly: true),
+                            InputFactory.Property("type", InputPrimitiveType.String, isReadOnly: true),
+                            InputFactory.Property("name", InputPrimitiveType.String, isReadOnly: true),
+                        ],
+                        decorators: []);
+            var responseType = InputFactory.OperationResponse(statusCodes: [200], bodytype: sharedModel);
+            var uuidType = new InputPrimitiveType(InputPrimitiveTypeKind.String, "uuid", "Azure.Core.uuid");
+
+            // Common parameters
+            var subsIdOpParameter = InputFactory.PathParameter("subscriptionId", uuidType, isRequired: true);
+            var subscriptionIdParameter = InputFactory.MethodParameter("subscriptionId", uuidType, location: InputRequestLocation.Path);
+
+            // First resource: .../versions/{versionName}
+            var rgOpParameter1 = InputFactory.PathParameter("resourceGroupName", InputPrimitiveType.String, isRequired: true);
+            var resourceGroupParameter1 = InputFactory.MethodParameter("resourceGroupName", InputPrimitiveType.String, location: InputRequestLocation.Path);
+            var versionOpParameter1 = InputFactory.PathParameter("versionName", InputPrimitiveType.String, isRequired: true);
+            var versionParameter1 = InputFactory.MethodParameter("versionName", InputPrimitiveType.String, location: InputRequestLocation.Path, isRequired: true);
+            var getOp1 = InputFactory.Operation(name: "get", responses: [responseType],
+                parameters: [subsIdOpParameter, rgOpParameter1, versionOpParameter1],
+                path: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/versions/{versionName}");
+            var getMethod1 = InputFactory.BasicServiceMethod("get", getOp1,
+                parameters: [versionParameter1, subscriptionIdParameter, resourceGroupParameter1],
+                crossLanguageDefinitionId: Guid.NewGuid().ToString());
+
+            // Second resource: .../environments/{environment}/versions/{versionName} (different path, same model and name)
+            var rgOpParameter2 = InputFactory.PathParameter("resourceGroupName", InputPrimitiveType.String, isRequired: true);
+            var resourceGroupParameter2 = InputFactory.MethodParameter("resourceGroupName", InputPrimitiveType.String, location: InputRequestLocation.Path);
+            var envOpParameter = InputFactory.PathParameter("environment", InputPrimitiveType.String, isRequired: true);
+            var envParameter = InputFactory.MethodParameter("environment", InputPrimitiveType.String, location: InputRequestLocation.Path, isRequired: true);
+            var versionOpParameter2 = InputFactory.PathParameter("versionName", InputPrimitiveType.String, isRequired: true);
+            var versionParameter2 = InputFactory.MethodParameter("versionName", InputPrimitiveType.String, location: InputRequestLocation.Path, isRequired: true);
+            var getOp2 = InputFactory.Operation(name: "getByEnvironment", responses: [responseType],
+                parameters: [subsIdOpParameter, rgOpParameter2, envOpParameter, versionOpParameter2],
+                path: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/environments/{environment}/versions/{versionName}");
+            var getMethod2 = InputFactory.BasicServiceMethod("getByEnvironment", getOp2,
+                parameters: [versionParameter2, envParameter, subscriptionIdParameter, resourceGroupParameter2],
+                crossLanguageDefinitionId: Guid.NewGuid().ToString());
+
+            var resourceIdPattern1 = "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/versions/{versionName}";
+            var resourceIdPattern2 = "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/environments/{environment}/versions/{versionName}";
+
+            // Both resources share the same model and name - this is what causes duplicate methods
+            var armProviderDecorator = BuildArmProviderSchemaMultiResource([
+                new ResourceSchemaInput(sharedModel,
+                    [new ResourceMethod(ResourceOperationKind.Read, getMethod1, getOp1.Path, ResourceScope.ResourceGroup, resourceIdPattern1, null!)],
+                    resourceIdPattern1, "Microsoft.ServiceFabric/versions", null, ResourceScope.ResourceGroup, ResourceModelName, null),
+                new ResourceSchemaInput(sharedModel,
+                    [new ResourceMethod(ResourceOperationKind.Read, getMethod2, getOp2.Path, ResourceScope.ResourceGroup, resourceIdPattern2, null!)],
+                    resourceIdPattern2, "Microsoft.ServiceFabric/environments/versions", null, ResourceScope.ResourceGroup, ResourceModelName, null)
+            ]);
+
+            var client = InputFactory.Client(
+                TestClientName,
+                methods: [getMethod1, getMethod2],
+                decorators: [armProviderDecorator],
+                crossLanguageDefinitionId: $"Test.{TestClientName}");
+
+            return (client, [sharedModel]);
+        }
+
         private static InputDecoratorInfo BuildArmProviderSchema(InputModelType resourceModel, IReadOnlyList<ResourceMethod> methods, string resourceIdPattern, string resourceType, string? singletonResourceName, ResourceScope resourceScope, string? resourceName)
         {
             return BuildArmProviderSchemaMultiResource([
