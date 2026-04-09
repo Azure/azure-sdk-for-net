@@ -27,17 +27,22 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="errorInternal"> The channel event error. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="messageId"> The message id. </param>
+        /// <param name="toBSUId"> Optional. The BSUID of the recipient. </param>
         /// <param name="status"> The updated message status. </param>
         /// <param name="channelKind"> The updated message channel type. </param>
-        internal AcsMessageDeliveryStatusUpdatedEventData(string @from, string to, DateTimeOffset? receivedTimestamp, AcsMessageChannelEventError errorInternal, IDictionary<string, BinaryData> additionalBinaryDataProperties, string messageId, AcsMessageDeliveryStatus? status, AcsMessageChannelKind? channelKind) : base(@from, to, receivedTimestamp, errorInternal, additionalBinaryDataProperties)
+        internal AcsMessageDeliveryStatusUpdatedEventData(string @from, string to, DateTimeOffset? receivedTimestamp, AcsMessageChannelEventError errorInternal, IDictionary<string, BinaryData> additionalBinaryDataProperties, string messageId, string toBSUId, AcsMessageDeliveryStatus? status, AcsMessageChannelKind? channelKind) : base(@from, to, receivedTimestamp, errorInternal, additionalBinaryDataProperties)
         {
             MessageId = messageId;
+            ToBSUId = toBSUId;
             Status = status;
             ChannelKind = channelKind;
         }
 
         /// <summary> The message id. </summary>
         public string MessageId { get; }
+
+        /// <summary> Optional. The BSUID of the recipient. </summary>
+        public string ToBSUId { get; }
 
         /// <summary> The updated message status. </summary>
         public AcsMessageDeliveryStatus? Status { get; }

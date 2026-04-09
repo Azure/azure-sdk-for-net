@@ -30,6 +30,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="content"> Optional. The message content. </param>
         /// <param name="messageId"> Optional. Message ID. Format is Guid as string. </param>
+        /// <param name="fromBSUId"> Optional. The BSUID of the sender. </param>
         /// <param name="channelKind"> Required. The message channel type. </param>
         /// <param name="messageType"> Required. Whatsapp message type. </param>
         /// <param name="mediaContent"> Optional. The received message media content. </param>
@@ -37,10 +38,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="context"> Optional. The received message context. </param>
         /// <param name="button"> Optional. The received message button content. </param>
         /// <param name="interactiveContent"> Optional. The received message interactive content. </param>
-        internal AcsMessageReceivedEventData(string @from, string to, DateTimeOffset? receivedTimestamp, AcsMessageChannelEventError errorInternal, IDictionary<string, BinaryData> additionalBinaryDataProperties, string content, string messageId, AcsMessageChannelKind? channelKind, string messageType, AcsMessageMediaContent mediaContent, AcsMessageReactionContent reaction, AcsMessageContext context, AcsMessageButtonContent button, AcsMessageInteractiveContent interactiveContent) : base(@from, to, receivedTimestamp, errorInternal, additionalBinaryDataProperties)
+        internal AcsMessageReceivedEventData(string @from, string to, DateTimeOffset? receivedTimestamp, AcsMessageChannelEventError errorInternal, IDictionary<string, BinaryData> additionalBinaryDataProperties, string content, string messageId, string fromBSUId, AcsMessageChannelKind? channelKind, string messageType, AcsMessageMediaContent mediaContent, AcsMessageReactionContent reaction, AcsMessageContext context, AcsMessageButtonContent button, AcsMessageInteractiveContent interactiveContent) : base(@from, to, receivedTimestamp, errorInternal, additionalBinaryDataProperties)
         {
             Content = content;
             MessageId = messageId;
+            FromBSUId = fromBSUId;
             ChannelKind = channelKind;
             MessageType = messageType;
             MediaContent = mediaContent;
@@ -55,6 +57,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         /// <summary> Optional. Message ID. Format is Guid as string. </summary>
         public string MessageId { get; }
+
+        /// <summary> Optional. The BSUID of the sender. </summary>
+        public string FromBSUId { get; }
 
         /// <summary> Required. The message channel type. </summary>
         public AcsMessageChannelKind? ChannelKind { get; }

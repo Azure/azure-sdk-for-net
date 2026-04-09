@@ -29,10 +29,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="version"> The version of the thread. </param>
         /// <param name="deletedByCommunicationIdentifier"> The communication identifier of the user who deleted the thread. </param>
         /// <param name="deleteTime"> The deletion time of the thread. </param>
-        internal AcsChatThreadDeletedEventData(string transactionId, string threadId, IDictionary<string, BinaryData> additionalBinaryDataProperties, DateTimeOffset? createTime, long? version, CommunicationIdentifierModel deletedByCommunicationIdentifier, DateTimeOffset? deleteTime) : base(transactionId, threadId, additionalBinaryDataProperties, createTime, version)
+        /// <param name="reason"> The chat thread deletion reason. </param>
+        internal AcsChatThreadDeletedEventData(string transactionId, string threadId, IDictionary<string, BinaryData> additionalBinaryDataProperties, DateTimeOffset? createTime, long? version, CommunicationIdentifierModel deletedByCommunicationIdentifier, DateTimeOffset? deleteTime, AcsChatThreadDeletedReasonType? reason) : base(transactionId, threadId, additionalBinaryDataProperties, createTime, version)
         {
             DeletedByCommunicationIdentifier = deletedByCommunicationIdentifier;
             DeleteTime = deleteTime;
+            Reason = reason;
         }
 
         /// <summary> The communication identifier of the user who deleted the thread. </summary>
@@ -40,5 +42,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         /// <summary> The deletion time of the thread. </summary>
         public DateTimeOffset? DeleteTime { get; }
+
+        /// <summary> The chat thread deletion reason. </summary>
+        public AcsChatThreadDeletedReasonType? Reason { get; }
     }
 }

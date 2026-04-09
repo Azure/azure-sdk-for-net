@@ -86,6 +86,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WritePropertyName("messageId"u8);
                 writer.WriteStringValue(MessageId);
             }
+            if (Optional.IsDefined(ToBSUId))
+            {
+                writer.WritePropertyName("toBSUID"u8);
+                writer.WriteStringValue(ToBSUId);
+            }
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
@@ -129,6 +134,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             AcsMessageChannelEventError errorInternal = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string messageId = default;
+            string toBSUId = default;
             AcsMessageDeliveryStatus? status = default;
             AcsMessageChannelKind? channelKind = default;
             foreach (var prop in element.EnumerateObject())
@@ -166,6 +172,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     messageId = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("toBSUID"u8))
+                {
+                    toBSUId = prop.Value.GetString();
+                    continue;
+                }
                 if (prop.NameEquals("status"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -196,6 +207,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 errorInternal,
                 additionalBinaryDataProperties,
                 messageId,
+                toBSUId,
                 status,
                 channelKind);
         }
