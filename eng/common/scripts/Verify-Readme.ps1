@@ -82,7 +82,7 @@ if ($RepoRoot) {
 Write-Host "ScanPath=$ScanPaths"
 
 Write-Host "Installing setup tools and DocWarden"
-Write-Host "pip install setuptools wheel  --index-url $FeedUrl --quiet"
+Write-Host "pip install setuptools wheel --quiet --index-url $FeedUrl"
 pip install setuptools wheel --quiet --index-url $FeedUrl
 if ($LASTEXITCODE -ne 0) {
   LogError "pip install setuptools wheel --quiet --index-url $FeedUrl failed with exit code $LASTEXITCODE"
