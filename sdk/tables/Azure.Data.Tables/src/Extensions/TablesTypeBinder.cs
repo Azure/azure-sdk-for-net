@@ -85,19 +85,155 @@ namespace Azure.Data.Tables
             }
             else if (typeof(T) == typeof(long))
             {
-                value = (T)(object)long.Parse(propertyValue as string, CultureInfo.InvariantCulture);
+                if (propertyValue is long l)
+                {
+                    value = (T)(object)l;
+                }
+                else if (propertyValue is int i)
+                {
+                    value = (T)(object)(long)i;
+                }
+                else if (propertyValue is short sh)
+                {
+                    value = (T)(object)(long)sh;
+                }
+                else if (propertyValue is byte b)
+                {
+                    value = (T)(object)(long)b;
+                }
+                else if (propertyValue is sbyte sb)
+                {
+                    value = (T)(object)(long)sb;
+                }
+                else if (propertyValue is string str)
+                {
+                    value = (T)(object)long.Parse(str, CultureInfo.InvariantCulture);
+                }
+                else if (propertyValue != null)
+                {
+                    throw new InvalidOperationException(
+                        $"Cannot convert value of type '{propertyValue.GetType().Name}' to Int64. " +
+                        "Azure Table may have stored an incompatible numeric type. " +
+                        $"Expected value: {propertyValue}");
+                }
+                else
+                {
+                    value = default;
+                }
             }
             else if (typeof(T) == typeof(long?))
             {
-                value = (T)(object)long.Parse(propertyValue as string, CultureInfo.InvariantCulture);
+                if (propertyValue is long l)
+                {
+                    value = (T)(object)(long?)l;
+                }
+                else if (propertyValue is int i)
+                {
+                    value = (T)(object)(long?)i;
+                }
+                else if (propertyValue is short sh)
+                {
+                    value = (T)(object)(long?)sh;
+                }
+                else if (propertyValue is byte b)
+                {
+                    value = (T)(object)(long?)b;
+                }
+                else if (propertyValue is sbyte sb)
+                {
+                    value = (T)(object)(long?)sb;
+                }
+                else if (propertyValue is string str)
+                {
+                    value = (T)(object)(long?)long.Parse(str, CultureInfo.InvariantCulture);
+                }
+                else if (propertyValue != null)
+                {
+                    throw new InvalidOperationException(
+                        $"Cannot convert value of type '{propertyValue.GetType().Name}' to Nullable<Int64>. " +
+                        "Azure Table may have stored an incompatible numeric type. " +
+                        $"Expected value: {propertyValue}");
+                }
+                else
+                {
+                    value = default;
+                }
             }
             else if (typeof(T) == typeof(ulong))
             {
-                value = (T)(object)ulong.Parse(propertyValue as string, CultureInfo.InvariantCulture);
+                if (propertyValue is ulong ul)
+                {
+                    value = (T)(object)ul;
+                }
+                else if (propertyValue is uint ui)
+                {
+                    value = (T)(object)(ulong)ui;
+                }
+                else if (propertyValue is ushort us)
+                {
+                    value = (T)(object)(ulong)us;
+                }
+                else if (propertyValue is byte b)
+                {
+                    value = (T)(object)(ulong)b;
+                }
+                else if (propertyValue is long l && l >= 0)
+                {
+                    value = (T)(object)(ulong)l;
+                }
+                else if (propertyValue is string s)
+                {
+                    value = (T)(object)ulong.Parse(s, CultureInfo.InvariantCulture);
+                }
+                else if (propertyValue != null)
+                {
+                    throw new InvalidOperationException(
+                        $"Cannot convert value of type '{propertyValue.GetType().Name}' to UInt64. " +
+                        "Azure Table may have stored an incompatible numeric type. " +
+                        $"Expected value: {propertyValue}");
+                }
+                else
+                {
+                    value = default;
+                }
             }
             else if (typeof(T) == typeof(ulong?))
             {
-                value = (T)(object)ulong.Parse(propertyValue as string, CultureInfo.InvariantCulture);
+                if (propertyValue is ulong ul)
+                {
+                    value = (T)(object)(ulong?)ul;
+                }
+                else if (propertyValue is uint ui)
+                {
+                    value = (T)(object)(ulong?)ui;
+                }
+                else if (propertyValue is ushort us)
+                {
+                    value = (T)(object)(ulong?)us;
+                }
+                else if (propertyValue is byte b)
+                {
+                    value = (T)(object)(ulong?)b;
+                }
+                else if (propertyValue is long l && l >= 0)
+                {
+                    value = (T)(object)(ulong?)l;
+                }
+                else if (propertyValue is string s)
+                {
+                    value = (T)(object)(ulong?)ulong.Parse(s, CultureInfo.InvariantCulture);
+                }
+                else if (propertyValue != null)
+                {
+                    throw new InvalidOperationException(
+                        $"Cannot convert value of type '{propertyValue.GetType().Name}' to Nullable<UInt64>. " +
+                        "Azure Table may have stored an incompatible numeric type. " +
+                        $"Expected value: {propertyValue}");
+                }
+                else
+                {
+                    value = default;
+                }
             }
             else if (typeof(T) == typeof(double))
             {
