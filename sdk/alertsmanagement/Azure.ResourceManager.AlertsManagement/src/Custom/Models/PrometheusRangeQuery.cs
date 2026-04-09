@@ -5,8 +5,6 @@ using System;
 using System.Collections.Generic;
 using Microsoft.TypeSpec.Generator.Customizations;
 
-using EnrichmentType = Azure.ResourceManager.AlertsManagement.Models.Type;
-
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
     // Workaround for generator bug: same multi-level discriminated hierarchy issue as
@@ -18,7 +16,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     public partial class PrometheusRangeQuery
     {
         internal PrometheusRangeQuery(string title, string description, AlertsManagementStatus status, string linkToApi, IEnumerable<string> datasources, string grafanaExplorePath, string query, DateTimeOffset start, DateTimeOffset end, string step)
-            : base(title, description, status, EnrichmentType.PrometheusRangeQuery, linkToApi, datasources, grafanaExplorePath, query)
+            : base(title, description, status, AlertsManagementType.PrometheusRangeQuery, linkToApi, datasources, grafanaExplorePath, query)
         {
             Start = start;
             End = end;

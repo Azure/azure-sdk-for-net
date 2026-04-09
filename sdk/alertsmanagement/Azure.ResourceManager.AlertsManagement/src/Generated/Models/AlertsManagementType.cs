@@ -12,7 +12,7 @@ using Azure.ResourceManager.AlertsManagement;
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
     /// <summary> The enrichment type. </summary>
-    internal readonly partial struct Type : IEquatable<Type>
+    internal readonly partial struct AlertsManagementType : IEquatable<AlertsManagementType>
     {
         private readonly string _value;
         /// <summary> PrometheusInstantQuery. </summary>
@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <summary> PrometheusEnrichmentItem. </summary>
         private const string PrometheusEnrichmentItemValue = "PrometheusEnrichmentItem";
 
-        /// <summary> Initializes a new instance of <see cref="Type"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlertsManagementType"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public Type(string value)
+        public AlertsManagementType(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -33,38 +33,38 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         }
 
         /// <summary> PrometheusInstantQuery. </summary>
-        public static Type PrometheusInstantQuery { get; } = new Type(PrometheusInstantQueryValue);
+        public static AlertsManagementType PrometheusInstantQuery { get; } = new AlertsManagementType(PrometheusInstantQueryValue);
 
         /// <summary> PrometheusRangeQuery. </summary>
-        public static Type PrometheusRangeQuery { get; } = new Type(PrometheusRangeQueryValue);
+        public static AlertsManagementType PrometheusRangeQuery { get; } = new AlertsManagementType(PrometheusRangeQueryValue);
 
         /// <summary> PrometheusEnrichmentItem. </summary>
-        public static Type PrometheusEnrichmentItem { get; } = new Type(PrometheusEnrichmentItemValue);
+        public static AlertsManagementType PrometheusEnrichmentItem { get; } = new AlertsManagementType(PrometheusEnrichmentItemValue);
 
-        /// <summary> Determines if two <see cref="Type"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="AlertsManagementType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(Type left, Type right) => left.Equals(right);
+        public static bool operator ==(AlertsManagementType left, AlertsManagementType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="Type"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="AlertsManagementType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(Type left, Type right) => !left.Equals(right);
+        public static bool operator !=(AlertsManagementType left, AlertsManagementType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="Type"/>. </summary>
+        /// <summary> Converts a string to a <see cref="AlertsManagementType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator Type(string value) => new Type(value);
+        public static implicit operator AlertsManagementType(string value) => new AlertsManagementType(value);
 
-        /// <summary> Converts a string to a <see cref="Type"/>. </summary>
+        /// <summary> Converts a string to a <see cref="AlertsManagementType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator Type?(string value) => value == null ? null : new Type(value);
+        public static implicit operator AlertsManagementType?(string value) => value == null ? null : new AlertsManagementType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is Type other && Equals(other);
+        public override bool Equals(object obj) => obj is AlertsManagementType other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(Type other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(AlertsManagementType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

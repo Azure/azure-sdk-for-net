@@ -6,8 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.TypeSpec.Generator.Customizations;
 
-using EnrichmentType = Azure.ResourceManager.AlertsManagement.Models.Type;
-
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
     // Workaround for generator bug: the TypeSpec generator produces incorrect constructor base()
@@ -15,14 +13,14 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     // → PrometheusInstantQuery/PrometheusRangeQuery). The generated constructors pass
     // AlertsManagementStatus where the base expects Type (the discriminator), causing CS1503 errors.
     // This custom code suppresses the broken constructors and provides correct ones that pass the
-    // discriminator value (EnrichmentType.PrometheusEnrichmentItem) to the base class.
+    // discriminator value (AlertsManagementType.PrometheusEnrichmentItem) to the base class.
     // See: https://github.com/Azure/azure-sdk-for-net/issues/57452
     [CodeGenSuppress("PrometheusEnrichmentItem", typeof(string), typeof(string), typeof(AlertsManagementStatus), typeof(string), typeof(IEnumerable<string>), typeof(string), typeof(string))]
-    [CodeGenSuppress("PrometheusEnrichmentItem", typeof(string), typeof(string), typeof(AlertsManagementStatus), typeof(EnrichmentType), typeof(string), typeof(IEnumerable<string>), typeof(string), typeof(string))]
+    [CodeGenSuppress("PrometheusEnrichmentItem", typeof(string), typeof(string), typeof(AlertsManagementStatus), typeof(AlertsManagementType), typeof(string), typeof(IEnumerable<string>), typeof(string), typeof(string))]
     public partial class PrometheusEnrichmentItem
     {
         internal PrometheusEnrichmentItem(string title, string description, AlertsManagementStatus status, string linkToApi, IEnumerable<string> datasources, string grafanaExplorePath, string query)
-            : base(title, description, status, EnrichmentType.PrometheusEnrichmentItem)
+            : base(title, description, status, AlertsManagementType.PrometheusEnrichmentItem)
         {
             LinkToApi = linkToApi;
             Datasources = datasources.ToList();
@@ -30,8 +28,8 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             Query = query;
         }
 
-        private protected PrometheusEnrichmentItem(string title, string description, AlertsManagementStatus status, EnrichmentType @type, string linkToApi, IEnumerable<string> datasources, string grafanaExplorePath, string query)
-            : base(title, description, status, @type)
+        private protected PrometheusEnrichmentItem(string title, string description, AlertsManagementStatus status, AlertsManagementType alertEnrichmentType, string linkToApi, IEnumerable<string> datasources, string grafanaExplorePath, string query)
+            : base(title, description, status, alertEnrichmentType)
         {
             LinkToApi = linkToApi;
             Datasources = datasources.ToList();

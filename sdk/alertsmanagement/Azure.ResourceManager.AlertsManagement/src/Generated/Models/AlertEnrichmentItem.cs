@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <param name="title"> The enrichment title. </param>
         /// <param name="description"> The enrichment description. </param>
         /// <param name="status"> The status of the evaluation of the enrichment. </param>
-        /// <param name="type"> The enrichment type. </param>
-        private protected AlertEnrichmentItem(string title, string description, AlertsManagementStatus status, Type @type)
+        /// <param name="alertEnrichmentType"> The enrichment type. </param>
+        private protected AlertEnrichmentItem(string title, string description, AlertsManagementStatus status, AlertsManagementType alertEnrichmentType)
         {
             Title = title;
             Description = description;
             Status = status;
-            Type = @type;
+            AlertEnrichmentType = alertEnrichmentType;
         }
 
         /// <summary> Initializes a new instance of <see cref="AlertEnrichmentItem"/>. </summary>
@@ -37,15 +37,15 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <param name="description"> The enrichment description. </param>
         /// <param name="status"> The status of the evaluation of the enrichment. </param>
         /// <param name="errorMessage"> The error message. Will be present only if the status is 'Failed'. </param>
-        /// <param name="type"> The enrichment type. </param>
+        /// <param name="alertEnrichmentType"> The enrichment type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AlertEnrichmentItem(string title, string description, AlertsManagementStatus status, string errorMessage, Type @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AlertEnrichmentItem(string title, string description, AlertsManagementStatus status, string errorMessage, AlertsManagementType alertEnrichmentType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Title = title;
             Description = description;
             Status = status;
             ErrorMessage = errorMessage;
-            Type = @type;
+            AlertEnrichmentType = alertEnrichmentType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -62,6 +62,6 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public string ErrorMessage { get; }
 
         /// <summary> The enrichment type. </summary>
-        internal Type Type { get; set; }
+        internal AlertsManagementType AlertEnrichmentType { get; set; }
     }
 }

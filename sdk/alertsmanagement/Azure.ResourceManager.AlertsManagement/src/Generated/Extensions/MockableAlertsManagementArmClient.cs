@@ -65,24 +65,14 @@ namespace Azure.ResourceManager.AlertsManagement.Mocking
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="groupby"> This parameter allows the result set to be grouped by input fields. For example, groupby=severity,alertstate. </param>
-        /// <param name="includeSmartGroupsCount"> Include count of the SmartGroups as part of the summary. Default value is 'false'. </param>
-        /// <param name="targetResource"> Filter by target resource( which is full ARM ID) Default value is select all. </param>
-        /// <param name="targetResourceType"> Filter by target resource type. Default value is select all. </param>
-        /// <param name="targetResourceGroup"> Filter by target resource group name. Default value is select all. </param>
-        /// <param name="monitorService"> Filter by monitor service which generates the alert instance. Default value is select all. </param>
-        /// <param name="monitorCondition"> Filter by monitor condition which is either 'Fired' or 'Resolved'. Default value is to select all. </param>
-        /// <param name="severity"> Filter by severity.  Default value is select all. </param>
-        /// <param name="alertState"> Filter by state of the alert instance. Default value is to select all. </param>
-        /// <param name="alertRule"> Filter by specific alert rule.  Default value is to select all. </param>
-        /// <param name="timeRange"> Filter by time range by below listed values. Default value is 1 day. </param>
-        /// <param name="customTimeRange"> Filter by custom time range in the format &lt;start-time&gt;/&lt;end-time&gt;  where time is in (ISO-8601 format)'. Permissible values is within 30 days from  query time. Either timeRange or customTimeRange could be used but not both. Default is none. </param>
+        /// <param name="options"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="options"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ServiceAlertSummary>> GetSummaryAsync(ResourceIdentifier scope, AlertsSummaryGroupByField groupby, bool? includeSmartGroupsCount = default, string targetResource = default, string targetResourceType = default, string targetResourceGroup = default, MonitorServiceSourceForAlert? monitorService = default, MonitorCondition? monitorCondition = default, ServiceAlertSeverity? severity = default, ServiceAlertState? alertState = default, string alertRule = default, TimeRangeFilter? timeRange = default, string customTimeRange = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceAlertSummary>> GetSummaryAsync(ResourceIdentifier scope, SubscriptionResourceGetServiceAlertSummaryOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(options, nameof(options));
 
             using DiagnosticScope scope0 = ServiceAlertClientDiagnostics.CreateScope("MockableAlertsManagementArmClient.GetSummary");
             scope0.Start();
@@ -92,7 +82,7 @@ namespace Azure.ResourceManager.AlertsManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ServiceAlertRestClient.CreateGetSummaryRequest(scope.ToString(), groupby.ToString(), includeSmartGroupsCount, targetResource, targetResourceType, targetResourceGroup, monitorService?.ToString(), monitorCondition?.ToString(), severity?.ToString(), alertState?.ToString(), alertRule, timeRange?.ToString(), customTimeRange, context);
+                HttpMessage message = ServiceAlertRestClient.CreateGetSummaryRequest(scope.ToString(), default, default, default, default, default, default, default, default, default, default, default, default, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ServiceAlertSummary> response = Response.FromValue(ServiceAlertSummary.FromResponse(result), result);
                 if (response.Value == null)
@@ -126,24 +116,14 @@ namespace Azure.ResourceManager.AlertsManagement.Mocking
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="groupby"> This parameter allows the result set to be grouped by input fields. For example, groupby=severity,alertstate. </param>
-        /// <param name="includeSmartGroupsCount"> Include count of the SmartGroups as part of the summary. Default value is 'false'. </param>
-        /// <param name="targetResource"> Filter by target resource( which is full ARM ID) Default value is select all. </param>
-        /// <param name="targetResourceType"> Filter by target resource type. Default value is select all. </param>
-        /// <param name="targetResourceGroup"> Filter by target resource group name. Default value is select all. </param>
-        /// <param name="monitorService"> Filter by monitor service which generates the alert instance. Default value is select all. </param>
-        /// <param name="monitorCondition"> Filter by monitor condition which is either 'Fired' or 'Resolved'. Default value is to select all. </param>
-        /// <param name="severity"> Filter by severity.  Default value is select all. </param>
-        /// <param name="alertState"> Filter by state of the alert instance. Default value is to select all. </param>
-        /// <param name="alertRule"> Filter by specific alert rule.  Default value is to select all. </param>
-        /// <param name="timeRange"> Filter by time range by below listed values. Default value is 1 day. </param>
-        /// <param name="customTimeRange"> Filter by custom time range in the format &lt;start-time&gt;/&lt;end-time&gt;  where time is in (ISO-8601 format)'. Permissible values is within 30 days from  query time. Either timeRange or customTimeRange could be used but not both. Default is none. </param>
+        /// <param name="options"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="options"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ServiceAlertSummary> GetSummary(ResourceIdentifier scope, AlertsSummaryGroupByField groupby, bool? includeSmartGroupsCount = default, string targetResource = default, string targetResourceType = default, string targetResourceGroup = default, MonitorServiceSourceForAlert? monitorService = default, MonitorCondition? monitorCondition = default, ServiceAlertSeverity? severity = default, ServiceAlertState? alertState = default, string alertRule = default, TimeRangeFilter? timeRange = default, string customTimeRange = default, CancellationToken cancellationToken = default)
+        public virtual Response<ServiceAlertSummary> GetSummary(ResourceIdentifier scope, SubscriptionResourceGetServiceAlertSummaryOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            Argument.AssertNotNull(options, nameof(options));
 
             using DiagnosticScope scope0 = ServiceAlertClientDiagnostics.CreateScope("MockableAlertsManagementArmClient.GetSummary");
             scope0.Start();
@@ -153,7 +133,7 @@ namespace Azure.ResourceManager.AlertsManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ServiceAlertRestClient.CreateGetSummaryRequest(scope.ToString(), groupby.ToString(), includeSmartGroupsCount, targetResource, targetResourceType, targetResourceGroup, monitorService?.ToString(), monitorCondition?.ToString(), severity?.ToString(), alertState?.ToString(), alertRule, timeRange?.ToString(), customTimeRange, context);
+                HttpMessage message = ServiceAlertRestClient.CreateGetSummaryRequest(scope.ToString(), default, default, default, default, default, default, default, default, default, default, default, default, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ServiceAlertSummary> response = Response.FromValue(ServiceAlertSummary.FromResponse(result), result);
                 if (response.Value == null)

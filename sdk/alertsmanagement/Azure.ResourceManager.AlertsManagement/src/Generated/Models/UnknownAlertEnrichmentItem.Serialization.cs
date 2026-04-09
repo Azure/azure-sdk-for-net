@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             string description = default;
             AlertsManagementStatus status = default;
             string errorMessage = default;
-            Type @type = default;
+            AlertsManagementType alertEnrichmentType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new Type(prop.Value.GetString());
+                    alertEnrichmentType = new AlertsManagementType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 description,
                 status,
                 errorMessage,
-                @type,
+                alertEnrichmentType,
                 additionalBinaryDataProperties);
         }
     }

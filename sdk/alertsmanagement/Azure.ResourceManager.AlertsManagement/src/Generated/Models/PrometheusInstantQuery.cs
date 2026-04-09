@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <param name="description"> The enrichment description. </param>
         /// <param name="status"> The status of the evaluation of the enrichment. </param>
         /// <param name="errorMessage"> The error message. Will be present only if the status is 'Failed'. </param>
-        /// <param name="type"> The enrichment type. </param>
+        /// <param name="alertEnrichmentType"> The enrichment type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="linkToApi"> Link to Prometheus query API (Url format). </param>
         /// <param name="datasources"> An array of the azure monitor workspace resource ids. </param>
         /// <param name="grafanaExplorePath"> Partial link to the Grafana explore API. </param>
         /// <param name="query"> The Prometheus expression query. </param>
         /// <param name="time"> The date and the time of the evaluation. </param>
-        internal PrometheusInstantQuery(string title, string description, AlertsManagementStatus status, string errorMessage, Type @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string linkToApi, IList<string> datasources, string grafanaExplorePath, string query, string time) : base(title, description, status, errorMessage, @type, additionalBinaryDataProperties, linkToApi, datasources, grafanaExplorePath, query)
+        internal PrometheusInstantQuery(string title, string description, AlertsManagementStatus status, string errorMessage, AlertsManagementType alertEnrichmentType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string linkToApi, IList<string> datasources, string grafanaExplorePath, string query, string time) : base(title, description, status, errorMessage, alertEnrichmentType, additionalBinaryDataProperties, linkToApi, datasources, grafanaExplorePath, query)
         {
             Time = time;
         }

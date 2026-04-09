@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <param name="description"> The enrichment description. </param>
         /// <param name="status"> The status of the evaluation of the enrichment. </param>
         /// <param name="errorMessage"> The error message. Will be present only if the status is 'Failed'. </param>
-        /// <param name="type"> The enrichment type. </param>
+        /// <param name="alertEnrichmentType"> The enrichment type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="linkToApi"> Link to Prometheus query API (Url format). </param>
         /// <param name="datasources"> An array of the azure monitor workspace resource ids. </param>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <param name="start"> The start evaluation date and time in ISO8601 format. </param>
         /// <param name="end"> The end evaluation date and time in ISO8601 format. </param>
         /// <param name="step"> Query resolution step width in ISO8601 format. </param>
-        internal PrometheusRangeQuery(string title, string description, AlertsManagementStatus status, string errorMessage, Type @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string linkToApi, IList<string> datasources, string grafanaExplorePath, string query, DateTimeOffset start, DateTimeOffset end, string step) : base(title, description, status, errorMessage, @type, additionalBinaryDataProperties, linkToApi, datasources, grafanaExplorePath, query)
+        internal PrometheusRangeQuery(string title, string description, AlertsManagementStatus status, string errorMessage, AlertsManagementType alertEnrichmentType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string linkToApi, IList<string> datasources, string grafanaExplorePath, string query, DateTimeOffset start, DateTimeOffset end, string step) : base(title, description, status, errorMessage, alertEnrichmentType, additionalBinaryDataProperties, linkToApi, datasources, grafanaExplorePath, query)
         {
             Start = start;
             End = end;

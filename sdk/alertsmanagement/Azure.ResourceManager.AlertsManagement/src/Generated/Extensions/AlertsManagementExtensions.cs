@@ -54,60 +54,38 @@ namespace Azure.ResourceManager.AlertsManagement
         /// Get a summarized count of your alerts grouped by various parameters (e.g. grouping by 'Severity' returns the count of alerts for each severity).
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAlertsManagementArmClient.GetSummaryAsync(ResourceIdentifier, AlertsSummaryGroupByField, bool?, string, string, string, MonitorServiceSourceForAlert?, MonitorCondition?, ServiceAlertSeverity?, ServiceAlertState?, string, TimeRangeFilter?, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAlertsManagementArmClient.GetSummaryAsync(ResourceIdentifier, SubscriptionResourceGetServiceAlertSummaryOptions, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="groupby"> This parameter allows the result set to be grouped by input fields. For example, groupby=severity,alertstate. </param>
-        /// <param name="includeSmartGroupsCount"> Include count of the SmartGroups as part of the summary. Default value is 'false'. </param>
-        /// <param name="targetResource"> Filter by target resource( which is full ARM ID) Default value is select all. </param>
-        /// <param name="targetResourceType"> Filter by target resource type. Default value is select all. </param>
-        /// <param name="targetResourceGroup"> Filter by target resource group name. Default value is select all. </param>
-        /// <param name="monitorService"> Filter by monitor service which generates the alert instance. Default value is select all. </param>
-        /// <param name="monitorCondition"> Filter by monitor condition which is either 'Fired' or 'Resolved'. Default value is to select all. </param>
-        /// <param name="severity"> Filter by severity.  Default value is select all. </param>
-        /// <param name="alertState"> Filter by state of the alert instance. Default value is to select all. </param>
-        /// <param name="alertRule"> Filter by specific alert rule.  Default value is to select all. </param>
-        /// <param name="timeRange"> Filter by time range by below listed values. Default value is 1 day. </param>
-        /// <param name="customTimeRange"> Filter by custom time range in the format &lt;start-time&gt;/&lt;end-time&gt;  where time is in (ISO-8601 format)'. Permissible values is within 30 days from  query time. Either timeRange or customTimeRange could be used but not both. Default is none. </param>
+        /// <param name="options"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        public static async Task<Response<ServiceAlertSummary>> GetSummaryAsync(this ArmClient client, ResourceIdentifier scope, AlertsSummaryGroupByField groupby, bool? includeSmartGroupsCount = default, string targetResource = default, string targetResourceType = default, string targetResourceGroup = default, MonitorServiceSourceForAlert? monitorService = default, MonitorCondition? monitorCondition = default, ServiceAlertSeverity? severity = default, ServiceAlertState? alertState = default, string alertRule = default, TimeRangeFilter? timeRange = default, string customTimeRange = default, CancellationToken cancellationToken = default)
+        public static async Task<Response<ServiceAlertSummary>> GetSummaryAsync(this ArmClient client, ResourceIdentifier scope, SubscriptionResourceGetServiceAlertSummaryOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return await GetMockableAlertsManagementArmClient(client).GetSummaryAsync(scope, groupby, includeSmartGroupsCount, targetResource, targetResourceType, targetResourceGroup, monitorService, monitorCondition, severity, alertState, alertRule, timeRange, customTimeRange, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAlertsManagementArmClient(client).GetSummaryAsync(scope, options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get a summarized count of your alerts grouped by various parameters (e.g. grouping by 'Severity' returns the count of alerts for each severity).
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAlertsManagementArmClient.GetSummary(ResourceIdentifier, AlertsSummaryGroupByField, bool?, string, string, string, MonitorServiceSourceForAlert?, MonitorCondition?, ServiceAlertSeverity?, ServiceAlertState?, string, TimeRangeFilter?, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAlertsManagementArmClient.GetSummary(ResourceIdentifier, SubscriptionResourceGetServiceAlertSummaryOptions, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="groupby"> This parameter allows the result set to be grouped by input fields. For example, groupby=severity,alertstate. </param>
-        /// <param name="includeSmartGroupsCount"> Include count of the SmartGroups as part of the summary. Default value is 'false'. </param>
-        /// <param name="targetResource"> Filter by target resource( which is full ARM ID) Default value is select all. </param>
-        /// <param name="targetResourceType"> Filter by target resource type. Default value is select all. </param>
-        /// <param name="targetResourceGroup"> Filter by target resource group name. Default value is select all. </param>
-        /// <param name="monitorService"> Filter by monitor service which generates the alert instance. Default value is select all. </param>
-        /// <param name="monitorCondition"> Filter by monitor condition which is either 'Fired' or 'Resolved'. Default value is to select all. </param>
-        /// <param name="severity"> Filter by severity.  Default value is select all. </param>
-        /// <param name="alertState"> Filter by state of the alert instance. Default value is to select all. </param>
-        /// <param name="alertRule"> Filter by specific alert rule.  Default value is to select all. </param>
-        /// <param name="timeRange"> Filter by time range by below listed values. Default value is 1 day. </param>
-        /// <param name="customTimeRange"> Filter by custom time range in the format &lt;start-time&gt;/&lt;end-time&gt;  where time is in (ISO-8601 format)'. Permissible values is within 30 days from  query time. Either timeRange or customTimeRange could be used but not both. Default is none. </param>
+        /// <param name="options"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        public static Response<ServiceAlertSummary> GetSummary(this ArmClient client, ResourceIdentifier scope, AlertsSummaryGroupByField groupby, bool? includeSmartGroupsCount = default, string targetResource = default, string targetResourceType = default, string targetResourceGroup = default, MonitorServiceSourceForAlert? monitorService = default, MonitorCondition? monitorCondition = default, ServiceAlertSeverity? severity = default, ServiceAlertState? alertState = default, string alertRule = default, TimeRangeFilter? timeRange = default, string customTimeRange = default, CancellationToken cancellationToken = default)
+        public static Response<ServiceAlertSummary> GetSummary(this ArmClient client, ResourceIdentifier scope, SubscriptionResourceGetServiceAlertSummaryOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAlertsManagementArmClient(client).GetSummary(scope, groupby, includeSmartGroupsCount, targetResource, targetResourceType, targetResourceGroup, monitorService, monitorCondition, severity, alertState, alertRule, timeRange, customTimeRange, cancellationToken);
+            return GetMockableAlertsManagementArmClient(client).GetSummary(scope, options, cancellationToken);
         }
 
         /// <summary>

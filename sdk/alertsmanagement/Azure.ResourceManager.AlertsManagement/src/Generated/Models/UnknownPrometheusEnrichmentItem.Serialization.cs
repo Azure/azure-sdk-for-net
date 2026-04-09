@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             string description = default;
             AlertsManagementStatus status = default;
             string errorMessage = default;
-            Type @type = default;
+            AlertsManagementType alertEnrichmentType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string linkToApi = default;
             IList<string> datasources = default;
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new Type(prop.Value.GetString());
+                    alertEnrichmentType = new AlertsManagementType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("linkToApi"u8))
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 description,
                 status,
                 errorMessage,
-                @type,
+                alertEnrichmentType,
                 additionalBinaryDataProperties,
                 linkToApi,
                 datasources,
