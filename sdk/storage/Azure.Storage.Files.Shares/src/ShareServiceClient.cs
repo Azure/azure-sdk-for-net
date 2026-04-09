@@ -840,6 +840,7 @@ namespace Azure.Storage.Files.Shares
                     Response response;
 
                     scope.Start();
+                    Argument.AssertNotNull(properties, nameof(properties));
 
                     if (async)
                     {

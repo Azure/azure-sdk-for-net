@@ -2005,11 +2005,13 @@ namespace Azure.Storage.Files.Shares
                     }
 
                     ShareUriBuilder uriBuilder = new ShareUriBuilder(sourceUri);
+                    var copySource = uriBuilder.ToString();
+                    Argument.AssertNotNull(copySource, nameof(copySource));
 
                     if (async)
                     {
                         response = await FileRestClient.StartCopyAsync(
-                            copySource: uriBuilder.ToString(),
+                            copySource: copySource,
                             metadata: metadata,
                             filePermission: filePermission,
                             filePermissionFormat: filePermissionFormat,
@@ -2033,7 +2035,7 @@ namespace Azure.Storage.Files.Shares
                     else
                     {
                         response = FileRestClient.StartCopy(
-                            copySource: uriBuilder.ToString(),
+                            copySource: copySource,
                             metadata: metadata,
                             filePermission: filePermission,
                             filePermissionFormat: filePermissionFormat,
@@ -2273,6 +2275,7 @@ namespace Azure.Storage.Files.Shares
                 try
                 {
                     scope.Start();
+                    Argument.AssertNotNull(copyId, nameof(copyId));
                     Response response;
 
                     if (async)
@@ -5084,6 +5087,7 @@ namespace Azure.Storage.Files.Shares
                     }
 
                     Response response;
+                    Argument.AssertNotNull(range, nameof(range));
 
                     if (async)
                     {
@@ -5092,7 +5096,7 @@ namespace Azure.Storage.Files.Shares
                             fileRangeWrite: ShareFileRangeWriteType.Update.ToSerialString(),
                             contentLength: (content?.Length - content?.Position) ?? 0,
                             fileLastWrittenMode: fileLastWrittenMode?.ToString(),
-                            content: RequestContent.Create(content),
+                            content: content != null ? RequestContent.Create(content) : null,
                             contentMD5: hashResult?.MD5AsArray != null ? BinaryData.FromBytes(hashResult.MD5AsArray) : null,
                             structuredBodyType: structuredBodyType,
                             structuredContentLength: structuredContentLength,
@@ -5107,7 +5111,7 @@ namespace Azure.Storage.Files.Shares
                             fileRangeWrite: ShareFileRangeWriteType.Update.ToSerialString(),
                             contentLength: (content?.Length - content?.Position) ?? 0,
                             fileLastWrittenMode: fileLastWrittenMode?.ToString(),
-                            content: RequestContent.Create(content),
+                            content: content != null ? RequestContent.Create(content) : null,
                             contentMD5: hashResult?.MD5AsArray != null ? BinaryData.FromBytes(hashResult.MD5AsArray) : null,
                             structuredBodyType: structuredBodyType,
                             structuredContentLength: structuredContentLength,
@@ -5503,6 +5507,8 @@ namespace Azure.Storage.Files.Shares
                 try
                 {
                     scope.Start();
+                    Argument.AssertNotNull(range, nameof(range));
+                    Argument.AssertNotNull(sourceUri, nameof(sourceUri));
                     Response response;
 
                     if (async)
@@ -6884,6 +6890,7 @@ namespace Azure.Storage.Files.Shares
                 try
                 {
                     scope.Start();
+                    Argument.AssertNotNull(handleId, nameof(handleId));
                     Response response;
 
                     if (async)
@@ -7094,11 +7101,13 @@ namespace Azure.Storage.Files.Shares
                     }
 
                     Response response;
+                    var renameSource = sourceUriBuilder.ToUri().AbsoluteUri;
+                    Argument.AssertNotNull(renameSource, nameof(renameSource));
 
                     if (async)
                     {
                         response = await destFileClient.FileRestClient.RenameAsync(
-                            renameSource: sourceUriBuilder.ToUri().AbsoluteUri,
+                            renameSource: renameSource,
                             replaceIfExists: options?.ReplaceIfExists,
                             ignoreReadOnly: options?.IgnoreReadOnly,
                             sourceLeaseId: options?.SourceConditions?.LeaseId,
@@ -7118,7 +7127,7 @@ namespace Azure.Storage.Files.Shares
                     else
                     {
                         response = destFileClient.FileRestClient.Rename(
-                            renameSource: sourceUriBuilder.ToUri().AbsoluteUri,
+                            renameSource: renameSource,
                             replaceIfExists: options?.ReplaceIfExists,
                             ignoreReadOnly: options?.IgnoreReadOnly,
                             sourceLeaseId: options?.SourceConditions?.LeaseId,
@@ -7385,6 +7394,7 @@ namespace Azure.Storage.Files.Shares
                 try
                 {
                     scope.Start();
+                    Argument.AssertNotNull(linkText, nameof(linkText));
 
                     if (async)
                     {
@@ -7550,6 +7560,7 @@ namespace Azure.Storage.Files.Shares
                 try
                 {
                     scope.Start();
+                    Argument.AssertNotNull(targetFile, nameof(targetFile));
 
                     Response response;
 

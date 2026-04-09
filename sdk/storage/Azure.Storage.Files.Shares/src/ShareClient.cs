@@ -3634,6 +3634,7 @@ namespace Azure.Storage.Files.Shares
                     Response<SharePermission> response;
 
                     scope.Start();
+                    Argument.AssertNotNull(filePermissionKey, nameof(filePermissionKey));
 
                     if (async)
                     {

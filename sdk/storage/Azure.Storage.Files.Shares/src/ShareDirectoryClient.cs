@@ -2787,6 +2787,7 @@ namespace Azure.Storage.Files.Shares
                 {
                     scope.Start();
                     Response response;
+                    Argument.AssertNotNull(handleId, nameof(handleId));
 
                     if (async)
                     {
@@ -2998,11 +2999,13 @@ namespace Azure.Storage.Files.Shares
                     }
 
                     Response response;
+                    var renameSource = sourceUriBuilder.ToUri().AbsoluteUri;
+                    Argument.AssertNotNull(renameSource, nameof(renameSource));
 
                     if (async)
                     {
                         response = await destDirectoryClient.DirectoryRestClient.RenameAsync(
-                            renameSource: sourceUriBuilder.ToUri().AbsoluteUri,
+                            renameSource: renameSource,
                             replaceIfExists: options?.ReplaceIfExists,
                             ignoreReadOnly: options?.IgnoreReadOnly,
                             sourceLeaseId: options?.SourceConditions?.LeaseId,
@@ -3021,7 +3024,7 @@ namespace Azure.Storage.Files.Shares
                     else
                     {
                         response = destDirectoryClient.DirectoryRestClient.Rename(
-                            renameSource: sourceUriBuilder.ToUri().AbsoluteUri,
+                            renameSource: renameSource,
                             replaceIfExists: options?.ReplaceIfExists,
                             ignoreReadOnly: options?.IgnoreReadOnly,
                             sourceLeaseId: options?.SourceConditions?.LeaseId,

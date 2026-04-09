@@ -526,6 +526,7 @@ namespace Azure.Storage.Files.Shares.Specialized
                 try
                 {
                     scope.Start();
+                    Argument.AssertNotNull(LeaseId, nameof(LeaseId));
                     if (FileClient != null)
                     {
                         Response response;
@@ -700,6 +701,7 @@ namespace Azure.Storage.Files.Shares.Specialized
                 try
                 {
                     scope.Start();
+                    Argument.AssertNotNull(LeaseId, nameof(LeaseId));
                     Response<ShareFileLease> response;
                     if (FileClient != null)
                     {
@@ -1052,6 +1054,7 @@ namespace Azure.Storage.Files.Shares.Specialized
                 try
                 {
                     scope.Start();
+                    Argument.AssertNotNull(LeaseId, nameof(LeaseId));
                     Response<ShareFileLease> response;
                     if (FileClient != null)
                     {
