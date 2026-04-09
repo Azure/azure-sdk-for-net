@@ -6,7 +6,7 @@ The `resource-metadata.ts` module is responsible for processing ARM resource met
 
 ## `getExpectedParentResourceType`
 
-The `getExpectedParentResourceType` function extracts the expected parent resource type from a resource's ID pattern. This is used during post-processing to populate the `parentResourceId` for collection resources, enabling the emitter to generate `ValidateResourceId` calls that verify a resource identifier belongs to the correct parent scope.
+The `getExpectedParentResourceType` function extracts the expected parent resource type from a resource's ID pattern. This is used during post-processing to populate `metadata.parentResourceType` for collection resources, enabling the emitter to generate `ValidateResourceId` calls that verify a resource identifier belongs to the correct parent resource type or scope.
 
 ### Input
 
@@ -95,11 +95,13 @@ Step 6 – Result: "Microsoft.Quota/groupQuotas"
 The `postProcessArmResources` function is the main post-processing entry point. It performs the following steps:
 
 1. **Separate valid and incomplete resources**: Filters out resources with missing metadata
-2. **Populate parent IDs**: Uses `getExpectedParentResourceType` to determine the parent resource type for each collection resource
+2. **Populate parent IDs**: Uses `parentLookup.getParentResource` to find each resource's parent and sets `metadata.parentResourceId` to the parent's resource ID pattern
 3. **Relocate methods**: Moves cross-resource list actions to their correct parent resources
 4. **Populate resource scope**: Determines whether each resource is tenant-scoped, subscription-scoped, etc.
 5. **Sort methods**: Orders methods by kind (CRUD, List, Action)
 6. **Filter resources**: Removes resources that don't meet generation criteria
+7. **Populate list-by-parent method**: Finds the list operation scoped to the parent resource
+8. **Compute parent resource type**: Uses `getExpectedParentResourceType` to set `metadata.parentResourceType` for extension resources with specific parent types
 
 ## `calculateResourceTypeFromPath`
 
