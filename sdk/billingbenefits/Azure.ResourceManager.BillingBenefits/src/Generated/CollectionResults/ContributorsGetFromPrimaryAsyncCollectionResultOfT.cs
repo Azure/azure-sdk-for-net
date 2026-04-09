@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.BillingBenefits
         private readonly string _resourceGroupName;
         private readonly string _maccName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of ContributorsGetFromPrimaryAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Contributors client used to send requests. </param>
@@ -29,13 +30,15 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="maccName"> Name of primary MACC. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ContributorsGetFromPrimaryAsyncCollectionResultOfT(Contributors client, Guid subscriptionId, string resourceGroupName, string maccName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public ContributorsGetFromPrimaryAsyncCollectionResultOfT(Contributors client, Guid subscriptionId, string resourceGroupName, string maccName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
             _maccName = maccName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of ContributorsGetFromPrimaryAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -68,7 +71,7 @@ namespace Azure.ResourceManager.BillingBenefits
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetFromPrimaryRequest(nextLink, _subscriptionId, _resourceGroupName, _maccName, _context) : _client.CreateGetFromPrimaryRequest(_subscriptionId, _resourceGroupName, _maccName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ContributorCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

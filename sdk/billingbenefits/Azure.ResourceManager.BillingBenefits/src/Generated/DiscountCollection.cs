@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.BillingBenefits
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DiscountData, DiscountResource>(new DiscountsResourceGroupListAsyncCollectionResultOfT(_discountsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new DiscountResource(Client, data));
+            return new AsyncPageableWrapper<DiscountData, DiscountResource>(new DiscountsResourceGroupListAsyncCollectionResultOfT(_discountsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DiscountCollection.GetAll"), data => new DiscountResource(Client, data));
         }
 
         /// <summary>
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.BillingBenefits
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DiscountData, DiscountResource>(new DiscountsResourceGroupListCollectionResultOfT(_discountsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new DiscountResource(Client, data));
+            return new PageableWrapper<DiscountData, DiscountResource>(new DiscountsResourceGroupListCollectionResultOfT(_discountsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DiscountCollection.GetAll"), data => new DiscountResource(Client, data));
         }
 
         /// <summary>

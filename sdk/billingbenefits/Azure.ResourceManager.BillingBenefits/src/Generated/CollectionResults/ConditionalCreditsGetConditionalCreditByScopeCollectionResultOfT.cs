@@ -19,16 +19,19 @@ namespace Azure.ResourceManager.BillingBenefits
         private readonly ConditionalCredits _client;
         private readonly string _scope;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of ConditionalCreditsGetConditionalCreditByScopeCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The ConditionalCredits client used to send requests. </param>
         /// <param name="scope"> The scope at which the benefits are listed. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ConditionalCreditsGetConditionalCreditByScopeCollectionResultOfT(ConditionalCredits client, string scope, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public ConditionalCreditsGetConditionalCreditByScopeCollectionResultOfT(ConditionalCredits client, string scope, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _scope = scope;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of ConditionalCreditsGetConditionalCreditByScopeCollectionResultOfT as an enumerable collection. </summary>
@@ -61,7 +64,7 @@ namespace Azure.ResourceManager.BillingBenefits
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetConditionalCreditByScopeRequest(nextLink, _scope, _context) : _client.CreateGetConditionalCreditByScopeRequest(_scope, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableBillingBenefitsArmClient.GetConditionalCreditByScope");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.BillingBenefits
         private readonly string _resourceGroupName;
         private readonly string _creditName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of SourcesGetByCreditCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Sources client used to send requests. </param>
@@ -28,13 +29,15 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="creditName"> Name of the credit. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public SourcesGetByCreditCollectionResultOfT(Sources client, Guid subscriptionId, string resourceGroupName, string creditName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public SourcesGetByCreditCollectionResultOfT(Sources client, Guid subscriptionId, string resourceGroupName, string creditName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
             _creditName = creditName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of SourcesGetByCreditCollectionResultOfT as an enumerable collection. </summary>
@@ -67,7 +70,7 @@ namespace Azure.ResourceManager.BillingBenefits
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByCreditRequest(nextLink, _subscriptionId, _resourceGroupName, _creditName, _context) : _client.CreateGetByCreditRequest(_subscriptionId, _resourceGroupName, _creditName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("CreditSourceCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

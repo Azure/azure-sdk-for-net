@@ -287,7 +287,13 @@ namespace Azure.ResourceManager.BillingBenefits
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CreditSourceData, CreditSourceResource>(new SourcesGetByCreditAsyncCollectionResultOfT(_sourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new CreditSourceResource(Client, data));
+            return new AsyncPageableWrapper<CreditSourceData, CreditSourceResource>(new SourcesGetByCreditAsyncCollectionResultOfT(
+                _sourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "CreditSourceCollection.GetAll"), data => new CreditSourceResource(Client, data));
         }
 
         /// <summary>
@@ -315,7 +321,13 @@ namespace Azure.ResourceManager.BillingBenefits
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CreditSourceData, CreditSourceResource>(new SourcesGetByCreditCollectionResultOfT(_sourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new CreditSourceResource(Client, data));
+            return new PageableWrapper<CreditSourceData, CreditSourceResource>(new SourcesGetByCreditCollectionResultOfT(
+                _sourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "CreditSourceCollection.GetAll"), data => new CreditSourceResource(Client, data));
         }
 
         /// <summary>

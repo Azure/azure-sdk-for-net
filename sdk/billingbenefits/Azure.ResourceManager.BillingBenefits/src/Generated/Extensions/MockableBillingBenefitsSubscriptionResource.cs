@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DiscountData, DiscountResource>(new DiscountsSubscriptionListAsyncCollectionResultOfT(DiscountsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DiscountResource(Client, data));
+            return new AsyncPageableWrapper<DiscountData, DiscountResource>(new DiscountsSubscriptionListAsyncCollectionResultOfT(DiscountsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableBillingBenefitsSubscriptionResource.GetDiscounts"), data => new DiscountResource(Client, data));
         }
 
         /// <summary>
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DiscountData, DiscountResource>(new DiscountsSubscriptionListCollectionResultOfT(DiscountsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DiscountResource(Client, data));
+            return new PageableWrapper<DiscountData, DiscountResource>(new DiscountsSubscriptionListCollectionResultOfT(DiscountsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableBillingBenefitsSubscriptionResource.GetDiscounts"), data => new DiscountResource(Client, data));
         }
 
         /// <summary>
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CreditData, CreditResource>(new CreditsGetBySubscriptionAsyncCollectionResultOfT(CreditsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new CreditResource(Client, data));
+            return new AsyncPageableWrapper<CreditData, CreditResource>(new CreditsGetBySubscriptionAsyncCollectionResultOfT(CreditsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableBillingBenefitsSubscriptionResource.GetCredits"), data => new CreditResource(Client, data));
         }
 
         /// <summary>
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CreditData, CreditResource>(new CreditsGetBySubscriptionCollectionResultOfT(CreditsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new CreditResource(Client, data));
+            return new PageableWrapper<CreditData, CreditResource>(new CreditsGetBySubscriptionCollectionResultOfT(CreditsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableBillingBenefitsSubscriptionResource.GetCredits"), data => new CreditResource(Client, data));
         }
 
         /// <summary>
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ConditionalCreditData, ConditionalCreditResource>(new ConditionalCreditsGetBySubscriptionAsyncCollectionResultOfT(ConditionalCreditsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new ConditionalCreditResource(Client, data));
+            return new AsyncPageableWrapper<ConditionalCreditData, ConditionalCreditResource>(new ConditionalCreditsGetBySubscriptionAsyncCollectionResultOfT(ConditionalCreditsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableBillingBenefitsSubscriptionResource.GetConditionalCredits"), data => new ConditionalCreditResource(Client, data));
         }
 
         /// <summary>
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ConditionalCreditData, ConditionalCreditResource>(new ConditionalCreditsGetBySubscriptionCollectionResultOfT(ConditionalCreditsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new ConditionalCreditResource(Client, data));
+            return new PageableWrapper<ConditionalCreditData, ConditionalCreditResource>(new ConditionalCreditsGetBySubscriptionCollectionResultOfT(ConditionalCreditsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableBillingBenefitsSubscriptionResource.GetConditionalCredits"), data => new ConditionalCreditResource(Client, data));
         }
 
         /// <summary>
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MaccData, MaccResource>(new MaccsGetBySubscriptionAsyncCollectionResultOfT(MaccsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new MaccResource(Client, data));
+            return new AsyncPageableWrapper<MaccData, MaccResource>(new MaccsGetBySubscriptionAsyncCollectionResultOfT(MaccsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableBillingBenefitsSubscriptionResource.GetMaccs"), data => new MaccResource(Client, data));
         }
 
         /// <summary>
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MaccData, MaccResource>(new MaccsGetBySubscriptionCollectionResultOfT(MaccsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new MaccResource(Client, data));
+            return new PageableWrapper<MaccData, MaccResource>(new MaccsGetBySubscriptionCollectionResultOfT(MaccsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableBillingBenefitsSubscriptionResource.GetMaccs"), data => new MaccResource(Client, data));
         }
 
         /// <summary>
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<FreeServicesData, FreeServicesResource>(new FreeServicesGetBySubscriptionAsyncCollectionResultOfT(FreeServicesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new FreeServicesResource(Client, data));
+            return new AsyncPageableWrapper<FreeServicesData, FreeServicesResource>(new FreeServicesGetBySubscriptionAsyncCollectionResultOfT(FreeServicesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableBillingBenefitsSubscriptionResource.GetFreeServices"), data => new FreeServicesResource(Client, data));
         }
 
         /// <summary>
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<FreeServicesData, FreeServicesResource>(new FreeServicesGetBySubscriptionCollectionResultOfT(FreeServicesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new FreeServicesResource(Client, data));
+            return new PageableWrapper<FreeServicesData, FreeServicesResource>(new FreeServicesGetBySubscriptionCollectionResultOfT(FreeServicesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableBillingBenefitsSubscriptionResource.GetFreeServices"), data => new FreeServicesResource(Client, data));
         }
     }
 }

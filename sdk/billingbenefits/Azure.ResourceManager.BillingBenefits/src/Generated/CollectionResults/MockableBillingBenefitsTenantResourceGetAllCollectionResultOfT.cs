@@ -21,16 +21,19 @@ namespace Azure.ResourceManager.BillingBenefits
         private readonly SellerResource _client;
         private readonly RequestContent _content;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of MockableBillingBenefitsTenantResourceGetAllCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The SellerResource client used to send requests. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public MockableBillingBenefitsTenantResourceGetAllCollectionResultOfT(SellerResource client, RequestContent content, RequestContext context)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public MockableBillingBenefitsTenantResourceGetAllCollectionResultOfT(SellerResource client, RequestContent content, RequestContext context, string diagnosticScope)
         {
             _client = client;
             _content = content;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of MockableBillingBenefitsTenantResourceGetAllCollectionResultOfT as an enumerable collection. </summary>
@@ -54,7 +57,7 @@ namespace Azure.ResourceManager.BillingBenefits
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = _client.CreateGetAllRequest(_content, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableBillingBenefitsTenantResource.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

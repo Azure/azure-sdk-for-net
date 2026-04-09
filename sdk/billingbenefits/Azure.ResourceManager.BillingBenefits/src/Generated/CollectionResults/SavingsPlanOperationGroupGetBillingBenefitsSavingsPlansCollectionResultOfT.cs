@@ -24,6 +24,7 @@ namespace Azure.ResourceManager.BillingBenefits
         private readonly string _selectedState;
         private readonly float? _take;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of SavingsPlanOperationGroupGetBillingBenefitsSavingsPlansCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The SavingsPlanOperationGroup client used to send requests. </param>
@@ -34,7 +35,8 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <param name="selectedState"> The selected provisioning state. </param>
         /// <param name="take"> To number of savings plans to return. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public SavingsPlanOperationGroupGetBillingBenefitsSavingsPlansCollectionResultOfT(SavingsPlanOperationGroup client, string filter, string @orderby, string refreshSummary, float? skiptoken, string selectedState, float? take, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public SavingsPlanOperationGroupGetBillingBenefitsSavingsPlansCollectionResultOfT(SavingsPlanOperationGroup client, string filter, string @orderby, string refreshSummary, float? skiptoken, string selectedState, float? take, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _filter = filter;
@@ -44,6 +46,7 @@ namespace Azure.ResourceManager.BillingBenefits
             _selectedState = selectedState;
             _take = take;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of SavingsPlanOperationGroupGetBillingBenefitsSavingsPlansCollectionResultOfT as an enumerable collection. </summary>
@@ -77,7 +80,7 @@ namespace Azure.ResourceManager.BillingBenefits
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetBillingBenefitsSavingsPlansRequest(nextLink, _filter, _orderby, _refreshSummary, _skiptoken, _selectedState, _take, _context) : _client.CreateGetBillingBenefitsSavingsPlansRequest(_filter, _orderby, _refreshSummary, _skiptoken, _selectedState, _take, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableBillingBenefitsTenantResource.GetBillingBenefitsSavingsPlans");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

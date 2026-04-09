@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.BillingBenefits
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<FreeServicesData, FreeServicesResource>(new FreeServicesGetByResourceGroupAsyncCollectionResultOfT(_freeServicesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new FreeServicesResource(Client, data));
+            return new AsyncPageableWrapper<FreeServicesData, FreeServicesResource>(new FreeServicesGetByResourceGroupAsyncCollectionResultOfT(_freeServicesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "FreeServicesCollection.GetAll"), data => new FreeServicesResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.BillingBenefits
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<FreeServicesData, FreeServicesResource>(new FreeServicesGetByResourceGroupCollectionResultOfT(_freeServicesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new FreeServicesResource(Client, data));
+            return new PageableWrapper<FreeServicesData, FreeServicesResource>(new FreeServicesGetByResourceGroupCollectionResultOfT(_freeServicesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "FreeServicesCollection.GetAll"), data => new FreeServicesResource(Client, data));
         }
 
         /// <summary>

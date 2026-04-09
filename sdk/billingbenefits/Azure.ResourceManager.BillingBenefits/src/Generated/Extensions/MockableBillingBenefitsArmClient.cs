@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DiscountData, DiscountResource>(new DiscountsGetDiscountByScopeAsyncCollectionResultOfT(DiscountsRestClient, scope.ToString(), context), data => new DiscountResource(Client, data));
+            return new AsyncPageableWrapper<DiscountData, DiscountResource>(new DiscountsGetDiscountByScopeAsyncCollectionResultOfT(DiscountsRestClient, scope.ToString(), context, "MockableBillingBenefitsArmClient.GetDiscountByScope"), data => new DiscountResource(Client, data));
         }
 
         /// <summary>
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DiscountData, DiscountResource>(new DiscountsGetDiscountByScopeCollectionResultOfT(DiscountsRestClient, scope.ToString(), context), data => new DiscountResource(Client, data));
+            return new PageableWrapper<DiscountData, DiscountResource>(new DiscountsGetDiscountByScopeCollectionResultOfT(DiscountsRestClient, scope.ToString(), context, "MockableBillingBenefitsArmClient.GetDiscountByScope"), data => new DiscountResource(Client, data));
         }
 
         /// <summary>
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ContributorData, ContributorResource>(new ContributorsGetFromApplicableMaccAsyncCollectionResultOfT(ContributorsRestClient, scope.ToString(), systemId, context), data => new ContributorResource(Client, data));
+            return new AsyncPageableWrapper<ContributorData, ContributorResource>(new ContributorsGetFromApplicableMaccAsyncCollectionResultOfT(ContributorsRestClient, scope.ToString(), systemId, context, "MockableBillingBenefitsArmClient.GetFromApplicableMacc"), data => new ContributorResource(Client, data));
         }
 
         /// <summary>
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ContributorData, ContributorResource>(new ContributorsGetFromApplicableMaccCollectionResultOfT(ContributorsRestClient, scope.ToString(), systemId, context), data => new ContributorResource(Client, data));
+            return new PageableWrapper<ContributorData, ContributorResource>(new ContributorsGetFromApplicableMaccCollectionResultOfT(ContributorsRestClient, scope.ToString(), systemId, context, "MockableBillingBenefitsArmClient.GetFromApplicableMacc"), data => new ContributorResource(Client, data));
         }
 
         /// <summary>
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CreditData, CreditResource>(new CreditsGetApplicableAsyncCollectionResultOfT(CreditsRestClient, scope.ToString(), context), data => new CreditResource(Client, data));
+            return new AsyncPageableWrapper<CreditData, CreditResource>(new CreditsGetApplicableAsyncCollectionResultOfT(CreditsRestClient, scope.ToString(), context, "MockableBillingBenefitsArmClient.GetApplicable"), data => new CreditResource(Client, data));
         }
 
         /// <summary>
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CreditData, CreditResource>(new CreditsGetApplicableCollectionResultOfT(CreditsRestClient, scope.ToString(), context), data => new CreditResource(Client, data));
+            return new PageableWrapper<CreditData, CreditResource>(new CreditsGetApplicableCollectionResultOfT(CreditsRestClient, scope.ToString(), context, "MockableBillingBenefitsArmClient.GetApplicable"), data => new CreditResource(Client, data));
         }
 
         /// <summary>
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ConditionalCreditData, ConditionalCreditResource>(new ConditionalCreditsGetConditionalCreditByScopeAsyncCollectionResultOfT(ConditionalCreditsRestClient, scope.ToString(), context), data => new ConditionalCreditResource(Client, data));
+            return new AsyncPageableWrapper<ConditionalCreditData, ConditionalCreditResource>(new ConditionalCreditsGetConditionalCreditByScopeAsyncCollectionResultOfT(ConditionalCreditsRestClient, scope.ToString(), context, "MockableBillingBenefitsArmClient.GetConditionalCreditByScope"), data => new ConditionalCreditResource(Client, data));
         }
 
         /// <summary>
@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ConditionalCreditData, ConditionalCreditResource>(new ConditionalCreditsGetConditionalCreditByScopeCollectionResultOfT(ConditionalCreditsRestClient, scope.ToString(), context), data => new ConditionalCreditResource(Client, data));
+            return new PageableWrapper<ConditionalCreditData, ConditionalCreditResource>(new ConditionalCreditsGetConditionalCreditByScopeCollectionResultOfT(ConditionalCreditsRestClient, scope.ToString(), context, "MockableBillingBenefitsArmClient.GetConditionalCreditByScope"), data => new ConditionalCreditResource(Client, data));
         }
 
         /// <summary>
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ConditionalCreditContributorData, ConditionalCreditContributorResource>(new ConditionalCreditContributorsGetFromApplicableConditionalCreditAsyncCollectionResultOfT(ConditionalCreditContributorsRestClient, scope.ToString(), systemId, context), data => new ConditionalCreditContributorResource(Client, data));
+            return new AsyncPageableWrapper<ConditionalCreditContributorData, ConditionalCreditContributorResource>(new ConditionalCreditContributorsGetFromApplicableConditionalCreditAsyncCollectionResultOfT(ConditionalCreditContributorsRestClient, scope.ToString(), systemId, context, "MockableBillingBenefitsArmClient.GetFromApplicableConditionalCredit"), data => new ConditionalCreditContributorResource(Client, data));
         }
 
         /// <summary>
@@ -511,7 +511,7 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ConditionalCreditContributorData, ConditionalCreditContributorResource>(new ConditionalCreditContributorsGetFromApplicableConditionalCreditCollectionResultOfT(ConditionalCreditContributorsRestClient, scope.ToString(), systemId, context), data => new ConditionalCreditContributorResource(Client, data));
+            return new PageableWrapper<ConditionalCreditContributorData, ConditionalCreditContributorResource>(new ConditionalCreditContributorsGetFromApplicableConditionalCreditCollectionResultOfT(ConditionalCreditContributorsRestClient, scope.ToString(), systemId, context, "MockableBillingBenefitsArmClient.GetFromApplicableConditionalCredit"), data => new ConditionalCreditContributorResource(Client, data));
         }
 
         /// <summary>
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ApplicableMaccsGetAllAsyncCollectionResultOfT(ApplicableMaccsRestClient, scope.ToString(), context);
+            return new ApplicableMaccsGetAllAsyncCollectionResultOfT(ApplicableMaccsRestClient, scope.ToString(), context, "MockableBillingBenefitsArmClient.GetAll");
         }
 
         /// <summary>
@@ -577,7 +577,7 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ApplicableMaccsGetAllCollectionResultOfT(ApplicableMaccsRestClient, scope.ToString(), context);
+            return new ApplicableMaccsGetAllCollectionResultOfT(ApplicableMaccsRestClient, scope.ToString(), context, "MockableBillingBenefitsArmClient.GetAll");
         }
     }
 }

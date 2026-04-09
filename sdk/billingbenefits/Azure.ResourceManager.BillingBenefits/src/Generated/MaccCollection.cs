@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.BillingBenefits
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MaccData, MaccResource>(new MaccsGetByResourceGroupAsyncCollectionResultOfT(_maccsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new MaccResource(Client, data));
+            return new AsyncPageableWrapper<MaccData, MaccResource>(new MaccsGetByResourceGroupAsyncCollectionResultOfT(_maccsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MaccCollection.GetAll"), data => new MaccResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.BillingBenefits
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MaccData, MaccResource>(new MaccsGetByResourceGroupCollectionResultOfT(_maccsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new MaccResource(Client, data));
+            return new PageableWrapper<MaccData, MaccResource>(new MaccsGetByResourceGroupCollectionResultOfT(_maccsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MaccCollection.GetAll"), data => new MaccResource(Client, data));
         }
 
         /// <summary>

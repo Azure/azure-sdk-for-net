@@ -20,16 +20,19 @@ namespace Azure.ResourceManager.BillingBenefits
         private readonly ApplicableMaccs _client;
         private readonly string _billingAccountId;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of ApplicableMaccsGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The ApplicableMaccs client used to send requests. </param>
         /// <param name="billingAccountId"> The billing account Id at which the benefits are listed. Accepted format is: {rootId:orgId}. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ApplicableMaccsGetAllAsyncCollectionResultOfT(ApplicableMaccs client, string billingAccountId, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public ApplicableMaccsGetAllAsyncCollectionResultOfT(ApplicableMaccs client, string billingAccountId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _billingAccountId = billingAccountId;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of ApplicableMaccsGetAllAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -63,7 +66,7 @@ namespace Azure.ResourceManager.BillingBenefits
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _billingAccountId, _context) : _client.CreateGetAllRequest(_billingAccountId, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableBillingBenefitsArmClient.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

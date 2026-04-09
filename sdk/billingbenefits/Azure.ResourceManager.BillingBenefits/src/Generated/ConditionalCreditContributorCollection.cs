@@ -177,7 +177,13 @@ namespace Azure.ResourceManager.BillingBenefits
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ConditionalCreditContributorData, ConditionalCreditContributorResource>(new ConditionalCreditContributorsGetFromPrimaryAsyncCollectionResultOfT(_conditionalCreditContributorsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ConditionalCreditContributorResource(Client, data));
+            return new AsyncPageableWrapper<ConditionalCreditContributorData, ConditionalCreditContributorResource>(new ConditionalCreditContributorsGetFromPrimaryAsyncCollectionResultOfT(
+                _conditionalCreditContributorsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ConditionalCreditContributorCollection.GetAll"), data => new ConditionalCreditContributorResource(Client, data));
         }
 
         /// <summary>
@@ -205,7 +211,13 @@ namespace Azure.ResourceManager.BillingBenefits
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ConditionalCreditContributorData, ConditionalCreditContributorResource>(new ConditionalCreditContributorsGetFromPrimaryCollectionResultOfT(_conditionalCreditContributorsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ConditionalCreditContributorResource(Client, data));
+            return new PageableWrapper<ConditionalCreditContributorData, ConditionalCreditContributorResource>(new ConditionalCreditContributorsGetFromPrimaryCollectionResultOfT(
+                _conditionalCreditContributorsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ConditionalCreditContributorCollection.GetAll"), data => new ConditionalCreditContributorResource(Client, data));
         }
 
         /// <summary>

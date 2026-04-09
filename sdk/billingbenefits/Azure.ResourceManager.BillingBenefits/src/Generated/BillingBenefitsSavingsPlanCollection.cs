@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.BillingBenefits
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BillingBenefitsSavingsPlanData, BillingBenefitsSavingsPlanResource>(new SavingsPlanGetAllAsyncCollectionResultOfT(_savingsPlanRestClient, Id.Name, context), data => new BillingBenefitsSavingsPlanResource(Client, data));
+            return new AsyncPageableWrapper<BillingBenefitsSavingsPlanData, BillingBenefitsSavingsPlanResource>(new SavingsPlanGetAllAsyncCollectionResultOfT(_savingsPlanRestClient, Id.Name, context, "BillingBenefitsSavingsPlanCollection.GetAll"), data => new BillingBenefitsSavingsPlanResource(Client, data));
         }
 
         /// <summary>
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.BillingBenefits
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BillingBenefitsSavingsPlanData, BillingBenefitsSavingsPlanResource>(new SavingsPlanGetAllCollectionResultOfT(_savingsPlanRestClient, Id.Name, context), data => new BillingBenefitsSavingsPlanResource(Client, data));
+            return new PageableWrapper<BillingBenefitsSavingsPlanData, BillingBenefitsSavingsPlanResource>(new SavingsPlanGetAllCollectionResultOfT(_savingsPlanRestClient, Id.Name, context, "BillingBenefitsSavingsPlanCollection.GetAll"), data => new BillingBenefitsSavingsPlanResource(Client, data));
         }
 
         /// <summary>
