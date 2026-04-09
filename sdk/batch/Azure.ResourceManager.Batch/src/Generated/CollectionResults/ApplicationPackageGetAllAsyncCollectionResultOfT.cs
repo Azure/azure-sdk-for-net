@@ -24,6 +24,7 @@ namespace Azure.ResourceManager.Batch
         private readonly string _applicationName;
         private readonly int? _maxresults;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of ApplicationPackageGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The ApplicationPackage client used to send requests. </param>
@@ -33,7 +34,8 @@ namespace Azure.ResourceManager.Batch
         /// <param name="applicationName"> The name of the application. This must be unique within the account. </param>
         /// <param name="maxresults"> The maximum number of items to return in the response. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ApplicationPackageGetAllAsyncCollectionResultOfT(ApplicationPackage client, Guid subscriptionId, string resourceGroupName, string accountName, string applicationName, int? maxresults, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public ApplicationPackageGetAllAsyncCollectionResultOfT(ApplicationPackage client, Guid subscriptionId, string resourceGroupName, string accountName, string applicationName, int? maxresults, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -42,6 +44,7 @@ namespace Azure.ResourceManager.Batch
             _applicationName = applicationName;
             _maxresults = maxresults;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of ApplicationPackageGetAllAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -74,7 +77,7 @@ namespace Azure.ResourceManager.Batch
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _accountName, _applicationName, _maxresults, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _accountName, _applicationName, _maxresults, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("BatchApplicationPackageCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

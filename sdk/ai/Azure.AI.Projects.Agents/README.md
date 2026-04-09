@@ -23,6 +23,7 @@ Develop Agents using the Azure AI Foundry platform, leveraging an extensive ecos
 - [Examples](#examples)
   - [Prompt Agents](#prompt-agents)
   - [Hosted Agents](#hosted-agents)
+  - [Toolboxes](#toolboxes)
 - [Tracing](#tracing)
   - [Enabling GenAI Tracing](#enabling-genai-tracing)
   - [Tracing to Azure Monitor](#tracing-to-azure-monitor)
@@ -204,6 +205,55 @@ Agent deletion should be done through Azure CLI.
 az cognitiveservices agent delete-deployment --account-name ACCOUNTNAME --project-name PROJECTNAME --name myHostedAgent --agent-version 1
 az cognitiveservices agent delete --account-name ACCOUNTNAME --project-name PROJECTNAME --name myHostedAgent --agent-version 1
 ```
+
+### Toolboxes
+
+Toolboxes allow us to store tools in Azure so that they can be retrieved and used by the Agents.
+As for the Hosted Agent we will need to set the experimental header, but in this scenario the header is `Toolboxes=V1Preview`,  we also need to disable the `AAIP001` warning.
+
+In the example below we create two versions of MCP tool and save it to Azure.
+```C# Snippet:Sample_CreateToolbox_ToolboxesAgentsCRUD_Async
+ProjectsAgentTool tool = ProjectsAgentTool.AsProjectTool(ResponseTool.CreateMcpTool(
+    serverLabel: "api-specs",
+    serverUri: new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
+    toolCallApprovalPolicy: new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
+));
+ToolboxVersion toolBox1 = await toolboxClient.CreateToolboxVersionAsync(
+    toolboxName: toolboxName,
+    tools: [tool],
+    description: "Example toolbox created by the azure-ai-projects sample.",
+    metadata: new Dictionary<string, string> {
+        {"team", "Engineers"}
+    }
+);
+ToolboxVersion toolBox2 = await toolboxClient.CreateToolboxVersionAsync(
+    toolboxName: toolboxName,
+    tools: [tool],
+    description: "Another toolbox created by the azure-ai-projects sample.",
+    metadata: new Dictionary<string, string> {
+        {"team", "Data scientists"}
+    }
+);
+string status = "unknown status";
+toolBox1.Metadata?.TryGetValue("team", out status);
+Console.WriteLine($"Toolbox: {toolBox1.Name}, version: {toolBox1.Version}, (tools: {toolBox1.Tools.Count}) (team: {status}).");
+```
+
+There are two objects which help to work with the Toolboxes: `ToolboxRecord` and `ToolboxVersion`. `ToolboxRecord` can be retrieved by
+name, it contains the default version of the Toolbox.
+
+```C# Snippet:Sample_GetToolbox_ToolboxesAgentsCRUD_Async
+ToolboxRecord record = await toolboxClient.GetToolboxAsync(toolboxName: toolBox1.Name);
+Console.WriteLine($"The default version for a toolbox {record.Name} is {record.DefaultVersion}");
+```
+
+The name of Toolbox and its version allow to get the `ToolboxVersion`, containing the tools, which can be used by Agent.
+
+```C# Snippet:Sample_GetToolboxVersion_ToolboxesAgentsCRUD_Async
+ToolboxVersion toolBox = await toolboxClient.GetToolboxVersionAsync(record.Name, record.DefaultVersion);
+Console.WriteLine($"Retrieved toolbox: {toolBox.Name} ({toolBox.Id})");
+```
+
 
 ## Tracing
 

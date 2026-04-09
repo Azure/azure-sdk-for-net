@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ContainerRegistry
 {
@@ -24,71 +25,82 @@ namespace Azure.ResourceManager.ContainerRegistry
     /// </summary>
     public partial class ContainerRegistryArchiveVersionCollection : ArmCollection, IEnumerable<ContainerRegistryArchiveVersionResource>, IAsyncEnumerable<ContainerRegistryArchiveVersionResource>
     {
-        private readonly ClientDiagnostics _containerRegistryArchiveVersionArchiveVersionsClientDiagnostics;
-        private readonly ArchiveVersionsRestOperations _containerRegistryArchiveVersionArchiveVersionsRestClient;
+        private readonly ClientDiagnostics _archiveVersionsClientDiagnostics;
+        private readonly ArchiveVersions _archiveVersionsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ContainerRegistryArchiveVersionCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ContainerRegistryArchiveVersionCollection for mocking. </summary>
         protected ContainerRegistryArchiveVersionCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ContainerRegistryArchiveVersionCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryArchiveVersionCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ContainerRegistryArchiveVersionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _containerRegistryArchiveVersionArchiveVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerRegistry", ContainerRegistryArchiveVersionResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ContainerRegistryArchiveVersionResource.ResourceType, out string containerRegistryArchiveVersionArchiveVersionsApiVersion);
-            _containerRegistryArchiveVersionArchiveVersionsRestClient = new ArchiveVersionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, containerRegistryArchiveVersionArchiveVersionsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ContainerRegistryArchiveVersionResource.ResourceType, out string containerRegistryArchiveVersionApiVersion);
+            _archiveVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerRegistry", ContainerRegistryArchiveVersionResource.ResourceType.Namespace, Diagnostics);
+            _archiveVersionsRestClient = new ArchiveVersions(_archiveVersionsClientDiagnostics, Pipeline, Endpoint, containerRegistryArchiveVersionApiVersion ?? "2026-01-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ContainerRegistryArchiveResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ContainerRegistryArchiveResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ContainerRegistryArchiveResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Creates a archive version for a container registry with the specified parameters.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/packages/{packageType}/archives/{archiveName}/versions/{archiveVersionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/packages/{packageType}/archives/{archiveName}/versions/{archiveVersionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ArchiveVersions_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> ArchiveVersions_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2026-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerRegistryArchiveVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="archiveVersionName"> The name of the archive version resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="archiveVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="archiveVersionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="archiveVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<ContainerRegistryArchiveVersionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string archiveVersionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(archiveVersionName, nameof(archiveVersionName));
 
-            using var scope = _containerRegistryArchiveVersionArchiveVersionsClientDiagnostics.CreateScope("ContainerRegistryArchiveVersionCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _archiveVersionsClientDiagnostics.CreateScope("ContainerRegistryArchiveVersionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _containerRegistryArchiveVersionArchiveVersionsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, archiveVersionName, cancellationToken).ConfigureAwait(false);
-                var operation = new ContainerRegistryArmOperation<ContainerRegistryArchiveVersionResource>(new ContainerRegistryArchiveVersionOperationSource(Client), _containerRegistryArchiveVersionArchiveVersionsClientDiagnostics, Pipeline, _containerRegistryArchiveVersionArchiveVersionsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, archiveVersionName).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _archiveVersionsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, archiveVersionName, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ContainerRegistryArmOperation<ContainerRegistryArchiveVersionResource> operation = new ContainerRegistryArmOperation<ContainerRegistryArchiveVersionResource>(
+                    new ContainerRegistryArchiveVersionOperationSource(Client),
+                    _archiveVersionsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -102,40 +114,49 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// Creates a archive version for a container registry with the specified parameters.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/packages/{packageType}/archives/{archiveName}/versions/{archiveVersionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/packages/{packageType}/archives/{archiveName}/versions/{archiveVersionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ArchiveVersions_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> ArchiveVersions_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2026-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerRegistryArchiveVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="archiveVersionName"> The name of the archive version resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="archiveVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="archiveVersionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="archiveVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<ContainerRegistryArchiveVersionResource> CreateOrUpdate(WaitUntil waitUntil, string archiveVersionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(archiveVersionName, nameof(archiveVersionName));
 
-            using var scope = _containerRegistryArchiveVersionArchiveVersionsClientDiagnostics.CreateScope("ContainerRegistryArchiveVersionCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _archiveVersionsClientDiagnostics.CreateScope("ContainerRegistryArchiveVersionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _containerRegistryArchiveVersionArchiveVersionsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, archiveVersionName, cancellationToken);
-                var operation = new ContainerRegistryArmOperation<ContainerRegistryArchiveVersionResource>(new ContainerRegistryArchiveVersionOperationSource(Client), _containerRegistryArchiveVersionArchiveVersionsClientDiagnostics, Pipeline, _containerRegistryArchiveVersionArchiveVersionsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, archiveVersionName).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _archiveVersionsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, archiveVersionName, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ContainerRegistryArmOperation<ContainerRegistryArchiveVersionResource> operation = new ContainerRegistryArmOperation<ContainerRegistryArchiveVersionResource>(
+                    new ContainerRegistryArchiveVersionOperationSource(Client),
+                    _archiveVersionsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -149,38 +170,42 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// Gets the properties of the archive version.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/packages/{packageType}/archives/{archiveName}/versions/{archiveVersionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/packages/{packageType}/archives/{archiveName}/versions/{archiveVersionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ArchiveVersions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ArchiveVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2026-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerRegistryArchiveVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="archiveVersionName"> The name of the archive version resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="archiveVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="archiveVersionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="archiveVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<ContainerRegistryArchiveVersionResource>> GetAsync(string archiveVersionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(archiveVersionName, nameof(archiveVersionName));
 
-            using var scope = _containerRegistryArchiveVersionArchiveVersionsClientDiagnostics.CreateScope("ContainerRegistryArchiveVersionCollection.Get");
+            using DiagnosticScope scope = _archiveVersionsClientDiagnostics.CreateScope("ContainerRegistryArchiveVersionCollection.Get");
             scope.Start();
             try
             {
-                var response = await _containerRegistryArchiveVersionArchiveVersionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, archiveVersionName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _archiveVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, archiveVersionName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ContainerRegistryArchiveVersionData> response = Response.FromValue(ContainerRegistryArchiveVersionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ContainerRegistryArchiveVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -194,38 +219,42 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// Gets the properties of the archive version.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/packages/{packageType}/archives/{archiveName}/versions/{archiveVersionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/packages/{packageType}/archives/{archiveName}/versions/{archiveVersionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ArchiveVersions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ArchiveVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2026-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerRegistryArchiveVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="archiveVersionName"> The name of the archive version resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="archiveVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="archiveVersionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="archiveVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<ContainerRegistryArchiveVersionResource> Get(string archiveVersionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(archiveVersionName, nameof(archiveVersionName));
 
-            using var scope = _containerRegistryArchiveVersionArchiveVersionsClientDiagnostics.CreateScope("ContainerRegistryArchiveVersionCollection.Get");
+            using DiagnosticScope scope = _archiveVersionsClientDiagnostics.CreateScope("ContainerRegistryArchiveVersionCollection.Get");
             scope.Start();
             try
             {
-                var response = _containerRegistryArchiveVersionArchiveVersionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, archiveVersionName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _archiveVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, archiveVersionName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ContainerRegistryArchiveVersionData> response = Response.FromValue(ContainerRegistryArchiveVersionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ContainerRegistryArchiveVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -239,50 +268,52 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// Lists all archive versions for the specified container registry, repository type and archive name.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/packages/{packageType}/archives/{archiveName}/versions</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/packages/{packageType}/archives/{archiveName}/versions. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ArchiveVersions_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> ArchiveVersions_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2026-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerRegistryArchiveVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ContainerRegistryArchiveVersionResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ContainerRegistryArchiveVersionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ContainerRegistryArchiveVersionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _containerRegistryArchiveVersionArchiveVersionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerRegistryArchiveVersionArchiveVersionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerRegistryArchiveVersionResource(Client, ContainerRegistryArchiveVersionData.DeserializeContainerRegistryArchiveVersionData(e)), _containerRegistryArchiveVersionArchiveVersionsClientDiagnostics, Pipeline, "ContainerRegistryArchiveVersionCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ContainerRegistryArchiveVersionData, ContainerRegistryArchiveVersionResource>(new ArchiveVersionsGetAllAsyncCollectionResultOfT(
+                _archiveVersionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Parent.Name,
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "ContainerRegistryArchiveVersionCollection.GetAll"), data => new ContainerRegistryArchiveVersionResource(Client, data));
         }
 
         /// <summary>
         /// Lists all archive versions for the specified container registry, repository type and archive name.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/packages/{packageType}/archives/{archiveName}/versions</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/packages/{packageType}/archives/{archiveName}/versions. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ArchiveVersions_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> ArchiveVersions_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2026-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerRegistryArchiveVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -290,45 +321,69 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <returns> A collection of <see cref="ContainerRegistryArchiveVersionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ContainerRegistryArchiveVersionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _containerRegistryArchiveVersionArchiveVersionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerRegistryArchiveVersionArchiveVersionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerRegistryArchiveVersionResource(Client, ContainerRegistryArchiveVersionData.DeserializeContainerRegistryArchiveVersionData(e)), _containerRegistryArchiveVersionArchiveVersionsClientDiagnostics, Pipeline, "ContainerRegistryArchiveVersionCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ContainerRegistryArchiveVersionData, ContainerRegistryArchiveVersionResource>(new ArchiveVersionsGetAllCollectionResultOfT(
+                _archiveVersionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Parent.Name,
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "ContainerRegistryArchiveVersionCollection.GetAll"), data => new ContainerRegistryArchiveVersionResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/packages/{packageType}/archives/{archiveName}/versions/{archiveVersionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/packages/{packageType}/archives/{archiveName}/versions/{archiveVersionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ArchiveVersions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ArchiveVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2026-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerRegistryArchiveVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="archiveVersionName"> The name of the archive version resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="archiveVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="archiveVersionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="archiveVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string archiveVersionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(archiveVersionName, nameof(archiveVersionName));
 
-            using var scope = _containerRegistryArchiveVersionArchiveVersionsClientDiagnostics.CreateScope("ContainerRegistryArchiveVersionCollection.Exists");
+            using DiagnosticScope scope = _archiveVersionsClientDiagnostics.CreateScope("ContainerRegistryArchiveVersionCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _containerRegistryArchiveVersionArchiveVersionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, archiveVersionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _archiveVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, archiveVersionName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ContainerRegistryArchiveVersionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ContainerRegistryArchiveVersionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ContainerRegistryArchiveVersionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -342,36 +397,50 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/packages/{packageType}/archives/{archiveName}/versions/{archiveVersionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/packages/{packageType}/archives/{archiveName}/versions/{archiveVersionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ArchiveVersions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ArchiveVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2026-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerRegistryArchiveVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="archiveVersionName"> The name of the archive version resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="archiveVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="archiveVersionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="archiveVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string archiveVersionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(archiveVersionName, nameof(archiveVersionName));
 
-            using var scope = _containerRegistryArchiveVersionArchiveVersionsClientDiagnostics.CreateScope("ContainerRegistryArchiveVersionCollection.Exists");
+            using DiagnosticScope scope = _archiveVersionsClientDiagnostics.CreateScope("ContainerRegistryArchiveVersionCollection.Exists");
             scope.Start();
             try
             {
-                var response = _containerRegistryArchiveVersionArchiveVersionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, archiveVersionName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _archiveVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, archiveVersionName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ContainerRegistryArchiveVersionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ContainerRegistryArchiveVersionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ContainerRegistryArchiveVersionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -385,38 +454,54 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/packages/{packageType}/archives/{archiveName}/versions/{archiveVersionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/packages/{packageType}/archives/{archiveName}/versions/{archiveVersionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ArchiveVersions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ArchiveVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2026-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerRegistryArchiveVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="archiveVersionName"> The name of the archive version resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="archiveVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="archiveVersionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="archiveVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<ContainerRegistryArchiveVersionResource>> GetIfExistsAsync(string archiveVersionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(archiveVersionName, nameof(archiveVersionName));
 
-            using var scope = _containerRegistryArchiveVersionArchiveVersionsClientDiagnostics.CreateScope("ContainerRegistryArchiveVersionCollection.GetIfExists");
+            using DiagnosticScope scope = _archiveVersionsClientDiagnostics.CreateScope("ContainerRegistryArchiveVersionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _containerRegistryArchiveVersionArchiveVersionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, archiveVersionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _archiveVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, archiveVersionName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ContainerRegistryArchiveVersionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ContainerRegistryArchiveVersionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ContainerRegistryArchiveVersionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ContainerRegistryArchiveVersionResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ContainerRegistryArchiveVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -430,38 +515,54 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/packages/{packageType}/archives/{archiveName}/versions/{archiveVersionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/packages/{packageType}/archives/{archiveName}/versions/{archiveVersionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ArchiveVersions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ArchiveVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2026-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerRegistryArchiveVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="archiveVersionName"> The name of the archive version resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="archiveVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="archiveVersionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="archiveVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<ContainerRegistryArchiveVersionResource> GetIfExists(string archiveVersionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(archiveVersionName, nameof(archiveVersionName));
 
-            using var scope = _containerRegistryArchiveVersionArchiveVersionsClientDiagnostics.CreateScope("ContainerRegistryArchiveVersionCollection.GetIfExists");
+            using DiagnosticScope scope = _archiveVersionsClientDiagnostics.CreateScope("ContainerRegistryArchiveVersionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _containerRegistryArchiveVersionArchiveVersionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, archiveVersionName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _archiveVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, archiveVersionName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ContainerRegistryArchiveVersionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ContainerRegistryArchiveVersionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ContainerRegistryArchiveVersionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ContainerRegistryArchiveVersionResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ContainerRegistryArchiveVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -481,6 +582,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<ContainerRegistryArchiveVersionResource> IAsyncEnumerable<ContainerRegistryArchiveVersionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

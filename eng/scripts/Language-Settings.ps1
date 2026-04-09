@@ -94,20 +94,17 @@ function Get-dotnet-AdditionalValidationPackagesFromPackageSet($LocatedPackages,
 {
   $additionalValidationPackages = @()
 
-  $DependencyCalculationPackages = @(
-    "Azure.Core",
-    "Azure.ResourceManager",
-    "System.ClientModel"
-  )
-
-  $TestDependsOnDependencySet = $LocatedPackages | Where-Object { $_.Name -in $DependencyCalculationPackages }
-  $TestDependsOnDependency = $TestDependsOnDependencySet.Name -join " "
+  # Use all directly changed packages for dependency calculation. This ensures that
+  # when any package changes, all cross-service packages that depend on it are included
+  # as indirect packages for validation testing.
+  $TestDependsOnDependencySet = $LocatedPackages | Where-Object { $_.IncludedForValidation -eq $false }
+  $TestDependsOnDependency = ($TestDependsOnDependencySet | ForEach-Object { $_.Name }) -join " "
 
   if (!$TestDependsOnDependency) {
     return $additionalValidationPackages
   }
 
-  Write-Host "Calculating dependencies for $($pkgProp.Name)"
+  Write-Host "Calculating dependencies for: $TestDependsOnDependency"
 
   $outputFilePath = Join-Path $RepoRoot "_dependencylist.txt"
 

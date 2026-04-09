@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.KeyVault
         {
             if (id.ResourceType != KeyVaultResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, KeyVaultResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, KeyVaultResource.ResourceType), nameof(id));
             }
         }
 
@@ -295,7 +295,8 @@ namespace Azure.ResourceManager.KeyVault
                 Id.ResourceGroupName,
                 Id.Name,
                 top,
-                context), data => new KeyVaultSecretResource(Client, data));
+                context,
+                "KeyVaultSecretCollection.GetAll"), data => new KeyVaultSecretResource(Client, data));
         }
 
         /// <summary>
@@ -330,7 +331,8 @@ namespace Azure.ResourceManager.KeyVault
                 Id.ResourceGroupName,
                 Id.Name,
                 top,
-                context), data => new KeyVaultSecretResource(Client, data));
+                context,
+                "KeyVaultSecretCollection.GetAll"), data => new KeyVaultSecretResource(Client, data));
         }
 
         /// <summary>

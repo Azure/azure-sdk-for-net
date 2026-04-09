@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Chaos
         {
             if (id.ResourceType != ChaosExperimentResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ChaosExperimentResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ChaosExperimentResource.ResourceType), nameof(id));
             }
         }
 
@@ -177,7 +177,13 @@ namespace Azure.ResourceManager.Chaos
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ChaosExperimentExecutionData, ChaosExperimentExecutionResource>(new ExperimentExecutionsGetAllExecutionsAsyncCollectionResultOfT(_experimentExecutionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ChaosExperimentExecutionResource(Client, data));
+            return new AsyncPageableWrapper<ChaosExperimentExecutionData, ChaosExperimentExecutionResource>(new ExperimentExecutionsGetAllExecutionsAsyncCollectionResultOfT(
+                _experimentExecutionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ChaosExperimentExecutionCollection.GetAll"), data => new ChaosExperimentExecutionResource(Client, data));
         }
 
         /// <summary>
@@ -205,7 +211,13 @@ namespace Azure.ResourceManager.Chaos
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ChaosExperimentExecutionData, ChaosExperimentExecutionResource>(new ExperimentExecutionsGetAllExecutionsCollectionResultOfT(_experimentExecutionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ChaosExperimentExecutionResource(Client, data));
+            return new PageableWrapper<ChaosExperimentExecutionData, ChaosExperimentExecutionResource>(new ExperimentExecutionsGetAllExecutionsCollectionResultOfT(
+                _experimentExecutionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ChaosExperimentExecutionCollection.GetAll"), data => new ChaosExperimentExecutionResource(Client, data));
         }
 
         /// <summary>

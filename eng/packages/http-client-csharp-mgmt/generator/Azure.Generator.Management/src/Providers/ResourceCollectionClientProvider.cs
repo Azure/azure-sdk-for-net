@@ -126,8 +126,6 @@ namespace Azure.Generator.Management.Providers
                 // For example, for path /providers/Microsoft.Management/serviceGroups/{servicegroupName}/providers/Microsoft.Edge/sites/{siteName}
                 // the contextual path is /providers/Microsoft.Management/serviceGroups/{servicegroupName}
                 // This ensures that servicegroupName is derived from the scope Id (id.Name) rather than being an extra constructor parameter.
-                // For specific extension resources (those targeting a known parent type like Microsoft.Compute/virtualMachines),
-                // the ParentResourceType property contains the explicit parent type for method name disambiguation.
                 return new RequestPathPattern(resourceMetadata.ResourceIdPattern).GetParent();
             }
 
@@ -199,7 +197,7 @@ namespace Azure.Generator.Management.Providers
 
         protected override FormattableString BuildDescription()
         {
-            var parentResourceType = GetParentResourceType(_resourceMetadata, _resource);
+            var parentResourceType = GetParentResourceType(_resourceMetadata, _resource) ?? typeof(ArmResource); // TODO: will update this with actual external resource type
             return $"A class representing a collection of {_resource.Type:C} and their operations.\nEach {_resource.Type:C} in the collection will belong to the same instance of {parentResourceType:C}.\nTo get a {Type:C} instance call the Get{ResourceName.Pluralize()} method from an instance of {parentResourceType:C}.";
         }
 
@@ -292,8 +290,8 @@ namespace Azure.Generator.Management.Providers
                 bodyStatements.Add(clientInfo.RestClientField.Assign(New.Instance(clientInfo.RestClientProvider.Type, clientInfo.DiagnosticsField, thisCollection.Pipeline(), thisCollection.Endpoint(), effectiveApiVersion)).Terminate());
             }
 
-            // Do not call ValidateResourceId for Extension resources
-            if (_resourceMetadata.ResourceScope != ResourceScope.Extension)
+            // skip resource Id validation for extension resource without parent resource type, since we don't have enough information to validate the resource Id. For example, for an extension resource with resource scope of extension and no parent resource type specified, the resource Id pattern could be something like /{scope}/providers/Microsoft.ABC/def/{defName}, in this case we don't know what the {scope} is, it could be subscription, resource group, or even a management group, so we can't validate the resource Id.
+            if (_resourceMetadata.ResourceScope != ResourceScope.Extension || !string.IsNullOrEmpty(_resourceMetadata.ParentResourceType))
             {
                 bodyStatements.Add(Static(Type).As<ArmCollection>().ValidateResourceId(idParameter).Terminate());
             }
@@ -301,7 +299,7 @@ namespace Azure.Generator.Management.Providers
             return new ConstructorProvider(signature, bodyStatements, this);
         }
 
-        private static CSharpType GetParentResourceType(ArmResourceMetadata resourceMetadata, ResourceClientProvider resource)
+        private static CSharpType? GetParentResourceType(ArmResourceMetadata resourceMetadata, ResourceClientProvider resource)
         {
             // First check if the resource has a parent resource
             if (resourceMetadata.ParentResourceId is not null)
@@ -318,10 +316,12 @@ namespace Azure.Generator.Management.Providers
                     return typeof(SubscriptionResource);
                 case ResourceScope.Tenant:
                     return typeof(TenantResource);
-                case ResourceScope.Extension:
-                    return typeof(ArmResource);
                 case ResourceScope.ManagementGroup:
                     return typeof(ManagementGroupResource);
+                case ResourceScope.Extension:
+                    // Generic-scope extension resources (e.g., /{scope}/providers/...) have no
+                    // specific parent type. Return null so callers fall back to ArmResource.
+                    return null;
                 default:
                     // TODO -- this is incorrect, but we put it here as a placeholder.
                     return resource.Type;
@@ -331,11 +331,16 @@ namespace Azure.Generator.Management.Providers
         protected override MethodProvider[] BuildMethods()
         {
             var methods = new List<MethodProvider>();
-
-            // Do not build ValidateResourceIdMethod for Extension resources
+            var parentResourceCsharpType = GetParentResourceType(_resourceMetadata, _resource);
             if (_resourceMetadata.ResourceScope != ResourceScope.Extension)
             {
-                methods.Add(ResourceMethodSnippets.BuildValidateResourceIdMethod(this, Static(GetParentResourceType(_resourceMetadata, _resource)).As<ArmResource>().ResourceType()));
+                methods.Add(ResourceMethodSnippets.BuildValidateResourceIdMethod(this,Static(parentResourceCsharpType!).As<ArmResource>().ResourceType()));
+            }
+            // For extension resource with parent resource type specified, we can also generate a ValidateResourceId method with parent resource type, which will be used in the Get{ResourceName} method in the parent resource's collection client.
+            // This is needed to ensure the resource Id passed in is valid and belongs to the correct parent resource type.
+            else if (!string.IsNullOrEmpty(_resourceMetadata.ParentResourceType))
+            {
+                methods.Add(ResourceMethodSnippets.BuildValidateResourceIdMethod(this, Literal(_resourceMetadata.ParentResourceType!)));
             }
 
             methods.AddRange(BuildCreateOrUpdateMethods());

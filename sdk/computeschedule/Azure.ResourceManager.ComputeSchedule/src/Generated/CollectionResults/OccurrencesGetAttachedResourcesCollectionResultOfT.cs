@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         private readonly string _scheduledActionName;
         private readonly string _occurrenceId;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of OccurrencesGetAttachedResourcesCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Occurrences client used to send requests. </param>
@@ -30,7 +31,8 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <param name="scheduledActionName"> The name of the ScheduledAction. </param>
         /// <param name="occurrenceId"> The name of the Occurrence. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public OccurrencesGetAttachedResourcesCollectionResultOfT(Occurrences client, Guid subscriptionId, string resourceGroupName, string scheduledActionName, string occurrenceId, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public OccurrencesGetAttachedResourcesCollectionResultOfT(Occurrences client, Guid subscriptionId, string resourceGroupName, string scheduledActionName, string occurrenceId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -38,6 +40,7 @@ namespace Azure.ResourceManager.ComputeSchedule
             _scheduledActionName = scheduledActionName;
             _occurrenceId = occurrenceId;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of OccurrencesGetAttachedResourcesCollectionResultOfT as an enumerable collection. </summary>
@@ -70,7 +73,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAttachedResourcesRequest(nextLink, _subscriptionId, _resourceGroupName, _scheduledActionName, _occurrenceId, _context) : _client.CreateGetAttachedResourcesRequest(_subscriptionId, _resourceGroupName, _scheduledActionName, _occurrenceId, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ScheduledActionOccurrenceResource.GetAttachedResources");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

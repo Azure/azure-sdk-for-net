@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -827,7 +827,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 appPrefix,
                 skip,
                 maxCount,
-                context);
+                context,
+                "LocalRulestackResource.GetAppIds");
         }
 
         /// <summary>
@@ -872,7 +873,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 appPrefix,
                 skip,
                 maxCount,
-                context);
+                context,
+                "LocalRulestackResource.GetAppIds");
         }
 
         /// <summary>
@@ -913,7 +915,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 Id.Name,
                 skip,
                 maxCount,
-                context);
+                context,
+                "LocalRulestackResource.GetCountries");
         }
 
         /// <summary>
@@ -954,7 +957,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 Id.Name,
                 skip,
                 maxCount,
-                context);
+                context,
+                "LocalRulestackResource.GetCountries");
         }
 
         /// <summary>
@@ -995,7 +999,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 Id.Name,
                 skip,
                 maxCount,
-                context);
+                context,
+                "LocalRulestackResource.GetPredefinedUrlCategories");
         }
 
         /// <summary>
@@ -1036,7 +1041,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 Id.Name,
                 skip,
                 maxCount,
-                context);
+                context,
+                "LocalRulestackResource.GetPredefinedUrlCategories");
         }
 
         /// <summary>

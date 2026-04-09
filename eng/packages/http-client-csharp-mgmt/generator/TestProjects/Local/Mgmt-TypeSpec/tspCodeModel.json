@@ -23447,6 +23447,7 @@
                   }
                 ],
                 "resourceScope": "ManagementGroup",
+                "parentResourceType": "Microsoft.Management/managementGroups",
                 "resourceName": "GroupQuotaSubscriptionRequestStatus",
                 "nameConstraints": {},
                 "apiVersions": [
@@ -23465,7 +23466,7 @@
                     "methodId": "MgmtTypeSpec.GroupQuotaLimitLists.createOrUpdate",
                     "kind": "Create",
                     "operationPath": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/groupQuotaLimits/{location}",
-                    "operationScope": "ManagementGroup",
+                    "operationScope": "Tenant",
                     "resourceScope": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/groupQuotaLimits/{location}"
                   },
                   {
@@ -23473,7 +23474,7 @@
                     "methodId": "MgmtTypeSpec.GroupQuotaLimitLists.list",
                     "kind": "Read",
                     "operationPath": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/groupQuotaLimits/{location}",
-                    "operationScope": "ManagementGroup",
+                    "operationScope": "Tenant",
                     "resourceScope": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/groupQuotaLimits/{location}"
                   },
                   {
@@ -23481,11 +23482,11 @@
                     "methodId": "MgmtTypeSpec.GroupQuotaLimitLists.update",
                     "kind": "Update",
                     "operationPath": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/groupQuotaLimits/{location}",
-                    "operationScope": "ManagementGroup",
+                    "operationScope": "Tenant",
                     "resourceScope": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/groupQuotaLimits/{location}"
                   }
                 ],
-                "resourceScope": "ManagementGroup",
+                "resourceScope": "Tenant",
                 "resourceName": "GroupQuotaLimitList",
                 "nameConstraints": {},
                 "apiVersions": [
@@ -23504,11 +23505,11 @@
                     "methodId": "MgmtTypeSpec.SubscriptionQuotaAllocationsLists.get",
                     "kind": "Read",
                     "operationPath": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/subscriptions/{subscriptionId}/providers/MgmtTypeSpec/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/quotaAllocations/{location}",
-                    "operationScope": "ManagementGroup",
+                    "operationScope": "Extension",
                     "resourceScope": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/subscriptions/{subscriptionId}/providers/MgmtTypeSpec/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/quotaAllocations/{location}"
                   }
                 ],
-                "resourceScope": "ManagementGroup",
+                "resourceScope": "Extension",
                 "resourceName": "SubscriptionQuotaAllocationsList",
                 "nameConstraints": {},
                 "apiVersions": [
@@ -23952,7 +23953,7 @@
                     "methodId": "MgmtTypeSpec.Targets.createOrUpdate",
                     "kind": "Create",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/MgmtTypeSpec/targets/{targetName}",
-                    "operationScope": "ResourceGroup",
+                    "operationScope": "Extension",
                     "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/MgmtTypeSpec/targets/{targetName}"
                   },
                   {
@@ -23960,7 +23961,7 @@
                     "methodId": "MgmtTypeSpec.Targets.get",
                     "kind": "Read",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/MgmtTypeSpec/targets/{targetName}",
-                    "operationScope": "ResourceGroup",
+                    "operationScope": "Extension",
                     "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/MgmtTypeSpec/targets/{targetName}"
                   },
                   {
@@ -23968,7 +23969,7 @@
                     "methodId": "MgmtTypeSpec.Targets.delete",
                     "kind": "Delete",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/MgmtTypeSpec/targets/{targetName}",
-                    "operationScope": "ResourceGroup",
+                    "operationScope": "Extension",
                     "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/MgmtTypeSpec/targets/{targetName}"
                   },
                   {
@@ -23976,10 +23977,10 @@
                     "methodId": "MgmtTypeSpec.Targets.list",
                     "kind": "List",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/MgmtTypeSpec/targets",
-                    "operationScope": "ResourceGroup"
+                    "operationScope": "Extension"
                   }
                 ],
-                "resourceScope": "ResourceGroup",
+                "resourceScope": "Extension",
                 "resourceName": "Target",
                 "nameConstraints": {
                   "pattern": "^[a-zA-Z0-9_\\-\\.]+$"
@@ -24131,6 +24132,7 @@
                   }
                 ],
                 "resourceScope": "Extension",
+                "parentResourceType": "Microsoft.Management/serviceGroups",
                 "resourceName": "ServiceGroupSite",
                 "nameConstraints": {
                   "pattern": "^[a-zA-Z0-9][a-zA-Z0-9-_]{2,22}[a-zA-Z0-9]$"
@@ -24317,7 +24319,7 @@
                     "methodId": "MgmtTypeSpec.PolicyVmAssignments.createOrUpdate",
                     "kind": "Create",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/MgmtTypeSpec/policyAssignments/{policyAssignmentName}",
-                    "operationScope": "ResourceGroup",
+                    "operationScope": "Extension",
                     "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/MgmtTypeSpec/policyAssignments/{policyAssignmentName}"
                   },
                   {
@@ -24325,7 +24327,7 @@
                     "methodId": "MgmtTypeSpec.PolicyVmAssignments.get",
                     "kind": "Read",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/MgmtTypeSpec/policyAssignments/{policyAssignmentName}",
-                    "operationScope": "ResourceGroup",
+                    "operationScope": "Extension",
                     "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/MgmtTypeSpec/policyAssignments/{policyAssignmentName}"
                   },
                   {
@@ -24333,7 +24335,7 @@
                     "methodId": "MgmtTypeSpec.PolicyVmAssignments.delete",
                     "kind": "Delete",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/MgmtTypeSpec/policyAssignments/{policyAssignmentName}",
-                    "operationScope": "ResourceGroup",
+                    "operationScope": "Extension",
                     "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/MgmtTypeSpec/policyAssignments/{policyAssignmentName}"
                   },
                   {
@@ -24341,10 +24343,11 @@
                     "methodId": "MgmtTypeSpec.PolicyVmAssignments.list",
                     "kind": "List",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/MgmtTypeSpec/policyAssignments",
-                    "operationScope": "ResourceGroup"
+                    "operationScope": "Extension"
                   }
                 ],
-                "resourceScope": "ResourceGroup",
+                "resourceScope": "Extension",
+                "parentResourceType": "Microsoft.Compute/virtualMachines",
                 "resourceName": "PolicyVmAssignment",
                 "nameConstraints": {},
                 "apiVersions": [
@@ -24363,7 +24366,7 @@
                     "methodId": "MgmtTypeSpec.PolicyArcAssignments.createOrUpdate",
                     "kind": "Create",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/providers/MgmtTypeSpec/policyAssignments/{policyAssignmentName}",
-                    "operationScope": "ResourceGroup",
+                    "operationScope": "Extension",
                     "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/providers/MgmtTypeSpec/policyAssignments/{policyAssignmentName}"
                   },
                   {
@@ -24371,7 +24374,7 @@
                     "methodId": "MgmtTypeSpec.PolicyArcAssignments.get",
                     "kind": "Read",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/providers/MgmtTypeSpec/policyAssignments/{policyAssignmentName}",
-                    "operationScope": "ResourceGroup",
+                    "operationScope": "Extension",
                     "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/providers/MgmtTypeSpec/policyAssignments/{policyAssignmentName}"
                   },
                   {
@@ -24379,7 +24382,7 @@
                     "methodId": "MgmtTypeSpec.PolicyArcAssignments.delete",
                     "kind": "Delete",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/providers/MgmtTypeSpec/policyAssignments/{policyAssignmentName}",
-                    "operationScope": "ResourceGroup",
+                    "operationScope": "Extension",
                     "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/providers/MgmtTypeSpec/policyAssignments/{policyAssignmentName}"
                   },
                   {
@@ -24387,10 +24390,11 @@
                     "methodId": "MgmtTypeSpec.PolicyArcAssignments.list",
                     "kind": "List",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/providers/MgmtTypeSpec/policyAssignments",
-                    "operationScope": "ResourceGroup"
+                    "operationScope": "Extension"
                   }
                 ],
-                "resourceScope": "ResourceGroup",
+                "resourceScope": "Extension",
+                "parentResourceType": "Microsoft.HybridCompute/machines",
                 "resourceName": "PolicyArcAssignment",
                 "nameConstraints": {},
                 "apiVersions": [

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Peering
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Peering
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PeeringServiceData, PeeringServiceResource>(new PeeringServicesGetByResourceGroupAsyncCollectionResultOfT(_peeringServicesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new PeeringServiceResource(Client, data));
+            return new AsyncPageableWrapper<PeeringServiceData, PeeringServiceResource>(new PeeringServicesGetByResourceGroupAsyncCollectionResultOfT(_peeringServicesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "PeeringServiceCollection.GetAll"), data => new PeeringServiceResource(Client, data));
         }
 
         /// <summary>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.Peering
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PeeringServiceData, PeeringServiceResource>(new PeeringServicesGetByResourceGroupCollectionResultOfT(_peeringServicesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new PeeringServiceResource(Client, data));
+            return new PageableWrapper<PeeringServiceData, PeeringServiceResource>(new PeeringServicesGetByResourceGroupCollectionResultOfT(_peeringServicesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "PeeringServiceCollection.GetAll"), data => new PeeringServiceResource(Client, data));
         }
 
         /// <summary>

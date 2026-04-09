@@ -43,6 +43,8 @@ public class SecurityCenterSpecification() :
         // TODO: Uncomment when Azure.ResourceManager.SecurityCenter is regenerated
         // from a ProjectReference with enable-bicep-serialization (see note above).
         // ServerVulnerabilityAssessmentsSetting is polymorphic with a 'kind' discriminator.
+        // Commented out: AzureServersSetting and ServerVulnerabilityAssessmentsSettingResource
+        // were removed from the latest Azure.ResourceManager.SecurityCenter package.
         // CustomizeResource<AzureServersSetting>(r =>
         // {
         //     r.BaseType = GetModel<ServerVulnerabilityAssessmentsSettingResource>() as TypeModel;

@@ -7,121 +7,147 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetworkCloud.Models;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
-    /// <summary>
-    /// A class representing the NetworkCloudVolume data model.
-    /// Volume represents storage made available for use by resources running on the cluster.
-    /// </summary>
+    /// <summary> Volume represents storage made available for use by resources running on the cluster. </summary>
     public partial class NetworkCloudVolumeData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudVolumeData"/>. </summary>
-        /// <param name="location"> The location. </param>
-        /// <param name="extendedLocation"> The extended location of the cluster associated with the resource. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="sizeInMiB"> The requested storage allocation for the volume in Mebibytes. </param>
+        /// <param name="extendedLocation"> The extended location of the resource. This property is required when creating the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="extendedLocation"/> is null. </exception>
-        public NetworkCloudVolumeData(AzureLocation location, ExtendedLocation extendedLocation, long sizeInMiB) : base(location)
+        public NetworkCloudVolumeData(AzureLocation location, long sizeInMiB, ExtendedLocation extendedLocation) : base(location)
         {
             Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
 
+            Properties = new VolumeProperties(sizeInMiB);
             ExtendedLocation = extendedLocation;
-            AttachedTo = new ChangeTrackingList<string>();
-            SizeInMiB = sizeInMiB;
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudVolumeData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="etag"> Resource ETag. </param>
-        /// <param name="extendedLocation"> The extended location of the cluster associated with the resource. </param>
-        /// <param name="allocatedInSizeMiB"> The allocated size of the volume in Mebibytes. </param>
-        /// <param name="attachedTo"> The list of resource IDs that attach the volume. It may include virtual machines and Hybrid AKS clusters. </param>
-        /// <param name="detailedStatus"> The more detailed status of the volume. </param>
-        /// <param name="detailedStatusMessage"> The descriptive message about the current detailed status. </param>
-        /// <param name="provisioningState"> The provisioning state of the volume. </param>
-        /// <param name="serialNumber"> The unique identifier of the volume. </param>
-        /// <param name="sizeInMiB"> The requested storage allocation for the volume in Mebibytes. </param>
-        /// <param name="storageApplianceId"> The resource ID of the storage appliance that hosts the volume. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkCloudVolumeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ExtendedLocation extendedLocation, long? allocatedInSizeMiB, IReadOnlyList<string> attachedTo, VolumeDetailedStatus? detailedStatus, string detailedStatusMessage, VolumeProvisioningState? provisioningState, string serialNumber, long sizeInMiB, ResourceIdentifier storageApplianceId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The list of the resource properties. </param>
+        /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
+        /// <param name="extendedLocation"> The extended location of the resource. This property is required when creating the resource. </param>
+        internal NetworkCloudVolumeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, VolumeProperties properties, ETag? eTag, ExtendedLocation extendedLocation) : base(id, name, resourceType, systemData, tags, location)
         {
-            ETag = etag;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
+            ETag = eTag;
             ExtendedLocation = extendedLocation;
-            AllocatedInSizeMiB = allocatedInSizeMiB;
-            AttachedTo = attachedTo;
-            DetailedStatus = detailedStatus;
-            DetailedStatusMessage = detailedStatusMessage;
-            ProvisioningState = provisioningState;
-            SerialNumber = serialNumber;
-            SizeInMiB = sizeInMiB;
-            StorageApplianceId = storageApplianceId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkCloudVolumeData"/> for deserialization. </summary>
-        internal NetworkCloudVolumeData()
-        {
-        }
+        /// <summary> The list of the resource properties. </summary>
+        internal VolumeProperties Properties { get; set; }
 
-        /// <summary> Resource ETag. </summary>
+        /// <summary> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </summary>
         public ETag? ETag { get; }
-        /// <summary> The extended location of the cluster associated with the resource. </summary>
-        public ExtendedLocation ExtendedLocation { get; set; }
-        /// <summary> The allocated size of the volume in Mebibytes. </summary>
-        public long? AllocatedInSizeMiB { get; }
-        /// <summary> The list of resource IDs that attach the volume. It may include virtual machines and Hybrid AKS clusters. </summary>
-        public IReadOnlyList<string> AttachedTo { get; }
-        /// <summary> The more detailed status of the volume. </summary>
-        public VolumeDetailedStatus? DetailedStatus { get; }
-        /// <summary> The descriptive message about the current detailed status. </summary>
-        public string DetailedStatusMessage { get; }
-        /// <summary> The provisioning state of the volume. </summary>
-        public VolumeProvisioningState? ProvisioningState { get; }
-        /// <summary> The unique identifier of the volume. </summary>
-        public string SerialNumber { get; }
+
         /// <summary> The requested storage allocation for the volume in Mebibytes. </summary>
-        public long SizeInMiB { get; set; }
+        public long SizeInMiB
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SizeInMiB;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VolumeProperties();
+                }
+                Properties.SizeInMiB = value;
+            }
+        }
+
         /// <summary> The resource ID of the storage appliance that hosts the volume. </summary>
-        public ResourceIdentifier StorageApplianceId { get; set; }
+        public ResourceIdentifier StorageApplianceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StorageApplianceId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VolumeProperties();
+                }
+                Properties.StorageApplianceId = value;
+            }
+        }
+
+        /// <summary> The allocated size of the volume in Mebibytes. </summary>
+        public long? AllocatedInSizeMiB
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AllocatedInSizeMiB;
+            }
+        }
+
+        /// <summary> The list of resource IDs that attach the volume. It may include virtual machines and Hybrid AKS clusters. </summary>
+        public IReadOnlyList<string> AttachedTo
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VolumeProperties();
+                }
+                return Properties.AttachedTo;
+            }
+        }
+
+        /// <summary> The more detailed status of the volume. </summary>
+        public VolumeDetailedStatus? DetailedStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DetailedStatus;
+            }
+        }
+
+        /// <summary> The descriptive message about the current detailed status. </summary>
+        public string DetailedStatusMessage
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DetailedStatusMessage;
+            }
+        }
+
+        /// <summary> The unique identifier of the volume. </summary>
+        public string SerialNumber
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SerialNumber;
+            }
+        }
+
+        /// <summary> The provisioning state of the volume. </summary>
+        public VolumeProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }
