@@ -16,3 +16,5 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
         }
     }
 }
+
+// Test comment for batching validation - DO NOT MERGE

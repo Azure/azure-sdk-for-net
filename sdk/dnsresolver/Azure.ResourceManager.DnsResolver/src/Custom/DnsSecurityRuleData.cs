@@ -28,3 +28,5 @@ namespace Azure.ResourceManager.DnsResolver
         }
     }
 }
+
+// Test comment for batching validation - DO NOT MERGE

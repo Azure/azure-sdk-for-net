@@ -177,3 +177,5 @@ namespace Azure.ResourceManager.Avs.Models
         }
     }
 }
+
+// Test comment for batching validation - DO NOT MERGE
