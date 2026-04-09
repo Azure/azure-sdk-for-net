@@ -128,7 +128,11 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
                 double currentHumidity = minHumidity + rand.NextDouble() * 20;
                 messageBase["Temperature"] = currentTemperature;
                 messageBase["Humidity"] = currentHumidity;
+#pragma warning disable IL2026 // RequiresUnreferencedCode
+#pragma warning disable IL3050 // RequiresDynamicCode
                 string messageBody = JsonSerializer.Serialize(messageBase);
+#pragma warning restore IL3050
+#pragma warning restore IL2026
                 var message = new Microsoft.Azure.Devices.Client.Message(Encoding.ASCII.GetBytes(messageBody))
                 {
                     ContentType = "application/json",
