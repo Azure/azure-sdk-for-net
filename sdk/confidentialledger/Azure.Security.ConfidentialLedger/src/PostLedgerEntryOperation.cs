@@ -60,6 +60,15 @@ namespace Azure.Security.ConfidentialLedger
                     .ConfigureAwait(false)
                 : _client.GetTransactionStatus(Id, new RequestContext { CancellationToken = cancellationToken, ErrorOptions = ErrorOptions.NoThrow });
 
+            // 404: node doesn't know about the transaction yet (replication lag)
+            // 406: node knows the transaction but it hasn't committed yet
+            // Both are transient — treat as pending so the poller retries.
+            if (statusResponse.Status == (int)HttpStatusCode.NotFound ||
+                statusResponse.Status == (int)HttpStatusCode.NotAcceptable)
+            {
+                return OperationState.Pending(statusResponse);
+            }
+
             if (statusResponse.Status != (int)HttpStatusCode.OK)
             {
                 var ex = new RequestFailedException(statusResponse, null, new PostLedgerEntryRequestFailedDetailsParser(exceptionMessage));
