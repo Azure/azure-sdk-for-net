@@ -487,6 +487,74 @@ namespace Azure.Generator.Mgmt.Tests
         }
 
         /// <summary>
+        /// Verifies that when the child model has multiple normal properties and an [Obsolete]
+        /// property from custom code, all non-obsolete properties are flattened via PropertyFlatten
+        /// while the obsolete one is skipped. This exercises the PropertyFlatten iteration loop
+        /// (as opposed to SafeFlatten which handles the single-property case).
+        /// </summary>
+        [Test]
+        public void TestPropertyFlattenSkipsObsoleteWithMultipleProperties()
+        {
+            // Create a child model "Step" with two normal properties.
+            var startTimeUtcProp = InputFactory.Property("startTimeUtc", InputPrimitiveType.PlainDate, isRequired: false, serializedName: "startTimeUtc");
+            var endTimeUtcProp = InputFactory.Property("endTimeUtc", InputPrimitiveType.PlainDate, isRequired: false, serializedName: "endTimeUtc");
+            var stepModel = InputFactory.Model(
+                "Step",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [startTimeUtcProp, endTimeUtcProp]);
+
+            // Create a "properties" property on the parent model referencing the Step model,
+            // then apply the @flattenProperty decorator to it.
+            var progressProperty = InputFactory.Property("progress", stepModel, isRequired: false, serializedName: "progress");
+            ApplyFlattenDecorator(progressProperty);
+
+            // Create the parent model.
+            var parentModel = InputFactory.Model(
+                "MyProperties",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [progressProperty]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [parentModel, stepModel]);
+
+            // Create the model providers.
+            var parentModelProvider = plugin.Object.TypeFactory.CreateModel(parentModel);
+            Assert.IsNotNull(parentModelProvider);
+
+            var stepModelProvider = plugin.Object.TypeFactory.CreateModel(stepModel);
+            Assert.IsNotNull(stepModelProvider);
+
+            // Set up a custom code view on the Step model that has an [Obsolete] property.
+            var customCodeView = new ObsoletePropertyCustomCodeView(stepModelProvider!);
+            ManagementMockHelpers.SetCustomCodeView(stepModelProvider!, customCodeView);
+
+            // Run all visitors on the parent model.
+            var visitTypeCore = typeof(LibraryVisitor).GetMethod(
+                "VisitTypeCore",
+                BindingFlags.NonPublic | BindingFlags.Instance);
+            Assert.IsNotNull(visitTypeCore, "Could not find LibraryVisitor.VisitTypeCore method");
+
+            foreach (var visitor in ManagementClientGenerator.Instance.Visitors)
+            {
+                visitTypeCore!.Invoke(visitor, [parentModelProvider]);
+            }
+
+            // After property flattening, the parent model should have:
+            // 1. The original "Progress" property (now internal)
+            // 2. Flattened "StartTimeUtc" and "EndTimeUtc" properties (non-obsolete)
+            // It should NOT have a flattened "OldPropertyName" (the obsolete property from custom code).
+
+            var flattenedStartTimeUtc = parentModelProvider!.Properties.FirstOrDefault(p => p.Name == "StartTimeUtc");
+            Assert.IsNotNull(flattenedStartTimeUtc, "Non-obsolete property 'StartTimeUtc' should be flattened onto the parent model");
+
+            var flattenedEndTimeUtc = parentModelProvider.Properties.FirstOrDefault(p => p.Name == "EndTimeUtc");
+            Assert.IsNotNull(flattenedEndTimeUtc, "Non-obsolete property 'EndTimeUtc' should be flattened onto the parent model");
+
+            var flattenedObsolete = parentModelProvider.Properties.FirstOrDefault(p => p.Name == "OldPropertyName");
+            Assert.IsNull(flattenedObsolete, "Obsolete property 'OldPropertyName' should NOT be flattened onto the parent model");
+        }
+
+        /// <summary>
         /// A mock custom code view TypeProvider that adds an [Obsolete] property
         /// to simulate a backward-compat alias defined in a partial class.
         /// </summary>
