@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<GlobalRulestackCertificateObjectData, GlobalRulestackCertificateObjectResource>(new CertificateObjectGlobalRulestackGetAllAsyncCollectionResultOfT(_certificateObjectGlobalRulestackRestClient, Id.Name, context), data => new GlobalRulestackCertificateObjectResource(Client, data));
+            return new AsyncPageableWrapper<GlobalRulestackCertificateObjectData, GlobalRulestackCertificateObjectResource>(new CertificateObjectGlobalRulestackGetAllAsyncCollectionResultOfT(_certificateObjectGlobalRulestackRestClient, Id.Name, context, "GlobalRulestackCertificateObjectCollection.GetAll"), data => new GlobalRulestackCertificateObjectResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<GlobalRulestackCertificateObjectData, GlobalRulestackCertificateObjectResource>(new CertificateObjectGlobalRulestackGetAllCollectionResultOfT(_certificateObjectGlobalRulestackRestClient, Id.Name, context), data => new GlobalRulestackCertificateObjectResource(Client, data));
+            return new PageableWrapper<GlobalRulestackCertificateObjectData, GlobalRulestackCertificateObjectResource>(new CertificateObjectGlobalRulestackGetAllCollectionResultOfT(_certificateObjectGlobalRulestackRestClient, Id.Name, context, "GlobalRulestackCertificateObjectCollection.GetAll"), data => new GlobalRulestackCertificateObjectResource(Client, data));
         }
 
         /// <summary>

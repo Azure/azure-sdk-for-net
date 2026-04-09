@@ -308,7 +308,8 @@ namespace Azure.ResourceManager.DevTestLabs
                 filter,
                 top,
                 @orderby,
-                context), data => new DevTestLabCustomImageResource(Client, data));
+                context,
+                "DevTestLabCustomImageCollection.GetAll"), data => new DevTestLabCustomImageResource(Client, data));
         }
 
         /// <summary>
@@ -349,7 +350,8 @@ namespace Azure.ResourceManager.DevTestLabs
                 filter,
                 top,
                 @orderby,
-                context), data => new DevTestLabCustomImageResource(Client, data));
+                context,
+                "DevTestLabCustomImageCollection.GetAll"), data => new DevTestLabCustomImageResource(Client, data));
         }
 
         /// <summary>

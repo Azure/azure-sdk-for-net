@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.ElasticSan
         private readonly string _resourceGroupName;
         private readonly string _elasticSanName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of PrivateLinkResourcesGetPrivateLinkResourcesAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The PrivateLinkResources client used to send requests. </param>
@@ -29,13 +30,15 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="elasticSanName"> The name of the ElasticSan. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public PrivateLinkResourcesGetPrivateLinkResourcesAsyncCollectionResultOfT(PrivateLinkResources client, string subscriptionId, string resourceGroupName, string elasticSanName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public PrivateLinkResourcesGetPrivateLinkResourcesAsyncCollectionResultOfT(PrivateLinkResources client, string subscriptionId, string resourceGroupName, string elasticSanName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
             _elasticSanName = elasticSanName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of PrivateLinkResourcesGetPrivateLinkResourcesAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -55,7 +58,7 @@ namespace Azure.ResourceManager.ElasticSan
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, string continuationToken)
         {
             HttpMessage message = _client.CreateGetPrivateLinkResourcesRequest(_subscriptionId, _resourceGroupName, _elasticSanName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ElasticSanResource.GetPrivateLinkResources");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

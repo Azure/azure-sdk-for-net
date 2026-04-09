@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SapDatabaseInstanceData, SapDatabaseInstanceResource>(new SapDatabaseInstancesGetAllAsyncCollectionResultOfT(_sapDatabaseInstancesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new SapDatabaseInstanceResource(Client, data));
+            return new AsyncPageableWrapper<SapDatabaseInstanceData, SapDatabaseInstanceResource>(new SapDatabaseInstancesGetAllAsyncCollectionResultOfT(
+                _sapDatabaseInstancesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "SapDatabaseInstanceCollection.GetAll"), data => new SapDatabaseInstanceResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SapDatabaseInstanceData, SapDatabaseInstanceResource>(new SapDatabaseInstancesGetAllCollectionResultOfT(_sapDatabaseInstancesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new SapDatabaseInstanceResource(Client, data));
+            return new PageableWrapper<SapDatabaseInstanceData, SapDatabaseInstanceResource>(new SapDatabaseInstancesGetAllCollectionResultOfT(
+                _sapDatabaseInstancesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "SapDatabaseInstanceCollection.GetAll"), data => new SapDatabaseInstanceResource(Client, data));
         }
 
         /// <summary>

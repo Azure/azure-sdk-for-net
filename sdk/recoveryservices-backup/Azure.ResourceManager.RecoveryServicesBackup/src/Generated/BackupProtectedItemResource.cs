@@ -350,7 +350,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 Id.Parent.Name,
                 Id.Name,
                 RecoveryPointsRecommendedForMoveContent.ToRequestContent(content),
-                context), data => new BackupRecoveryPointResource(Client, data));
+                context,
+                "BackupProtectedItemResource.GetRecoveryPointsRecommendedForMove"), data => new BackupRecoveryPointResource(Client, data));
         }
 
         /// <summary>
@@ -395,7 +396,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 Id.Parent.Name,
                 Id.Name,
                 RecoveryPointsRecommendedForMoveContent.ToRequestContent(content),
-                context), data => new BackupRecoveryPointResource(Client, data));
+                context,
+                "BackupProtectedItemResource.GetRecoveryPointsRecommendedForMove"), data => new BackupRecoveryPointResource(Client, data));
         }
 
         /// <summary>

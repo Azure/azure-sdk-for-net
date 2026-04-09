@@ -20,11 +20,11 @@ using Azure.ResourceManager.Resources;
 namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MgmtFooResource"/> and their operations.
-    /// Each <see cref="MgmtFooResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="MgmtFooCollection"/> instance call the GetMgmtFoos method from an instance of <see cref="ResourceGroupResource"/>.
+    /// A class representing a collection of <see cref="FooResource"/> and their operations.
+    /// Each <see cref="FooResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="FooCollection"/> instance call the GetFoos method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
-    public partial class MgmtFooCollection : ArmCollection, IEnumerable<MgmtFooResource>, IAsyncEnumerable<MgmtFooResource>
+    public partial class FooCollection : ArmCollection, IEnumerable<FooResource>, IAsyncEnumerable<FooResource>
     {
         private readonly ClientDiagnostics _foosClientDiagnostics;
         private readonly Foos _foosRestClient;
@@ -35,25 +35,25 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         private readonly ClientDiagnostics _sharedParamReproClientDiagnostics;
         private readonly SharedParamRepro _sharedParamReproRestClient;
 
-        /// <summary> Initializes a new instance of MgmtFooCollection for mocking. </summary>
-        protected MgmtFooCollection()
+        /// <summary> Initializes a new instance of FooCollection for mocking. </summary>
+        protected FooCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MgmtFooCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="FooCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal MgmtFooCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal FooCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(MgmtFooResource.ResourceType, out string mgmtFooApiVersion);
-            _foosClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", MgmtFooResource.ResourceType.Namespace, Diagnostics);
-            _foosRestClient = new Foos(_foosClientDiagnostics, Pipeline, Endpoint, mgmtFooApiVersion ?? "2024-05-01");
-            _entityResourceReproClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", MgmtFooResource.ResourceType.Namespace, Diagnostics);
-            _entityResourceReproRestClient = new EntityResourceRepro(_entityResourceReproClientDiagnostics, Pipeline, Endpoint, mgmtFooApiVersion ?? "2024-05-01");
-            _grandparentFlattenReproClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", MgmtFooResource.ResourceType.Namespace, Diagnostics);
-            _grandparentFlattenReproRestClient = new GrandparentFlattenRepro(_grandparentFlattenReproClientDiagnostics, Pipeline, Endpoint, mgmtFooApiVersion ?? "2024-05-01");
-            _sharedParamReproClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", MgmtFooResource.ResourceType.Namespace, Diagnostics);
-            _sharedParamReproRestClient = new SharedParamRepro(_sharedParamReproClientDiagnostics, Pipeline, Endpoint, mgmtFooApiVersion ?? "2024-05-01");
+            TryGetApiVersion(FooResource.ResourceType, out string fooApiVersion);
+            _foosClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", FooResource.ResourceType.Namespace, Diagnostics);
+            _foosRestClient = new Foos(_foosClientDiagnostics, Pipeline, Endpoint, fooApiVersion ?? "2024-05-01");
+            _entityResourceReproClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", FooResource.ResourceType.Namespace, Diagnostics);
+            _entityResourceReproRestClient = new EntityResourceRepro(_entityResourceReproClientDiagnostics, Pipeline, Endpoint, fooApiVersion ?? "2024-05-01");
+            _grandparentFlattenReproClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", FooResource.ResourceType.Namespace, Diagnostics);
+            _grandparentFlattenReproRestClient = new GrandparentFlattenRepro(_grandparentFlattenReproClientDiagnostics, Pipeline, Endpoint, fooApiVersion ?? "2024-05-01");
+            _sharedParamReproClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", FooResource.ResourceType.Namespace, Diagnostics);
+            _sharedParamReproRestClient = new SharedParamRepro(_sharedParamReproClientDiagnostics, Pipeline, Endpoint, fooApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 
@@ -90,12 +90,12 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fooName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fooName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<MgmtFooResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string fooName, MgmtFooData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<FooResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string fooName, FooData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fooName, nameof(fooName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _foosClientDiagnostics.CreateScope("MgmtFooCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _foosClientDiagnostics.CreateScope("FooCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -103,10 +103,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _foosRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, fooName, MgmtFooData.ToRequestContent(data), context);
+                HttpMessage message = _foosRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, fooName, FooData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                TestsArmOperation<MgmtFooResource> operation = new TestsArmOperation<MgmtFooResource>(
-                    new MgmtFooOperationSource(Client),
+                TestsArmOperation<FooResource> operation = new TestsArmOperation<FooResource>(
+                    new FooOperationSource(Client),
                     _foosClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -149,12 +149,12 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fooName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fooName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<MgmtFooResource> CreateOrUpdate(WaitUntil waitUntil, string fooName, MgmtFooData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<FooResource> CreateOrUpdate(WaitUntil waitUntil, string fooName, FooData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fooName, nameof(fooName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _foosClientDiagnostics.CreateScope("MgmtFooCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _foosClientDiagnostics.CreateScope("FooCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -162,10 +162,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _foosRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, fooName, MgmtFooData.ToRequestContent(data), context);
+                HttpMessage message = _foosRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, fooName, FooData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                TestsArmOperation<MgmtFooResource> operation = new TestsArmOperation<MgmtFooResource>(
-                    new MgmtFooOperationSource(Client),
+                TestsArmOperation<FooResource> operation = new TestsArmOperation<FooResource>(
+                    new FooOperationSource(Client),
                     _foosClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -206,11 +206,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fooName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fooName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<MgmtFooResource>> GetAsync(string fooName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FooResource>> GetAsync(string fooName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fooName, nameof(fooName));
 
-            using DiagnosticScope scope = _foosClientDiagnostics.CreateScope("MgmtFooCollection.Get");
+            using DiagnosticScope scope = _foosClientDiagnostics.CreateScope("FooCollection.Get");
             scope.Start();
             try
             {
@@ -220,12 +220,12 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 };
                 HttpMessage message = _foosRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, fooName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<MgmtFooData> response = Response.FromValue(MgmtFooData.FromResponse(result), result);
+                Response<FooData> response = Response.FromValue(FooData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new MgmtFooResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new FooResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -255,11 +255,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fooName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fooName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<MgmtFooResource> Get(string fooName, CancellationToken cancellationToken = default)
+        public virtual Response<FooResource> Get(string fooName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fooName, nameof(fooName));
 
-            using DiagnosticScope scope = _foosClientDiagnostics.CreateScope("MgmtFooCollection.Get");
+            using DiagnosticScope scope = _foosClientDiagnostics.CreateScope("FooCollection.Get");
             scope.Start();
             try
             {
@@ -269,12 +269,12 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 };
                 HttpMessage message = _foosRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, fooName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<MgmtFooData> response = Response.FromValue(MgmtFooData.FromResponse(result), result);
+                Response<FooData> response = Response.FromValue(FooData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new MgmtFooResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new FooResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -301,14 +301,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MgmtFooResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MgmtFooResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="FooResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<FooResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MgmtFooData, MgmtFooResource>(new FoosGetAllAsyncCollectionResultOfT(_foosRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new MgmtFooResource(Client, data));
+            return new AsyncPageableWrapper<FooData, FooResource>(new FoosGetAllAsyncCollectionResultOfT(_foosRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "FooCollection.GetAll"), data => new FooResource(Client, data));
         }
 
         /// <summary>
@@ -329,14 +329,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MgmtFooResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MgmtFooResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="FooResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<FooResource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MgmtFooData, MgmtFooResource>(new FoosGetAllCollectionResultOfT(_foosRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new MgmtFooResource(Client, data));
+            return new PageableWrapper<FooData, FooResource>(new FoosGetAllCollectionResultOfT(_foosRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "FooCollection.GetAll"), data => new FooResource(Client, data));
         }
 
         /// <summary>
@@ -364,7 +364,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNullOrEmpty(fooName, nameof(fooName));
 
-            using DiagnosticScope scope = _foosClientDiagnostics.CreateScope("MgmtFooCollection.Exists");
+            using DiagnosticScope scope = _foosClientDiagnostics.CreateScope("FooCollection.Exists");
             scope.Start();
             try
             {
@@ -375,14 +375,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 HttpMessage message = _foosRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, fooName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<MgmtFooData> response = default;
+                Response<FooData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(MgmtFooData.FromResponse(result), result);
+                        response = Response.FromValue(FooData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((MgmtFooData)null, result);
+                        response = Response.FromValue((FooData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -421,7 +421,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNullOrEmpty(fooName, nameof(fooName));
 
-            using DiagnosticScope scope = _foosClientDiagnostics.CreateScope("MgmtFooCollection.Exists");
+            using DiagnosticScope scope = _foosClientDiagnostics.CreateScope("FooCollection.Exists");
             scope.Start();
             try
             {
@@ -432,14 +432,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 HttpMessage message = _foosRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, fooName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<MgmtFooData> response = default;
+                Response<FooData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(MgmtFooData.FromResponse(result), result);
+                        response = Response.FromValue(FooData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((MgmtFooData)null, result);
+                        response = Response.FromValue((FooData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -474,11 +474,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fooName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fooName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<MgmtFooResource>> GetIfExistsAsync(string fooName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<FooResource>> GetIfExistsAsync(string fooName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fooName, nameof(fooName));
 
-            using DiagnosticScope scope = _foosClientDiagnostics.CreateScope("MgmtFooCollection.GetIfExists");
+            using DiagnosticScope scope = _foosClientDiagnostics.CreateScope("FooCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -489,23 +489,23 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 HttpMessage message = _foosRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, fooName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<MgmtFooData> response = default;
+                Response<FooData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(MgmtFooData.FromResponse(result), result);
+                        response = Response.FromValue(FooData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((MgmtFooData)null, result);
+                        response = Response.FromValue((FooData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<MgmtFooResource>(response.GetRawResponse());
+                    return new NoValueResponse<FooResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new MgmtFooResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new FooResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -535,11 +535,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fooName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fooName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<MgmtFooResource> GetIfExists(string fooName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<FooResource> GetIfExists(string fooName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fooName, nameof(fooName));
 
-            using DiagnosticScope scope = _foosClientDiagnostics.CreateScope("MgmtFooCollection.GetIfExists");
+            using DiagnosticScope scope = _foosClientDiagnostics.CreateScope("FooCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -550,23 +550,23 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 HttpMessage message = _foosRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, fooName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<MgmtFooData> response = default;
+                Response<FooData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(MgmtFooData.FromResponse(result), result);
+                        response = Response.FromValue(FooData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((MgmtFooData)null, result);
+                        response = Response.FromValue((FooData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<MgmtFooResource>(response.GetRawResponse());
+                    return new NoValueResponse<FooResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new MgmtFooResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new FooResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -575,7 +575,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
         }
 
-        IEnumerator<MgmtFooResource> IEnumerable<MgmtFooResource>.GetEnumerator()
+        IEnumerator<FooResource> IEnumerable<FooResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -586,7 +586,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<MgmtFooResource> IAsyncEnumerable<MgmtFooResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<FooResource> IAsyncEnumerable<FooResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

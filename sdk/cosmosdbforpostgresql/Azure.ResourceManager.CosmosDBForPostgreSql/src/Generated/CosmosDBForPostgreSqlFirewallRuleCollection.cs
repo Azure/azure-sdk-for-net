@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         {
             if (id.ResourceType != CosmosDBForPostgreSqlClusterResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, CosmosDBForPostgreSqlClusterResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, CosmosDBForPostgreSqlClusterResource.ResourceType), nameof(id));
             }
         }
 
@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CosmosDBForPostgreSqlFirewallRuleData, CosmosDBForPostgreSqlFirewallRuleResource>(new FirewallRulesGetByClusterAsyncCollectionResultOfT(_firewallRulesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new CosmosDBForPostgreSqlFirewallRuleResource(Client, data));
+            return new AsyncPageableWrapper<CosmosDBForPostgreSqlFirewallRuleData, CosmosDBForPostgreSqlFirewallRuleResource>(new FirewallRulesGetByClusterAsyncCollectionResultOfT(
+                _firewallRulesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "CosmosDBForPostgreSqlFirewallRuleCollection.GetAll"), data => new CosmosDBForPostgreSqlFirewallRuleResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CosmosDBForPostgreSqlFirewallRuleData, CosmosDBForPostgreSqlFirewallRuleResource>(new FirewallRulesGetByClusterCollectionResultOfT(_firewallRulesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new CosmosDBForPostgreSqlFirewallRuleResource(Client, data));
+            return new PageableWrapper<CosmosDBForPostgreSqlFirewallRuleData, CosmosDBForPostgreSqlFirewallRuleResource>(new FirewallRulesGetByClusterCollectionResultOfT(
+                _firewallRulesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "CosmosDBForPostgreSqlFirewallRuleCollection.GetAll"), data => new CosmosDBForPostgreSqlFirewallRuleResource(Client, data));
         }
 
         /// <summary>

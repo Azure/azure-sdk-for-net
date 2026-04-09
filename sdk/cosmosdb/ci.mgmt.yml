@@ -12,4 +12,3 @@ extends:
       safeName: AzureResourceManagerCosmosDB
     - name: Azure.Provisioning.CosmosDB
       safeName: AzureProvisioningCosmosDB
-    TestDependsOnDependency: Azure.Provisioning.CosmosDB

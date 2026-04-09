@@ -10,16 +10,75 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.BillingBenefits.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.BillingBenefits
 {
-    public partial class BillingBenefitsSavingsPlanOrderAliasData : IUtf8JsonSerializable, IJsonModel<BillingBenefitsSavingsPlanOrderAliasData>
+    /// <summary> Savings plan order alias. </summary>
+    public partial class BillingBenefitsSavingsPlanOrderAliasData : ResourceData, IJsonModel<BillingBenefitsSavingsPlanOrderAliasData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BillingBenefitsSavingsPlanOrderAliasData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BillingBenefitsSavingsPlanOrderAliasData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeBillingBenefitsSavingsPlanOrderAliasData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BillingBenefitsSavingsPlanOrderAliasData)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BillingBenefitsSavingsPlanOrderAliasData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerBillingBenefitsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(BillingBenefitsSavingsPlanOrderAliasData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<BillingBenefitsSavingsPlanOrderAliasData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BillingBenefitsSavingsPlanOrderAliasData IPersistableModel<BillingBenefitsSavingsPlanOrderAliasData>.Create(BinaryData data, ModelReaderWriterOptions options) => (BillingBenefitsSavingsPlanOrderAliasData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<BillingBenefitsSavingsPlanOrderAliasData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="billingBenefitsSavingsPlanOrderAliasData"> The <see cref="BillingBenefitsSavingsPlanOrderAliasData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(BillingBenefitsSavingsPlanOrderAliasData billingBenefitsSavingsPlanOrderAliasData)
+        {
+            if (billingBenefitsSavingsPlanOrderAliasData == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(billingBenefitsSavingsPlanOrderAliasData, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="BillingBenefitsSavingsPlanOrderAliasData"/> from. </param>
+        internal static BillingBenefitsSavingsPlanOrderAliasData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeBillingBenefitsSavingsPlanOrderAliasData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BillingBenefitsSavingsPlanOrderAliasData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -31,13 +90,17 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BillingBenefitsSavingsPlanOrderAliasData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BillingBenefitsSavingsPlanOrderAliasData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BillingBenefitsSavingsPlanOrderAliasData)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku, options);
             if (Optional.IsDefined(Kind))
@@ -45,272 +108,108 @@ namespace Azure.ResourceManager.BillingBenefits
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(DisplayName))
-            {
-                writer.WritePropertyName("displayName"u8);
-                writer.WriteStringValue(DisplayName);
-            }
-            if (options.Format != "W" && Optional.IsDefined(SavingsPlanOrderId))
-            {
-                writer.WritePropertyName("savingsPlanOrderId"u8);
-                writer.WriteStringValue(SavingsPlanOrderId);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            if (Optional.IsDefined(BillingScopeId))
-            {
-                writer.WritePropertyName("billingScopeId"u8);
-                writer.WriteStringValue(BillingScopeId);
-            }
-            if (Optional.IsDefined(Term))
-            {
-                writer.WritePropertyName("term"u8);
-                writer.WriteStringValue(Term.Value.ToString());
-            }
-            if (Optional.IsDefined(BillingPlan))
-            {
-                writer.WritePropertyName("billingPlan"u8);
-                writer.WriteStringValue(BillingPlan.Value.ToString());
-            }
-            if (Optional.IsDefined(AppliedScopeType))
-            {
-                writer.WritePropertyName("appliedScopeType"u8);
-                writer.WriteStringValue(AppliedScopeType.Value.ToString());
-            }
-            if (Optional.IsDefined(AppliedScopeProperties))
-            {
-                writer.WritePropertyName("appliedScopeProperties"u8);
-                writer.WriteObjectValue(AppliedScopeProperties, options);
-            }
-            if (Optional.IsDefined(Commitment))
-            {
-                writer.WritePropertyName("commitment"u8);
-                writer.WriteObjectValue(Commitment, options);
-            }
-            writer.WriteEndObject();
         }
 
-        BillingBenefitsSavingsPlanOrderAliasData IJsonModel<BillingBenefitsSavingsPlanOrderAliasData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BillingBenefitsSavingsPlanOrderAliasData IJsonModel<BillingBenefitsSavingsPlanOrderAliasData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (BillingBenefitsSavingsPlanOrderAliasData)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BillingBenefitsSavingsPlanOrderAliasData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BillingBenefitsSavingsPlanOrderAliasData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BillingBenefitsSavingsPlanOrderAliasData)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeBillingBenefitsSavingsPlanOrderAliasData(document.RootElement, options);
         }
 
-        internal static BillingBenefitsSavingsPlanOrderAliasData DeserializeBillingBenefitsSavingsPlanOrderAliasData(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static BillingBenefitsSavingsPlanOrderAliasData DeserializeBillingBenefitsSavingsPlanOrderAliasData(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            BillingBenefitsSku sku = default;
-            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            ResourceType resourceType = default;
             SystemData systemData = default;
-            string displayName = default;
-            ResourceIdentifier savingsPlanOrderId = default;
-            BillingBenefitsProvisioningState? provisioningState = default;
-            ResourceIdentifier billingScopeId = default;
-            BillingBenefitsTerm? term = default;
-            BillingBenefitsBillingPlan? billingPlan = default;
-            BillingBenefitsAppliedScopeType? appliedScopeType = default;
-            BillingBenefitsAppliedScopeProperties appliedScopeProperties = default;
-            BillingBenefitsCommitment commitment = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            SavingsPlanOrderAliasProperties properties = default;
+            ResourceSku sku = default;
+            string kind = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("sku"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    sku = BillingBenefitsSku.DeserializeBillingBenefitsSku(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("kind"u8))
-                {
-                    kind = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("id"u8))
-                {
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerBillingBenefitsContext.Default);
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    resourceType = new ResourceType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("systemData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        if (property0.NameEquals("displayName"u8))
-                        {
-                            displayName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("savingsPlanOrderId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            savingsPlanOrderId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new BillingBenefitsProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("billingScopeId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            billingScopeId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("term"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            term = new BillingBenefitsTerm(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("billingPlan"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            billingPlan = new BillingBenefitsBillingPlan(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("appliedScopeType"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            appliedScopeType = new BillingBenefitsAppliedScopeType(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("appliedScopeProperties"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            appliedScopeProperties = BillingBenefitsAppliedScopeProperties.DeserializeBillingBenefitsAppliedScopeProperties(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("commitment"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            commitment = BillingBenefitsCommitment.DeserializeBillingBenefitsCommitment(property0.Value, options);
-                            continue;
-                        }
+                        continue;
                     }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerBillingBenefitsContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = SavingsPlanOrderAliasProperties.DeserializeSavingsPlanOrderAliasProperties(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("sku"u8))
+                {
+                    sku = ResourceSku.DeserializeResourceSku(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("kind"u8))
+                {
+                    kind = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new BillingBenefitsSavingsPlanOrderAliasData(
                 id,
                 name,
-                type,
+                resourceType,
                 systemData,
+                additionalBinaryDataProperties,
+                properties,
                 sku,
-                kind,
-                displayName,
-                savingsPlanOrderId,
-                provisioningState,
-                billingScopeId,
-                term,
-                billingPlan,
-                appliedScopeType,
-                appliedScopeProperties,
-                commitment,
-                serializedAdditionalRawData);
+                kind);
         }
-
-        BinaryData IPersistableModel<BillingBenefitsSavingsPlanOrderAliasData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<BillingBenefitsSavingsPlanOrderAliasData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerBillingBenefitsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(BillingBenefitsSavingsPlanOrderAliasData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        BillingBenefitsSavingsPlanOrderAliasData IPersistableModel<BillingBenefitsSavingsPlanOrderAliasData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<BillingBenefitsSavingsPlanOrderAliasData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeBillingBenefitsSavingsPlanOrderAliasData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(BillingBenefitsSavingsPlanOrderAliasData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<BillingBenefitsSavingsPlanOrderAliasData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

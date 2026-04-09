@@ -287,7 +287,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataReplicationEmailConfigurationData, DataReplicationEmailConfigurationResource>(new EmailConfigurationGetAllAsyncCollectionResultOfT(_emailConfigurationRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new DataReplicationEmailConfigurationResource(Client, data));
+            return new AsyncPageableWrapper<DataReplicationEmailConfigurationData, DataReplicationEmailConfigurationResource>(new EmailConfigurationGetAllAsyncCollectionResultOfT(
+                _emailConfigurationRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DataReplicationEmailConfigurationCollection.GetAll"), data => new DataReplicationEmailConfigurationResource(Client, data));
         }
 
         /// <summary>
@@ -315,7 +321,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataReplicationEmailConfigurationData, DataReplicationEmailConfigurationResource>(new EmailConfigurationGetAllCollectionResultOfT(_emailConfigurationRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new DataReplicationEmailConfigurationResource(Client, data));
+            return new PageableWrapper<DataReplicationEmailConfigurationData, DataReplicationEmailConfigurationResource>(new EmailConfigurationGetAllCollectionResultOfT(
+                _emailConfigurationRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DataReplicationEmailConfigurationCollection.GetAll"), data => new DataReplicationEmailConfigurationResource(Client, data));
         }
 
         /// <summary>

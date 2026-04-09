@@ -174,7 +174,8 @@ namespace Azure.ResourceManager.Advisor
                 filter,
                 top,
                 skipToken,
-                context), data => new AdvisorRecommendationResource(Client, data));
+                context,
+                "AdvisorRecommendationCollection.GetAll"), data => new AdvisorRecommendationResource(Client, data));
         }
 
         /// <summary>
@@ -211,7 +212,8 @@ namespace Azure.ResourceManager.Advisor
                 filter,
                 top,
                 skipToken,
-                context), data => new AdvisorRecommendationResource(Client, data));
+                context,
+                "AdvisorRecommendationCollection.GetAll"), data => new AdvisorRecommendationResource(Client, data));
         }
 
         /// <summary>

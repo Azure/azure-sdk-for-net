@@ -447,7 +447,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context);
+                context,
+                "BarResource.GetEmployees");
         }
 
         /// <summary>
@@ -485,7 +486,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context);
+                context,
+                "BarResource.GetEmployees");
         }
 
         /// <summary> Add a tag to the current resource. </summary>

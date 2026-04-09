@@ -14,31 +14,34 @@ using Azure.Generator.MgmtTypeSpec.Tests.Models;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests
 {
-    internal partial class FoosGetAllCollectionResultOfT : Pageable<MgmtFooData>
+    internal partial class FoosGetAllCollectionResultOfT : Pageable<FooData>
     {
         private readonly Foos _client;
         private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of FoosGetAllCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Foos client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public FoosGetAllCollectionResultOfT(Foos client, Guid subscriptionId, string resourceGroupName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public FoosGetAllCollectionResultOfT(Foos client, Guid subscriptionId, string resourceGroupName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of FoosGetAllCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of FoosGetAllCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<MgmtFooData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<FooData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -49,7 +52,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     yield break;
                 }
                 FooListResult result = FooListResult.FromResponse(response);
-                yield return Page<MgmtFooData>.FromValues((IReadOnlyList<MgmtFooData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<FooData>.FromValues((IReadOnlyList<FooData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -64,7 +67,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MgmtFooCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

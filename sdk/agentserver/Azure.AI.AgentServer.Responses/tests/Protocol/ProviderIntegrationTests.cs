@@ -57,13 +57,29 @@ public class ProviderDiIntegrationTests : IDisposable
     }
 
     [Test]
-    public async Task Post_Responses_Calls_CreateEventPublisherAsync()
+    public async Task Post_Responses_BgStreaming_Calls_CreateEventPublisherAsync()
     {
+        // Only background+streaming mode creates a replay-capable event publisher
+        // via the stream provider. Non-replay modes use NullPublisher internally.
+        var body = JsonSerializer.Serialize(new { model = "test", background = true, stream = true });
+        var response = await _client.PostAsync("/responses",
+            new StringContent(body, Encoding.UTF8, "application/json"));
+
+        // Consume the SSE stream so the handler completes
+        await response.Content.ReadAsStringAsync();
+
+        XAssert.Contains("CreateEventPublisherAsync", _spy.Calls);
+    }
+
+    [Test]
+    public async Task Post_Responses_Default_DoesNot_Call_CreateEventPublisherAsync()
+    {
+        // Default mode (bg=false, stream=false) uses NullPublisher — no stream provider call.
         var body = JsonSerializer.Serialize(new { model = "test" });
         await _client.PostAsync("/responses",
             new StringContent(body, Encoding.UTF8, "application/json"));
 
-        XAssert.Contains("CreateEventPublisherAsync", _spy.Calls);
+        XAssert.DoesNotContain("CreateEventPublisherAsync", _spy.Calls);
     }
 
     [Test]

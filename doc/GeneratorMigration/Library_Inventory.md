@@ -1,6 +1,6 @@
 # Azure SDK for .NET Libraries Inventory
 
-> **Auto-generated** by `Library_Inventory` on 2026-04-07 06:52:44 UTC.
+> **Auto-generated** by `Library_Inventory` on 2026-04-03 23:43:21 UTC.
 > Run that script to refresh this file.
 
 ## Table of Contents
@@ -18,13 +18,13 @@
 
 - Total libraries: 398
 - Management Plane (MPG): 232
-  - Autorest/Swagger: 101
-  - New Emitter (TypeSpec): 131
+  - Autorest/Swagger: 102
+  - New Emitter (TypeSpec): 130
   - Old TypeSpec: 0
 - Data Plane (DPG): 128
   - Autorest/Swagger: 37
-  - New Emitter (TypeSpec): 40
-  - Old TypeSpec: 3
+  - New Emitter (TypeSpec): 41
+  - Old TypeSpec: 2
 - Provisioning: 38
   - Reflection-based generator: 34
   - TypeSpec-based generator: 2
@@ -36,7 +36,7 @@
 
 Libraries that provide client APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 40 / 43 (93%)
+**Migration Status**: 41 / 43 (95.3%)
 
 | Service | Library | New Emitter | Using SCM |
 | ------- | ------- | ----------- | --------- |
@@ -79,7 +79,7 @@ Libraries that provide client APIs for Azure services and have been migrated to 
 | search | Azure.Search.Documents | ✅ |  |
 | template | Azure.Template | ✅ |  |
 | transcription | Azure.AI.Speech.Transcription | ✅ | ✅ |
-| translation | Azure.AI.Translation.Document |  |  |
+| translation | Azure.AI.Translation.Document | ✅ |  |
 | translation | Azure.AI.Translation.Text | ✅ |  |
 | vision | Azure.AI.Vision.ImageAnalysis | ✅ |  |
 | voicelive | Azure.AI.VoiceLive | ✅ |  |
@@ -134,7 +134,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 37
 
 Libraries that provide resource management APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 131 / 131 (100%)
+**Migration Status**: 130 / 130 (100%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -169,7 +169,6 @@ Libraries that provide resource management APIs for Azure services and have been
 | containerregistry | Azure.ResourceManager.ContainerRegistry | ✅ |
 | containerregistry | Azure.ResourceManager.ContainerRegistry.Tasks | ✅ |
 | containerservice | Azure.ResourceManager.ContainerService | ✅ |
-| cosmosdbforpostgresql | Azure.ResourceManager.CosmosDBForPostgreSql | ✅ |
 | databasewatcher | Azure.ResourceManager.DatabaseWatcher | ✅ |
 | databox | Azure.ResourceManager.DataBox | ✅ |
 | datadog | Azure.ResourceManager.Datadog | ✅ |
@@ -273,7 +272,7 @@ Libraries that provide resource management APIs for Azure services and have been
 
 ## Management Plane Libraries (MPG) - Still on Swagger
 
-Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 101
+Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 102
 
 | Service | Library |
 | ------- | ------- |
@@ -299,6 +298,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 10
 | containerapps | Azure.ResourceManager.AppContainers |
 | containerinstance | Azure.ResourceManager.ContainerInstance |
 | cosmosdb | Azure.ResourceManager.CosmosDB |
+| cosmosdbforpostgresql | Azure.ResourceManager.CosmosDBForPostgreSql |
 | costmanagement | Azure.ResourceManager.CostManagement |
 | customer-insights | Azure.ResourceManager.CustomerInsights |
 | databoxedge | Azure.ResourceManager.DataBoxEdge |

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.EventHubs
         {
             if (id.ResourceType != EventHubsNamespaceResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, EventHubsNamespaceResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, EventHubsNamespaceResource.ResourceType), nameof(id));
             }
         }
 
@@ -287,7 +287,13 @@ namespace Azure.ResourceManager.EventHubs
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EventHubsApplicationGroupData, EventHubsApplicationGroupResource>(new ApplicationGroupGetByNamespaceAsyncCollectionResultOfT(_applicationGroupRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new EventHubsApplicationGroupResource(Client, data));
+            return new AsyncPageableWrapper<EventHubsApplicationGroupData, EventHubsApplicationGroupResource>(new ApplicationGroupGetByNamespaceAsyncCollectionResultOfT(
+                _applicationGroupRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "EventHubsApplicationGroupCollection.GetAll"), data => new EventHubsApplicationGroupResource(Client, data));
         }
 
         /// <summary>
@@ -315,7 +321,13 @@ namespace Azure.ResourceManager.EventHubs
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EventHubsApplicationGroupData, EventHubsApplicationGroupResource>(new ApplicationGroupGetByNamespaceCollectionResultOfT(_applicationGroupRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new EventHubsApplicationGroupResource(Client, data));
+            return new PageableWrapper<EventHubsApplicationGroupData, EventHubsApplicationGroupResource>(new ApplicationGroupGetByNamespaceCollectionResultOfT(
+                _applicationGroupRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "EventHubsApplicationGroupCollection.GetAll"), data => new EventHubsApplicationGroupResource(Client, data));
         }
 
         /// <summary>

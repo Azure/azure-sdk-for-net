@@ -562,7 +562,8 @@ namespace Azure.ResourceManager.OracleDatabase
                 Id.ResourceGroupName,
                 Id.Name,
                 PrivateIPAddressesContent.ToRequestContent(content),
-                context);
+                context,
+                "CloudVmClusterResource.GetPrivateIPAddresses");
         }
 
         /// <summary>
@@ -604,7 +605,8 @@ namespace Azure.ResourceManager.OracleDatabase
                 Id.ResourceGroupName,
                 Id.Name,
                 PrivateIPAddressesContent.ToRequestContent(content),
-                context);
+                context,
+                "CloudVmClusterResource.GetPrivateIPAddresses");
         }
 
         /// <summary>

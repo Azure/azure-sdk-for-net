@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         {
             if (id.ResourceType != CosmosDBForPostgreSqlClusterResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, CosmosDBForPostgreSqlClusterResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, CosmosDBForPostgreSqlClusterResource.ResourceType), nameof(id));
             }
         }
 
@@ -177,7 +177,13 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CosmosDBForPostgreSqlPrivateLinkResourceData, CosmosDBForPostgreSqlPrivateLinkResource>(new PrivateLinkResourcesGetByClusterAsyncCollectionResultOfT(_privateLinkResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new CosmosDBForPostgreSqlPrivateLinkResource(Client, data));
+            return new AsyncPageableWrapper<CosmosDBForPostgreSqlPrivateLinkResourceData, CosmosDBForPostgreSqlPrivateLinkResource>(new PrivateLinkResourcesGetByClusterAsyncCollectionResultOfT(
+                _privateLinkResourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "CosmosDBForPostgreSqlPrivateLinkResourceCollection.GetAll"), data => new CosmosDBForPostgreSqlPrivateLinkResource(Client, data));
         }
 
         /// <summary>
@@ -205,7 +211,13 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CosmosDBForPostgreSqlPrivateLinkResourceData, CosmosDBForPostgreSqlPrivateLinkResource>(new PrivateLinkResourcesGetByClusterCollectionResultOfT(_privateLinkResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new CosmosDBForPostgreSqlPrivateLinkResource(Client, data));
+            return new PageableWrapper<CosmosDBForPostgreSqlPrivateLinkResourceData, CosmosDBForPostgreSqlPrivateLinkResource>(new PrivateLinkResourcesGetByClusterCollectionResultOfT(
+                _privateLinkResourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "CosmosDBForPostgreSqlPrivateLinkResourceCollection.GetAll"), data => new CosmosDBForPostgreSqlPrivateLinkResource(Client, data));
         }
 
         /// <summary>

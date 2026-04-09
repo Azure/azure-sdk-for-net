@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AutonomousDatabaseData, AutonomousDatabaseResource>(new AutonomousDatabasesGetByResourceGroupAsyncCollectionResultOfT(_autonomousDatabasesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new AutonomousDatabaseResource(Client, data));
+            return new AsyncPageableWrapper<AutonomousDatabaseData, AutonomousDatabaseResource>(new AutonomousDatabasesGetByResourceGroupAsyncCollectionResultOfT(_autonomousDatabasesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AutonomousDatabaseCollection.GetAll"), data => new AutonomousDatabaseResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AutonomousDatabaseData, AutonomousDatabaseResource>(new AutonomousDatabasesGetByResourceGroupCollectionResultOfT(_autonomousDatabasesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new AutonomousDatabaseResource(Client, data));
+            return new PageableWrapper<AutonomousDatabaseData, AutonomousDatabaseResource>(new AutonomousDatabasesGetByResourceGroupCollectionResultOfT(_autonomousDatabasesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AutonomousDatabaseCollection.GetAll"), data => new AutonomousDatabaseResource(Client, data));
         }
 
         /// <summary>

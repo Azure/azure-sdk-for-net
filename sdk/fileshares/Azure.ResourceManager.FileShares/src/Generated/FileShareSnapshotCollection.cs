@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.FileShares
         {
             if (id.ResourceType != FileShareResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, FileShareResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, FileShareResource.ResourceType), nameof(id));
             }
         }
 
@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.FileShares
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<FileShareSnapshotData, FileShareSnapshotResource>(new FileShareSnapshotsGetByFileShareAsyncCollectionResultOfT(_fileShareSnapshotsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new FileShareSnapshotResource(Client, data));
+            return new AsyncPageableWrapper<FileShareSnapshotData, FileShareSnapshotResource>(new FileShareSnapshotsGetByFileShareAsyncCollectionResultOfT(
+                _fileShareSnapshotsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "FileShareSnapshotCollection.GetAll"), data => new FileShareSnapshotResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.FileShares
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<FileShareSnapshotData, FileShareSnapshotResource>(new FileShareSnapshotsGetByFileShareCollectionResultOfT(_fileShareSnapshotsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new FileShareSnapshotResource(Client, data));
+            return new PageableWrapper<FileShareSnapshotData, FileShareSnapshotResource>(new FileShareSnapshotsGetByFileShareCollectionResultOfT(
+                _fileShareSnapshotsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "FileShareSnapshotCollection.GetAll"), data => new FileShareSnapshotResource(Client, data));
         }
 
         /// <summary>

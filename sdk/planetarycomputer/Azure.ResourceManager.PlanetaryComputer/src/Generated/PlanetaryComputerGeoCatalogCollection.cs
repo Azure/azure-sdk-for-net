@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.PlanetaryComputer
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PlanetaryComputerGeoCatalogData, PlanetaryComputerGeoCatalogResource>(new GeoCatalogsGetByResourceGroupAsyncCollectionResultOfT(_geoCatalogsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new PlanetaryComputerGeoCatalogResource(Client, data));
+            return new AsyncPageableWrapper<PlanetaryComputerGeoCatalogData, PlanetaryComputerGeoCatalogResource>(new GeoCatalogsGetByResourceGroupAsyncCollectionResultOfT(_geoCatalogsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "PlanetaryComputerGeoCatalogCollection.GetAll"), data => new PlanetaryComputerGeoCatalogResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.PlanetaryComputer
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PlanetaryComputerGeoCatalogData, PlanetaryComputerGeoCatalogResource>(new GeoCatalogsGetByResourceGroupCollectionResultOfT(_geoCatalogsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new PlanetaryComputerGeoCatalogResource(Client, data));
+            return new PageableWrapper<PlanetaryComputerGeoCatalogData, PlanetaryComputerGeoCatalogResource>(new GeoCatalogsGetByResourceGroupCollectionResultOfT(_geoCatalogsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "PlanetaryComputerGeoCatalogCollection.GetAll"), data => new PlanetaryComputerGeoCatalogResource(Client, data));
         }
 
         /// <summary>
