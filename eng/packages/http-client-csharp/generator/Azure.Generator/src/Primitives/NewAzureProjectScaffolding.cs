@@ -215,9 +215,9 @@ namespace Azure.Generator.Primitives
             string outputDir = AzureClientGenerator.Instance.Configuration.OutputDirectory;
             string packageName = AzureClientGenerator.Instance.Configuration.PackageName;
 
-            WriteFileIfNotExists(Path.Combine(outputDir, "README.md"), GetReadmeContent(packageName));
-            WriteFileIfNotExists(Path.Combine(outputDir, "CHANGELOG.md"), GetChangelogContent(packageName));
-            WriteFileIfNotExists(Path.Combine(outputDir, "Directory.Build.props"), GetDirectoryBuildPropsContent());
+            WriteFileIfNotExists(Path.Combine(outputDir, "README.md"), packageName, GetReadmeContent);
+            WriteFileIfNotExists(Path.Combine(outputDir, "CHANGELOG.md"), packageName, GetChangelogContent);
+            WriteFileIfNotExists(Path.Combine(outputDir, "Directory.Build.props"), packageName, _ => GetDirectoryBuildPropsContent());
 
             // ci.yml goes to the service directory (parent of the package directory)
             string normalizedOutputDir = outputDir.TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
@@ -228,15 +228,17 @@ namespace Azure.Generator.Primitives
                 if (!File.Exists(ciFilePath))
                 {
                     string serviceDirectoryName = Path.GetFileName(serviceDirectory);
-                    WriteFileIfNotExists(ciFilePath, GetCiYamlContent(packageName, serviceDirectoryName));
+                    WriteFileIfNotExists(ciFilePath, packageName, name => GetCiYamlContent(name, serviceDirectoryName));
                 }
             }
         }
 
-        private static void WriteFileIfNotExists(string filePath, string content)
+        private static void WriteFileIfNotExists(string filePath, string packageName, Func<string, string> contentFactory)
         {
             if (!File.Exists(filePath))
             {
+                string content = contentFactory(packageName);
+
                 string? directory = Path.GetDirectoryName(filePath);
                 if (directory != null && !Directory.Exists(directory))
                 {
@@ -362,7 +364,7 @@ namespace Azure.Generator.Primitives
         protected virtual string GetDirectoryBuildPropsContent()
         {
             return """
-                <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+                <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
                   <!--
                     Add any shared properties you want for the projects under this package directory that need to be set before the auto imported Directory.Build.props
                   -->
