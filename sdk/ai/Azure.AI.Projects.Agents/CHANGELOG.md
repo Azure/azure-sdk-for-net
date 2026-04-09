@@ -3,6 +3,7 @@
 ## 2.1.0-beta.1 (Unreleased)
 
 ### Features Added
+- Added `AgentToolboxes` client, which can be retrieved using `GetAgentToolboxes` method of `AgentAdministrationClient`.
 
 ### Breaking Changes
 

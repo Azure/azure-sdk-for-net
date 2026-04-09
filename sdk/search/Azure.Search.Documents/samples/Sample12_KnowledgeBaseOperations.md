@@ -45,15 +45,15 @@ KnowledgeBase knowledgeBase = new KnowledgeBase(
 // Add an Azure OpenAI model for query planning
 string openAIEndpoint = Environment.GetEnvironmentVariable("OPENAI_ENDPOINT");
 string openAIKey = Environment.GetEnvironmentVariable("OPENAI_KEY");
-knowledgeBase.Models.Add(
-    new KnowledgeBaseAzureOpenAIModel(
-        new AzureOpenAIVectorizerParameters
-        {
-            ResourceUri = new Uri(openAIEndpoint),
-            ApiKey = openAIKey,
-            DeploymentName = "gpt-5-mini",
-            ModelName = AzureOpenAIModelName.Gpt5Mini
-        }));
+    knowledgeBase.Models.Add(
+        new KnowledgeBaseAzureOpenAIModel(
+            new AzureOpenAIVectorizerParameters
+            {
+                ResourceUri = new Uri(openAIEndpoint),
+                ApiKey = openAIKey,
+                DeploymentName = "gpt-5-mini",
+                ModelName = AzureOpenAIModelName.Gpt5Mini
+            }));
 
 KnowledgeBase createdBase = await indexClient.CreateKnowledgeBaseAsync(knowledgeBase);
 Console.WriteLine($"Created knowledge base '{createdBase.Name}' with {createdBase.KnowledgeSources.Count} source(s)");

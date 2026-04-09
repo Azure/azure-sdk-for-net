@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.WebPubSub
         {
             if (id.ResourceType != WebPubSubResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, WebPubSubResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, WebPubSubResource.ResourceType), nameof(id));
             }
         }
 
@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.WebPubSub
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<WebPubSubSharedPrivateLinkData, WebPubSubSharedPrivateLinkResource>(new WebPubSubSharedPrivateLinkResourcesGetAllAsyncCollectionResultOfT(_webPubSubSharedPrivateLinkResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new WebPubSubSharedPrivateLinkResource(Client, data));
+            return new AsyncPageableWrapper<WebPubSubSharedPrivateLinkData, WebPubSubSharedPrivateLinkResource>(new WebPubSubSharedPrivateLinkResourcesGetAllAsyncCollectionResultOfT(
+                _webPubSubSharedPrivateLinkResourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "WebPubSubSharedPrivateLinkCollection.GetAll"), data => new WebPubSubSharedPrivateLinkResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.WebPubSub
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<WebPubSubSharedPrivateLinkData, WebPubSubSharedPrivateLinkResource>(new WebPubSubSharedPrivateLinkResourcesGetAllCollectionResultOfT(_webPubSubSharedPrivateLinkResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new WebPubSubSharedPrivateLinkResource(Client, data));
+            return new PageableWrapper<WebPubSubSharedPrivateLinkData, WebPubSubSharedPrivateLinkResource>(new WebPubSubSharedPrivateLinkResourcesGetAllCollectionResultOfT(
+                _webPubSubSharedPrivateLinkResourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "WebPubSubSharedPrivateLinkCollection.GetAll"), data => new WebPubSubSharedPrivateLinkResource(Client, data));
         }
 
         /// <summary>

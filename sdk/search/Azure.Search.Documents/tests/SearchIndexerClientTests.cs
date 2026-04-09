@@ -18,7 +18,7 @@ namespace Azure.Search.Documents.Tests
     public class SearchIndexerClientTests : SearchTestBase
     {
         public SearchIndexerClientTests(bool async, SearchClientOptions.ServiceVersion serviceVersion)
-            : base(async, serviceVersion,  null)
+            : base(async, serviceVersion, null)
         {
         }
 

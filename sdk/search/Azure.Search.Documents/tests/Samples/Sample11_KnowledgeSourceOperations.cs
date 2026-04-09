@@ -76,7 +76,9 @@ namespace Azure.Search.Documents.Tests.Samples
             finally
             {
                 SearchIndexClient client = resources.GetIndexClient();
-                try { await client.DeleteKnowledgeSourceAsync(testSourceName, cancellationToken: CancellationToken.None); } catch { }
+                try
+                { await client.DeleteKnowledgeSourceAsync(testSourceName, cancellationToken: CancellationToken.None); }
+                catch { }
             }
         }
 
@@ -132,7 +134,9 @@ namespace Azure.Search.Documents.Tests.Samples
             finally
             {
                 SearchIndexClient client = resources.GetIndexClient();
-                try { await client.DeleteKnowledgeSourceAsync(testSourceName, cancellationToken: CancellationToken.None); } catch { }
+                try
+                { await client.DeleteKnowledgeSourceAsync(testSourceName, cancellationToken: CancellationToken.None); }
+                catch { }
             }
         }
 
@@ -249,7 +253,9 @@ namespace Azure.Search.Documents.Tests.Samples
             finally
             {
                 SearchIndexClient client = resources.GetIndexClient();
-                try { await client.DeleteKnowledgeSourceAsync(testSourceName, cancellationToken: CancellationToken.None); } catch { }
+                try
+                { await client.DeleteKnowledgeSourceAsync(testSourceName, cancellationToken: CancellationToken.None); }
+                catch { }
             }
         }
 

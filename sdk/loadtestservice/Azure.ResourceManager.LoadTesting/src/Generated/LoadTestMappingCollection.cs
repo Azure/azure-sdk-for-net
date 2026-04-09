@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.LoadTesting
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<LoadTestMappingData, LoadTestMappingResource>(new LoadTestMappingsGetAllAsyncCollectionResultOfT(_loadTestMappingsRestClient, Id, context), data => new LoadTestMappingResource(Client, data));
+            return new AsyncPageableWrapper<LoadTestMappingData, LoadTestMappingResource>(new LoadTestMappingsGetAllAsyncCollectionResultOfT(_loadTestMappingsRestClient, Id, context, "LoadTestMappingCollection.GetAll"), data => new LoadTestMappingResource(Client, data));
         }
 
         /// <summary>
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.LoadTesting
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<LoadTestMappingData, LoadTestMappingResource>(new LoadTestMappingsGetAllCollectionResultOfT(_loadTestMappingsRestClient, Id, context), data => new LoadTestMappingResource(Client, data));
+            return new PageableWrapper<LoadTestMappingData, LoadTestMappingResource>(new LoadTestMappingsGetAllCollectionResultOfT(_loadTestMappingsRestClient, Id, context, "LoadTestMappingCollection.GetAll"), data => new LoadTestMappingResource(Client, data));
         }
 
         /// <summary>

@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ContainerService
             TryGetApiVersion(MeshRevisionProfileResource.ResourceType, out string meshRevisionProfileApiVersion);
             _location = location;
             _meshRevisionProfilesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerService", MeshRevisionProfileResource.ResourceType.Namespace, Diagnostics);
-            _meshRevisionProfilesRestClient = new MeshRevisionProfiles(_meshRevisionProfilesClientDiagnostics, Pipeline, Endpoint, meshRevisionProfileApiVersion ?? "2026-01-01");
+            _meshRevisionProfilesRestClient = new MeshRevisionProfiles(_meshRevisionProfilesClientDiagnostics, Pipeline, Endpoint, meshRevisionProfileApiVersion ?? "2026-01-02-preview");
             ValidateResourceId(id);
         }
 
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ContainerService
         {
             if (id.ResourceType != SubscriptionResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
             }
         }
 
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-01-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-01-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-01-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.ContainerService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MeshRevisionProfileData, MeshRevisionProfileResource>(new MeshRevisionProfilesGetMeshRevisionProfilesAsyncCollectionResultOfT(_meshRevisionProfilesRestClient, Guid.Parse(Id.SubscriptionId), _location, context), data => new MeshRevisionProfileResource(Client, data));
+            return new AsyncPageableWrapper<MeshRevisionProfileData, MeshRevisionProfileResource>(new MeshRevisionProfilesGetMeshRevisionProfilesAsyncCollectionResultOfT(_meshRevisionProfilesRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "MeshRevisionProfileCollection.GetAll"), data => new MeshRevisionProfileResource(Client, data));
         }
 
         /// <summary>
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-01-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.ContainerService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MeshRevisionProfileData, MeshRevisionProfileResource>(new MeshRevisionProfilesGetMeshRevisionProfilesCollectionResultOfT(_meshRevisionProfilesRestClient, Guid.Parse(Id.SubscriptionId), _location, context), data => new MeshRevisionProfileResource(Client, data));
+            return new PageableWrapper<MeshRevisionProfileData, MeshRevisionProfileResource>(new MeshRevisionProfilesGetMeshRevisionProfilesCollectionResultOfT(_meshRevisionProfilesRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "MeshRevisionProfileCollection.GetAll"), data => new MeshRevisionProfileResource(Client, data));
         }
 
         /// <summary>
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-01-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-01-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-01-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-01-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

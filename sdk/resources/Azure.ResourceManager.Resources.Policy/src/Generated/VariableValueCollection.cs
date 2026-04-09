@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Resources.Policy
         {
             if (id.ResourceType != VariableResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, VariableResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, VariableResource.ResourceType), nameof(id));
             }
         }
 
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Resources.Policy
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VariableValueData, VariableValueResource>(new VariableValuesGetAllAsyncCollectionResultOfT(_variableValuesRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context), data => new VariableValueResource(Client, data));
+            return new AsyncPageableWrapper<VariableValueData, VariableValueResource>(new VariableValuesGetAllAsyncCollectionResultOfT(_variableValuesRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "VariableValueCollection.GetAll"), data => new VariableValueResource(Client, data));
         }
 
         /// <summary>
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.Resources.Policy
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VariableValueData, VariableValueResource>(new VariableValuesGetAllCollectionResultOfT(_variableValuesRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context), data => new VariableValueResource(Client, data));
+            return new PageableWrapper<VariableValueData, VariableValueResource>(new VariableValuesGetAllCollectionResultOfT(_variableValuesRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "VariableValueCollection.GetAll"), data => new VariableValueResource(Client, data));
         }
 
         /// <summary>

@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MySqlFlexibleServerData, MySqlFlexibleServerResource>(new ServersGetByResourceGroupAsyncCollectionResultOfT(_serversRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new MySqlFlexibleServerResource(Client, data));
+            return new AsyncPageableWrapper<MySqlFlexibleServerData, MySqlFlexibleServerResource>(new ServersGetByResourceGroupAsyncCollectionResultOfT(_serversRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MySqlFlexibleServerCollection.GetAll"), data => new MySqlFlexibleServerResource(Client, data));
         }
 
         /// <summary>
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MySqlFlexibleServerData, MySqlFlexibleServerResource>(new ServersGetByResourceGroupCollectionResultOfT(_serversRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new MySqlFlexibleServerResource(Client, data));
+            return new PageableWrapper<MySqlFlexibleServerData, MySqlFlexibleServerResource>(new ServersGetByResourceGroupCollectionResultOfT(_serversRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MySqlFlexibleServerCollection.GetAll"), data => new MySqlFlexibleServerResource(Client, data));
         }
 
         /// <summary>

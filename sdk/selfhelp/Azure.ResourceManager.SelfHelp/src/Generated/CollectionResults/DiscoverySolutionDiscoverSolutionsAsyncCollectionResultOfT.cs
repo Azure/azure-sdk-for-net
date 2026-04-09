@@ -21,18 +21,21 @@ namespace Azure.ResourceManager.SelfHelp
         private readonly string _filter;
         private readonly string _skiptoken;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of DiscoverySolutionDiscoverSolutionsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The DiscoverySolution client used to send requests. </param>
         /// <param name="filter"> 'ProblemClassificationId' is a mandatory filter to get solutions ids. It also supports optional 'ResourceType' and 'SolutionType' filters. The [$filter](https://learn.microsoft.com/en-us/odata/webapi/first-odata-api#filter) supports only 'and', 'or' and 'eq' operators. Example: $filter=ProblemClassificationId eq '1ddda5b4-cf6c-4d4f-91ad-bc38ab0e811e'. </param>
         /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public DiscoverySolutionDiscoverSolutionsAsyncCollectionResultOfT(DiscoverySolution client, string filter, string skiptoken, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public DiscoverySolutionDiscoverSolutionsAsyncCollectionResultOfT(DiscoverySolution client, string filter, string skiptoken, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _filter = filter;
             _skiptoken = skiptoken;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of DiscoverySolutionDiscoverSolutionsAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -65,7 +68,7 @@ namespace Azure.ResourceManager.SelfHelp
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextDiscoverSolutionsRequest(nextLink, _filter, _skiptoken, _context) : _client.CreateDiscoverSolutionsRequest(_filter, _skiptoken, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableSelfHelpTenantResource.DiscoverSolutions");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

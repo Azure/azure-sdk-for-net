@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.Chaos
         private readonly bool? _running;
         private readonly string _continuationToken;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of ExperimentsGetAllCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Experiments client used to send requests. </param>
@@ -30,7 +31,8 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="running"> Optional value that indicates whether to filter results based on if the Experiment is currently running. If null, then the results will not be filtered. </param>
         /// <param name="continuationToken"> String that sets the continuation token. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ExperimentsGetAllCollectionResultOfT(Experiments client, Guid subscriptionId, string resourceGroupName, bool? running, string continuationToken, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public ExperimentsGetAllCollectionResultOfT(Experiments client, Guid subscriptionId, string resourceGroupName, bool? running, string continuationToken, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -38,6 +40,7 @@ namespace Azure.ResourceManager.Chaos
             _running = running;
             _continuationToken = continuationToken;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of ExperimentsGetAllCollectionResultOfT as an enumerable collection. </summary>
@@ -70,7 +73,7 @@ namespace Azure.ResourceManager.Chaos
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _running, _continuationToken, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _running, _continuationToken, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ChaosExperimentCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

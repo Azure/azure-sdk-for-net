@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.StandbyPool
         {
             if (id.ResourceType != StandbyVirtualMachinePoolResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, StandbyVirtualMachinePoolResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, StandbyVirtualMachinePoolResource.ResourceType), nameof(id));
             }
         }
 
@@ -177,7 +177,13 @@ namespace Azure.ResourceManager.StandbyPool
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<StandbyVirtualMachineData, StandbyVirtualMachineResource>(new StandbyVirtualMachinesGetByStandbyVirtualMachinePoolResourceAsyncCollectionResultOfT(_standbyVirtualMachinesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new StandbyVirtualMachineResource(Client, data));
+            return new AsyncPageableWrapper<StandbyVirtualMachineData, StandbyVirtualMachineResource>(new StandbyVirtualMachinesGetByStandbyVirtualMachinePoolResourceAsyncCollectionResultOfT(
+                _standbyVirtualMachinesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "StandbyVirtualMachineCollection.GetAll"), data => new StandbyVirtualMachineResource(Client, data));
         }
 
         /// <summary>
@@ -205,7 +211,13 @@ namespace Azure.ResourceManager.StandbyPool
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<StandbyVirtualMachineData, StandbyVirtualMachineResource>(new StandbyVirtualMachinesGetByStandbyVirtualMachinePoolResourceCollectionResultOfT(_standbyVirtualMachinesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new StandbyVirtualMachineResource(Client, data));
+            return new PageableWrapper<StandbyVirtualMachineData, StandbyVirtualMachineResource>(new StandbyVirtualMachinesGetByStandbyVirtualMachinePoolResourceCollectionResultOfT(
+                _standbyVirtualMachinesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "StandbyVirtualMachineCollection.GetAll"), data => new StandbyVirtualMachineResource(Client, data));
         }
 
         /// <summary>

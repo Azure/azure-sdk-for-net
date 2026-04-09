@@ -94,7 +94,7 @@ public class StatusLifecycleTests : ProtocolTestBase
     [Test]
     public async Task ZeroOutputEvents_Completed_WithEmptyOutput()
     {
-        // Empty handler (no events) → FR-007 bad handler → 500 error
+        // Empty handler (no events) → S-015 bad handler → 500 error
         Handler.EventFactory = (req, ctx, ct) => EmptyStream();
 
         var response = await PostResponsesAsync(new { model = "test" });
@@ -103,6 +103,68 @@ public class StatusLifecycleTests : ProtocolTestBase
         using var doc = await ParseJsonAsync(response);
         var error = doc.RootElement.GetProperty("error");
         Assert.That(error.GetProperty("message").GetString(), Is.EqualTo("An internal server error occurred."));
+    }
+
+    // ── T020: Handler starts with queued status ────────────────
+
+    [Test]
+    public async Task Streaming_QueuedStatus_HonouredInCreatedEvent()
+    {
+        Handler.EventFactory = (req, ctx, ct) => QueuedThenCompletedStream(ctx);
+
+        var response = await PostResponsesAsync(new { model = "test", stream = true });
+        var events = await ParseSseAsync(response);
+
+        // First event is response.created with status "queued"
+        var createdEvent = events.First(e => e.EventType == "response.created");
+        using var doc = JsonDocument.Parse(createdEvent.Data);
+        Assert.That(
+            doc.RootElement.GetProperty("response").GetProperty("status").GetString(),
+            Is.EqualTo("queued"),
+            "Handler set status to queued but the response.created event did not honour it.");
+    }
+
+    [Test]
+    public async Task Background_QueuedStatus_HonouredInPostResponse()
+    {
+        var tcs = new TaskCompletionSource();
+        Handler.EventFactory = (req, ctx, ct) => QueuedWaitingStream(ctx, tcs.Task, ct);
+
+        var response = await PostResponsesAsync(new { model = "test", background = true });
+
+        using var doc = await ParseJsonAsync(response);
+        Assert.That(
+            doc.RootElement.GetProperty("status").GetString(),
+            Is.EqualTo("queued"),
+            "Handler set status to queued but the background POST response did not honour it.");
+
+        // Clean up — let handler finish
+        tcs.SetResult();
+        await WaitForBackgroundCompletionAsync(
+            doc.RootElement.GetProperty("id").GetString()!);
+    }
+
+    [Test]
+    public async Task Background_QueuedStatus_EventuallyCompletes()
+    {
+        var tcs = new TaskCompletionSource();
+        Handler.EventFactory = (req, ctx, ct) => QueuedWaitingStream(ctx, tcs.Task, ct);
+
+        var createResponse = await PostResponsesAsync(new { model = "test", background = true });
+        using var createDoc = await ParseJsonAsync(createResponse);
+        var responseId = createDoc.RootElement.GetProperty("id").GetString()!;
+
+        // Verify initial queued status
+        Assert.That(createDoc.RootElement.GetProperty("status").GetString(), Is.EqualTo("queued"));
+
+        // Let handler finish
+        tcs.SetResult();
+        await WaitForBackgroundCompletionAsync(responseId);
+
+        // Final GET returns completed
+        var getResponse = await GetResponseAsync(responseId);
+        using var getDoc = await ParseJsonAsync(getResponse);
+        Assert.That(getDoc.RootElement.GetProperty("status").GetString(), Is.EqualTo("completed"));
     }
 
     // ── Helper event factories ─────────────────────────────────
@@ -136,6 +198,29 @@ public class StatusLifecycleTests : ProtocolTestBase
         var stream = new ResponseEventStream(ctx, new CreateResponse { Model = "test" });
         yield return stream.EmitCreated();
         await waitTask.WaitAsync(ct);
+        yield return stream.EmitCompleted();
+    }
+
+    private static async IAsyncEnumerable<ResponseStreamEvent> QueuedThenCompletedStream(
+        ResponseContext ctx,
+        [EnumeratorCancellation] CancellationToken ct = default)
+    {
+        var stream = new ResponseEventStream(ctx, new CreateResponse { Model = "test" });
+        yield return stream.EmitCreated(ResponseStatus.Queued);
+        yield return stream.EmitInProgress();
+        yield return stream.EmitCompleted();
+        await Task.CompletedTask;
+    }
+
+    private static async IAsyncEnumerable<ResponseStreamEvent> QueuedWaitingStream(
+        ResponseContext ctx,
+        Task waitTask,
+        [EnumeratorCancellation] CancellationToken ct = default)
+    {
+        var stream = new ResponseEventStream(ctx, new CreateResponse { Model = "test" });
+        yield return stream.EmitCreated(ResponseStatus.Queued);
+        await waitTask.WaitAsync(ct);
+        yield return stream.EmitInProgress();
         yield return stream.EmitCompleted();
     }
 

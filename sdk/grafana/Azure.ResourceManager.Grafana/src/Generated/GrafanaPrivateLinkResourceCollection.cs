@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Grafana
         {
             if (id.ResourceType != ManagedGrafanaResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ManagedGrafanaResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ManagedGrafanaResource.ResourceType), nameof(id));
             }
         }
 
@@ -177,7 +177,13 @@ namespace Azure.ResourceManager.Grafana
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<GrafanaPrivateLinkResourceData, GrafanaPrivateLinkResource>(new PrivateLinkResourcesGetAllAsyncCollectionResultOfT(_privateLinkResourcesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new GrafanaPrivateLinkResource(Client, data));
+            return new AsyncPageableWrapper<GrafanaPrivateLinkResourceData, GrafanaPrivateLinkResource>(new PrivateLinkResourcesGetAllAsyncCollectionResultOfT(
+                _privateLinkResourcesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "GrafanaPrivateLinkResourceCollection.GetAll"), data => new GrafanaPrivateLinkResource(Client, data));
         }
 
         /// <summary>
@@ -205,7 +211,13 @@ namespace Azure.ResourceManager.Grafana
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<GrafanaPrivateLinkResourceData, GrafanaPrivateLinkResource>(new PrivateLinkResourcesGetAllCollectionResultOfT(_privateLinkResourcesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new GrafanaPrivateLinkResource(Client, data));
+            return new PageableWrapper<GrafanaPrivateLinkResourceData, GrafanaPrivateLinkResource>(new PrivateLinkResourcesGetAllCollectionResultOfT(
+                _privateLinkResourcesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "GrafanaPrivateLinkResourceCollection.GetAll"), data => new GrafanaPrivateLinkResource(Client, data));
         }
 
         /// <summary>

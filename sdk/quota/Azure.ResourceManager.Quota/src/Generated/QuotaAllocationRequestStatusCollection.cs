@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Quota
         {
             if (id.ResourceType != ManagementGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ManagementGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ManagementGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -205,7 +205,8 @@ namespace Azure.ResourceManager.Quota
                 _groupQuotaName,
                 _resourceProviderName,
                 filter,
-                context), data => new QuotaAllocationRequestStatusResource(Client, data));
+                context,
+                "QuotaAllocationRequestStatusCollection.GetAll"), data => new QuotaAllocationRequestStatusResource(Client, data));
         }
 
         /// <summary>
@@ -250,7 +251,8 @@ namespace Azure.ResourceManager.Quota
                 _groupQuotaName,
                 _resourceProviderName,
                 filter,
-                context), data => new QuotaAllocationRequestStatusResource(Client, data));
+                context,
+                "QuotaAllocationRequestStatusCollection.GetAll"), data => new QuotaAllocationRequestStatusResource(Client, data));
         }
 
         /// <summary>

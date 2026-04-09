@@ -24,6 +24,7 @@ namespace Azure.ResourceManager.CertificateRegistration
         private readonly string _resourceGroupName;
         private readonly string _name;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of AppServiceCertificateOrderResourceRetrieveCertificateEmailHistoryCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The AppServiceCertificateOrders client used to send requests. </param>
@@ -31,13 +32,15 @@ namespace Azure.ResourceManager.CertificateRegistration
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="name"> Name of the certificate order.. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public AppServiceCertificateOrderResourceRetrieveCertificateEmailHistoryCollectionResultOfT(AppServiceCertificateOrders client, string subscriptionId, string resourceGroupName, string name, RequestContext context)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public AppServiceCertificateOrderResourceRetrieveCertificateEmailHistoryCollectionResultOfT(AppServiceCertificateOrders client, string subscriptionId, string resourceGroupName, string name, RequestContext context, string diagnosticScope)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
             _name = name;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of AppServiceCertificateOrderResourceRetrieveCertificateEmailHistoryCollectionResultOfT as an enumerable collection. </summary>
@@ -61,7 +64,7 @@ namespace Azure.ResourceManager.CertificateRegistration
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = _client.CreateRetrieveCertificateEmailHistoryRequest(_subscriptionId, _resourceGroupName, _name, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("AppServiceCertificateOrderResource.RetrieveCertificateEmailHistory");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

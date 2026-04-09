@@ -219,15 +219,15 @@ namespace Azure.Search.Documents.Tests.Samples
                 if (!string.IsNullOrEmpty(openAIEndpoint))
                 {
 #endif
-                knowledgeBase.Models.Add(
-                    new KnowledgeBaseAzureOpenAIModel(
-                        new AzureOpenAIVectorizerParameters
-                        {
-                            ResourceUri = new Uri(openAIEndpoint),
-                            ApiKey = openAIKey,
-                            DeploymentName = "gpt-5-mini",
-                            ModelName = AzureOpenAIModelName.Gpt5Mini
-                        }));
+                    knowledgeBase.Models.Add(
+                        new KnowledgeBaseAzureOpenAIModel(
+                            new AzureOpenAIVectorizerParameters
+                            {
+                                ResourceUri = new Uri(openAIEndpoint),
+                                ApiKey = openAIKey,
+                                DeploymentName = "gpt-5-mini",
+                                ModelName = AzureOpenAIModelName.Gpt5Mini
+                            }));
 #if !SNIPPET
                 }
 #endif
@@ -281,9 +281,15 @@ namespace Azure.Search.Documents.Tests.Samples
                 // Clean up resources in reverse order
                 if (testIndexClient != null)
                 {
-                    try { await testIndexClient.DeleteKnowledgeBaseAsync(testBaseName, cancellationToken: CancellationToken.None); } catch { }
-                    try { await testIndexClient.DeleteKnowledgeSourceAsync(testSourceName, cancellationToken: CancellationToken.None); } catch { }
-                    try { await testIndexClient.DeleteIndexAsync(testIndexName, cancellationToken: CancellationToken.None); } catch { }
+                    try
+                    { await testIndexClient.DeleteKnowledgeBaseAsync(testBaseName, cancellationToken: CancellationToken.None); }
+                    catch { }
+                    try
+                    { await testIndexClient.DeleteKnowledgeSourceAsync(testSourceName, cancellationToken: CancellationToken.None); }
+                    catch { }
+                    try
+                    { await testIndexClient.DeleteIndexAsync(testIndexName, cancellationToken: CancellationToken.None); }
+                    catch { }
                 }
             }
         }

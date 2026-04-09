@@ -17,6 +17,7 @@ namespace Azure.Generator.Management.Models;
 /// <param name="Methods"> The list of methods associated with the resource. </param>
 /// <param name="SingletonResourceName"> The singleton resource name, if applicable. </param>
 /// <param name="ParentResourceId"> The parent resource ID pattern, if applicable. </param>
+/// <param name="ParentResourceType"> The expected parent resource type for extension resources with specific parent types (e.g., "Microsoft.Compute/virtualMachines"), if applicable. </param>
 /// <param name="ChildResourceIds"> The list of child resource ID patterns. </param>
 /// <param name="NameConstraints"> The name constraints for the resource. </param>
 /// <param name="ApiVersions"> The API versions that this resource is available in. </param>
@@ -30,6 +31,7 @@ public record ArmResourceMetadata(
     IReadOnlyList<ResourceMethod> Methods,
     string? SingletonResourceName,
     string? ParentResourceId,
+    string? ParentResourceType,
     IReadOnlyList<string> ChildResourceIds,
     ArmResourceNameConstraints NameConstraints,
     IReadOnlyList<string> ApiVersions,
@@ -83,6 +85,11 @@ public record ArmResourceMetadata(
         {
             parentResource = parentResourceElement.GetString();
         }
+        string? parentResourceType = null;
+        if (element.TryGetProperty("parentResourceType", out var parentResourceTypeElement))
+        {
+            parentResourceType = parentResourceTypeElement.GetString();
+        }
         if (element.TryGetProperty("resourceName", out var resourceNameElement))
         {
             resourceName = resourceNameElement.GetString();
@@ -125,6 +132,7 @@ public record ArmResourceMetadata(
             methods,
             singletonResourceName,
             parentResource,
+            parentResourceType,
             childResourceIds,
             nameConstraints,
             apiVersions,

@@ -84,15 +84,15 @@ namespace Azure.Search.Documents.Tests.Samples
                 if (!string.IsNullOrEmpty(openAIEndpoint))
                 {
 #endif
-                knowledgeBase.Models.Add(
-                    new KnowledgeBaseAzureOpenAIModel(
-                        new AzureOpenAIVectorizerParameters
-                        {
-                            ResourceUri = new Uri(openAIEndpoint),
-                            ApiKey = openAIKey,
-                            DeploymentName = "gpt-5-mini",
-                            ModelName = AzureOpenAIModelName.Gpt5Mini
-                        }));
+                    knowledgeBase.Models.Add(
+                        new KnowledgeBaseAzureOpenAIModel(
+                            new AzureOpenAIVectorizerParameters
+                            {
+                                ResourceUri = new Uri(openAIEndpoint),
+                                ApiKey = openAIKey,
+                                DeploymentName = "gpt-5-mini",
+                                ModelName = AzureOpenAIModelName.Gpt5Mini
+                            }));
 #if !SNIPPET
                 }
 #endif
@@ -108,8 +108,12 @@ namespace Azure.Search.Documents.Tests.Samples
             {
                 if (testClient != null)
                 {
-                    try { await testClient.DeleteKnowledgeBaseAsync(testBaseName, cancellationToken: CancellationToken.None); } catch { }
-                    try { await testClient.DeleteKnowledgeSourceAsync(testSourceName, cancellationToken: CancellationToken.None); } catch { }
+                    try
+                    { await testClient.DeleteKnowledgeBaseAsync(testBaseName, cancellationToken: CancellationToken.None); }
+                    catch { }
+                    try
+                    { await testClient.DeleteKnowledgeSourceAsync(testSourceName, cancellationToken: CancellationToken.None); }
+                    catch { }
                 }
             }
         }
@@ -280,7 +284,9 @@ namespace Azure.Search.Documents.Tests.Samples
             }
             finally
             {
-                try { await testClient.DeleteKnowledgeSourceAsync(testSourceName, cancellationToken: CancellationToken.None); } catch { }
+                try
+                { await testClient.DeleteKnowledgeSourceAsync(testSourceName, cancellationToken: CancellationToken.None); }
+                catch { }
             }
         }
     }

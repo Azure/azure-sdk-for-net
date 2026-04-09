@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         {
             if (id.ResourceType != ContainerRegistryResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ContainerRegistryResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ContainerRegistryResource.ResourceType), nameof(id));
             }
         }
 
@@ -300,7 +300,8 @@ namespace Azure.ResourceManager.ContainerRegistry
                 Id.ResourceGroupName,
                 Id.Name,
                 filter,
-                context), data => new ConnectedRegistryResource(Client, data));
+                context,
+                "ConnectedRegistryCollection.GetAll"), data => new ConnectedRegistryResource(Client, data));
         }
 
         /// <summary>
@@ -335,7 +336,8 @@ namespace Azure.ResourceManager.ContainerRegistry
                 Id.ResourceGroupName,
                 Id.Name,
                 filter,
-                context), data => new ConnectedRegistryResource(Client, data));
+                context,
+                "ConnectedRegistryCollection.GetAll"), data => new ConnectedRegistryResource(Client, data));
         }
 
         /// <summary>

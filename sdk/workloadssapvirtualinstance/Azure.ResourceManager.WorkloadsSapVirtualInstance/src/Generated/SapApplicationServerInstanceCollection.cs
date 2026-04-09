@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
         {
             if (id.ResourceType != SapVirtualInstanceResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SapVirtualInstanceResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SapVirtualInstanceResource.ResourceType), nameof(id));
             }
         }
 
@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SapApplicationServerInstanceData, SapApplicationServerInstanceResource>(new SapApplicationServerInstancesGetAllAsyncCollectionResultOfT(_sapApplicationServerInstancesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new SapApplicationServerInstanceResource(Client, data));
+            return new AsyncPageableWrapper<SapApplicationServerInstanceData, SapApplicationServerInstanceResource>(new SapApplicationServerInstancesGetAllAsyncCollectionResultOfT(
+                _sapApplicationServerInstancesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "SapApplicationServerInstanceCollection.GetAll"), data => new SapApplicationServerInstanceResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SapApplicationServerInstanceData, SapApplicationServerInstanceResource>(new SapApplicationServerInstancesGetAllCollectionResultOfT(_sapApplicationServerInstancesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new SapApplicationServerInstanceResource(Client, data));
+            return new PageableWrapper<SapApplicationServerInstanceData, SapApplicationServerInstanceResource>(new SapApplicationServerInstancesGetAllCollectionResultOfT(
+                _sapApplicationServerInstancesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "SapApplicationServerInstanceCollection.GetAll"), data => new SapApplicationServerInstanceResource(Client, data));
         }
 
         /// <summary>

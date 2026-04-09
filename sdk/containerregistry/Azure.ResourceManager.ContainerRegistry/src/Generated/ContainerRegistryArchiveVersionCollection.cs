@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         {
             if (id.ResourceType != ContainerRegistryArchiveResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ContainerRegistryArchiveResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ContainerRegistryArchiveResource.ResourceType), nameof(id));
             }
         }
 
@@ -296,7 +296,8 @@ namespace Azure.ResourceManager.ContainerRegistry
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new ContainerRegistryArchiveVersionResource(Client, data));
+                context,
+                "ContainerRegistryArchiveVersionCollection.GetAll"), data => new ContainerRegistryArchiveVersionResource(Client, data));
         }
 
         /// <summary>
@@ -331,7 +332,8 @@ namespace Azure.ResourceManager.ContainerRegistry
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new ContainerRegistryArchiveVersionResource(Client, data));
+                context,
+                "ContainerRegistryArchiveVersionCollection.GetAll"), data => new ContainerRegistryArchiveVersionResource(Client, data));
         }
 
         /// <summary>
