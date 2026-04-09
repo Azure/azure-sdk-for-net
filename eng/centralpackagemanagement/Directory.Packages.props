@@ -157,7 +157,7 @@
     <PackageVersion Include="Azure.ResourceManager.ServiceBus" Version="1.1.0" />
     <PackageVersion Include="Azure.ResourceManager.ServiceGroups" Version="1.0.0-beta.1" />
     <PackageVersion Include="Azure.ResourceManager.SignalR" Version="1.1.4" />
-    <PackageVersion Include="Azure.ResourceManager.Sql" Version="1.3.0" />
+    <PackageVersion Include="Azure.ResourceManager.Sql" Version="1.4.0" />
     <PackageVersion Include="Azure.ResourceManager.Storage" Version="1.6.2" />
     <PackageVersion Include="Azure.ResourceManager.WebPubSub" Version="1.2.0" />
     <PackageVersion Include="Azure.Search.Documents" Version="11.7.0" />
