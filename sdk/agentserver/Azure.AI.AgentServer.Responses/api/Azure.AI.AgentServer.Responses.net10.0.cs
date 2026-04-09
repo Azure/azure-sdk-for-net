@@ -458,7 +458,7 @@ namespace Azure.AI.AgentServer.Responses
         protected OutputItemImageGenCallBuilder() { }
         public virtual Azure.AI.AgentServer.Responses.Models.ResponseOutputItemAddedEvent EmitAdded() { throw null; }
         public virtual Azure.AI.AgentServer.Responses.Models.ResponseImageGenCallCompletedEvent EmitCompleted() { throw null; }
-        public virtual Azure.AI.AgentServer.Responses.Models.ResponseOutputItemDoneEvent EmitDone() { throw null; }
+        public virtual Azure.AI.AgentServer.Responses.Models.ResponseOutputItemDoneEvent EmitDone(string result) { throw null; }
         public virtual Azure.AI.AgentServer.Responses.Models.ResponseImageGenCallGeneratingEvent EmitGenerating() { throw null; }
         public virtual Azure.AI.AgentServer.Responses.Models.ResponseImageGenCallInProgressEvent EmitInProgress() { throw null; }
         public virtual Azure.AI.AgentServer.Responses.Models.ResponseImageGenCallPartialImageEvent EmitPartialImage(string partialImageB64) { throw null; }

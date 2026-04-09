@@ -797,7 +797,7 @@ The library provides specialised builders for each tool call type. Each also has
 | `OutputItemCodeInterpreterCallBuilder` | `AddOutputItemCodeInterpreterCall()` | `EmitAdded()` → `EmitInProgress()` → `EmitInterpreting()` → `EmitCodeDelta()` → `EmitCodeDone()` → `EmitCompleted()` → `EmitDone()` | `Code(string\|IAsyncEnumerable<string>)` |
 | `OutputItemFileSearchCallBuilder` | `AddOutputItemFileSearchCall()` | `EmitAdded()` → `EmitInProgress()` → `EmitSearching()` → `EmitCompleted()` → `EmitDone()` | — |
 | `OutputItemWebSearchCallBuilder` | `AddOutputItemWebSearchCall()` | `EmitAdded()` → `EmitInProgress()` → `EmitSearching()` → `EmitCompleted()` → `EmitDone()` | — |
-| `OutputItemImageGenCallBuilder` | `AddOutputItemImageGenCall()` | `EmitAdded()` → `EmitInProgress()` → `EmitGenerating()` → `EmitPartialImage()` → `EmitCompleted()` → `EmitDone()` | — |
+| `OutputItemImageGenCallBuilder` | `AddOutputItemImageGenCall()` | `EmitAdded()` → `EmitInProgress()` → `EmitGenerating()` → `EmitPartialImage()` → `EmitCompleted()` → `EmitDone(result)` | — |
 | `OutputItemMcpCallBuilder` | `AddOutputItemMcpCall(serverLabel, name)` | `EmitAdded()` → `EmitInProgress()` → `EmitArgumentsDelta()` → `EmitArgumentsDone()` → `EmitCompleted()` / `EmitFailed()` → `EmitDone()` | `Arguments(string\|IAsyncEnumerable<string>)` |
 | `OutputItemCustomToolCallBuilder` | `AddOutputItemCustomToolCall(callId, name)` | `EmitAdded()` → `EmitInputDelta()` → `EmitInputDone()` → `EmitDone()` | `Input(string\|IAsyncEnumerable<string>)` |
 
