@@ -460,6 +460,34 @@ public class ResponseEventStream
         yield return builder.EmitDone();
     }
 
+    /// <summary>
+    /// Convenience generator that yields the complete image generation call output-item lifecycle
+    /// from a final base64-encoded image result.
+    /// </summary>
+    /// <param name="resultBase64">
+    /// The base64-encoded image data (PNG, JPEG, or WebP). For example:
+    /// <c>Convert.ToBase64String(imageBytes)</c>.
+    /// </param>
+    /// <returns>
+    /// An enumerable of events: <c>output_item.added</c> → <c>image_gen_call.in_progress</c> →
+    /// <c>image_gen_call.generating</c> → <c>image_gen_call.completed</c> → <c>output_item.done</c>.
+    /// </returns>
+    /// <remarks>
+    /// For streaming partial images (progressive rendering), use
+    /// <see cref="AddOutputItemImageGenCall"/> to get a builder and call
+    /// <see cref="OutputItemImageGenCallBuilder.EmitPartialImage"/> between
+    /// <c>EmitGenerating()</c> and <c>EmitCompleted()</c>.
+    /// </remarks>
+    public IEnumerable<ResponseStreamEvent> OutputItemImageGenCall(string resultBase64)
+    {
+        var builder = AddOutputItemImageGenCall();
+        yield return builder.EmitAdded();
+        yield return builder.EmitInProgress();
+        yield return builder.EmitGenerating();
+        yield return builder.EmitCompleted();
+        yield return builder.EmitDone(resultBase64);
+    }
+
     // ── Raw Event Interop ─────────────────────────────────────
 
     /// <summary>

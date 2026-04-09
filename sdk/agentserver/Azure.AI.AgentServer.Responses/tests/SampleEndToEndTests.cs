@@ -670,6 +670,165 @@ public class SampleEndToEndTests
     }
 
     // ═══════════════════════════════════════════════════════════════════
+    //  Sample 12: Image Generation — Base64 Image Output
+    // ═══════════════════════════════════════════════════════════════════
+
+    [Test]
+    public async Task Sample12_ImageHandler_ReturnsBase64ImageResult()
+    {
+        using var factory = new TestWebApplicationFactory(
+            configureTestServices: services =>
+            {
+                services.AddSingleton<ResponseHandler, Sample12Snippets.ImageHandler>();
+            });
+        using var client = factory.CreateClient();
+
+        var body = await PostJsonAsync(client,
+            """{"model":"test","input":"Draw a cat"}""");
+
+        using var doc = JsonDocument.Parse(body);
+        var output = doc.RootElement.GetProperty("output");
+        Assert.That(output.GetArrayLength(), Is.EqualTo(1));
+        var item = output[0];
+        Assert.That(item.GetProperty("type").GetString(), Is.EqualTo("image_generation_call"));
+        Assert.That(item.GetProperty("status").GetString(), Is.EqualTo("completed"));
+        var result = item.GetProperty("result").GetString()!;
+        // Verify it's valid base64 that decodes to a PNG (starts with 0x89504E47).
+        byte[] imageBytes = Convert.FromBase64String(result);
+        Assert.That(imageBytes[0], Is.EqualTo(0x89));
+        Assert.That(imageBytes[1], Is.EqualTo(0x50));
+        Assert.That(imageBytes[2], Is.EqualTo(0x4E));
+        Assert.That(imageBytes[3], Is.EqualTo(0x47));
+    }
+
+    [Test]
+    public async Task Sample12_StreamingImageHandler_ReturnsBase64WithPartials()
+    {
+        using var factory = new TestWebApplicationFactory(
+            configureTestServices: services =>
+            {
+                services.AddSingleton<ResponseHandler, Sample12Snippets.StreamingImageHandler>();
+            });
+        using var client = factory.CreateClient();
+
+        var body = await PostJsonAsync(client,
+            """{"model":"test","input":"Draw a cat"}""");
+
+        using var doc = JsonDocument.Parse(body);
+        var output = doc.RootElement.GetProperty("output");
+        Assert.That(output.GetArrayLength(), Is.EqualTo(1));
+        var item = output[0];
+        Assert.That(item.GetProperty("type").GetString(), Is.EqualTo("image_generation_call"));
+        Assert.That(item.GetProperty("status").GetString(), Is.EqualTo("completed"));
+        var result = item.GetProperty("result").GetString()!;
+        byte[] imageBytes = Convert.FromBase64String(result);
+        Assert.That(imageBytes[0], Is.EqualTo(0x89)); // PNG header
+    }
+
+    [Test]
+    public async Task Sample12_ImageHandlerFullControl_ReturnsBase64Image()
+    {
+        using var factory = new TestWebApplicationFactory(
+            configureTestServices: services =>
+            {
+                services.AddSingleton<ResponseHandler, Sample12Snippets.ImageHandlerFullControl>();
+            });
+        using var client = factory.CreateClient();
+
+        var body = await PostJsonAsync(client,
+            """{"model":"test","input":"Draw a cat"}""");
+
+        using var doc = JsonDocument.Parse(body);
+        var output = doc.RootElement.GetProperty("output");
+        Assert.That(output.GetArrayLength(), Is.EqualTo(1));
+        var item = output[0];
+        Assert.That(item.GetProperty("type").GetString(), Is.EqualTo("image_generation_call"));
+        Assert.That(item.GetProperty("status").GetString(), Is.EqualTo("completed"));
+        var result = item.GetProperty("result").GetString()!;
+        byte[] imageBytes = Convert.FromBase64String(result);
+        Assert.That(imageBytes[0], Is.EqualTo(0x89)); // PNG header
+    }
+
+    // ═══════════════════════════════════════════════════════════════════
+    //  Sample 13 — Image Input (Vision)
+    // ═══════════════════════════════════════════════════════════════════
+
+    [Test]
+    public async Task Sample13_ImageUrlHandler_ExtractsImageUrl()
+    {
+        using var factory = new TestWebApplicationFactory(
+            configureTestServices: services =>
+            {
+                services.AddSingleton<ResponseHandler, Sample13Snippets.ImageUrlHandler>();
+            });
+        using var client = factory.CreateClient();
+
+        var body = await PostJsonAsync(client, """
+            {
+              "model": "vision",
+              "input": [
+                {
+                  "type": "message",
+                  "role": "user",
+                  "content": [
+                    {"type": "input_text", "text": "What is this?"},
+                    {"type": "input_image", "image_url": "https://example.com/photo.jpg", "detail": "auto"}
+                  ]
+                }
+              ]
+            }
+            """);
+
+        using var doc = JsonDocument.Parse(body);
+        var text = GetOutputText(doc.RootElement);
+        Assert.That(text, Does.Contain("1 image(s)"));
+        Assert.That(text, Does.Contain("https://example.com/photo.jpg"));
+    }
+
+    [Test]
+    public async Task Sample13_ImageBase64Handler_DecodesDataUrl()
+    {
+        // Create a small valid base64 payload (1x1 PNG).
+        string pngBase64 = Convert.ToBase64String(new byte[]
+        {
+            0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A, 0x00, 0x00, 0x00, 0x0D,
+            0x49, 0x48, 0x44, 0x52, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x01,
+            0x08, 0x02, 0x00, 0x00, 0x00, 0x90, 0x77, 0x53, 0xDE, 0x00, 0x00, 0x00,
+            0x0C, 0x49, 0x44, 0x41, 0x54, 0x08, 0xD7, 0x63, 0xF8, 0xCF, 0xC0, 0x00,
+            0x00, 0x00, 0x03, 0x00, 0x01, 0x36, 0x28, 0x19, 0x00, 0x00, 0x00, 0x00,
+            0x00, 0x49, 0x45, 0x4E, 0x44, 0xAE, 0x42, 0x60, 0x82,
+        });
+
+        using var factory = new TestWebApplicationFactory(
+            configureTestServices: services =>
+            {
+                services.AddSingleton<ResponseHandler, Sample13Snippets.ImageBase64Handler>();
+            });
+        using var client = factory.CreateClient();
+
+        var body = await PostJsonAsync(client, $$"""
+            {
+              "model": "vision",
+              "input": [
+                {
+                  "type": "message",
+                  "role": "user",
+                  "content": [
+                    {"type": "input_text", "text": "Describe this"},
+                    {"type": "input_image", "image_url": "data:image/png;base64,{{pngBase64}}", "detail": "high"}
+                  ]
+                }
+              ]
+            }
+            """);
+
+        using var doc = JsonDocument.Parse(body);
+        var text = GetOutputText(doc.RootElement);
+        Assert.That(text, Does.Contain("base64 image"));
+        Assert.That(text, Does.Match(@"\d+ bytes")); // Confirms image bytes were decoded
+    }
+
+    // ═══════════════════════════════════════════════════════════════════
     //  Helpers
     // ═══════════════════════════════════════════════════════════════════
 

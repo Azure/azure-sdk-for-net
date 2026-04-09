@@ -525,6 +525,45 @@ public class ConvenienceGeneratorTests
         }
     }
 
+    // ═══════════════════════════════════════════════════════════════════
+    //  S-056: Output-Item Convenience – ImageGenCall
+    // ═══════════════════════════════════════════════════════════════════
+
+    [Test]
+    public void OutputItemImageGenCall_String_ProducesCompleteLifecycle()
+    {
+        var context = new ResponseContext("resp_test");
+        var stream = new ResponseEventStream(context, new CreateResponse { Model = "m" });
+        var resultBase64 = Convert.ToBase64String(new byte[] { 0x89, 0x50, 0x4E, 0x47 });
+
+        var events = stream.OutputItemImageGenCall(resultBase64).ToList();
+
+        Assert.That(events, Has.Count.EqualTo(5));
+        XAssert.IsType<ResponseOutputItemAddedEvent>(events[0]);
+        XAssert.IsType<ResponseImageGenCallInProgressEvent>(events[1]);
+        XAssert.IsType<ResponseImageGenCallGeneratingEvent>(events[2]);
+        XAssert.IsType<ResponseImageGenCallCompletedEvent>(events[3]);
+        var done = XAssert.IsType<ResponseOutputItemDoneEvent>(events[4]);
+        var item = XAssert.IsType<OutputItemImageGenToolCall>(done.Item);
+        Assert.That(item.Status, Is.EqualTo(OutputItemImageGenToolCallStatus.Completed));
+        Assert.That(item.Result, Is.EqualTo(resultBase64));
+    }
+
+    [Test]
+    public void OutputItemImageGenCall_SequenceNumbersAreMonotonic()
+    {
+        var context = new ResponseContext("resp_test");
+        var stream = new ResponseEventStream(context, new CreateResponse { Model = "m" });
+
+        var events = stream.OutputItemImageGenCall("dGVzdA==").ToList();
+
+        for (int i = 1; i < events.Count; i++)
+        {
+            Assert.That(events[i].SequenceNumber, Is.GreaterThan(events[i - 1].SequenceNumber),
+                $"Event {i} should have a greater sequence number than event {i - 1}");
+        }
+    }
+
     // ── Helpers ──────────────────────────────────────────────
 
     private static async Task<List<ResponseStreamEvent>> CollectAsync(
