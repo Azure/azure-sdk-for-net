@@ -41,19 +41,9 @@ namespace Azure.Generator.Management.Providers
         {
             var methods = new List<MethodProvider>(_resources.Count + _nonResourceMethods.Count * 2);
 
-            // Track generated method names to avoid duplicates (CS0111) when multiple resources
-            // share the same name (e.g., operations with same @@clientLocation but different paths).
-            var generatedMethodNames = new HashSet<string>();
-
             // Build methods for extension resources
             foreach (var resource in _resources)
             {
-                var methodName = $"Get{resource.Name}";
-                if (!generatedMethodNames.Add(methodName))
-                {
-                    // A method with the same name was already generated; skip duplicate
-                    continue;
-                }
                 methods.Add(BuildGetResourceIdMethodForResource(resource));
                 if (resource.IsExtensionResource)
                 {

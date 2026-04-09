@@ -14,7 +14,7 @@ using Azure.Generator.MgmtTypeSpec.Tests.Models;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests
 {
-    internal partial class FoosGetAllCollectionResultOfT : Pageable<FooData>
+    internal partial class FoosGetAllCollectionResultOfT : Pageable<MgmtFooData>
     {
         private readonly Foos _client;
         private readonly Guid _subscriptionId;
@@ -41,7 +41,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of FoosGetAllCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<FooData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<MgmtFooData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -52,7 +52,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     yield break;
                 }
                 FooListResult result = FooListResult.FromResponse(response);
-                yield return Page<FooData>.FromValues((IReadOnlyList<FooData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<MgmtFooData>.FromValues((IReadOnlyList<MgmtFooData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

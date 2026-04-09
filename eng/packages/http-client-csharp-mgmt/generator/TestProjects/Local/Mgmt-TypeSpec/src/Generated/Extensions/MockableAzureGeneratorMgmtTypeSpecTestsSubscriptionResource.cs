@@ -213,14 +213,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="FooResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<FooResource> GetFoosAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MgmtFooResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MgmtFooResource> GetMgmtFoosAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<FooData, FooResource>(new FoosGetBySubscriptionAsyncCollectionResultOfT(FoosRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource.GetFoos"), data => new FooResource(Client, data));
+            return new AsyncPageableWrapper<MgmtFooData, MgmtFooResource>(new FoosGetBySubscriptionAsyncCollectionResultOfT(FoosRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource.GetMgmtFoos"), data => new MgmtFooResource(Client, data));
         }
 
         /// <summary>
@@ -241,14 +241,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="FooResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<FooResource> GetFoos(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MgmtFooResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MgmtFooResource> GetMgmtFoos(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<FooData, FooResource>(new FoosGetBySubscriptionCollectionResultOfT(FoosRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource.GetFoos"), data => new FooResource(Client, data));
+            return new PageableWrapper<MgmtFooData, MgmtFooResource>(new FoosGetBySubscriptionCollectionResultOfT(FoosRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource.GetMgmtFoos"), data => new MgmtFooResource(Client, data));
         }
 
         /// <summary>
