@@ -778,13 +778,20 @@ export function postProcessArmResources(
 
   // Step 8: Compute parentResourceType for extension resources with specific parent types
   for (const resource of filteredResources) {
-    if (
-      resource.metadata.resourceIdPattern &&
-      resource.metadata.resourceIdPattern.scopePath.scopePath.length > 0
-    ) {
-      resource.metadata.parentResourceType = getExpectedParentResourceType(
-        resource.metadata.resourceIdPattern.path
-      );
+    const pattern = resource.metadata.resourceIdPattern;
+    if (pattern && pattern.scopePath.scopePath.length > 0) {
+      // The scope path is the parent resource's path — extract its resource type
+      const parentScope = pattern.scopePath;
+      try {
+        const parentType = parentScope.resourceType;
+        // Validate that the parent type doesn't contain variable segments
+        // (e.g., {parentProviderNamespace}/{parentResourceType} would be invalid)
+        if (!parentType.includes("{")) {
+          resource.metadata.parentResourceType = parentType;
+        }
+      } catch {
+        // Path doesn't have a resource type — skip
+      }
     }
   }
 
@@ -1017,103 +1024,4 @@ function relocateCrossResourceListActions(
     // Add to target (already classified as List)
     targetResource.metadata.methods.push(method);
   }
-}
-
-/**
- * Extracts the expected parent resource type from a resource ID pattern that is
- * already known to have multiple /providers/ segments. Returns undefined if the
- * parent segment is not a simple `<namespace>/<type>/{name}` pattern (e.g., for
- * complex paths with nested types or mixed scopes).
- *
- * For example, for a pattern like:
- * /subscriptions/{sub}/resourceGroups/{rg}/providers/Microsoft.Compute/virtualMachines/{vm}/providers/MyService/resources/{name}
- * This returns "Microsoft.Compute/virtualMachines".
- */
-function getExpectedParentResourceType(
-  resourceIdPattern: string
-): string | undefined {
-  // Find the last /providers/ segment (the extension resource's own provider)
-  const lastProvidersIndex = resourceIdPattern.lastIndexOf("/providers/");
-
-  // Find the second-to-last /providers/ segment (the parent resource's provider)
-  const parentProvidersIndex = resourceIdPattern.lastIndexOf(
-    "/providers/",
-    lastProvidersIndex - 1
-  );
-
-  if (parentProvidersIndex === -1) {
-    return undefined;
-  }
-
-  // Extract the parent segment between the two /providers/ markers
-  const parentSegment = resourceIdPattern.substring(
-    parentProvidersIndex + "/providers/".length,
-    lastProvidersIndex
-  );
-
-  const segments = parentSegment.split("/");
-
-  // Simple case: "<namespace>/<type>/{name}" — e.g., Microsoft.Compute/virtualMachines/{vmName}
-  if (segments.length === 3) {
-    const [providerNamespace, resourceType, nameSegment] = segments;
-    if (
-      providerNamespace.includes("{") ||
-      resourceType.includes("{") ||
-      !nameSegment.startsWith("{") ||
-      !nameSegment.endsWith("}")
-    ) {
-      return undefined;
-    }
-    return `${providerNamespace}/${resourceType}`;
-  }
-
-  // Complex case: parent path between providers has more segments
-  // (e.g., Microsoft.Management/managementGroups/{mgId}/subscriptions/{subId})
-  // Fall back to computing the parent scope's resource type from the resource ID pattern.
-  // Remove the leaf type/name pair, then extract the resource type from the last /providers/ segment.
-  const allSegments = resourceIdPattern.split("/").filter((s) => s !== "");
-  // Remove the last two segments (leaf type and name, e.g., "quotaAllocations" and "{location}")
-  if (allSegments.length < 2) {
-    return undefined;
-  }
-  const parentPathSegments = allSegments.slice(0, -2);
-  const parentPath = "/" + parentPathSegments.join("/");
-
-  // Find the last /providers/ in the parent path
-  const parentLastProvidersIndex = parentPath.lastIndexOf("/providers/");
-  if (parentLastProvidersIndex === -1) {
-    return undefined;
-  }
-
-  // Extract everything after the last /providers/ in parent path
-  const afterProviders = parentPath
-    .substring(parentLastProvidersIndex + "/providers/".length)
-    .split("/");
-
-  // Must have at least namespace/type/{name} (3 segments)
-  if (afterProviders.length < 3) {
-    return undefined;
-  }
-
-  const namespace = afterProviders[0];
-  // Namespace must be a constant
-  if (namespace.includes("{")) {
-    return undefined;
-  }
-
-  // Collect constant type segments (every other segment starting at index 1)
-  const typeSegments: string[] = [];
-  for (let i = 1; i < afterProviders.length; i += 2) {
-    const typeSeg = afterProviders[i];
-    if (typeSeg.includes("{")) {
-      return undefined; // variable type segment — can't determine parent type
-    }
-    typeSegments.push(typeSeg);
-  }
-
-  if (typeSegments.length === 0) {
-    return undefined;
-  }
-
-  return `${namespace}/${typeSegments.join("/")}`;
 }
