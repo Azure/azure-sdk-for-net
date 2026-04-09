@@ -253,21 +253,49 @@ namespace Azure.Core.TestFramework
 
         /// <summary>
         /// Returns the credential used for local developer authentication when no service principal
-        /// or pipeline credentials are available. The default implementation returns a
-        /// <see cref="ChainedTokenCredential"/> that tries CLI-based credentials before IDE credentials,
-        /// ensuring the correct testing tenant is used during local test recording.
-        /// Subclasses can override this method to customize the credential chain (e.g., to use
-        /// <see cref="DefaultAzureCredential"/>).
+        /// or pipeline credentials are available. The default implementation attempts silent
+        /// authentication via the system authentication broker (using the TME tenant) and falls
+        /// back to <see cref="DefaultAzureCredential"/> if the broker is unavailable or silent auth fails.
+        /// Subclasses can override this method to customize the credential chain.
         /// </summary>
         /// <returns>A <see cref="TokenCredential"/> for local developer authentication.</returns>
         protected virtual TokenCredential CreateDeveloperCredential()
         {
-            return new ChainedTokenCredential(
-                new AzureCliCredential(),
-                new AzurePowerShellCredential(),
-                new AzureDeveloperCliCredential(),
-                new VisualStudioCodeCredential(),
-                new VisualStudioCredential());
+            const string TmeTenantId = "70a036f6-8e4d-4615-bad6-149c02e7720d";
+
+            try
+            {
+                // Try to create DevelopmentBrokerOptions via reflection (requires Azure.Identity.Broker package)
+                var optionsType = Type.GetType(
+                    "Azure.Identity.Broker.DevelopmentBrokerOptions, Azure.Identity.Broker",
+                    throwOnError: false);
+
+                if (optionsType != null)
+                {
+                    var ctor = optionsType.GetConstructor(Type.EmptyTypes);
+                    if (ctor?.Invoke(null) is InteractiveBrowserCredentialOptions brokerOptions)
+                    {
+                        brokerOptions.TenantId = TmeTenantId;
+                        brokerOptions.TokenCachePersistenceOptions = new TokenCachePersistenceOptions();
+
+                        // Set IsChainedCredential = true via reflection so failures are wrapped as
+                        // CredentialUnavailableException, allowing ChainedTokenCredential to fall through.
+                        typeof(TokenCredentialOptions)
+                            .GetProperty("IsChainedCredential", BindingFlags.Instance | BindingFlags.NonPublic)
+                            ?.SetValue(brokerOptions, true);
+
+                        return new ChainedTokenCredential(
+                            new InteractiveBrowserCredential(brokerOptions),
+                            new DefaultAzureCredential());
+                    }
+                }
+            }
+            catch
+            {
+                // Azure.Identity.Broker package not available, fall through to DefaultAzureCredential
+            }
+
+            return new DefaultAzureCredential();
         }
 
         /// <summary>
