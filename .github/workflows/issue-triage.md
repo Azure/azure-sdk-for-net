@@ -564,10 +564,21 @@ Use the following format exactly:
 - **Service:** `<label>` — <reasoning>
 - **Confidence:** <High|Medium|Low> — <justification>
 </details>
+
+<details>
+<summary>👥 Owner Routing</summary>
+
+- **Matched CODEOWNERS entry:** `# ServiceLabel: %<Label1> %<Label2>` (line <N>) — <why this entry matched>
+- **AzureSdkOwners:** <owners or "none listed">
+- **ServiceOwners:** <owners or "none listed">
+- **Routing action:** <what was done — e.g., assigned `@owner`, added Service Attention, added needs-team-triage>
+- **Scan notes:** <entries considered during bottom-to-top scan that did not match and why>
+</details>
 ```
 
 Rules for the sections:
-- The Summary is always visible; all three detail sections are collapsed by default
+- The Summary is always visible; all detail sections are collapsed by default
   - 📋 Issue Details: extract package, affected API, and scenarios from the issue body; include root ask
   - 🔎 Debugging / Reproduction Notes: include diagnostic observations and numbered investigation steps; note similar open issues found via `search_issues` if any
   - 🏷️ Label Confidence: explain category and service label selection; state confidence as High, Medium, or Low with justification; note other labels considered and why they were rejected
+  - 👥 Owner Routing: show which CODEOWNERS `# ServiceLabel:` entry matched (with line number) and why; list AzureSdkOwners and ServiceOwners found; state what routing action was taken; briefly note other entries encountered during the bottom-to-top scan and why they were skipped

@@ -558,6 +558,38 @@ function convertScopeToResourceScope(
 }
 
 /**
+<<<<<<< HEAD
+=======
+ * Determine operation scope from path
+ */
+export function getOperationScopeFromPath(path: string): ResourceScope {
+  // Match any path starting with a variable segment followed by /providers/
+  // This covers scope-based operations like /{resourceUri}/providers/..., /{scope}/providers/..., /{resourceId}/providers/..., etc.
+  const lastProviderIndex = path.lastIndexOf("/providers/");
+  const scopePath = path.substring(0, lastProviderIndex);
+  if (!scopePath) {
+      return ResourceScope.Tenant;
+  }
+  else if (
+    /^\/subscriptions\/\{[^}]+\}\/resourceGroups\/\{[^}]+\}$/.test(scopePath)
+  ) {
+    return ResourceScope.ResourceGroup;
+  } else if (/^\/subscriptions\/\{[^}]+\}$/.test(scopePath)) {
+    return ResourceScope.Subscription;
+  } else if (
+    /^\/providers\/Microsoft\.Management\/managementGroups\/\{[^}]+\}$/.test(
+      scopePath
+    )
+  ) {
+    return ResourceScope.ManagementGroup;
+  }
+  else {
+    return ResourceScope.Extension;
+  }
+}
+
+/**
+>>>>>>> origin/main
  * Format ResourceType to a string
  */
 function formatResourceType(resourceType: ResourceType): string {

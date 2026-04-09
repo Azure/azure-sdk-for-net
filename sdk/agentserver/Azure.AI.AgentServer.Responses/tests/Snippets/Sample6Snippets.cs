@@ -32,9 +32,51 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
             Assert.That(handler, Is.Not.Null);
         }
 
-        #region Snippet:Responses_Sample6_MathSolverHandler
+        [Test]
+        public void Implement_MathSolverHandlerFullControl()
+        {
+            var handler = new MathSolverHandlerFullControl();
+            Assert.That(handler, Is.Not.Null);
+        }
+
+        #region Snippet:Responses_Sample6_MathSolverHandlerConvenience
 
         public class MathSolverHandler : ResponseHandler
+        {
+            public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
+                CreateResponse request,
+                ResponseContext context,
+                [EnumeratorCancellation] CancellationToken cancellationToken)
+            {
+                await Task.CompletedTask;
+                var stream = new ResponseEventStream(context, request);
+                var question = request.GetInputText();
+
+                yield return stream.EmitCreated();
+                yield return stream.EmitInProgress();
+
+                // Output item 0: Reasoning — show the thought process.
+                var thought = $"The user asked: \"{question}\". " +
+                              "I need to identify the mathematical operation, " +
+                              "compute the result, and explain the steps.";
+                foreach (var evt in stream.OutputItemReasoningItem(thought))
+                    yield return evt;
+
+                // Output item 1: Message — the final answer.
+                var answer = "The answer is 42. Here's how: " +
+                             "6 × 7 = 42. The multiplication of 6 and 7 gives 42.";
+                foreach (var evt in stream.OutputItemMessage(answer))
+                    yield return evt;
+
+                yield return stream.EmitCompleted();
+            }
+        }
+
+        #endregion
+
+        #region Snippet:Responses_Sample6_MathSolverHandler
+
+        public class MathSolverHandlerFullControl : ResponseHandler
         {
             public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
                 CreateResponse request,

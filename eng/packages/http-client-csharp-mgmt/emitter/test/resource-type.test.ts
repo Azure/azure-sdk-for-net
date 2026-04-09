@@ -137,10 +137,17 @@ describe("Operation Scope Detection", () => {
     strictEqual(scope, ResourceScope.Extension);
   });
 
+<<<<<<< HEAD
   it("nested extension resources under resource group are Extension scope", async () => {
     const path =
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Something/parentResource/{parentName}/providers/Microsoft.Edge/sites/{siteName}";
     const scope = new RequestPath(path).operationScope;
+=======
+  it("extension scope for resources extending a specific ARM resource within a resource group", async () => {
+    const path =
+      "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Something/parentResource/{parentName}/providers/Microsoft.Edge/sites/{siteName}";
+    const scope = getOperationScopeFromPath(path);
+>>>>>>> origin/main
     strictEqual(scope, ResourceScope.Extension);
   });
 });
