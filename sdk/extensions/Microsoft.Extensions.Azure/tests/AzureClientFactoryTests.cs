@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Azure.Identity;
@@ -473,9 +472,7 @@ namespace Azure.Core.Extensions.Tests
 
             provider.Dispose();
 
-            using var cancellationSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
-
-            Assert.DoesNotThrowAsync(async () => await tcs.Task.AwaitWithCancellation(cancellationSource.Token));
+            Assert.DoesNotThrowAsync(async () => await tcs.Task.WaitAsync(TimeSpan.FromSeconds(5)));
             Assert.IsTrue(disposed);
         }
 
@@ -501,9 +498,7 @@ namespace Azure.Core.Extensions.Tests
 
             provider.Dispose();
 
-            using var cancellationSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
-
-            Assert.DoesNotThrowAsync(async () => await tcs.Task.AwaitWithCancellation(cancellationSource.Token));
+            Assert.DoesNotThrowAsync(async () => await tcs.Task.WaitAsync(TimeSpan.FromSeconds(5)));
             Assert.IsTrue(disposed);
         }
 
@@ -565,9 +560,7 @@ namespace Azure.Core.Extensions.Tests
 
             Assert.DoesNotThrow(provider.Dispose);
 
-            using var cancellationSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
-
-            Assert.DoesNotThrowAsync(async () => await tcs.Task.AwaitWithCancellation(cancellationSource.Token));
+            Assert.DoesNotThrowAsync(async () => await tcs.Task.WaitAsync(TimeSpan.FromSeconds(5)));
             Assert.AreEqual(disposeCount, 3);
         }
 
@@ -593,9 +586,7 @@ namespace Azure.Core.Extensions.Tests
 
             await provider.DisposeAsync();
 
-            using var cancellationSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
-
-            Assert.DoesNotThrowAsync(async () => await tcs.Task.AwaitWithCancellation(cancellationSource.Token));
+            Assert.DoesNotThrowAsync(async () => await tcs.Task.WaitAsync(TimeSpan.FromSeconds(5)));
             Assert.IsTrue(disposed);
         }
 
@@ -621,9 +612,7 @@ namespace Azure.Core.Extensions.Tests
 
             await provider.DisposeAsync();
 
-            using var cancellationSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
-
-            Assert.DoesNotThrowAsync(async () => await tcs.Task.AwaitWithCancellation(cancellationSource.Token));
+            Assert.DoesNotThrowAsync(async () => await tcs.Task.WaitAsync(TimeSpan.FromSeconds(5)));
             Assert.IsTrue(disposed);
         }
 
@@ -685,9 +674,7 @@ namespace Azure.Core.Extensions.Tests
 
             await provider.DisposeAsync();
 
-            using var cancellationSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
-
-            Assert.DoesNotThrowAsync(async () => await tcs.Task.AwaitWithCancellation(cancellationSource.Token));
+            Assert.DoesNotThrowAsync(async () => await tcs.Task.WaitAsync(TimeSpan.FromSeconds(5)));
             Assert.AreEqual(disposeCount, 3);
         }
 
