@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Cdn.Models
             string probePath = default;
             IList<GeoFilter> geoFilters = default;
             ResourceReference defaultOriginGroup = default;
-            IReadOnlyList<UriSigningKey> uriSigningKeys = default;
+            IList<UriSigningKey> uriSigningKeys = default;
             EndpointDeliveryPolicy deliveryPolicy = default;
             EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink webApplicationFirewallPolicyLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();

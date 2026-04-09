@@ -270,20 +270,6 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        /// <summary> List of keys used to validate the signed URL hashes. </summary>
-        [WirePath("properties.urlSigningKeys")]
-        public IReadOnlyList<UriSigningKey> UriSigningKeys
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new EndpointProperties();
-                }
-                return Properties.UriSigningKeys;
-            }
-        }
-
         /// <summary> The host name of the endpoint structured as {endpointName}.{DNSZone}, e.g. contoso.azureedge.net. </summary>
         [WirePath("properties.hostName")]
         public string HostName

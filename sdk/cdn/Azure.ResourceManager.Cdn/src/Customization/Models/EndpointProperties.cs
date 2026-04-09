@@ -7,6 +7,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
+    // Customization: The generator does not produce a property for DeepCreatedCustomDomains on this inner model.
+    // It is added here so that the flattened property on CdnEndpointData can delegate to it correctly.
     internal partial class EndpointProperties : EndpointPropertiesUpdateParameters
     {
         /// <summary> The custom domains under the endpoint. </summary>

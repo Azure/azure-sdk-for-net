@@ -13,6 +13,7 @@ using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
+    /// <summary> The JSON object containing endpoint update parameters. </summary>
     internal partial class EndpointPropertiesUpdateParameters : IJsonModel<EndpointPropertiesUpdateParameters>
     {
         /// <param name="data"> The data to parse. </param>
@@ -216,7 +217,7 @@ namespace Azure.ResourceManager.Cdn.Models
             string probePath = default;
             IList<GeoFilter> geoFilters = default;
             ResourceReference defaultOriginGroup = default;
-            IReadOnlyList<UriSigningKey> uriSigningKeys = default;
+            IList<UriSigningKey> uriSigningKeys = default;
             EndpointDeliveryPolicy deliveryPolicy = default;
             EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink webApplicationFirewallPolicyLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();

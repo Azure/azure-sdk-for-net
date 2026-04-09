@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Threading;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Cdn;
@@ -1639,16 +1640,16 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="optimizationType"> Specifies what scenario the customer wants this CDN endpoint to optimize for, e.g. Download, Media services. With this information, CDN can apply scenario driven optimization. </param>
         /// <param name="probePath"> Path to a file hosted on the origin which helps accelerate delivery of the dynamic content and calculate the most optimal routes for the CDN. This is relative to the origin path. This property is only relevant when using a single origin. </param>
         /// <param name="geoFilters"> List of rules defining the user's geo access within a CDN endpoint. Each geo filter defines an access rule to a specified path or content, e.g. block APAC for path /pictures/. </param>
+        /// <param name="uriSigningKeys"> List of keys used to validate the signed URL hashes. </param>
         /// <param name="deliveryPolicy"> A policy that specifies the delivery rules to be used for an endpoint. </param>
         /// <param name="defaultOriginGroupId"> Resource ID. </param>
         /// <param name="webApplicationFirewallPolicyLinkId"> Resource ID. </param>
-        /// <param name="uriSigningKeys"> List of keys used to validate the signed URL hashes. </param>
         /// <returns> A new <see cref="Models.CdnEndpointPatch"/> instance for mocking. </returns>
-        public static CdnEndpointPatch CdnEndpointPatch(IDictionary<string, string> tags = default, string originPath = default, IEnumerable<string> contentTypesToCompress = default, string originHostHeader = default, bool? isCompressionEnabled = default, bool? isHttpAllowed = default, bool? isHttpsAllowed = default, QueryStringCachingBehavior? queryStringCachingBehavior = default, OptimizationType? optimizationType = default, string probePath = default, IEnumerable<GeoFilter> geoFilters = default, EndpointDeliveryPolicy deliveryPolicy = default, ResourceIdentifier defaultOriginGroupId = default, ResourceIdentifier webApplicationFirewallPolicyLinkId = default, IEnumerable<UriSigningKey> uriSigningKeys = default)
+        public static CdnEndpointPatch CdnEndpointPatch(IDictionary<string, string> tags = default, string originPath = default, IEnumerable<string> contentTypesToCompress = default, string originHostHeader = default, bool? isCompressionEnabled = default, bool? isHttpAllowed = default, bool? isHttpsAllowed = default, QueryStringCachingBehavior? queryStringCachingBehavior = default, OptimizationType? optimizationType = default, string probePath = default, IEnumerable<GeoFilter> geoFilters = default, IEnumerable<UriSigningKey> uriSigningKeys = default, EndpointDeliveryPolicy deliveryPolicy = default, ResourceIdentifier defaultOriginGroupId = default, ResourceIdentifier webApplicationFirewallPolicyLinkId = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new CdnEndpointPatch(tags, originPath is null && contentTypesToCompress is null && originHostHeader is null && isCompressionEnabled is null && isHttpAllowed is null && isHttpsAllowed is null && queryStringCachingBehavior is null && optimizationType is null && probePath is null && geoFilters is null && deliveryPolicy is null && defaultOriginGroupId is null && webApplicationFirewallPolicyLinkId is null && uriSigningKeys is null ? default : new EndpointPropertiesUpdateParameters(
+            return new CdnEndpointPatch(tags, originPath is null && contentTypesToCompress is null && originHostHeader is null && isCompressionEnabled is null && isHttpAllowed is null && isHttpsAllowed is null && queryStringCachingBehavior is null && optimizationType is null && probePath is null && geoFilters is null && uriSigningKeys is null && deliveryPolicy is null && defaultOriginGroupId is null && webApplicationFirewallPolicyLinkId is null ? default : new EndpointPropertiesUpdateParameters(
                 originPath,
                 (contentTypesToCompress ?? new ChangeTrackingList<string>()).ToList(),
                 originHostHeader,
@@ -3020,8 +3021,8 @@ namespace Azure.ResourceManager.Cdn.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ProfileData ProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CdnSkuName? skuName, string kind, ProfileResourceState? resourceState, ProfileProvisioningState? provisioningState, Guid? frontDoorId, int? originResponseTimeoutSeconds)
         {
-            throw new NotImplementedException();
             //return ProfileData(id, name, resourceType, systemData, tags, location, resourceState, provisioningState, extendedProperties: default, frontDoorId, originResponseTimeoutSeconds, logScrubbing: default, skuName, kind, identity: default);
+            throw new NotImplementedException();
         }
 
         /// <summary> Initializes a new instance of CdnWebApplicationFirewallPolicyData. </summary>
