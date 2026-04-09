@@ -2848,67 +2848,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// Gets a collection of GroupQuotaLimitLists in the <see cref="TenantResource"/>
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsTenantResource.GetGroupQuotaLimitLists()"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        /// <returns> An object representing collection of GroupQuotaLimitLists and their operations over a GroupQuotaLimitListResource. </returns>
-        public static GroupQuotaLimitListCollection GetGroupQuotaLimitLists(this TenantResource tenantResource)
-        {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
-
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsTenantResource(tenantResource).GetGroupQuotaLimitLists();
-        }
-
-        /// <summary>
-        /// Gets the GroupQuotaLimits for the specified resource provider and location for resource names passed in $filter=resourceName eq {SKU}.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsTenantResource.GetGroupQuotaLimitListAsync(string, string, string, AzureLocation, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
-        /// <param name="managementGroupId"> The management group ID. </param>
-        /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
-        /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<GroupQuotaLimitListResource>> GetGroupQuotaLimitListAsync(this TenantResource tenantResource, string managementGroupId, string groupQuotaName, string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
-
-            return await GetMockableAzureGeneratorMgmtTypeSpecTestsTenantResource(tenantResource).GetGroupQuotaLimitListAsync(managementGroupId, groupQuotaName, resourceProviderName, location, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the GroupQuotaLimits for the specified resource provider and location for resource names passed in $filter=resourceName eq {SKU}.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsTenantResource.GetGroupQuotaLimitList(string, string, string, AzureLocation, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
-        /// <param name="managementGroupId"> The management group ID. </param>
-        /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
-        /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<GroupQuotaLimitListResource> GetGroupQuotaLimitList(this TenantResource tenantResource, string managementGroupId, string groupQuotaName, string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
-
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsTenantResource(tenantResource).GetGroupQuotaLimitList(managementGroupId, groupQuotaName, resourceProviderName, location, cancellationToken);
-        }
-
-        /// <summary>
         /// Gets a collection of BestPractices in the <see cref="TenantResource"/>
         /// <item>
         /// <term> Mocking. </term>

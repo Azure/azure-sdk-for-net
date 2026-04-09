@@ -534,12 +534,8 @@ export function convertArmProviderSchemaToArguments(
         resourceScope: m.resourceScope?.path
       })),
       resourceScope: r.metadata.resourceScope,
-<<<<<<< HEAD
       parentResourceId: r.metadata.parentResourceId?.path,
-=======
-      parentResourceId: r.metadata.parentResourceId,
       parentResourceType: r.metadata.parentResourceType,
->>>>>>> origin/main
       singletonResourceName: r.metadata.singletonResourceName,
       resourceName: r.metadata.resourceName,
       nameConstraints: r.metadata.nameConstraints,
@@ -782,9 +778,12 @@ export function postProcessArmResources(
 
   // Step 8: Compute parentResourceType for extension resources with specific parent types
   for (const resource of filteredResources) {
-    if (countProviderSegments(resource.metadata.resourceIdPattern) > 1) {
+    if (
+      resource.metadata.resourceIdPattern &&
+      resource.metadata.resourceIdPattern.scopePath.scopePath.length > 0
+    ) {
       resource.metadata.parentResourceType = getExpectedParentResourceType(
-        resource.metadata.resourceIdPattern
+        resource.metadata.resourceIdPattern.path
       );
     }
   }

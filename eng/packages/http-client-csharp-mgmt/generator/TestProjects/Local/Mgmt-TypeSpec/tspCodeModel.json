@@ -24017,6 +24017,7 @@
                   }
                 ],
                 "resourceScope": "Extension",
+                "parentResourceType": "Microsoft.Compute/virtualMachines",
                 "resourceName": "PolicyVmAssignment",
                 "nameConstraints": {},
                 "apiVersions": [
@@ -24063,6 +24064,7 @@
                   }
                 ],
                 "resourceScope": "Extension",
+                "parentResourceType": "Microsoft.HybridCompute/machines",
                 "resourceName": "PolicyArcAssignment",
                 "nameConstraints": {},
                 "apiVersions": [

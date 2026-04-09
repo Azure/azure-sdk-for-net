@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -40,6 +41,17 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             TryGetApiVersion(PolicyVmAssignmentResource.ResourceType, out string policyVmAssignmentApiVersion);
             _policyVmAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", PolicyVmAssignmentResource.ResourceType.Namespace, Diagnostics);
             _policyVmAssignmentsRestClient = new PolicyVmAssignments(_policyVmAssignmentsClientDiagnostics, Pipeline, Endpoint, policyVmAssignmentApiVersion ?? "2024-05-01");
+            ValidateResourceId(id);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != "Microsoft.Compute/virtualMachines")
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, "Microsoft.Compute/virtualMachines"), nameof(id));
+            }
         }
 
         /// <summary>

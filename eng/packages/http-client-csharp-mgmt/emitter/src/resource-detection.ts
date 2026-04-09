@@ -49,7 +49,7 @@ import {
   builtInResourceOperationName,
   parentResourceName,
   readsResourceName,
-  singleton,
+  singleton
 } from "./sdk-context-options.js";
 import {
   DecoratorApplication,
@@ -417,7 +417,7 @@ export function buildArmProviderSchema(
   // Update the model's resourceScope based on resource scope decorator if it exists or based on the Read method's scope.
   // This is specific to legacy resource detection
   for (const metadata of resourcePathToMetadataMap.values()) {
-      metadata.resourceScope = getResourceScope(metadata.methods);
+    metadata.resourceScope = getResourceScope(metadata.methods);
   }
 
   // Create parent lookup context for legacy resource detection
@@ -1028,9 +1028,7 @@ function getSingletonResource(
     | undefined;
   return singletonResource ?? "default";
 }
-function getResourceScope(
-  methods?: ResourceMethod[]
-): ResourceScope {
+function getResourceScope(methods?: ResourceMethod[]): ResourceScope {
   // Determine scope from the Read method's operation path, which is the source of truth.
   // Scope decorators (@resourceGroupResource, etc.) can be inherited implicitly from base
   // model types like ProxyResource and may not reflect the actual scope for extension
