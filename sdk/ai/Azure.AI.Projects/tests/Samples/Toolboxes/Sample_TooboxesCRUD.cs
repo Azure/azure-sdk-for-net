@@ -5,11 +5,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.AI.Projects.Agents;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 using OpenAI.Responses;
-using Azure.AI.Projects.Agents;
 
 namespace Azure.AI.Projects.Tests.Samples;
 #pragma warning disable AAIP001
@@ -89,7 +89,7 @@ public class Sample_Toolboxes_CRUD : SamplesBase
         #endregion
 
         #region Snippet:Sample_ListToolboxVersions_ToolboxesCRUD_Async
-        List <ToolboxVersion> toolboxes = await toolboxClient.GetToolboxVersionsAsync(toolBox.Name).ToListAsync();
+        List<ToolboxVersion> toolboxes = await toolboxClient.GetToolboxVersionsAsync(toolBox.Name).ToListAsync();
         Console.WriteLine($"Found {toolboxes.Count} toolbox version(s).");
         foreach (ToolboxVersion item in toolboxes)
         {
@@ -173,7 +173,7 @@ public class Sample_Toolboxes_CRUD : SamplesBase
         #endregion
 
         #region Snippet:Sample_ListToolboxVersions_ToolboxesCRUD_Sync
-        List<ToolboxVersion> toolboxes = [..toolboxClient.GetToolboxVersions(toolBox.Name)];
+        List<ToolboxVersion> toolboxes = [.. toolboxClient.GetToolboxVersions(toolBox.Name)];
         Console.WriteLine($"Found {toolboxes.Count} toolbox version(s).");
         foreach (ToolboxVersion item in toolboxes)
         {
@@ -182,7 +182,7 @@ public class Sample_Toolboxes_CRUD : SamplesBase
         #endregion
 
         #region Snippet:Sample_ListToolboxes_ToolboxesCRUD_Sync
-        List<ToolboxRecord> records = [..toolboxClient.GetToolboxes()];
+        List<ToolboxRecord> records = [.. toolboxClient.GetToolboxes()];
         Console.WriteLine($"Found {records.Count} toolbox(es).");
         foreach (ToolboxRecord item in records)
         {
