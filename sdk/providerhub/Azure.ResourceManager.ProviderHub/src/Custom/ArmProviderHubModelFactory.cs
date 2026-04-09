@@ -104,12 +104,18 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 foreach (var item in linkedNotificationRules)
                     result.LinkedNotificationRules.Add(item);
             }
+            result.AsyncOperationPollingRules = asyncOperationPollingRules;
             result.DstsConfiguration = dstsConfiguration;
             result.NotificationOptions = notificationOptions;
             if (resourceHydrationAccounts != null)
             {
                 foreach (var item in resourceHydrationAccounts)
                     result.ResourceHydrationAccounts.Add(item);
+            }
+            if (notificationSubscriberSettings != null)
+            {
+                foreach (var item in notificationSubscriberSettings)
+                    result.NotificationSubscriberSettings.Add(item);
             }
             if (managementGroupGlobalNotificationEndpoints != null)
             {
@@ -121,6 +127,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 foreach (var item in optionalFeatures)
                     result.OptionalFeatures.Add(item);
             }
+            if (resourceGroupLockOptionDuringMoveBlockActionVerb.HasValue)
+                result.ResourceGroupLockOptionDuringMoveBlockActionVerb = resourceGroupLockOptionDuringMoveBlockActionVerb.Value;
+            if (serviceClientOptionsType.HasValue)
+                result.ServiceClientOptionsType = serviceClientOptionsType.Value;
             result.LegacyNamespace = legacyNamespace;
             if (legacyRegistrations != null)
             {
@@ -131,6 +141,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
             result.ProviderHubMetadata = providerHubMetadata;
             result.ProvisioningState = provisioningState;
             result.SubscriptionLifecycleNotificationSpecifications = subscriptionLifecycleNotificationSpecifications;
+            if (privateResourceProviderAllowedSubscriptions != null)
+            {
+                foreach (var item in privateResourceProviderAllowedSubscriptions)
+                    result.PrivateResourceProviderAllowedSubscriptions.Add(item);
+            }
             result.TokenAuthConfiguration = tokenAuthConfiguration;
             return result;
         }
@@ -159,6 +174,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
             IEnumerable<FanoutLinkedNotificationRule> linkedNotificationRules = null,
             AsyncOperationPollingRules asyncOperationPollingRules = null)
         {
+            var resourceProviderAuthorizationRules = asyncOperationPollingRules is null
+                ? default
+                : new ResourceProviderAuthorizationRules(asyncOperationPollingRules, null);
             return new ResourceProviderManifest(
                 providerAuthenticationAllowedAudiences is null ? null : new ResourceProviderAuthentication(providerAuthenticationAllowedAudiences.ToList(), null),
                 providerAuthorizations?.ToList(),
@@ -180,7 +198,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 isTenantLinkedNotificationEnabled,
                 notifications?.ToList(),
                 linkedNotificationRules?.ToList(),
-                default,
+                resourceProviderAuthorizationRules,
                 additionalBinaryDataProperties: null);
         }
 
@@ -201,6 +219,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
             IEnumerable<ResourceProviderEndpoint> globalNotificationEndpoints = null,
             ReRegisterSubscriptionMetadata reRegisterSubscriptionMetadata = null)
         {
+            var providerRequestHeaderOptions = optInHeaders is null
+                ? default
+                : new ProviderRequestHeaderOptions(optInHeaders, default, null);
             return new ResourceProviderManifest(
                 providerAuthenticationAllowedAudiences is null ? null : new ResourceProviderAuthentication(providerAuthenticationAllowedAudiences.ToList(), null),
                 providerAuthorizations?.ToList(),
@@ -211,7 +232,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 providerType,
                 requiredFeatures?.ToList(),
                 requiredFeaturesPolicy is null ? default : new ProviderFeaturesRule(requiredFeaturesPolicy.Value, null),
-                default,
+                providerRequestHeaderOptions,
                 resourceTypes?.ToList(),
                 management,
                 capabilities?.ToList(),
