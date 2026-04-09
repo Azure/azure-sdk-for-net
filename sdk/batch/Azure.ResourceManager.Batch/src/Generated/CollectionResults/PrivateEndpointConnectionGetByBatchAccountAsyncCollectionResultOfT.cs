@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.Batch
         private readonly string _accountName;
         private readonly int? _maxresults;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of PrivateEndpointConnectionGetByBatchAccountAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The PrivateEndpointConnection client used to send requests. </param>
@@ -31,7 +32,8 @@ namespace Azure.ResourceManager.Batch
         /// <param name="accountName"> A name for the Batch account which must be unique within the region. Batch account names must be between 3 and 24 characters in length and must use only numbers and lowercase letters. This name is used as part of the DNS name that is used to access the Batch service in the region in which the account is created. For example: http://accountname.region.batch.azure.com/. </param>
         /// <param name="maxresults"> The maximum number of items to return in the response. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public PrivateEndpointConnectionGetByBatchAccountAsyncCollectionResultOfT(PrivateEndpointConnection client, Guid subscriptionId, string resourceGroupName, string accountName, int? maxresults, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public PrivateEndpointConnectionGetByBatchAccountAsyncCollectionResultOfT(PrivateEndpointConnection client, Guid subscriptionId, string resourceGroupName, string accountName, int? maxresults, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -39,6 +41,7 @@ namespace Azure.ResourceManager.Batch
             _accountName = accountName;
             _maxresults = maxresults;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of PrivateEndpointConnectionGetByBatchAccountAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -71,7 +74,7 @@ namespace Azure.ResourceManager.Batch
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByBatchAccountRequest(nextLink, _subscriptionId, _resourceGroupName, _accountName, _maxresults, _context) : _client.CreateGetByBatchAccountRequest(_subscriptionId, _resourceGroupName, _accountName, _maxresults, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("BatchPrivateEndpointConnectionCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

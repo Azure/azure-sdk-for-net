@@ -21,15 +21,19 @@ namespace OpenAI
         /// <param name="filters"></param>
         /// <param name="userLocation"></param>
         /// <param name="searchContextSize"> High level guidance for the amount of context window space to use for the search. One of `low`, `medium`, or `high`. `medium` is the default. </param>
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
         /// <param name="customSearchConfiguration">
         /// The project connections attached to this tool. There can be a maximum of 1 connection
         /// resource attached to the tool.
         /// </param>
-        internal InternalWebSearchTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, WebSearchToolFilters filters, WebSearchApproximateLocation userLocation, WebSearchToolSearchContextSize? searchContextSize, ProjectWebSearchConfiguration customSearchConfiguration) : base(@type, additionalBinaryDataProperties)
+        internal InternalWebSearchTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, WebSearchToolFilters filters, WebSearchApproximateLocation userLocation, WebSearchToolSearchContextSize? searchContextSize, string name, string description, ProjectWebSearchConfiguration customSearchConfiguration) : base(@type, additionalBinaryDataProperties)
         {
             Filters = filters;
             UserLocation = userLocation;
             SearchContextSize = searchContextSize;
+            Name = name;
+            Description = description;
             CustomSearchConfiguration = customSearchConfiguration;
         }
 
@@ -41,6 +45,12 @@ namespace OpenAI
 
         /// <summary> High level guidance for the amount of context window space to use for the search. One of `low`, `medium`, or `high`. `medium` is the default. </summary>
         public WebSearchToolSearchContextSize? SearchContextSize { get; set; }
+
+        /// <summary> Optional user-defined name for this tool or configuration. </summary>
+        public string Name { get; set; }
+
+        /// <summary> Optional user-defined description for this tool or configuration. </summary>
+        public string Description { get; set; }
 
         /// <summary>
         /// The project connections attached to this tool. There can be a maximum of 1 connection

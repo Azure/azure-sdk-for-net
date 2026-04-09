@@ -70,7 +70,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _vmName, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _vmName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("PolicyVmAssignmentCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

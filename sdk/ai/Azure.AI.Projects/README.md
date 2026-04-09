@@ -45,6 +45,7 @@ The client library uses version `v1` of the AI Foundry [data plane REST APIs](ht
     - [Evaluation rules](#evaluation-rules)
   - [Red teams](#red-teams)
   - [Schedules](#schedules)
+  - [Toolboxes](#toolboxes)
 - [Tracing](#tracing)
     - [Azure Monitor Tracing](#tracing-to-azure-monitor)
     - [Console Tracing](#tracing-to-console)
@@ -1349,6 +1350,58 @@ private static BinaryData CreateRedTeamRunObject(string evaluationId, string eva
         }
     });
 }
+```
+
+## Toolboxes
+
+Toolboxes allow us to store tools in Azure so that they can be retrieved and used by the Agents. To use this feature please disable
+the `AAIP001` warning.
+
+```C#
+#pragma warning disable AAIP001
+```
+
+In the example below we create two versions of MCP tool and save it to Azure.
+```C# Snippet:Sample_CreateToolbox_ToolboxesCRUD_Async
+ProjectsAgentTool tool = ProjectsAgentTool.AsProjectTool(ResponseTool.CreateMcpTool(
+    serverLabel: "api-specs",
+    serverUri: new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
+    toolCallApprovalPolicy: new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
+));
+ToolboxVersion toolBox1 = await toolboxClient.CreateToolboxVersionAsync(
+    toolboxName: toolboxName,
+    tools: [tool],
+    description: "Example toolbox created by the azure-ai-projects sample.",
+    metadata: new Dictionary<string, string> {
+        {"team", "Engineers"}
+    }
+);
+ToolboxVersion toolBox2 = await toolboxClient.CreateToolboxVersionAsync(
+    toolboxName: toolboxName,
+    tools: [tool],
+    description: "Another toolbox created by the azure-ai-projects sample.",
+    metadata: new Dictionary<string, string> {
+        {"team", "Data scientists"}
+    }
+);
+string status = "unknown status";
+toolBox1.Metadata?.TryGetValue("team", out status);
+Console.WriteLine($"Toolbox: {toolBox1.Name}, version: {toolBox1.Version}, (tools: {toolBox1.Tools.Count}) (team: {status}).");
+```
+
+There are two objects which help to work with the Toolboxes: `ToolboxRecord` and `ToolboxVersion`. `ToolboxRecord` can be retrieved by
+name, it contains the default version of the Toolbox.
+
+```C# Snippet:Sample_GetToolbox_ToolboxesCRUD_Async
+ToolboxRecord record = await toolboxClient.GetToolboxAsync(toolboxName: toolBox1.Name);
+Console.WriteLine($"The default version for a toolbox {record.Name} is {record.DefaultVersion}");
+```
+
+The name of Toolbox and its version allow to get the `ToolboxVersion`, containing the tools, which can be used by Agent.
+
+```C# Snippet:Sample_GetToolboxVersion_ToolboxesCRUD_Async
+ToolboxVersion toolBox = await toolboxClient.GetToolboxVersionAsync(record.Name, record.DefaultVersion);
+Console.WriteLine($"Retrieved toolbox: {toolBox.Name} ({toolBox.Id})");
 ```
 
 ## Tracing

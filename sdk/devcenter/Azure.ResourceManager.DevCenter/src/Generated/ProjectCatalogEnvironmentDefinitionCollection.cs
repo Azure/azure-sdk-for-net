@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             if (id.ResourceType != ProjectCatalogResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ProjectCatalogResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ProjectCatalogResource.ResourceType), nameof(id));
             }
         }
 
@@ -187,7 +187,8 @@ namespace Azure.ResourceManager.DevCenter
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new ProjectCatalogEnvironmentDefinitionResource(Client, data));
+                context,
+                "ProjectCatalogEnvironmentDefinitionCollection.GetAll"), data => new ProjectCatalogEnvironmentDefinitionResource(Client, data));
         }
 
         /// <summary>
@@ -221,7 +222,8 @@ namespace Azure.ResourceManager.DevCenter
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new ProjectCatalogEnvironmentDefinitionResource(Client, data));
+                context,
+                "ProjectCatalogEnvironmentDefinitionCollection.GetAll"), data => new ProjectCatalogEnvironmentDefinitionResource(Client, data));
         }
 
         /// <summary>

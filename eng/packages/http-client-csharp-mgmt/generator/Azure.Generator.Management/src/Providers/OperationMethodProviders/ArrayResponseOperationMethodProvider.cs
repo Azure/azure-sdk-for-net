@@ -157,9 +157,6 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             var scopeName = ResourceHelpers.GetDiagnosticScope(_enclosingType, _methodName, _isAsync);
             var collectionResult = CreateCollectionResultDefinition(scopeName);
 
-            // Register the collection result with the output library
-            ManagementClientGenerator.Instance.OutputLibrary.PageableMethodScopes.Add(collectionResult.Name, scopeName);
-
             statements.Add(ResourceMethodSnippets.CreateRequestContext(KnownParameters.CancellationTokenParameter, out var contextVariable));
 
             var requestMethod = _restClient.GetRequestMethodByOperation(_serviceMethod.Operation);
@@ -200,9 +197,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 _restClient,
                 _serviceMethod,
                 _itemType,
-                _listType,
                 _isAsync,
-                scopeName,
                 constructorParams,
                 _methodName,  // Pass the actual method name for proper class naming
                 _enclosingType.Name);  // Pass the enclosing type name (e.g., "FooResource")

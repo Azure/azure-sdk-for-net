@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ContainerService
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.ContainerService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AgentPoolSnapshotData, AgentPoolSnapshotResource>(new SnapshotsGetByResourceGroupAsyncCollectionResultOfT(_snapshotsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new AgentPoolSnapshotResource(Client, data));
+            return new AsyncPageableWrapper<AgentPoolSnapshotData, AgentPoolSnapshotResource>(new SnapshotsGetByResourceGroupAsyncCollectionResultOfT(_snapshotsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AgentPoolSnapshotCollection.GetAll"), data => new AgentPoolSnapshotResource(Client, data));
         }
 
         /// <summary>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.ContainerService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AgentPoolSnapshotData, AgentPoolSnapshotResource>(new SnapshotsGetByResourceGroupCollectionResultOfT(_snapshotsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new AgentPoolSnapshotResource(Client, data));
+            return new PageableWrapper<AgentPoolSnapshotData, AgentPoolSnapshotResource>(new SnapshotsGetByResourceGroupCollectionResultOfT(_snapshotsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AgentPoolSnapshotCollection.GetAll"), data => new AgentPoolSnapshotResource(Client, data));
         }
 
         /// <summary>

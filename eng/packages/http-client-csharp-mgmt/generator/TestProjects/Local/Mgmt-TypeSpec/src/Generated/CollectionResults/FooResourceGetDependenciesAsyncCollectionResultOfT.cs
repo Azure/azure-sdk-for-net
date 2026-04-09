@@ -65,7 +65,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = _client.CreateGetDependenciesRequest(_subscriptionId, _resourceGroupName, _fooName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("FooResource.GetDependencies");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Relay
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Relay
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RelayNamespaceData, RelayNamespaceResource>(new NamespacesGetByResourceGroupAsyncCollectionResultOfT(_namespacesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new RelayNamespaceResource(Client, data));
+            return new AsyncPageableWrapper<RelayNamespaceData, RelayNamespaceResource>(new NamespacesGetByResourceGroupAsyncCollectionResultOfT(_namespacesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "RelayNamespaceCollection.GetAll"), data => new RelayNamespaceResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Relay
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RelayNamespaceData, RelayNamespaceResource>(new NamespacesGetByResourceGroupCollectionResultOfT(_namespacesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new RelayNamespaceResource(Client, data));
+            return new PageableWrapper<RelayNamespaceData, RelayNamespaceResource>(new NamespacesGetByResourceGroupCollectionResultOfT(_namespacesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "RelayNamespaceCollection.GetAll"), data => new RelayNamespaceResource(Client, data));
         }
 
         /// <summary>

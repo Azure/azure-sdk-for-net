@@ -128,7 +128,6 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
             var collectionResult = ((ScmMethodProvider)_convenienceMethod).CollectionDefinition!;
             var diagnosticScope = ResourceHelpers.GetDiagnosticScope(_enclosingType, _methodName, _isAsync);
-            ManagementClientGenerator.Instance.OutputLibrary.PageableMethodScopes.Add(collectionResult.Name, diagnosticScope);
 
             var collectionResultOfT = collectionResult.Type;
             statements.Add(ResourceMethodSnippets.CreateRequestContext(KnownParameters.CancellationTokenParameter, out var contextVariable));

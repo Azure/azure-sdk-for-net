@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.TrafficManager
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.TrafficManager
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<TrafficManagerProfileData, TrafficManagerProfileResource>(new ProfilesGetByResourceGroupAsyncCollectionResultOfT(_profilesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new TrafficManagerProfileResource(Client, data));
+            return new AsyncPageableWrapper<TrafficManagerProfileData, TrafficManagerProfileResource>(new ProfilesGetByResourceGroupAsyncCollectionResultOfT(_profilesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "TrafficManagerProfileCollection.GetAll"), data => new TrafficManagerProfileResource(Client, data));
         }
 
         /// <summary>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.TrafficManager
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<TrafficManagerProfileData, TrafficManagerProfileResource>(new ProfilesGetByResourceGroupCollectionResultOfT(_profilesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new TrafficManagerProfileResource(Client, data));
+            return new PageableWrapper<TrafficManagerProfileData, TrafficManagerProfileResource>(new ProfilesGetByResourceGroupCollectionResultOfT(_profilesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "TrafficManagerProfileCollection.GetAll"), data => new TrafficManagerProfileResource(Client, data));
         }
 
         /// <summary>

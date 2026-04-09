@@ -32,7 +32,21 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
             Assert.That(handler, Is.Not.Null);
         }
 
-        #region Snippet:Responses_Sample3_GreetingHandler
+        [Test]
+        public void Implement_GreetingHandlerFullControl()
+        {
+            var handler = new GreetingHandlerFullControl();
+            Assert.That(handler, Is.Not.Null);
+        }
+
+        [Test]
+        public void Implement_StreamingGreetingHandler()
+        {
+            var handler = new StreamingGreetingHandler();
+            Assert.That(handler, Is.Not.Null);
+        }
+
+        #region Snippet:Responses_Sample3_GreetingHandlerConvenience
 
         public class GreetingHandler : ResponseHandler
         {
@@ -44,9 +58,77 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
                 await Task.CompletedTask;
                 var stream = new ResponseEventStream(context, request);
 
-                // ── Configure Response properties BEFORE EmitCreated() ──
-                // Any property set here will appear in the response.created event
-                // and every subsequent event that carries the Response snapshot.
+                // Configure Response properties BEFORE EmitCreated().
+                stream.Response.Temperature = 0.7;
+                stream.Response.MaxOutputTokens = 1024;
+
+                yield return stream.EmitCreated();
+                yield return stream.EmitInProgress();
+
+                // Emit a complete text message in one call.
+                var input = request.GetInputText();
+                foreach (var evt in stream.OutputItemMessage($"Hello! You said: \"{input}\""))
+                    yield return evt;
+
+                yield return stream.EmitCompleted();
+            }
+        }
+
+        #endregion
+
+        #region Snippet:Responses_Sample3_StreamingGreetingHandler
+
+        public class StreamingGreetingHandler : ResponseHandler
+        {
+            public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
+                CreateResponse request,
+                ResponseContext context,
+                [EnumeratorCancellation] CancellationToken cancellationToken)
+            {
+                var stream = new ResponseEventStream(context, request);
+
+                yield return stream.EmitCreated();
+                yield return stream.EmitInProgress();
+
+                // Stream tokens as they arrive — each chunk becomes a delta event.
+                await foreach (var evt in stream.OutputItemMessage(
+                    GenerateTokensAsync(request.GetInputText(), cancellationToken),
+                    cancellationToken))
+                {
+                    yield return evt;
+                }
+
+                yield return stream.EmitCompleted();
+            }
+
+            private static async IAsyncEnumerable<string> GenerateTokensAsync(
+                string input,
+                [EnumeratorCancellation] CancellationToken ct)
+            {
+                // Replace with your actual LLM call.
+                var tokens = new[] { "Hello! ", "You ", "said: ", $"\"{input}\"" };
+                foreach (var token in tokens)
+                {
+                    await Task.Delay(100, ct);
+                    yield return token;
+                }
+            }
+        }
+
+        #endregion
+
+        #region Snippet:Responses_Sample3_GreetingHandler
+
+        public class GreetingHandlerFullControl : ResponseHandler
+        {
+            public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
+                CreateResponse request,
+                ResponseContext context,
+                [EnumeratorCancellation] CancellationToken cancellationToken)
+            {
+                await Task.CompletedTask;
+                var stream = new ResponseEventStream(context, request);
+
                 stream.Response.Temperature = 0.7;
                 stream.Response.MaxOutputTokens = 1024;
 

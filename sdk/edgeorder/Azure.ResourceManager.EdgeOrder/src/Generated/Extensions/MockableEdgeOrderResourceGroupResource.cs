@@ -271,7 +271,8 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
                 Id.ResourceGroupName,
                 skipToken,
                 top,
-                context), data => new EdgeOrderResource(Client, data));
+                context,
+                "MockableEdgeOrderResourceGroupResource.GetEdgeOrders"), data => new EdgeOrderResource(Client, data));
         }
 
         /// <summary>
@@ -307,7 +308,8 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
                 Id.ResourceGroupName,
                 skipToken,
                 top,
-                context), data => new EdgeOrderResource(Client, data));
+                context,
+                "MockableEdgeOrderResourceGroupResource.GetEdgeOrders"), data => new EdgeOrderResource(Client, data));
         }
     }
 }

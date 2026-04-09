@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             if (id.ResourceType != ProjectCatalogImageDefinitionResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ProjectCatalogImageDefinitionResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ProjectCatalogImageDefinitionResource.ResourceType), nameof(id));
             }
         }
 
@@ -188,7 +188,8 @@ namespace Azure.ResourceManager.DevCenter
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new ProjectCatalogImageDefinitionBuildResource(Client, data));
+                context,
+                "ProjectCatalogImageDefinitionBuildCollection.GetAll"), data => new ProjectCatalogImageDefinitionBuildResource(Client, data));
         }
 
         /// <summary>
@@ -223,7 +224,8 @@ namespace Azure.ResourceManager.DevCenter
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new ProjectCatalogImageDefinitionBuildResource(Client, data));
+                context,
+                "ProjectCatalogImageDefinitionBuildCollection.GetAll"), data => new ProjectCatalogImageDefinitionBuildResource(Client, data));
         }
 
         /// <summary>

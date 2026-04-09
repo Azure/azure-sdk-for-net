@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ContainerService
         {
             if (id.ResourceType != ContainerServiceManagedClusterResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ContainerServiceManagedClusterResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ContainerServiceManagedClusterResource.ResourceType), nameof(id));
             }
         }
 
@@ -287,7 +287,13 @@ namespace Azure.ResourceManager.ContainerService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ManagedClusterLoadBalancerData, ManagedClusterLoadBalancerResource>(new LoadBalancersGetByManagedClusterAsyncCollectionResultOfT(_loadBalancersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ManagedClusterLoadBalancerResource(Client, data));
+            return new AsyncPageableWrapper<ManagedClusterLoadBalancerData, ManagedClusterLoadBalancerResource>(new LoadBalancersGetByManagedClusterAsyncCollectionResultOfT(
+                _loadBalancersRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ManagedClusterLoadBalancerCollection.GetAll"), data => new ManagedClusterLoadBalancerResource(Client, data));
         }
 
         /// <summary>
@@ -315,7 +321,13 @@ namespace Azure.ResourceManager.ContainerService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ManagedClusterLoadBalancerData, ManagedClusterLoadBalancerResource>(new LoadBalancersGetByManagedClusterCollectionResultOfT(_loadBalancersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ManagedClusterLoadBalancerResource(Client, data));
+            return new PageableWrapper<ManagedClusterLoadBalancerData, ManagedClusterLoadBalancerResource>(new LoadBalancersGetByManagedClusterCollectionResultOfT(
+                _loadBalancersRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ManagedClusterLoadBalancerCollection.GetAll"), data => new ManagedClusterLoadBalancerResource(Client, data));
         }
 
         /// <summary>

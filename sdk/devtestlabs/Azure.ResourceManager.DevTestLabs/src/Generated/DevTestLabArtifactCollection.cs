@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             if (id.ResourceType != DevTestLabArtifactSourceResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DevTestLabArtifactSourceResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DevTestLabArtifactSourceResource.ResourceType), nameof(id));
             }
         }
 
@@ -193,7 +193,8 @@ namespace Azure.ResourceManager.DevTestLabs
                 filter,
                 top,
                 @orderby,
-                context), data => new DevTestLabArtifactResource(Client, data));
+                context,
+                "DevTestLabArtifactCollection.GetAll"), data => new DevTestLabArtifactResource(Client, data));
         }
 
         /// <summary>
@@ -235,7 +236,8 @@ namespace Azure.ResourceManager.DevTestLabs
                 filter,
                 top,
                 @orderby,
-                context), data => new DevTestLabArtifactResource(Client, data));
+                context,
+                "DevTestLabArtifactCollection.GetAll"), data => new DevTestLabArtifactResource(Client, data));
         }
 
         /// <summary>

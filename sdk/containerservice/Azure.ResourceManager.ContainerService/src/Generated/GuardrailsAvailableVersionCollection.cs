@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ContainerService
         {
             if (id.ResourceType != SubscriptionResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
             }
         }
 
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.ContainerService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<GuardrailsAvailableVersionData, GuardrailsAvailableVersionResource>(new GuardrailsAvailableVersionsGetGuardrailsVersionsAsyncCollectionResultOfT(_guardrailsAvailableVersionsRestClient, Guid.Parse(Id.SubscriptionId), _location, context), data => new GuardrailsAvailableVersionResource(Client, data));
+            return new AsyncPageableWrapper<GuardrailsAvailableVersionData, GuardrailsAvailableVersionResource>(new GuardrailsAvailableVersionsGetGuardrailsVersionsAsyncCollectionResultOfT(_guardrailsAvailableVersionsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "GuardrailsAvailableVersionCollection.GetAll"), data => new GuardrailsAvailableVersionResource(Client, data));
         }
 
         /// <summary>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.ContainerService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<GuardrailsAvailableVersionData, GuardrailsAvailableVersionResource>(new GuardrailsAvailableVersionsGetGuardrailsVersionsCollectionResultOfT(_guardrailsAvailableVersionsRestClient, Guid.Parse(Id.SubscriptionId), _location, context), data => new GuardrailsAvailableVersionResource(Client, data));
+            return new PageableWrapper<GuardrailsAvailableVersionData, GuardrailsAvailableVersionResource>(new GuardrailsAvailableVersionsGetGuardrailsVersionsCollectionResultOfT(_guardrailsAvailableVersionsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "GuardrailsAvailableVersionCollection.GetAll"), data => new GuardrailsAvailableVersionResource(Client, data));
         }
 
         /// <summary>

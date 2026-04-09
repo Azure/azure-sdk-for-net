@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Chaos
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -309,7 +309,8 @@ namespace Azure.ResourceManager.Chaos
                 _parentResourceType,
                 _parentResourceName,
                 continuationToken,
-                context), data => new ChaosTargetResource(Client, data));
+                context,
+                "ChaosTargetCollection.GetAll"), data => new ChaosTargetResource(Client, data));
         }
 
         /// <summary>
@@ -346,7 +347,8 @@ namespace Azure.ResourceManager.Chaos
                 _parentResourceType,
                 _parentResourceName,
                 continuationToken,
-                context), data => new ChaosTargetResource(Client, data));
+                context,
+                "ChaosTargetCollection.GetAll"), data => new ChaosTargetResource(Client, data));
         }
 
         /// <summary>

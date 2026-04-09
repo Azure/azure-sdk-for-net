@@ -64,7 +64,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByServiceGroupRequest(nextLink, _servicegroupName, _context) : _client.CreateGetByServiceGroupRequest(_servicegroupName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ServiceGroupSiteCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

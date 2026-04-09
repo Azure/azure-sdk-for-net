@@ -9,4 +9,3 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.RecoveryServices
       safeName: AzureResourceManagerRecoveryServices
-    TestDependsOnDependency: Azure.ResourceManager.RecoveryServices

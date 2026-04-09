@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Storage
         {
             if (id.ResourceType != QueueServiceResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, QueueServiceResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, QueueServiceResource.ResourceType), nameof(id));
             }
         }
 
@@ -300,7 +300,8 @@ namespace Azure.ResourceManager.Storage
                 Id.Parent.Name,
                 maxpagesize,
                 filter,
-                context), data => new StorageQueueResource(Client, data));
+                context,
+                "StorageQueueCollection.GetAll"), data => new StorageQueueResource(Client, data));
         }
 
         /// <summary>
@@ -337,7 +338,8 @@ namespace Azure.ResourceManager.Storage
                 Id.Parent.Name,
                 maxpagesize,
                 filter,
-                context), data => new StorageQueueResource(Client, data));
+                context,
+                "StorageQueueCollection.GetAll"), data => new StorageQueueResource(Client, data));
         }
 
         /// <summary>
