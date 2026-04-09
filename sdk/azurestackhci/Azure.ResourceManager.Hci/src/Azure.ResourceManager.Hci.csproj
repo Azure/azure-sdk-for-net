@@ -9,9 +9,7 @@
     <!-- CS0108: Generated HciClusterUpdateRunData.Name hides ResourceData.Name
          (from flattened properties.progress.name — generator limitation).
          CS0618: Generated code (constructors/serialization) references [Obsolete] members
-         that we declared in custom code for backward compat (HciUpdateStep.StartTimeUtc,
-         PerNodeExtensionState with HciExtensionInstanceView, etc.).
-         Both are in generated files that cannot use #pragma — project-level suppression required. -->
+         declared in custom code for backward compat. Cannot use #pragma in generated files. -->
     <NoWarn>$(NoWarn);CS0108;CS0618</NoWarn>
   </PropertyGroup>
 </Project>
