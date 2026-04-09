@@ -340,7 +340,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 Id.Name,
                 filter,
                 skipToken,
-                context);
+                context,
+                "BackupProtectionContainerResource.GetBackupWorkloadItems");
         }
 
         /// <summary>
@@ -384,7 +385,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 Id.Name,
                 filter,
                 skipToken,
-                context);
+                context,
+                "BackupProtectionContainerResource.GetBackupWorkloadItems");
         }
 
         /// <summary>

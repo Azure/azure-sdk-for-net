@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DurableTask.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DurableTaskSchedulerData, DurableTaskSchedulerResource>(new SchedulersGetBySubscriptionAsyncCollectionResultOfT(SchedulersRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DurableTaskSchedulerResource(Client, data));
+            return new AsyncPageableWrapper<DurableTaskSchedulerData, DurableTaskSchedulerResource>(new SchedulersGetBySubscriptionAsyncCollectionResultOfT(SchedulersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDurableTaskSubscriptionResource.GetDurableTaskSchedulers"), data => new DurableTaskSchedulerResource(Client, data));
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.DurableTask.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DurableTaskSchedulerData, DurableTaskSchedulerResource>(new SchedulersGetBySubscriptionCollectionResultOfT(SchedulersRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DurableTaskSchedulerResource(Client, data));
+            return new PageableWrapper<DurableTaskSchedulerData, DurableTaskSchedulerResource>(new SchedulersGetBySubscriptionCollectionResultOfT(SchedulersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDurableTaskSubscriptionResource.GetDurableTaskSchedulers"), data => new DurableTaskSchedulerResource(Client, data));
         }
     }
 }

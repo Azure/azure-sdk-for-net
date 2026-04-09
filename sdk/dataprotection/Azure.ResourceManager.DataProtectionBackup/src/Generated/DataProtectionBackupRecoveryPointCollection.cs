@@ -187,7 +187,8 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 Id.Name,
                 filter,
                 skipToken,
-                context), data => new DataProtectionBackupRecoveryPointResource(Client, data));
+                context,
+                "DataProtectionBackupRecoveryPointCollection.GetAll"), data => new DataProtectionBackupRecoveryPointResource(Client, data));
         }
 
         /// <summary>
@@ -225,7 +226,8 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 Id.Name,
                 filter,
                 skipToken,
-                context), data => new DataProtectionBackupRecoveryPointResource(Client, data));
+                context,
+                "DataProtectionBackupRecoveryPointCollection.GetAll"), data => new DataProtectionBackupRecoveryPointResource(Client, data));
         }
 
         /// <summary>

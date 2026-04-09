@@ -297,7 +297,13 @@ namespace Azure.ResourceManager.ElasticSan
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ElasticSanVolumeGroupData, ElasticSanVolumeGroupResource>(new VolumeGroupsGetByElasticSanAsyncCollectionResultOfT(_volumeGroupsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new ElasticSanVolumeGroupResource(Client, data));
+            return new AsyncPageableWrapper<ElasticSanVolumeGroupData, ElasticSanVolumeGroupResource>(new VolumeGroupsGetByElasticSanAsyncCollectionResultOfT(
+                _volumeGroupsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ElasticSanVolumeGroupCollection.GetAll"), data => new ElasticSanVolumeGroupResource(Client, data));
         }
 
         /// <summary>
@@ -325,7 +331,13 @@ namespace Azure.ResourceManager.ElasticSan
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ElasticSanVolumeGroupData, ElasticSanVolumeGroupResource>(new VolumeGroupsGetByElasticSanCollectionResultOfT(_volumeGroupsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new ElasticSanVolumeGroupResource(Client, data));
+            return new PageableWrapper<ElasticSanVolumeGroupData, ElasticSanVolumeGroupResource>(new VolumeGroupsGetByElasticSanCollectionResultOfT(
+                _volumeGroupsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ElasticSanVolumeGroupCollection.GetAll"), data => new ElasticSanVolumeGroupResource(Client, data));
         }
 
         /// <summary>

@@ -8,14 +8,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using Azure.AI.Projects;
+using Azure.AI.Projects.Agents;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 using OpenAI.Responses;
 using OpenTelemetry;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
-using Azure.AI.Projects;
-using Azure.AI.Projects.Agents;
 
 namespace Azure.AI.Extensions.OpenAI.Tests;
 
@@ -162,13 +162,13 @@ public partial class ResponsesTelemetryTests : ProjectsOpenAITestBase
 
         try
         {
-            #pragma warning disable OPENAI001
+#pragma warning disable OPENAI001
             CreateResponseOptions options = new()
             {
                 Agent = new AgentReference(agentVersion.Name, agentVersion.Version),
                 InputItems = { ResponseItem.CreateUserMessageItem("Hello agent!") },
             };
-            #pragma warning restore OPENAI001
+#pragma warning restore OPENAI001
 
             ProjectResponsesClient client = projectClient.ProjectOpenAIClient.GetProjectResponsesClient();
             ResponseResult response = await client.CreateResponseAsync(options);
@@ -179,7 +179,7 @@ public partial class ResponsesTelemetryTests : ProjectsOpenAITestBase
             var span = _exporter.GetExportedActivities().FirstOrDefault(s => s.DisplayName == $"invoke_agent {agentName}");
             Assert.That(span, Is.Not.Null, $"Expected span 'invoke_agent {agentName}'");
 
-                GenAiTraceVerifier.ValidateSpanAttributes(span, GetExpectedAgentAttributes(agentName, agentVersion.Version), allowUnexpected: false);
+            GenAiTraceVerifier.ValidateSpanAttributes(span, GetExpectedAgentAttributes(agentName, agentVersion.Version), allowUnexpected: false);
         }
         finally
         {

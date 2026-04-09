@@ -6,7 +6,7 @@ using Azure.AI.AgentServer.Responses.Tests.Helpers;
 namespace Azure.AI.AgentServer.Responses.Tests.Protocol;
 
 /// <summary>
-/// E2E protocol tests for SSE wire-format headers (US1 / FR-001..003).
+/// E2E protocol tests for SSE wire-format headers (B27 / SSE Response Headers).
 /// Verifies Content-Type includes charset and Connection: keep-alive is set.
 /// </summary>
 public sealed class SseHeadersProtocolTests : ProtocolTestBase
@@ -14,7 +14,7 @@ public sealed class SseHeadersProtocolTests : ProtocolTestBase
     [Test]
     public async Task StreamingPost_HasCorrectContentType()
     {
-        // FR-001: Content-Type: text/event-stream; charset=utf-8
+        // B27: Content-Type: text/event-stream; charset=utf-8
         var response = await PostResponsesAsync(new { model = "test", stream = true });
 
         Assert.That(response.Content.Headers.ContentType?.ToString(), Is.EqualTo("text/event-stream; charset=utf-8"));
@@ -23,7 +23,7 @@ public sealed class SseHeadersProtocolTests : ProtocolTestBase
     [Test]
     public async Task StreamingPost_HasConnectionKeepAlive()
     {
-        // FR-002: Connection: keep-alive
+        // B27: Connection: keep-alive
         var response = await PostResponsesAsync(new { model = "test", stream = true });
 
         Assert.That(response.Headers.Contains("Connection"), Is.True, "Response should include Connection header");
@@ -46,7 +46,7 @@ public sealed class SseHeadersProtocolTests : ProtocolTestBase
     [Test]
     public async Task SseReplay_HasCorrectContentType()
     {
-        // FR-003: Replay GET also has correct Content-Type
+        // B27: Replay GET also has correct Content-Type
         // SSE replay requires background+streaming
         var responseId = await CreateBackgroundStreamingResponseAsync();
         await WaitForBackgroundCompletionAsync(responseId);
@@ -60,7 +60,7 @@ public sealed class SseHeadersProtocolTests : ProtocolTestBase
     [Test]
     public async Task SseReplay_HasConnectionKeepAlive()
     {
-        // FR-003: Replay GET also has Connection: keep-alive
+        // B27: Replay GET also has Connection: keep-alive
         // SSE replay requires background+streaming
         var responseId = await CreateBackgroundStreamingResponseAsync();
         await WaitForBackgroundCompletionAsync(responseId);

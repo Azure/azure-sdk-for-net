@@ -541,7 +541,8 @@ namespace Azure.ResourceManager.ComputeFleet
                 Id.Name,
                 filter,
                 skipToken,
-                context);
+                context,
+                "ComputeFleetResource.GetVirtualMachines");
         }
 
         /// <summary>
@@ -582,7 +583,8 @@ namespace Azure.ResourceManager.ComputeFleet
                 Id.Name,
                 filter,
                 skipToken,
-                context);
+                context,
+                "ComputeFleetResource.GetVirtualMachines");
         }
 
         /// <summary>
@@ -614,7 +616,13 @@ namespace Azure.ResourceManager.ComputeFleet
             {
                 CancellationToken = cancellationToken
             };
-            return new FleetsGetVirtualMachineScaleSetsAsyncCollectionResultOfT(_fleetsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new FleetsGetVirtualMachineScaleSetsAsyncCollectionResultOfT(
+                _fleetsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ComputeFleetResource.GetVirtualMachineScaleSets");
         }
 
         /// <summary>
@@ -646,7 +654,13 @@ namespace Azure.ResourceManager.ComputeFleet
             {
                 CancellationToken = cancellationToken
             };
-            return new FleetsGetVirtualMachineScaleSetsCollectionResultOfT(_fleetsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new FleetsGetVirtualMachineScaleSetsCollectionResultOfT(
+                _fleetsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ComputeFleetResource.GetVirtualMachineScaleSets");
         }
 
         /// <summary> Add a tag to the current resource. </summary>

@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ContainerServiceFleetData, ContainerServiceFleetResource>(new FleetsGetByResourceGroupAsyncCollectionResultOfT(_fleetsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new ContainerServiceFleetResource(Client, data));
+            return new AsyncPageableWrapper<ContainerServiceFleetData, ContainerServiceFleetResource>(new FleetsGetByResourceGroupAsyncCollectionResultOfT(_fleetsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ContainerServiceFleetCollection.GetAll"), data => new ContainerServiceFleetResource(Client, data));
         }
 
         /// <summary>
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ContainerServiceFleetData, ContainerServiceFleetResource>(new FleetsGetByResourceGroupCollectionResultOfT(_fleetsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new ContainerServiceFleetResource(Client, data));
+            return new PageableWrapper<ContainerServiceFleetData, ContainerServiceFleetResource>(new FleetsGetByResourceGroupCollectionResultOfT(_fleetsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ContainerServiceFleetCollection.GetAll"), data => new ContainerServiceFleetResource(Client, data));
         }
 
         /// <summary>

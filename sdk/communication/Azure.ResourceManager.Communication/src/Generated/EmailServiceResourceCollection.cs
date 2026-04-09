@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Communication
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EmailServiceResourceData, EmailServiceResource>(new EmailServicesGetByResourceGroupAsyncCollectionResultOfT(_emailServicesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new EmailServiceResource(Client, data));
+            return new AsyncPageableWrapper<EmailServiceResourceData, EmailServiceResource>(new EmailServicesGetByResourceGroupAsyncCollectionResultOfT(_emailServicesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "EmailServiceResourceCollection.GetAll"), data => new EmailServiceResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Communication
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EmailServiceResourceData, EmailServiceResource>(new EmailServicesGetByResourceGroupCollectionResultOfT(_emailServicesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new EmailServiceResource(Client, data));
+            return new PageableWrapper<EmailServiceResourceData, EmailServiceResource>(new EmailServicesGetByResourceGroupCollectionResultOfT(_emailServicesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "EmailServiceResourceCollection.GetAll"), data => new EmailServiceResource(Client, data));
         }
 
         /// <summary>

@@ -295,7 +295,13 @@ namespace Azure.ResourceManager.ContainerService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ContainerServiceAgentPoolData, ContainerServiceAgentPoolResource>(new AgentPoolsGetAllAsyncCollectionResultOfT(_agentPoolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ContainerServiceAgentPoolResource(Client, data));
+            return new AsyncPageableWrapper<ContainerServiceAgentPoolData, ContainerServiceAgentPoolResource>(new AgentPoolsGetAllAsyncCollectionResultOfT(
+                _agentPoolsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ContainerServiceAgentPoolCollection.GetAll"), data => new ContainerServiceAgentPoolResource(Client, data));
         }
 
         /// <summary>
@@ -323,7 +329,13 @@ namespace Azure.ResourceManager.ContainerService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ContainerServiceAgentPoolData, ContainerServiceAgentPoolResource>(new AgentPoolsGetAllCollectionResultOfT(_agentPoolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ContainerServiceAgentPoolResource(Client, data));
+            return new PageableWrapper<ContainerServiceAgentPoolData, ContainerServiceAgentPoolResource>(new AgentPoolsGetAllCollectionResultOfT(
+                _agentPoolsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ContainerServiceAgentPoolCollection.GetAll"), data => new ContainerServiceAgentPoolResource(Client, data));
         }
 
         /// <summary>

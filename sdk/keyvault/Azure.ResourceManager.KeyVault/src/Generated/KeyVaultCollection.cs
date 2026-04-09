@@ -296,7 +296,13 @@ namespace Azure.ResourceManager.KeyVault
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<KeyVaultData, KeyVaultResource>(new VaultsGetByResourceGroupAsyncCollectionResultOfT(_vaultsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, top, context), data => new KeyVaultResource(Client, data));
+            return new AsyncPageableWrapper<KeyVaultData, KeyVaultResource>(new VaultsGetByResourceGroupAsyncCollectionResultOfT(
+                _vaultsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                top,
+                context,
+                "KeyVaultCollection.GetAll"), data => new KeyVaultResource(Client, data));
         }
 
         /// <summary>
@@ -325,7 +331,13 @@ namespace Azure.ResourceManager.KeyVault
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<KeyVaultData, KeyVaultResource>(new VaultsGetByResourceGroupCollectionResultOfT(_vaultsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, top, context), data => new KeyVaultResource(Client, data));
+            return new PageableWrapper<KeyVaultData, KeyVaultResource>(new VaultsGetByResourceGroupCollectionResultOfT(
+                _vaultsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                top,
+                context,
+                "KeyVaultCollection.GetAll"), data => new KeyVaultResource(Client, data));
         }
 
         /// <summary>

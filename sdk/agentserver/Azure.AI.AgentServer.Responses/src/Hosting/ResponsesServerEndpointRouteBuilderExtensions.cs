@@ -26,7 +26,7 @@ public static class ResponsesServerEndpointRouteBuilderExtensions
         this IEndpointRouteBuilder endpoints,
         string? prefix = null)
     {
-        // Fail-fast: verify ResponseHandler is registered (FR-016, FR-017)
+        // Fail-fast: verify ResponseHandler is registered (S-004)
         var handler = endpoints.ServiceProvider.GetService<ResponseHandler>();
         if (handler is null)
         {

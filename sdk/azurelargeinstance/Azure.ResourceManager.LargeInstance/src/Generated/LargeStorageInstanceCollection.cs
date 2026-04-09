@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.LargeInstance
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<LargeStorageInstanceData, LargeStorageInstanceResource>(new AzureLargeStorageInstanceGetByResourceGroupAsyncCollectionResultOfT(_azureLargeStorageInstanceRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new LargeStorageInstanceResource(Client, data));
+            return new AsyncPageableWrapper<LargeStorageInstanceData, LargeStorageInstanceResource>(new AzureLargeStorageInstanceGetByResourceGroupAsyncCollectionResultOfT(_azureLargeStorageInstanceRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "LargeStorageInstanceCollection.GetAll"), data => new LargeStorageInstanceResource(Client, data));
         }
 
         /// <summary>
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.LargeInstance
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<LargeStorageInstanceData, LargeStorageInstanceResource>(new AzureLargeStorageInstanceGetByResourceGroupCollectionResultOfT(_azureLargeStorageInstanceRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new LargeStorageInstanceResource(Client, data));
+            return new PageableWrapper<LargeStorageInstanceData, LargeStorageInstanceResource>(new AzureLargeStorageInstanceGetByResourceGroupCollectionResultOfT(_azureLargeStorageInstanceRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "LargeStorageInstanceCollection.GetAll"), data => new LargeStorageInstanceResource(Client, data));
         }
 
         /// <summary>

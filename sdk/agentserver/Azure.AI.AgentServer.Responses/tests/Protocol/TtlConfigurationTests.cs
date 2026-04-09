@@ -18,8 +18,8 @@ namespace Azure.AI.AgentServer.Responses.Tests.Protocol;
 
 /// <summary>
 /// Protocol tests for User Story 4 — In-Memory Provider TTL Configuration.
-/// Verifies FR-016 (default 10-minute TTL), FR-017 (custom response TTL),
-/// FR-018 (separate event stream TTL), FR-019 (custom provider ignores InMemoryProviderOptions).
+/// Verifies S-038/B35 (default 10-minute TTL), S-038 (custom response TTL),
+/// S-038/B35 (separate event stream TTL), and custom provider isolation.
 /// </summary>
 public class TtlConfigurationTests : IDisposable
 {

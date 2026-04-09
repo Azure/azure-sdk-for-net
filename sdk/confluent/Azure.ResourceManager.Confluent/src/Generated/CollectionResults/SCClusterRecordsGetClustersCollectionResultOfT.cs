@@ -24,6 +24,7 @@ namespace Azure.ResourceManager.Confluent
         private readonly int? _pageSize;
         private readonly string _pageToken;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of SCClusterRecordsGetClustersCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The SCClusterRecords client used to send requests. </param>
@@ -34,7 +35,8 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="pageSize"> Pagination size. </param>
         /// <param name="pageToken"> An opaque pagination token to fetch the next set of records. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public SCClusterRecordsGetClustersCollectionResultOfT(SCClusterRecords client, Guid subscriptionId, string resourceGroupName, string organizationName, string environmentId, int? pageSize, string pageToken, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public SCClusterRecordsGetClustersCollectionResultOfT(SCClusterRecords client, Guid subscriptionId, string resourceGroupName, string organizationName, string environmentId, int? pageSize, string pageToken, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -44,6 +46,7 @@ namespace Azure.ResourceManager.Confluent
             _pageSize = pageSize;
             _pageToken = pageToken;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of SCClusterRecordsGetClustersCollectionResultOfT as an enumerable collection. </summary>
@@ -76,7 +79,7 @@ namespace Azure.ResourceManager.Confluent
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetClustersRequest(nextLink, _subscriptionId, _resourceGroupName, _organizationName, _environmentId, _pageSize, _pageToken, _context) : _client.CreateGetClustersRequest(_subscriptionId, _resourceGroupName, _organizationName, _environmentId, _pageSize, _pageToken, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("SCClusterRecordCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

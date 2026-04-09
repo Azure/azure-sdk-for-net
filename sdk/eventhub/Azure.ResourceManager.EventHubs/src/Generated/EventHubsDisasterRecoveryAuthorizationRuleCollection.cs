@@ -183,7 +183,8 @@ namespace Azure.ResourceManager.EventHubs
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new EventHubsDisasterRecoveryAuthorizationRuleResource(Client, data));
+                context,
+                "EventHubsDisasterRecoveryAuthorizationRuleCollection.GetAll"), data => new EventHubsDisasterRecoveryAuthorizationRuleResource(Client, data));
         }
 
         /// <summary>
@@ -217,7 +218,8 @@ namespace Azure.ResourceManager.EventHubs
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new EventHubsDisasterRecoveryAuthorizationRuleResource(Client, data));
+                context,
+                "EventHubsDisasterRecoveryAuthorizationRuleCollection.GetAll"), data => new EventHubsDisasterRecoveryAuthorizationRuleResource(Client, data));
         }
 
         /// <summary>

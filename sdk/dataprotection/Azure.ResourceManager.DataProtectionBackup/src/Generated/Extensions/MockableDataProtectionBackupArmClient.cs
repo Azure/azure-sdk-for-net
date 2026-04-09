@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataProtectionBackupInstanceData, DataProtectionBackupInstanceResource>(new BackupInstancesExtensionRoutingOperationGroupGetDataProtectionBackupInstancesAsyncCollectionResultOfT(BackupInstancesExtensionRoutingOperationGroupRestClient, scope, context), data => new DataProtectionBackupInstanceResource(Client, data));
+            return new AsyncPageableWrapper<DataProtectionBackupInstanceData, DataProtectionBackupInstanceResource>(new BackupInstancesExtensionRoutingOperationGroupGetDataProtectionBackupInstancesAsyncCollectionResultOfT(BackupInstancesExtensionRoutingOperationGroupRestClient, scope, context, "MockableDataProtectionBackupArmClient.GetDataProtectionBackupInstances"), data => new DataProtectionBackupInstanceResource(Client, data));
         }
 
         /// <summary>
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataProtectionBackupInstanceData, DataProtectionBackupInstanceResource>(new BackupInstancesExtensionRoutingOperationGroupGetDataProtectionBackupInstancesCollectionResultOfT(BackupInstancesExtensionRoutingOperationGroupRestClient, scope, context), data => new DataProtectionBackupInstanceResource(Client, data));
+            return new PageableWrapper<DataProtectionBackupInstanceData, DataProtectionBackupInstanceResource>(new BackupInstancesExtensionRoutingOperationGroupGetDataProtectionBackupInstancesCollectionResultOfT(BackupInstancesExtensionRoutingOperationGroupRestClient, scope, context, "MockableDataProtectionBackupArmClient.GetDataProtectionBackupInstances"), data => new DataProtectionBackupInstanceResource(Client, data));
         }
     }
 }

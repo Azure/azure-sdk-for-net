@@ -287,7 +287,13 @@ namespace Azure.ResourceManager.Relay
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RelayPrivateEndpointConnectionData, RelayPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetAllAsyncCollectionResultOfT(_privateEndpointConnectionsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new RelayPrivateEndpointConnectionResource(Client, data));
+            return new AsyncPageableWrapper<RelayPrivateEndpointConnectionData, RelayPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetAllAsyncCollectionResultOfT(
+                _privateEndpointConnectionsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "RelayPrivateEndpointConnectionCollection.GetAll"), data => new RelayPrivateEndpointConnectionResource(Client, data));
         }
 
         /// <summary>
@@ -315,7 +321,13 @@ namespace Azure.ResourceManager.Relay
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RelayPrivateEndpointConnectionData, RelayPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetAllCollectionResultOfT(_privateEndpointConnectionsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new RelayPrivateEndpointConnectionResource(Client, data));
+            return new PageableWrapper<RelayPrivateEndpointConnectionData, RelayPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetAllCollectionResultOfT(
+                _privateEndpointConnectionsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "RelayPrivateEndpointConnectionCollection.GetAll"), data => new RelayPrivateEndpointConnectionResource(Client, data));
         }
 
         /// <summary>

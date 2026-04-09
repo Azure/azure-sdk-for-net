@@ -185,7 +185,8 @@ namespace Azure.ResourceManager.DevCenter
                 Id.Parent.Name,
                 Id.Name,
                 top,
-                context), data => new ProjectCatalogImageDefinitionResource(Client, data));
+                context,
+                "ProjectCatalogImageDefinitionCollection.GetAll"), data => new ProjectCatalogImageDefinitionResource(Client, data));
         }
 
         /// <summary>
@@ -221,7 +222,8 @@ namespace Azure.ResourceManager.DevCenter
                 Id.Parent.Name,
                 Id.Name,
                 top,
-                context), data => new ProjectCatalogImageDefinitionResource(Client, data));
+                context,
+                "ProjectCatalogImageDefinitionCollection.GetAll"), data => new ProjectCatalogImageDefinitionResource(Client, data));
         }
 
         /// <summary>

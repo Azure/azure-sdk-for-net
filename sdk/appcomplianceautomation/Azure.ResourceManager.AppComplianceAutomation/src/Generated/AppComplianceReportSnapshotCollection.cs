@@ -194,7 +194,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 @orderby,
                 offerGuid,
                 reportCreatorTenantId,
-                context), data => new AppComplianceReportSnapshotResource(Client, data));
+                context,
+                "AppComplianceReportSnapshotCollection.GetAll"), data => new AppComplianceReportSnapshotResource(Client, data));
         }
 
         /// <summary>
@@ -239,7 +240,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 @orderby,
                 offerGuid,
                 reportCreatorTenantId,
-                context), data => new AppComplianceReportSnapshotResource(Client, data));
+                context,
+                "AppComplianceReportSnapshotCollection.GetAll"), data => new AppComplianceReportSnapshotResource(Client, data));
         }
 
         /// <summary>
