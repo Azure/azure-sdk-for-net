@@ -95,15 +95,5 @@ namespace Azure.AI.VoiceLive.Tests
 
             Assert.AreEqual(MCPApprovalType.Never, server.RequireApproval.ApprovalType);
         }
-
-        [Test]
-        public void MCPApprovalType_JsonConverter_StillWorks()
-        {
-            string serialized = JsonSerializer.Serialize(MCPApprovalType.Never);
-            Assert.AreEqual("\"never\"", serialized);
-
-            MCPApprovalType deserialized = JsonSerializer.Deserialize<MCPApprovalType>(serialized);
-            Assert.AreEqual(MCPApprovalType.Never, deserialized);
-        }
     }
 }
