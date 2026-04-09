@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ProviderHub
         {
             if (id.ResourceType != ProviderRegistrationResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ProviderRegistrationResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ProviderRegistrationResource.ResourceType), nameof(id));
             }
         }
 
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.ProviderHub
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ProviderAuthorizedApplicationData, ProviderAuthorizedApplicationResource>(new AuthorizedApplicationsGetAllAsyncCollectionResultOfT(_authorizedApplicationsRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context), data => new ProviderAuthorizedApplicationResource(Client, data));
+            return new AsyncPageableWrapper<ProviderAuthorizedApplicationData, ProviderAuthorizedApplicationResource>(new AuthorizedApplicationsGetAllAsyncCollectionResultOfT(_authorizedApplicationsRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "ProviderAuthorizedApplicationCollection.GetAll"), data => new ProviderAuthorizedApplicationResource(Client, data));
         }
 
         /// <summary>
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.ProviderHub
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ProviderAuthorizedApplicationData, ProviderAuthorizedApplicationResource>(new AuthorizedApplicationsGetAllCollectionResultOfT(_authorizedApplicationsRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context), data => new ProviderAuthorizedApplicationResource(Client, data));
+            return new PageableWrapper<ProviderAuthorizedApplicationData, ProviderAuthorizedApplicationResource>(new AuthorizedApplicationsGetAllCollectionResultOfT(_authorizedApplicationsRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "ProviderAuthorizedApplicationCollection.GetAll"), data => new ProviderAuthorizedApplicationResource(Client, data));
         }
 
         /// <summary>

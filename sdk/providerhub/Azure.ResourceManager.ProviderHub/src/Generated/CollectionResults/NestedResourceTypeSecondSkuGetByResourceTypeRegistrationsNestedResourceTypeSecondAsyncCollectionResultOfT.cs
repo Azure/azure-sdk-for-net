@@ -24,6 +24,7 @@ namespace Azure.ResourceManager.ProviderHub
         private readonly string _nestedResourceTypeFirst;
         private readonly string _nestedResourceTypeSecond;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of NestedResourceTypeSecondSkuGetByResourceTypeRegistrationsNestedResourceTypeSecondAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The NestedResourceTypeSecondSku client used to send requests. </param>
@@ -33,7 +34,8 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="nestedResourceTypeFirst"> The first child resource type. </param>
         /// <param name="nestedResourceTypeSecond"> The second child resource type. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public NestedResourceTypeSecondSkuGetByResourceTypeRegistrationsNestedResourceTypeSecondAsyncCollectionResultOfT(NestedResourceTypeSecondSku client, Guid subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public NestedResourceTypeSecondSkuGetByResourceTypeRegistrationsNestedResourceTypeSecondAsyncCollectionResultOfT(NestedResourceTypeSecondSku client, Guid subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -42,6 +44,7 @@ namespace Azure.ResourceManager.ProviderHub
             _nestedResourceTypeFirst = nestedResourceTypeFirst;
             _nestedResourceTypeSecond = nestedResourceTypeSecond;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of NestedResourceTypeSecondSkuGetByResourceTypeRegistrationsNestedResourceTypeSecondAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -74,7 +77,7 @@ namespace Azure.ResourceManager.ProviderHub
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByResourceTypeRegistrationsNestedResourceTypeSecondRequest(nextLink, _subscriptionId, _providerNamespace, _resourceType, _nestedResourceTypeFirst, _nestedResourceTypeSecond, _context) : _client.CreateGetByResourceTypeRegistrationsNestedResourceTypeSecondRequest(_subscriptionId, _providerNamespace, _resourceType, _nestedResourceTypeFirst, _nestedResourceTypeSecond, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("NestedResourceTypeSecondSkuCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

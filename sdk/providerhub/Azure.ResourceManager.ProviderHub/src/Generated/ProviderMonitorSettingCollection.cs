@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ProviderHub
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.ProviderHub
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ProviderMonitorSettingData, ProviderMonitorSettingResource>(new ProviderMonitorSettingsGetByResourceGroupAsyncCollectionResultOfT(_providerMonitorSettingsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new ProviderMonitorSettingResource(Client, data));
+            return new AsyncPageableWrapper<ProviderMonitorSettingData, ProviderMonitorSettingResource>(new ProviderMonitorSettingsGetByResourceGroupAsyncCollectionResultOfT(_providerMonitorSettingsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ProviderMonitorSettingCollection.GetAll"), data => new ProviderMonitorSettingResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.ProviderHub
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ProviderMonitorSettingData, ProviderMonitorSettingResource>(new ProviderMonitorSettingsGetByResourceGroupCollectionResultOfT(_providerMonitorSettingsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new ProviderMonitorSettingResource(Client, data));
+            return new PageableWrapper<ProviderMonitorSettingData, ProviderMonitorSettingResource>(new ProviderMonitorSettingsGetByResourceGroupCollectionResultOfT(_providerMonitorSettingsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ProviderMonitorSettingCollection.GetAll"), data => new ProviderMonitorSettingResource(Client, data));
         }
 
         /// <summary>

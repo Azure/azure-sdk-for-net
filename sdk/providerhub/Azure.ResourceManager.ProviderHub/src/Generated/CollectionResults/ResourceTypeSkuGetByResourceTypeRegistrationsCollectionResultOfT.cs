@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.ProviderHub
         private readonly string _providerNamespace;
         private readonly string _resourceType;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of ResourceTypeSkuGetByResourceTypeRegistrationsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The ResourceTypeSku client used to send requests. </param>
@@ -28,13 +29,15 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
         /// <param name="resourceType"> The resource type. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ResourceTypeSkuGetByResourceTypeRegistrationsCollectionResultOfT(ResourceTypeSku client, Guid subscriptionId, string providerNamespace, string resourceType, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public ResourceTypeSkuGetByResourceTypeRegistrationsCollectionResultOfT(ResourceTypeSku client, Guid subscriptionId, string providerNamespace, string resourceType, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _providerNamespace = providerNamespace;
             _resourceType = resourceType;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of ResourceTypeSkuGetByResourceTypeRegistrationsCollectionResultOfT as an enumerable collection. </summary>
@@ -67,7 +70,7 @@ namespace Azure.ResourceManager.ProviderHub
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByResourceTypeRegistrationsRequest(nextLink, _subscriptionId, _providerNamespace, _resourceType, _context) : _client.CreateGetByResourceTypeRegistrationsRequest(_subscriptionId, _providerNamespace, _resourceType, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ResourceTypeSkuCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

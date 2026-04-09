@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ProviderHub
         {
             if (id.ResourceType != ProviderRegistrationResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ProviderRegistrationResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ProviderRegistrationResource.ResourceType), nameof(id));
             }
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.ProviderHub
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DefaultRolloutData, DefaultRolloutResource>(new DefaultRolloutsGetByProviderRegistrationAsyncCollectionResultOfT(_defaultRolloutsRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context), data => new DefaultRolloutResource(Client, data));
+            return new AsyncPageableWrapper<DefaultRolloutData, DefaultRolloutResource>(new DefaultRolloutsGetByProviderRegistrationAsyncCollectionResultOfT(_defaultRolloutsRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "DefaultRolloutCollection.GetAll"), data => new DefaultRolloutResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.ProviderHub
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DefaultRolloutData, DefaultRolloutResource>(new DefaultRolloutsGetByProviderRegistrationCollectionResultOfT(_defaultRolloutsRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context), data => new DefaultRolloutResource(Client, data));
+            return new PageableWrapper<DefaultRolloutData, DefaultRolloutResource>(new DefaultRolloutsGetByProviderRegistrationCollectionResultOfT(_defaultRolloutsRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "DefaultRolloutCollection.GetAll"), data => new DefaultRolloutResource(Client, data));
         }
 
         /// <summary>

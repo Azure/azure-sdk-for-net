@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ProviderHub
         {
             if (id.ResourceType != ResourceTypeRegistrationResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceTypeRegistrationResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceTypeRegistrationResource.ResourceType), nameof(id));
             }
         }
 
@@ -287,7 +287,13 @@ namespace Azure.ResourceManager.ProviderHub
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ResourceTypeSkuData, ResourceTypeSkuResource>(new ResourceTypeSkuGetByResourceTypeRegistrationsAsyncCollectionResultOfT(_resourceTypeSkuRestClient, Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context), data => new ResourceTypeSkuResource(Client, data));
+            return new AsyncPageableWrapper<ResourceTypeSkuData, ResourceTypeSkuResource>(new ResourceTypeSkuGetByResourceTypeRegistrationsAsyncCollectionResultOfT(
+                _resourceTypeSkuRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "ResourceTypeSkuCollection.GetAll"), data => new ResourceTypeSkuResource(Client, data));
         }
 
         /// <summary>
@@ -315,7 +321,13 @@ namespace Azure.ResourceManager.ProviderHub
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ResourceTypeSkuData, ResourceTypeSkuResource>(new ResourceTypeSkuGetByResourceTypeRegistrationsCollectionResultOfT(_resourceTypeSkuRestClient, Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context), data => new ResourceTypeSkuResource(Client, data));
+            return new PageableWrapper<ResourceTypeSkuData, ResourceTypeSkuResource>(new ResourceTypeSkuGetByResourceTypeRegistrationsCollectionResultOfT(
+                _resourceTypeSkuRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "ResourceTypeSkuCollection.GetAll"), data => new ResourceTypeSkuResource(Client, data));
         }
 
         /// <summary>

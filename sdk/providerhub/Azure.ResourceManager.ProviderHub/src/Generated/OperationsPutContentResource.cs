@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ProviderHub
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.ProviderHub
             {
                 CancellationToken = cancellationToken
             };
-            return new OperationsPutContentResourceGetAsyncCollectionResultOfT(_operationsRestClient, Guid.Parse(Id.SubscriptionId), Id.Parent.Name, context);
+            return new OperationsPutContentResourceGetAsyncCollectionResultOfT(_operationsRestClient, Guid.Parse(Id.SubscriptionId), Id.Parent.Name, context, "OperationsPutContentResource.Get");
         }
 
         /// <summary>
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.ProviderHub
             {
                 CancellationToken = cancellationToken
             };
-            return new OperationsPutContentResourceGetCollectionResultOfT(_operationsRestClient, Guid.Parse(Id.SubscriptionId), Id.Parent.Name, context);
+            return new OperationsPutContentResourceGetCollectionResultOfT(_operationsRestClient, Guid.Parse(Id.SubscriptionId), Id.Parent.Name, context, "OperationsPutContentResource.Get");
         }
 
         /// <summary>

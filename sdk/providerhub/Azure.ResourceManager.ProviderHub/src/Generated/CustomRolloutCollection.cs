@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ProviderHub
         {
             if (id.ResourceType != ProviderRegistrationResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ProviderRegistrationResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ProviderRegistrationResource.ResourceType), nameof(id));
             }
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.ProviderHub
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CustomRolloutData, CustomRolloutResource>(new CustomRolloutsGetByProviderRegistrationAsyncCollectionResultOfT(_customRolloutsRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context), data => new CustomRolloutResource(Client, data));
+            return new AsyncPageableWrapper<CustomRolloutData, CustomRolloutResource>(new CustomRolloutsGetByProviderRegistrationAsyncCollectionResultOfT(_customRolloutsRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "CustomRolloutCollection.GetAll"), data => new CustomRolloutResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.ProviderHub
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CustomRolloutData, CustomRolloutResource>(new CustomRolloutsGetByProviderRegistrationCollectionResultOfT(_customRolloutsRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context), data => new CustomRolloutResource(Client, data));
+            return new PageableWrapper<CustomRolloutData, CustomRolloutResource>(new CustomRolloutsGetByProviderRegistrationCollectionResultOfT(_customRolloutsRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "CustomRolloutCollection.GetAll"), data => new CustomRolloutResource(Client, data));
         }
 
         /// <summary>

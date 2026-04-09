@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ProviderHub
         {
             if (id.ResourceType != ProviderRegistrationResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ProviderRegistrationResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ProviderRegistrationResource.ResourceType), nameof(id));
             }
         }
 
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.ProviderHub
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NotificationRegistrationData, NotificationRegistrationResource>(new NotificationRegistrationsGetByProviderRegistrationAsyncCollectionResultOfT(_notificationRegistrationsRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context), data => new NotificationRegistrationResource(Client, data));
+            return new AsyncPageableWrapper<NotificationRegistrationData, NotificationRegistrationResource>(new NotificationRegistrationsGetByProviderRegistrationAsyncCollectionResultOfT(_notificationRegistrationsRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "NotificationRegistrationCollection.GetAll"), data => new NotificationRegistrationResource(Client, data));
         }
 
         /// <summary>
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.ProviderHub
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NotificationRegistrationData, NotificationRegistrationResource>(new NotificationRegistrationsGetByProviderRegistrationCollectionResultOfT(_notificationRegistrationsRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context), data => new NotificationRegistrationResource(Client, data));
+            return new PageableWrapper<NotificationRegistrationData, NotificationRegistrationResource>(new NotificationRegistrationsGetByProviderRegistrationCollectionResultOfT(_notificationRegistrationsRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "NotificationRegistrationCollection.GetAll"), data => new NotificationRegistrationResource(Client, data));
         }
 
         /// <summary>

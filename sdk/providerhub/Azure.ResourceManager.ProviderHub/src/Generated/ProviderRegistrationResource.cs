@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ProviderHub
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -642,7 +642,7 @@ namespace Azure.ResourceManager.ProviderHub
             {
                 CancellationToken = cancellationToken
             };
-            return new ProviderRegistrationResourceGenerateOperationsAsyncCollectionResultOfT(_providerRegistrationsRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context);
+            return new ProviderRegistrationResourceGenerateOperationsAsyncCollectionResultOfT(_providerRegistrationsRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "ProviderRegistrationResource.GenerateOperations");
         }
 
         /// <summary>
@@ -674,7 +674,7 @@ namespace Azure.ResourceManager.ProviderHub
             {
                 CancellationToken = cancellationToken
             };
-            return new ProviderRegistrationResourceGenerateOperationsCollectionResultOfT(_providerRegistrationsRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context);
+            return new ProviderRegistrationResourceGenerateOperationsCollectionResultOfT(_providerRegistrationsRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "ProviderRegistrationResource.GenerateOperations");
         }
 
         /// <summary>

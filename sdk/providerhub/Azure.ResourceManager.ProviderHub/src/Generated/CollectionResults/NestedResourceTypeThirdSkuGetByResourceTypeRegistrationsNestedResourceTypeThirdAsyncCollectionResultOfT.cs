@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.ProviderHub
         private readonly string _nestedResourceTypeSecond;
         private readonly string _nestedResourceTypeThird;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of NestedResourceTypeThirdSkuGetByResourceTypeRegistrationsNestedResourceTypeThirdAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The NestedResourceTypeThirdSku client used to send requests. </param>
@@ -35,7 +36,8 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="nestedResourceTypeSecond"> The second child resource type. </param>
         /// <param name="nestedResourceTypeThird"> The third child resource type. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public NestedResourceTypeThirdSkuGetByResourceTypeRegistrationsNestedResourceTypeThirdAsyncCollectionResultOfT(NestedResourceTypeThirdSku client, Guid subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond, string nestedResourceTypeThird, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public NestedResourceTypeThirdSkuGetByResourceTypeRegistrationsNestedResourceTypeThirdAsyncCollectionResultOfT(NestedResourceTypeThirdSku client, Guid subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond, string nestedResourceTypeThird, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -45,6 +47,7 @@ namespace Azure.ResourceManager.ProviderHub
             _nestedResourceTypeSecond = nestedResourceTypeSecond;
             _nestedResourceTypeThird = nestedResourceTypeThird;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of NestedResourceTypeThirdSkuGetByResourceTypeRegistrationsNestedResourceTypeThirdAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -77,7 +80,7 @@ namespace Azure.ResourceManager.ProviderHub
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByResourceTypeRegistrationsNestedResourceTypeThirdRequest(nextLink, _subscriptionId, _providerNamespace, _resourceType, _nestedResourceTypeFirst, _nestedResourceTypeSecond, _nestedResourceTypeThird, _context) : _client.CreateGetByResourceTypeRegistrationsNestedResourceTypeThirdRequest(_subscriptionId, _providerNamespace, _resourceType, _nestedResourceTypeFirst, _nestedResourceTypeSecond, _nestedResourceTypeThird, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("NestedResourceTypeThirdSkuCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

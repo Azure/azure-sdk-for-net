@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ProviderHub
         {
             if (id.ResourceType != ProviderRegistrationResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ProviderRegistrationResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ProviderRegistrationResource.ResourceType), nameof(id));
             }
         }
 

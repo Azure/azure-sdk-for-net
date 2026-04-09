@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ProviderHub
         {
             if (id.ResourceType != ProviderRegistrationResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ProviderRegistrationResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ProviderRegistrationResource.ResourceType), nameof(id));
             }
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.ProviderHub
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ResourceTypeRegistrationData, ResourceTypeRegistrationResource>(new ResourceTypeRegistrationsGetByProviderRegistrationAsyncCollectionResultOfT(_resourceTypeRegistrationsRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context), data => new ResourceTypeRegistrationResource(Client, data));
+            return new AsyncPageableWrapper<ResourceTypeRegistrationData, ResourceTypeRegistrationResource>(new ResourceTypeRegistrationsGetByProviderRegistrationAsyncCollectionResultOfT(_resourceTypeRegistrationsRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "ResourceTypeRegistrationCollection.GetAll"), data => new ResourceTypeRegistrationResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.ProviderHub
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ResourceTypeRegistrationData, ResourceTypeRegistrationResource>(new ResourceTypeRegistrationsGetByProviderRegistrationCollectionResultOfT(_resourceTypeRegistrationsRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context), data => new ResourceTypeRegistrationResource(Client, data));
+            return new PageableWrapper<ResourceTypeRegistrationData, ResourceTypeRegistrationResource>(new ResourceTypeRegistrationsGetByProviderRegistrationCollectionResultOfT(_resourceTypeRegistrationsRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "ResourceTypeRegistrationCollection.GetAll"), data => new ResourceTypeRegistrationResource(Client, data));
         }
 
         /// <summary>

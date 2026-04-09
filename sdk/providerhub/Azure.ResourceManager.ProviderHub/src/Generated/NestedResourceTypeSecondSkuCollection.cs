@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ProviderHub
         {
             if (id.ResourceType != ResourceTypeRegistrationResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceTypeRegistrationResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceTypeRegistrationResource.ResourceType), nameof(id));
             }
         }
 
@@ -302,7 +302,8 @@ namespace Azure.ResourceManager.ProviderHub
                 Id.Name,
                 _nestedResourceTypeFirst,
                 _nestedResourceTypeSecond,
-                context), data => new NestedResourceTypeSecondSkuResource(Client, data));
+                context,
+                "NestedResourceTypeSecondSkuCollection.GetAll"), data => new NestedResourceTypeSecondSkuResource(Client, data));
         }
 
         /// <summary>
@@ -337,7 +338,8 @@ namespace Azure.ResourceManager.ProviderHub
                 Id.Name,
                 _nestedResourceTypeFirst,
                 _nestedResourceTypeSecond,
-                context), data => new NestedResourceTypeSecondSkuResource(Client, data));
+                context,
+                "NestedResourceTypeSecondSkuCollection.GetAll"), data => new NestedResourceTypeSecondSkuResource(Client, data));
         }
 
         /// <summary>

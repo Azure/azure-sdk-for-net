@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ProviderHub
         {
             if (id.ResourceType != SubscriptionResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
             }
         }
 
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.ProviderHub
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ProviderRegistrationData, ProviderRegistrationResource>(new ProviderRegistrationsGetAllAsyncCollectionResultOfT(_providerRegistrationsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new ProviderRegistrationResource(Client, data));
+            return new AsyncPageableWrapper<ProviderRegistrationData, ProviderRegistrationResource>(new ProviderRegistrationsGetAllAsyncCollectionResultOfT(_providerRegistrationsRestClient, Guid.Parse(Id.SubscriptionId), context, "ProviderRegistrationCollection.GetAll"), data => new ProviderRegistrationResource(Client, data));
         }
 
         /// <summary>
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.ProviderHub
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ProviderRegistrationData, ProviderRegistrationResource>(new ProviderRegistrationsGetAllCollectionResultOfT(_providerRegistrationsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new ProviderRegistrationResource(Client, data));
+            return new PageableWrapper<ProviderRegistrationData, ProviderRegistrationResource>(new ProviderRegistrationsGetAllCollectionResultOfT(_providerRegistrationsRestClient, Guid.Parse(Id.SubscriptionId), context, "ProviderRegistrationCollection.GetAll"), data => new ProviderRegistrationResource(Client, data));
         }
 
         /// <summary>
