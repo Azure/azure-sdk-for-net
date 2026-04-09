@@ -7,32 +7,34 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Compute.Models;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Azure.ResourceManager.Compute
 {
     /// <summary> Specifies information about the gallery image version that you want to create or update. </summary>
-    public partial class SharedGalleryImageVersion : PirSharedGalleryResourceData
+    public partial class CommunityGalleryImageVersionData : PirCommunityGalleryResourceData
     {
-        /// <summary> Initializes a new instance of <see cref="SharedGalleryImageVersion"/>. </summary>
-        internal SharedGalleryImageVersion()
+        /// <summary> Initializes a new instance of <see cref="CommunityGalleryImageVersionData"/>. </summary>
+        internal CommunityGalleryImageVersionData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SharedGalleryImageVersion"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommunityGalleryImageVersionData"/>. </summary>
         /// <param name="name"> Resource name. </param>
         /// <param name="location"> Resource location. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="identifier"> The identifier information of community gallery. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="identifier"> The identifier information of shared gallery. </param>
         /// <param name="properties"> Describes the properties of a gallery image version. </param>
         /// <param name="parentName"> The name of the parent resource. </param>
-        internal SharedGalleryImageVersion(string name, string location, IDictionary<string, BinaryData> additionalBinaryDataProperties, SharedGalleryIdentifier identifier, SharedGalleryImageVersionProperties properties, string parentName) : base(name, location, additionalBinaryDataProperties, identifier)
+        internal CommunityGalleryImageVersionData(string name, string location, string @type, CommunityGalleryIdentifier identifier, IDictionary<string, BinaryData> additionalBinaryDataProperties, CommunityGalleryImageVersionProperties properties, string parentName) : base(name, location, @type, identifier, additionalBinaryDataProperties)
         {
             Properties = properties;
             ParentName = parentName;
         }
 
         /// <summary> Describes the properties of a gallery image version. </summary>
-        internal SharedGalleryImageVersionProperties Properties { get; }
+        internal CommunityGalleryImageVersionProperties Properties { get; }
 
         /// <summary> The name of the parent resource. </summary>
         public string ParentName { get; }
@@ -55,15 +57,6 @@ namespace Azure.ResourceManager.Compute.Models
             }
         }
 
-        /// <summary> If set to true, Virtual Machines deployed from the latest version of the Image Definition won't use this Image Version. </summary>
-        public bool? ExcludeFromLatest
-        {
-            get
-            {
-                return Properties.ExcludeFromLatest;
-            }
-        }
-
         /// <summary> Describes the storage profile of the image version. </summary>
         public SharedGalleryImageVersionStorageProfile StorageProfile
         {
@@ -73,7 +66,16 @@ namespace Azure.ResourceManager.Compute.Models
             }
         }
 
-        /// <summary> The artifact tags of a shared gallery resource. </summary>
+        /// <summary> The disclaimer for a community gallery resource. </summary>
+        public string Disclaimer
+        {
+            get
+            {
+                return Properties.Disclaimer;
+            }
+        }
+
+        /// <summary> The artifact tags of a community gallery resource. </summary>
         public IDictionary<string, string> ArtifactTags
         {
             get

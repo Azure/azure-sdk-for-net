@@ -7,25 +7,26 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Compute.Models;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Azure.ResourceManager.Compute
 {
     /// <summary> Specifies information about the Shared Gallery that you want to create or update. </summary>
-    public partial class SharedGallery : PirSharedGalleryResourceData
+    public partial class SharedGalleryData : PirSharedGalleryResourceData
     {
-        /// <summary> Initializes a new instance of <see cref="SharedGallery"/>. </summary>
-        internal SharedGallery()
+        /// <summary> Initializes a new instance of <see cref="SharedGalleryData"/>. </summary>
+        internal SharedGalleryData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SharedGallery"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SharedGalleryData"/>. </summary>
         /// <param name="name"> Resource name. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="identifier"> The identifier information of shared gallery. </param>
         /// <param name="properties"> Specifies the properties of a shared gallery. </param>
         /// <param name="parentName"> The name of the parent resource. </param>
-        internal SharedGallery(string name, string location, IDictionary<string, BinaryData> additionalBinaryDataProperties, SharedGalleryIdentifier identifier, SharedGalleryProperties properties, string parentName) : base(name, location, additionalBinaryDataProperties, identifier)
+        internal SharedGalleryData(string name, string location, IDictionary<string, BinaryData> additionalBinaryDataProperties, SharedGalleryIdentifier identifier, SharedGalleryProperties properties, string parentName) : base(name, location, additionalBinaryDataProperties, identifier)
         {
             Properties = properties;
             ParentName = parentName;

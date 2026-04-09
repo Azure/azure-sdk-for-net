@@ -10,63 +10,63 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
-using Azure.ResourceManager.Compute;
+using Azure.ResourceManager.Compute.Models;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Azure.ResourceManager.Compute
 {
     /// <summary> Specifies information about the gallery image definition that you want to create or update. </summary>
-    public partial class CommunityGalleryImage : PirCommunityGalleryResourceData, IJsonModel<CommunityGalleryImage>
+    public partial class CommunityGalleryImageData : PirCommunityGalleryResourceData, IJsonModel<CommunityGalleryImageData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override PirCommunityGalleryResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CommunityGalleryImage>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CommunityGalleryImageData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeCommunityGalleryImage(document.RootElement, options);
+                        return DeserializeCommunityGalleryImageData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CommunityGalleryImage)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CommunityGalleryImageData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CommunityGalleryImage>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CommunityGalleryImageData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(CommunityGalleryImage)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CommunityGalleryImageData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CommunityGalleryImage>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<CommunityGalleryImageData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CommunityGalleryImage IPersistableModel<CommunityGalleryImage>.Create(BinaryData data, ModelReaderWriterOptions options) => (CommunityGalleryImage)PersistableModelCreateCore(data, options);
+        CommunityGalleryImageData IPersistableModel<CommunityGalleryImageData>.Create(BinaryData data, ModelReaderWriterOptions options) => (CommunityGalleryImageData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CommunityGalleryImage>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CommunityGalleryImageData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="CommunityGalleryImage"/> from. </param>
-        internal static CommunityGalleryImage FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="CommunityGalleryImageData"/> from. </param>
+        internal static CommunityGalleryImageData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeCommunityGalleryImage(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeCommunityGalleryImageData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<CommunityGalleryImage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CommunityGalleryImageData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -77,10 +77,10 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CommunityGalleryImage>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CommunityGalleryImageData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CommunityGalleryImage)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CommunityGalleryImageData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -92,24 +92,24 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CommunityGalleryImage IJsonModel<CommunityGalleryImage>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (CommunityGalleryImage)JsonModelCreateCore(ref reader, options);
+        CommunityGalleryImageData IJsonModel<CommunityGalleryImageData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (CommunityGalleryImageData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override PirCommunityGalleryResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CommunityGalleryImage>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CommunityGalleryImageData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CommunityGalleryImage)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CommunityGalleryImageData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCommunityGalleryImage(document.RootElement, options);
+            return DeserializeCommunityGalleryImageData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static CommunityGalleryImage DeserializeCommunityGalleryImage(JsonElement element, ModelReaderWriterOptions options)
+        internal static CommunityGalleryImageData DeserializeCommunityGalleryImageData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CommunityGalleryImage(
+            return new CommunityGalleryImageData(
                 name,
                 location,
                 @type,

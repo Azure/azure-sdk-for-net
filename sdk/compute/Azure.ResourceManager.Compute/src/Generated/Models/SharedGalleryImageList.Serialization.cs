@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (SharedGalleryImage item in Value)
+            foreach (SharedGalleryImageData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            IList<SharedGalleryImage> value = default;
+            IList<SharedGalleryImageData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<SharedGalleryImage> array = new List<SharedGalleryImage>();
+                    List<SharedGalleryImageData> array = new List<SharedGalleryImageData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SharedGalleryImage.DeserializeSharedGalleryImage(item, options));
+                        array.Add(SharedGalleryImageData.DeserializeSharedGalleryImageData(item, options));
                     }
                     value = array;
                     continue;

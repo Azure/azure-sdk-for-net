@@ -14,7 +14,7 @@ using Azure.ResourceManager.Compute.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    internal partial class CommunityGalleryImagesGetCommunityGalleryImagesCollectionResultOfT : Pageable<CommunityGalleryImage>
+    internal partial class CommunityGalleryImagesGetCommunityGalleryImagesCollectionResultOfT : Pageable<CommunityGalleryImageData>
     {
         private readonly CommunityGalleryImages _client;
         private readonly string _subscriptionId;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of CommunityGalleryImagesGetCommunityGalleryImagesCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<CommunityGalleryImage>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<CommunityGalleryImageData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Compute
                     yield break;
                 }
                 CommunityGalleryImageList result = CommunityGalleryImageList.FromResponse(response);
-                yield return Page<CommunityGalleryImage>.FromValues((IReadOnlyList<CommunityGalleryImage>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<CommunityGalleryImageData>.FromValues((IReadOnlyList<CommunityGalleryImageData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

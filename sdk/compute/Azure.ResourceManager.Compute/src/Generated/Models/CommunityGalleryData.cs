@@ -7,18 +7,19 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Compute.Models;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Azure.ResourceManager.Compute
 {
     /// <summary> Specifies information about the Community Gallery that you want to create or update. </summary>
-    public partial class CommunityGallery : PirCommunityGalleryResourceData
+    public partial class CommunityGalleryData : PirCommunityGalleryResourceData
     {
-        /// <summary> Initializes a new instance of <see cref="CommunityGallery"/>. </summary>
-        internal CommunityGallery()
+        /// <summary> Initializes a new instance of <see cref="CommunityGalleryData"/>. </summary>
+        internal CommunityGalleryData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="CommunityGallery"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommunityGalleryData"/>. </summary>
         /// <param name="name"> Resource name. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="type"> Resource type. </param>
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Describes the properties of a community gallery. </param>
         /// <param name="parentName"> The name of the parent resource. </param>
-        internal CommunityGallery(string name, string location, string @type, CommunityGalleryIdentifier identifier, IDictionary<string, BinaryData> additionalBinaryDataProperties, CommunityGalleryProperties properties, string parentName) : base(name, location, @type, identifier, additionalBinaryDataProperties)
+        internal CommunityGalleryData(string name, string location, string @type, CommunityGalleryIdentifier identifier, IDictionary<string, BinaryData> additionalBinaryDataProperties, CommunityGalleryProperties properties, string parentName) : base(name, location, @type, identifier, additionalBinaryDataProperties)
         {
             Properties = properties;
             ParentName = parentName;

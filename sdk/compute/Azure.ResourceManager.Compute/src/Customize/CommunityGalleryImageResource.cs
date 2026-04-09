@@ -1,0 +1,145 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+#nullable disable
+
+using System;
+using System.ComponentModel;
+using System.Globalization;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure.Core;
+using Azure.ResourceManager.Resources;
+
+namespace Azure.ResourceManager.Compute
+{
+    /// <summary>
+    /// A Class representing a CommunityGalleryImage along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CommunityGalleryImageResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetCommunityGalleryImageResource method.
+    /// Otherwise you can get one from its parent resource <see cref="CommunityGalleryResource"/> using the GetCommunityGalleryImage method.
+    /// </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public partial class CommunityGalleryImageResource : ArmResource
+    {
+        /// <summary> Generate the resource identifier of a <see cref="CommunityGalleryImageResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="publicGalleryName"> The publicGalleryName. </param>
+        /// <param name="galleryImageName"> The galleryImageName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation location, string publicGalleryName, string galleryImageName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/communityGalleries/{publicGalleryName}/images/{galleryImageName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        private readonly CommunityGalleryImageData _data;
+
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Compute/locations/communityGalleries/images";
+
+        /// <summary> Initializes a new instance of the <see cref="CommunityGalleryImageResource"/> class for mocking. </summary>
+        protected CommunityGalleryImageResource()
+        {
+        }
+
+        /// <summary> Initializes a new instance of the <see cref="CommunityGalleryImageResource"/> class. </summary>
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="data"> The resource that is the target of operations. </param>
+        internal CommunityGalleryImageResource(ArmClient client, CommunityGalleryImageData data) : this(client, data.Id)
+        {
+            HasData = true;
+            _data = data;
+        }
+
+        /// <summary> Initializes a new instance of the <see cref="CommunityGalleryImageResource"/> class. </summary>
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        internal CommunityGalleryImageResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        {
+#if DEBUG
+            ValidateResourceId(Id);
+#endif
+        }
+
+        /// <summary> Gets whether or not the current instance has data. </summary>
+        public virtual bool HasData { get; }
+
+        /// <summary> Gets the data representing this Feature. </summary>
+        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
+        public virtual CommunityGalleryImageData Data
+        {
+            get
+            {
+                if (!HasData)
+                    throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                return _data;
+            }
+        }
+
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+        }
+
+        private SubscriptionResource GetSubscriptionResource() => Client.GetSubscriptionResource(SubscriptionResource.CreateResourceIdentifier(Id.SubscriptionId));
+
+        /// <summary> Gets a collection of CommunityGalleryImageVersionResources in the CommunityGalleryImage. </summary>
+        /// <returns> An object representing collection of CommunityGalleryImageVersionResources and their operations over a CommunityGalleryImageVersionResource. </returns>
+        public virtual CommunityGalleryImageVersionCollection GetCommunityGalleryImageVersions()
+        {
+            return GetCachedClient(client => new CommunityGalleryImageVersionCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a community gallery image version.
+        /// </summary>
+        /// <param name="galleryImageVersionName"> The name of the community gallery image version. Needs to follow semantic version name pattern: The allowed characters are digit and period. Digits must be within the range of a 32-bit integer. Format: &lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="galleryImageVersionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="galleryImageVersionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<CommunityGalleryImageVersionResource>> GetCommunityGalleryImageVersionAsync(string galleryImageVersionName, CancellationToken cancellationToken = default)
+        {
+            return await GetCommunityGalleryImageVersions().GetAsync(galleryImageVersionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a community gallery image version.
+        /// </summary>
+        /// <param name="galleryImageVersionName"> The name of the community gallery image version. Needs to follow semantic version name pattern: The allowed characters are digit and period. Digits must be within the range of a 32-bit integer. Format: &lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="galleryImageVersionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="galleryImageVersionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<CommunityGalleryImageVersionResource> GetCommunityGalleryImageVersion(string galleryImageVersionName, CancellationToken cancellationToken = default)
+        {
+            return GetCommunityGalleryImageVersions().Get(galleryImageVersionName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get a community gallery image.
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<CommunityGalleryImageResource>> GetAsync(CancellationToken cancellationToken = default)
+        {
+            var response = await GetSubscriptionResource().GetCommunityGalleryImageAsync(new AzureLocation(Id.Parent.Parent.Name), Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+            response.Value.Id = CreateResourceIdentifier(Id.SubscriptionId, new AzureLocation(Id.Parent.Parent.Name), Id.Parent.Name, Id.Name);
+            return Response.FromValue(new CommunityGalleryImageResource(Client, response.Value), response.GetRawResponse());
+        }
+
+        /// <summary>
+        /// Get a community gallery image.
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual Response<CommunityGalleryImageResource> Get(CancellationToken cancellationToken = default)
+        {
+            var response = GetSubscriptionResource().GetCommunityGalleryImage(new AzureLocation(Id.Parent.Parent.Name), Id.Parent.Name, Id.Name, cancellationToken);
+            response.Value.Id = CreateResourceIdentifier(Id.SubscriptionId, new AzureLocation(Id.Parent.Parent.Name), Id.Parent.Name, Id.Name);
+            return Response.FromValue(new CommunityGalleryImageResource(Client, response.Value), response.GetRawResponse());
+        }
+    }
+}

@@ -10,63 +10,63 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
-using Azure.ResourceManager.Compute;
+using Azure.ResourceManager.Compute.Models;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Azure.ResourceManager.Compute
 {
-    /// <summary> Specifies information about the Shared Gallery that you want to create or update. </summary>
-    public partial class SharedGallery : PirSharedGalleryResourceData, IJsonModel<SharedGallery>
+    /// <summary> Specifies information about the gallery image version that you want to create or update. </summary>
+    public partial class CommunityGalleryImageVersionData : PirCommunityGalleryResourceData, IJsonModel<CommunityGalleryImageVersionData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override PirResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override PirCommunityGalleryResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SharedGallery>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CommunityGalleryImageVersionData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSharedGallery(document.RootElement, options);
+                        return DeserializeCommunityGalleryImageVersionData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SharedGallery)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CommunityGalleryImageVersionData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SharedGallery>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CommunityGalleryImageVersionData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SharedGallery)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CommunityGalleryImageVersionData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SharedGallery>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<CommunityGalleryImageVersionData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SharedGallery IPersistableModel<SharedGallery>.Create(BinaryData data, ModelReaderWriterOptions options) => (SharedGallery)PersistableModelCreateCore(data, options);
+        CommunityGalleryImageVersionData IPersistableModel<CommunityGalleryImageVersionData>.Create(BinaryData data, ModelReaderWriterOptions options) => (CommunityGalleryImageVersionData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SharedGallery>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CommunityGalleryImageVersionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SharedGallery"/> from. </param>
-        internal static SharedGallery FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="CommunityGalleryImageVersionData"/> from. </param>
+        internal static CommunityGalleryImageVersionData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeSharedGallery(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeCommunityGalleryImageVersionData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SharedGallery>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CommunityGalleryImageVersionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -77,10 +77,10 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SharedGallery>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CommunityGalleryImageVersionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SharedGallery)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CommunityGalleryImageVersionData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -92,24 +92,24 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SharedGallery IJsonModel<SharedGallery>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SharedGallery)JsonModelCreateCore(ref reader, options);
+        CommunityGalleryImageVersionData IJsonModel<CommunityGalleryImageVersionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (CommunityGalleryImageVersionData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override PirResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override PirCommunityGalleryResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SharedGallery>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CommunityGalleryImageVersionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SharedGallery)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CommunityGalleryImageVersionData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSharedGallery(document.RootElement, options);
+            return DeserializeCommunityGalleryImageVersionData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static SharedGallery DeserializeSharedGallery(JsonElement element, ModelReaderWriterOptions options)
+        internal static CommunityGalleryImageVersionData DeserializeCommunityGalleryImageVersionData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -117,9 +117,10 @@ namespace Azure.ResourceManager.Compute.Models
             }
             string name = default;
             string location = default;
+            string @type = default;
+            CommunityGalleryIdentifier identifier = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            SharedGalleryIdentifier identifier = default;
-            SharedGalleryProperties properties = default;
+            CommunityGalleryImageVersionProperties properties = default;
             string parentName = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -133,13 +134,18 @@ namespace Azure.ResourceManager.Compute.Models
                     location = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("type"u8))
+                {
+                    @type = prop.Value.GetString();
+                    continue;
+                }
                 if (prop.NameEquals("identifier"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    identifier = SharedGalleryIdentifier.DeserializeSharedGalleryIdentifier(prop.Value, options);
+                    identifier = CommunityGalleryIdentifier.DeserializeCommunityGalleryIdentifier(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))
@@ -148,7 +154,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    properties = SharedGalleryProperties.DeserializeSharedGalleryProperties(prop.Value, options);
+                    properties = CommunityGalleryImageVersionProperties.DeserializeCommunityGalleryImageVersionProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -156,11 +162,12 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SharedGallery(
+            return new CommunityGalleryImageVersionData(
                 name,
                 location,
-                additionalBinaryDataProperties,
+                @type,
                 identifier,
+                additionalBinaryDataProperties,
                 properties,
                 parentName);
         }

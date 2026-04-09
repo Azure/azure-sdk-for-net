@@ -7,32 +7,34 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Compute.Models;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Azure.ResourceManager.Compute
 {
     /// <summary> Specifies information about the gallery image definition that you want to create or update. </summary>
-    public partial class SharedGalleryImage : PirSharedGalleryResourceData
+    public partial class CommunityGalleryImageData : PirCommunityGalleryResourceData
     {
-        /// <summary> Initializes a new instance of <see cref="SharedGalleryImage"/>. </summary>
-        internal SharedGalleryImage()
+        /// <summary> Initializes a new instance of <see cref="CommunityGalleryImageData"/>. </summary>
+        internal CommunityGalleryImageData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SharedGalleryImage"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommunityGalleryImageData"/>. </summary>
         /// <param name="name"> Resource name. </param>
         /// <param name="location"> Resource location. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="identifier"> The identifier information of community gallery. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="identifier"> The identifier information of shared gallery. </param>
         /// <param name="properties"> Describes the properties of a gallery image definition. </param>
         /// <param name="parentName"> The name of the parent resource. </param>
-        internal SharedGalleryImage(string name, string location, IDictionary<string, BinaryData> additionalBinaryDataProperties, SharedGalleryIdentifier identifier, SharedGalleryImageProperties properties, string parentName) : base(name, location, additionalBinaryDataProperties, identifier)
+        internal CommunityGalleryImageData(string name, string location, string @type, CommunityGalleryIdentifier identifier, IDictionary<string, BinaryData> additionalBinaryDataProperties, CommunityGalleryImageProperties properties, string parentName) : base(name, location, @type, identifier, additionalBinaryDataProperties)
         {
             Properties = properties;
             ParentName = parentName;
         }
 
         /// <summary> Describes the properties of a gallery image definition. </summary>
-        internal SharedGalleryImageProperties Properties { get; }
+        internal CommunityGalleryImageProperties Properties { get; }
 
         /// <summary> The name of the parent resource. </summary>
         public string ParentName { get; }
@@ -64,8 +66,8 @@ namespace Azure.ResourceManager.Compute.Models
             }
         }
 
-        /// <summary> This is the gallery image definition identifier. </summary>
-        public GalleryImageIdentifier ImageIdentifier
+        /// <summary> This is the community gallery image definition identifier. </summary>
+        public CommunityGalleryImageIdentifier ImageIdentifier
         {
             get
             {
@@ -118,7 +120,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
         }
 
-        /// <summary> Privacy statement uri for the current community gallery image. </summary>
+        /// <summary> Privacy statement URI for the current community gallery image. </summary>
         public string PrivacyStatementUri
         {
             get
@@ -127,7 +129,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
         }
 
-        /// <summary> End-user license agreement for the current community gallery image. </summary>
+        /// <summary> The end-user license agreement for the current community gallery image. </summary>
         public string Eula
         {
             get
@@ -136,7 +138,16 @@ namespace Azure.ResourceManager.Compute.Models
             }
         }
 
-        /// <summary> The artifact tags of a shared gallery resource. </summary>
+        /// <summary> The disclaimer for a community gallery resource. </summary>
+        public string Disclaimer
+        {
+            get
+            {
+                return Properties.Disclaimer;
+            }
+        }
+
+        /// <summary> The artifact tags of a community gallery resource. </summary>
         public IDictionary<string, string> ArtifactTags
         {
             get
