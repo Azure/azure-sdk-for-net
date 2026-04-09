@@ -121,9 +121,9 @@ namespace Azure.AI.Extensions.OpenAI
         /// </param>
         /// <param name="results"> The results returned from the memory search. </param>
         /// <returns> A new <see cref="OpenAI.MemorySearchToolCallResponseItem"/> instance for mocking. </returns>
-        public static MemorySearchToolCallResponseItem MemorySearchToolCallResponseItem(string id = default, AgentReference agentReference = default, string responseId = default, MemorySearchToolCallStatus status = default, IEnumerable<MemorySearchItem> results = default)
+        public static MemorySearchToolCallResponseItem MemorySearchToolCallResponseItem(string id = default, AgentReference agentReference = default, string responseId = default, MemorySearchToolCallStatus status = default, IEnumerable<MemoryToolSearchItem> results = default)
         {
-            results ??= new ChangeTrackingList<MemorySearchItem>();
+            results ??= new ChangeTrackingList<MemoryToolSearchItem>();
 
             return new MemorySearchToolCallResponseItem(
                 AgentResponseItemKind.MemorySearchCall,
@@ -137,10 +137,10 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary> A retrieved memory item from memory search. </summary>
         /// <param name="memoryItem"> Retrieved memory item. </param>
-        /// <returns> A new <see cref="OpenAI.MemorySearchItem"/> instance for mocking. </returns>
-        public static MemorySearchItem MemorySearchItem(MemoryItem memoryItem = default)
+        /// <returns> A new <see cref="OpenAI.MemoryToolSearchItem"/> instance for mocking. </returns>
+        public static MemoryToolSearchItem MemoryToolSearchItem(MemoryOutputItem memoryItem = default)
         {
-            return new MemorySearchItem(memoryItem, additionalBinaryDataProperties: null);
+            return new MemoryToolSearchItem(memoryItem, additionalBinaryDataProperties: null);
         }
 
         /// <summary>
@@ -152,10 +152,10 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="scope"> The namespace that logically groups and isolates memories, such as a user ID. </param>
         /// <param name="content"> The content of the memory. </param>
         /// <param name="kind"> The kind of the memory item. </param>
-        /// <returns> A new <see cref="OpenAI.MemoryItem"/> instance for mocking. </returns>
-        public static MemoryItem MemoryItem(string memoryId = default, DateTimeOffset updatedAt = default, string scope = default, string content = default, string kind = default)
+        /// <returns> A new <see cref="OpenAI.MemoryOutputItem"/> instance for mocking. </returns>
+        public static MemoryOutputItem MemoryOutputItem(string memoryId = default, DateTimeOffset updatedAt = default, string scope = default, string content = default, string kind = default)
         {
-            return new UnknownMemoryItem(
+            return new UnknownMemoryOutputItem(
                 memoryId,
                 updatedAt,
                 scope,
@@ -554,7 +554,7 @@ namespace Azure.AI.Extensions.OpenAI
         public static A2AToolCall A2AToolCall(string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, string name = default, string arguments = default, ToolCallStatus status = default)
         {
             return new A2AToolCall(
-                AgentResponseItemKind.A2aPreviewCall,
+                AgentResponseItemKind.A2APreviewCall,
                 id,
                 agentReference,
                 responseId,
@@ -577,7 +577,7 @@ namespace Azure.AI.Extensions.OpenAI
         public static A2AToolCallOutput A2AToolCallOutput(string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, string name = default, BinaryData output = default, ToolCallStatus status = default)
         {
             return new A2AToolCallOutput(
-                AgentResponseItemKind.A2aPreviewCallOutput,
+                AgentResponseItemKind.A2APreviewCallOutput,
                 id,
                 agentReference,
                 responseId,

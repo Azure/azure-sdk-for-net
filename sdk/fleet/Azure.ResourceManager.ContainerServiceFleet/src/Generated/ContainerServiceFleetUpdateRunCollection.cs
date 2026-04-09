@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         {
             if (id.ResourceType != ContainerServiceFleetResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ContainerServiceFleetResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ContainerServiceFleetResource.ResourceType), nameof(id));
             }
         }
 
@@ -99,7 +99,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                     Pipeline,
                     message.Request,
                     response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                    OperationFinalStateVia.AzureAsyncOperation,
+                    true);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -158,7 +159,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                     Pipeline,
                     message.Request,
                     response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                    OperationFinalStateVia.AzureAsyncOperation,
+                    true);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);
@@ -304,7 +306,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 Id.Name,
                 maxCount,
                 skipToken,
-                context), data => new ContainerServiceFleetUpdateRunResource(Client, data));
+                context,
+                "ContainerServiceFleetUpdateRunCollection.GetAll"), data => new ContainerServiceFleetUpdateRunResource(Client, data));
         }
 
         /// <summary>
@@ -341,7 +344,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 Id.Name,
                 maxCount,
                 skipToken,
-                context), data => new ContainerServiceFleetUpdateRunResource(Client, data));
+                context,
+                "ContainerServiceFleetUpdateRunCollection.GetAll"), data => new ContainerServiceFleetUpdateRunResource(Client, data));
         }
 
         /// <summary>

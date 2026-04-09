@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DeploymentStackWhatIfResultData, DeploymentStackWhatIfResultResource>(new DeploymentStacksWhatIfAtScopeGetAllAsyncCollectionResultOfT(_deploymentStacksWhatIfAtScopeRestClient, Id, context), data => new DeploymentStackWhatIfResultResource(Client, data));
+            return new AsyncPageableWrapper<DeploymentStackWhatIfResultData, DeploymentStackWhatIfResultResource>(new DeploymentStacksWhatIfAtScopeGetAllAsyncCollectionResultOfT(_deploymentStacksWhatIfAtScopeRestClient, Id, context, "DeploymentStackWhatIfResultCollection.GetAll"), data => new DeploymentStackWhatIfResultResource(Client, data));
         }
 
         /// <summary>
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DeploymentStackWhatIfResultData, DeploymentStackWhatIfResultResource>(new DeploymentStacksWhatIfAtScopeGetAllCollectionResultOfT(_deploymentStacksWhatIfAtScopeRestClient, Id, context), data => new DeploymentStackWhatIfResultResource(Client, data));
+            return new PageableWrapper<DeploymentStackWhatIfResultData, DeploymentStackWhatIfResultResource>(new DeploymentStacksWhatIfAtScopeGetAllCollectionResultOfT(_deploymentStacksWhatIfAtScopeRestClient, Id, context, "DeploymentStackWhatIfResultCollection.GetAll"), data => new DeploymentStackWhatIfResultResource(Client, data));
         }
 
         /// <summary>

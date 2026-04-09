@@ -633,9 +633,9 @@ namespace Azure.ResourceManager.EventHubs.Tests
                 DefaultAction = EventHubsNetworkRuleSetDefaultAction.Deny,
                 VirtualNetworkRules =
                 {
-                    new EventHubsNetworkRuleSetVirtualNetworkRules() { Subnet = new WritableSubResource(){Id=subnetId1} },
-                    new EventHubsNetworkRuleSetVirtualNetworkRules() { Subnet = new WritableSubResource(){Id=subnetId2} },
-                    new EventHubsNetworkRuleSetVirtualNetworkRules() { Subnet = new WritableSubResource(){Id=subnetId3} }
+                    new EventHubsNetworkRuleSetVirtualNetworkRules() { SubnetId = subnetId1 },
+                    new EventHubsNetworkRuleSetVirtualNetworkRules() { SubnetId = subnetId2 },
+                    new EventHubsNetworkRuleSetVirtualNetworkRules() { SubnetId = subnetId3 }
                 },
                 IPRules =
                     {

@@ -64,9 +64,7 @@ namespace Azure.ResourceManager.ImpactReporting.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(impactConnectorPatch, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(impactConnectorPatch, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

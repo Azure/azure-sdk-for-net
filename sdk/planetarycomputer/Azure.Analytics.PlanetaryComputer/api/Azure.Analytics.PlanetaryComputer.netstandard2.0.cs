@@ -1177,6 +1177,7 @@ namespace Azure.Analytics.PlanetaryComputer
     public partial class PlanetaryComputerProClient
     {
         protected PlanetaryComputerProClient() { }
+        public PlanetaryComputerProClient(Azure.Analytics.PlanetaryComputer.PlanetaryComputerProClientSettings settings) { }
         public PlanetaryComputerProClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
         public PlanetaryComputerProClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.PlanetaryComputer.PlanetaryComputerProClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
@@ -1192,6 +1193,13 @@ namespace Azure.Analytics.PlanetaryComputer
         {
             V2025_04_30_Preview = 1,
         }
+    }
+    public partial class PlanetaryComputerProClientSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public PlanetaryComputerProClientSettings() { }
+        public System.Uri Endpoint { get { throw null; } set { } }
+        public Azure.Analytics.PlanetaryComputer.PlanetaryComputerProClientOptions Options { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
     public partial class PointGeometry : Azure.Analytics.PlanetaryComputer.GeoJsonGeometry, System.ClientModel.Primitives.IJsonModel<Azure.Analytics.PlanetaryComputer.PointGeometry>, System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.PlanetaryComputer.PointGeometry>
     {

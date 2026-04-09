@@ -30,6 +30,11 @@ import "./flatten-with-customized-property.tsp";
 import "./extensionresourcename.tsp";
 import "./testcertificate.tsp";
 import "./sharedmodel.tsp";
+import "./entityresource.tsp";
+import "./sharedparamrepro.tsp";
+import "./discriminatedextensionresource.tsp";
+import "./inherited-flatten-grandparent.tsp";
+import "./basetype-cycle-proxy-resource.tsp";
 using TypeSpec.Versioning;
 using Azure.ClientGenerator.Core;
 using Azure.ResourceManager;
@@ -46,6 +51,7 @@ namespace MgmtTypeSpec {
 
   /** The available API versions. */
   enum Versions {
+    v2024_04_01: "2024-04-01",
     v2024_05_01: "2024-05-01",
   }
 
@@ -71,6 +77,8 @@ namespace MgmtTypeSpec {
   @@Azure.ClientGenerator.Core.Legacy.flattenProperty(Foo.properties);
   #suppress "deprecated"
   @@Azure.ClientGenerator.Core.Legacy.flattenProperty(MultiFlattenTest.properties);
+  #suppress "deprecated"
+  @@Azure.ClientGenerator.Core.Legacy.flattenProperty(CycleTestConnectionReference.properties);
 
   @@alternateType(FooProperties.something, Azure.ResourceManager.Foundations.ManagedServiceIdentity, "csharp");
   @@clientName(Employees.listByParent, "GetEmployees", "csharp");

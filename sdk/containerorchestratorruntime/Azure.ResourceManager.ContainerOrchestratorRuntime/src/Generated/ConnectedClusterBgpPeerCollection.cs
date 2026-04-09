@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ConnectedClusterBgpPeerData, ConnectedClusterBgpPeerResource>(new BgpPeersGetAllAsyncCollectionResultOfT(_bgpPeersRestClient, Id, context), data => new ConnectedClusterBgpPeerResource(Client, data));
+            return new AsyncPageableWrapper<ConnectedClusterBgpPeerData, ConnectedClusterBgpPeerResource>(new BgpPeersGetAllAsyncCollectionResultOfT(_bgpPeersRestClient, Id, context, "ConnectedClusterBgpPeerCollection.GetAll"), data => new ConnectedClusterBgpPeerResource(Client, data));
         }
 
         /// <summary>
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ConnectedClusterBgpPeerData, ConnectedClusterBgpPeerResource>(new BgpPeersGetAllCollectionResultOfT(_bgpPeersRestClient, Id, context), data => new ConnectedClusterBgpPeerResource(Client, data));
+            return new PageableWrapper<ConnectedClusterBgpPeerData, ConnectedClusterBgpPeerResource>(new BgpPeersGetAllCollectionResultOfT(_bgpPeersRestClient, Id, context, "ConnectedClusterBgpPeerCollection.GetAll"), data => new ConnectedClusterBgpPeerResource(Client, data));
         }
 
         /// <summary>

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DisconnectedOperationData, DisconnectedOperationResource>(new DisconnectedGetByResourceGroupAsyncCollectionResultOfT(_disconnectedRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new DisconnectedOperationResource(Client, data));
+            return new AsyncPageableWrapper<DisconnectedOperationData, DisconnectedOperationResource>(new DisconnectedGetByResourceGroupAsyncCollectionResultOfT(_disconnectedRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DisconnectedOperationCollection.GetAll"), data => new DisconnectedOperationResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DisconnectedOperationData, DisconnectedOperationResource>(new DisconnectedGetByResourceGroupCollectionResultOfT(_disconnectedRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new DisconnectedOperationResource(Client, data));
+            return new PageableWrapper<DisconnectedOperationData, DisconnectedOperationResource>(new DisconnectedGetByResourceGroupCollectionResultOfT(_disconnectedRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DisconnectedOperationCollection.GetAll"), data => new DisconnectedOperationResource(Client, data));
         }
 
         /// <summary>

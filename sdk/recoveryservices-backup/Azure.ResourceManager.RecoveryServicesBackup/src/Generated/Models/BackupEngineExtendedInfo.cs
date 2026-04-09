@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Additional information on backup engine. </summary>
     public partial class BackupEngineExtendedInfo
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BackupEngineExtendedInfo"/>. </summary>
         public BackupEngineExtendedInfo()
@@ -59,8 +30,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="availableDiskSpace"> Disk space currently available in the backup engine. </param>
         /// <param name="refreshedOn"> Last refresh time in the backup engine. </param>
         /// <param name="azureProtectedInstances"> Protected instances in the backup engine. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BackupEngineExtendedInfo(string databaseName, int? protectedItemsCount, int? protectedServersCount, int? diskCount, double? usedDiskSpace, double? availableDiskSpace, DateTimeOffset? refreshedOn, int? azureProtectedInstances, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BackupEngineExtendedInfo(string databaseName, int? protectedItemsCount, int? protectedServersCount, int? diskCount, double? usedDiskSpace, double? availableDiskSpace, DateTimeOffset? refreshedOn, int? azureProtectedInstances, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DatabaseName = databaseName;
             ProtectedItemsCount = protectedItemsCount;
@@ -70,23 +41,30 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             AvailableDiskSpace = availableDiskSpace;
             RefreshedOn = refreshedOn;
             AzureProtectedInstances = azureProtectedInstances;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Database name of backup engine. </summary>
         public string DatabaseName { get; set; }
+
         /// <summary> Number of protected items in the backup engine. </summary>
         public int? ProtectedItemsCount { get; set; }
+
         /// <summary> Number of protected servers in the backup engine. </summary>
         public int? ProtectedServersCount { get; set; }
+
         /// <summary> Number of disks in the backup engine. </summary>
         public int? DiskCount { get; set; }
+
         /// <summary> Disk space used in the backup engine. </summary>
         public double? UsedDiskSpace { get; set; }
+
         /// <summary> Disk space currently available in the backup engine. </summary>
         public double? AvailableDiskSpace { get; set; }
+
         /// <summary> Last refresh time in the backup engine. </summary>
         public DateTimeOffset? RefreshedOn { get; set; }
+
         /// <summary> Protected instances in the backup engine. </summary>
         public int? AzureProtectedInstances { get; set; }
     }

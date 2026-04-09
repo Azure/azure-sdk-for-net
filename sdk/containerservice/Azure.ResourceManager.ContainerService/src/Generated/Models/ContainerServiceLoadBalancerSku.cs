@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.ContainerService.Models
     public readonly partial struct ContainerServiceLoadBalancerSku : IEquatable<ContainerServiceLoadBalancerSku>
     {
         private readonly string _value;
+        /// <summary> Use a a standard Load Balancer. This is the recommended Load Balancer SKU. For more information about on working with the load balancer in the managed cluster, see the [standard Load Balancer](https://docs.microsoft.com/azure/aks/load-balancer-standard) article. </summary>
+        private const string StandardValue = "standard";
+        /// <summary> Use a basic Load Balancer with limited functionality. </summary>
+        private const string BasicValue = "basic";
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceLoadBalancerSku"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ContainerServiceLoadBalancerSku(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string StandardValue = "standard";
-        private const string BasicValue = "basic";
+            _value = value;
+        }
 
         /// <summary> Use a a standard Load Balancer. This is the recommended Load Balancer SKU. For more information about on working with the load balancer in the managed cluster, see the [standard Load Balancer](https://docs.microsoft.com/azure/aks/load-balancer-standard) article. </summary>
         public static ContainerServiceLoadBalancerSku Standard { get; } = new ContainerServiceLoadBalancerSku(StandardValue);
+
         /// <summary> Use a basic Load Balancer with limited functionality. </summary>
         public static ContainerServiceLoadBalancerSku Basic { get; } = new ContainerServiceLoadBalancerSku(BasicValue);
+
         /// <summary> Determines if two <see cref="ContainerServiceLoadBalancerSku"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ContainerServiceLoadBalancerSku left, ContainerServiceLoadBalancerSku right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ContainerServiceLoadBalancerSku"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ContainerServiceLoadBalancerSku left, ContainerServiceLoadBalancerSku right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerServiceLoadBalancerSku"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ContainerServiceLoadBalancerSku"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ContainerServiceLoadBalancerSku(string value) => new ContainerServiceLoadBalancerSku(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ContainerServiceLoadBalancerSku"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ContainerServiceLoadBalancerSku?(string value) => value == null ? null : new ContainerServiceLoadBalancerSku(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ContainerServiceLoadBalancerSku other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ContainerServiceLoadBalancerSku other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

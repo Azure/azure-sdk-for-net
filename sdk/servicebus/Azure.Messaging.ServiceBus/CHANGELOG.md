@@ -15,6 +15,9 @@ Thank you to our developer community members who helped to make the Service Bus 
 ### Bugs Fixed
 
 - Fixed a bug in the `ServiceBusProcessor` where terminal errors (such as DNS resolution failures) caused a tight retry loop with no delay between attempts, potentially overwhelming logs and consuming excessive resources.  ([#54572](https://github.com/Azure/azure-sdk-for-net/issues/54572))
+- Fixed a race condition in `AmqpSender` where concurrent calls to `CreateMessageBatchAsync` during initial AMQP link creation could observe an inconsistent `MaxBatchSize`, causing a spurious `ArgumentOutOfRangeException`. ([#56301](https://github.com/Azure/azure-sdk-for-net/issues/56301))
+
+- The sender now reads the `com.microsoft:max-message-batch-size` vendor property from the AMQP link to correctly limit batch size on Premium large-message entities, where `max-message-size` can be up to 100 MB but the batch limit is 1 MB. The 4,500 message count cap on batches has been removed as the service does not enforce a count limit. ([#44914](https://github.com/Azure/azure-sdk-for-net/issues/44914))
 
 ### Other Changes
 

@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Storage.Models
 {
     internal static partial class StorageAccountKeyPermissionExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this StorageAccountKeyPermission value) => value switch
         {
             StorageAccountKeyPermission.Read => "Read",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.Storage.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown StorageAccountKeyPermission value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static StorageAccountKeyPermission ToStorageAccountKeyPermission(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Read")) return StorageAccountKeyPermission.Read;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Full")) return StorageAccountKeyPermission.Full;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Read"))
+            {
+                return StorageAccountKeyPermission.Read;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Full"))
+            {
+                return StorageAccountKeyPermission.Full;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown StorageAccountKeyPermission value.");
         }
     }

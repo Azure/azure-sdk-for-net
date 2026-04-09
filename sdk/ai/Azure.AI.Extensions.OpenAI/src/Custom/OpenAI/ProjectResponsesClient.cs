@@ -8,9 +8,9 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.AI.Extensions.OpenAI.Telemetry;
 using OpenAI;
 using OpenAI.Responses;
-using Azure.AI.Extensions.OpenAI.Telemetry;
 
 namespace Azure.AI.Extensions.OpenAI;
 
@@ -245,6 +245,7 @@ public partial class ProjectResponsesClient : ResponsesClient
     public override CollectionResult<StreamingResponseUpdate> CreateResponseStreaming(CreateResponseOptions options, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNull(options, nameof(options));
+        options.StreamingEnabled = true;
         ApplyClientDefaults(options);
         if (!OpenTelemetryResponseScope.IsEnabled)
         {
@@ -302,7 +303,7 @@ public partial class ProjectResponsesClient : ResponsesClient
             StreamingEnabled = true,
             PreviousResponseId = previousResponseId,
             InputItems = { ResponseItem.CreateUserMessageItem(userInputText) },
-            Model=model,
+            Model = model,
         };
         ApplyClientDefaults(options);
         return CreateResponseStreaming(options, cancellationToken);
@@ -311,6 +312,7 @@ public partial class ProjectResponsesClient : ResponsesClient
     public override AsyncCollectionResult<StreamingResponseUpdate> CreateResponseStreamingAsync(CreateResponseOptions options, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNull(options, nameof(options));
+        options.StreamingEnabled = true;
         ApplyClientDefaults(options);
         if (!OpenTelemetryResponseScope.IsEnabled)
         {

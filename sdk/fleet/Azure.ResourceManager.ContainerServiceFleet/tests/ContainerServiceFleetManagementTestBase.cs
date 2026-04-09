@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Tests
         //protected SubscriptionResource DefaultSubscription { get; private set; }
         //protected ResourceGroupResource DefaultResourceGroup { get; private set; }
         protected const string DefaultFleetResourceGroupName = "fleet-dotnet-testing"; // this must match the value set from ./New-TestResources.ps1
-        protected AzureLocation DefaultLocation = new AzureLocation("eastus");
+        protected AzureLocation DefaultLocation = new AzureLocation("westcentralus");
 
         protected ContainerServiceFleetManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)

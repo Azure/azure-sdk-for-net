@@ -25,6 +25,7 @@ namespace Azure.Communication.JobRouter
         private readonly DateTimeOffset? _scheduledBefore;
         private readonly DateTimeOffset? _scheduledAfter;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of JobRouterClientGetJobsCollectionResult, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The JobRouterClient client used to send requests. </param>
@@ -36,7 +37,8 @@ namespace Azure.Communication.JobRouter
         /// <param name="scheduledBefore"> If specified, filter on jobs that was scheduled before or at given timestamp. Range: (-Inf, scheduledBefore]. </param>
         /// <param name="scheduledAfter"> If specified, filter on jobs that was scheduled at or after given value. Range: [scheduledAfter, +Inf). </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public JobRouterClientGetJobsCollectionResult(JobRouterClient client, int? maxpagesize, string status, string queueId, string channelId, string classificationPolicyId, DateTimeOffset? scheduledBefore, DateTimeOffset? scheduledAfter, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public JobRouterClientGetJobsCollectionResult(JobRouterClient client, int? maxpagesize, string status, string queueId, string channelId, string classificationPolicyId, DateTimeOffset? scheduledBefore, DateTimeOffset? scheduledAfter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _maxpagesize = maxpagesize;
@@ -47,6 +49,7 @@ namespace Azure.Communication.JobRouter
             _scheduledBefore = scheduledBefore;
             _scheduledAfter = scheduledAfter;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of JobRouterClientGetJobsCollectionResult as an enumerable collection. </summary>
@@ -85,7 +88,7 @@ namespace Azure.Communication.JobRouter
         {
             int? pageSize = pageSizeHint.HasValue ? pageSizeHint.Value : _maxpagesize;
             HttpMessage message = nextLink != null ? _client.CreateNextGetJobsRequest(nextLink, pageSize, _context) : _client.CreateGetJobsRequest(pageSize, _status, _queueId, _channelId, _classificationPolicyId, _scheduledBefore, _scheduledAfter, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("JobRouterClient.GetJobs");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

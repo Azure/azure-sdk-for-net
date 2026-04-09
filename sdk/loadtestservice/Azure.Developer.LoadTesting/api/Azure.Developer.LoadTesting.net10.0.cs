@@ -89,7 +89,7 @@ namespace Azure.Developer.LoadTesting
         private readonly int _dummyPrimitive;
         public CreatedByType(string value) { throw null; }
         public static Azure.Developer.LoadTesting.CreatedByType AzurePipelines { get { throw null; } }
-        public static Azure.Developer.LoadTesting.CreatedByType GitHubWorkflows { get { throw null; } }
+        public static Azure.Developer.LoadTesting.CreatedByType GithubWorkflows { get { throw null; } }
         public static Azure.Developer.LoadTesting.CreatedByType ScheduledTrigger { get { throw null; } }
         public static Azure.Developer.LoadTesting.CreatedByType User { get { throw null; } }
         public bool Equals(Azure.Developer.LoadTesting.CreatedByType other) { throw null; }
@@ -260,6 +260,7 @@ namespace Azure.Developer.LoadTesting
         public string MetricsReferenceIdentityId { get { throw null; } set { } }
         public Azure.Developer.LoadTesting.LoadTestingManagedIdentityType? MetricsReferenceIdentityType { get { throw null; } set { } }
         public Azure.Developer.LoadTesting.PassFailCriteria PassFailCriteria { get { throw null; } set { } }
+        public Azure.Developer.LoadTesting.TestPreferences Preferences { get { throw null; } set { } }
         public bool? PublicIpDisabled { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, Azure.Developer.LoadTesting.TestSecret> Secrets { get { throw null; } }
         public string SubnetId { get { throw null; } set { } }
@@ -278,6 +279,8 @@ namespace Azure.Developer.LoadTesting
     public partial class LoadTestAdministrationClient
     {
         protected LoadTestAdministrationClient() { }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+        public LoadTestAdministrationClient(Azure.Developer.LoadTesting.LoadTestAdministrationClientSettings settings) { }
         public LoadTestAdministrationClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
         public LoadTestAdministrationClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Developer.LoadTesting.LoadTestingClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
@@ -317,6 +320,10 @@ namespace Azure.Developer.LoadTesting
         public virtual Azure.Response DeleteTrigger(string triggerId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteTriggerAsync(string triggerId, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteTriggerAsync(string triggerId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Operation<System.BinaryData> GenerateTestPlanRecommendations(Azure.WaitUntil waitUntil, string testId, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Operation<Azure.Developer.LoadTesting.LoadTest> GenerateTestPlanRecommendations(Azure.WaitUntil waitUntil, string testId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> GenerateTestPlanRecommendationsAsync(Azure.WaitUntil waitUntil, string testId, Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<Azure.Developer.LoadTesting.LoadTest>> GenerateTestPlanRecommendationsAsync(Azure.WaitUntil waitUntil, string testId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetAppComponents(string testId, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<Azure.Developer.LoadTesting.TestAppComponents> GetAppComponents(string testId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetAppComponentsAsync(string testId, Azure.RequestContext context) { throw null; }
@@ -372,6 +379,14 @@ namespace Azure.Developer.LoadTesting
         public virtual Azure.Developer.LoadTesting.FileUploadResultOperation UploadTestFile(Azure.WaitUntil waitUntil, string testId, string fileName, Azure.Core.RequestContent content, System.TimeSpan? timeSpan = default(System.TimeSpan?), string fileType = null, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Developer.LoadTesting.FileUploadResultOperation> UploadTestFileAsync(Azure.WaitUntil waitUntil, string testId, string fileName, Azure.Core.RequestContent content, System.TimeSpan? timeSpan = default(System.TimeSpan?), string fileType = null, Azure.RequestContext context = null) { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+    public partial class LoadTestAdministrationClientSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public LoadTestAdministrationClientSettings() { }
+        public System.Uri Endpoint { get { throw null; } set { } }
+        public Azure.Developer.LoadTesting.LoadTestingClientOptions Options { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
+    }
     public partial class LoadTestConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.LoadTestConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.LoadTestConfiguration>
     {
         public LoadTestConfiguration() { }
@@ -412,7 +427,7 @@ namespace Azure.Developer.LoadTesting
     }
     public partial class LoadTestingClientOptions : Azure.Core.ClientOptions
     {
-        public LoadTestingClientOptions(Azure.Developer.LoadTesting.LoadTestingClientOptions.ServiceVersion version = Azure.Developer.LoadTesting.LoadTestingClientOptions.ServiceVersion.V2025_03_01_Preview) { }
+        public LoadTestingClientOptions(Azure.Developer.LoadTesting.LoadTestingClientOptions.ServiceVersion version = Azure.Developer.LoadTesting.LoadTestingClientOptions.ServiceVersion.V2025_11_01_Preview) { }
         public enum ServiceVersion
         {
             V2022_11_01 = 1,
@@ -422,6 +437,7 @@ namespace Azure.Developer.LoadTesting
             V2024_07_01_Preview = 5,
             V2024_12_01_Preview = 6,
             V2025_03_01_Preview = 7,
+            V2025_11_01_Preview = 8,
         }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -431,7 +447,9 @@ namespace Azure.Developer.LoadTesting
         private readonly int _dummyPrimitive;
         public LoadTestingFileType(string value) { throw null; }
         public static Azure.Developer.LoadTesting.LoadTestingFileType AdditionalArtifacts { get { throw null; } }
+        public static Azure.Developer.LoadTesting.LoadTestingFileType BrowserRecording { get { throw null; } }
         public static Azure.Developer.LoadTesting.LoadTestingFileType JmxFile { get { throw null; } }
+        public static Azure.Developer.LoadTesting.LoadTestingFileType TestPlanRecommendations { get { throw null; } }
         public static Azure.Developer.LoadTesting.LoadTestingFileType TestScript { get { throw null; } }
         public static Azure.Developer.LoadTesting.LoadTestingFileType UrlTestConfig { get { throw null; } }
         public static Azure.Developer.LoadTesting.LoadTestingFileType UserProperties { get { throw null; } }
@@ -473,12 +491,12 @@ namespace Azure.Developer.LoadTesting
         public static Azure.Developer.LoadTesting.FunctionFlexConsumptionResourceConfiguration FunctionFlexConsumptionResourceConfiguration(long instanceMemoryMB = (long)0, long? httpConcurrency = default(long?)) { throw null; }
         public static Azure.Developer.LoadTesting.FunctionFlexConsumptionTargetResourceConfigurations FunctionFlexConsumptionTargetResourceConfigurations(System.Collections.Generic.IDictionary<string, Azure.Developer.LoadTesting.FunctionFlexConsumptionResourceConfiguration> configurations = null) { throw null; }
         public static Azure.Developer.LoadTesting.HourlyRecurrence HourlyRecurrence(Azure.Developer.LoadTesting.RecurrenceEnd recurrenceEnd = null, int interval = 0) { throw null; }
-        public static Azure.Developer.LoadTesting.LoadTest LoadTest(Azure.Developer.LoadTesting.PassFailCriteria passFailCriteria = null, Azure.Developer.LoadTesting.AutoStopCriteria autoStopCriteria = null, System.Collections.Generic.IDictionary<string, Azure.Developer.LoadTesting.TestSecret> secrets = null, Azure.Developer.LoadTesting.TestCertificate certificate = null, System.Collections.Generic.IDictionary<string, string> environmentVariables = null, Azure.Developer.LoadTesting.LoadTestConfiguration loadTestConfiguration = null, string baselineTestRunId = null, Azure.Developer.LoadTesting.TestInputArtifacts inputArtifacts = null, string testId = null, string description = null, string displayName = null, string subnetId = null, Azure.Developer.LoadTesting.LoadTestKind? kind = default(Azure.Developer.LoadTesting.LoadTestKind?), bool? publicIpDisabled = default(bool?), string keyvaultReferenceIdentityType = null, string keyvaultReferenceIdentityId = null, Azure.Developer.LoadTesting.LoadTestingManagedIdentityType? metricsReferenceIdentityType = default(Azure.Developer.LoadTesting.LoadTestingManagedIdentityType?), string metricsReferenceIdentityId = null, Azure.Developer.LoadTesting.LoadTestingManagedIdentityType? engineBuiltInIdentityType = default(Azure.Developer.LoadTesting.LoadTestingManagedIdentityType?), System.Collections.Generic.IEnumerable<string> engineBuiltInIdentityIds = null, double? estimatedVirtualUserHours = default(double?), System.DateTimeOffset? createdDateTime = default(System.DateTimeOffset?), string createdBy = null, System.DateTimeOffset? lastModifiedDateTime = default(System.DateTimeOffset?), string lastModifiedBy = null) { throw null; }
+        public static Azure.Developer.LoadTesting.LoadTest LoadTest(Azure.Developer.LoadTesting.PassFailCriteria passFailCriteria = null, Azure.Developer.LoadTesting.AutoStopCriteria autoStopCriteria = null, System.Collections.Generic.IDictionary<string, Azure.Developer.LoadTesting.TestSecret> secrets = null, Azure.Developer.LoadTesting.TestCertificate certificate = null, System.Collections.Generic.IDictionary<string, string> environmentVariables = null, Azure.Developer.LoadTesting.LoadTestConfiguration loadTestConfiguration = null, string baselineTestRunId = null, Azure.Developer.LoadTesting.TestInputArtifacts inputArtifacts = null, string testId = null, string description = null, string displayName = null, string subnetId = null, Azure.Developer.LoadTesting.LoadTestKind? kind = default(Azure.Developer.LoadTesting.LoadTestKind?), bool? publicIpDisabled = default(bool?), string keyvaultReferenceIdentityType = null, string keyvaultReferenceIdentityId = null, Azure.Developer.LoadTesting.LoadTestingManagedIdentityType? metricsReferenceIdentityType = default(Azure.Developer.LoadTesting.LoadTestingManagedIdentityType?), string metricsReferenceIdentityId = null, Azure.Developer.LoadTesting.LoadTestingManagedIdentityType? engineBuiltInIdentityType = default(Azure.Developer.LoadTesting.LoadTestingManagedIdentityType?), System.Collections.Generic.IEnumerable<string> engineBuiltInIdentityIds = null, double? estimatedVirtualUserHours = default(double?), Azure.Developer.LoadTesting.TestPreferences preferences = null, System.DateTimeOffset? createdDateTime = default(System.DateTimeOffset?), string createdBy = null, System.DateTimeOffset? lastModifiedDateTime = default(System.DateTimeOffset?), string lastModifiedBy = null) { throw null; }
         public static Azure.Developer.LoadTesting.LoadTestConfiguration LoadTestConfiguration(int? engineInstances = default(int?), bool? splitAllCsvs = default(bool?), bool? quickStartTest = default(bool?), Azure.Developer.LoadTesting.OptionalLoadTestConfiguration optionalLoadTestConfiguration = null, System.Collections.Generic.IEnumerable<Azure.Developer.LoadTesting.RegionalConfiguration> regionalLoadTestConfiguration = null) { throw null; }
         public static Azure.Developer.LoadTesting.LoadTestingAppComponent LoadTestingAppComponent(Azure.Core.ResourceIdentifier resourceId = null, string resourceName = null, string resourceType = null, string displayName = null, string resourceGroup = null, string subscriptionId = null, string kind = null) { throw null; }
         public static Azure.Developer.LoadTesting.LoadTestingRecurrence LoadTestingRecurrence(string frequency = null, Azure.Developer.LoadTesting.RecurrenceEnd recurrenceEnd = null) { throw null; }
         public static Azure.Developer.LoadTesting.LoadTestingTrigger LoadTestingTrigger(string triggerId = null, string displayName = null, string description = null, string kind = null, Azure.Developer.LoadTesting.TriggerState? state = default(Azure.Developer.LoadTesting.TriggerState?), Azure.Developer.LoadTesting.StateDetails stateDetails = null, System.DateTimeOffset? createdDateTime = default(System.DateTimeOffset?), string createdBy = null, System.DateTimeOffset? lastModifiedDateTime = default(System.DateTimeOffset?), string lastModifiedBy = null) { throw null; }
-        public static Azure.Developer.LoadTesting.LoadTestRun LoadTestRun(string testRunId = null, Azure.Developer.LoadTesting.PassFailCriteria passFailCriteria = null, Azure.Developer.LoadTesting.AutoStopCriteria autoStopCriteria = null, System.Collections.Generic.IDictionary<string, Azure.Developer.LoadTesting.TestSecret> secrets = null, Azure.Developer.LoadTesting.TestCertificate certificate = null, System.Collections.Generic.IDictionary<string, string> environmentVariables = null, System.Collections.Generic.IEnumerable<Azure.Developer.LoadTesting.ErrorDetails> errorDetails = null, System.Collections.Generic.IReadOnlyDictionary<string, Azure.Developer.LoadTesting.TestRunStatistics> testRunStatistics = null, System.Collections.Generic.IReadOnlyDictionary<string, Azure.Developer.LoadTesting.TestRunStatistics> regionalStatistics = null, Azure.Developer.LoadTesting.LoadTestConfiguration loadTestConfiguration = null, Azure.Developer.LoadTesting.TestRunArtifacts testArtifacts = null, Azure.Developer.LoadTesting.PassFailTestResult? testResult = default(Azure.Developer.LoadTesting.PassFailTestResult?), int? virtualUsers = default(int?), string displayName = null, string testId = null, string description = null, Azure.Developer.LoadTesting.TestRunStatus? status = default(Azure.Developer.LoadTesting.TestRunStatus?), System.DateTimeOffset? startDateTime = default(System.DateTimeOffset?), System.DateTimeOffset? endDateTime = default(System.DateTimeOffset?), System.DateTimeOffset? executedDateTime = default(System.DateTimeOffset?), System.Uri portalUri = null, long? duration = default(long?), double? virtualUserHours = default(double?), string subnetId = null, Azure.Developer.LoadTesting.LoadTestKind? kind = default(Azure.Developer.LoadTesting.LoadTestKind?), Azure.Developer.LoadTesting.RequestDataLevel? requestDataLevel = default(Azure.Developer.LoadTesting.RequestDataLevel?), bool? debugLogsEnabled = default(bool?), bool? publicIpDisabled = default(bool?), Azure.Developer.LoadTesting.CreatedByType? createdByType = default(Azure.Developer.LoadTesting.CreatedByType?), System.Uri createdByUri = null, double? estimatedVirtualUserHours = default(double?), System.DateTimeOffset? createdDateTime = default(System.DateTimeOffset?), string createdBy = null, System.DateTimeOffset? lastModifiedDateTime = default(System.DateTimeOffset?), string lastModifiedBy = null) { throw null; }
+        public static Azure.Developer.LoadTesting.LoadTestRun LoadTestRun(string testRunId = null, Azure.Developer.LoadTesting.PassFailCriteria passFailCriteria = null, Azure.Developer.LoadTesting.AutoStopCriteria autoStopCriteria = null, System.Collections.Generic.IDictionary<string, Azure.Developer.LoadTesting.TestSecret> secrets = null, Azure.Developer.LoadTesting.TestCertificate certificate = null, System.Collections.Generic.IDictionary<string, string> environmentVariables = null, System.Collections.Generic.IEnumerable<Azure.Developer.LoadTesting.ErrorDetails> errorDetails = null, System.Collections.Generic.IReadOnlyDictionary<string, Azure.Developer.LoadTesting.TestRunStatistics> testRunStatistics = null, System.Collections.Generic.IReadOnlyDictionary<string, Azure.Developer.LoadTesting.TestRunStatistics> regionalStatistics = null, Azure.Developer.LoadTesting.LoadTestConfiguration loadTestConfiguration = null, Azure.Developer.LoadTesting.TestRunArtifacts testArtifacts = null, Azure.Developer.LoadTesting.PassFailTestResult? testResult = default(Azure.Developer.LoadTesting.PassFailTestResult?), int? virtualUsers = default(int?), string displayName = null, string testId = null, string description = null, Azure.Developer.LoadTesting.TestRunStatus? status = default(Azure.Developer.LoadTesting.TestRunStatus?), System.DateTimeOffset? startDateTime = default(System.DateTimeOffset?), System.DateTimeOffset? endDateTime = default(System.DateTimeOffset?), System.DateTimeOffset? executedDateTime = default(System.DateTimeOffset?), System.Uri portalUri = null, long? duration = default(long?), double? virtualUserHours = default(double?), string subnetId = null, Azure.Developer.LoadTesting.LoadTestKind? kind = default(Azure.Developer.LoadTesting.LoadTestKind?), Azure.Developer.LoadTesting.RequestDataLevel? requestDataLevel = default(Azure.Developer.LoadTesting.RequestDataLevel?), bool? debugLogsEnabled = default(bool?), bool? publicIpDisabled = default(bool?), Azure.Developer.LoadTesting.CreatedByType? createdByType = default(Azure.Developer.LoadTesting.CreatedByType?), System.Uri createdByUri = null, double? estimatedVirtualUserHours = default(double?), System.DateTimeOffset? executionStartDateTime = default(System.DateTimeOffset?), System.DateTimeOffset? executionEndDateTime = default(System.DateTimeOffset?), System.DateTimeOffset? createdDateTime = default(System.DateTimeOffset?), string createdBy = null, System.DateTimeOffset? lastModifiedDateTime = default(System.DateTimeOffset?), string lastModifiedBy = null) { throw null; }
         public static Azure.Developer.LoadTesting.MetricAvailability MetricAvailability(Azure.Developer.LoadTesting.TimeGrain? timeGrain = default(Azure.Developer.LoadTesting.TimeGrain?)) { throw null; }
         public static Azure.Developer.LoadTesting.MetricDefinition MetricDefinition(System.Collections.Generic.IEnumerable<Azure.Developer.LoadTesting.NameAndDescription> dimensions = null, string description = null, string name = null, string @namespace = null, Azure.Developer.LoadTesting.AggregationType? primaryAggregationType = default(Azure.Developer.LoadTesting.AggregationType?), System.Collections.Generic.IEnumerable<string> supportedAggregationTypes = null, Azure.Developer.LoadTesting.MetricUnit? unit = default(Azure.Developer.LoadTesting.MetricUnit?), System.Collections.Generic.IEnumerable<Azure.Developer.LoadTesting.MetricAvailability> metricAvailabilities = null) { throw null; }
         public static Azure.Developer.LoadTesting.MetricDefinitions MetricDefinitions(System.Collections.Generic.IEnumerable<Azure.Developer.LoadTesting.MetricDefinition> value = null) { throw null; }
@@ -507,6 +525,7 @@ namespace Azure.Developer.LoadTesting
         public static Azure.Developer.LoadTesting.TestCertificate TestCertificate(string value = null, Azure.Developer.LoadTesting.CertificateType? certificateKind = default(Azure.Developer.LoadTesting.CertificateType?), string name = null) { throw null; }
         public static Azure.Developer.LoadTesting.TestFileInfo TestFileInfo(string fileName = null, System.Uri uri = null, Azure.Developer.LoadTesting.LoadTestingFileType? fileType = default(Azure.Developer.LoadTesting.LoadTestingFileType?), System.DateTimeOffset? expiresOn = default(System.DateTimeOffset?), Azure.Developer.LoadTesting.FileValidationStatus? validationStatus = default(Azure.Developer.LoadTesting.FileValidationStatus?), string validationFailureDetails = null) { throw null; }
         public static Azure.Developer.LoadTesting.TestInputArtifacts TestInputArtifacts(Azure.Developer.LoadTesting.TestFileInfo configFileInfo = null, Azure.Developer.LoadTesting.TestFileInfo testScriptFileInfo = null, Azure.Developer.LoadTesting.TestFileInfo userPropertyFileInfo = null, Azure.Developer.LoadTesting.TestFileInfo inputArtifactsZipFileInfo = null, Azure.Developer.LoadTesting.TestFileInfo urlTestConfigFileInfo = null, System.Collections.Generic.IEnumerable<Azure.Developer.LoadTesting.TestFileInfo> additionalFileInfo = null) { throw null; }
+        public static Azure.Developer.LoadTesting.TestPreferences TestPreferences(bool? enableAIErrorInsights = default(bool?)) { throw null; }
         public static Azure.Developer.LoadTesting.TestProfile TestProfile(string testProfileId = null, string displayName = null, string description = null, string testId = null, Azure.Core.ResourceIdentifier targetResourceId = null, Azure.Developer.LoadTesting.TargetResourceConfigurations targetResourceConfigurations = null, System.DateTimeOffset? createdDateTime = default(System.DateTimeOffset?), string createdBy = null, System.DateTimeOffset? lastModifiedDateTime = default(System.DateTimeOffset?), string lastModifiedBy = null) { throw null; }
         public static Azure.Developer.LoadTesting.TestProfileRun TestProfileRun(string testProfileRunId = null, string displayName = null, string description = null, string testProfileId = null, Azure.Core.ResourceIdentifier targetResourceId = null, Azure.Developer.LoadTesting.TargetResourceConfigurations targetResourceConfigurations = null, Azure.Developer.LoadTesting.TestProfileRunStatus? status = default(Azure.Developer.LoadTesting.TestProfileRunStatus?), System.Collections.Generic.IEnumerable<Azure.Developer.LoadTesting.ErrorDetails> errorDetails = null, System.DateTimeOffset? startDateTime = default(System.DateTimeOffset?), System.DateTimeOffset? endDateTime = default(System.DateTimeOffset?), long? durationInSeconds = default(long?), System.Collections.Generic.IReadOnlyDictionary<string, Azure.Developer.LoadTesting.TestRunDetail> testRunDetails = null, System.Collections.Generic.IEnumerable<Azure.Developer.LoadTesting.TestProfileRunRecommendation> recommendations = null, System.DateTimeOffset? createdDateTime = default(System.DateTimeOffset?), string createdBy = null, System.DateTimeOffset? lastModifiedDateTime = default(System.DateTimeOffset?), string lastModifiedBy = null) { throw null; }
         public static Azure.Developer.LoadTesting.TestProfileRunRecommendation TestProfileRunRecommendation(Azure.Developer.LoadTesting.RecommendationCategory category = default(Azure.Developer.LoadTesting.RecommendationCategory), System.Collections.Generic.IEnumerable<string> configurations = null) { throw null; }
@@ -518,7 +537,7 @@ namespace Azure.Developer.LoadTesting
         public static Azure.Developer.LoadTesting.TestRunFileInfo TestRunFileInfo(string fileName = null, System.Uri uri = null, Azure.Developer.LoadTesting.LoadTestingFileType? fileType = default(Azure.Developer.LoadTesting.LoadTestingFileType?), System.DateTimeOffset? expiresOn = default(System.DateTimeOffset?), Azure.Developer.LoadTesting.FileValidationStatus? validationStatus = default(Azure.Developer.LoadTesting.FileValidationStatus?), string validationFailureDetails = null) { throw null; }
         public static Azure.Developer.LoadTesting.TestRunInputArtifacts TestRunInputArtifacts(Azure.Developer.LoadTesting.TestRunFileInfo configFileInfo = null, Azure.Developer.LoadTesting.TestRunFileInfo testScriptFileInfo = null, Azure.Developer.LoadTesting.TestRunFileInfo userPropertyFileInfo = null, Azure.Developer.LoadTesting.TestRunFileInfo inputArtifactsZipFileInfo = null, Azure.Developer.LoadTesting.TestRunFileInfo urlTestConfigFileInfo = null, System.Collections.Generic.IEnumerable<Azure.Developer.LoadTesting.TestRunFileInfo> additionalFileInfo = null) { throw null; }
         public static Azure.Developer.LoadTesting.TestRunInsightColumn TestRunInsightColumn(string name = null, string dataType = null) { throw null; }
-        public static Azure.Developer.LoadTesting.TestRunInsights TestRunInsights(System.Collections.Generic.IEnumerable<Azure.Developer.LoadTesting.TestRunInsightColumn> columns = null, System.Collections.Generic.IEnumerable<System.Collections.Generic.IDictionary<string, string>> rows = null, long? version = default(long?), Azure.Developer.LoadTesting.OperationState? status = default(Azure.Developer.LoadTesting.OperationState?)) { throw null; }
+        public static Azure.Developer.LoadTesting.TestRunInsights TestRunInsights(System.Collections.Generic.IEnumerable<Azure.Developer.LoadTesting.TestRunInsightColumn> columns = null, System.Collections.Generic.IDictionary<string, System.Collections.Generic.IDictionary<string, string>> rows = null, long? version = default(long?), Azure.Developer.LoadTesting.OperationState? status = default(Azure.Developer.LoadTesting.OperationState?)) { throw null; }
         public static Azure.Developer.LoadTesting.TestRunOutputArtifacts TestRunOutputArtifacts(Azure.Developer.LoadTesting.TestRunFileInfo resultFileInfo = null, Azure.Developer.LoadTesting.TestRunFileInfo logsFileInfo = null, Azure.Developer.LoadTesting.ArtifactsContainerInfo artifactsContainerInfo = null, Azure.Developer.LoadTesting.TestRunFileInfo reportFileInfo = null) { throw null; }
         public static Azure.Developer.LoadTesting.TestRunServerMetricsConfiguration TestRunServerMetricsConfiguration(string testRunId = null, System.Collections.Generic.IDictionary<string, Azure.Developer.LoadTesting.ResourceMetric> metrics = null, System.DateTimeOffset? createdDateTime = default(System.DateTimeOffset?), string createdBy = null, System.DateTimeOffset? lastModifiedDateTime = default(System.DateTimeOffset?), string lastModifiedBy = null) { throw null; }
         public static Azure.Developer.LoadTesting.TestRunStartedNotificationEventFilter TestRunStartedNotificationEventFilter() { throw null; }
@@ -605,6 +624,8 @@ namespace Azure.Developer.LoadTesting
         public System.Collections.Generic.IReadOnlyList<Azure.Developer.LoadTesting.ErrorDetails> ErrorDetails { get { throw null; } }
         public double? EstimatedVirtualUserHours { get { throw null; } }
         public System.DateTimeOffset? ExecutedDateTime { get { throw null; } }
+        public System.DateTimeOffset? ExecutionEndDateTime { get { throw null; } }
+        public System.DateTimeOffset? ExecutionStartDateTime { get { throw null; } }
         public Azure.Developer.LoadTesting.LoadTestKind? Kind { get { throw null; } }
         public string LastModifiedBy { get { throw null; } }
         public System.DateTimeOffset? LastModifiedDateTime { get { throw null; } }
@@ -639,6 +660,8 @@ namespace Azure.Developer.LoadTesting
     public partial class LoadTestRunClient
     {
         protected LoadTestRunClient() { }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+        public LoadTestRunClient(Azure.Developer.LoadTesting.LoadTestRunClientSettings settings) { }
         public LoadTestRunClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
         public LoadTestRunClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Developer.LoadTesting.LoadTestingClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
@@ -722,6 +745,16 @@ namespace Azure.Developer.LoadTesting
         public virtual Azure.Response<Azure.Developer.LoadTesting.LoadTestRun> StopTestRun(string testRunId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> StopTestRunAsync(string testRunId, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Developer.LoadTesting.LoadTestRun>> StopTestRunAsync(string testRunId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response UpdateLatestTestRunInsights(string testRunId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> UpdateLatestTestRunInsightsAsync(string testRunId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+    public partial class LoadTestRunClientSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public LoadTestRunClientSettings() { }
+        public System.Uri Endpoint { get { throw null; } set { } }
+        public Azure.Developer.LoadTesting.LoadTestingClientOptions Options { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
     public partial class MetricAvailability : System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.MetricAvailability>, System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.MetricAvailability>
     {
@@ -931,6 +964,7 @@ namespace Azure.Developer.LoadTesting
         public OperationKind(string value) { throw null; }
         public static Azure.Developer.LoadTesting.OperationKind CloneTest { get { throw null; } }
         public static Azure.Developer.LoadTesting.OperationKind GenerateTestRunInsights { get { throw null; } }
+        public static Azure.Developer.LoadTesting.OperationKind TestPlanRecommendations { get { throw null; } }
         public bool Equals(Azure.Developer.LoadTesting.OperationKind other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
@@ -1408,6 +1442,20 @@ namespace Azure.Developer.LoadTesting
         string System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.TestInputArtifacts>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.TestInputArtifacts>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class TestPreferences : System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.TestPreferences>, System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.TestPreferences>
+    {
+        public TestPreferences() { }
+        public bool? EnableAIErrorInsights { get { throw null; } set { } }
+        protected virtual Azure.Developer.LoadTesting.TestPreferences JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.Developer.LoadTesting.TestPreferences PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.Developer.LoadTesting.TestPreferences System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.TestPreferences>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.TestPreferences>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Developer.LoadTesting.TestPreferences System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.TestPreferences>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.TestPreferences>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.TestPreferences>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class TestProfile : System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.TestProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.TestProfile>
     {
         public TestProfile() { }
@@ -1648,9 +1696,9 @@ namespace Azure.Developer.LoadTesting
     }
     public partial class TestRunInsights : System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.TestRunInsights>, System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.TestRunInsights>
     {
-        internal TestRunInsights() { }
+        public TestRunInsights() { }
         public System.Collections.Generic.IReadOnlyList<Azure.Developer.LoadTesting.TestRunInsightColumn> Columns { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<System.Collections.Generic.IDictionary<string, string>> Rows { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, System.Collections.Generic.IDictionary<string, string>> Rows { get { throw null; } }
         public Azure.Developer.LoadTesting.OperationState? Status { get { throw null; } }
         public long? Version { get { throw null; } }
         protected virtual Azure.Developer.LoadTesting.TestRunInsights JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

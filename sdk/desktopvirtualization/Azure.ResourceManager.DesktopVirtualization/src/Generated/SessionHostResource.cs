@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="force"> Force flag to update assign, unassign or reassign personal desktop. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SessionHostResource>> UpdateAsync(SessionHostPatch patch = default, bool? force = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SessionHostResource>> UpdateAsync(SessionHostPatch patch, bool? force = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _sessionHostsClientDiagnostics.CreateScope("SessionHostResource.Update");
             scope.Start();
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="force"> Force flag to update assign, unassign or reassign personal desktop. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SessionHostResource> Update(SessionHostPatch patch = default, bool? force = default, CancellationToken cancellationToken = default)
+        public virtual Response<SessionHostResource> Update(SessionHostPatch patch, bool? force = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _sessionHostsClientDiagnostics.CreateScope("SessionHostResource.Update");
             scope.Start();
@@ -432,7 +432,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 Id.Parent.Name,
                 Id.Name,
                 ScopedRegistrationTokenProperties.ToRequestContent(body),
-                context);
+                context,
+                "SessionHostResource.GetSingleSessionHostRegistrationTokens");
         }
 
         /// <summary>
@@ -475,7 +476,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 Id.Parent.Name,
                 Id.Name,
                 ScopedRegistrationTokenProperties.ToRequestContent(body),
-                context);
+                context,
+                "SessionHostResource.GetSingleSessionHostRegistrationTokens");
         }
 
         /// <summary>
