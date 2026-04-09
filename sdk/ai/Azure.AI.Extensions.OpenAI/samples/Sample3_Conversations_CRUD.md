@@ -55,7 +55,8 @@ foreach (ProjectConversation res in projectClient.ProjectOpenAIClient.GetProject
 
 Asynchronous sample:
 ```C# Snippet:Sample_ListConversations_ConversationCRUD_Async
-await foreach (ProjectConversation res in projectClient.ProjectOpenAIClient.GetProjectConversationsClient().GetProjectConversationsAsync()){
+await foreach (ProjectConversation res in projectClient.ProjectOpenAIClient.GetProjectConversationsClient().GetProjectConversationsAsync())
+{
     Console.WriteLine($"Listed conversation (id: {res.Id})");
 }
 ```

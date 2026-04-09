@@ -459,7 +459,8 @@ public static class CommitIterationTool
     private static async Task WriteYamlFieldAsync(
         string filePath, string fieldName, string value, CancellationToken cancellationToken)
     {
-        var lines = await File.ReadAllLinesAsync(filePath, cancellationToken).ConfigureAwait(false);
+        var content = await File.ReadAllTextAsync(filePath, cancellationToken).ConfigureAwait(false);
+        var lines = content.Split('\n');
         var prefix = $"{fieldName}:";
         var found = false;
 
@@ -475,7 +476,7 @@ public static class CommitIterationTool
 
         if (found)
         {
-            await File.WriteAllLinesAsync(filePath, lines, cancellationToken).ConfigureAwait(false);
+            await File.WriteAllTextAsync(filePath, string.Join("\n", lines), cancellationToken).ConfigureAwait(false);
         }
         else
         {

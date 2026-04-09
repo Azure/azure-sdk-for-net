@@ -9,7 +9,7 @@ An MCP (Model Context Protocol) server that exposes deterministic fix tools for 
 - [.NET 10.0](https://dotnet.microsoft.com/download/dotnet/10.0) or later
 - Git (for repository operations)
 
-### Build and run
+### Build
 
 Build from source within the azure-sdk-for-net repository:
 
@@ -17,6 +17,60 @@ Build from source within the azure-sdk-for-net repository:
 cd sdk/tools/Azure.GeneratorAgent
 dotnet build
 ```
+
+### Run the MCP server
+
+Start the MCP server over stdio transport:
+
+```bash
+dotnet run --project src/Azure.GeneratorAgent.csproj
+```
+
+#### Register in VS Code (GitHub Copilot)
+
+Add the server to your VS Code `settings.json` under `mcp.servers`:
+
+```jsonc
+{
+  "mcp": {
+    "servers": {
+      "azure-generator-agent": {
+        "command": "dotnet",
+        "args": [
+          "run",
+          "--project",
+          "<repo-root>/sdk/tools/Azure.GeneratorAgent/src/Azure.GeneratorAgent.csproj"
+        ]
+      }
+    }
+  }
+}
+```
+
+#### Register in Claude Desktop
+
+Add to your Claude Desktop `claude_desktop_config.json`:
+
+```jsonc
+{
+  "mcpServers": {
+    "azure-generator-agent": {
+      "command": "dotnet",
+      "args": [
+        "run",
+        "--project",
+        "<repo-root>/sdk/tools/Azure.GeneratorAgent/src/Azure.GeneratorAgent.csproj"
+      ]
+    }
+  }
+}
+```
+
+Replace `<repo-root>` with the absolute path to your local clone of `azure-sdk-for-net`.
+
+### Authenticate the client
+
+Azure.GeneratorAgent is a local development tool that operates on files in your local repository clone. It does not make any authenticated calls to Azure services, so no authentication or credentials are required.
 
 ## Key concepts
 
@@ -27,17 +81,19 @@ The Azure Generator Agent automates SDK code generation workflows, including cod
 The agent uses a three-layer architecture:
 
 - **MCP Server** — Exposes deterministic fix tools over the [Model Context Protocol](https://modelcontextprotocol.io/) via stdio transport. Tools are auto-discovered from the assembly at startup.
-- **MCP Tools** — 18 individual tools covering regex replacements (field renames, type patterns), adding/removing using directives, nullable annotation fixes, build output parsing, error classification, code generation, test execution, commit iteration, and finalization. Each tool supports both MCP (JSON) and in-process invocation.
+- **MCP Tools** — 19 individual tool classes covering project discovery, regex replacements (field renames, type patterns), adding/removing using directives, nullable annotation fixes, `[CodeGenSuppress]` attribute insertion, build output parsing, error classification, code generation, generated code snapshots, test execution, commit iteration, and finalization. Each tool supports both MCP (JSON) and in-process invocation.
 - **Skill-Driven Workflow** — The skill doc ([`sdk-migration`](https://github.com/Azure/azure-sdk-for-net/blob/main/.github/skills/sdk-migration/SKILL.md)) IS the orchestrator. The LLM reads it, calls MCP tools directly, and reasons about what to do next. No compiled C# orchestrator — the skill drives the build→classify→fix→rebuild loop.
 
 ### MCP Tools
 
 | Tool | Description |
 |------|-------------|
+| `discover_project` | Discover project metadata: plane (dpg/mpg), package name, service directory, emitter config, custom code folder, API surface files, and tsp-location.yaml fields. Call this first to get all context needed for migration. |
 | `regex_replacement` | Perform regex-based find/replace in source files (field renames, type patterns, namespace fixes) |
 | `add_using_directive` | Add a using directive to a C# file if not already present |
 | `remove_using_directive` | Remove using directives matching a namespace pattern |
 | `nullable_annotation_fix` | Fix CS8625/CS8600 by adding `?` nullable annotation on a specific line |
+| `add_codegen_suppress` | Add a `[CodeGenSuppress]` attribute to a custom partial class to suppress a duplicate member from the generator. Scans `Generated/` to find the member signature. |
 | `batch_fix` | Apply multiple deterministic fixes in a single call |
 | `build_and_classify` | Run `dotnet build`, parse output, and classify each error as deterministic or requires-reasoning |
 | `classify_errors` | Classify a batch of build errors against the deterministic fix registry |
@@ -45,9 +101,11 @@ The agent uses a three-layer architecture:
 | `validate_tsp_config` | Validate that `tspconfig.yaml` has the correct emitter configuration |
 | `commit_iteration` | Iterate through spec repo commits to find one with valid tspconfig. Accepts optional `commitOverride` to skip iteration. |
 | `pregen_cleanup` | Remove `IncludeAutorestDependency` from `.csproj` files before first generation |
+| `snapshot_generated` | Take a SHA-256 snapshot of all files in `Generated/`. Call after code regeneration and before the build-fix cycle. |
+| `verify_generated_unchanged` | Verify that no files in `Generated/` were modified since the last snapshot. Call after the build-fix cycle. Reports violations and optionally reverts them. |
 | `migrate_test_samples` | Move test samples from `Generated/Samples/` to `Samples/` |
 | `finalize_migration` | Run `Export-API.ps1` and `Update-Snippets.ps1` after a successful migration |
-| `run_tests` | Run `dotnet test` with configurable filter (defaults to excluding live tests). Returns structured pass/fail results. |
+| `run_tests` | Run `dotnet test` with configurable filter (defaults to excluding live tests). Returns a structured `TestResult` with `Success`, `ExitCode`, `Passed`, `Failed`, `Skipped`, `Total`, `Failures` (list of failure details), `Error`, and `RawOutput`. |
 | `rename_codegen_type` | Fix mismatched `[CodeGenType]` attributes by matching generated counterparts |
 | `fetch_to_fromlro` | Replace legacy `Fetch(response)` calls with `ResponseModel.FromLroResponse(response)` |
 
