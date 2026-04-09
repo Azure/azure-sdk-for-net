@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ServiceFabric
         {
             if (id.ResourceType != ClusterResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ClusterResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ClusterResource.ResourceType), nameof(id));
             }
         }
 
@@ -287,7 +287,13 @@ namespace Azure.ResourceManager.ServiceFabric
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ServiceFabricApplicationTypeData, ServiceFabricApplicationTypeResource>(new ApplicationTypesGetAllAsyncCollectionResultOfT(_applicationTypesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new ServiceFabricApplicationTypeResource(Client, data));
+            return new AsyncPageableWrapper<ServiceFabricApplicationTypeData, ServiceFabricApplicationTypeResource>(new ApplicationTypesGetAllAsyncCollectionResultOfT(
+                _applicationTypesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ServiceFabricApplicationTypeCollection.GetAll"), data => new ServiceFabricApplicationTypeResource(Client, data));
         }
 
         /// <summary>
@@ -315,7 +321,13 @@ namespace Azure.ResourceManager.ServiceFabric
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ServiceFabricApplicationTypeData, ServiceFabricApplicationTypeResource>(new ApplicationTypesGetAllCollectionResultOfT(_applicationTypesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new ServiceFabricApplicationTypeResource(Client, data));
+            return new PageableWrapper<ServiceFabricApplicationTypeData, ServiceFabricApplicationTypeResource>(new ApplicationTypesGetAllCollectionResultOfT(
+                _applicationTypesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ServiceFabricApplicationTypeCollection.GetAll"), data => new ServiceFabricApplicationTypeResource(Client, data));
         }
 
         /// <summary>

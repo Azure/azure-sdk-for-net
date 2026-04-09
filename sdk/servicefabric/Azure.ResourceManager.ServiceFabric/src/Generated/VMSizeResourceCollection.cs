@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ServiceFabric
         {
             if (id.ResourceType != SubscriptionResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
             }
         }
 
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.ServiceFabric
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VMSizeResourceData, VMSizeResource>(new UnsupportedVmSizesGetAllAsyncCollectionResultOfT(_unsupportedVmSizesRestClient, Id.SubscriptionId, _location, context), data => new VMSizeResource(Client, data));
+            return new AsyncPageableWrapper<VMSizeResourceData, VMSizeResource>(new UnsupportedVmSizesGetAllAsyncCollectionResultOfT(_unsupportedVmSizesRestClient, Id.SubscriptionId, _location, context, "VMSizeResourceCollection.GetAll"), data => new VMSizeResource(Client, data));
         }
 
         /// <summary>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.ServiceFabric
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VMSizeResourceData, VMSizeResource>(new UnsupportedVmSizesGetAllCollectionResultOfT(_unsupportedVmSizesRestClient, Id.SubscriptionId, _location, context), data => new VMSizeResource(Client, data));
+            return new PageableWrapper<VMSizeResourceData, VMSizeResource>(new UnsupportedVmSizesGetAllCollectionResultOfT(_unsupportedVmSizesRestClient, Id.SubscriptionId, _location, context, "VMSizeResourceCollection.GetAll"), data => new VMSizeResource(Client, data));
         }
 
         /// <summary>

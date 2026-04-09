@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.ServiceFabric.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ServiceFabricClusterData, ClusterResource>(new ClustersGetAllAsyncCollectionResultOfT(ClustersRestClient, Id.SubscriptionId, context), data => new ClusterResource(Client, data));
+            return new AsyncPageableWrapper<ServiceFabricClusterData, ClusterResource>(new ClustersGetAllAsyncCollectionResultOfT(ClustersRestClient, Id.SubscriptionId, context, "Azure.ResourceManager.ServiceFabric.Mocking.MockableServiceFabricSubscriptionResource.GetClusters"), data => new ClusterResource(Client, data));
         }
 
         /// <summary>
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.ServiceFabric.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ServiceFabricClusterData, ClusterResource>(new ClustersGetAllCollectionResultOfT(ClustersRestClient, Id.SubscriptionId, context), data => new ClusterResource(Client, data));
+            return new PageableWrapper<ServiceFabricClusterData, ClusterResource>(new ClustersGetAllCollectionResultOfT(ClustersRestClient, Id.SubscriptionId, context, "Azure.ResourceManager.ServiceFabric.Mocking.MockableServiceFabricSubscriptionResource.GetClusters"), data => new ClusterResource(Client, data));
         }
     }
 }
