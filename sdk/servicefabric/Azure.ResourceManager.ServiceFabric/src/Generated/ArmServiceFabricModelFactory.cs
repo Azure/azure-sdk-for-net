@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     public static partial class ArmServiceFabricModelFactory
     {
 
-        /// <param name="id"></param>
-        /// <param name="name"></param>
-        /// <param name="resourceType"></param>
-        /// <param name="systemData"></param>
-        /// <param name="tags"></param>
-        /// <param name="location"></param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="addOnFeatures"> The list of add-on features to enable in the cluster. </param>
         /// <param name="availableClusterVersions"> The Service Fabric runtime versions available for this cluster. </param>
         /// <param name="azureActiveDirectory"> The AAD authentication settings of the cluster. </param>
@@ -65,9 +65,9 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <param name="notifications"> Indicates a list of notification channels for cluster events. </param>
         /// <param name="enableHttpGatewayExclusiveAuthMode"> If true, token-based authentication is not allowed on the HttpGatewayEndpoint. This is required to support TLS versions 1.3 and above. If token-based authentication is used, HttpGatewayTokenAuthEndpointPort must be defined. </param>
         /// <param name="maxUnusedVersionsToKeep"> Number of unused versions per application type to keep. </param>
-        /// <param name="eTag"></param>
+        /// <param name="etag"> Azure resource etag. </param>
         /// <returns> A new <see cref="ServiceFabric.ServiceFabricClusterData"/> instance for mocking. </returns>
-        public static ServiceFabricClusterData ServiceFabricClusterData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, IEnumerable<ClusterAddOnFeature> addOnFeatures = default, IEnumerable<ClusterVersionDetails> availableClusterVersions = default, ClusterAadSetting azureActiveDirectory = default, ClusterCertificateDescription certificate = default, ClusterServerCertificateCommonNames certificateCommonNames = default, IEnumerable<ClusterClientCertificateCommonName> clientCertificateCommonNames = default, IEnumerable<ClusterClientCertificateThumbprint> clientCertificateThumbprints = default, string clusterCodeVersion = default, Uri clusterEndpoint = default, string clusterId = default, ServiceFabricClusterState? clusterState = default, DiagnosticsStorageAccountConfig diagnosticsStorageAccountConfig = default, bool? isEventStoreServiceEnabled = default, IEnumerable<SettingsSectionDescription> fabricSettings = default, Uri managementEndpoint = default, IEnumerable<ClusterNodeTypeDescription> nodeTypes = default, ServiceFabricProvisioningState? provisioningState = default, ClusterReliabilityLevel? reliabilityLevel = default, ClusterCertificateDescription reverseProxyCertificate = default, ClusterServerCertificateCommonNames reverseProxyCertificateCommonNames = default, ClusterUpgradePolicy upgradeDescription = default, ClusterUpgradeMode? upgradeMode = default, string vmImage = default, SfZonalUpgradeMode? serviceFabricZonalUpgradeMode = default, VmssZonalUpgradeMode? vmssZonalUpgradeMode = default, bool? isInfrastructureServiceManagerEnabled = default, ClusterUpgradeCadence? upgradeWave = default, DateTimeOffset? upgradePauseStartOn = default, DateTimeOffset? upgradePauseEndOn = default, bool? isWaveUpgradePaused = default, IEnumerable<ClusterNotification> notifications = default, bool? enableHttpGatewayExclusiveAuthMode = default, long? maxUnusedVersionsToKeep = default, string eTag = default)
+        public static ServiceFabricClusterData ServiceFabricClusterData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, IEnumerable<ClusterAddOnFeature> addOnFeatures = default, IEnumerable<ClusterVersionDetails> availableClusterVersions = default, ClusterAadSetting azureActiveDirectory = default, ClusterCertificateDescription certificate = default, ClusterServerCertificateCommonNames certificateCommonNames = default, IEnumerable<ClusterClientCertificateCommonName> clientCertificateCommonNames = default, IEnumerable<ClusterClientCertificateThumbprint> clientCertificateThumbprints = default, string clusterCodeVersion = default, Uri clusterEndpoint = default, string clusterId = default, ServiceFabricClusterState? clusterState = default, DiagnosticsStorageAccountConfig diagnosticsStorageAccountConfig = default, bool? isEventStoreServiceEnabled = default, IEnumerable<SettingsSectionDescription> fabricSettings = default, Uri managementEndpoint = default, IEnumerable<ClusterNodeTypeDescription> nodeTypes = default, ServiceFabricProvisioningState? provisioningState = default, ClusterReliabilityLevel? reliabilityLevel = default, ClusterCertificateDescription reverseProxyCertificate = default, ClusterServerCertificateCommonNames reverseProxyCertificateCommonNames = default, ClusterUpgradePolicy upgradeDescription = default, ClusterUpgradeMode? upgradeMode = default, string vmImage = default, SfZonalUpgradeMode? serviceFabricZonalUpgradeMode = default, VmssZonalUpgradeMode? vmssZonalUpgradeMode = default, bool? isInfrastructureServiceManagerEnabled = default, ClusterUpgradeCadence? upgradeWave = default, DateTimeOffset? upgradePauseStartOn = default, DateTimeOffset? upgradePauseEndOn = default, bool? isWaveUpgradePaused = default, IEnumerable<ClusterNotification> notifications = default, bool? enableHttpGatewayExclusiveAuthMode = default, long? maxUnusedVersionsToKeep = default, string etag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -79,8 +79,42 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                default,
-                eTag);
+                addOnFeatures is null && availableClusterVersions is null && azureActiveDirectory is null && certificate is null && certificateCommonNames is null && clientCertificateCommonNames is null && clientCertificateThumbprints is null && clusterCodeVersion is null && clusterEndpoint is null && clusterId is null && clusterState is null && diagnosticsStorageAccountConfig is null && isEventStoreServiceEnabled is null && fabricSettings is null && managementEndpoint is null && nodeTypes is null && provisioningState is null && reliabilityLevel is null && reverseProxyCertificate is null && reverseProxyCertificateCommonNames is null && upgradeDescription is null && upgradeMode is null && vmImage is null && serviceFabricZonalUpgradeMode is null && vmssZonalUpgradeMode is null && isInfrastructureServiceManagerEnabled is null && upgradeWave is null && upgradePauseStartOn is null && upgradePauseEndOn is null && isWaveUpgradePaused is null && notifications is null && enableHttpGatewayExclusiveAuthMode is null && maxUnusedVersionsToKeep is null ? default : new ClusterProperties(
+                    (addOnFeatures ?? new ChangeTrackingList<ClusterAddOnFeature>()).ToList(),
+                    (availableClusterVersions ?? new ChangeTrackingList<ClusterVersionDetails>()).ToList(),
+                    azureActiveDirectory,
+                    certificate,
+                    certificateCommonNames,
+                    (clientCertificateCommonNames ?? new ChangeTrackingList<ClusterClientCertificateCommonName>()).ToList(),
+                    (clientCertificateThumbprints ?? new ChangeTrackingList<ClusterClientCertificateThumbprint>()).ToList(),
+                    clusterCodeVersion,
+                    clusterEndpoint,
+                    clusterId,
+                    clusterState,
+                    diagnosticsStorageAccountConfig,
+                    isEventStoreServiceEnabled,
+                    (fabricSettings ?? new ChangeTrackingList<SettingsSectionDescription>()).ToList(),
+                    managementEndpoint,
+                    (nodeTypes ?? new ChangeTrackingList<ClusterNodeTypeDescription>()).ToList(),
+                    provisioningState,
+                    reliabilityLevel,
+                    reverseProxyCertificate,
+                    reverseProxyCertificateCommonNames,
+                    upgradeDescription,
+                    upgradeMode,
+                    new ApplicationTypeVersionsCleanupPolicy(maxUnusedVersionsToKeep.Value, null),
+                    vmImage,
+                    serviceFabricZonalUpgradeMode,
+                    vmssZonalUpgradeMode,
+                    isInfrastructureServiceManagerEnabled,
+                    upgradeWave,
+                    upgradePauseStartOn,
+                    upgradePauseEndOn,
+                    isWaveUpgradePaused,
+                    (notifications ?? new ChangeTrackingList<ClusterNotification>()).ToList(),
+                    enableHttpGatewayExclusiveAuthMode,
+                    null),
+                etag);
         }
 
         /// <summary> The detail of the Service Fabric runtime version result. </summary>
@@ -332,10 +366,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             return new UpgradableVersionPathResult(supportedPath.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <param name="id"></param>
-        /// <param name="name"></param>
-        /// <param name="resourceType"></param>
-        /// <param name="systemData"></param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="vmSize"> VM Size name. </param>
         /// <returns> A new <see cref="ServiceFabric.VMSizeResourceData"/> instance for mocking. </returns>
         public static VMSizeResourceData VMSizeResourceData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string vmSize = default)
@@ -346,7 +380,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                default);
+                vmSize is null ? default : new VMSize(vmSize, null));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -445,7 +479,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     typeName),
                 tags,
                 etag,
-                default);
+                identity);
         }
 
         /// <summary> Defines a health policy used to evaluate the health of an application or one of its children entities. </summary>
@@ -1079,7 +1113,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 default,
                 tags,
                 default,
-                default);
+                identity);
         }
 
         /// <summary> Initializes a new instance of ServiceFabricApplicationPatch. </summary>

@@ -8,12 +8,11 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ServiceFabric
 {
     /// <summary></summary>
-    public partial class ServiceFabricApplicationResource : ArmResource, IJsonModel<ServiceFabricApplicationData>
+    public partial class ServiceFabricApplicationResource : IJsonModel<ServiceFabricApplicationData>
     {
         private static IJsonModel<ServiceFabricApplicationData> s_dataDeserializationInstance;
 

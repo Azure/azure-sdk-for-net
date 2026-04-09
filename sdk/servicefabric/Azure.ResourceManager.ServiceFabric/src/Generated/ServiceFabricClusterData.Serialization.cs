@@ -106,6 +106,11 @@ namespace Azure.ResourceManager.ServiceFabric
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
+            if (options.Format != "W" && Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -141,6 +146,7 @@ namespace Azure.ResourceManager.ServiceFabric
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ClusterProperties properties = default;
+            string eTag = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -206,6 +212,11 @@ namespace Azure.ResourceManager.ServiceFabric
                     properties = ClusterProperties.DeserializeClusterProperties(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("etag"u8))
+                {
+                    eTag = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -219,7 +230,8 @@ namespace Azure.ResourceManager.ServiceFabric
                 additionalBinaryDataProperties,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                properties);
+                properties,
+                eTag);
         }
     }
 }

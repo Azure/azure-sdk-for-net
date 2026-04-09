@@ -5,12 +5,48 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.ServiceFabric.Models;
 
 namespace Azure.ResourceManager.ServiceFabric
 {
     /// <summary> Describes a VM Sizes. </summary>
     public partial class VMSizeResourceData : ResourceData
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
+        /// <summary> Initializes a new instance of <see cref="VMSizeResourceData"/>. </summary>
+        internal VMSizeResourceData()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VMSizeResourceData"/>. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> VM Size properties. </param>
+        internal VMSizeResourceData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, VMSize properties) : base(id, name, resourceType, systemData)
+        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
+        }
+
+        /// <summary> VM Size properties. </summary>
+        internal VMSize Properties { get; }
+
+        /// <summary> VM Size name. </summary>
+        public string VMSize
+        {
+            get
+            {
+                return Properties.Size;
+            }
+        }
     }
 }

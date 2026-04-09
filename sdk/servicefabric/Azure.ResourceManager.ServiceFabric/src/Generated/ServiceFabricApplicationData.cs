@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="tags"> Azure resource tags. </param>
         /// <param name="eTag"> Azure resource etag. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        internal ServiceFabricApplicationData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation location, ApplicationResourceProperties properties, IDictionary<string, string> tags, string eTag, ManagedIdentity identity) : base(id != null ? new ResourceIdentifier(id) : null, name, resourceType, systemData, tags, location)
+        internal ServiceFabricApplicationData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation location, ApplicationResourceProperties properties, IDictionary<string, string> tags, string eTag, ManagedIdentity identity) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
