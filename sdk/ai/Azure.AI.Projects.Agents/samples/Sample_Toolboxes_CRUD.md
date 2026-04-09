@@ -1,4 +1,4 @@
-# Sample for Toolboxes Administration (create, retrieve, update and deletion) in Azure.AI.Projects
+# Sample for Toolboxes Administration (create, retrieve, update and deletion) in Azure.AI.Projects.Agents
 
 In this example we will demonstrate how to create, update and delete toolboxes.
 To use toolboxes we need to provide the `Foundry-Features` header in our REST requests. It can be done using `PipelinePolicy`.

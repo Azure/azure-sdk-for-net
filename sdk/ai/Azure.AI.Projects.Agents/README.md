@@ -24,6 +24,7 @@ Develop Agents using the Azure AI Foundry platform, leveraging an extensive ecos
   - [Prompt Agents](#prompt-agents)
   - [Hosted Agents](#hosted-agents)
   - [Toolboxes](#toolboxes)
+  - [Sessions](#sessions)
 - [Tracing](#tracing)
   - [Enabling GenAI Tracing](#enabling-genai-tracing)
   - [Tracing to Azure Monitor](#tracing-to-azure-monitor)
@@ -254,6 +255,80 @@ ToolboxVersion toolBox = await toolboxClient.GetToolboxVersionAsync(record.Name,
 Console.WriteLine($"Retrieved toolbox: {toolBox.Name} ({toolBox.Id})");
 ```
 
+### Sessions
+
+Sessions allow multiple users to use the same hosted Agent within their own sandboxed environment. In the example below we create two
+sessions for the same agent version.
+
+```C# Snippet:Sample_CreateSessions_SessionsCRUD_Async
+string sessionKey1 = Guid.NewGuid().ToString();
+string sessionKey2 = Guid.NewGuid().ToString();
+AgentSession session1 = await agentsClient.CreateSessionAsync(
+    agentName: agentVersion.Name,
+    isolationKey: sessionKey1,
+    versionIndicator: new VersionRefIndicator(agentVersion.Version)
+);
+Console.WriteLine($"Created session with ID {session1.AgentSessionId}");
+AgentSession session2 = await agentsClient.CreateSessionAsync(
+    agentName: agentVersion.Name,
+    isolationKey: sessionKey1,
+    versionIndicator: new VersionRefIndicator(agentVersion.Version)
+);
+Console.WriteLine($"Created session with ID {session2.AgentSessionId}");
+while (session1.Status != AgentSessionStatus.Failed && session1.Status != AgentSessionStatus.Active)
+{
+    await Task.Delay(TimeSpan.FromMilliseconds(500));
+    session1 = await agentsClient.GetSessionAsync(agentName: agentVersion.Name, sessionId: session1.AgentSessionId);
+}
+while (session2.Status != AgentSessionStatus.Failed && session2.Status != AgentSessionStatus.Active)
+{
+    await Task.Delay(TimeSpan.FromMilliseconds(500));
+    session2 = await agentsClient.GetSessionAsync(agentName: agentVersion.Name, sessionId: session2.AgentSessionId);
+}
+```
+
+It is also possible to upload the files to the session store, so that it will only be accessible inside its session.
+To use this feature we need to create the `AgentSessionFiles` client:
+
+```C# Snippet:Sample_CreateClient_SessionFiles
+var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+var hostedAgentName = System.Environment.GetEnvironmentVariable("HOSTED_AGENT_NAME");
+var hostedAgentVersion = System.Environment.GetEnvironmentVariable("HOSTED_AGENT_VERSION");
+AgentAdministrationClientOptions options = new();
+options.AddPolicy(new FeaturePolicy("HostedAgents=V1Preview"), PipelinePosition.PerCall);
+AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
+AgentSessionFiles sessionClient = agentsClient.GetAgentSessionFiles();
+```
+
+We can use it to upload the files.
+
+```C# Snippet:Sample_Upload_SessionFiles_Async
+string filePath = "sample_file_for_upload1.txt";
+File.WriteAllText(
+    path: filePath,
+    contents: "The word 'apple' uses the code 442345, while the word 'banana' uses the code 673457.");
+
+SessionFileWriteResponse writeResponse = await sessionClient.UploadSessionFileAsync(
+    agentName: agentVersion.Name,
+    sessionId: session.AgentSessionId,
+    sessionStoragePath: $"/store/{filePath}",
+    localPath: filePath
+);
+Console.WriteLine($"The file was written to path {writeResponse.Path}, file length is {writeResponse.BytesWritten}.");
+File.Delete(filePath);
+filePath = "sample_file_for_upload2.txt";
+File.WriteAllText(
+    path: filePath,
+    contents: "The word 'grape' uses the code 111222, while the word 'mango' uses the code 222111.");
+writeResponse = await sessionClient.UploadSessionFileAsync(
+    agentName: agentVersion.Name,
+    sessionId: session.AgentSessionId,
+    sessionStoragePath: $"/store/{filePath}",
+    localPath: filePath
+);
+Console.WriteLine($"The file was written to path {writeResponse.Path}, file length is {writeResponse.BytesWritten}.");
+File.Delete(filePath);
+```
 
 ## Tracing
 

@@ -1,12 +1,14 @@
-﻿using System;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
-using System.Linq;
+using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
-using OpenAI.Responses;
 
 namespace Azure.AI.Projects.Agents.Tests.Samples;
 #pragma warning disable AAIP001
@@ -20,69 +22,177 @@ public class Sample_SessionFiles : SamplesBase
         #region Snippet:Sample_CreateClient_SessionFiles
 #if SNIPPET
         var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
-        var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
+        var hostedAgentName = System.Environment.GetEnvironmentVariable("HOSTED_AGENT_NAME");
+        var hostedAgentVersion = System.Environment.GetEnvironmentVariable("HOSTED_AGENT_VERSION");
 #else
         var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
-        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
+        var hostedAgentName = TestEnvironment.HOSTED_AGENT_NAME;
+        var hostedAgentVersion = TestEnvironment.HOSTED_AGENT_VERSION;
 #endif
         AgentAdministrationClientOptions options = new();
-        options.AddPolicy(new FeaturePolicy("Toolboxes=V1Preview"), PipelinePosition.PerCall);
+        options.AddPolicy(new FeaturePolicy("HostedAgents=V1Preview"), PipelinePosition.PerCall);
         AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
         AgentSessionFiles sessionClient = agentsClient.GetAgentSessionFiles();
-        string toolboxName = "mcp";
         #endregion
-        #region Snippet:Sample_CreateAgent_SessionFiles_Async
-        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        #region Snippet:Sample_CreateAgentAndSession_SessionFiles_Async
+        ProjectsAgentVersion agentVersion = await agentsClient.GetAgentVersionAsync(
+            agentName: hostedAgentName,
+            agentVersion: hostedAgentVersion);
+        string sessionKey = Guid.NewGuid().ToString();
+        AgentSession session = await agentsClient.CreateSessionAsync(
+            agentName: agentVersion.Name,
+            isolationKey: sessionKey,
+            versionIndicator: new VersionRefIndicator(agentVersion.Version)
+        );
+        while (session.Status != AgentSessionStatus.Failed && session.Status != AgentSessionStatus.Active)
         {
-            Instructions = "You are a prompt agent."
-        };
-        ProjectsAgentVersion agentVersion = await agentsClient.CreateAgentVersionAsync(
-            agentName: "myAgent",
-            options: new(agentDefinition));
-        Console.WriteLine($"Agent created (id: {agentVersion.Id}, name: {agentVersion.Name}, version: {agentVersion.Version})");
-        sessionClient.UploadSessionFileAsync()
+            await Task.Delay(TimeSpan.FromMilliseconds(500));
+            session = await agentsClient.GetSessionAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId);
+        }
         #endregion
+        #region Snippet:Sample_Upload_SessionFiles_Async
+        string filePath = "sample_file_for_upload1.txt";
+        File.WriteAllText(
+            path: filePath,
+            contents: "The word 'apple' uses the code 442345, while the word 'banana' uses the code 673457.");
 
-        #region Snippet:Sample_GetToolbox_SessionFiles_Async
-        ToolboxRecord record = await toolboxClient.GetToolboxAsync(toolboxName: toolBox1.Name);
-        Console.WriteLine($"The default version for a toolbox {record.Name} is {record.DefaultVersion}");
+        SessionFileWriteResponse writeResponse = await sessionClient.UploadSessionFileAsync(
+            agentName: agentVersion.Name,
+            sessionId: session.AgentSessionId,
+            sessionStoragePath: $"/store/{filePath}",
+            localPath: filePath
+        );
+        Console.WriteLine($"The file was written to path {writeResponse.Path}, file length is {writeResponse.BytesWritten}.");
+        File.Delete(filePath);
+        filePath = "sample_file_for_upload2.txt";
+        File.WriteAllText(
+            path: filePath,
+            contents: "The word 'grape' uses the code 111222, while the word 'mango' uses the code 222111.");
+        writeResponse = await sessionClient.UploadSessionFileAsync(
+            agentName: agentVersion.Name,
+            sessionId: session.AgentSessionId,
+            sessionStoragePath: $"/store/{filePath}",
+            localPath: filePath
+        );
+        Console.WriteLine($"The file was written to path {writeResponse.Path}, file length is {writeResponse.BytesWritten}.");
+        File.Delete(filePath);
         #endregion
-
-        #region Snippet:Sample_GetToolboxVersion_SessionFiles_Async
-        ToolboxVersion toolBox = await toolboxClient.GetToolboxVersionAsync(record.Name, record.DefaultVersion);
-        Console.WriteLine($"Retrieved toolbox: {toolBox.Name} ({toolBox.Id})");
-        #endregion
-
-        #region Snippet:Sample_UpdateToolbox_SessionFiles_Async
-        string newVersion = string.Equals(record.DefaultVersion, toolBox1.Version) ? toolBox2.Version : toolBox1.Version;
-        record = await toolboxClient.UpdateToolboxAsync(toolboxName, newVersion);
-        Console.WriteLine($"The default version for a toolbox {record.Name} is now {record.DefaultVersion}");
-        #endregion
-
-        #region Snippet:Sample_ListToolboxVersions_SessionFiles_Async
-        List<ToolboxVersion> toolboxes = await toolboxClient.GetToolboxVersionsAsync(toolBox.Name).ToListAsync();
-        Console.WriteLine($"Found {toolboxes.Count} toolbox version(s).");
-        foreach (ToolboxVersion item in toolboxes)
+        #region Snippet:Sample_List_SessionFiles_Async
+        SessionDirectoryListResponse response = await sessionClient.GetSessionFilesAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId, sessionStoragePath: "/store");
+        Console.WriteLine($"The path {response.Path} contains the next files:");
+        foreach (SessionDirectoryEntry entry in response.Entries)
         {
-            Console.WriteLine($"  - {item.Name} ({item.Version})");
+            Console.WriteLine($"    - {entry.Name}, size {entry.Size}");
         }
         #endregion
 
-        #region Snippet:Sample_ListToolboxes_SessionFiles_Async
-        List<ToolboxRecord> records = await toolboxClient.GetToolboxesAsync().ToListAsync();
-        Console.WriteLine($"Found {records.Count} toolbox(es).");
-        foreach (ToolboxRecord item in records)
-        {
-            Console.WriteLine($"  - {item.Name} ({item.Id})");
-        }
+        #region Snippet:Sample_Download_SessionFiles_Async
+        filePath = "saved.txt";
+        await sessionClient.DownloadSessionFileAsync(
+            agentName: agentVersion.Name,
+            sessionId: session.AgentSessionId,
+            sessionStoragePath: "/store/sample_file_for_upload1.txt",
+            localPath: filePath
+        );
+        Console.WriteLine($"Download file contents: {File.ReadAllText(filePath)}");
+        File.Delete(filePath);
         #endregion
 
-        #region Snippet:Sample_DeleteToolbox_SessionFiles_Async
-        // We cannot delete the default version.
-        await agentsClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        #region Snippet:Sample_DeleteFiles_SessionFiles_Async
+        await sessionClient.DeleteSessionFileAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId, path: "/store/sample_file_for_upload1.txt");
+        await sessionClient.DeleteSessionFileAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId, path: "/store/sample_file_for_upload1.txt");
+        await agentsClient.DeleteSessionAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId, isolationKey: sessionKey);
         #endregion
     }
 
-    public Sample_Toolboxes_CRUD(bool isAsync) : base(isAsync)
+    [Test]
+    [SyncOnly]
+    public void SessionFilesSync()
+    {
+#if SNIPPET
+        var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+        var hostedAgentName = System.Environment.GetEnvironmentVariable("HOSTED_AGENT_NAME");
+        var hostedAgentVersion = System.Environment.GetEnvironmentVariable("HOSTED_AGENT_VERSION");
+#else
+        var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
+        var hostedAgentName = TestEnvironment.HOSTED_AGENT_NAME;
+        var hostedAgentVersion = TestEnvironment.HOSTED_AGENT_VERSION;
+#endif
+        AgentAdministrationClientOptions options = new();
+        options.AddPolicy(new FeaturePolicy("HostedAgents=V1Preview"), PipelinePosition.PerCall);
+        AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
+        AgentSessionFiles sessionClient = agentsClient.GetAgentSessionFiles();
+        #region Snippet:Sample_CreateAgentAndSession_SessionFiles_Sync
+        ProjectsAgentVersion agentVersion = agentsClient.GetAgentVersion(
+            agentName: hostedAgentName,
+            agentVersion: hostedAgentVersion);
+        string sessionKey = Guid.NewGuid().ToString();
+        AgentSession session = agentsClient.CreateSession(
+            agentName: agentVersion.Name,
+            isolationKey: sessionKey,
+            versionIndicator: new VersionRefIndicator(agentVersion.Version)
+        );
+        while (session.Status != AgentSessionStatus.Failed && session.Status != AgentSessionStatus.Active)
+        {
+            Thread.Sleep(TimeSpan.FromMilliseconds(500));
+            session = agentsClient.GetSession(agentName: agentVersion.Name, sessionId: session.AgentSessionId);
+        }
+        #endregion
+        #region Snippet:Sample_Upload_SessionFiles_Sync
+        string filePath = "sample_file_for_upload1.txt";
+        File.WriteAllText(
+            path: filePath,
+            contents: "The word 'apple' uses the code 442345, while the word 'banana' uses the code 673457.");
+
+        SessionFileWriteResponse writeResponse = sessionClient.UploadSessionFile(
+            agentName: agentVersion.Name,
+            sessionId: session.AgentSessionId,
+            sessionStoragePath: $"/store/{filePath}",
+            localPath: filePath
+        );
+        Console.WriteLine($"The file was written to path {writeResponse.Path}, file length is {writeResponse.BytesWritten}.");
+        File.Delete(filePath);
+        filePath = "sample_file_for_upload2.txt";
+        File.WriteAllText(
+            path: filePath,
+            contents: "The word 'grape' uses the code 111222, while the word 'mango' uses the code 222111.");
+        writeResponse = sessionClient.UploadSessionFile(
+            agentName: agentVersion.Name,
+            sessionId: session.AgentSessionId,
+            sessionStoragePath: $"/store/{filePath}",
+            localPath: filePath
+        );
+        Console.WriteLine($"The file was written to path {writeResponse.Path}, file length is {writeResponse.BytesWritten}.");
+        File.Delete(filePath);
+        #endregion
+        #region Snippet:Sample_List_SessionFiles_Sync
+        SessionDirectoryListResponse response = sessionClient.GetSessionFiles(agentName: agentVersion.Name, sessionId: session.AgentSessionId, sessionStoragePath: "/store");
+        Console.WriteLine($"The path {response.Path} contains the next files:");
+        foreach (SessionDirectoryEntry entry in response.Entries)
+        {
+            Console.WriteLine($"    - {entry.Name}, size {entry.Size}");
+        }
+        #endregion
+
+        #region Snippet:Sample_Download_SessionFiles_Sync
+        filePath = "saved.txt";
+        sessionClient.DownloadSessionFile(
+            agentName: agentVersion.Name,
+            sessionId: session.AgentSessionId,
+            sessionStoragePath: "/store/sample_file_for_upload1.txt",
+            localPath: filePath
+        );
+        Console.WriteLine($"Download file contents: {File.ReadAllText(filePath)}");
+        File.Delete(filePath);
+        #endregion
+
+        #region Snippet:Sample_DeleteFiles_SessionFiles_Sync
+        sessionClient.DeleteSessionFile(agentName: agentVersion.Name, sessionId: session.AgentSessionId, path: "/store/sample_file_for_upload1.txt");
+        sessionClient.DeleteSessionFile(agentName: agentVersion.Name, sessionId: session.AgentSessionId, path: "/store/sample_file_for_upload1.txt");
+        agentsClient.DeleteSession(agentName: agentVersion.Name, sessionId: session.AgentSessionId, isolationKey: sessionKey);
+        #endregion
+    }
+
+    public Sample_SessionFiles(bool isAsync) : base(isAsync)
     { }
 }

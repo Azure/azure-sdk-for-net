@@ -86,7 +86,7 @@ namespace Azure.AI.Projects.Agents
             }
             writer.WritePropertyName("data"u8);
             writer.WriteStartArray();
-            foreach (AgentSessionResource item in Data)
+            foreach (AgentSession item in Data)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -145,7 +145,7 @@ namespace Azure.AI.Projects.Agents
             {
                 return null;
             }
-            IList<AgentSessionResource> data = default;
+            IList<AgentSession> data = default;
             string firstId = default;
             string lastId = default;
             bool hasMore = default;
@@ -154,10 +154,10 @@ namespace Azure.AI.Projects.Agents
             {
                 if (prop.NameEquals("data"u8))
                 {
-                    List<AgentSessionResource> array = new List<AgentSessionResource>();
+                    List<AgentSession> array = new List<AgentSession>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AgentSessionResource.DeserializeAgentSessionResource(item, options));
+                        array.Add(AgentSession.DeserializeAgentSession(item, options));
                     }
                     data = array;
                     continue;

@@ -17,7 +17,7 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Initializes a new instance of <see cref="AgentsPagedResultAgentSessionResource"/>. </summary>
         /// <param name="data"> The requested list of items. </param>
         /// <param name="hasMore"> A value indicating whether there are additional values available not captured in this list. </param>
-        internal AgentsPagedResultAgentSessionResource(IEnumerable<AgentSessionResource> data, bool hasMore)
+        internal AgentsPagedResultAgentSessionResource(IEnumerable<AgentSession> data, bool hasMore)
         {
             Data = data.ToList();
             HasMore = hasMore;
@@ -29,7 +29,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="lastId"> The last ID represented in this list. </param>
         /// <param name="hasMore"> A value indicating whether there are additional values available not captured in this list. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentsPagedResultAgentSessionResource(IList<AgentSessionResource> data, string firstId, string lastId, bool hasMore, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentsPagedResultAgentSessionResource(IList<AgentSession> data, string firstId, string lastId, bool hasMore, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Data = data;
             FirstId = firstId;
@@ -39,7 +39,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> The requested list of items. </summary>
-        public IList<AgentSessionResource> Data { get; }
+        public IList<AgentSession> Data { get; }
 
         /// <summary> The first ID represented in this list. </summary>
         public string FirstId { get; }

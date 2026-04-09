@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Azure.AI.Projects.Agents
 {
-    internal partial class AgentAdministrationClientGetSessionsAsyncCollectionResultOfT : AsyncCollectionResult<AgentSessionResource>
+    internal partial class AgentAdministrationClientGetSessionsAsyncCollectionResultOfT : AsyncCollectionResult<AgentSession>
     {
         private readonly AgentAdministrationClient _client;
         private readonly string _agentName;
@@ -95,9 +95,9 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Gets the values from the specified page. </summary>
         /// <param name="page"></param>
         /// <returns> The values from the specified page. </returns>
-        protected override async IAsyncEnumerable<AgentSessionResource> GetValuesFromPageAsync(ClientResult page)
+        protected override async IAsyncEnumerable<AgentSession> GetValuesFromPageAsync(ClientResult page)
         {
-            foreach (AgentSessionResource item in ((AgentsPagedResultAgentSessionResource)page).Data)
+            foreach (AgentSession item in ((AgentsPagedResultAgentSessionResource)page).Data)
             {
                 yield return item;
                 await Task.Yield();

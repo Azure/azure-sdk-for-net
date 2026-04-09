@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Projects.Agents
 {
-    internal partial class AgentAdministrationClientGetSessionsCollectionResultOfT : CollectionResult<AgentSessionResource>
+    internal partial class AgentAdministrationClientGetSessionsCollectionResultOfT : CollectionResult<AgentSession>
     {
         private readonly AgentAdministrationClient _client;
         private readonly string _agentName;
@@ -94,7 +94,7 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Gets the values from the specified page. </summary>
         /// <param name="page"></param>
         /// <returns> The values from the specified page. </returns>
-        protected override IEnumerable<AgentSessionResource> GetValuesFromPage(ClientResult page)
+        protected override IEnumerable<AgentSession> GetValuesFromPage(ClientResult page)
         {
             return ((AgentsPagedResultAgentSessionResource)page).Data;
         }

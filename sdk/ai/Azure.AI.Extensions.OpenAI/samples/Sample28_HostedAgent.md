@@ -21,12 +21,12 @@ Azure.AI.Projects can be used only to create an `ProjectsAgentVersion` object, h
 3. Assign the `Azure AI User` role to the project's Managed Identity for resource group (This operation only may be performed by the group owner).
 4. Add a capability host to the Azure Foundry by running the next script in PowerShell.
 
-```bash
-TOKEN=$(az account get-access-token --resource https://management.azure.com/ --query accessToken -o tsv)
-curl --request PUT \
-  --url 'https://management.azure.com/subscriptions/[SUBSCRIPTIONID]/resourceGroups/[RESOURCEGROUPNAME]/providers/Microsoft.CognitiveServices/accounts/[ACCOUNTNAME]/capabilityHosts/accountcaphost?api-version=2025-10-01-preview' \
-  --header 'content-type: application/json' \
-  --header "authorization: Bearer $TOKEN"\
+```ps
+$TOKEN=$(az account get-access-token --resource https://management.azure.com/ --query accessToken -o tsv)
+curl --request PUT `
+  --url 'https://management.azure.com/subscriptions/[SUBSCRIPTIONID]/resourceGroups/[RESOURCEGROUPNAME]/providers/Microsoft.CognitiveServices/accounts/[ACCOUNTNAME]/capabilityHosts/accountcaphost?api-version=2025-10-01-preview' `
+  --header 'content-type: application/json' `
+  --header "authorization: Bearer $TOKEN"`
   --data '{
   "properties": {
     "capabilityHostKind": "Agents",
@@ -37,14 +37,14 @@ curl --request PUT \
 
 4. Clone the repository and get to the directory with the hosted agent definition.
 
-```bash
+```ps
 git clone https://github.com/azure-ai-foundry/foundry-samples.git
 cd foundry-samples/samples/python/hosted-agents/agent-framework/agents-in-workflow/
 ```
 
 5. Build the docker image and push it to the Azure Container registry you have created.
 
-```bash
+```ps
 docker build -t <DOCKER_USERNAME>/workflow-agent .
 docker image tag <DOCKER_USERNAME>/workflow-agent:latest <DOCKER_USERNAME>.azurecr.io/<DOCKER_USERNAME>/workflow-agent:latest
 docker login <DOCKER_USERNAME>.azurecr.io

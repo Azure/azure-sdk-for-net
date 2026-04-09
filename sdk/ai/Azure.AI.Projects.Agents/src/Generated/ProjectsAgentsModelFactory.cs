@@ -860,10 +860,10 @@ namespace Azure.AI.Projects.Agents
         /// <param name="createdAt"> The Unix timestamp (in seconds) when the session was created. </param>
         /// <param name="lastAccessedAt"> The Unix timestamp (in seconds) when the session was last accessed. </param>
         /// <param name="expiresAt"> The Unix timestamp (in seconds) when the session expires (rolling, 30 days from last activity). </param>
-        /// <returns> A new <see cref="Agents.AgentSessionResource"/> instance for mocking. </returns>
-        public static AgentSessionResource AgentSessionResource(string agentSessionId = default, VersionIndicator versionIndicator = default, AgentSessionStatus status = default, DateTimeOffset createdAt = default, DateTimeOffset lastAccessedAt = default, DateTimeOffset expiresAt = default)
+        /// <returns> A new <see cref="Agents.AgentSession"/> instance for mocking. </returns>
+        public static AgentSession AgentSession(string agentSessionId = default, VersionIndicator versionIndicator = default, AgentSessionStatus status = default, DateTimeOffset createdAt = default, DateTimeOffset lastAccessedAt = default, DateTimeOffset expiresAt = default)
         {
-            return new AgentSessionResource(
+            return new AgentSession(
                 agentSessionId,
                 versionIndicator,
                 status,

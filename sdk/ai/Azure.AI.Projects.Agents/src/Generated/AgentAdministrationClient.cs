@@ -598,7 +598,7 @@ namespace Azure.AI.Projects.Agents
         /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="isolationKey"/> or <paramref name="versionIndicator"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="isolationKey"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<AgentSessionResource> CreateSession(string agentName, string isolationKey, VersionIndicator versionIndicator, string agentSessionId = default, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        public virtual ClientResult<AgentSession> CreateSession(string agentName, string isolationKey, VersionIndicator versionIndicator, string agentSessionId = default, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
             Argument.AssertNotNullOrEmpty(isolationKey, nameof(isolationKey));
@@ -606,7 +606,7 @@ namespace Azure.AI.Projects.Agents
 
             CreateSessionRequest spreadModel = new CreateSessionRequest(agentSessionId, versionIndicator, default);
             ClientResult result = CreateSession(agentName, isolationKey, spreadModel, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((AgentSessionResource)result, result.GetRawResponse());
+            return ClientResult.FromValue((AgentSession)result, result.GetRawResponse());
         }
 
         /// <summary>
@@ -623,7 +623,7 @@ namespace Azure.AI.Projects.Agents
         /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="isolationKey"/> or <paramref name="versionIndicator"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="isolationKey"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<AgentSessionResource>> CreateSessionAsync(string agentName, string isolationKey, VersionIndicator versionIndicator, string agentSessionId = default, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult<AgentSession>> CreateSessionAsync(string agentName, string isolationKey, VersionIndicator versionIndicator, string agentSessionId = default, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
             Argument.AssertNotNullOrEmpty(isolationKey, nameof(isolationKey));
@@ -631,7 +631,7 @@ namespace Azure.AI.Projects.Agents
 
             CreateSessionRequest spreadModel = new CreateSessionRequest(agentSessionId, versionIndicator, default);
             ClientResult result = await CreateSessionAsync(agentName, isolationKey, spreadModel, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((AgentSessionResource)result, result.GetRawResponse());
+            return ClientResult.FromValue((AgentSession)result, result.GetRawResponse());
         }
 
         /// <summary>
@@ -692,13 +692,13 @@ namespace Azure.AI.Projects.Agents
         /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="sessionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="sessionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<AgentSessionResource> GetSession(string agentName, string sessionId, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        public virtual ClientResult<AgentSession> GetSession(string agentName, string sessionId, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
             Argument.AssertNotNullOrEmpty(sessionId, nameof(sessionId));
 
             ClientResult result = GetSession(agentName, sessionId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((AgentSessionResource)result, result.GetRawResponse());
+            return ClientResult.FromValue((AgentSession)result, result.GetRawResponse());
         }
 
         /// <summary> Retrieves a session by ID. </summary>
@@ -709,13 +709,13 @@ namespace Azure.AI.Projects.Agents
         /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="sessionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="sessionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<AgentSessionResource>> GetSessionAsync(string agentName, string sessionId, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult<AgentSession>> GetSessionAsync(string agentName, string sessionId, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
             Argument.AssertNotNullOrEmpty(sessionId, nameof(sessionId));
 
             ClientResult result = await GetSessionAsync(agentName, sessionId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((AgentSessionResource)result, result.GetRawResponse());
+            return ClientResult.FromValue((AgentSession)result, result.GetRawResponse());
         }
 
         /// <summary>
@@ -937,7 +937,7 @@ namespace Azure.AI.Projects.Agents
         /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual CollectionResult<AgentSessionResource> GetSessions(string agentName, AgentDefinitionOptInKeys? foundryFeatures = default, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
+        public virtual CollectionResult<AgentSession> GetSessions(string agentName, AgentDefinitionOptInKeys? foundryFeatures = default, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
 
@@ -977,7 +977,7 @@ namespace Azure.AI.Projects.Agents
         /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual AsyncCollectionResult<AgentSessionResource> GetSessionsAsync(string agentName, AgentDefinitionOptInKeys? foundryFeatures = default, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
+        public virtual AsyncCollectionResult<AgentSession> GetSessionsAsync(string agentName, AgentDefinitionOptInKeys? foundryFeatures = default, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
 

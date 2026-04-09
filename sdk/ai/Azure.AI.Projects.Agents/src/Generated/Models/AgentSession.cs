@@ -8,23 +8,23 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> An agent session providing a long-lived compute sandbox for hosted agent invocations. </summary>
-    public partial class AgentSessionResource
+    public partial class AgentSession
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AgentSessionResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentSession"/>. </summary>
         /// <param name="agentSessionId"> The session identifier. </param>
         /// <param name="versionIndicator"> The version indicator determining which agent version backs this session. </param>
         /// <param name="status"> The current status of the session. </param>
-        internal AgentSessionResource(string agentSessionId, VersionIndicator versionIndicator, AgentSessionStatus status)
+        internal AgentSession(string agentSessionId, VersionIndicator versionIndicator, AgentSessionStatus status)
         {
             AgentSessionId = agentSessionId;
             VersionIndicator = versionIndicator;
             Status = status;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AgentSessionResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentSession"/>. </summary>
         /// <param name="agentSessionId"> The session identifier. </param>
         /// <param name="versionIndicator"> The version indicator determining which agent version backs this session. </param>
         /// <param name="status"> The current status of the session. </param>
@@ -32,7 +32,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="lastAccessedAt"> The Unix timestamp (in seconds) when the session was last accessed. </param>
         /// <param name="expiresAt"> The Unix timestamp (in seconds) when the session expires (rolling, 30 days from last activity). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentSessionResource(string agentSessionId, VersionIndicator versionIndicator, AgentSessionStatus status, DateTimeOffset createdAt, DateTimeOffset lastAccessedAt, DateTimeOffset expiresAt, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentSession(string agentSessionId, VersionIndicator versionIndicator, AgentSessionStatus status, DateTimeOffset createdAt, DateTimeOffset lastAccessedAt, DateTimeOffset expiresAt, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AgentSessionId = agentSessionId;
             VersionIndicator = versionIndicator;
