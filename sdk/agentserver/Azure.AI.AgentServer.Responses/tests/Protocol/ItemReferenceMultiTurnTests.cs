@@ -298,9 +298,11 @@ public class ItemReferenceMultiTurnTests : IDisposable
         return doc.RootElement.Clone();
     }
 
-    private async Task WaitForCompletionAsync(string responseId, int maxAttempts = 20)
+    private async Task WaitForCompletionAsync(string responseId, TimeSpan? timeout = null)
     {
-        for (int i = 0; i < maxAttempts; i++)
+        var deadline = DateTime.UtcNow + (timeout ?? TimeSpan.FromSeconds(5));
+
+        while (DateTime.UtcNow < deadline)
         {
             var response = await _client.GetAsync($"/responses/{responseId}");
             if (response.StatusCode == HttpStatusCode.OK)
@@ -317,7 +319,7 @@ public class ItemReferenceMultiTurnTests : IDisposable
             await Task.Delay(50);
         }
 
-        Assert.Fail($"Response {responseId} did not complete within timeout");
+        Assert.Fail($"Response {responseId} did not complete within {timeout ?? TimeSpan.FromSeconds(5)}");
     }
 
     public void Dispose()

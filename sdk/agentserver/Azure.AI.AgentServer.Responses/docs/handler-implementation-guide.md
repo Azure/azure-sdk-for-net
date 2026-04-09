@@ -491,7 +491,7 @@ A convenience that resolves input items and extracts all text content as a singl
 
 ```csharp
 var text = await context.GetInputTextAsync(cancellationToken: ct);
-// Equivalent to: (await context.GetInputItemsAsync(ct)).GetInputText()
+// Equivalent to: (await context.GetInputItemsAsync(cancellationToken: ct)).GetInputText()
 ```
 
 You can also use the `GetInputText()` extension on any `IEnumerable<Item>`:
