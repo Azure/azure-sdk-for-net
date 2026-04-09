@@ -1460,7 +1460,7 @@
       "namespace": "Azure.Generator.MgmtTypeSpec.MultiService.Tests",
       "crossLanguageDefinitionId": "Azure.ResourceManager.ArmOperationStatus",
       "usage": "LroPolling",
-      "doc": "Standard Azure Resource Manager operation status response, used as the response\nbody for `GetResourceOperationStatus`.",
+      "doc": "Standard Azure Resource Manager operation status response",
       "decorators": [],
       "serializationOptions": {
         "json": {
@@ -1514,14 +1514,14 @@
               "name": "id"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": true
         },
         {
           "$id": "124",
           "kind": "property",
           "name": "name",
           "serializedName": "name",
-          "doc": "The name of the operationStatus resource",
+          "doc": "The name of the  operationStatus resource",
           "type": {
             "$id": "125",
             "kind": "string",
@@ -6294,7 +6294,7 @@
           "isMultiServiceClient": false
         }
       ],
-      "isMultiServiceClient": false
+      "isMultiServiceClient": true
     }
   ],
   "auth": {
