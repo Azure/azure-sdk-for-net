@@ -12,12 +12,6 @@
 - Added `RetryProvisioning` operation on `SessionHostResource`.
 - Migrated SDK from Swagger/AutoRest to TypeSpec-based code generation.
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
 ## 1.3.2 (2025-08-11)
 
 ### Features Added
