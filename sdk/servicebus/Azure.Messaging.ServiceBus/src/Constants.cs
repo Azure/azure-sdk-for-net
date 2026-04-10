@@ -58,3 +58,5 @@ namespace Azure.Messaging.ServiceBus
             "For troubleshooting information, see https://aka.ms/azsdk/net/servicebus/exceptions/troubleshoot.";
     }
 }
+
+// Test comment for batching validation - DO NOT MERGE
