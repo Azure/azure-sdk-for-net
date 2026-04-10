@@ -18,7 +18,11 @@ Path to the folder containing PackageInfo JSON files.
 Path to the JSON weights file (package name → seconds).
 
 .PARAMETER TargetSeconds
-Target maximum time per bucket in seconds. Default is 1800 (30 minutes).
+Target maximum time per bucket in seconds for direct packages. Default is 1800 (30 minutes).
+
+.PARAMETER IndirectTargetSeconds
+Target maximum time per bucket in seconds for indirect packages. Defaults to TargetSeconds if not specified.
+Indirect packages only run on Linux, so they can use a higher target than direct packages which run across all platforms.
 
 .PARAMETER DefaultWeight
 Weight assigned to packages not found in the weights file. Default is 1.
@@ -29,10 +33,13 @@ param (
   [Parameter(Mandatory = $true)][string]$PackageInfoFolder,
   [Parameter(Mandatory = $true)][string]$WeightsFile,
   [Parameter()][int]$TargetSeconds = 1800,
+  [Parameter()][int]$IndirectTargetSeconds = 0,
   [Parameter()][int]$DefaultWeight = 1
 )
 
 Set-StrictMode -Version 4
+
+if ($IndirectTargetSeconds -le 0) { $IndirectTargetSeconds = $TargetSeconds }
 
 # Load weights
 $weights = @{}
@@ -168,7 +175,7 @@ if ($directPackages.Count -gt 0) {
 
 if ($indirectPackages.Count -gt 0) {
   Apply-LPTBatching -Packages $indirectPackages -Weights $weights `
-    -TargetSeconds $TargetSeconds -DefaultWeight $DefaultWeight -Label "Indirect"
+    -TargetSeconds $IndirectTargetSeconds -DefaultWeight $DefaultWeight -Label "Indirect"
 }
 
 # Verify
