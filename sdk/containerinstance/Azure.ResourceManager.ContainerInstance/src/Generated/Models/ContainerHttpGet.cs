@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public ContainerHttpGet(int port)
         {
             Port = port;
-            HttpHeaders = new ChangeTrackingList<Models.ContainerHttpHeader>();
+            HttpHeaders = new ChangeTrackingList<ContainerHttpHeader>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerHttpGet"/>. </summary>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="scheme"> The scheme. </param>
         /// <param name="httpHeaders"> The HTTP headers. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerHttpGet(string path, int port, ContainerHttpGetScheme? scheme, IList<Models.ContainerHttpHeader> httpHeaders, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerHttpGet(string path, int port, ContainerHttpGetScheme? scheme, IList<ContainerHttpHeader> httpHeaders, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Path = path;
             Port = port;
@@ -50,6 +50,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public ContainerHttpGetScheme? Scheme { get; set; }
 
         /// <summary> The HTTP headers. </summary>
-        public IList<Models.ContainerHttpHeader> HttpHeaders { get; }
+        public IList<ContainerHttpHeader> HttpHeaders { get; }
     }
 }

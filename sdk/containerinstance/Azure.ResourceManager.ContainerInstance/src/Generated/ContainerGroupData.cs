@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="zones"> The availability zones. </param>
         /// <param name="identity"> The identity of the container group, if configured. </param>
         /// <param name="properties"> The container group properties. </param>
-        internal ContainerGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation location, IDictionary<string, string> tags, IList<string> zones, ContainerGroupIdentity identity, ContainerGroupPropertiesProperties properties) : base(id, name, resourceType, systemData, tags, location)
+        internal ContainerGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation location, IDictionary<string, string> tags, IList<string> zones, ManagedServiceIdentity identity, ContainerGroupPropertiesProperties properties) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Zones = zones;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ContainerInstance
         public IList<string> Zones { get; }
 
         /// <summary> The identity of the container group, if configured. </summary>
-        public ContainerGroupIdentity Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> The container group properties. </summary>
         internal ContainerGroupPropertiesProperties Properties { get; set; }
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary> The init containers for a container group. </summary>
-        public IList<InitContainerDefinition> InitContainers
+        public IList<InitContainerDefinitionContent> InitContainers
         {
             get
             {

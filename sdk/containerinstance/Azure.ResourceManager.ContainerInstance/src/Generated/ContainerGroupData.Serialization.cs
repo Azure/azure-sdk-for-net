@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ContainerInstance
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteObjectValue(Properties, options);
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.ContainerInstance
             AzureLocation location = default;
             IDictionary<string, string> tags = default;
             IList<string> zones = default;
-            ContainerGroupIdentity identity = default;
+            ManagedServiceIdentity identity = default;
             ContainerGroupPropertiesProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.ContainerInstance
                     {
                         continue;
                     }
-                    identity = ContainerGroupIdentity.DeserializeContainerGroupIdentity(prop.Value, options);
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options, AzureResourceManagerContainerInstanceContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))

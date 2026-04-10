@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 writer.WritePropertyName("initContainers"u8);
                 writer.WriteStartArray();
-                foreach (InitContainerDefinition item in InitContainers)
+                foreach (InitContainerDefinitionContent item in InitContainers)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             ContainerGroupDnsConfiguration dnsConfig = default;
             ContainerGroupSku? sku = default;
             ContainerGroupEncryptionProperties encryptionProperties = default;
-            IList<InitContainerDefinition> initContainers = default;
+            IList<InitContainerDefinitionContent> initContainers = default;
             IList<DeploymentExtensionSpec> extensions = default;
             ConfidentialComputeProperties confidentialComputeProperties = default;
             ContainerGroupPriority? priority = default;
@@ -437,10 +437,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    List<InitContainerDefinition> array = new List<InitContainerDefinition>();
+                    List<InitContainerDefinitionContent> array = new List<InitContainerDefinitionContent>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(InitContainerDefinition.DeserializeInitContainerDefinition(item, options));
+                        array.Add(InitContainerDefinitionContent.DeserializeInitContainerDefinitionContent(item, options));
                     }
                     initContainers = array;
                     continue;
@@ -533,7 +533,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 dnsConfig,
                 sku,
                 encryptionProperties,
-                initContainers ?? new ChangeTrackingList<InitContainerDefinition>(),
+                initContainers ?? new ChangeTrackingList<InitContainerDefinitionContent>(),
                 extensions ?? new ChangeTrackingList<DeploymentExtensionSpec>(),
                 confidentialComputeProperties,
                 priority,

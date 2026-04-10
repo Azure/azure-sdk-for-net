@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             Argument.AssertNotNull(containers, nameof(containers));
 
             Containers = containers.ToList();
-            InitContainers = new ChangeTrackingList<InitContainerDefinition>();
+            InitContainers = new ChangeTrackingList<InitContainerDefinitionContent>();
             Extensions = new ChangeTrackingList<DeploymentExtensionSpec>();
             ImageRegistryCredentials = new ChangeTrackingList<ContainerGroupImageRegistryCredential>();
             OsType = osType;
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="registeredRevisions"> Registered revisions are calculated at request time based off the records in the table logs. </param>
         /// <param name="useKrypton"> Gets or sets Krypton use property. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerGroupProfileProperties(ContainerGroupSku? sku, ContainerGroupEncryptionProperties encryptionProperties, IList<ContainerInstanceContainer> containers, IList<InitContainerDefinition> initContainers, IList<DeploymentExtensionSpec> extensions, IList<ContainerGroupImageRegistryCredential> imageRegistryCredentials, ContainerGroupRestartPolicy? restartPolicy, DateTimeOffset? shutdownGracePeriod, ContainerGroupIPAddress ipAddress, DateTimeOffset? timeToLive, ContainerInstanceOperatingSystemType osType, IList<ContainerVolume> volumes, ContainerGroupDiagnostics diagnostics, ContainerGroupPriority? priority, ConfidentialComputeProperties confidentialComputeProperties, ContainerSecurityContextDefinition securityContext, int? revision, IReadOnlyList<int> registeredRevisions, bool? useKrypton, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerGroupProfileProperties(ContainerGroupSku? sku, ContainerGroupEncryptionProperties encryptionProperties, IList<ContainerInstanceContainer> containers, IList<InitContainerDefinitionContent> initContainers, IList<DeploymentExtensionSpec> extensions, IList<ContainerGroupImageRegistryCredential> imageRegistryCredentials, ContainerGroupRestartPolicy? restartPolicy, DateTimeOffset? shutdownGracePeriod, ContainerGroupIPAddress ipAddress, DateTimeOffset? timeToLive, ContainerInstanceOperatingSystemType osType, IList<ContainerVolume> volumes, ContainerGroupDiagnostics diagnostics, ContainerGroupPriority? priority, ConfidentialComputeProperties confidentialComputeProperties, ContainerSecurityContextDefinition securityContext, int? revision, IReadOnlyList<int> registeredRevisions, bool? useKrypton, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Sku = sku;
             EncryptionProperties = encryptionProperties;
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public IList<ContainerInstanceContainer> Containers { get; } = new ChangeTrackingList<ContainerInstanceContainer>();
 
         /// <summary> The init containers for a container group. </summary>
-        public IList<InitContainerDefinition> InitContainers { get; } = new ChangeTrackingList<InitContainerDefinition>();
+        public IList<InitContainerDefinitionContent> InitContainers { get; } = new ChangeTrackingList<InitContainerDefinitionContent>();
 
         /// <summary> extensions used by virtual kubelet. </summary>
         public IList<DeploymentExtensionSpec> Extensions { get; } = new ChangeTrackingList<DeploymentExtensionSpec>();

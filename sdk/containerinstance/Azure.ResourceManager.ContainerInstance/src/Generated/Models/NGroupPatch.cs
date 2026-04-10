@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="tags"> The resource tags. </param>
         /// <param name="zones"> The zones for the NGroup. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NGroupPatch(SystemData systemData, NGroupProperties properties, NGroupIdentity identity, IDictionary<string, string> tags, IList<string> zones, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NGroupPatch(SystemData systemData, NGroupProperties properties, ManagedServiceIdentity identity, IDictionary<string, string> tags, IList<string> zones, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SystemData = systemData;
             Properties = properties;
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         internal NGroupProperties Properties { get; set; }
 
         /// <summary> The identity of the NGroup, if configured. </summary>
-        public NGroupIdentity Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> The resource tags. </summary>
         public IDictionary<string, string> Tags { get; }

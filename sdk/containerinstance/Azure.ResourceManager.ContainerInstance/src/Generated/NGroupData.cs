@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="zones"> The availability zones. </param>
         /// <param name="identity"> The identity of the NGroup, if configured. </param>
-        internal NGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, NGroupProperties properties, IDictionary<string, string> tags, string location, IList<string> zones, NGroupIdentity identity) : base(id, name, resourceType, systemData)
+        internal NGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, NGroupProperties properties, IDictionary<string, string> tags, string location, IList<string> zones, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ContainerInstance
         public IList<string> Zones { get; }
 
         /// <summary> The identity of the NGroup, if configured. </summary>
-        public NGroupIdentity Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> The elastic profile. </summary>
         public ContainerGroupElasticProfile ElasticProfile

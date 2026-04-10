@@ -95,9 +95,9 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 writer.WritePropertyName("httpHeaders"u8);
                 writer.WriteStartArray();
-                foreach (Models.ContainerHttpHeader item in HttpHeaders)
+                foreach (ContainerHttpHeader item in HttpHeaders)
                 {
-                    writer.WriteObjectValue<Models.ContainerHttpHeader>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             string path = default;
             int port = default;
             ContainerHttpGetScheme? scheme = default;
-            IList<Models.ContainerHttpHeader> httpHeaders = default;
+            IList<ContainerHttpHeader> httpHeaders = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -175,10 +175,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    List<Models.ContainerHttpHeader> array = new List<Models.ContainerHttpHeader>();
+                    List<ContainerHttpHeader> array = new List<ContainerHttpHeader>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Models.ContainerHttpHeader.DeserializeContainerHttpHeader(item, options));
+                        array.Add(ContainerHttpHeader.DeserializeContainerHttpHeader(item, options));
                     }
                     httpHeaders = array;
                     continue;
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ContainerHttpGet(path, port, scheme, httpHeaders ?? new ChangeTrackingList<Models.ContainerHttpHeader>(), additionalBinaryDataProperties);
+            return new ContainerHttpGet(path, port, scheme, httpHeaders ?? new ChangeTrackingList<ContainerHttpHeader>(), additionalBinaryDataProperties);
         }
     }
 }

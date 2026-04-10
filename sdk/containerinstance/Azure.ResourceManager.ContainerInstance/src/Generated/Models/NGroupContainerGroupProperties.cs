@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public NGroupContainerGroupProperties()
         {
             SubnetIds = new ChangeTrackingList<ContainerGroupSubnetId>();
-            Volumes = new ChangeTrackingList<Models.NGroupContainerGroupPropertyVolume>();
-            Containers = new ChangeTrackingList<Models.NGroupContainerGroupPropertyContainer>();
+            Volumes = new ChangeTrackingList<NGroupContainerGroupPropertyVolume>();
+            Containers = new ChangeTrackingList<NGroupContainerGroupPropertyContainer>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NGroupContainerGroupProperties"/>. </summary>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="volumes"> Contains information about the volumes that can be mounted by Containers in the Container Groups. </param>
         /// <param name="containers"> Contains information about Container which can be set while creating or updating the NGroups. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NGroupContainerGroupProperties(IList<ContainerGroupSubnetId> subnetIds, IList<Models.NGroupContainerGroupPropertyVolume> volumes, IList<Models.NGroupContainerGroupPropertyContainer> containers, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NGroupContainerGroupProperties(IList<ContainerGroupSubnetId> subnetIds, IList<NGroupContainerGroupPropertyVolume> volumes, IList<NGroupContainerGroupPropertyContainer> containers, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SubnetIds = subnetIds;
             Volumes = volumes;
@@ -42,9 +42,9 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public IList<ContainerGroupSubnetId> SubnetIds { get; }
 
         /// <summary> Contains information about the volumes that can be mounted by Containers in the Container Groups. </summary>
-        public IList<Models.NGroupContainerGroupPropertyVolume> Volumes { get; }
+        public IList<NGroupContainerGroupPropertyVolume> Volumes { get; }
 
         /// <summary> Contains information about Container which can be set while creating or updating the NGroups. </summary>
-        public IList<Models.NGroupContainerGroupPropertyContainer> Containers { get; }
+        public IList<NGroupContainerGroupPropertyContainer> Containers { get; }
     }
 }

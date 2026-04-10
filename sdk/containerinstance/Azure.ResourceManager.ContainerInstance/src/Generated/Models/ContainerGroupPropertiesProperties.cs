@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             ImageRegistryCredentials = new ChangeTrackingList<ContainerGroupImageRegistryCredential>();
             Volumes = new ChangeTrackingList<ContainerVolume>();
             SubnetIds = new ChangeTrackingList<ContainerGroupSubnetId>();
-            InitContainers = new ChangeTrackingList<InitContainerDefinition>();
+            InitContainers = new ChangeTrackingList<InitContainerDefinitionContent>();
             Extensions = new ChangeTrackingList<DeploymentExtensionSpec>();
         }
 
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="standbyPoolProfile"> The reference standby pool profile properties. </param>
         /// <param name="isCreatedFromStandbyPool"> The flag to determine whether the container group is created from standby pool. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerGroupPropertiesProperties(string provisioningState, IList<ContainerGroupSecretReference> secretReferences, IList<ContainerInstanceContainer> containers, IList<ContainerGroupImageRegistryCredential> imageRegistryCredentials, ContainerGroupRestartPolicy? restartPolicy, ContainerGroupIPAddress ipAddress, ContainerInstanceOperatingSystemType? osType, IList<ContainerVolume> volumes, ContainerGroupInstanceView instanceView, ContainerGroupDiagnostics diagnostics, IList<ContainerGroupSubnetId> subnetIds, ContainerGroupDnsConfiguration dnsConfig, ContainerGroupSku? sku, ContainerGroupEncryptionProperties encryptionProperties, IList<InitContainerDefinition> initContainers, IList<DeploymentExtensionSpec> extensions, ConfidentialComputeProperties confidentialComputeProperties, ContainerGroupPriority? priority, ContainerGroupIdentityAccessControlLevels identityAcls, ContainerGroupProfileReferenceDefinition containerGroupProfile, StandbyPoolProfileDefinition standbyPoolProfile, bool? isCreatedFromStandbyPool, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerGroupPropertiesProperties(string provisioningState, IList<ContainerGroupSecretReference> secretReferences, IList<ContainerInstanceContainer> containers, IList<ContainerGroupImageRegistryCredential> imageRegistryCredentials, ContainerGroupRestartPolicy? restartPolicy, ContainerGroupIPAddress ipAddress, ContainerInstanceOperatingSystemType? osType, IList<ContainerVolume> volumes, ContainerGroupInstanceView instanceView, ContainerGroupDiagnostics diagnostics, IList<ContainerGroupSubnetId> subnetIds, ContainerGroupDnsConfiguration dnsConfig, ContainerGroupSku? sku, ContainerGroupEncryptionProperties encryptionProperties, IList<InitContainerDefinitionContent> initContainers, IList<DeploymentExtensionSpec> extensions, ConfidentialComputeProperties confidentialComputeProperties, ContainerGroupPriority? priority, ContainerGroupIdentityAccessControlLevels identityAcls, ContainerGroupProfileReferenceDefinition containerGroupProfile, StandbyPoolProfileDefinition standbyPoolProfile, bool? isCreatedFromStandbyPool, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             SecretReferences = secretReferences;
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public ContainerGroupEncryptionProperties EncryptionProperties { get; set; }
 
         /// <summary> The init containers for a container group. </summary>
-        public IList<InitContainerDefinition> InitContainers { get; } = new ChangeTrackingList<InitContainerDefinition>();
+        public IList<InitContainerDefinitionContent> InitContainers { get; } = new ChangeTrackingList<InitContainerDefinitionContent>();
 
         /// <summary> extensions used by virtual kubelet. </summary>
         public IList<DeploymentExtensionSpec> Extensions { get; } = new ChangeTrackingList<DeploymentExtensionSpec>();

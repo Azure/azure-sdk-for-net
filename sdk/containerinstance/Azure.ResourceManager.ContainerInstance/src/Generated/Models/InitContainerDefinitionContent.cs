@@ -12,26 +12,26 @@ using Azure.ResourceManager.ContainerInstance;
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
     /// <summary> The init container definition. </summary>
-    public partial class InitContainerDefinition
+    public partial class InitContainerDefinitionContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="InitContainerDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="InitContainerDefinitionContent"/>. </summary>
         /// <param name="name"> The name for the init container. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public InitContainerDefinition(string name)
+        public InitContainerDefinitionContent(string name)
         {
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of <see cref="InitContainerDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="InitContainerDefinitionContent"/>. </summary>
         /// <param name="name"> The name for the init container. </param>
         /// <param name="properties"> The properties for the init container. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InitContainerDefinition(string name, InitContainerPropertiesDefinition properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InitContainerDefinitionContent(string name, InitContainerPropertiesDefinition properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Properties = properties;
