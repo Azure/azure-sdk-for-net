@@ -71,3 +71,5 @@ namespace Azure.ResourceManager.FrontDoor
         }
     }
 }
+
+// Test comment for batching validation - DO NOT MERGE

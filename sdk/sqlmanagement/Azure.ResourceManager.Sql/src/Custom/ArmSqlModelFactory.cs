@@ -87,3 +87,5 @@ namespace Azure.ResourceManager.Sql.Models
         }
     }
 }
+
+// Test comment for batching validation - DO NOT MERGE

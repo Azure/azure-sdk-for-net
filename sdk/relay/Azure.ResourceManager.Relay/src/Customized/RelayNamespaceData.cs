@@ -17,3 +17,5 @@ namespace Azure.ResourceManager.Relay
         public RelayPublicNetworkAccess? PublicNetworkAccess { get; set; }
     }
 }
+
+// Test comment for batching validation - DO NOT MERGE
