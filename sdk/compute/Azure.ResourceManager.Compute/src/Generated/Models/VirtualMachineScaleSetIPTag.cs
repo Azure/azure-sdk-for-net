@@ -11,21 +11,21 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Contains the IP tag associated with the public IP address. </summary>
-    public partial class VirtualMachineScaleSetIpTag
+    public partial class VirtualMachineScaleSetIPTag
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetIpTag"/>. </summary>
-        public VirtualMachineScaleSetIpTag()
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetIPTag"/>. </summary>
+        public VirtualMachineScaleSetIPTag()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetIpTag"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetIPTag"/>. </summary>
         /// <param name="ipTagType"> IP tag type. Example: FirstPartyUsage. </param>
         /// <param name="tag"> IP tag associated with the public IP. Example: SQL, Storage etc. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineScaleSetIpTag(string ipTagType, string tag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineScaleSetIPTag(string ipTagType, string tag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IpTagType = ipTagType;
             Tag = tag;

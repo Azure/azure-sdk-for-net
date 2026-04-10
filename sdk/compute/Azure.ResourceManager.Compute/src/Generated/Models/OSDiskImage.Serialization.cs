@@ -123,13 +123,13 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            OperatingSystemTypes operatingSystem = default;
+            OperatingSystemType operatingSystem = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("operatingSystem"u8))
                 {
-                    operatingSystem = prop.Value.GetString().ToOperatingSystemTypes();
+                    operatingSystem = prop.Value.GetString().ToOperatingSystemType();
                     continue;
                 }
                 if (options.Format != "W")

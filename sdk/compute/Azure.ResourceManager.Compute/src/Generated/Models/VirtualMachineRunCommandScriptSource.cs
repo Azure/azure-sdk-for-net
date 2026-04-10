@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="scriptShell"> Optional. Specify which shell to use for running the script. These values must match those expected by the extension. Currently supported only for Windows VMs, script uses Powershell 7 when specified. Powershell 7 must be already installed on the machine to use Powershell7 parameter value. </param>
         /// <param name="galleryScriptReferenceId"> The resource ID of a Gallery Script version that needs to be executed. Example ID looks like /subscriptions/{subId}/resourceGroups/{rgName}/providers/Microsoft.Compute/galleries/{galleryName}/scripts/{scriptName}/versions/{version}. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineRunCommandScriptSource(string script, string scriptUri, string commandId, RunCommandManagedIdentity scriptUriManagedIdentity, ScriptShellTypes? scriptShell, string galleryScriptReferenceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineRunCommandScriptSource(string script, string scriptUri, string commandId, RunCommandManagedIdentity scriptUriManagedIdentity, ScriptShellType? scriptShell, string galleryScriptReferenceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Script = script;
             ScriptUri = scriptUri;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Compute.Models
         public RunCommandManagedIdentity ScriptUriManagedIdentity { get; set; }
 
         /// <summary> Optional. Specify which shell to use for running the script. These values must match those expected by the extension. Currently supported only for Windows VMs, script uses Powershell 7 when specified. Powershell 7 must be already installed on the machine to use Powershell7 parameter value. </summary>
-        public ScriptShellTypes? ScriptShell { get; set; }
+        public ScriptShellType? ScriptShell { get; set; }
 
         /// <summary> The resource ID of a Gallery Script version that needs to be executed. Example ID looks like /subscriptions/{subId}/resourceGroups/{rgName}/providers/Microsoft.Compute/galleries/{galleryName}/scripts/{scriptName}/versions/{version}. </summary>
         public string GalleryScriptReferenceId { get; set; }

@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             string region = default;
-            ReplicationState? state = default;
+            RegionalReplicationState? state = default;
             string details = default;
             int? progress = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    state = new ReplicationState(prop.Value.GetString());
+                    state = new RegionalReplicationState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("details"u8))

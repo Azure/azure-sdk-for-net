@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointCollectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="restorePointCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<RestorePointGroupResource>> GetAsync(string restorePointCollectionName, RestorePointCollectionExpandOptions? expand = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RestorePointGroupResource>> GetAsync(string restorePointCollectionName, RestorePointGroupExpand? expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(restorePointCollectionName, nameof(restorePointCollectionName));
 
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointCollectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="restorePointCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<RestorePointGroupResource> Get(string restorePointCollectionName, RestorePointCollectionExpandOptions? expand = default, CancellationToken cancellationToken = default)
+        public virtual Response<RestorePointGroupResource> Get(string restorePointCollectionName, RestorePointGroupExpand? expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(restorePointCollectionName, nameof(restorePointCollectionName));
 
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointCollectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="restorePointCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string restorePointCollectionName, RestorePointCollectionExpandOptions? expand = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string restorePointCollectionName, RestorePointGroupExpand? expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(restorePointCollectionName, nameof(restorePointCollectionName));
 
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointCollectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="restorePointCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<bool> Exists(string restorePointCollectionName, RestorePointCollectionExpandOptions? expand = default, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string restorePointCollectionName, RestorePointGroupExpand? expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(restorePointCollectionName, nameof(restorePointCollectionName));
 
@@ -464,7 +464,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointCollectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="restorePointCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<RestorePointGroupResource>> GetIfExistsAsync(string restorePointCollectionName, RestorePointCollectionExpandOptions? expand = default, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<RestorePointGroupResource>> GetIfExistsAsync(string restorePointCollectionName, RestorePointGroupExpand? expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(restorePointCollectionName, nameof(restorePointCollectionName));
 
@@ -526,7 +526,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointCollectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="restorePointCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<RestorePointGroupResource> GetIfExists(string restorePointCollectionName, RestorePointCollectionExpandOptions? expand = default, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<RestorePointGroupResource> GetIfExists(string restorePointCollectionName, RestorePointGroupExpand? expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(restorePointCollectionName, nameof(restorePointCollectionName));
 

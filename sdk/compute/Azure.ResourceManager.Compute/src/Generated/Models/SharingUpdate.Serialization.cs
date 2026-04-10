@@ -152,14 +152,14 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            SharingUpdateOperationTypes operationType = default;
+            SharingUpdateOperationType operationType = default;
             IList<SharingProfileGroup> groups = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("operationType"u8))
                 {
-                    operationType = new SharingUpdateOperationTypes(prop.Value.GetString());
+                    operationType = new SharingUpdateOperationType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("groups"u8))

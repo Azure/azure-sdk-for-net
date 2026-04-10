@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="name"> Specify public IP sku name. </param>
         /// <param name="tier"> Specify public IP sku tier. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputePublicIPAddressSku(PublicIPAddressSkuName? name, PublicIPAddressSkuTier? tier, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputePublicIPAddressSku(ComputePublicIPAddressSkuName? name, ComputePublicIPAddressSkuTier? tier, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Tier = tier;
@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Specify public IP sku name. </summary>
-        public PublicIPAddressSkuName? Name { get; set; }
+        public ComputePublicIPAddressSkuName? Name { get; set; }
 
         /// <summary> Specify public IP sku tier. </summary>
-        public PublicIPAddressSkuTier? Tier { get; set; }
+        public ComputePublicIPAddressSkuTier? Tier { get; set; }
     }
 }

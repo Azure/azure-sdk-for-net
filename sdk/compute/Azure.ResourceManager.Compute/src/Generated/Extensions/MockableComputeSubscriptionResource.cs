@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <param name="expand"> The expand expression to apply on operation. 'instanceView' enables fetching run time status of all Virtual Machines, this can only be specified if a valid $filter option is specified. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VirtualMachineResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VirtualMachineResource> GetVirtualMachinesAsync(string statusOnly = default, string filter = default, ExpandTypesForListVMs? expand = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<VirtualMachineResource> GetVirtualMachinesAsync(string statusOnly = default, string filter = default, ExpandTypesForListVm? expand = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <param name="expand"> The expand expression to apply on operation. 'instanceView' enables fetching run time status of all Virtual Machines, this can only be specified if a valid $filter option is specified. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VirtualMachineResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VirtualMachineResource> GetVirtualMachines(string statusOnly = default, string filter = default, ExpandTypesForListVMs? expand = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<VirtualMachineResource> GetVirtualMachines(string statusOnly = default, string filter = default, ExpandTypesForListVm? expand = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -773,7 +773,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <param name="resourceIdsOnly"> The query option to fetch Capacity Reservation Group Resource Ids. &lt;br&gt; 'CreatedInSubscription' enables fetching Resource Ids for all capacity reservation group resources created in the subscription. &lt;br&gt; 'SharedWithSubscription' enables fetching Resource Ids for all capacity reservation group resources shared with the subscription. &lt;br&gt; 'All' enables fetching Resource Ids for all capacity reservation group resources shared with the subscription and created in the subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CapacityReservationGroupResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CapacityReservationGroupResource> GetCapacityReservationGroupsAsync(CapacityReservationGroupGetExpand? expand = default, ResourceIdOptionsForGetCapacityReservationGroups? resourceIdsOnly = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<CapacityReservationGroupResource> GetCapacityReservationGroupsAsync(CapacityReservationGroupGetExpand? expand = default, ResourceIdOptionsForGetCapacityReservationGroup? resourceIdsOnly = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -809,7 +809,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <param name="resourceIdsOnly"> The query option to fetch Capacity Reservation Group Resource Ids. &lt;br&gt; 'CreatedInSubscription' enables fetching Resource Ids for all capacity reservation group resources created in the subscription. &lt;br&gt; 'SharedWithSubscription' enables fetching Resource Ids for all capacity reservation group resources shared with the subscription. &lt;br&gt; 'All' enables fetching Resource Ids for all capacity reservation group resources shared with the subscription and created in the subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CapacityReservationGroupResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CapacityReservationGroupResource> GetCapacityReservationGroups(CapacityReservationGroupGetExpand? expand = default, ResourceIdOptionsForGetCapacityReservationGroups? resourceIdsOnly = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<CapacityReservationGroupResource> GetCapacityReservationGroups(CapacityReservationGroupGetExpand? expand = default, ResourceIdOptionsForGetCapacityReservationGroup? resourceIdsOnly = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {

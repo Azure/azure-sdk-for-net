@@ -1084,7 +1084,7 @@ namespace Azure.ResourceManager.Compute
         /// The operation to get the restore point collection.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeResourceGroupResource.GetRestorePointGroupAsync(string, RestorePointCollectionExpandOptions?, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableComputeResourceGroupResource.GetRestorePointGroupAsync(string, RestorePointGroupExpand?, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -1093,7 +1093,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<RestorePointGroupResource>> GetRestorePointGroupAsync(this ResourceGroupResource resourceGroupResource, string restorePointCollectionName, RestorePointCollectionExpandOptions? expand = default, CancellationToken cancellationToken = default)
+        public static async Task<Response<RestorePointGroupResource>> GetRestorePointGroupAsync(this ResourceGroupResource resourceGroupResource, string restorePointCollectionName, RestorePointGroupExpand? expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -1104,7 +1104,7 @@ namespace Azure.ResourceManager.Compute
         /// The operation to get the restore point collection.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeResourceGroupResource.GetRestorePointGroup(string, RestorePointCollectionExpandOptions?, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableComputeResourceGroupResource.GetRestorePointGroup(string, RestorePointGroupExpand?, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -1113,7 +1113,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<RestorePointGroupResource> GetRestorePointGroup(this ResourceGroupResource resourceGroupResource, string restorePointCollectionName, RestorePointCollectionExpandOptions? expand = default, CancellationToken cancellationToken = default)
+        public static Response<RestorePointGroupResource> GetRestorePointGroup(this ResourceGroupResource resourceGroupResource, string restorePointCollectionName, RestorePointGroupExpand? expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -1141,7 +1141,7 @@ namespace Azure.ResourceManager.Compute
         /// The operation that retrieves information about a capacity reservation group.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeResourceGroupResource.GetCapacityReservationGroupAsync(string, CapacityReservationGroupInstanceViewTypes?, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableComputeResourceGroupResource.GetCapacityReservationGroupAsync(string, CapacityReservationGroupInstanceViewType?, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -1150,7 +1150,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<CapacityReservationGroupResource>> GetCapacityReservationGroupAsync(this ResourceGroupResource resourceGroupResource, string capacityReservationGroupName, CapacityReservationGroupInstanceViewTypes? expand = default, CancellationToken cancellationToken = default)
+        public static async Task<Response<CapacityReservationGroupResource>> GetCapacityReservationGroupAsync(this ResourceGroupResource resourceGroupResource, string capacityReservationGroupName, CapacityReservationGroupInstanceViewType? expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -1161,7 +1161,7 @@ namespace Azure.ResourceManager.Compute
         /// The operation that retrieves information about a capacity reservation group.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeResourceGroupResource.GetCapacityReservationGroup(string, CapacityReservationGroupInstanceViewTypes?, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableComputeResourceGroupResource.GetCapacityReservationGroup(string, CapacityReservationGroupInstanceViewType?, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -1170,7 +1170,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<CapacityReservationGroupResource> GetCapacityReservationGroup(this ResourceGroupResource resourceGroupResource, string capacityReservationGroupName, CapacityReservationGroupInstanceViewTypes? expand = default, CancellationToken cancellationToken = default)
+        public static Response<CapacityReservationGroupResource> GetCapacityReservationGroup(this ResourceGroupResource resourceGroupResource, string capacityReservationGroupName, CapacityReservationGroupInstanceViewType? expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -1418,7 +1418,7 @@ namespace Azure.ResourceManager.Compute
         /// Retrieves information about a Shared Image Gallery.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeResourceGroupResource.GetGalleryAsync(string, SelectPermissions?, GalleryExpandParams?, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableComputeResourceGroupResource.GetGalleryAsync(string, SelectPermission?, GalleryExpand?, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -1428,7 +1428,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<GalleryResource>> GetGalleryAsync(this ResourceGroupResource resourceGroupResource, string galleryName, SelectPermissions? @select = default, GalleryExpandParams? expand = default, CancellationToken cancellationToken = default)
+        public static async Task<Response<GalleryResource>> GetGalleryAsync(this ResourceGroupResource resourceGroupResource, string galleryName, SelectPermission? @select = default, GalleryExpand? expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -1439,7 +1439,7 @@ namespace Azure.ResourceManager.Compute
         /// Retrieves information about a Shared Image Gallery.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeResourceGroupResource.GetGallery(string, SelectPermissions?, GalleryExpandParams?, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableComputeResourceGroupResource.GetGallery(string, SelectPermission?, GalleryExpand?, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -1449,7 +1449,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<GalleryResource> GetGallery(this ResourceGroupResource resourceGroupResource, string galleryName, SelectPermissions? @select = default, GalleryExpandParams? expand = default, CancellationToken cancellationToken = default)
+        public static Response<GalleryResource> GetGallery(this ResourceGroupResource resourceGroupResource, string galleryName, SelectPermission? @select = default, GalleryExpand? expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -1560,7 +1560,7 @@ namespace Azure.ResourceManager.Compute
         /// Lists all of the virtual machines in the specified subscription. Use the nextLink property in the response to get the next page of virtual machines.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetVirtualMachinesAsync(string, string, ExpandTypesForListVMs?, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetVirtualMachinesAsync(string, string, ExpandTypesForListVm?, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -1570,7 +1570,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="VirtualMachineResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<VirtualMachineResource> GetVirtualMachinesAsync(this SubscriptionResource subscriptionResource, string statusOnly = default, string filter = default, ExpandTypesForListVMs? expand = default, CancellationToken cancellationToken = default)
+        public static AsyncPageable<VirtualMachineResource> GetVirtualMachinesAsync(this SubscriptionResource subscriptionResource, string statusOnly = default, string filter = default, ExpandTypesForListVm? expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -1581,7 +1581,7 @@ namespace Azure.ResourceManager.Compute
         /// Lists all of the virtual machines in the specified subscription. Use the nextLink property in the response to get the next page of virtual machines.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetVirtualMachines(string, string, ExpandTypesForListVMs?, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetVirtualMachines(string, string, ExpandTypesForListVm?, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -1591,7 +1591,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="VirtualMachineResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<VirtualMachineResource> GetVirtualMachines(this SubscriptionResource subscriptionResource, string statusOnly = default, string filter = default, ExpandTypesForListVMs? expand = default, CancellationToken cancellationToken = default)
+        public static Pageable<VirtualMachineResource> GetVirtualMachines(this SubscriptionResource subscriptionResource, string statusOnly = default, string filter = default, ExpandTypesForListVm? expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -1820,7 +1820,7 @@ namespace Azure.ResourceManager.Compute
         /// Lists all of the capacity reservation groups in the subscription. Use the nextLink property in the response to get the next page of capacity reservation groups.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetCapacityReservationGroupsAsync(CapacityReservationGroupGetExpand?, ResourceIdOptionsForGetCapacityReservationGroups?, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetCapacityReservationGroupsAsync(CapacityReservationGroupGetExpand?, ResourceIdOptionsForGetCapacityReservationGroup?, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -1829,7 +1829,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="CapacityReservationGroupResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<CapacityReservationGroupResource> GetCapacityReservationGroupsAsync(this SubscriptionResource subscriptionResource, CapacityReservationGroupGetExpand? expand = default, ResourceIdOptionsForGetCapacityReservationGroups? resourceIdsOnly = default, CancellationToken cancellationToken = default)
+        public static AsyncPageable<CapacityReservationGroupResource> GetCapacityReservationGroupsAsync(this SubscriptionResource subscriptionResource, CapacityReservationGroupGetExpand? expand = default, ResourceIdOptionsForGetCapacityReservationGroup? resourceIdsOnly = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -1840,7 +1840,7 @@ namespace Azure.ResourceManager.Compute
         /// Lists all of the capacity reservation groups in the subscription. Use the nextLink property in the response to get the next page of capacity reservation groups.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetCapacityReservationGroups(CapacityReservationGroupGetExpand?, ResourceIdOptionsForGetCapacityReservationGroups?, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetCapacityReservationGroups(CapacityReservationGroupGetExpand?, ResourceIdOptionsForGetCapacityReservationGroup?, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -1849,7 +1849,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="CapacityReservationGroupResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<CapacityReservationGroupResource> GetCapacityReservationGroups(this SubscriptionResource subscriptionResource, CapacityReservationGroupGetExpand? expand = default, ResourceIdOptionsForGetCapacityReservationGroups? resourceIdsOnly = default, CancellationToken cancellationToken = default)
+        public static Pageable<CapacityReservationGroupResource> GetCapacityReservationGroups(this SubscriptionResource subscriptionResource, CapacityReservationGroupGetExpand? expand = default, ResourceIdOptionsForGetCapacityReservationGroup? resourceIdsOnly = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 

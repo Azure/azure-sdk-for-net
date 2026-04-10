@@ -527,7 +527,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointCollectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="restorePointCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<RestorePointGroupResource>> GetRestorePointGroupAsync(string restorePointCollectionName, RestorePointCollectionExpandOptions? expand = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RestorePointGroupResource>> GetRestorePointGroupAsync(string restorePointCollectionName, RestorePointGroupExpand? expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(restorePointCollectionName, nameof(restorePointCollectionName));
 
@@ -557,7 +557,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointCollectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="restorePointCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<RestorePointGroupResource> GetRestorePointGroup(string restorePointCollectionName, RestorePointCollectionExpandOptions? expand = default, CancellationToken cancellationToken = default)
+        public virtual Response<RestorePointGroupResource> GetRestorePointGroup(string restorePointCollectionName, RestorePointGroupExpand? expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(restorePointCollectionName, nameof(restorePointCollectionName));
 
@@ -594,7 +594,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="capacityReservationGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="capacityReservationGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<CapacityReservationGroupResource>> GetCapacityReservationGroupAsync(string capacityReservationGroupName, CapacityReservationGroupInstanceViewTypes? expand = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CapacityReservationGroupResource>> GetCapacityReservationGroupAsync(string capacityReservationGroupName, CapacityReservationGroupInstanceViewType? expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(capacityReservationGroupName, nameof(capacityReservationGroupName));
 
@@ -624,7 +624,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="capacityReservationGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="capacityReservationGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<CapacityReservationGroupResource> GetCapacityReservationGroup(string capacityReservationGroupName, CapacityReservationGroupInstanceViewTypes? expand = default, CancellationToken cancellationToken = default)
+        public virtual Response<CapacityReservationGroupResource> GetCapacityReservationGroup(string capacityReservationGroupName, CapacityReservationGroupInstanceViewType? expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(capacityReservationGroupName, nameof(capacityReservationGroupName));
 
@@ -922,7 +922,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="galleryName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="galleryName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<GalleryResource>> GetGalleryAsync(string galleryName, SelectPermissions? @select = default, GalleryExpandParams? expand = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<GalleryResource>> GetGalleryAsync(string galleryName, SelectPermission? @select = default, GalleryExpand? expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(galleryName, nameof(galleryName));
 
@@ -953,7 +953,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="galleryName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="galleryName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<GalleryResource> GetGallery(string galleryName, SelectPermissions? @select = default, GalleryExpandParams? expand = default, CancellationToken cancellationToken = default)
+        public virtual Response<GalleryResource> GetGallery(string galleryName, SelectPermission? @select = default, GalleryExpand? expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(galleryName, nameof(galleryName));
 

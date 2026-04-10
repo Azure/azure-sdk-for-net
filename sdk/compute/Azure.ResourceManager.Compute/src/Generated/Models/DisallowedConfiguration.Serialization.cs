@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            VmDiskTypes? vmDiskType = default;
+            VirtualMachineDiskType? vmDiskType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    vmDiskType = new VmDiskTypes(prop.Value.GetString());
+                    vmDiskType = new VirtualMachineDiskType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

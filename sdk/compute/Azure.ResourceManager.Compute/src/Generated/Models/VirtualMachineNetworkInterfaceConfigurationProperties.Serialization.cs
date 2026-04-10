@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             bool? primary = default;
-            DeleteOptions? deleteOption = default;
+            ComputeDeleteOption? deleteOption = default;
             bool? enableAcceleratedNetworking = default;
             bool? disableTcpStateTracking = default;
             bool? enableFpga = default;
@@ -193,8 +193,8 @@ namespace Azure.ResourceManager.Compute.Models
             VirtualMachineNetworkInterfaceDnsSettingsConfiguration dnsSettings = default;
             IList<VirtualMachineNetworkInterfaceIPConfiguration> ipConfigurations = default;
             ComputeSubResourceData dscpConfiguration = default;
-            NetworkInterfaceAuxiliaryMode? auxiliaryMode = default;
-            NetworkInterfaceAuxiliarySku? auxiliarySku = default;
+            ComputeNetworkInterfaceAuxiliaryMode? auxiliaryMode = default;
+            ComputeNetworkInterfaceAuxiliarySku? auxiliarySku = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    deleteOption = new DeleteOptions(prop.Value.GetString());
+                    deleteOption = new ComputeDeleteOption(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("enableAcceleratedNetworking"u8))
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    auxiliaryMode = new NetworkInterfaceAuxiliaryMode(prop.Value.GetString());
+                    auxiliaryMode = new ComputeNetworkInterfaceAuxiliaryMode(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("auxiliarySku"u8))
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    auxiliarySku = new NetworkInterfaceAuxiliarySku(prop.Value.GetString());
+                    auxiliarySku = new ComputeNetworkInterfaceAuxiliarySku(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

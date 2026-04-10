@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="expand"> The expand expression to apply on the operation. 'InstanceView' retrieves a snapshot of the runtime properties of the capacity reservation that is managed by the platform and can change outside of control plane operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CapacityReservationResource>> GetAsync(CapacityReservationInstanceViewTypes? expand = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CapacityReservationResource>> GetAsync(CapacityReservationInstanceViewType? expand = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _capacityReservationsClientDiagnostics.CreateScope("CapacityReservationResource.Get");
             scope.Start();
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="expand"> The expand expression to apply on the operation. 'InstanceView' retrieves a snapshot of the runtime properties of the capacity reservation that is managed by the platform and can change outside of control plane operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CapacityReservationResource> Get(CapacityReservationInstanceViewTypes? expand = default, CancellationToken cancellationToken = default)
+        public virtual Response<CapacityReservationResource> Get(CapacityReservationInstanceViewType? expand = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _capacityReservationsClientDiagnostics.CreateScope("CapacityReservationResource.Get");
             scope.Start();

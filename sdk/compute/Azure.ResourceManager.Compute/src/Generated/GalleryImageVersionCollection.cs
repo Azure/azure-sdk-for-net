@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryImageVersionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="galleryImageVersionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<GalleryImageVersionResource>> GetAsync(string galleryImageVersionName, ReplicationStatusTypes? expand = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<GalleryImageVersionResource>> GetAsync(string galleryImageVersionName, ReplicationStatusType? expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(galleryImageVersionName, nameof(galleryImageVersionName));
 
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryImageVersionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="galleryImageVersionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<GalleryImageVersionResource> Get(string galleryImageVersionName, ReplicationStatusTypes? expand = default, CancellationToken cancellationToken = default)
+        public virtual Response<GalleryImageVersionResource> Get(string galleryImageVersionName, ReplicationStatusType? expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(galleryImageVersionName, nameof(galleryImageVersionName));
 
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryImageVersionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="galleryImageVersionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string galleryImageVersionName, ReplicationStatusTypes? expand = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string galleryImageVersionName, ReplicationStatusType? expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(galleryImageVersionName, nameof(galleryImageVersionName));
 
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryImageVersionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="galleryImageVersionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<bool> Exists(string galleryImageVersionName, ReplicationStatusTypes? expand = default, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string galleryImageVersionName, ReplicationStatusType? expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(galleryImageVersionName, nameof(galleryImageVersionName));
 
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryImageVersionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="galleryImageVersionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<GalleryImageVersionResource>> GetIfExistsAsync(string galleryImageVersionName, ReplicationStatusTypes? expand = default, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<GalleryImageVersionResource>> GetIfExistsAsync(string galleryImageVersionName, ReplicationStatusType? expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(galleryImageVersionName, nameof(galleryImageVersionName));
 
@@ -541,7 +541,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryImageVersionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="galleryImageVersionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<GalleryImageVersionResource> GetIfExists(string galleryImageVersionName, ReplicationStatusTypes? expand = default, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<GalleryImageVersionResource> GetIfExists(string galleryImageVersionName, ReplicationStatusType? expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(galleryImageVersionName, nameof(galleryImageVersionName));
 

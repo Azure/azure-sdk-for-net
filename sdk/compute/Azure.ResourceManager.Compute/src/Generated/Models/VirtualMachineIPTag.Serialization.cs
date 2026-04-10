@@ -14,51 +14,51 @@ using Azure.ResourceManager.Compute;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Contains the IP tag associated with the public IP address. </summary>
-    public partial class VirtualMachineIpTag : IJsonModel<VirtualMachineIpTag>
+    public partial class VirtualMachineIPTag : IJsonModel<VirtualMachineIPTag>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VirtualMachineIpTag PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual VirtualMachineIPTag PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineIpTag>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineIPTag>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeVirtualMachineIpTag(document.RootElement, options);
+                        return DeserializeVirtualMachineIPTag(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineIpTag)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineIPTag)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineIpTag>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineIPTag>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineIpTag)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineIPTag)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<VirtualMachineIpTag>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<VirtualMachineIPTag>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VirtualMachineIpTag IPersistableModel<VirtualMachineIpTag>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        VirtualMachineIPTag IPersistableModel<VirtualMachineIPTag>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<VirtualMachineIpTag>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<VirtualMachineIPTag>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<VirtualMachineIpTag>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<VirtualMachineIPTag>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineIpTag>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineIPTag>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineIpTag)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineIPTag)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(IpTagType))
             {
@@ -103,24 +103,24 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VirtualMachineIpTag IJsonModel<VirtualMachineIpTag>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        VirtualMachineIPTag IJsonModel<VirtualMachineIPTag>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VirtualMachineIpTag JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual VirtualMachineIPTag JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineIpTag>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineIPTag>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineIpTag)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineIPTag)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeVirtualMachineIpTag(document.RootElement, options);
+            return DeserializeVirtualMachineIPTag(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static VirtualMachineIpTag DeserializeVirtualMachineIpTag(JsonElement element, ModelReaderWriterOptions options)
+        internal static VirtualMachineIPTag DeserializeVirtualMachineIPTag(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new VirtualMachineIpTag(ipTagType, tag, additionalBinaryDataProperties);
+            return new VirtualMachineIPTag(ipTagType, tag, additionalBinaryDataProperties);
         }
     }
 }

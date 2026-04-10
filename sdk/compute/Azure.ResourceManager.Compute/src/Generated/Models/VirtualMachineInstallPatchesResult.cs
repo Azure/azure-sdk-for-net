@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="startOn"> The UTC timestamp when the operation began. </param>
         /// <param name="error"> The errors that were encountered during execution of the operation. The details array contains the list of them. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineInstallPatchesResult(PatchOperationStatus? status, string installationActivityId, VMGuestPatchRebootStatus? rebootStatus, bool? maintenanceWindowExceeded, int? excludedPatchCount, int? notSelectedPatchCount, int? pendingPatchCount, int? installedPatchCount, int? failedPatchCount, IReadOnlyList<PatchInstallationDetail> patches, DateTimeOffset? startOn, ComputeApiError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineInstallPatchesResult(PatchOperationStatus? status, string installationActivityId, VmGuestPatchRebootStatus? rebootStatus, bool? maintenanceWindowExceeded, int? excludedPatchCount, int? notSelectedPatchCount, int? pendingPatchCount, int? installedPatchCount, int? failedPatchCount, IReadOnlyList<PatchInstallationDetail> patches, DateTimeOffset? startOn, ComputeApiError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             InstallationActivityId = installationActivityId;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Compute.Models
         public string InstallationActivityId { get; }
 
         /// <summary> The reboot state of the VM following completion of the operation. </summary>
-        public VMGuestPatchRebootStatus? RebootStatus { get; }
+        public VmGuestPatchRebootStatus? RebootStatus { get; }
 
         /// <summary> Whether the operation ran out of time before it completed all its intended actions. </summary>
         public bool? MaintenanceWindowExceeded { get; }

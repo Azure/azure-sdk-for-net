@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="securityProfile"> Contains the security related information for the resource. </param>
         /// <param name="logicalSectorSize"> Logical sector size in bytes for disk restore points of UltraSSD_LRS and PremiumV2_LRS disks. Supported values are 512 and 4096. 4096 is the default. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DiskRestorePointProperties(DateTimeOffset? timeCreated, string sourceResourceId, OperatingSystemTypes? osType, HyperVGeneration? hyperVGeneration, DiskPurchasePlan purchasePlan, SupportedCapabilities supportedCapabilities, string familyId, string sourceUniqueId, DiskEncryption encryption, bool? supportsHibernation, NetworkAccessPolicy? networkAccessPolicy, DiskPublicNetworkAccess? publicNetworkAccess, string diskAccessId, float? completionPercent, string replicationState, string sourceResourceLocation, DiskSecurityProfile securityProfile, int? logicalSectorSize, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DiskRestorePointProperties(DateTimeOffset? timeCreated, string sourceResourceId, OperatingSystemType? osType, HyperVGeneration? hyperVGeneration, DiskPurchasePlan purchasePlan, SupportedCapabilities supportedCapabilities, string familyId, string sourceUniqueId, DiskEncryption encryption, bool? supportsHibernation, NetworkAccessPolicy? networkAccessPolicy, DiskPublicNetworkAccess? publicNetworkAccess, string diskAccessId, float? completionPercent, string replicationState, string sourceResourceLocation, DiskSecurityProfile securityProfile, int? logicalSectorSize, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TimeCreated = timeCreated;
             SourceResourceId = sourceResourceId;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Compute.Models
         public string SourceResourceId { get; }
 
         /// <summary> The Operating System type. </summary>
-        public OperatingSystemTypes? OsType { get; }
+        public OperatingSystemType? OsType { get; }
 
         /// <summary> The hypervisor generation of the Virtual Machine. Applicable to OS disks only. </summary>
         public HyperVGeneration? HyperVGeneration { get; }

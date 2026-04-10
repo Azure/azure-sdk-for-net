@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Specify what happens to the public IP address when the VM is deleted. </summary>
-        public DeleteOptions? DeleteOption
+        public ComputeDeleteOption? DeleteOption
         {
             get
             {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The list of IP tags associated with the public IP address. </summary>
-        public IList<VirtualMachineIpTag> IpTags
+        public IList<VirtualMachineIPTag> IpTags
         {
             get
             {

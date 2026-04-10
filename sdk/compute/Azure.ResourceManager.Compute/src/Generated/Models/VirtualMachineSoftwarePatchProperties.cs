@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="lastModifiedOn"> The UTC timestamp of the last update to this patch record. </param>
         /// <param name="assessmentState"> Describes the availability of a given patch. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineSoftwarePatchProperties(string patchId, string name, string version, string kbId, IReadOnlyList<string> classifications, VMGuestPatchRebootBehavior? rebootBehavior, string activityId, DateTimeOffset? publishedOn, DateTimeOffset? lastModifiedOn, PatchAssessmentState? assessmentState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineSoftwarePatchProperties(string patchId, string name, string version, string kbId, IReadOnlyList<string> classifications, VmGuestPatchRebootBehavior? rebootBehavior, string activityId, DateTimeOffset? publishedOn, DateTimeOffset? lastModifiedOn, PatchAssessmentState? assessmentState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PatchId = patchId;
             Name = name;
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Compute.Models
         public IReadOnlyList<string> Classifications { get; }
 
         /// <summary> Describes the reboot requirements of the patch. </summary>
-        public VMGuestPatchRebootBehavior? RebootBehavior { get; }
+        public VmGuestPatchRebootBehavior? RebootBehavior { get; }
 
         /// <summary> The activity ID of the operation that produced this result. It is used to correlate across CRP and extension logs. </summary>
         public string ActivityId { get; }

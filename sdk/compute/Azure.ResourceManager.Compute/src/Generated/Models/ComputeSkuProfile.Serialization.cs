@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             IList<ComputeSkuProfileVmSize> vmSizes = default;
-            AllocationStrategy? allocationStrategy = default;
+            ComputeAllocationStrategy? allocationStrategy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    allocationStrategy = new AllocationStrategy(prop.Value.GetString());
+                    allocationStrategy = new ComputeAllocationStrategy(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

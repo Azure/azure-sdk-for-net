@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             TimeSpan? maximumDuration = default;
-            VMGuestPatchRebootSetting rebootSetting = default;
+            VmGuestPatchRebootSetting rebootSetting = default;
             WindowsParameters windowsParameters = default;
             LinuxParameters linuxParameters = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (prop.NameEquals("rebootSetting"u8))
                 {
-                    rebootSetting = new VMGuestPatchRebootSetting(prop.Value.GetString());
+                    rebootSetting = new VmGuestPatchRebootSetting(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("windowsParameters"u8))

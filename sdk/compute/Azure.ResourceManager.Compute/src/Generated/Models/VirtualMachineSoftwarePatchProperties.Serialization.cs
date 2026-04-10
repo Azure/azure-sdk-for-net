@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Compute.Models
             string version = default;
             string kbId = default;
             IReadOnlyList<string> classifications = default;
-            VMGuestPatchRebootBehavior? rebootBehavior = default;
+            VmGuestPatchRebootBehavior? rebootBehavior = default;
             string activityId = default;
             DateTimeOffset? publishedOn = default;
             DateTimeOffset? lastModifiedOn = default;
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    rebootBehavior = new VMGuestPatchRebootBehavior(prop.Value.GetString());
+                    rebootBehavior = new VmGuestPatchRebootBehavior(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("activityId"u8))

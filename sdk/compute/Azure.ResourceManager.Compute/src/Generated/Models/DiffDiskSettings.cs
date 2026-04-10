@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="option"> Specifies the ephemeral disk settings for operating system disk. </param>
         /// <param name="placement"> Specifies the ephemeral disk placement for operating system disk. Possible values are: <b>CacheDisk,</b> <b>ResourceDisk,</b> <b>NvmeDisk.</b> The defaulting behavior is: <b>CacheDisk</b> if one is configured for the VM size otherwise <b>ResourceDisk</b> or <b>NvmeDisk</b> is used. Refer to the VM size documentation for Windows VM at https://docs.microsoft.com/azure/virtual-machines/windows/sizes and Linux VM at https://docs.microsoft.com/azure/virtual-machines/linux/sizes to check which VM sizes exposes a cache disk. Minimum api-version for NvmeDisk: 2024-03-01. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DiffDiskSettings(DiffDiskOptions? option, DiffDiskPlacement? placement, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DiffDiskSettings(DiffDiskOption? option, DiffDiskPlacement? placement, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Option = option;
             Placement = placement;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Specifies the ephemeral disk settings for operating system disk. </summary>
-        public DiffDiskOptions? Option { get; set; }
+        public DiffDiskOption? Option { get; set; }
 
         /// <summary> Specifies the ephemeral disk placement for operating system disk. Possible values are: <b>CacheDisk,</b> <b>ResourceDisk,</b> <b>NvmeDisk.</b> The defaulting behavior is: <b>CacheDisk</b> if one is configured for the VM size otherwise <b>ResourceDisk</b> or <b>NvmeDisk</b> is used. Refer to the VM size documentation for Windows VM at https://docs.microsoft.com/azure/virtual-machines/windows/sizes and Linux VM at https://docs.microsoft.com/azure/virtual-machines/linux/sizes to check which VM sizes exposes a cache disk. Minimum api-version for NvmeDisk: 2024-03-01. </summary>
         public DiffDiskPlacement? Placement { get; set; }

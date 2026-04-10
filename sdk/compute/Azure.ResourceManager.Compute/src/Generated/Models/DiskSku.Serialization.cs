@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            DiskStorageAccountTypes? name = default;
+            DiskStorageAccountType? name = default;
             string tier = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    name = new DiskStorageAccountTypes(prop.Value.GetString());
+                    name = new DiskStorageAccountType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("tier"u8))

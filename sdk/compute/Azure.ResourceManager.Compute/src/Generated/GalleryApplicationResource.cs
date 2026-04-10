@@ -694,7 +694,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="galleryApplicationVersionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="galleryApplicationVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<GalleryApplicationVersionResource>> GetGalleryApplicationVersionAsync(string galleryApplicationVersionName, ReplicationStatusTypes? expand = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<GalleryApplicationVersionResource>> GetGalleryApplicationVersionAsync(string galleryApplicationVersionName, ReplicationStatusType? expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(galleryApplicationVersionName, nameof(galleryApplicationVersionName));
 
@@ -708,7 +708,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="galleryApplicationVersionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="galleryApplicationVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<GalleryApplicationVersionResource> GetGalleryApplicationVersion(string galleryApplicationVersionName, ReplicationStatusTypes? expand = default, CancellationToken cancellationToken = default)
+        public virtual Response<GalleryApplicationVersionResource> GetGalleryApplicationVersion(string galleryApplicationVersionName, ReplicationStatusType? expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(galleryApplicationVersionName, nameof(galleryApplicationVersionName));
 

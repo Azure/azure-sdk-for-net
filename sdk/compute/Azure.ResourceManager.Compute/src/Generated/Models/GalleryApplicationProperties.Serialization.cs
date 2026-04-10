@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Compute.Models
             string privacyStatementUri = default;
             string releaseNoteUri = default;
             DateTimeOffset? endOfLifeOn = default;
-            OperatingSystemTypes supportedOSType = default;
+            OperatingSystemType supportedOSType = default;
             IList<GalleryApplicationCustomAction> customActions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (prop.NameEquals("supportedOSType"u8))
                 {
-                    supportedOSType = prop.Value.GetString().ToOperatingSystemTypes();
+                    supportedOSType = prop.Value.GetString().ToOperatingSystemType();
                     continue;
                 }
                 if (prop.NameEquals("customActions"u8))

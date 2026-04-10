@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="category"> Describes the nature of the policy violation. </param>
         /// <param name="details"> Describes specific details about why this policy violation was reported. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GalleryImageVersionPolicyViolation(PolicyViolationCategory? category, string details, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GalleryImageVersionPolicyViolation(GalleryImageVersionPolicyViolationCategory? category, string details, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Category = category;
             Details = details;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Describes the nature of the policy violation. </summary>
-        public PolicyViolationCategory? Category { get; }
+        public GalleryImageVersionPolicyViolationCategory? Category { get; }
 
         /// <summary> Describes specific details about why this policy violation was reported. </summary>
         public string Details { get; }

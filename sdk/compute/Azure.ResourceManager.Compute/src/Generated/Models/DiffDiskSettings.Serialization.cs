@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            DiffDiskOptions? option = default;
+            DiffDiskOption? option = default;
             DiffDiskPlacement? placement = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    option = new DiffDiskOptions(prop.Value.GetString());
+                    option = new DiffDiskOption(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("placement"u8))

@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Compute.Models
             string scriptUri = default;
             string commandId = default;
             RunCommandManagedIdentity scriptUriManagedIdentity = default;
-            ScriptShellTypes? scriptShell = default;
+            ScriptShellType? scriptShell = default;
             string galleryScriptReferenceId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    scriptShell = new ScriptShellTypes(prop.Value.GetString());
+                    scriptShell = new ScriptShellType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("galleryScriptReferenceId"u8))

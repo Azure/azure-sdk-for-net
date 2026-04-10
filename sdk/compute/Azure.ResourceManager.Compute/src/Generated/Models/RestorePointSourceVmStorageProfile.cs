@@ -12,23 +12,23 @@ using Azure.ResourceManager.Compute;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes the storage profile. </summary>
-    public partial class RestorePointSourceVMStorageProfile
+    public partial class RestorePointSourceVmStorageProfile
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RestorePointSourceVMStorageProfile"/>. </summary>
-        public RestorePointSourceVMStorageProfile()
+        /// <summary> Initializes a new instance of <see cref="RestorePointSourceVmStorageProfile"/>. </summary>
+        public RestorePointSourceVmStorageProfile()
         {
-            DataDisks = new ChangeTrackingList<RestorePointSourceVMDataDisk>();
+            DataDisks = new ChangeTrackingList<RestorePointSourceVmDataDisk>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="RestorePointSourceVMStorageProfile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorePointSourceVmStorageProfile"/>. </summary>
         /// <param name="osDisk"> Gets the OS disk of the VM captured at the time of the restore point creation. </param>
         /// <param name="dataDisks"> Gets the data disks of the VM captured at the time of the restore point creation. </param>
         /// <param name="diskControllerType"> Gets the disk controller type of the VM captured at the time of the restore point creation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RestorePointSourceVMStorageProfile(RestorePointSourceVMOSDisk osDisk, IList<RestorePointSourceVMDataDisk> dataDisks, DiskControllerTypes? diskControllerType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RestorePointSourceVmStorageProfile(RestorePointSourceVmOSDisk osDisk, IReadOnlyList<RestorePointSourceVmDataDisk> dataDisks, DiskControllerType? diskControllerType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OsDisk = osDisk;
             DataDisks = dataDisks;
@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Gets the OS disk of the VM captured at the time of the restore point creation. </summary>
-        public RestorePointSourceVMOSDisk OsDisk { get; set; }
+        public RestorePointSourceVmOSDisk OsDisk { get; set; }
 
         /// <summary> Gets the data disks of the VM captured at the time of the restore point creation. </summary>
-        public IList<RestorePointSourceVMDataDisk> DataDisks { get; }
+        public IReadOnlyList<RestorePointSourceVmDataDisk> DataDisks { get; }
 
         /// <summary> Gets the disk controller type of the VM captured at the time of the restore point creation. </summary>
-        public DiskControllerTypes? DiskControllerType { get; }
+        public DiskControllerType? DiskControllerType { get; }
     }
 }

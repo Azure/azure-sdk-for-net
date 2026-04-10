@@ -56,6 +56,15 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
+        /// <summary> If set to true, Virtual Machines deployed from the latest version of the Image Definition won't use this Image Version. </summary>
+        public bool? ExcludeFromLatest
+        {
+            get
+            {
+                return Properties.ExcludeFromLatest;
+            }
+        }
+
         /// <summary> Describes the storage profile of the image version. </summary>
         public SharedGalleryImageVersionStorageProfile StorageProfile
         {

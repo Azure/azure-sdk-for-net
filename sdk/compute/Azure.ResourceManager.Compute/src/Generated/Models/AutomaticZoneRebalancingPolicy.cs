@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="rebalanceStrategy"> Type of rebalance strategy that will be used for rebalancing virtual machines in the scale set across availability zones. Default and only supported value for now is Recreate. </param>
         /// <param name="rebalanceBehavior"> Type of rebalance behavior that will be used for recreating virtual machines in the scale set across availability zones. Default and only supported value for now is CreateBeforeDelete. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AutomaticZoneRebalancingPolicy(bool? enabled, RebalanceStrategy? rebalanceStrategy, RebalanceBehavior? rebalanceBehavior, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AutomaticZoneRebalancingPolicy(bool? enabled, VmssRebalanceStrategy? rebalanceStrategy, VmssRebalanceBehavior? rebalanceBehavior, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Enabled = enabled;
             RebalanceStrategy = rebalanceStrategy;
@@ -38,9 +38,9 @@ namespace Azure.ResourceManager.Compute.Models
         public bool? Enabled { get; set; }
 
         /// <summary> Type of rebalance strategy that will be used for rebalancing virtual machines in the scale set across availability zones. Default and only supported value for now is Recreate. </summary>
-        public RebalanceStrategy? RebalanceStrategy { get; set; }
+        public VmssRebalanceStrategy? RebalanceStrategy { get; set; }
 
         /// <summary> Type of rebalance behavior that will be used for recreating virtual machines in the scale set across availability zones. Default and only supported value for now is CreateBeforeDelete. </summary>
-        public RebalanceBehavior? RebalanceBehavior { get; set; }
+        public VmssRebalanceBehavior? RebalanceBehavior { get; set; }
     }
 }

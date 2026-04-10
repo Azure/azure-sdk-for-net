@@ -11,17 +11,17 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes an Operating System disk. </summary>
-    public partial class RestorePointSourceVMOSDisk
+    public partial class RestorePointSourceVmOSDisk
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RestorePointSourceVMOSDisk"/>. </summary>
-        public RestorePointSourceVMOSDisk()
+        /// <summary> Initializes a new instance of <see cref="RestorePointSourceVmOSDisk"/>. </summary>
+        public RestorePointSourceVmOSDisk()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="RestorePointSourceVMOSDisk"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorePointSourceVmOSDisk"/>. </summary>
         /// <param name="osType"> Gets the Operating System type. </param>
         /// <param name="encryptionSettings"> Gets the disk encryption settings. </param>
         /// <param name="name"> Gets the disk name. </param>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="diskRestorePoint"> Contains Disk Restore Point properties. </param>
         /// <param name="writeAcceleratorEnabled"> Shows true if the disk is write-accelerator enabled. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RestorePointSourceVMOSDisk(SupportedOperatingSystemType? osType, DiskEncryptionSettings encryptionSettings, string name, CachingType? caching, int? diskSizeGB, VirtualMachineManagedDisk managedDisk, DiskRestorePointAttributes diskRestorePoint, bool? writeAcceleratorEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RestorePointSourceVmOSDisk(SupportedOperatingSystemType? osType, DiskEncryptionSettings encryptionSettings, string name, CachingType? caching, int? diskSizeGB, VirtualMachineManagedDisk managedDisk, DiskRestorePointAttributes diskRestorePoint, bool? writeAcceleratorEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OsType = osType;
             EncryptionSettings = encryptionSettings;

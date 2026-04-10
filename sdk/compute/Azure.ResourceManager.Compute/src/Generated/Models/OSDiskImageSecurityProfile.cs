@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="confidentialVMEncryptionType"> confidential VM encryption types. </param>
         /// <param name="secureVMDiskEncryptionSetId"> secure VM disk encryption set id. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OSDiskImageSecurityProfile(ConfidentialVMEncryptionType? confidentialVMEncryptionType, string secureVMDiskEncryptionSetId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OSDiskImageSecurityProfile(ConfidentialVmEncryptionType? confidentialVMEncryptionType, string secureVMDiskEncryptionSetId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ConfidentialVMEncryptionType = confidentialVMEncryptionType;
             SecureVMDiskEncryptionSetId = secureVMDiskEncryptionSetId;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> confidential VM encryption types. </summary>
-        public ConfidentialVMEncryptionType? ConfidentialVMEncryptionType { get; set; }
+        public ConfidentialVmEncryptionType? ConfidentialVMEncryptionType { get; set; }
 
         /// <summary> secure VM disk encryption set id. </summary>
         public string SecureVMDiskEncryptionSetId { get; set; }

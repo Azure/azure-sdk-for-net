@@ -12,7 +12,7 @@ using Azure.ResourceManager.Compute;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The reboot state of the VM following completion of the operation. </summary>
-    public readonly partial struct VMGuestPatchRebootStatus : IEquatable<VMGuestPatchRebootStatus>
+    public readonly partial struct VmGuestPatchRebootStatus : IEquatable<VmGuestPatchRebootStatus>
     {
         private readonly string _value;
         private const string UnknownValue = "Unknown";
@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.Compute.Models
         private const string FailedValue = "Failed";
         private const string CompletedValue = "Completed";
 
-        /// <summary> Initializes a new instance of <see cref="VMGuestPatchRebootStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmGuestPatchRebootStatus"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public VMGuestPatchRebootStatus(string value)
+        public VmGuestPatchRebootStatus(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -33,47 +33,47 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Gets the Unknown. </summary>
-        public static VMGuestPatchRebootStatus Unknown { get; } = new VMGuestPatchRebootStatus(UnknownValue);
+        public static VmGuestPatchRebootStatus Unknown { get; } = new VmGuestPatchRebootStatus(UnknownValue);
 
         /// <summary> Gets the NotNeeded. </summary>
-        public static VMGuestPatchRebootStatus NotNeeded { get; } = new VMGuestPatchRebootStatus(NotNeededValue);
+        public static VmGuestPatchRebootStatus NotNeeded { get; } = new VmGuestPatchRebootStatus(NotNeededValue);
 
         /// <summary> Gets the Required. </summary>
-        public static VMGuestPatchRebootStatus Required { get; } = new VMGuestPatchRebootStatus(RequiredValue);
+        public static VmGuestPatchRebootStatus Required { get; } = new VmGuestPatchRebootStatus(RequiredValue);
 
         /// <summary> Gets the Started. </summary>
-        public static VMGuestPatchRebootStatus Started { get; } = new VMGuestPatchRebootStatus(StartedValue);
+        public static VmGuestPatchRebootStatus Started { get; } = new VmGuestPatchRebootStatus(StartedValue);
 
         /// <summary> Gets the Failed. </summary>
-        public static VMGuestPatchRebootStatus Failed { get; } = new VMGuestPatchRebootStatus(FailedValue);
+        public static VmGuestPatchRebootStatus Failed { get; } = new VmGuestPatchRebootStatus(FailedValue);
 
         /// <summary> Gets the Completed. </summary>
-        public static VMGuestPatchRebootStatus Completed { get; } = new VMGuestPatchRebootStatus(CompletedValue);
+        public static VmGuestPatchRebootStatus Completed { get; } = new VmGuestPatchRebootStatus(CompletedValue);
 
-        /// <summary> Determines if two <see cref="VMGuestPatchRebootStatus"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="VmGuestPatchRebootStatus"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(VMGuestPatchRebootStatus left, VMGuestPatchRebootStatus right) => left.Equals(right);
+        public static bool operator ==(VmGuestPatchRebootStatus left, VmGuestPatchRebootStatus right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="VMGuestPatchRebootStatus"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="VmGuestPatchRebootStatus"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(VMGuestPatchRebootStatus left, VMGuestPatchRebootStatus right) => !left.Equals(right);
+        public static bool operator !=(VmGuestPatchRebootStatus left, VmGuestPatchRebootStatus right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="VMGuestPatchRebootStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="VmGuestPatchRebootStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VMGuestPatchRebootStatus(string value) => new VMGuestPatchRebootStatus(value);
+        public static implicit operator VmGuestPatchRebootStatus(string value) => new VmGuestPatchRebootStatus(value);
 
-        /// <summary> Converts a string to a <see cref="VMGuestPatchRebootStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="VmGuestPatchRebootStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VMGuestPatchRebootStatus?(string value) => value == null ? null : new VMGuestPatchRebootStatus(value);
+        public static implicit operator VmGuestPatchRebootStatus?(string value) => value == null ? null : new VmGuestPatchRebootStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is VMGuestPatchRebootStatus other && Equals(other);
+        public override bool Equals(object obj) => obj is VmGuestPatchRebootStatus other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(VMGuestPatchRebootStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(VmGuestPatchRebootStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

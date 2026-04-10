@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             string id = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            StorageAccountTypes? storageAccountType = default;
+            StorageAccountType? storageAccountType = default;
             DiskEncryptionSetParameters diskEncryptionSet = default;
             VirtualMachineDiskSecurityProfile securityProfile = default;
             foreach (var prop in element.EnumerateObject())
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    storageAccountType = new StorageAccountTypes(prop.Value.GetString());
+                    storageAccountType = new StorageAccountType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("diskEncryptionSet"u8))

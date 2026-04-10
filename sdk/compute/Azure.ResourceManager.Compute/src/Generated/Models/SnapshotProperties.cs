@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="dataAccessAuthMode"> Additional authentication requirements when exporting or uploading to a disk or snapshot. </param>
         /// <param name="snapshotAccessState"> The state of snapshot which determines the access availability of the snapshot. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SnapshotProperties(DateTimeOffset? timeCreated, OperatingSystemTypes? osType, HyperVGeneration? hyperVGeneration, DiskPurchasePlan purchasePlan, SupportedCapabilities supportedCapabilities, DiskCreationData creationData, int? diskSizeGB, long? diskSizeBytes, DiskState? diskState, string uniqueId, EncryptionSettingsGroup encryptionSettingsCollection, string provisioningState, bool? incremental, string incrementalSnapshotFamilyId, DiskEncryption encryption, NetworkAccessPolicy? networkAccessPolicy, string diskAccessId, DiskSecurityProfile securityProfile, bool? supportsHibernation, DiskPublicNetworkAccess? publicNetworkAccess, float? completionPercent, CopyCompletionError copyCompletionError, DataAccessAuthMode? dataAccessAuthMode, SnapshotAccessState? snapshotAccessState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SnapshotProperties(DateTimeOffset? timeCreated, OperatingSystemType? osType, HyperVGeneration? hyperVGeneration, DiskPurchasePlan purchasePlan, SupportedCapabilities supportedCapabilities, DiskCreationData creationData, int? diskSizeGB, long? diskSizeBytes, DiskState? diskState, string uniqueId, EncryptionSettingsGroup encryptionSettingsCollection, string provisioningState, bool? incremental, string incrementalSnapshotFamilyId, DiskEncryption encryption, NetworkAccessPolicy? networkAccessPolicy, string diskAccessId, DiskSecurityProfile securityProfile, bool? supportsHibernation, DiskPublicNetworkAccess? publicNetworkAccess, float? completionPercent, CopyCompletionError copyCompletionError, DataAccessAuthMode? dataAccessAuthMode, SnapshotAccessState? snapshotAccessState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TimeCreated = timeCreated;
             OsType = osType;
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Compute.Models
         public DateTimeOffset? TimeCreated { get; }
 
         /// <summary> The Operating System type. </summary>
-        public OperatingSystemTypes? OsType { get; set; }
+        public OperatingSystemType? OsType { get; set; }
 
         /// <summary> The hypervisor generation of the Virtual Machine. Applicable to OS disks only. </summary>
         public HyperVGeneration? HyperVGeneration { get; set; }

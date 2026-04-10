@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            SharingProfileGroupTypes? @type = default;
+            SharingProfileGroupType? @type = default;
             IList<string> ids = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    @type = new SharingProfileGroupTypes(prop.Value.GetString());
+                    @type = new SharingProfileGroupType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("ids"u8))

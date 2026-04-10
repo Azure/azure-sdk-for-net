@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            PolicyViolationCategory? category = default;
+            GalleryImageVersionPolicyViolationCategory? category = default;
             string details = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    category = new PolicyViolationCategory(prop.Value.GetString());
+                    category = new GalleryImageVersionPolicyViolationCategory(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("details"u8))

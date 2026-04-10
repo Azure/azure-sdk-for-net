@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="SshGenerateKeyPairInputContent"/>. </summary>
         /// <param name="encryptionType"> The encryption type of the SSH keys to be generated. See SshEncryptionTypes for possible set of values. If not provided, will default to RSA. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SshGenerateKeyPairInputContent(SshEncryptionTypes? encryptionType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SshGenerateKeyPairInputContent(SshEncryptionType? encryptionType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EncryptionType = encryptionType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The encryption type of the SSH keys to be generated. See SshEncryptionTypes for possible set of values. If not provided, will default to RSA. </summary>
-        public SshEncryptionTypes? EncryptionType { get; set; }
+        public SshEncryptionType? EncryptionType { get; set; }
     }
 }

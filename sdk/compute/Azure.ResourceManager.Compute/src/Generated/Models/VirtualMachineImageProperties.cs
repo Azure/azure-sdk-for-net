@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Compute.Models
         public ImageDeprecationStatus ImageDeprecationStatus { get; }
 
         /// <summary> The operating system of the osDiskImage. </summary>
-        public OperatingSystemTypes? OsDiskImageOperatingSystem
+        public OperatingSystemType? OsDiskImageOperatingSystem
         {
             get
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> VM disk types which are disallowed. </summary>
-        public VmDiskTypes? DisallowedVmDiskType
+        public VirtualMachineDiskType? DisallowedVmDiskType
         {
             get
             {

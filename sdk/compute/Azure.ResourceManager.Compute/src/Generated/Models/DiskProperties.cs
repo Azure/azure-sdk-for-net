@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="lastOwnershipUpdateOn"> The UTC time when the ownership state of the disk was last changed i.e., the time the disk was last attached or detached from a VM or the time when the VM to which the disk was attached was deallocated or started. </param>
         /// <param name="availabilityPolicy"> Determines how platform treats disk failures. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DiskProperties(DateTimeOffset? timeCreated, OperatingSystemTypes? osType, HyperVGeneration? hyperVGeneration, DiskPurchasePlan purchasePlan, SupportedCapabilities supportedCapabilities, DiskCreationData creationData, int? diskSizeGB, long? diskSizeBytes, string uniqueId, EncryptionSettingsGroup encryptionSettingsCollection, string provisioningState, long? diskIOPSReadWrite, long? diskMBpsReadWrite, long? diskIOPSReadOnly, long? diskMBpsReadOnly, DiskState? diskState, DiskEncryption encryption, int? maxShares, IReadOnlyList<ShareInfoElement> shareInfo, NetworkAccessPolicy? networkAccessPolicy, string diskAccessId, DateTimeOffset? burstingEnabledOn, string tier, bool? burstingEnabled, PropertyUpdatesInProgress propertyUpdatesInProgress, bool? supportsHibernation, DiskSecurityProfile securityProfile, float? completionPercent, DiskPublicNetworkAccess? publicNetworkAccess, DataAccessAuthMode? dataAccessAuthMode, bool? optimizedForFrequentAttach, DateTimeOffset? lastOwnershipUpdateOn, AvailabilityPolicy availabilityPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DiskProperties(DateTimeOffset? timeCreated, OperatingSystemType? osType, HyperVGeneration? hyperVGeneration, DiskPurchasePlan purchasePlan, SupportedCapabilities supportedCapabilities, DiskCreationData creationData, int? diskSizeGB, long? diskSizeBytes, string uniqueId, EncryptionSettingsGroup encryptionSettingsCollection, string provisioningState, long? diskIOPSReadWrite, long? diskMBpsReadWrite, long? diskIOPSReadOnly, long? diskMBpsReadOnly, DiskState? diskState, DiskEncryption encryption, int? maxShares, IReadOnlyList<ShareInfoElement> shareInfo, NetworkAccessPolicy? networkAccessPolicy, string diskAccessId, DateTimeOffset? burstingEnabledOn, string tier, bool? burstingEnabled, PropertyUpdatesInProgress propertyUpdatesInProgress, bool? supportsHibernation, DiskSecurityProfile securityProfile, float? completionPercent, DiskPublicNetworkAccess? publicNetworkAccess, DataAccessAuthMode? dataAccessAuthMode, bool? optimizedForFrequentAttach, DateTimeOffset? lastOwnershipUpdateOn, AvailabilityPolicy availabilityPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TimeCreated = timeCreated;
             OsType = osType;
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Compute.Models
         public DateTimeOffset? TimeCreated { get; }
 
         /// <summary> The Operating System type. </summary>
-        public OperatingSystemTypes? OsType { get; set; }
+        public OperatingSystemType? OsType { get; set; }
 
         /// <summary> The hypervisor generation of the Virtual Machine. Applicable to OS disks only. </summary>
         public HyperVGeneration? HyperVGeneration { get; set; }

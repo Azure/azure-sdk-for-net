@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> artifact type of the soft-deleted resource. </summary>
-        public SoftDeletedArtifactTypes? SoftDeletedArtifactType
+        public GallerySoftDeletedArtifactType? SoftDeletedArtifactType
         {
             get
             {

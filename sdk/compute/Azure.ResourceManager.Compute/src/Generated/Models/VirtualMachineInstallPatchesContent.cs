@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachineInstallPatchesContent"/>. </summary>
         /// <param name="rebootSetting"> Defines when it is acceptable to reboot a VM during a software update operation. </param>
-        public VirtualMachineInstallPatchesContent(VMGuestPatchRebootSetting rebootSetting)
+        public VirtualMachineInstallPatchesContent(VmGuestPatchRebootSetting rebootSetting)
         {
             RebootSetting = rebootSetting;
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="windowsParameters"> Input for InstallPatches on a Windows VM, as directly received by the API. </param>
         /// <param name="linuxParameters"> Input for InstallPatches on a Linux VM, as directly received by the API. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineInstallPatchesContent(TimeSpan? maximumDuration, VMGuestPatchRebootSetting rebootSetting, WindowsParameters windowsParameters, LinuxParameters linuxParameters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineInstallPatchesContent(TimeSpan? maximumDuration, VmGuestPatchRebootSetting rebootSetting, WindowsParameters windowsParameters, LinuxParameters linuxParameters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MaximumDuration = maximumDuration;
             RebootSetting = rebootSetting;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Compute.Models
         public TimeSpan? MaximumDuration { get; set; }
 
         /// <summary> Defines when it is acceptable to reboot a VM during a software update operation. </summary>
-        public VMGuestPatchRebootSetting RebootSetting { get; }
+        public VmGuestPatchRebootSetting RebootSetting { get; }
 
         /// <summary> Input for InstallPatches on a Windows VM, as directly received by the API. </summary>
         public WindowsParameters WindowsParameters { get; set; }

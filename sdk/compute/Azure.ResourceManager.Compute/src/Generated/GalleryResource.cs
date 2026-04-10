@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="select"> The select expression to apply on the operation. </param>
         /// <param name="expand"> The expand query option to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<GalleryResource>> GetAsync(SelectPermissions? @select = default, GalleryExpandParams? expand = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<GalleryResource>> GetAsync(SelectPermission? @select = default, GalleryExpand? expand = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _galleriesClientDiagnostics.CreateScope("GalleryResource.Get");
             scope.Start();
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="select"> The select expression to apply on the operation. </param>
         /// <param name="expand"> The expand query option to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<GalleryResource> Get(SelectPermissions? @select = default, GalleryExpandParams? expand = default, CancellationToken cancellationToken = default)
+        public virtual Response<GalleryResource> Get(SelectPermission? @select = default, GalleryExpand? expand = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _galleriesClientDiagnostics.CreateScope("GalleryResource.Get");
             scope.Start();

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="vmSizes"> Specifies the VM sizes for the virtual machine scale set. </param>
         /// <param name="allocationStrategy"> Specifies the allocation strategy for the virtual machine scale set based on which the VMs will be allocated. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeSkuProfile(IList<ComputeSkuProfileVmSize> vmSizes, AllocationStrategy? allocationStrategy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeSkuProfile(IList<ComputeSkuProfileVmSize> vmSizes, ComputeAllocationStrategy? allocationStrategy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VmSizes = vmSizes;
             AllocationStrategy = allocationStrategy;
@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.Compute.Models
         public IList<ComputeSkuProfileVmSize> VmSizes { get; }
 
         /// <summary> Specifies the allocation strategy for the virtual machine scale set based on which the VMs will be allocated. </summary>
-        public AllocationStrategy? AllocationStrategy { get; set; }
+        public ComputeAllocationStrategy? AllocationStrategy { get; set; }
     }
 }

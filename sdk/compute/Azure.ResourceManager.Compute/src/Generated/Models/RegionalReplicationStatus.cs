@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="details"> The details of the replication status. </param>
         /// <param name="progress"> It indicates progress of the replication job. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RegionalReplicationStatus(string region, ReplicationState? state, string details, int? progress, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RegionalReplicationStatus(string region, RegionalReplicationState? state, string details, int? progress, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Region = region;
             State = state;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Compute.Models
         public string Region { get; }
 
         /// <summary> This is the regional replication state. </summary>
-        public ReplicationState? State { get; }
+        public RegionalReplicationState? State { get; }
 
         /// <summary> The details of the replication status. </summary>
         public string Details { get; }

@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="primary"> Specifies the primary network interface in case the virtual machine has more than 1 network interface. </param>
         /// <param name="deleteOption"> Specify what happens to the network interface when the VM is deleted. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkInterfaceReferenceProperties(bool? primary, DeleteOptions? deleteOption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkInterfaceReferenceProperties(bool? primary, ComputeDeleteOption? deleteOption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Primary = primary;
             DeleteOption = deleteOption;
@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.Compute.Models
         public bool? Primary { get; set; }
 
         /// <summary> Specify what happens to the network interface when the VM is deleted. </summary>
-        public DeleteOptions? DeleteOption { get; set; }
+        public ComputeDeleteOption? DeleteOption { get; set; }
     }
 }

@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 writer.WritePropertyName("ipTags"u8);
                 writer.WriteStartArray();
-                foreach (VirtualMachineIpTag item in IpTags)
+                foreach (VirtualMachineIPTag item in IpTags)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -157,9 +157,9 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             int? idleTimeoutInMinutes = default;
-            DeleteOptions? deleteOption = default;
+            ComputeDeleteOption? deleteOption = default;
             VirtualMachinePublicIPAddressDnsSettingsConfiguration dnsSettings = default;
-            IList<VirtualMachineIpTag> ipTags = default;
+            IList<VirtualMachineIPTag> ipTags = default;
             ComputeSubResourceData publicIPPrefix = default;
             IPVersions? publicIPAddressVersion = default;
             PublicIPAllocationMethod? publicIPAllocationMethod = default;
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    deleteOption = new DeleteOptions(prop.Value.GetString());
+                    deleteOption = new ComputeDeleteOption(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("dnsSettings"u8))
@@ -199,10 +199,10 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    List<VirtualMachineIpTag> array = new List<VirtualMachineIpTag>();
+                    List<VirtualMachineIPTag> array = new List<VirtualMachineIPTag>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(VirtualMachineIpTag.DeserializeVirtualMachineIpTag(item, options));
+                        array.Add(VirtualMachineIPTag.DeserializeVirtualMachineIPTag(item, options));
                     }
                     ipTags = array;
                     continue;
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.Compute.Models
                 idleTimeoutInMinutes,
                 deleteOption,
                 dnsSettings,
-                ipTags ?? new ChangeTrackingList<VirtualMachineIpTag>(),
+                ipTags ?? new ChangeTrackingList<VirtualMachineIPTag>(),
                 publicIPPrefix,
                 publicIPAddressVersion,
                 publicIPAllocationMethod,

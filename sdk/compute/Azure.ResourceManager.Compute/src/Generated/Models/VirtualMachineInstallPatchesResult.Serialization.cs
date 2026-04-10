@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             PatchOperationStatus? status = default;
             string installationActivityId = default;
-            VMGuestPatchRebootStatus? rebootStatus = default;
+            VmGuestPatchRebootStatus? rebootStatus = default;
             bool? maintenanceWindowExceeded = default;
             int? excludedPatchCount = default;
             int? notSelectedPatchCount = default;
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    rebootStatus = new VMGuestPatchRebootStatus(prop.Value.GetString());
+                    rebootStatus = new VmGuestPatchRebootStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("maintenanceWindowExceeded"u8))

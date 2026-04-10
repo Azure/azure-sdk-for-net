@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             ResourceIdentifier resourceArmId = default;
-            SoftDeletedArtifactTypes? softDeletedArtifactType = default;
+            GallerySoftDeletedArtifactType? softDeletedArtifactType = default;
             string softDeletedTime = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    softDeletedArtifactType = new SoftDeletedArtifactTypes(prop.Value.GetString());
+                    softDeletedArtifactType = new GallerySoftDeletedArtifactType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("softDeletedTime"u8))

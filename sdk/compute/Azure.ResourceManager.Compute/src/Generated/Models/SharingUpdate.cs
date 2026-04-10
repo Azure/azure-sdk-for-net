@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of <see cref="SharingUpdate"/>. </summary>
         /// <param name="operationType"> This property allows you to specify the operation type of gallery sharing update. Possible values are: <b>Add,</b> <b>Remove,</b> <b>Reset.</b>. </param>
-        public SharingUpdate(SharingUpdateOperationTypes operationType)
+        public SharingUpdate(SharingUpdateOperationType operationType)
         {
             OperationType = operationType;
             Groups = new ChangeTrackingList<SharingProfileGroup>();
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="operationType"> This property allows you to specify the operation type of gallery sharing update. Possible values are: <b>Add,</b> <b>Remove,</b> <b>Reset.</b>. </param>
         /// <param name="groups"> A list of sharing profile groups. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SharingUpdate(SharingUpdateOperationTypes operationType, IList<SharingProfileGroup> groups, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SharingUpdate(SharingUpdateOperationType operationType, IList<SharingProfileGroup> groups, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OperationType = operationType;
             Groups = groups;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> This property allows you to specify the operation type of gallery sharing update. Possible values are: <b>Add,</b> <b>Remove,</b> <b>Reset.</b>. </summary>
-        public SharingUpdateOperationTypes OperationType { get; set; }
+        public SharingUpdateOperationType OperationType { get; set; }
 
         /// <summary> A list of sharing profile groups. </summary>
         public IList<SharingProfileGroup> Groups { get; }

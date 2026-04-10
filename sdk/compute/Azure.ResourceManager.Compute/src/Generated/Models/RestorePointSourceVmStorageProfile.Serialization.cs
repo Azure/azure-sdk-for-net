@@ -14,51 +14,51 @@ using Azure.ResourceManager.Compute;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes the storage profile. </summary>
-    public partial class RestorePointSourceVMStorageProfile : IJsonModel<RestorePointSourceVMStorageProfile>
+    public partial class RestorePointSourceVmStorageProfile : IJsonModel<RestorePointSourceVmStorageProfile>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RestorePointSourceVMStorageProfile PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual RestorePointSourceVmStorageProfile PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RestorePointSourceVMStorageProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RestorePointSourceVmStorageProfile>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeRestorePointSourceVMStorageProfile(document.RootElement, options);
+                        return DeserializeRestorePointSourceVmStorageProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RestorePointSourceVMStorageProfile)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RestorePointSourceVmStorageProfile)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RestorePointSourceVMStorageProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RestorePointSourceVmStorageProfile>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(RestorePointSourceVMStorageProfile)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RestorePointSourceVmStorageProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RestorePointSourceVMStorageProfile>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<RestorePointSourceVmStorageProfile>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RestorePointSourceVMStorageProfile IPersistableModel<RestorePointSourceVMStorageProfile>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        RestorePointSourceVmStorageProfile IPersistableModel<RestorePointSourceVmStorageProfile>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RestorePointSourceVMStorageProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<RestorePointSourceVmStorageProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<RestorePointSourceVMStorageProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<RestorePointSourceVmStorageProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RestorePointSourceVMStorageProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RestorePointSourceVmStorageProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RestorePointSourceVMStorageProfile)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(RestorePointSourceVmStorageProfile)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(OsDisk))
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 writer.WritePropertyName("dataDisks"u8);
                 writer.WriteStartArray();
-                foreach (RestorePointSourceVMDataDisk item in DataDisks)
+                foreach (RestorePointSourceVmDataDisk item in DataDisks)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -113,32 +113,32 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RestorePointSourceVMStorageProfile IJsonModel<RestorePointSourceVMStorageProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        RestorePointSourceVmStorageProfile IJsonModel<RestorePointSourceVmStorageProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RestorePointSourceVMStorageProfile JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual RestorePointSourceVmStorageProfile JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RestorePointSourceVMStorageProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RestorePointSourceVmStorageProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RestorePointSourceVMStorageProfile)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(RestorePointSourceVmStorageProfile)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRestorePointSourceVMStorageProfile(document.RootElement, options);
+            return DeserializeRestorePointSourceVmStorageProfile(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static RestorePointSourceVMStorageProfile DeserializeRestorePointSourceVMStorageProfile(JsonElement element, ModelReaderWriterOptions options)
+        internal static RestorePointSourceVmStorageProfile DeserializeRestorePointSourceVmStorageProfile(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            RestorePointSourceVMOSDisk osDisk = default;
-            IList<RestorePointSourceVMDataDisk> dataDisks = default;
-            DiskControllerTypes? diskControllerType = default;
+            RestorePointSourceVmOSDisk osDisk = default;
+            IReadOnlyList<RestorePointSourceVmDataDisk> dataDisks = default;
+            DiskControllerType? diskControllerType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    osDisk = RestorePointSourceVMOSDisk.DeserializeRestorePointSourceVMOSDisk(prop.Value, options);
+                    osDisk = RestorePointSourceVmOSDisk.DeserializeRestorePointSourceVmOSDisk(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("dataDisks"u8))
@@ -157,10 +157,10 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    List<RestorePointSourceVMDataDisk> array = new List<RestorePointSourceVMDataDisk>();
+                    List<RestorePointSourceVmDataDisk> array = new List<RestorePointSourceVmDataDisk>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(RestorePointSourceVMDataDisk.DeserializeRestorePointSourceVMDataDisk(item, options));
+                        array.Add(RestorePointSourceVmDataDisk.DeserializeRestorePointSourceVmDataDisk(item, options));
                     }
                     dataDisks = array;
                     continue;
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    diskControllerType = new DiskControllerTypes(prop.Value.GetString());
+                    diskControllerType = new DiskControllerType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RestorePointSourceVMStorageProfile(osDisk, dataDisks ?? new ChangeTrackingList<RestorePointSourceVMDataDisk>(), diskControllerType, additionalBinaryDataProperties);
+            return new RestorePointSourceVmStorageProfile(osDisk, dataDisks ?? new ChangeTrackingList<RestorePointSourceVmDataDisk>(), diskControllerType, additionalBinaryDataProperties);
         }
     }
 }

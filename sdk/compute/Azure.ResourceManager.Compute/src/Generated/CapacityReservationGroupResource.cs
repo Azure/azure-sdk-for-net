@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="expand"> The expand expression to apply on the operation. 'InstanceView' will retrieve the list of instance views of the capacity reservations under the capacity reservation group which is a snapshot of the runtime properties of a capacity reservation that is managed by the platform and can change outside of control plane operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CapacityReservationGroupResource>> GetAsync(CapacityReservationGroupInstanceViewTypes? expand = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CapacityReservationGroupResource>> GetAsync(CapacityReservationGroupInstanceViewType? expand = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _capacityReservationGroupsClientDiagnostics.CreateScope("CapacityReservationGroupResource.Get");
             scope.Start();
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="expand"> The expand expression to apply on the operation. 'InstanceView' will retrieve the list of instance views of the capacity reservations under the capacity reservation group which is a snapshot of the runtime properties of a capacity reservation that is managed by the platform and can change outside of control plane operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CapacityReservationGroupResource> Get(CapacityReservationGroupInstanceViewTypes? expand = default, CancellationToken cancellationToken = default)
+        public virtual Response<CapacityReservationGroupResource> Get(CapacityReservationGroupInstanceViewType? expand = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _capacityReservationGroupsClientDiagnostics.CreateScope("CapacityReservationGroupResource.Get");
             scope.Start();
@@ -685,7 +685,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="capacityReservationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="capacityReservationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<CapacityReservationResource>> GetCapacityReservationAsync(string capacityReservationName, CapacityReservationInstanceViewTypes? expand = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CapacityReservationResource>> GetCapacityReservationAsync(string capacityReservationName, CapacityReservationInstanceViewType? expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(capacityReservationName, nameof(capacityReservationName));
 
@@ -699,7 +699,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="capacityReservationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="capacityReservationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<CapacityReservationResource> GetCapacityReservation(string capacityReservationName, CapacityReservationInstanceViewTypes? expand = default, CancellationToken cancellationToken = default)
+        public virtual Response<CapacityReservationResource> GetCapacityReservation(string capacityReservationName, CapacityReservationInstanceViewType? expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(capacityReservationName, nameof(capacityReservationName));
 

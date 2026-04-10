@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            DiskSecurityTypes? securityType = default;
+            DiskSecurityType? securityType = default;
             string secureVMDiskEncryptionSetId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    securityType = new DiskSecurityTypes(prop.Value.GetString());
+                    securityType = new DiskSecurityType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("secureVMDiskEncryptionSetId"u8))

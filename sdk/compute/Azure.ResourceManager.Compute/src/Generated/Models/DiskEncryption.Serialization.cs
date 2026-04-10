@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             string diskEncryptionSetId = default;
-            EncryptionType? @type = default;
+            ComputeEncryptionType? @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    @type = new EncryptionType(prop.Value.GetString());
+                    @type = new ComputeEncryptionType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

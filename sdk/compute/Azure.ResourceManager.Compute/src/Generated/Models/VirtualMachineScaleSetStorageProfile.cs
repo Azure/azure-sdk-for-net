@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="dataDisks"> Specifies the parameters that are used to add data disks to the virtual machines in the scale set. For more information about disks, see [About disks and VHDs for Azure virtual machines](https://docs.microsoft.com/azure/virtual-machines/managed-disks-overview). </param>
         /// <param name="diskControllerType"> Specifies the disk controller type configured for the virtual machines in the scale set. Minimum api-version: 2022-08-01. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineScaleSetStorageProfile(ImageReference imageReference, VirtualMachineScaleSetOSDisk osDisk, IList<VirtualMachineScaleSetDataDisk> dataDisks, DiskControllerTypes? diskControllerType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineScaleSetStorageProfile(ImageReference imageReference, VirtualMachineScaleSetOSDisk osDisk, IList<VirtualMachineScaleSetDataDisk> dataDisks, DiskControllerType? diskControllerType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ImageReference = imageReference;
             OsDisk = osDisk;
@@ -48,6 +48,6 @@ namespace Azure.ResourceManager.Compute.Models
         public IList<VirtualMachineScaleSetDataDisk> DataDisks { get; }
 
         /// <summary> Specifies the disk controller type configured for the virtual machines in the scale set. Minimum api-version: 2022-08-01. </summary>
-        public DiskControllerTypes? DiskControllerType { get; set; }
+        public DiskControllerType? DiskControllerType { get; set; }
     }
 }

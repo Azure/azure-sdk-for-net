@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="supportedCapabilities"> List of supported capabilities for the image from which the OS disk was created. </param>
         /// <param name="snapshotAccessState"> The state of snapshot which determines the access availability of the snapshot. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SnapshotUpdateProperties(OperatingSystemTypes? osType, int? diskSizeGB, EncryptionSettingsGroup encryptionSettingsCollection, DiskEncryption encryption, NetworkAccessPolicy? networkAccessPolicy, string diskAccessId, bool? supportsHibernation, DiskPublicNetworkAccess? publicNetworkAccess, DataAccessAuthMode? dataAccessAuthMode, SupportedCapabilities supportedCapabilities, SnapshotAccessState? snapshotAccessState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SnapshotUpdateProperties(OperatingSystemType? osType, int? diskSizeGB, EncryptionSettingsGroup encryptionSettingsCollection, DiskEncryption encryption, NetworkAccessPolicy? networkAccessPolicy, string diskAccessId, bool? supportsHibernation, DiskPublicNetworkAccess? publicNetworkAccess, DataAccessAuthMode? dataAccessAuthMode, SupportedCapabilities supportedCapabilities, SnapshotAccessState? snapshotAccessState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OsType = osType;
             DiskSizeGB = diskSizeGB;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> the Operating System type. </summary>
-        public OperatingSystemTypes? OsType { get; set; }
+        public OperatingSystemType? OsType { get; set; }
 
         /// <summary> If creationData.createOption is Empty, this field is mandatory and it indicates the size of the disk to create. If this field is present for updates or creation with other options, it indicates a resize. Resizes are only allowed if the disk is not attached to a running VM, and can only increase the disk's size. </summary>
         public int? DiskSizeGB { get; set; }

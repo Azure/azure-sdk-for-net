@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Specify what happens to the public IP when the VM is deleted. </summary>
-        public DeleteOptions? DeleteOption
+        public ComputeDeleteOption? DeleteOption
         {
             get
             {

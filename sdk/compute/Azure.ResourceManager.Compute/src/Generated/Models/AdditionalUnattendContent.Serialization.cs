@@ -136,8 +136,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            PassNames? passName = default;
-            ComponentNames? componentName = default;
+            PassName? passName = default;
+            ComponentName? componentName = default;
             SettingName? settingName = default;
             string content = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    passName = prop.Value.GetString().ToPassNames();
+                    passName = prop.Value.GetString().ToPassName();
                     continue;
                 }
                 if (prop.NameEquals("componentName"u8))
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    componentName = prop.Value.GetString().ToComponentNames();
+                    componentName = prop.Value.GetString().ToComponentName();
                     continue;
                 }
                 if (prop.NameEquals("settingName"u8))

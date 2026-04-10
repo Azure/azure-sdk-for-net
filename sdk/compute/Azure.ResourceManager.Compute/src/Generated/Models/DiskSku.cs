@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="name"> The sku name. </param>
         /// <param name="tier"> The sku tier. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DiskSku(DiskStorageAccountTypes? name, string tier, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DiskSku(DiskStorageAccountType? name, string tier, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Tier = tier;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The sku name. </summary>
-        public DiskStorageAccountTypes? Name { get; set; }
+        public DiskStorageAccountType? Name { get; set; }
 
         /// <summary> The sku tier. </summary>
         public string Tier { get; }

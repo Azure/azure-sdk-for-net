@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="VirtualMachinePublicIPAddressConfigurationProperties"/>. </summary>
         public VirtualMachinePublicIPAddressConfigurationProperties()
         {
-            IpTags = new ChangeTrackingList<VirtualMachineIpTag>();
+            IpTags = new ChangeTrackingList<VirtualMachineIPTag>();
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachinePublicIPAddressConfigurationProperties"/>. </summary>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="publicIPAddressVersion"> Available from Api-Version 2019-07-01 onwards, it represents whether the specific ipconfiguration is IPv4 or IPv6. Default is taken as IPv4. Possible values are: 'IPv4' and 'IPv6'. </param>
         /// <param name="publicIPAllocationMethod"> Specify the public IP allocation type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachinePublicIPAddressConfigurationProperties(int? idleTimeoutInMinutes, DeleteOptions? deleteOption, VirtualMachinePublicIPAddressDnsSettingsConfiguration dnsSettings, IList<VirtualMachineIpTag> ipTags, ComputeSubResourceData publicIPPrefix, IPVersions? publicIPAddressVersion, PublicIPAllocationMethod? publicIPAllocationMethod, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachinePublicIPAddressConfigurationProperties(int? idleTimeoutInMinutes, ComputeDeleteOption? deleteOption, VirtualMachinePublicIPAddressDnsSettingsConfiguration dnsSettings, IList<VirtualMachineIPTag> ipTags, ComputeSubResourceData publicIPPrefix, IPVersions? publicIPAddressVersion, PublicIPAllocationMethod? publicIPAllocationMethod, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IdleTimeoutInMinutes = idleTimeoutInMinutes;
             DeleteOption = deleteOption;
@@ -48,13 +48,13 @@ namespace Azure.ResourceManager.Compute.Models
         public int? IdleTimeoutInMinutes { get; set; }
 
         /// <summary> Specify what happens to the public IP address when the VM is deleted. </summary>
-        public DeleteOptions? DeleteOption { get; set; }
+        public ComputeDeleteOption? DeleteOption { get; set; }
 
         /// <summary> The dns settings to be applied on the publicIP addresses . </summary>
         public VirtualMachinePublicIPAddressDnsSettingsConfiguration DnsSettings { get; set; }
 
         /// <summary> The list of IP tags associated with the public IP address. </summary>
-        public IList<VirtualMachineIpTag> IpTags { get; } = new ChangeTrackingList<VirtualMachineIpTag>();
+        public IList<VirtualMachineIPTag> IpTags { get; } = new ChangeTrackingList<VirtualMachineIPTag>();
 
         /// <summary> The PublicIPPrefix from which to allocate publicIP addresses. </summary>
         internal ComputeSubResourceData PublicIPPrefix { get; set; }

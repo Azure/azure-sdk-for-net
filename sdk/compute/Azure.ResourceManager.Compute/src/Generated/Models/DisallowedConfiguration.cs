@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="DisallowedConfiguration"/>. </summary>
         /// <param name="vmDiskType"> VM disk types which are disallowed. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DisallowedConfiguration(VmDiskTypes? vmDiskType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DisallowedConfiguration(VirtualMachineDiskType? vmDiskType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VmDiskType = vmDiskType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> VM disk types which are disallowed. </summary>
-        public VmDiskTypes? VmDiskType { get; }
+        public VirtualMachineDiskType? VmDiskType { get; }
     }
 }

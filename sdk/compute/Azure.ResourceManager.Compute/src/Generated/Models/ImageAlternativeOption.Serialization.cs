@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            AlternativeType? @type = default;
+            ImageAlternativeType? @type = default;
             string value = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    @type = new AlternativeType(prop.Value.GetString());
+                    @type = new ImageAlternativeType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("value"u8))

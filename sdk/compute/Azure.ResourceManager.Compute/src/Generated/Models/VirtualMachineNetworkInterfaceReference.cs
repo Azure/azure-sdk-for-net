@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Specify what happens to the network interface when the VM is deleted. </summary>
-        public DeleteOptions? DeleteOption
+        public ComputeDeleteOption? DeleteOption
         {
             get
             {

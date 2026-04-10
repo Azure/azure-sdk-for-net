@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="capacityReservationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="capacityReservationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<CapacityReservationResource>> GetAsync(string capacityReservationName, CapacityReservationInstanceViewTypes? expand = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CapacityReservationResource>> GetAsync(string capacityReservationName, CapacityReservationInstanceViewType? expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(capacityReservationName, nameof(capacityReservationName));
 
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="capacityReservationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="capacityReservationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<CapacityReservationResource> Get(string capacityReservationName, CapacityReservationInstanceViewTypes? expand = default, CancellationToken cancellationToken = default)
+        public virtual Response<CapacityReservationResource> Get(string capacityReservationName, CapacityReservationInstanceViewType? expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(capacityReservationName, nameof(capacityReservationName));
 
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="capacityReservationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="capacityReservationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string capacityReservationName, CapacityReservationInstanceViewTypes? expand = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string capacityReservationName, CapacityReservationInstanceViewType? expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(capacityReservationName, nameof(capacityReservationName));
 
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="capacityReservationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="capacityReservationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<bool> Exists(string capacityReservationName, CapacityReservationInstanceViewTypes? expand = default, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string capacityReservationName, CapacityReservationInstanceViewType? expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(capacityReservationName, nameof(capacityReservationName));
 
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="capacityReservationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="capacityReservationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<CapacityReservationResource>> GetIfExistsAsync(string capacityReservationName, CapacityReservationInstanceViewTypes? expand = default, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<CapacityReservationResource>> GetIfExistsAsync(string capacityReservationName, CapacityReservationInstanceViewType? expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(capacityReservationName, nameof(capacityReservationName));
 
@@ -543,7 +543,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="capacityReservationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="capacityReservationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<CapacityReservationResource> GetIfExists(string capacityReservationName, CapacityReservationInstanceViewTypes? expand = default, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<CapacityReservationResource> GetIfExists(string capacityReservationName, CapacityReservationInstanceViewType? expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(capacityReservationName, nameof(capacityReservationName));
 

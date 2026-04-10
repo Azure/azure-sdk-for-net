@@ -12,7 +12,7 @@ using Azure.ResourceManager.Compute;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes the reboot requirements of the patch. </summary>
-    public readonly partial struct VMGuestPatchRebootBehavior : IEquatable<VMGuestPatchRebootBehavior>
+    public readonly partial struct VmGuestPatchRebootBehavior : IEquatable<VmGuestPatchRebootBehavior>
     {
         private readonly string _value;
         private const string UnknownValue = "Unknown";
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.Compute.Models
         private const string AlwaysRequiresRebootValue = "AlwaysRequiresReboot";
         private const string CanRequestRebootValue = "CanRequestReboot";
 
-        /// <summary> Initializes a new instance of <see cref="VMGuestPatchRebootBehavior"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmGuestPatchRebootBehavior"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public VMGuestPatchRebootBehavior(string value)
+        public VmGuestPatchRebootBehavior(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,41 +31,41 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Gets the Unknown. </summary>
-        public static VMGuestPatchRebootBehavior Unknown { get; } = new VMGuestPatchRebootBehavior(UnknownValue);
+        public static VmGuestPatchRebootBehavior Unknown { get; } = new VmGuestPatchRebootBehavior(UnknownValue);
 
         /// <summary> Gets the NeverReboots. </summary>
-        public static VMGuestPatchRebootBehavior NeverReboots { get; } = new VMGuestPatchRebootBehavior(NeverRebootsValue);
+        public static VmGuestPatchRebootBehavior NeverReboots { get; } = new VmGuestPatchRebootBehavior(NeverRebootsValue);
 
         /// <summary> Gets the AlwaysRequiresReboot. </summary>
-        public static VMGuestPatchRebootBehavior AlwaysRequiresReboot { get; } = new VMGuestPatchRebootBehavior(AlwaysRequiresRebootValue);
+        public static VmGuestPatchRebootBehavior AlwaysRequiresReboot { get; } = new VmGuestPatchRebootBehavior(AlwaysRequiresRebootValue);
 
         /// <summary> Gets the CanRequestReboot. </summary>
-        public static VMGuestPatchRebootBehavior CanRequestReboot { get; } = new VMGuestPatchRebootBehavior(CanRequestRebootValue);
+        public static VmGuestPatchRebootBehavior CanRequestReboot { get; } = new VmGuestPatchRebootBehavior(CanRequestRebootValue);
 
-        /// <summary> Determines if two <see cref="VMGuestPatchRebootBehavior"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="VmGuestPatchRebootBehavior"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(VMGuestPatchRebootBehavior left, VMGuestPatchRebootBehavior right) => left.Equals(right);
+        public static bool operator ==(VmGuestPatchRebootBehavior left, VmGuestPatchRebootBehavior right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="VMGuestPatchRebootBehavior"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="VmGuestPatchRebootBehavior"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(VMGuestPatchRebootBehavior left, VMGuestPatchRebootBehavior right) => !left.Equals(right);
+        public static bool operator !=(VmGuestPatchRebootBehavior left, VmGuestPatchRebootBehavior right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="VMGuestPatchRebootBehavior"/>. </summary>
+        /// <summary> Converts a string to a <see cref="VmGuestPatchRebootBehavior"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VMGuestPatchRebootBehavior(string value) => new VMGuestPatchRebootBehavior(value);
+        public static implicit operator VmGuestPatchRebootBehavior(string value) => new VmGuestPatchRebootBehavior(value);
 
-        /// <summary> Converts a string to a <see cref="VMGuestPatchRebootBehavior"/>. </summary>
+        /// <summary> Converts a string to a <see cref="VmGuestPatchRebootBehavior"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VMGuestPatchRebootBehavior?(string value) => value == null ? null : new VMGuestPatchRebootBehavior(value);
+        public static implicit operator VmGuestPatchRebootBehavior?(string value) => value == null ? null : new VmGuestPatchRebootBehavior(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is VMGuestPatchRebootBehavior other && Equals(other);
+        public override bool Equals(object obj) => obj is VmGuestPatchRebootBehavior other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(VMGuestPatchRebootBehavior other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(VmGuestPatchRebootBehavior other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

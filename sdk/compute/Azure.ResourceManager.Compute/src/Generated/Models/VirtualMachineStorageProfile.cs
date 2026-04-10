@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="diskControllerType"> Specifies the disk controller type configured for the VM. <b>Note:</b> This property will be set to the default disk controller type if not specified provided virtual machine is being created with 'hyperVGeneration' set to V2 based on the capabilities of the operating system disk and VM size from the the specified minimum api version. You need to deallocate the VM before updating its disk controller type unless you are updating the VM size in the VM configuration which implicitly deallocates and reallocates the VM. Minimum api-version: 2022-08-01. </param>
         /// <param name="alignRegionalDisksToVMZone"> Specifies whether the regional disks should be aligned/moved to the VM zone. This is applicable only for VMs with placement property set. Please note that this change is irreversible. Minimum api-version: 2024-11-01. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineStorageProfile(ImageReference imageReference, VirtualMachineOSDisk osDisk, IList<VirtualMachineDataDisk> dataDisks, DiskControllerTypes? diskControllerType, bool? alignRegionalDisksToVMZone, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineStorageProfile(ImageReference imageReference, VirtualMachineOSDisk osDisk, IList<VirtualMachineDataDisk> dataDisks, DiskControllerType? diskControllerType, bool? alignRegionalDisksToVMZone, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ImageReference = imageReference;
             OsDisk = osDisk;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Compute.Models
         public IList<VirtualMachineDataDisk> DataDisks { get; }
 
         /// <summary> Specifies the disk controller type configured for the VM. <b>Note:</b> This property will be set to the default disk controller type if not specified provided virtual machine is being created with 'hyperVGeneration' set to V2 based on the capabilities of the operating system disk and VM size from the the specified minimum api version. You need to deallocate the VM before updating its disk controller type unless you are updating the VM size in the VM configuration which implicitly deallocates and reallocates the VM. Minimum api-version: 2022-08-01. </summary>
-        public DiskControllerTypes? DiskControllerType { get; set; }
+        public DiskControllerType? DiskControllerType { get; set; }
 
         /// <summary> Specifies whether the regional disks should be aligned/moved to the VM zone. This is applicable only for VMs with placement property set. Please note that this change is irreversible. Minimum api-version: 2024-11-01. </summary>
         public bool? AlignRegionalDisksToVMZone { get; set; }

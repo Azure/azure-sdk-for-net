@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="securityEncryptionType"> Specifies the EncryptionType of the managed disk. It is set to DiskWithVMGuestState for encryption of the managed disk along with VMGuestState blob, VMGuestStateOnly for encryption of just the VMGuestState blob, and NonPersistedTPM for not persisting firmware state in the VMGuestState blob.. <b>Note:</b> It can be set for only Confidential VMs. </param>
         /// <param name="diskEncryptionSet"> Specifies the customer managed disk encryption set resource id for the managed disk that is used for Customer Managed Key encrypted ConfidentialVM OS Disk and VMGuest blob. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineDiskSecurityProfile(SecurityEncryptionTypes? securityEncryptionType, DiskEncryptionSetParameters diskEncryptionSet, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineDiskSecurityProfile(SecurityEncryptionType? securityEncryptionType, DiskEncryptionSetParameters diskEncryptionSet, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SecurityEncryptionType = securityEncryptionType;
             DiskEncryptionSet = diskEncryptionSet;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Specifies the EncryptionType of the managed disk. It is set to DiskWithVMGuestState for encryption of the managed disk along with VMGuestState blob, VMGuestStateOnly for encryption of just the VMGuestState blob, and NonPersistedTPM for not persisting firmware state in the VMGuestState blob.. <b>Note:</b> It can be set for only Confidential VMs. </summary>
-        public SecurityEncryptionTypes? SecurityEncryptionType { get; set; }
+        public SecurityEncryptionType? SecurityEncryptionType { get; set; }
 
         /// <summary> Specifies the customer managed disk encryption set resource id for the managed disk that is used for Customer Managed Key encrypted ConfidentialVM OS Disk and VMGuest blob. </summary>
         internal DiskEncryptionSetParameters DiskEncryptionSet { get; set; }

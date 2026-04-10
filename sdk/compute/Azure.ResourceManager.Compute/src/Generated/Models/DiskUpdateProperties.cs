@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="optimizedForFrequentAttach"> Setting this property to true improves reliability and performance of data disks that are frequently (more than 5 times a day) by detached from one virtual machine and attached to another. This property should not be set for disks that are not detached and attached frequently as it causes the disks to not align with the fault domain of the virtual machine. </param>
         /// <param name="availabilityPolicy"> Determines how platform treats disk failures. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DiskUpdateProperties(OperatingSystemTypes? osType, int? diskSizeGB, EncryptionSettingsGroup encryptionSettingsCollection, long? diskIOPSReadWrite, long? diskMBpsReadWrite, long? diskIOPSReadOnly, long? diskMBpsReadOnly, int? maxShares, DiskEncryption encryption, NetworkAccessPolicy? networkAccessPolicy, string diskAccessId, string tier, bool? burstingEnabled, DiskPurchasePlan purchasePlan, SupportedCapabilities supportedCapabilities, PropertyUpdatesInProgress propertyUpdatesInProgress, bool? supportsHibernation, DiskPublicNetworkAccess? publicNetworkAccess, DataAccessAuthMode? dataAccessAuthMode, bool? optimizedForFrequentAttach, AvailabilityPolicy availabilityPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DiskUpdateProperties(OperatingSystemType? osType, int? diskSizeGB, EncryptionSettingsGroup encryptionSettingsCollection, long? diskIOPSReadWrite, long? diskMBpsReadWrite, long? diskIOPSReadOnly, long? diskMBpsReadOnly, int? maxShares, DiskEncryption encryption, NetworkAccessPolicy? networkAccessPolicy, string diskAccessId, string tier, bool? burstingEnabled, DiskPurchasePlan purchasePlan, SupportedCapabilities supportedCapabilities, PropertyUpdatesInProgress propertyUpdatesInProgress, bool? supportsHibernation, DiskPublicNetworkAccess? publicNetworkAccess, DataAccessAuthMode? dataAccessAuthMode, bool? optimizedForFrequentAttach, AvailabilityPolicy availabilityPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OsType = osType;
             DiskSizeGB = diskSizeGB;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> the Operating System type. </summary>
-        public OperatingSystemTypes? OsType { get; set; }
+        public OperatingSystemType? OsType { get; set; }
 
         /// <summary> If creationData.createOption is Empty, this field is mandatory and it indicates the size of the disk to create. If this field is present for updates or creation with other options, it indicates a resize. Resizes are only allowed if the disk is not attached to a running VM, and can only increase the disk's size. </summary>
         public int? DiskSizeGB { get; set; }

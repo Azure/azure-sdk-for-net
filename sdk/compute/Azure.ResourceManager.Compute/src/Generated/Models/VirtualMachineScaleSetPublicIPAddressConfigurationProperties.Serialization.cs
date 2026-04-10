@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 writer.WritePropertyName("ipTags"u8);
                 writer.WriteStartArray();
-                foreach (VirtualMachineScaleSetIpTag item in IpTags)
+                foreach (VirtualMachineScaleSetIPTag item in IpTags)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -153,10 +153,10 @@ namespace Azure.ResourceManager.Compute.Models
             }
             int? idleTimeoutInMinutes = default;
             VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings dnsSettings = default;
-            IList<VirtualMachineScaleSetIpTag> ipTags = default;
+            IList<VirtualMachineScaleSetIPTag> ipTags = default;
             ComputeSubResourceData publicIPPrefix = default;
             IPVersion? publicIPAddressVersion = default;
-            DeleteOptions? deleteOption = default;
+            ComputeDeleteOption? deleteOption = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -184,10 +184,10 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    List<VirtualMachineScaleSetIpTag> array = new List<VirtualMachineScaleSetIpTag>();
+                    List<VirtualMachineScaleSetIPTag> array = new List<VirtualMachineScaleSetIPTag>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(VirtualMachineScaleSetIpTag.DeserializeVirtualMachineScaleSetIpTag(item, options));
+                        array.Add(VirtualMachineScaleSetIPTag.DeserializeVirtualMachineScaleSetIPTag(item, options));
                     }
                     ipTags = array;
                     continue;
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    deleteOption = new DeleteOptions(prop.Value.GetString());
+                    deleteOption = new ComputeDeleteOption(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Compute.Models
             return new VirtualMachineScaleSetPublicIPAddressConfigurationProperties(
                 idleTimeoutInMinutes,
                 dnsSettings,
-                ipTags ?? new ChangeTrackingList<VirtualMachineScaleSetIpTag>(),
+                ipTags ?? new ChangeTrackingList<VirtualMachineScaleSetIPTag>(),
                 publicIPPrefix,
                 publicIPAddressVersion,
                 deleteOption,

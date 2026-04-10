@@ -14,51 +14,51 @@ using Azure.ResourceManager.Compute;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes an Operating System disk. </summary>
-    public partial class RestorePointSourceVMOSDisk : IJsonModel<RestorePointSourceVMOSDisk>
+    public partial class RestorePointSourceVmOSDisk : IJsonModel<RestorePointSourceVmOSDisk>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RestorePointSourceVMOSDisk PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual RestorePointSourceVmOSDisk PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RestorePointSourceVMOSDisk>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RestorePointSourceVmOSDisk>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeRestorePointSourceVMOSDisk(document.RootElement, options);
+                        return DeserializeRestorePointSourceVmOSDisk(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RestorePointSourceVMOSDisk)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RestorePointSourceVmOSDisk)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RestorePointSourceVMOSDisk>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RestorePointSourceVmOSDisk>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(RestorePointSourceVMOSDisk)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RestorePointSourceVmOSDisk)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RestorePointSourceVMOSDisk>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<RestorePointSourceVmOSDisk>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RestorePointSourceVMOSDisk IPersistableModel<RestorePointSourceVMOSDisk>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        RestorePointSourceVmOSDisk IPersistableModel<RestorePointSourceVmOSDisk>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RestorePointSourceVMOSDisk>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<RestorePointSourceVmOSDisk>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<RestorePointSourceVMOSDisk>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<RestorePointSourceVmOSDisk>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RestorePointSourceVMOSDisk>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RestorePointSourceVmOSDisk>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RestorePointSourceVMOSDisk)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(RestorePointSourceVmOSDisk)} does not support writing '{format}' format.");
             }
             if (options.Format != "W" && Optional.IsDefined(OsType))
             {
@@ -133,24 +133,24 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RestorePointSourceVMOSDisk IJsonModel<RestorePointSourceVMOSDisk>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        RestorePointSourceVmOSDisk IJsonModel<RestorePointSourceVmOSDisk>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RestorePointSourceVMOSDisk JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual RestorePointSourceVmOSDisk JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RestorePointSourceVMOSDisk>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RestorePointSourceVmOSDisk>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RestorePointSourceVMOSDisk)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(RestorePointSourceVmOSDisk)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRestorePointSourceVMOSDisk(document.RootElement, options);
+            return DeserializeRestorePointSourceVmOSDisk(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static RestorePointSourceVMOSDisk DeserializeRestorePointSourceVMOSDisk(JsonElement element, ModelReaderWriterOptions options)
+        internal static RestorePointSourceVmOSDisk DeserializeRestorePointSourceVmOSDisk(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RestorePointSourceVMOSDisk(
+            return new RestorePointSourceVmOSDisk(
                 osType,
                 encryptionSettings,
                 name,

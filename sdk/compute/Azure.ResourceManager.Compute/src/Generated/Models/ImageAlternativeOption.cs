@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="type"> Describes the type of the alternative option. </param>
         /// <param name="value"> Indicates the alternative option value specified by the Publisher. This is the Offer name when the type is Offer or the Plan name when the type is Plan. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ImageAlternativeOption(AlternativeType? @type, string value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ImageAlternativeOption(ImageAlternativeType? @type, string value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             Value = value;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Describes the type of the alternative option. </summary>
-        public AlternativeType? Type { get; }
+        public ImageAlternativeType? Type { get; }
 
         /// <summary> Indicates the alternative option value specified by the Publisher. This is the Offer name when the type is Offer or the Plan name when the type is Plan. </summary>
         public string Value { get; }

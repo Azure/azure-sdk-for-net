@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Specify what happens to the network interface when the VM is deleted. </summary>
-        public DeleteOptions? DeleteOption
+        public ComputeDeleteOption? DeleteOption
         {
             get
             {
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Specifies whether the Auxiliary mode is enabled for the Network Interface resource. </summary>
-        public NetworkInterfaceAuxiliaryMode? AuxiliaryMode
+        public ComputeNetworkInterfaceAuxiliaryMode? AuxiliaryMode
         {
             get
             {
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Specifies whether the Auxiliary sku is enabled for the Network Interface resource. </summary>
-        public NetworkInterfaceAuxiliarySku? AuxiliarySku
+        public ComputeNetworkInterfaceAuxiliarySku? AuxiliarySku
         {
             get
             {

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="auxiliaryMode"> Specifies whether the Auxiliary mode is enabled for the Network Interface resource. </param>
         /// <param name="auxiliarySku"> Specifies whether the Auxiliary sku is enabled for the Network Interface resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineScaleSetNetworkConfigurationProperties(bool? primary, bool? enableAcceleratedNetworking, bool? disableTcpStateTracking, bool? enableFpga, ComputeSubResourceData networkSecurityGroup, VirtualMachineScaleSetNetworkConfigurationDnsSettings dnsSettings, IList<VirtualMachineScaleSetIPConfiguration> ipConfigurations, bool? enableIPForwarding, DeleteOptions? deleteOption, NetworkInterfaceAuxiliaryMode? auxiliaryMode, NetworkInterfaceAuxiliarySku? auxiliarySku, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineScaleSetNetworkConfigurationProperties(bool? primary, bool? enableAcceleratedNetworking, bool? disableTcpStateTracking, bool? enableFpga, ComputeSubResourceData networkSecurityGroup, VirtualMachineScaleSetNetworkConfigurationDnsSettings dnsSettings, IList<VirtualMachineScaleSetIPConfiguration> ipConfigurations, bool? enableIPForwarding, ComputeDeleteOption? deleteOption, ComputeNetworkInterfaceAuxiliaryMode? auxiliaryMode, ComputeNetworkInterfaceAuxiliarySku? auxiliarySku, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Primary = primary;
             EnableAcceleratedNetworking = enableAcceleratedNetworking;
@@ -82,13 +82,13 @@ namespace Azure.ResourceManager.Compute.Models
         public bool? EnableIPForwarding { get; set; }
 
         /// <summary> Specify what happens to the network interface when the VM is deleted. </summary>
-        public DeleteOptions? DeleteOption { get; set; }
+        public ComputeDeleteOption? DeleteOption { get; set; }
 
         /// <summary> Specifies whether the Auxiliary mode is enabled for the Network Interface resource. </summary>
-        public NetworkInterfaceAuxiliaryMode? AuxiliaryMode { get; set; }
+        public ComputeNetworkInterfaceAuxiliaryMode? AuxiliaryMode { get; set; }
 
         /// <summary> Specifies whether the Auxiliary sku is enabled for the Network Interface resource. </summary>
-        public NetworkInterfaceAuxiliarySku? AuxiliarySku { get; set; }
+        public ComputeNetworkInterfaceAuxiliarySku? AuxiliarySku { get; set; }
 
         /// <summary> Resource Id. </summary>
         public string NetworkSecurityGroupId

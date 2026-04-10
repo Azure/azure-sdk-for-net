@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            ConfidentialVMEncryptionType? confidentialVMEncryptionType = default;
+            ConfidentialVmEncryptionType? confidentialVMEncryptionType = default;
             string secureVMDiskEncryptionSetId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    confidentialVMEncryptionType = new ConfidentialVMEncryptionType(prop.Value.GetString());
+                    confidentialVMEncryptionType = new ConfidentialVmEncryptionType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("secureVMDiskEncryptionSetId"u8))

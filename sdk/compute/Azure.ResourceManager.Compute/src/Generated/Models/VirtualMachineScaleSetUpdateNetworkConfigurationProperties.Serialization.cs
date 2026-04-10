@@ -184,9 +184,9 @@ namespace Azure.ResourceManager.Compute.Models
             VirtualMachineScaleSetNetworkConfigurationDnsSettings dnsSettings = default;
             IList<VirtualMachineScaleSetUpdateIPConfiguration> ipConfigurations = default;
             bool? enableIPForwarding = default;
-            DeleteOptions? deleteOption = default;
-            NetworkInterfaceAuxiliaryMode? auxiliaryMode = default;
-            NetworkInterfaceAuxiliarySku? auxiliarySku = default;
+            ComputeDeleteOption? deleteOption = default;
+            ComputeNetworkInterfaceAuxiliaryMode? auxiliaryMode = default;
+            ComputeNetworkInterfaceAuxiliarySku? auxiliarySku = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    deleteOption = new DeleteOptions(prop.Value.GetString());
+                    deleteOption = new ComputeDeleteOption(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("auxiliaryMode"u8))
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    auxiliaryMode = new NetworkInterfaceAuxiliaryMode(prop.Value.GetString());
+                    auxiliaryMode = new ComputeNetworkInterfaceAuxiliaryMode(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("auxiliarySku"u8))
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    auxiliarySku = new NetworkInterfaceAuxiliarySku(prop.Value.GetString());
+                    auxiliarySku = new ComputeNetworkInterfaceAuxiliarySku(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

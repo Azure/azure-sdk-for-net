@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Compute.Models
             string blobUri = default;
             CachingType? caching = default;
             int? diskSizeGB = default;
-            StorageAccountTypes? storageAccountType = default;
+            StorageAccountType? storageAccountType = default;
             DiskEncryptionSetParameters diskEncryptionSet = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    storageAccountType = new StorageAccountTypes(prop.Value.GetString());
+                    storageAccountType = new StorageAccountType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("diskEncryptionSet"u8))

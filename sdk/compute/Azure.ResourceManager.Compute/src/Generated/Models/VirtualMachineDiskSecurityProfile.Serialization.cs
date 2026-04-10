@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            SecurityEncryptionTypes? securityEncryptionType = default;
+            SecurityEncryptionType? securityEncryptionType = default;
             DiskEncryptionSetParameters diskEncryptionSet = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    securityEncryptionType = new SecurityEncryptionTypes(prop.Value.GetString());
+                    securityEncryptionType = new SecurityEncryptionType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("diskEncryptionSet"u8))

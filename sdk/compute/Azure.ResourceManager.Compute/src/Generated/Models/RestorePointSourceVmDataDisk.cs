@@ -11,17 +11,17 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a data disk. </summary>
-    public partial class RestorePointSourceVMDataDisk
+    public partial class RestorePointSourceVmDataDisk
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RestorePointSourceVMDataDisk"/>. </summary>
-        public RestorePointSourceVMDataDisk()
+        /// <summary> Initializes a new instance of <see cref="RestorePointSourceVmDataDisk"/>. </summary>
+        public RestorePointSourceVmDataDisk()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="RestorePointSourceVMDataDisk"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorePointSourceVmDataDisk"/>. </summary>
         /// <param name="lun"> Gets the logical unit number. </param>
         /// <param name="name"> Gets the disk name. </param>
         /// <param name="caching"> Gets the caching type. </param>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="diskRestorePoint"> Contains Disk Restore Point properties. </param>
         /// <param name="writeAcceleratorEnabled"> Shows true if the disk is write-accelerator enabled. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RestorePointSourceVMDataDisk(int? lun, string name, CachingType? caching, int? diskSizeGB, VirtualMachineManagedDisk managedDisk, DiskRestorePointAttributes diskRestorePoint, bool? writeAcceleratorEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RestorePointSourceVmDataDisk(int? lun, string name, CachingType? caching, int? diskSizeGB, VirtualMachineManagedDisk managedDisk, DiskRestorePointAttributes diskRestorePoint, bool? writeAcceleratorEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Lun = lun;
             Name = name;

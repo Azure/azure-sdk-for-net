@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="domainNameLabel"> The Domain name label prefix of the PublicIPAddress resources that will be created. The generated name label is the concatenation of the domain name label and vm network profile unique ID. </param>
         /// <param name="domainNameLabelScope"> The Domain name label scope of the PublicIPAddress resources that will be created. The generated name label is the concatenation of the hashed domain name label with policy according to the domain name label scope and vm network profile unique ID. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachinePublicIPAddressDnsSettingsConfiguration(string domainNameLabel, DomainNameLabelScopeTypes? domainNameLabelScope, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachinePublicIPAddressDnsSettingsConfiguration(string domainNameLabel, DomainNameLabelScopeType? domainNameLabelScope, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DomainNameLabel = domainNameLabel;
             DomainNameLabelScope = domainNameLabelScope;
@@ -42,6 +42,6 @@ namespace Azure.ResourceManager.Compute.Models
         public string DomainNameLabel { get; set; }
 
         /// <summary> The Domain name label scope of the PublicIPAddress resources that will be created. The generated name label is the concatenation of the hashed domain name label with policy according to the domain name label scope and vm network profile unique ID. </summary>
-        public DomainNameLabelScopeTypes? DomainNameLabelScope { get; set; }
+        public DomainNameLabelScopeType? DomainNameLabelScope { get; set; }
     }
 }

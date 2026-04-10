@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<GalleryApplicationVersionResource>> GetAsync(ReplicationStatusTypes? expand = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<GalleryApplicationVersionResource>> GetAsync(ReplicationStatusType? expand = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _galleryApplicationVersionsClientDiagnostics.CreateScope("GalleryApplicationVersionResource.Get");
             scope.Start();
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<GalleryApplicationVersionResource> Get(ReplicationStatusTypes? expand = default, CancellationToken cancellationToken = default)
+        public virtual Response<GalleryApplicationVersionResource> Get(ReplicationStatusType? expand = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _galleryApplicationVersionsClientDiagnostics.CreateScope("GalleryApplicationVersionResource.Get");
             scope.Start();

@@ -126,8 +126,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            PublicIPAddressSkuName? name = default;
-            PublicIPAddressSkuTier? tier = default;
+            ComputePublicIPAddressSkuName? name = default;
+            ComputePublicIPAddressSkuTier? tier = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    name = new PublicIPAddressSkuName(prop.Value.GetString());
+                    name = new ComputePublicIPAddressSkuName(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("tier"u8))
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    tier = new PublicIPAddressSkuTier(prop.Value.GetString());
+                    tier = new ComputePublicIPAddressSkuTier(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            SshEncryptionTypes? encryptionType = default;
+            SshEncryptionType? encryptionType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    encryptionType = new SshEncryptionTypes(prop.Value.GetString());
+                    encryptionType = new SshEncryptionType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Compute.Models
             ImageReference imageReference = default;
             VirtualMachineOSDisk osDisk = default;
             IList<VirtualMachineDataDisk> dataDisks = default;
-            DiskControllerTypes? diskControllerType = default;
+            DiskControllerType? diskControllerType = default;
             bool? alignRegionalDisksToVMZone = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    diskControllerType = new DiskControllerTypes(prop.Value.GetString());
+                    diskControllerType = new DiskControllerType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("alignRegionalDisksToVMZone"u8))

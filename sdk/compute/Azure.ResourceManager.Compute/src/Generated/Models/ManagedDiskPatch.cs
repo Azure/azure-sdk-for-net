@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Compute.Models
         public DiskSku Sku { get; set; }
 
         /// <summary> the Operating System type. </summary>
-        public OperatingSystemTypes? OsType
+        public OperatingSystemType? OsType
         {
             get
             {
