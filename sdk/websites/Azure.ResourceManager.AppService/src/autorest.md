@@ -113,13 +113,10 @@ override-operation-name:
   StaticSites_ListStaticSiteBuildFunctions: GetFunctions
   StaticSites_CreateZipDeploymentForStaticSiteBuild: CreateZipDeployment
   StaticSites_ListStaticSiteBuildFunctionAppSettings: GetFunctionAppSettings
-  AppServiceCertificateOrders_ValidatePurchaseInformation: ValidateAppServiceCertificateOrderPurchaseInformation
   Recommendations_ResetAllFilters: ResetAllRecommendationFilters
   StaticSites_PreviewWorkflow: PreviewStaticSiteWorkflow
   Provider_GetWebAppStacksForLocation: GetWebAppStacksByLocation
   GetSubscriptionDeploymentLocations: GetAppServiceDeploymentLocations
-  Domains_ListRecommendations: GetAppServiceDomainRecommendations
-  Domains_CheckAvailability: CheckAppServiceDomainRegistrationAvailability
   Recommendations_DisableRecommendationForSubscription: DisableAppServiceRecommendation
   WebApps_ListSnapshotsSlot: GetSlotSnapshots
   WebApps_ListSnapshotsFromDRSecondarySlot: GetSlotSnapshotsFromDRSecondary
@@ -187,7 +184,6 @@ acronym-mapping:
   SQL: Sql
 
 rename-mapping:
-  Address: RegistrationAddressInfo
   AddressResponse.properties.internalIpAddress: -|ip-address
   AddressResponse.properties.outboundIpAddresses: -|ip-address
   AddressResponse.properties.serviceIpAddress: -|ip-address
@@ -204,20 +200,6 @@ rename-mapping:
   AppleRegistration: AppServiceAppleRegistration
   ApplicationStackCollection: ApplicationStackListResult
   ApplicationStackResource.properties.name: StackName
-  AppServiceCertificate.keyVaultId: -|arm-id
-  AppServiceCertificate: AppServiceCertificateProperties
-  AppServiceCertificateCollection: AppServiceCertificateListResult
-  AppServiceCertificateOrder.properties.autoRenew: IsAutoRenew
-  AppServiceCertificateOrder.properties.expirationTime: ExpireOn
-  AppServiceCertificateOrder.properties.lastCertificateIssuanceTime: LastCertificateIssuedOn
-  AppServiceCertificateOrder.properties.nextAutoRenewalTimeStamp: NextAutoRenewTimeStamp
-  AppServiceCertificateOrderCollection: AppServiceCertificateOrderListResult
-  AppServiceCertificateOrderPatchResource.properties.autoRenew: IsAutoRenew
-  AppServiceCertificateOrderPatchResource: AppServiceCertificateOrderPatch
-  AppServiceCertificatePatchResource.properties.keyVaultId: -|arm-id
-  AppServiceCertificatePatchResource: AppServiceCertificatePatch
-  AppServiceCertificateResource.properties.keyVaultId: -|arm-id
-  AppServiceCertificateResource: AppServiceCertificate
   AppServiceEnvironment.suspended: IsSuspended
   AppServiceEnvironment.zoneRedundant: IsZoneRedundant
   AppServiceEnvironment: AppServiceEnvironmentProperties
@@ -228,7 +210,6 @@ rename-mapping:
   AppServiceEnvironmentResource.properties.suspended: IsSuspended
   AppServiceEnvironmentResource.properties.zoneRedundant: IsZoneRedundant
   AppServiceEnvironmentResource: AppServiceEnvironment
-  AppserviceGithubToken: AppServiceGithubToken
   AppServicePlan.properties.asyncScalingEnabled: IsAsyncScalingEnabled
   AppServicePlan.properties.elasticScaleEnabled: IsElasticScaleEnabled
   AppServicePlan.properties.freeOfferExpirationTime: FreeOfferExpireOn
@@ -304,7 +285,6 @@ rename-mapping:
   Certificate.properties.valid: IsValid
   Certificate: AppCertificate
   CertificateCollection: AppCertificateListResult
-  CertificateDetails.thumbprint: ThumbprintString
   CertificatePatchResource: AppCertificatePatch
   CertificatePatchResource.properties.keyVaultId: -|arm-id
   CertificatePatchResource.properties.thumbprint: ThumbprintString
@@ -313,7 +293,6 @@ rename-mapping:
   CheckNameResourceTypes.Site: WebSite
   CloningInfo.overwrite: CanOverwrite
   CloningInfo.sourceWebAppLocation: -|azure-location
-  Contact: RegistrationContactInfo
   ContainerThrottlingData: ContainerThrottlingInfo
   ContentHash: WebAppContentHash
   ContentLink: WebAppContentLink
@@ -326,7 +305,6 @@ rename-mapping:
   CsmPublishingProfileOptions: CsmPublishingProfile
   CsmUsageQuotaCollection: CsmUsageQuotaListResult
   CustomOpenIdConnectProvider.enabled: IsEnabled
-  Dapr.enabled: IsEnabled
   DaprConfig.enableApiLogging: IsApiLoggingEnabled
   DaprConfig.enabled: IsEnabled
   DaprConfig: AppDaprConfig
@@ -354,18 +332,6 @@ rename-mapping:
   Dimension.toBeExportedForShoebox: IsToBeExportedForShoebox
   Dimension: MetricDimension
   DnlResourceNameAvailability: DnlResourceNameAvailabilityResult
-  Domain.properties.autoRenew: IsAutoRenew
-  Domain.properties.expirationTime: ExpireOn
-  Domain.properties.privacy: IsDomainPrivacyEnabled
-  Domain.properties.readyForDnsRecordManagement: IsDnsRecordManagementReady
-  Domain: AppServiceDomain
-  DomainAvailabilityCheckResult.available: IsAvailable
-  DomainCollection: AppServiceDomainListResult
-  DomainControlCenterSsoRequest: DomainControlCenterSsoRequestInfo
-  DomainOwnershipIdentifierCollection: DomainOwnershipIdentifierListResult
-  DomainPatchResource.properties.autoRenew: IsAutoRenew
-  DomainPatchResource.properties.privacy: IsDomainPrivacyEnabled
-  DomainPatchResource.properties.readyForDnsRecordManagement: IsReadyForDnsRecordManagement
   EnabledConfig: WebAppEnabledConfig
   EndpointDetail.ipAddress: -|ip-address
   EnvironmentVariable: WebAppEnvironmentVariable
@@ -392,7 +358,6 @@ rename-mapping:
   FunctionsScaleAndConcurrency.maximumInstanceCount: FunctionAppMaximumInstanceCount
   FunctionsScaleAndConcurrency: FunctionAppScaleAndConcurrency
   FunctionsScaleAndConcurrencyTriggersHttp.perInstanceConcurrency: ConcurrentHttpPerInstanceConcurrency
-  FunctionStorageType: FunctionAppStorageType
   GeoRegionCollection: AppServiceGeoRegionListResult
   GitHub.enabled: IsEnabled
   GitHub: AppServiceGitHubProvider
@@ -440,7 +405,6 @@ rename-mapping:
   MSDeployLogEntryType: WebAppMSDeployLogEntryType
   MSDeployStatus.properties.complete: IsComplete
   NameIdentifier: AppServiceDomainNameIdentifier
-  NameIdentifierCollection: AppServiceDomainNameIdentifierListResult
   NetworkTrace: WebAppNetworkTrace
   Nonce: LoginFlowNonceSettings
   OpenAuthenticationAccessPolicies.policies: OpenAuthenticationPolicyList
@@ -506,9 +470,6 @@ rename-mapping:
   RunActionCorrelation: WebAppRunActionCorrelation
   RunCorrelation: WebAppRunCorrelation
   RuntimeName: FunctionAppRuntimeName
-  Scale: ContainerAppScale
-  ScaleRule: ContainerAppScaleRule
-  ScaleRuleAuth: ContainerAppScaleRuleAuth
   Site.properties.clientAffinityEnabled: IsClientAffinityEnabled
   Site.properties.clientAffinityPartitioningEnabled: IsClientAffinityPartitioningEnabled
   Site.properties.clientAffinityProxyEnabled: IsClientAffinityProxyEnabled
@@ -576,7 +537,6 @@ rename-mapping:
   SitePatchResource.properties.suspendedTill: SuspendOn
   SitePatchResource.properties.virtualNetworkSubnetId: -|arm-id
   SitePatchResource: SitePatchInfo
-  SiteSealRequest.lightTheme: IsLightTheme
   SiteSourceControl.properties.deploymentRollbackEnabled: IsDeploymentRollbackEnabled
   SkuCapacity: AppServiceSkuCapacity
   SkuDescription.locations: -|azure-location
@@ -628,8 +588,6 @@ rename-mapping:
   SupportTopic: DetectorSupportTopic
   SwiftVirtualNetwork.properties.subnetResourceId: -|arm-id
   SwiftVirtualNetwork.properties.swiftSupported: IsSwiftSupported
-  Template: ContainerAppTemplate
-  TldLegalAgreementCollection: TldLegalAgreementListResult
   TlsCipherSuites.TLS_AES_128_GCM_SHA256: TlsAes128GcmSha256
   TlsCipherSuites.TLS_AES_256_GCM_SHA384: TlsAes256GcmSha384
   TlsCipherSuites.TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256: TlsECDiffieHellmanECDsaWithAes128CbcSha256
@@ -649,9 +607,6 @@ rename-mapping:
   TlsCipherSuites.TLS_RSA_WITH_AES_256_GCM_SHA384: TlsRsaWithAes256GcmSha384
   TlsCipherSuites: AppServiceTlsCipherSuite
   TokenStore.enabled: IsEnabled
-  TopLevelDomain.properties.privacy: IsDomainPrivacySupported
-  TopLevelDomainAgreementOption.forTransfer: IsForTransfer
-  TopLevelDomainCollection: TopLevelDomainListResult
   TriggeredJobHistoryCollection: TriggeredJobHistoryListResult
   TriggeredWebJob.properties.storageAccountRequired: IsStorageAccountRequired
   TriggeredWebJob.properties.using_sdk: IsUsingSdk
@@ -709,21 +664,15 @@ prepend-rp-prefix:
   - ArmPlan
   - BillingMeter
   - BlobStorageTokenStore
-  - CertificateDetails
-  - CertificateEmail
   - CorsSettings
   - DatabaseBackupSetting
   - DatabaseType
   - DeploymentLocations
-  - DnsType
-  - DomainStatus
-  - DomainType
   - EndpointDependency
   - EndpointDetail
   - ForwardProxy
   - FtpsState
   - GeoRegion
-  - HostName
   - HostNameType
   - HostType
   - HttpLogsConfig

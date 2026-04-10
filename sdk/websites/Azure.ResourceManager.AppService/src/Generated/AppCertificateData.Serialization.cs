@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.AppService
                         }
                         if (property0.NameEquals("thumbprint"u8))
                         {
-                            thumbprint = property0.Value.GetString();
+                            DeserializeThumbprintString(property0, ref thumbprint);
                             continue;
                         }
                         if (property0.NameEquals("valid"u8))
@@ -378,11 +378,7 @@ namespace Azure.ResourceManager.AppService
                         }
                         if (property0.NameEquals("keyVaultId"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            keyVaultId = new ResourceIdentifier(property0.Value.GetString());
+                            DeserializeKeyVaultId(property0, ref keyVaultId);
                             continue;
                         }
                         if (property0.NameEquals("keyVaultSecretName"u8))

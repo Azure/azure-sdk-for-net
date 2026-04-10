@@ -3,9 +3,14 @@
 
 using System;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.ResourceManager.AppService
 {
+    [CodeGenSerialization(nameof(KeyVaultId), DeserializationValueHook = nameof(DeserializeKeyVaultId))]
+    [CodeGenSerialization(nameof(ThumbprintString), DeserializationValueHook = nameof(DeserializeThumbprintString))]
     public partial class AppCertificateData
     {
         /// <summary>
@@ -41,5 +46,25 @@ namespace Azure.ResourceManager.AppService
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This property is obsolete and will be removed in a future release. Please use `ThumbprintString` instead.", false)]
         public BinaryData Thumbprint => BinaryData.FromString(ThumbprintString);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static void DeserializeKeyVaultId(JsonProperty property, ref string keyVaultId)
+        {
+            if (property.Value.ValueKind == JsonValueKind.Null || property.Value.GetString().Length == 0)
+            {
+                return;
+            }
+            keyVaultId = new ResourceIdentifier(property.Value.GetString());
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static void DeserializeThumbprintString(JsonProperty property, ref string thumbprintString)
+        {
+            if (property.Value.ValueKind == JsonValueKind.Null || property.Value.GetString().Length == 0)
+            {
+                return;
+            }
+            thumbprintString = property.Value.GetString();
+        }
     }
 }
