@@ -140,13 +140,13 @@ public partial class ResourceGraphQuery : ProvisionableResource
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
-        _description = DefineProperty<string>("Description", ["Description"]);
-        _eTag = DefineProperty<ETag>("ETag", ["ETag"]);
-        _query = DefineProperty<string>("Query", ["Query"]);
+        _description = DefineProperty<string>("Description", ["properties", "description"]);
+        _eTag = DefineProperty<ETag>("ETag", ["etag"]);
+        _query = DefineProperty<string>("Query", ["properties", "query"]);
         _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
-        _modifiedOn = DefineProperty<DateTimeOffset>("ModifiedOn", ["ModifiedOn"], isOutput: true);
-        _resultKind = DefineProperty<ResultKind>("ResultKind", ["ResultKind"], isOutput: true);
+        _modifiedOn = DefineProperty<DateTimeOffset>("ModifiedOn", ["properties", "timeModified"], isOutput: true);
+        _resultKind = DefineProperty<ResultKind>("ResultKind", ["properties", "resultKind"], isOutput: true);
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
     }
 
