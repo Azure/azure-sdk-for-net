@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="mode"> Specifies the execution mode. In Audit mode, the system acts as if it is enforcing the access control policy, including emitting access denial entries in the logs but it does not actually deny any requests to host endpoints. In Enforce mode, the system will enforce the access control and it is the recommended mode of operation. </param>
         /// <param name="inVMAccessControlProfileReferenceId"> Specifies the InVMAccessControlProfileVersion resource id in the format of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/inVMAccessControlProfiles/{profile}/versions/{version}. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HostEndpointSettings(Modes? mode, string inVMAccessControlProfileReferenceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HostEndpointSettings(HostEndpointSettingsMode? mode, string inVMAccessControlProfileReferenceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Mode = mode;
             InVMAccessControlProfileReferenceId = inVMAccessControlProfileReferenceId;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Specifies the execution mode. In Audit mode, the system acts as if it is enforcing the access control policy, including emitting access denial entries in the logs but it does not actually deny any requests to host endpoints. In Enforce mode, the system will enforce the access control and it is the recommended mode of operation. </summary>
-        public Modes? Mode { get; set; }
+        public HostEndpointSettingsMode? Mode { get; set; }
 
         /// <summary> Specifies the InVMAccessControlProfileVersion resource id in the format of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/inVMAccessControlProfiles/{profile}/versions/{version}. </summary>
         public string InVMAccessControlProfileReferenceId { get; set; }

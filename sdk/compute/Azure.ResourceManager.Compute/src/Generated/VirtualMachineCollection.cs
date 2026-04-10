@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="expand"> The expand expression to apply on operation. 'instanceView' enables fetching run time status of all Virtual Machines, this can only be specified if a valid $filter option is specified. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VirtualMachineResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VirtualMachineResource> GetAllAsync(string filter = default, ExpandTypeForListVMs? expand = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<VirtualMachineResource> GetAllAsync(string filter = default, GetVirtualMachineExpandType? expand = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="expand"> The expand expression to apply on operation. 'instanceView' enables fetching run time status of all Virtual Machines, this can only be specified if a valid $filter option is specified. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VirtualMachineResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VirtualMachineResource> GetAll(string filter = default, ExpandTypeForListVMs? expand = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<VirtualMachineResource> GetAll(string filter = default, GetVirtualMachineExpandType? expand = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {

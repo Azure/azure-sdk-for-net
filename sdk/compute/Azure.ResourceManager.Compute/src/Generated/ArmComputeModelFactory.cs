@@ -533,7 +533,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="identity"> The identity of the virtual machine scale set, if configured. </param>
         /// <param name="zones"> The virtual machine scale set zones. </param>
         /// <returns> A new <see cref="Models.VirtualMachineScaleSetPatch"/> instance for mocking. </returns>
-        public static VirtualMachineScaleSetPatch VirtualMachineScaleSetPatch(IDictionary<string, string> tags = default, ComputeSku sku = default, ComputePlan plan = default, VirtualMachineScaleSetUpdateProperties properties = default, VirtualMachineScaleSetIdentity identity = default, IEnumerable<string> zones = default)
+        public static VirtualMachineScaleSetPatch VirtualMachineScaleSetPatch(IDictionary<string, string> tags = default, ComputeSku sku = default, ComputePlan plan = default, VirtualMachineScaleSetPatchProperties properties = default, VirtualMachineScaleSetIdentity identity = default, IEnumerable<string> zones = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             zones ??= new ChangeTrackingList<string>();

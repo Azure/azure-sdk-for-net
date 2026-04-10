@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Modes? mode = default;
+            HostEndpointSettingsMode? mode = default;
             string inVMAccessControlProfileReferenceId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    mode = new Modes(prop.Value.GetString());
+                    mode = new HostEndpointSettingsMode(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("inVMAccessControlProfileReferenceId"u8))
