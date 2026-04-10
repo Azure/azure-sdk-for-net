@@ -18,7 +18,7 @@ dotnet add package Azure.AI.AgentServer.Responses --prerelease
 
 ## Implement the handler
 
-Use the `OutputItemStructuredOutputs()` convenience method to emit a complete structured output item in one call. The method takes a `BinaryData` parameter — serialize your object with `BinaryData.FromObjectAsJson()`:
+Use the `OutputItemStructuredOutputs()` convenience method to emit a complete structured output item in one call. The method takes a `BinaryData` parameter — serialize your object with `BinaryData.FromObjectAsJson()`. The payload shape is entirely up to you — analytics, file references, classification labels, or any combination:
 
 ```C# Snippet:Responses_Sample15_StructuredOutputHandler
 public class StructuredOutputHandler : ResponseHandler
@@ -34,11 +34,18 @@ public class StructuredOutputHandler : ResponseHandler
         yield return stream.EmitInProgress();
 
         // Build structured data — any serializable object works.
+        // This example returns analytics alongside generated file references
+        // to demonstrate that the payload shape is entirely up to the developer.
         var result = new
         {
             sentiment = "positive",
             confidence = 0.95,
             topics = new[] { "product-quality", "customer-service" },
+            files = new object[]
+            {
+                new { name = "report.pdf", url = "https://storage.example.com/files/report.pdf", mediaType = "application/pdf" },
+                new { name = "chart.png", url = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUg...", mediaType = "image/png" },
+            },
         };
 
         // Emit as a structured outputs item.
@@ -117,7 +124,11 @@ The response body contains a `structured_outputs` item in the `output` array. Th
   "output": {
     "sentiment": "positive",
     "confidence": 0.95,
-    "topics": ["product-quality", "customer-service"]
+    "topics": ["product-quality", "customer-service"],
+    "files": [
+      { "name": "report.pdf", "url": "https://storage.example.com/files/report.pdf", "mediaType": "application/pdf" },
+      { "name": "chart.png", "url": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUg...", "mediaType": "image/png" }
+    ]
   }
 }
 ```

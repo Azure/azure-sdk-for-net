@@ -45,11 +45,18 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
                 yield return stream.EmitInProgress();
 
                 // Build structured data — any serializable object works.
+                // This example returns analytics alongside generated file references
+                // to demonstrate that the payload shape is entirely up to the developer.
                 var result = new
                 {
                     sentiment = "positive",
                     confidence = 0.95,
                     topics = new[] { "product-quality", "customer-service" },
+                    files = new object[]
+                    {
+                        new { name = "report.pdf", url = "https://storage.example.com/files/report.pdf", mediaType = "application/pdf" },
+                        new { name = "chart.png", url = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUg...", mediaType = "image/png" },
+                    },
                 };
 
                 // Emit as a structured outputs item.

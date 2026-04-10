@@ -920,6 +920,11 @@ public class SampleEndToEndTests
         Assert.That(output.GetProperty("sentiment").GetString(), Is.EqualTo("positive"));
         Assert.That(output.GetProperty("confidence").GetDouble(), Is.EqualTo(0.95));
         Assert.That(output.GetProperty("topics").GetArrayLength(), Is.EqualTo(2));
+        var files = output.GetProperty("files");
+        Assert.That(files.GetArrayLength(), Is.EqualTo(2));
+        Assert.That(files[0].GetProperty("name").GetString(), Is.EqualTo("report.pdf"));
+        Assert.That(files[0].GetProperty("mediaType").GetString(), Is.EqualTo("application/pdf"));
+        Assert.That(files[1].GetProperty("name").GetString(), Is.EqualTo("chart.png"));
     }
 
     [Test]
