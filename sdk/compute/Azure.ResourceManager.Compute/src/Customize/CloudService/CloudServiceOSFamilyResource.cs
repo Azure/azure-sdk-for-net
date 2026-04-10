@@ -2,7 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.ComponentModel;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -12,7 +14,7 @@ namespace Azure.ResourceManager.Compute
     /// <summary> This type is obsolete. Cloud Services (classic) are no longer supported for new customers. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
     [Obsolete("CloudService operations are no longer supported.")]
-    public partial class CloudServiceOSFamilyResource : ArmResource
+    public partial class CloudServiceOSFamilyResource : ArmResource, IJsonModel<CloudServiceOSFamilyData>, IPersistableModel<CloudServiceOSFamilyData>
     {
         private const string _notSupported = "CloudService operations are no longer supported in this version.";
 
@@ -48,5 +50,19 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Not supported. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Task<Response<CloudServiceOSFamilyResource>> GetAsync(CancellationToken cancellationToken = default) => throw new NotSupportedException(_notSupported);
+
+        CloudServiceOSFamilyData IJsonModel<CloudServiceOSFamilyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+            => throw new NotSupportedException("CloudService operations are no longer supported.");
+
+        void IJsonModel<CloudServiceOSFamilyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+            => throw new NotSupportedException("CloudService operations are no longer supported.");
+
+        CloudServiceOSFamilyData IPersistableModel<CloudServiceOSFamilyData>.Create(BinaryData data, ModelReaderWriterOptions options)
+            => throw new NotSupportedException("CloudService operations are no longer supported.");
+
+        string IPersistableModel<CloudServiceOSFamilyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        BinaryData IPersistableModel<CloudServiceOSFamilyData>.Write(ModelReaderWriterOptions options)
+            => throw new NotSupportedException("CloudService operations are no longer supported.");
     }
 }

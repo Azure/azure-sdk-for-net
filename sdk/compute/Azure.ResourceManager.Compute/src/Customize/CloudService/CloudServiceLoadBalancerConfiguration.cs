@@ -2,8 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -11,7 +13,7 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> This type is obsolete. Cloud Services (classic) are no longer supported for new customers. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
     [Obsolete("CloudService operations are no longer supported.")]
-    public partial class CloudServiceLoadBalancerConfiguration
+    public partial class CloudServiceLoadBalancerConfiguration : IJsonModel<CloudServiceLoadBalancerConfiguration>, IPersistableModel<CloudServiceLoadBalancerConfiguration>
     {
         /// <summary> Initializes a new instance of CloudServiceLoadBalancerConfiguration. </summary>
         /// <param name="name"> The name. </param>
@@ -30,5 +32,19 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> The frontend IP configurations. </summary>
         public IList<LoadBalancerFrontendIPConfiguration> FrontendIPConfigurations { get; }
+
+        CloudServiceLoadBalancerConfiguration IJsonModel<CloudServiceLoadBalancerConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+            => throw new NotSupportedException("CloudService operations are no longer supported.");
+
+        void IJsonModel<CloudServiceLoadBalancerConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+            => throw new NotSupportedException("CloudService operations are no longer supported.");
+
+        CloudServiceLoadBalancerConfiguration IPersistableModel<CloudServiceLoadBalancerConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+            => throw new NotSupportedException("CloudService operations are no longer supported.");
+
+        string IPersistableModel<CloudServiceLoadBalancerConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        BinaryData IPersistableModel<CloudServiceLoadBalancerConfiguration>.Write(ModelReaderWriterOptions options)
+            => throw new NotSupportedException("CloudService operations are no longer supported.");
     }
 }

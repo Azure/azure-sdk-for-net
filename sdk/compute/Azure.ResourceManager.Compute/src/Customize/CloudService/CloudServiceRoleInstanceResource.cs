@@ -2,7 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.ComponentModel;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -13,7 +15,7 @@ namespace Azure.ResourceManager.Compute
     /// <summary> This type is obsolete. Cloud Services (classic) are no longer supported for new customers. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
     [Obsolete("CloudService operations are no longer supported.")]
-    public partial class CloudServiceRoleInstanceResource : ArmResource
+    public partial class CloudServiceRoleInstanceResource : ArmResource, IJsonModel<CloudServiceRoleInstanceData>, IPersistableModel<CloudServiceRoleInstanceData>
     {
         private const string _notSupported = "CloudService operations are no longer supported in this version.";
 
@@ -121,5 +123,19 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Not supported. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Task<ArmOperation> RestartAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default) => throw new NotSupportedException(_notSupported);
+
+        CloudServiceRoleInstanceData IJsonModel<CloudServiceRoleInstanceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+            => throw new NotSupportedException("CloudService operations are no longer supported.");
+
+        void IJsonModel<CloudServiceRoleInstanceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+            => throw new NotSupportedException("CloudService operations are no longer supported.");
+
+        CloudServiceRoleInstanceData IPersistableModel<CloudServiceRoleInstanceData>.Create(BinaryData data, ModelReaderWriterOptions options)
+            => throw new NotSupportedException("CloudService operations are no longer supported.");
+
+        string IPersistableModel<CloudServiceRoleInstanceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        BinaryData IPersistableModel<CloudServiceRoleInstanceData>.Write(ModelReaderWriterOptions options)
+            => throw new NotSupportedException("CloudService operations are no longer supported.");
     }
 }

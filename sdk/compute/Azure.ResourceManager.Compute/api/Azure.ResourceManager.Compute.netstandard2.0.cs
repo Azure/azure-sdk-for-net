@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Compute
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     [System.ObsoleteAttribute("CloudService operations are no longer supported.")]
-    public partial class CloudServiceData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class CloudServiceData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.CloudServiceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.CloudServiceData>
     {
         public CloudServiceData(Azure.Core.AzureLocation location) { }
         public bool? AllowModelOverride { get { throw null; } set { } }
@@ -243,6 +243,11 @@ namespace Azure.ResourceManager.Compute
         public string UniqueId { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.CloudServiceUpgradeMode? UpgradeMode { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Zones { get { throw null; } set { } }
+        Azure.ResourceManager.Compute.CloudServiceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.CloudServiceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.CloudServiceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Compute.CloudServiceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.CloudServiceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.CloudServiceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.CloudServiceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.ObsoleteAttribute("CloudService operations are no longer supported.")]
     public partial class CloudServiceOSFamilyCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Compute.CloudServiceOSFamilyResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.CloudServiceOSFamilyResource>, System.Collections.IEnumerable
@@ -261,7 +266,7 @@ namespace Azure.ResourceManager.Compute
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     [System.ObsoleteAttribute("CloudService operations are no longer supported.")]
-    public partial class CloudServiceOSFamilyData : Azure.ResourceManager.Models.ResourceData
+    public partial class CloudServiceOSFamilyData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.CloudServiceOSFamilyData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.CloudServiceOSFamilyData>
     {
         internal CloudServiceOSFamilyData() { }
         public string Label { get { throw null; } }
@@ -269,9 +274,14 @@ namespace Azure.ResourceManager.Compute
         public string OSFamilyName { get { throw null; } }
         public string ResourceName { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.OSVersionPropertiesBase> Versions { get { throw null; } }
+        Azure.ResourceManager.Compute.CloudServiceOSFamilyData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.CloudServiceOSFamilyData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.CloudServiceOSFamilyData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Compute.CloudServiceOSFamilyData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.CloudServiceOSFamilyData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.CloudServiceOSFamilyData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.CloudServiceOSFamilyData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.ObsoleteAttribute("CloudService operations are no longer supported.")]
-    public partial class CloudServiceOSFamilyResource : Azure.ResourceManager.ArmResource
+    public partial class CloudServiceOSFamilyResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.CloudServiceOSFamilyData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.CloudServiceOSFamilyData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected CloudServiceOSFamilyResource() { }
@@ -280,6 +290,11 @@ namespace Azure.ResourceManager.Compute
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, Azure.Core.AzureLocation location, string osFamilyName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.CloudServiceOSFamilyResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.CloudServiceOSFamilyResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Compute.CloudServiceOSFamilyData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.CloudServiceOSFamilyData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.CloudServiceOSFamilyData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Compute.CloudServiceOSFamilyData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.CloudServiceOSFamilyData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.CloudServiceOSFamilyData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.CloudServiceOSFamilyData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.ObsoleteAttribute("CloudService operations are no longer supported.")]
     public partial class CloudServiceOSVersionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Compute.CloudServiceOSVersionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.CloudServiceOSVersionResource>, System.Collections.IEnumerable
@@ -298,7 +313,7 @@ namespace Azure.ResourceManager.Compute
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     [System.ObsoleteAttribute("CloudService operations are no longer supported.")]
-    public partial class CloudServiceOSVersionData : Azure.ResourceManager.Models.ResourceData
+    public partial class CloudServiceOSVersionData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.CloudServiceOSVersionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.CloudServiceOSVersionData>
     {
         internal CloudServiceOSVersionData() { }
         public string Family { get { throw null; } }
@@ -308,9 +323,14 @@ namespace Azure.ResourceManager.Compute
         public string Label { get { throw null; } }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public string Version { get { throw null; } }
+        Azure.ResourceManager.Compute.CloudServiceOSVersionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.CloudServiceOSVersionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.CloudServiceOSVersionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Compute.CloudServiceOSVersionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.CloudServiceOSVersionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.CloudServiceOSVersionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.CloudServiceOSVersionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.ObsoleteAttribute("CloudService operations are no longer supported.")]
-    public partial class CloudServiceOSVersionResource : Azure.ResourceManager.ArmResource
+    public partial class CloudServiceOSVersionResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.CloudServiceOSVersionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.CloudServiceOSVersionData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected CloudServiceOSVersionResource() { }
@@ -319,9 +339,14 @@ namespace Azure.ResourceManager.Compute
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, Azure.Core.AzureLocation location, string osVersionName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.CloudServiceOSVersionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.CloudServiceOSVersionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Compute.CloudServiceOSVersionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.CloudServiceOSVersionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.CloudServiceOSVersionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Compute.CloudServiceOSVersionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.CloudServiceOSVersionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.CloudServiceOSVersionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.CloudServiceOSVersionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.ObsoleteAttribute("CloudService operations are no longer supported.")]
-    public partial class CloudServiceResource : Azure.ResourceManager.ArmResource
+    public partial class CloudServiceResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.CloudServiceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.CloudServiceData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected CloudServiceResource() { }
@@ -362,6 +387,11 @@ namespace Azure.ResourceManager.Compute
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> RestartAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Compute.Models.RoleInstances parameters = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.CloudServiceResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.CloudServiceResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Compute.CloudServiceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.CloudServiceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.CloudServiceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Compute.CloudServiceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.CloudServiceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.CloudServiceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.CloudServiceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.CloudServiceResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Compute.Models.CloudServicePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.CloudServiceResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Compute.Models.CloudServicePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation WalkUpdateDomain(Azure.WaitUntil waitUntil, int updateDomain, Azure.ResourceManager.Compute.Models.UpdateDomainIdentifier updateDomainIdentifier = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -384,12 +414,17 @@ namespace Azure.ResourceManager.Compute
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     [System.ObsoleteAttribute("CloudService operations are no longer supported.")]
-    public partial class CloudServiceRoleData : Azure.ResourceManager.Models.ResourceData
+    public partial class CloudServiceRoleData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.CloudServiceRoleData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.CloudServiceRoleData>
     {
         internal CloudServiceRoleData() { }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.CloudServiceRoleSku Sku { get { throw null; } }
         public string UniqueId { get { throw null; } }
+        Azure.ResourceManager.Compute.CloudServiceRoleData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.CloudServiceRoleData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.CloudServiceRoleData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Compute.CloudServiceRoleData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.CloudServiceRoleData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.CloudServiceRoleData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.CloudServiceRoleData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.ObsoleteAttribute("CloudService operations are no longer supported.")]
     public partial class CloudServiceRoleInstanceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Compute.CloudServiceRoleInstanceResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.CloudServiceRoleInstanceResource>, System.Collections.IEnumerable
@@ -408,7 +443,7 @@ namespace Azure.ResourceManager.Compute
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     [System.ObsoleteAttribute("CloudService operations are no longer supported.")]
-    public partial class CloudServiceRoleInstanceData : Azure.ResourceManager.Models.ResourceData
+    public partial class CloudServiceRoleInstanceData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.CloudServiceRoleInstanceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.CloudServiceRoleInstanceData>
     {
         internal CloudServiceRoleInstanceData() { }
         public Azure.ResourceManager.Compute.Models.RoleInstanceView InstanceView { get { throw null; } }
@@ -416,9 +451,14 @@ namespace Azure.ResourceManager.Compute
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> NetworkInterfaces { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.InstanceSku Sku { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
+        Azure.ResourceManager.Compute.CloudServiceRoleInstanceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.CloudServiceRoleInstanceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.CloudServiceRoleInstanceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Compute.CloudServiceRoleInstanceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.CloudServiceRoleInstanceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.CloudServiceRoleInstanceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.CloudServiceRoleInstanceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.ObsoleteAttribute("CloudService operations are no longer supported.")]
-    public partial class CloudServiceRoleInstanceResource : Azure.ResourceManager.ArmResource
+    public partial class CloudServiceRoleInstanceResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.CloudServiceRoleInstanceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.CloudServiceRoleInstanceData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected CloudServiceRoleInstanceResource() { }
@@ -445,9 +485,14 @@ namespace Azure.ResourceManager.Compute
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> RestartAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.CloudServiceRoleInstanceResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.CloudServiceRoleInstanceResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Compute.CloudServiceRoleInstanceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.CloudServiceRoleInstanceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.CloudServiceRoleInstanceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Compute.CloudServiceRoleInstanceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.CloudServiceRoleInstanceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.CloudServiceRoleInstanceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.CloudServiceRoleInstanceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.ObsoleteAttribute("CloudService operations are no longer supported.")]
-    public partial class CloudServiceRoleResource : Azure.ResourceManager.ArmResource
+    public partial class CloudServiceRoleResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.CloudServiceRoleData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.CloudServiceRoleData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected CloudServiceRoleResource() { }
@@ -456,6 +501,11 @@ namespace Azure.ResourceManager.Compute
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string cloudServiceName, string roleName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.CloudServiceRoleResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.CloudServiceRoleResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Compute.CloudServiceRoleData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.CloudServiceRoleData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.CloudServiceRoleData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Compute.CloudServiceRoleData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.CloudServiceRoleData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.CloudServiceRoleData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.CloudServiceRoleData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class CommunityGalleryCollection : Azure.ResourceManager.ArmCollection
     {
@@ -3866,7 +3916,7 @@ namespace Azure.ResourceManager.Compute.Models
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.CapacityReservationUtilization>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.ObsoleteAttribute("CloudService operations are no longer supported.")]
-    public partial class CloudServiceExtension
+    public partial class CloudServiceExtension : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.CloudServiceExtension>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.CloudServiceExtension>
     {
         public CloudServiceExtension() { }
         public bool? AutoUpgradeMinorVersion { get { throw null; } set { } }
@@ -3880,52 +3930,87 @@ namespace Azure.ResourceManager.Compute.Models
         public System.Collections.Generic.IList<string> RolesAppliedTo { get { throw null; } set { } }
         public string Settings { get { throw null; } set { } }
         public string TypeHandlerVersion { get { throw null; } set { } }
+        Azure.ResourceManager.Compute.Models.CloudServiceExtension System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.CloudServiceExtension>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.CloudServiceExtension>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Compute.Models.CloudServiceExtension System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.CloudServiceExtension>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.CloudServiceExtension>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.CloudServiceExtension>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.ObsoleteAttribute("CloudService operations are no longer supported.")]
-    public partial class CloudServiceInstanceView
+    public partial class CloudServiceInstanceView : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.CloudServiceInstanceView>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.CloudServiceInstanceView>
     {
         internal CloudServiceInstanceView() { }
         public System.Collections.Generic.IReadOnlyList<string> PrivateIds { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.StatusCodeCount> RoleInstanceStatusesSummary { get { throw null; } }
         public string SdkVersion { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.ResourceInstanceViewStatus> Statuses { get { throw null; } }
+        Azure.ResourceManager.Compute.Models.CloudServiceInstanceView System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.CloudServiceInstanceView>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.CloudServiceInstanceView>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Compute.Models.CloudServiceInstanceView System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.CloudServiceInstanceView>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.CloudServiceInstanceView>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.CloudServiceInstanceView>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.ObsoleteAttribute("CloudService operations are no longer supported.")]
-    public partial class CloudServiceLoadBalancerConfiguration
+    public partial class CloudServiceLoadBalancerConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.CloudServiceLoadBalancerConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.CloudServiceLoadBalancerConfiguration>
     {
         public CloudServiceLoadBalancerConfiguration(string name, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.Models.LoadBalancerFrontendIPConfiguration> frontendIPConfigurations) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.LoadBalancerFrontendIPConfiguration> FrontendIPConfigurations { get { throw null; } }
         public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
+        Azure.ResourceManager.Compute.Models.CloudServiceLoadBalancerConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.CloudServiceLoadBalancerConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.CloudServiceLoadBalancerConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Compute.Models.CloudServiceLoadBalancerConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.CloudServiceLoadBalancerConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.CloudServiceLoadBalancerConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.CloudServiceLoadBalancerConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.ObsoleteAttribute("CloudService operations are no longer supported.")]
-    public partial class CloudServiceNetworkProfile
+    public partial class CloudServiceNetworkProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.CloudServiceNetworkProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.CloudServiceNetworkProfile>
     {
         public CloudServiceNetworkProfile() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.CloudServiceLoadBalancerConfiguration> LoadBalancerConfigurations { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.CloudServiceSlotType? SlotType { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SwappableCloudServiceId { get { throw null; } set { } }
+        Azure.ResourceManager.Compute.Models.CloudServiceNetworkProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.CloudServiceNetworkProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.CloudServiceNetworkProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Compute.Models.CloudServiceNetworkProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.CloudServiceNetworkProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.CloudServiceNetworkProfile>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.CloudServiceNetworkProfile>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.ObsoleteAttribute("CloudService operations are no longer supported.")]
-    public partial class CloudServicePatch
+    public partial class CloudServicePatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.CloudServicePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.CloudServicePatch>
     {
         public CloudServicePatch() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } set { } }
+        Azure.ResourceManager.Compute.Models.CloudServicePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.CloudServicePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.CloudServicePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Compute.Models.CloudServicePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.CloudServicePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.CloudServicePatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.CloudServicePatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.ObsoleteAttribute("CloudService operations are no longer supported.")]
-    public partial class CloudServiceRoleProfileProperties
+    public partial class CloudServiceRoleProfileProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.CloudServiceRoleProfileProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.CloudServiceRoleProfileProperties>
     {
         public CloudServiceRoleProfileProperties() { }
         public string Name { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.CloudServiceRoleSku Sku { get { throw null; } set { } }
+        Azure.ResourceManager.Compute.Models.CloudServiceRoleProfileProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.CloudServiceRoleProfileProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.CloudServiceRoleProfileProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Compute.Models.CloudServiceRoleProfileProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.CloudServiceRoleProfileProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.CloudServiceRoleProfileProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.CloudServiceRoleProfileProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.ObsoleteAttribute("CloudService operations are no longer supported.")]
-    public partial class CloudServiceRoleSku
+    public partial class CloudServiceRoleSku : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.CloudServiceRoleSku>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.CloudServiceRoleSku>
     {
         public CloudServiceRoleSku() { }
         public long? Capacity { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public string Tier { get { throw null; } set { } }
+        Azure.ResourceManager.Compute.Models.CloudServiceRoleSku System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.CloudServiceRoleSku>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.CloudServiceRoleSku>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Compute.Models.CloudServiceRoleSku System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.CloudServiceRoleSku>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.CloudServiceRoleSku>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.CloudServiceRoleSku>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.ObsoleteAttribute("CloudService operations are no longer supported.")]
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -3963,25 +4048,40 @@ namespace Azure.ResourceManager.Compute.Models
         public override string ToString() { throw null; }
     }
     [System.ObsoleteAttribute("CloudService operations are no longer supported.")]
-    public partial class CloudServiceVaultAndSecretReference
+    public partial class CloudServiceVaultAndSecretReference : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.CloudServiceVaultAndSecretReference>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.CloudServiceVaultAndSecretReference>
     {
         public CloudServiceVaultAndSecretReference() { }
         public System.Uri SecretUri { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SourceVaultId { get { throw null; } set { } }
+        Azure.ResourceManager.Compute.Models.CloudServiceVaultAndSecretReference System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.CloudServiceVaultAndSecretReference>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.CloudServiceVaultAndSecretReference>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Compute.Models.CloudServiceVaultAndSecretReference System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.CloudServiceVaultAndSecretReference>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.CloudServiceVaultAndSecretReference>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.CloudServiceVaultAndSecretReference>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.ObsoleteAttribute("CloudService operations are no longer supported.")]
-    public partial class CloudServiceVaultCertificate
+    public partial class CloudServiceVaultCertificate : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.CloudServiceVaultCertificate>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.CloudServiceVaultCertificate>
     {
         public CloudServiceVaultCertificate() { }
         public System.Uri CertificateUri { get { throw null; } set { } }
         public bool? IsBootstrapCertificate { get { throw null; } set { } }
+        Azure.ResourceManager.Compute.Models.CloudServiceVaultCertificate System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.CloudServiceVaultCertificate>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.CloudServiceVaultCertificate>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Compute.Models.CloudServiceVaultCertificate System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.CloudServiceVaultCertificate>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.CloudServiceVaultCertificate>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.CloudServiceVaultCertificate>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.ObsoleteAttribute("CloudService operations are no longer supported.")]
-    public partial class CloudServiceVaultSecretGroup
+    public partial class CloudServiceVaultSecretGroup : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.CloudServiceVaultSecretGroup>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.CloudServiceVaultSecretGroup>
     {
         public CloudServiceVaultSecretGroup() { }
         public Azure.Core.ResourceIdentifier SourceVaultId { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.CloudServiceVaultCertificate> VaultCertificates { get { throw null; } set { } }
+        Azure.ResourceManager.Compute.Models.CloudServiceVaultSecretGroup System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.CloudServiceVaultSecretGroup>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.CloudServiceVaultSecretGroup>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Compute.Models.CloudServiceVaultSecretGroup System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.CloudServiceVaultSecretGroup>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.CloudServiceVaultSecretGroup>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.CloudServiceVaultSecretGroup>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class CommunityGalleryImageIdentifier : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.CommunityGalleryImageIdentifier>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.CommunityGalleryImageIdentifier>
     {
@@ -6876,11 +6976,16 @@ namespace Azure.ResourceManager.Compute.Models
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.InnerError>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.ObsoleteAttribute("CloudService operations are no longer supported.")]
-    public partial class InstanceSku
+    public partial class InstanceSku : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.InstanceSku>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.InstanceSku>
     {
         internal InstanceSku() { }
         public string Name { get { throw null; } }
         public string Tier { get { throw null; } }
+        Azure.ResourceManager.Compute.Models.InstanceSku System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.InstanceSku>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.InstanceSku>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Compute.Models.InstanceSku System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.InstanceSku>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.InstanceSku>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.InstanceSku>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class InstanceViewStatus : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.InstanceViewStatus>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.InstanceViewStatus>
     {
@@ -7166,13 +7271,18 @@ namespace Azure.ResourceManager.Compute.Models
         public override string ToString() { throw null; }
     }
     [System.ObsoleteAttribute("CloudService operations are no longer supported.")]
-    public partial class LoadBalancerFrontendIPConfiguration
+    public partial class LoadBalancerFrontendIPConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.LoadBalancerFrontendIPConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.LoadBalancerFrontendIPConfiguration>
     {
         public LoadBalancerFrontendIPConfiguration(string name) { }
         public string Name { get { throw null; } set { } }
         public string PrivateIPAddress { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier PublicIPAddressId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
+        Azure.ResourceManager.Compute.Models.LoadBalancerFrontendIPConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.LoadBalancerFrontendIPConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.LoadBalancerFrontendIPConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Compute.Models.LoadBalancerFrontendIPConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.LoadBalancerFrontendIPConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.LoadBalancerFrontendIPConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.LoadBalancerFrontendIPConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class LogAnalytics : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.LogAnalytics>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.LogAnalytics>
     {
@@ -7613,13 +7723,18 @@ namespace Azure.ResourceManager.Compute.Models
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.OSProfileProvisioningData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.ObsoleteAttribute("CloudService operations are no longer supported.")]
-    public partial class OSVersionPropertiesBase
+    public partial class OSVersionPropertiesBase : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.OSVersionPropertiesBase>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.OSVersionPropertiesBase>
     {
         internal OSVersionPropertiesBase() { }
         public bool? IsActive { get { throw null; } }
         public bool? IsDefault { get { throw null; } }
         public string Label { get { throw null; } }
         public string Version { get { throw null; } }
+        Azure.ResourceManager.Compute.Models.OSVersionPropertiesBase System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.OSVersionPropertiesBase>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.OSVersionPropertiesBase>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Compute.Models.OSVersionPropertiesBase System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.OSVersionPropertiesBase>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.OSVersionPropertiesBase>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.OSVersionPropertiesBase>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public enum PassNames
     {
@@ -8157,7 +8272,7 @@ namespace Azure.ResourceManager.Compute.Models
         public override string ToString() { throw null; }
     }
     [System.ObsoleteAttribute("CloudService operations are no longer supported.")]
-    public partial class ResourceInstanceViewStatus
+    public partial class ResourceInstanceViewStatus : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.ResourceInstanceViewStatus>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.ResourceInstanceViewStatus>
     {
         internal ResourceInstanceViewStatus() { }
         public string Code { get { throw null; } }
@@ -8165,6 +8280,11 @@ namespace Azure.ResourceManager.Compute.Models
         public Azure.ResourceManager.Compute.Models.ComputeStatusLevelType? Level { get { throw null; } }
         public string Message { get { throw null; } }
         public System.DateTimeOffset? Time { get { throw null; } }
+        Azure.ResourceManager.Compute.Models.ResourceInstanceViewStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.ResourceInstanceViewStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.ResourceInstanceViewStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Compute.Models.ResourceInstanceViewStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.ResourceInstanceViewStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.ResourceInstanceViewStatus>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.ResourceInstanceViewStatus>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ResourceRange : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.ResourceRange>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.ResourceRange>
     {
@@ -8406,19 +8526,29 @@ namespace Azure.ResourceManager.Compute.Models
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.RetrieveBootDiagnosticsDataResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.ObsoleteAttribute("CloudService operations are no longer supported.")]
-    public partial class RoleInstances
+    public partial class RoleInstances : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.RoleInstances>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.RoleInstances>
     {
         public RoleInstances(System.Collections.Generic.IEnumerable<string> roleInstancesValue) { }
         public System.Collections.Generic.IList<string> RoleInstancesValue { get { throw null; } }
+        Azure.ResourceManager.Compute.Models.RoleInstances System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.RoleInstances>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.RoleInstances>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Compute.Models.RoleInstances System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.RoleInstances>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.RoleInstances>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.RoleInstances>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.ObsoleteAttribute("CloudService operations are no longer supported.")]
-    public partial class RoleInstanceView
+    public partial class RoleInstanceView : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.RoleInstanceView>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.RoleInstanceView>
     {
         internal RoleInstanceView() { }
         public int? PlatformFaultDomain { get { throw null; } }
         public int? PlatformUpdateDomain { get { throw null; } }
         public string PrivateId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.ResourceInstanceViewStatus> Statuses { get { throw null; } }
+        Azure.ResourceManager.Compute.Models.RoleInstanceView System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.RoleInstanceView>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.RoleInstanceView>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Compute.Models.RoleInstanceView System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.RoleInstanceView>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.RoleInstanceView>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.RoleInstanceView>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class RollbackStatusInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.RollbackStatusInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.RollbackStatusInfo>
     {
@@ -9177,11 +9307,16 @@ namespace Azure.ResourceManager.Compute.Models
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.SshPublicKeyPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.ObsoleteAttribute("CloudService operations are no longer supported.")]
-    public partial class StatusCodeCount
+    public partial class StatusCodeCount : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.StatusCodeCount>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.StatusCodeCount>
     {
         internal StatusCodeCount() { }
         public string Code { get { throw null; } }
         public int? Count { get { throw null; } }
+        Azure.ResourceManager.Compute.Models.StatusCodeCount System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.StatusCodeCount>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.StatusCodeCount>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Compute.Models.StatusCodeCount System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.StatusCodeCount>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.StatusCodeCount>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.StatusCodeCount>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct StorageAccountStrategy : System.IEquatable<Azure.ResourceManager.Compute.Models.StorageAccountStrategy>
@@ -9403,11 +9538,16 @@ namespace Azure.ResourceManager.Compute.Models
         public override string ToString() { throw null; }
     }
     [System.ObsoleteAttribute("CloudService operations are no longer supported.")]
-    public partial class UpdateDomainIdentifier
+    public partial class UpdateDomainIdentifier : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.UpdateDomainIdentifier>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.UpdateDomainIdentifier>
     {
         public UpdateDomainIdentifier() { }
         public Azure.Core.ResourceIdentifier Id { get { throw null; } }
         public string Name { get { throw null; } }
+        Azure.ResourceManager.Compute.Models.UpdateDomainIdentifier System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.UpdateDomainIdentifier>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.UpdateDomainIdentifier>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Compute.Models.UpdateDomainIdentifier System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.UpdateDomainIdentifier>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.UpdateDomainIdentifier>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.UpdateDomainIdentifier>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class UpdateResourceDefinition : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.UpdateResourceDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.UpdateResourceDefinition>
     {
