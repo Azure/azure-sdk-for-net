@@ -612,7 +612,9 @@ namespace Azure.Generator.Mgmt.Tests
                 preVisitPublicCtor!.Signature.Parameters.Any(p => p.Type.Name == "WrapperModel"),
                 "Precondition: DerivedModel ctor should have WrapperModel param before flatten");
 
-            // Run only the FlattenPropertyVisitor on both models (base must be processed first to populate the flatten map).
+            // Visit only the derived model; FlattenModel recurses into the base automatically
+            // (via the base-first recursion guard), so a separate invocation for baseModelProvider
+            // is not needed.
             var visitor = new FlattenPropertyVisitor();
             var visitTypeCore = typeof(LibraryVisitor).GetMethod(
                 "VisitTypeCore",
@@ -620,7 +622,6 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.IsNotNull(visitTypeCore);
 
             visitTypeCore!.Invoke(visitor, [derivedModelProvider]);
-            visitTypeCore!.Invoke(visitor, [baseModelProvider]);
 
             // After visitors: DerivedModel public ctor should use the flattened type (string), not WrapperModel.
             var publicCtor = derivedModelProvider.Constructors

@@ -635,7 +635,20 @@ namespace Azure.Generator.Management.Visitors
                 var flattenedProperties = propertyMap.Values.SelectMany(x => x.Select(item => item.FlattenedProperty));
                 model.Update(properties: [.. model.Properties, .. flattenedProperties]);
                 _flattenedModelTypes.Add(model.Type, propertyNameMap);
-                UpdatePublicConstructor(model, propertyNameMap);
+
+                // If the base model was also flattened, merge its property name map so that
+                // inherited constructor parameters (from the base's flattening) are also updated.
+                var effectiveMap = propertyNameMap;
+                if (model.BaseModelProvider is ModelProvider flattenedBaseProvider
+                    && _flattenedModelTypes.TryGetValue(flattenedBaseProvider.Type, out var baseMap))
+                {
+                    effectiveMap = new Dictionary<string, List<FlattenPropertyInfo>>(propertyNameMap);
+                    foreach (var (key, value) in baseMap)
+                    {
+                        effectiveMap.TryAdd(key, value);
+                    }
+                }
+                UpdatePublicConstructor(model, effectiveMap);
             }
             else if (model.BaseModelProvider is ModelProvider flattenedBase && _flattenedModelTypes.TryGetValue(flattenedBase.Type, out var basePropertyNameMap))
             {
