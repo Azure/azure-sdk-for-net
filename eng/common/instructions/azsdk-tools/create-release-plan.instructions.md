@@ -1,3 +1,8 @@
+---
+description: 'Create and manage release plans for Azure SDK releases'
+related_skill: "azsdk-common-prepare-release-plan"
+---
+
 > **Related Skill:** See `.github/skills/azsdk-common-prepare-release-plan/SKILL.md` for the high-level release plan workflow and MCP tool reference. This instruction file provides the detailed step-by-step interaction flow.
 
 > **CRITICAL INSTRUCTIONS FOR LLM**
