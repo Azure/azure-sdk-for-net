@@ -10,78 +10,132 @@ using System.ComponentModel;
 
 namespace Azure.Storage.Blobs.Batch.Models
 {
-    /// <summary> The BatchAccessTier. </summary>
     internal readonly partial struct BatchAccessTier : IEquatable<BatchAccessTier>
     {
         private readonly string _value;
+        /// <summary> The hot P4 tier. </summary>
+        private const string P4Value = "P4";
+        /// <summary> The hot P6 tier. </summary>
+        private const string P6Value = "P6";
+        /// <summary> The hot P10 tier. </summary>
+        private const string P10Value = "P10";
+        /// <summary> The hot P15 tier. </summary>
+        private const string P15Value = "P15";
+        /// <summary> The hot P20 tier. </summary>
+        private const string P20Value = "P20";
+        /// <summary> The hot P30 tier. </summary>
+        private const string P30Value = "P30";
+        /// <summary> The hot P40 tier. </summary>
+        private const string P40Value = "P40";
+        /// <summary> The hot P50 tier. </summary>
+        private const string P50Value = "P50";
+        /// <summary> The hot P60 tier. </summary>
+        private const string P60Value = "P60";
+        /// <summary> The hot P70 tier. </summary>
+        private const string P70Value = "P70";
+        /// <summary> The hot P80 tier. </summary>
+        private const string P80Value = "P80";
+        /// <summary> The hot access tier. </summary>
+        private const string HotValue = "Hot";
+        /// <summary> The cool access tier. </summary>
+        private const string CoolValue = "Cool";
+        /// <summary> The archive access tier. </summary>
+        private const string ArchiveValue = "Archive";
+        /// <summary> The Premium access tier. </summary>
+        private const string PremiumValue = "Premium";
+        /// <summary> The Cold access tier. </summary>
+        private const string ColdValue = "Cold";
+        /// <summary> The Smart access tier. </summary>
+        private const string SmartValue = "Smart";
 
         /// <summary> Initializes a new instance of <see cref="BatchAccessTier"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <param name="value"> The value. </param>
         public BatchAccessTier(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            _value = value;
         }
 
-        private const string P4Value = "P4";
-        private const string P6Value = "P6";
-        private const string P10Value = "P10";
-        private const string P15Value = "P15";
-        private const string P20Value = "P20";
-        private const string P30Value = "P30";
-        private const string P40Value = "P40";
-        private const string P50Value = "P50";
-        private const string P60Value = "P60";
-        private const string P70Value = "P70";
-        private const string P80Value = "P80";
-        private const string HotValue = "Hot";
-        private const string CoolValue = "Cool";
-        private const string ArchiveValue = "Archive";
-
-        /// <summary> P4. </summary>
+        /// <summary> The hot P4 tier. </summary>
         public static BatchAccessTier P4 { get; } = new BatchAccessTier(P4Value);
-        /// <summary> P6. </summary>
+
+        /// <summary> The hot P6 tier. </summary>
         public static BatchAccessTier P6 { get; } = new BatchAccessTier(P6Value);
-        /// <summary> P10. </summary>
+
+        /// <summary> The hot P10 tier. </summary>
         public static BatchAccessTier P10 { get; } = new BatchAccessTier(P10Value);
-        /// <summary> P15. </summary>
+
+        /// <summary> The hot P15 tier. </summary>
         public static BatchAccessTier P15 { get; } = new BatchAccessTier(P15Value);
-        /// <summary> P20. </summary>
+
+        /// <summary> The hot P20 tier. </summary>
         public static BatchAccessTier P20 { get; } = new BatchAccessTier(P20Value);
-        /// <summary> P30. </summary>
+
+        /// <summary> The hot P30 tier. </summary>
         public static BatchAccessTier P30 { get; } = new BatchAccessTier(P30Value);
-        /// <summary> P40. </summary>
+
+        /// <summary> The hot P40 tier. </summary>
         public static BatchAccessTier P40 { get; } = new BatchAccessTier(P40Value);
-        /// <summary> P50. </summary>
+
+        /// <summary> The hot P50 tier. </summary>
         public static BatchAccessTier P50 { get; } = new BatchAccessTier(P50Value);
-        /// <summary> P60. </summary>
+
+        /// <summary> The hot P60 tier. </summary>
         public static BatchAccessTier P60 { get; } = new BatchAccessTier(P60Value);
-        /// <summary> P70. </summary>
+
+        /// <summary> The hot P70 tier. </summary>
         public static BatchAccessTier P70 { get; } = new BatchAccessTier(P70Value);
-        /// <summary> P80. </summary>
+
+        /// <summary> The hot P80 tier. </summary>
         public static BatchAccessTier P80 { get; } = new BatchAccessTier(P80Value);
-        /// <summary> Hot. </summary>
+
+        /// <summary> The hot access tier. </summary>
         public static BatchAccessTier Hot { get; } = new BatchAccessTier(HotValue);
-        /// <summary> Cool. </summary>
+
+        /// <summary> The cool access tier. </summary>
         public static BatchAccessTier Cool { get; } = new BatchAccessTier(CoolValue);
-        /// <summary> Archive. </summary>
+
+        /// <summary> The archive access tier. </summary>
         public static BatchAccessTier Archive { get; } = new BatchAccessTier(ArchiveValue);
+
+        /// <summary> The Premium access tier. </summary>
+        public static BatchAccessTier Premium { get; } = new BatchAccessTier(PremiumValue);
+
+        /// <summary> The Cold access tier. </summary>
+        public static BatchAccessTier Cold { get; } = new BatchAccessTier(ColdValue);
+
+        /// <summary> The Smart access tier. </summary>
+        public static BatchAccessTier Smart { get; } = new BatchAccessTier(SmartValue);
+
         /// <summary> Determines if two <see cref="BatchAccessTier"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BatchAccessTier left, BatchAccessTier right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BatchAccessTier"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BatchAccessTier left, BatchAccessTier right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BatchAccessTier"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BatchAccessTier"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BatchAccessTier(string value) => new BatchAccessTier(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BatchAccessTier"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BatchAccessTier?(string value) => value == null ? null : new BatchAccessTier(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BatchAccessTier other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BatchAccessTier other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

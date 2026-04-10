@@ -11,17 +11,20 @@ namespace Azure.Storage.Blobs.Batch.Models
 {
     internal static partial class BlobDeleteTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this BlobDeleteType value) => value switch
         {
-            BlobDeleteType.None => "None",
             BlobDeleteType.Permanent => "Permanent",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BlobDeleteType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static BlobDeleteType ToBlobDeleteType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None")) return BlobDeleteType.None;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Permanent")) return BlobDeleteType.Permanent;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Permanent"))
+            {
+                return BlobDeleteType.Permanent;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BlobDeleteType value.");
         }
     }
