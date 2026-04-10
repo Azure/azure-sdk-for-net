@@ -13,4 +13,3 @@ extends:
       safeName: AzureResourceManagerEventGrid
     - name: Azure.Provisioning.EventGrid
       safeName: AzureProvisioningEventGrid
-    TestDependsOnDependency: Azure.Provisioning.EventGrid

@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql
 {
@@ -24,69 +25,75 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
     /// </summary>
     public partial class CosmosDBForPostgreSqlConfigurationCollection : ArmCollection, IEnumerable<CosmosDBForPostgreSqlConfigurationResource>, IAsyncEnumerable<CosmosDBForPostgreSqlConfigurationResource>
     {
-        private readonly ClientDiagnostics _cosmosDBForPostgreSqlConfigurationConfigurationsClientDiagnostics;
-        private readonly ConfigurationsRestOperations _cosmosDBForPostgreSqlConfigurationConfigurationsRestClient;
+        private readonly ClientDiagnostics _configurationsClientDiagnostics;
+        private readonly Configurations _configurationsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="CosmosDBForPostgreSqlConfigurationCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlConfigurationCollection for mocking. </summary>
         protected CosmosDBForPostgreSqlConfigurationCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="CosmosDBForPostgreSqlConfigurationCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlConfigurationCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal CosmosDBForPostgreSqlConfigurationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _cosmosDBForPostgreSqlConfigurationConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDBForPostgreSql", CosmosDBForPostgreSqlConfigurationResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(CosmosDBForPostgreSqlConfigurationResource.ResourceType, out string cosmosDBForPostgreSqlConfigurationConfigurationsApiVersion);
-            _cosmosDBForPostgreSqlConfigurationConfigurationsRestClient = new ConfigurationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, cosmosDBForPostgreSqlConfigurationConfigurationsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(CosmosDBForPostgreSqlConfigurationResource.ResourceType, out string cosmosDBForPostgreSqlConfigurationApiVersion);
+            _configurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDBForPostgreSql", CosmosDBForPostgreSqlConfigurationResource.ResourceType.Namespace, Diagnostics);
+            _configurationsRestClient = new Configurations(_configurationsClientDiagnostics, Pipeline, Endpoint, cosmosDBForPostgreSqlConfigurationApiVersion ?? "2023-03-02-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != CosmosDBForPostgreSqlClusterResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, CosmosDBForPostgreSqlClusterResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, CosmosDBForPostgreSqlClusterResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets information of a configuration for coordinator and nodes.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/{clusterName}/configurations/{configurationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/{clusterName}/configurations/{configurationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Configurations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Configurations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-11-08</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBForPostgreSqlConfigurationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-03-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="configurationName"> The name of the cluster configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<CosmosDBForPostgreSqlConfigurationResource>> GetAsync(string configurationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
 
-            using var scope = _cosmosDBForPostgreSqlConfigurationConfigurationsClientDiagnostics.CreateScope("CosmosDBForPostgreSqlConfigurationCollection.Get");
+            using DiagnosticScope scope = _configurationsClientDiagnostics.CreateScope("CosmosDBForPostgreSqlConfigurationCollection.Get");
             scope.Start();
             try
             {
-                var response = await _cosmosDBForPostgreSqlConfigurationConfigurationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _configurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configurationName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<CosmosDBForPostgreSqlConfigurationData> response = Response.FromValue(CosmosDBForPostgreSqlConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new CosmosDBForPostgreSqlConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -100,38 +107,42 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// Gets information of a configuration for coordinator and nodes.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/{clusterName}/configurations/{configurationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/{clusterName}/configurations/{configurationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Configurations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Configurations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-11-08</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBForPostgreSqlConfigurationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-03-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="configurationName"> The name of the cluster configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<CosmosDBForPostgreSqlConfigurationResource> Get(string configurationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
 
-            using var scope = _cosmosDBForPostgreSqlConfigurationConfigurationsClientDiagnostics.CreateScope("CosmosDBForPostgreSqlConfigurationCollection.Get");
+            using DiagnosticScope scope = _configurationsClientDiagnostics.CreateScope("CosmosDBForPostgreSqlConfigurationCollection.Get");
             scope.Start();
             try
             {
-                var response = _cosmosDBForPostgreSqlConfigurationConfigurationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _configurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configurationName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<CosmosDBForPostgreSqlConfigurationData> response = Response.FromValue(CosmosDBForPostgreSqlConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new CosmosDBForPostgreSqlConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -145,50 +156,50 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// List all the configurations of a cluster.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/{clusterName}/configurations</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/{clusterName}/configurations. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Configurations_ListByCluster</description>
+        /// <term> Operation Id. </term>
+        /// <description> Configurations_ListByCluster. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-11-08</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBForPostgreSqlConfigurationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-03-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CosmosDBForPostgreSqlConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CosmosDBForPostgreSqlConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CosmosDBForPostgreSqlConfigurationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBForPostgreSqlConfigurationConfigurationsRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cosmosDBForPostgreSqlConfigurationConfigurationsRestClient.CreateListByClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CosmosDBForPostgreSqlConfigurationResource(Client, CosmosDBForPostgreSqlConfigurationData.DeserializeCosmosDBForPostgreSqlConfigurationData(e)), _cosmosDBForPostgreSqlConfigurationConfigurationsClientDiagnostics, Pipeline, "CosmosDBForPostgreSqlConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<CosmosDBForPostgreSqlConfigurationData, CosmosDBForPostgreSqlConfigurationResource>(new ConfigurationsGetByClusterAsyncCollectionResultOfT(
+                _configurationsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "CosmosDBForPostgreSqlConfigurationCollection.GetAll"), data => new CosmosDBForPostgreSqlConfigurationResource(Client, data));
         }
 
         /// <summary>
         /// List all the configurations of a cluster.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/{clusterName}/configurations</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/{clusterName}/configurations. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Configurations_ListByCluster</description>
+        /// <term> Operation Id. </term>
+        /// <description> Configurations_ListByCluster. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-11-08</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBForPostgreSqlConfigurationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-03-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -196,45 +207,67 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <returns> A collection of <see cref="CosmosDBForPostgreSqlConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CosmosDBForPostgreSqlConfigurationResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBForPostgreSqlConfigurationConfigurationsRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cosmosDBForPostgreSqlConfigurationConfigurationsRestClient.CreateListByClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CosmosDBForPostgreSqlConfigurationResource(Client, CosmosDBForPostgreSqlConfigurationData.DeserializeCosmosDBForPostgreSqlConfigurationData(e)), _cosmosDBForPostgreSqlConfigurationConfigurationsClientDiagnostics, Pipeline, "CosmosDBForPostgreSqlConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<CosmosDBForPostgreSqlConfigurationData, CosmosDBForPostgreSqlConfigurationResource>(new ConfigurationsGetByClusterCollectionResultOfT(
+                _configurationsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "CosmosDBForPostgreSqlConfigurationCollection.GetAll"), data => new CosmosDBForPostgreSqlConfigurationResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/{clusterName}/configurations/{configurationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/{clusterName}/configurations/{configurationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Configurations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Configurations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-11-08</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBForPostgreSqlConfigurationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-03-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="configurationName"> The name of the cluster configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string configurationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
 
-            using var scope = _cosmosDBForPostgreSqlConfigurationConfigurationsClientDiagnostics.CreateScope("CosmosDBForPostgreSqlConfigurationCollection.Exists");
+            using DiagnosticScope scope = _configurationsClientDiagnostics.CreateScope("CosmosDBForPostgreSqlConfigurationCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _cosmosDBForPostgreSqlConfigurationConfigurationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _configurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configurationName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<CosmosDBForPostgreSqlConfigurationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(CosmosDBForPostgreSqlConfigurationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((CosmosDBForPostgreSqlConfigurationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -248,36 +281,50 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/{clusterName}/configurations/{configurationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/{clusterName}/configurations/{configurationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Configurations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Configurations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-11-08</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBForPostgreSqlConfigurationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-03-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="configurationName"> The name of the cluster configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string configurationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
 
-            using var scope = _cosmosDBForPostgreSqlConfigurationConfigurationsClientDiagnostics.CreateScope("CosmosDBForPostgreSqlConfigurationCollection.Exists");
+            using DiagnosticScope scope = _configurationsClientDiagnostics.CreateScope("CosmosDBForPostgreSqlConfigurationCollection.Exists");
             scope.Start();
             try
             {
-                var response = _cosmosDBForPostgreSqlConfigurationConfigurationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _configurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configurationName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<CosmosDBForPostgreSqlConfigurationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(CosmosDBForPostgreSqlConfigurationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((CosmosDBForPostgreSqlConfigurationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -291,38 +338,54 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/{clusterName}/configurations/{configurationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/{clusterName}/configurations/{configurationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Configurations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Configurations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-11-08</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBForPostgreSqlConfigurationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-03-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="configurationName"> The name of the cluster configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<CosmosDBForPostgreSqlConfigurationResource>> GetIfExistsAsync(string configurationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
 
-            using var scope = _cosmosDBForPostgreSqlConfigurationConfigurationsClientDiagnostics.CreateScope("CosmosDBForPostgreSqlConfigurationCollection.GetIfExists");
+            using DiagnosticScope scope = _configurationsClientDiagnostics.CreateScope("CosmosDBForPostgreSqlConfigurationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _cosmosDBForPostgreSqlConfigurationConfigurationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _configurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configurationName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<CosmosDBForPostgreSqlConfigurationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(CosmosDBForPostgreSqlConfigurationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((CosmosDBForPostgreSqlConfigurationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<CosmosDBForPostgreSqlConfigurationResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new CosmosDBForPostgreSqlConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -336,38 +399,54 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/{clusterName}/configurations/{configurationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/{clusterName}/configurations/{configurationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Configurations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Configurations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-11-08</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBForPostgreSqlConfigurationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-03-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="configurationName"> The name of the cluster configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<CosmosDBForPostgreSqlConfigurationResource> GetIfExists(string configurationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
 
-            using var scope = _cosmosDBForPostgreSqlConfigurationConfigurationsClientDiagnostics.CreateScope("CosmosDBForPostgreSqlConfigurationCollection.GetIfExists");
+            using DiagnosticScope scope = _configurationsClientDiagnostics.CreateScope("CosmosDBForPostgreSqlConfigurationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _cosmosDBForPostgreSqlConfigurationConfigurationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _configurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configurationName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<CosmosDBForPostgreSqlConfigurationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(CosmosDBForPostgreSqlConfigurationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((CosmosDBForPostgreSqlConfigurationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<CosmosDBForPostgreSqlConfigurationResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new CosmosDBForPostgreSqlConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -387,6 +466,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<CosmosDBForPostgreSqlConfigurationResource> IAsyncEnumerable<CosmosDBForPostgreSqlConfigurationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

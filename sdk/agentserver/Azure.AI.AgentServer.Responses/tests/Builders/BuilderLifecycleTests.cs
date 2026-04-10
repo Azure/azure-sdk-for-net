@@ -411,7 +411,7 @@ public class BuilderLifecycleTests
         events.Add(ig.EmitPartialImage("base64chunk1"));
         events.Add(ig.EmitPartialImage("base64chunk2"));
         events.Add(ig.EmitCompleted());
-        events.Add(ig.EmitDone());
+        events.Add(ig.EmitDone("dGVzdC1pbWFnZS1kYXRh"));
 
         Assert.That(events.Count, Is.EqualTo(6));
         XAssert.IsType<ResponseOutputItemAddedEvent>(events[0]);

@@ -24,6 +24,7 @@ namespace Azure.ResourceManager.Sphere
         private readonly string _productName;
         private readonly string _deviceGroupName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of DevicesGetByDeviceGroupAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Devices client used to send requests. </param>
@@ -33,7 +34,8 @@ namespace Azure.ResourceManager.Sphere
         /// <param name="productName"> Name of product. </param>
         /// <param name="deviceGroupName"> Name of device group. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public DevicesGetByDeviceGroupAsyncCollectionResultOfT(Devices client, string subscriptionId, string resourceGroupName, string catalogName, string productName, string deviceGroupName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public DevicesGetByDeviceGroupAsyncCollectionResultOfT(Devices client, string subscriptionId, string resourceGroupName, string catalogName, string productName, string deviceGroupName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -42,6 +44,7 @@ namespace Azure.ResourceManager.Sphere
             _productName = productName;
             _deviceGroupName = deviceGroupName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of DevicesGetByDeviceGroupAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -74,7 +77,7 @@ namespace Azure.ResourceManager.Sphere
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByDeviceGroupRequest(nextLink, _subscriptionId, _resourceGroupName, _catalogName, _productName, _deviceGroupName, _context) : _client.CreateGetByDeviceGroupRequest(_subscriptionId, _resourceGroupName, _catalogName, _productName, _deviceGroupName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("SphereDeviceCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         private readonly string _hostPoolName;
         private readonly RequestContent _content;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of MSIXImagesExpandMsixImagesAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The MSIXImages client used to send requests. </param>
@@ -31,7 +32,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="hostPoolName"> The name of the host pool within the specified resource group. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public MSIXImagesExpandMsixImagesAsyncCollectionResultOfT(MSIXImages client, Guid subscriptionId, string resourceGroupName, string hostPoolName, RequestContent content, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public MSIXImagesExpandMsixImagesAsyncCollectionResultOfT(MSIXImages client, Guid subscriptionId, string resourceGroupName, string hostPoolName, RequestContent content, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -39,6 +41,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             _hostPoolName = hostPoolName;
             _content = content;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of MSIXImagesExpandMsixImagesAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -71,7 +74,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextExpandMsixImagesRequest(nextLink, _subscriptionId, _resourceGroupName, _hostPoolName, _content, _context) : _client.CreateExpandMsixImagesRequest(_subscriptionId, _resourceGroupName, _hostPoolName, _content, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("HostPoolResource.ExpandMsixImages");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

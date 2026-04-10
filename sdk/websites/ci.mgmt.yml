@@ -11,4 +11,3 @@ extends:
       safeName: AzureResourceManagerAppService
     - name: Azure.Provisioning.AppService
       safeName: AzureProvisioningAppService
-    TestDependsOnDependency: Azure.ResourceManager.AppService

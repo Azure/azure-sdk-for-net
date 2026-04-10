@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         {
             if (id.ResourceType != ContainerServiceFleetResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ContainerServiceFleetResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ContainerServiceFleetResource.ResourceType), nameof(id));
             }
         }
 
@@ -306,7 +306,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 Id.Name,
                 maxCount,
                 skipToken,
-                context), data => new FleetUpdateStrategyResource(Client, data));
+                context,
+                "FleetUpdateStrategyCollection.GetAll"), data => new FleetUpdateStrategyResource(Client, data));
         }
 
         /// <summary>
@@ -343,7 +344,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 Id.Name,
                 maxCount,
                 skipToken,
-                context), data => new FleetUpdateStrategyResource(Client, data));
+                context,
+                "FleetUpdateStrategyCollection.GetAll"), data => new FleetUpdateStrategyResource(Client, data));
         }
 
         /// <summary>

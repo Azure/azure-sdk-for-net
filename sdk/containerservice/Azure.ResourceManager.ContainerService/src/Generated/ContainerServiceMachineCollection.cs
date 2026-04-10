@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ContainerService
         {
             if (id.ResourceType != ContainerServiceAgentPoolResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ContainerServiceAgentPoolResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ContainerServiceAgentPoolResource.ResourceType), nameof(id));
             }
         }
 
@@ -301,7 +301,8 @@ namespace Azure.ResourceManager.ContainerService
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new ContainerServiceMachineResource(Client, data));
+                context,
+                "ContainerServiceMachineCollection.GetAll"), data => new ContainerServiceMachineResource(Client, data));
         }
 
         /// <summary>
@@ -335,7 +336,8 @@ namespace Azure.ResourceManager.ContainerService
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new ContainerServiceMachineResource(Client, data));
+                context,
+                "ContainerServiceMachineCollection.GetAll"), data => new ContainerServiceMachineResource(Client, data));
         }
 
         /// <summary>

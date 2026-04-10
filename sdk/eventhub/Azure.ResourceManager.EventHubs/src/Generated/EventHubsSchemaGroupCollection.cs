@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.EventHubs
         {
             if (id.ResourceType != EventHubsNamespaceResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, EventHubsNamespaceResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, EventHubsNamespaceResource.ResourceType), nameof(id));
             }
         }
 
@@ -296,7 +296,8 @@ namespace Azure.ResourceManager.EventHubs
                 Id.Name,
                 skip,
                 top,
-                context), data => new EventHubsSchemaGroupResource(Client, data));
+                context,
+                "EventHubsSchemaGroupCollection.GetAll"), data => new EventHubsSchemaGroupResource(Client, data));
         }
 
         /// <summary>
@@ -333,7 +334,8 @@ namespace Azure.ResourceManager.EventHubs
                 Id.Name,
                 skip,
                 top,
-                context), data => new EventHubsSchemaGroupResource(Client, data));
+                context,
+                "EventHubsSchemaGroupCollection.GetAll"), data => new EventHubsSchemaGroupResource(Client, data));
         }
 
         /// <summary>

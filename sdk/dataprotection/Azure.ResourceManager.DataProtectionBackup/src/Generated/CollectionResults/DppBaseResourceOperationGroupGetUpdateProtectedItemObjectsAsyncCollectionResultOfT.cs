@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         private readonly string _resourceGroupName;
         private readonly string _resourceGuardsName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of DppBaseResourceOperationGroupGetUpdateProtectedItemObjectsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The DppBaseResourceOperationGroup client used to send requests. </param>
@@ -29,13 +30,15 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public DppBaseResourceOperationGroupGetUpdateProtectedItemObjectsAsyncCollectionResultOfT(DppBaseResourceOperationGroup client, Guid subscriptionId, string resourceGroupName, string resourceGuardsName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public DppBaseResourceOperationGroupGetUpdateProtectedItemObjectsAsyncCollectionResultOfT(DppBaseResourceOperationGroup client, Guid subscriptionId, string resourceGroupName, string resourceGuardsName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
             _resourceGuardsName = resourceGuardsName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of DppBaseResourceOperationGroupGetUpdateProtectedItemObjectsAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -68,7 +71,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetUpdateProtectedItemObjectsRequest(nextLink, _subscriptionId, _resourceGroupName, _resourceGuardsName, _context) : _client.CreateGetUpdateProtectedItemObjectsRequest(_subscriptionId, _resourceGroupName, _resourceGuardsName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ResourceGuardResource.GetUpdateProtectedItemObjects");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

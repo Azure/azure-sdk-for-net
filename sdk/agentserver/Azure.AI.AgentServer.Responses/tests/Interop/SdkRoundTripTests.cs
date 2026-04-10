@@ -648,7 +648,7 @@ public class SdkRoundTripTests
         yield return ig.EmitInProgress();
         yield return ig.EmitGenerating();
         yield return ig.EmitCompleted();
-        yield return ig.EmitDone();
+        yield return ig.EmitDone("dGVzdC1pbWFnZS1kYXRh");
 
         yield return stream.EmitCompleted();
         await Task.CompletedTask;

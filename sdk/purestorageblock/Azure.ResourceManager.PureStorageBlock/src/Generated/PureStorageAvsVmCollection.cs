@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         {
             if (id.ResourceType != PureStoragePoolResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, PureStoragePoolResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, PureStoragePoolResource.ResourceType), nameof(id));
             }
         }
 
@@ -177,7 +177,13 @@ namespace Azure.ResourceManager.PureStorageBlock
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PureStorageAvsVmData, PureStorageAvsVmResource>(new AvsVmsGetByStoragePoolAsyncCollectionResultOfT(_avsVmsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new PureStorageAvsVmResource(Client, data));
+            return new AsyncPageableWrapper<PureStorageAvsVmData, PureStorageAvsVmResource>(new AvsVmsGetByStoragePoolAsyncCollectionResultOfT(
+                _avsVmsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "PureStorageAvsVmCollection.GetAll"), data => new PureStorageAvsVmResource(Client, data));
         }
 
         /// <summary>
@@ -205,7 +211,13 @@ namespace Azure.ResourceManager.PureStorageBlock
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PureStorageAvsVmData, PureStorageAvsVmResource>(new AvsVmsGetByStoragePoolCollectionResultOfT(_avsVmsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new PureStorageAvsVmResource(Client, data));
+            return new PageableWrapper<PureStorageAvsVmData, PureStorageAvsVmResource>(new AvsVmsGetByStoragePoolCollectionResultOfT(
+                _avsVmsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "PureStorageAvsVmCollection.GetAll"), data => new PureStorageAvsVmResource(Client, data));
         }
 
         /// <summary>

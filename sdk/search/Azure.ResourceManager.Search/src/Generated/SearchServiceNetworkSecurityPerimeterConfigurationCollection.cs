@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Search
         {
             if (id.ResourceType != SearchServiceResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SearchServiceResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SearchServiceResource.ResourceType), nameof(id));
             }
         }
 
@@ -177,7 +177,13 @@ namespace Azure.ResourceManager.Search
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SearchServiceNetworkSecurityPerimeterConfigurationData, SearchServiceNetworkSecurityPerimeterConfigurationResource>(new NetworkSecurityPerimeterConfigurationsGetByServiceAsyncCollectionResultOfT(_networkSecurityPerimeterConfigurationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new SearchServiceNetworkSecurityPerimeterConfigurationResource(Client, data));
+            return new AsyncPageableWrapper<SearchServiceNetworkSecurityPerimeterConfigurationData, SearchServiceNetworkSecurityPerimeterConfigurationResource>(new NetworkSecurityPerimeterConfigurationsGetByServiceAsyncCollectionResultOfT(
+                _networkSecurityPerimeterConfigurationsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "SearchServiceNetworkSecurityPerimeterConfigurationCollection.GetAll"), data => new SearchServiceNetworkSecurityPerimeterConfigurationResource(Client, data));
         }
 
         /// <summary>
@@ -205,7 +211,13 @@ namespace Azure.ResourceManager.Search
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SearchServiceNetworkSecurityPerimeterConfigurationData, SearchServiceNetworkSecurityPerimeterConfigurationResource>(new NetworkSecurityPerimeterConfigurationsGetByServiceCollectionResultOfT(_networkSecurityPerimeterConfigurationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new SearchServiceNetworkSecurityPerimeterConfigurationResource(Client, data));
+            return new PageableWrapper<SearchServiceNetworkSecurityPerimeterConfigurationData, SearchServiceNetworkSecurityPerimeterConfigurationResource>(new NetworkSecurityPerimeterConfigurationsGetByServiceCollectionResultOfT(
+                _networkSecurityPerimeterConfigurationsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "SearchServiceNetworkSecurityPerimeterConfigurationCollection.GetAll"), data => new SearchServiceNetworkSecurityPerimeterConfigurationResource(Client, data));
         }
 
         /// <summary>
