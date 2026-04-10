@@ -6,11 +6,25 @@ This package is automatically included in all Azure SDK libraries in this reposi
 
 ## Implemented Rules
 
-- [**AZC0012**](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/tools/Azure.SdkAnalyzers/docs/list-of-diagnostics.md#azc0012): Avoid single word type names
-- [**AZC0020**](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/tools/Azure.SdkAnalyzers/docs/AZC0020.md): Propagate CancellationToken to RequestContext
+### Unsuppressible (Error severity)
+
+These rules enforce internal implementation correctness and **cannot be suppressed** via `#pragma`, `<NoWarn>`, or `.editorconfig`.
+
+| Rule | Description | Fix |
+|------|-------------|-----|
+| [**AZC0013**](docs/AZC0013.md) | Use `TaskCreationOptions.RunContinuationsAsynchronously` | — |
+| [**AZC0101**](docs/AZC0101.md) | Do not use `ConfigureAwait(true)` | ✅ |
+| [**AZC0108**](docs/AZC0108.md) | Incorrect `async` parameter value | — |
+| [**AZC0109**](docs/AZC0109.md) | Misuse of `async` parameter | — |
+| [**AZC0111**](docs/AZC0111.md) | Do not use `EnsureCompleted` in possibly async scope | — |
+
+### Suppressible (Warning severity)
+
+| Rule | Description | Fix |
+|------|-------------|-----|
+| [**AZC0012**](docs/list-of-diagnostics.md#azc0012) | Avoid single word type names | ✅ |
+| [**AZC0020**](docs/AZC0020.md) | Propagate CancellationToken to RequestContext | — |
 
 ## For Library Authors
 
-These analyzers run automatically during build and will produce warnings when your code doesn't follow Azure SDK conventions. Review the [Azure SDK Design Guidelines](https://azure.github.io/azure-sdk/dotnet_introduction.html) for detailed guidance on all rules.
-
-For detailed information about each diagnostic rule, see the [list of diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/tools/Azure.SdkAnalyzers/docs/list-of-diagnostics.md).
+These analyzers run automatically during build. Unsuppressible rules produce errors that must be fixed — they prevent deadlocks and threading issues that are difficult to diagnose at runtime. Review the [list of diagnostics](docs/list-of-diagnostics.md) for detailed guidance on each rule.
