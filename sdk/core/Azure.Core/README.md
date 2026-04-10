@@ -28,6 +28,7 @@ The main shared concepts of Azure.Core (and so Azure SDK libraries using Azure.C
 - Exceptions for reporting errors from service requests in a consistent fashion. (`RequestFailedException`).
 - Customizing requests (`RequestContext`).
 - Abstractions for representing Azure SDK credentials. (`TokenCredentials`).
+- Authenticating Azure SDK clients using credential types from Microsoft Entra ID without a separate package dependency. (`DefaultAzureCredential`, `ManagedIdentityCredential`, and all other credential types from `Azure.Identity` are included directly in `Azure.Core` starting with version 1.53.)
 
 Below, you will find sections explaining these shared concepts in more detail.
 
@@ -233,6 +234,16 @@ KeyVaultSecret secret = client.GetSecret("Name");
 ```
 
 More on mocking in [Unit testing and mocking with the Azure SDK for .NET](https://learn.microsoft.com/dotnet/azure/sdk/unit-testing-mocking).
+
+### Authenticating Service Clients
+
+Starting with Azure.Core 1.53, all credential types previously in `Azure.Identity` are available directly:
+
+```C# Snippet:AzureCoreDefaultCredential
+// No Azure.Identity package reference required for Azure.Core 1.53+
+var credential = new DefaultAzureCredential();
+var client = new SecretClient(new Uri("https://myvault.vault.azure.net/"), credential);
+```
 
 ## Distributed tracing with OpenTelemetry
 
