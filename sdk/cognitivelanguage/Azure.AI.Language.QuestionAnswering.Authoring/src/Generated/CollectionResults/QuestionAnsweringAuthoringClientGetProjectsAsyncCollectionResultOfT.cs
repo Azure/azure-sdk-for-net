@@ -21,6 +21,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         private readonly int? _skip;
         private readonly int? _maxpagesize;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of QuestionAnsweringAuthoringClientGetProjectsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The QuestionAnsweringAuthoringClient client used to send requests. </param>
@@ -28,13 +29,15 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public QuestionAnsweringAuthoringClientGetProjectsAsyncCollectionResultOfT(QuestionAnsweringAuthoringClient client, int? maxCount, int? skip, int? maxpagesize, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public QuestionAnsweringAuthoringClientGetProjectsAsyncCollectionResultOfT(QuestionAnsweringAuthoringClient client, int? maxCount, int? skip, int? maxpagesize, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _maxCount = maxCount;
             _skip = skip;
             _maxpagesize = maxpagesize;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of QuestionAnsweringAuthoringClientGetProjectsAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -67,7 +70,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetProjectsRequest(nextLink, _maxCount, _skip, _maxpagesize, _context) : _client.CreateGetProjectsRequest(_maxCount, _skip, _maxpagesize, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("QuestionAnsweringAuthoringClient.GetProjects");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

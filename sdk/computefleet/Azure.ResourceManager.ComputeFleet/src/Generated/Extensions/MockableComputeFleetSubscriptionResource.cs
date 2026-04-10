@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ComputeFleet.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ComputeFleetData, ComputeFleetResource>(new FleetsGetBySubscriptionAsyncCollectionResultOfT(FleetsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new ComputeFleetResource(Client, data));
+            return new AsyncPageableWrapper<ComputeFleetData, ComputeFleetResource>(new FleetsGetBySubscriptionAsyncCollectionResultOfT(FleetsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableComputeFleetSubscriptionResource.GetComputeFleets"), data => new ComputeFleetResource(Client, data));
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ComputeFleet.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ComputeFleetData, ComputeFleetResource>(new FleetsGetBySubscriptionCollectionResultOfT(FleetsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new ComputeFleetResource(Client, data));
+            return new PageableWrapper<ComputeFleetData, ComputeFleetResource>(new FleetsGetBySubscriptionCollectionResultOfT(FleetsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableComputeFleetSubscriptionResource.GetComputeFleets"), data => new ComputeFleetResource(Client, data));
         }
     }
 }

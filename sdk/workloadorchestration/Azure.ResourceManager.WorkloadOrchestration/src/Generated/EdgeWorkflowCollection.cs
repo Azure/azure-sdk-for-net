@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         {
             if (id.ResourceType != EdgeContextResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, EdgeContextResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, EdgeContextResource.ResourceType), nameof(id));
             }
         }
 
@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EdgeWorkflowData, EdgeWorkflowResource>(new WorkflowsGetByContextAsyncCollectionResultOfT(_workflowsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new EdgeWorkflowResource(Client, data));
+            return new AsyncPageableWrapper<EdgeWorkflowData, EdgeWorkflowResource>(new WorkflowsGetByContextAsyncCollectionResultOfT(
+                _workflowsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "EdgeWorkflowCollection.GetAll"), data => new EdgeWorkflowResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EdgeWorkflowData, EdgeWorkflowResource>(new WorkflowsGetByContextCollectionResultOfT(_workflowsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new EdgeWorkflowResource(Client, data));
+            return new PageableWrapper<EdgeWorkflowData, EdgeWorkflowResource>(new WorkflowsGetByContextCollectionResultOfT(
+                _workflowsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "EdgeWorkflowCollection.GetAll"), data => new EdgeWorkflowResource(Client, data));
         }
 
         /// <summary>

@@ -564,35 +564,27 @@ function convertScopeToResourceScope(
 export function getOperationScopeFromPath(path: string): ResourceScope {
   // Match any path starting with a variable segment followed by /providers/
   // This covers scope-based operations like /{resourceUri}/providers/..., /{scope}/providers/..., /{resourceId}/providers/..., etc.
-  if (/^\/\{[^}]+\}\/providers\//.test(path)) {
-    return ResourceScope.Extension;
-  } else if (
-    /^\/subscriptions\/\{[^}]+\}\/resourceGroups\/\{[^}]+\}\//.test(path)
+  const lastProviderIndex = path.lastIndexOf("/providers/");
+  const scopePath = path.substring(0, lastProviderIndex);
+  if (!scopePath) {
+      return ResourceScope.Tenant;
+  }
+  else if (
+    /^\/subscriptions\/\{[^}]+\}\/resourceGroups\/\{[^}]+\}$/.test(scopePath)
   ) {
     return ResourceScope.ResourceGroup;
-  } else if (/^\/subscriptions\/\{[^}]+\}\//.test(path)) {
+  } else if (/^\/subscriptions\/\{[^}]+\}$/.test(scopePath)) {
     return ResourceScope.Subscription;
   } else if (
-    /^\/providers\/Microsoft\.Management\/managementGroups\/\{[^}]+\}\//.test(
-      path
+    /^\/providers\/Microsoft\.Management\/managementGroups\/\{[^}]+\}$/.test(
+      scopePath
     )
   ) {
     return ResourceScope.ManagementGroup;
-  } else if (hasMultipleProviderSegments(path)) {
-    // Paths with multiple /providers/ segments indicate extension resources
-    // e.g., /providers/Microsoft.Management/serviceGroups/{name}/providers/Microsoft.Edge/sites/{siteName}
+  }
+  else {
     return ResourceScope.Extension;
   }
-  return ResourceScope.Tenant; // all the templates work as if there is a tenant decorator when there is no such decorator
-}
-
-/**
- * Check if a path has multiple /providers/ segments, indicating an extension resource
- * that extends another ARM resource.
- */
-function hasMultipleProviderSegments(path: string): boolean {
-  const providerMatches = path.match(/\/providers\//gi);
-  return providerMatches !== null && providerMatches.length > 1;
 }
 
 /**

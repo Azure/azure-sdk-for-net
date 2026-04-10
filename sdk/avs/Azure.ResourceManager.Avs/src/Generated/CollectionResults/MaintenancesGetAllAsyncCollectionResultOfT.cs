@@ -26,6 +26,7 @@ namespace Azure.ResourceManager.Avs
         private readonly DateTimeOffset? _from;
         private readonly DateTimeOffset? _to;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of MaintenancesGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Maintenances client used to send requests. </param>
@@ -37,7 +38,8 @@ namespace Azure.ResourceManager.Avs
         /// <param name="from"> date from which result should be returned. ie. scheduledStartTime &gt;= from. </param>
         /// <param name="to"> date till which result should be returned. i.e. scheduledStartTime &lt;= to. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public MaintenancesGetAllAsyncCollectionResultOfT(Maintenances client, Guid subscriptionId, string resourceGroupName, string privateCloudName, string stateName, string status, DateTimeOffset? @from, DateTimeOffset? to, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public MaintenancesGetAllAsyncCollectionResultOfT(Maintenances client, Guid subscriptionId, string resourceGroupName, string privateCloudName, string stateName, string status, DateTimeOffset? @from, DateTimeOffset? to, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -48,6 +50,7 @@ namespace Azure.ResourceManager.Avs
             _from = @from;
             _to = to;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of MaintenancesGetAllAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -80,7 +83,7 @@ namespace Azure.ResourceManager.Avs
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _privateCloudName, _stateName, _status, _from, _to, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _privateCloudName, _stateName, _status, _from, _to, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("AvsMaintenanceCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

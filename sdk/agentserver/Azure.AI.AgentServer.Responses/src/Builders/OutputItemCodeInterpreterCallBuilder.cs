@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Text;
 using Azure.AI.AgentServer.Responses.Models;
 
 namespace Azure.AI.AgentServer.Responses;
@@ -85,6 +86,42 @@ public class OutputItemCodeInterpreterCallBuilder : OutputItemBuilder<OutputItem
         _finalCode = code;
         return new ResponseCodeInterpreterCallCodeDoneEvent(
             _stream.NextSequenceNumber(), _outputIndex, _itemId, code);
+    }
+
+    // ── Sub-Item Convenience Generators (S-053/S-054/S-055) ────
+
+    /// <summary>
+    /// Convenience generator that yields the complete code sub-item
+    /// event sequence from a single string (S-053, complete-text mode per S-054).
+    /// </summary>
+    /// <param name="code">The complete code to emit.</param>
+    /// <returns>An enumerable of events: <c>code_interpreter_call.code.delta</c> → <c>code_interpreter_call.code.done</c>.</returns>
+    public virtual IEnumerable<ResponseStreamEvent> Code(string code)
+    {
+        yield return EmitCodeDelta(code);
+        yield return EmitCodeDone(code);
+    }
+
+    /// <summary>
+    /// Convenience generator that yields the complete code sub-item
+    /// event sequence from streaming chunks (S-053, streaming mode per S-054).
+    /// Each chunk is emitted as a delta immediately (S-055).
+    /// </summary>
+    /// <param name="chunks">An async enumerable of code chunks.</param>
+    /// <param name="cancellationToken">A token to cancel iteration.</param>
+    /// <returns>An async enumerable of events: N × <c>code_interpreter_call.code.delta</c> → <c>code_interpreter_call.code.done</c>.</returns>
+    public virtual async IAsyncEnumerable<ResponseStreamEvent> Code(
+        IAsyncEnumerable<string> chunks,
+        [System.Runtime.CompilerServices.EnumeratorCancellation] CancellationToken cancellationToken = default)
+    {
+        var sb = new StringBuilder();
+        await foreach (var chunk in chunks.WithCancellation(cancellationToken).ConfigureAwait(false))
+        {
+            sb.Append(chunk);
+            yield return EmitCodeDelta(chunk);
+        }
+
+        yield return EmitCodeDone(sb.ToString());
     }
 
     /// <summary>

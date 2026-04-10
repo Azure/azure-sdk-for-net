@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.StorageSync
         {
             if (id.ResourceType != StorageSyncServiceResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, StorageSyncServiceResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, StorageSyncServiceResource.ResourceType), nameof(id));
             }
         }
 
@@ -282,7 +282,13 @@ namespace Azure.ResourceManager.StorageSync
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<StorageSyncRegisteredServerData, StorageSyncRegisteredServerResource>(new RegisteredServersGetByStorageSyncServiceAsyncCollectionResultOfT(_registeredServersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new StorageSyncRegisteredServerResource(Client, data));
+            return new AsyncPageableWrapper<StorageSyncRegisteredServerData, StorageSyncRegisteredServerResource>(new RegisteredServersGetByStorageSyncServiceAsyncCollectionResultOfT(
+                _registeredServersRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "StorageSyncRegisteredServerCollection.GetAll"), data => new StorageSyncRegisteredServerResource(Client, data));
         }
 
         /// <summary>
@@ -310,7 +316,13 @@ namespace Azure.ResourceManager.StorageSync
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<StorageSyncRegisteredServerData, StorageSyncRegisteredServerResource>(new RegisteredServersGetByStorageSyncServiceCollectionResultOfT(_registeredServersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new StorageSyncRegisteredServerResource(Client, data));
+            return new PageableWrapper<StorageSyncRegisteredServerData, StorageSyncRegisteredServerResource>(new RegisteredServersGetByStorageSyncServiceCollectionResultOfT(
+                _registeredServersRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "StorageSyncRegisteredServerCollection.GetAll"), data => new StorageSyncRegisteredServerResource(Client, data));
         }
 
         /// <summary>

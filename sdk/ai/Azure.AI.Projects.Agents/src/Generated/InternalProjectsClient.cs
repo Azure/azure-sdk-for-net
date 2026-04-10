@@ -24,6 +24,7 @@ namespace Azure.AI.Projects.Agents
         };
         private readonly string _apiVersion;
         private AgentAdministrationClient _cachedAgentAdministrationClient;
+        private AgentToolboxes _cachedAgentToolboxes;
 
         /// <summary> Initializes a new instance of InternalProjectsClient for mocking. </summary>
         protected InternalProjectsClient()
@@ -74,6 +75,12 @@ namespace Azure.AI.Projects.Agents
         public virtual AgentAdministrationClient GetAgentAdministrationClient()
         {
             return Volatile.Read(ref _cachedAgentAdministrationClient) ?? Interlocked.CompareExchange(ref _cachedAgentAdministrationClient, new AgentAdministrationClient(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentAdministrationClient;
+        }
+
+        /// <summary> Initializes a new instance of AgentToolboxes. </summary>
+        public virtual AgentToolboxes GetAgentToolboxesClient()
+        {
+            return Volatile.Read(ref _cachedAgentToolboxes) ?? Interlocked.CompareExchange(ref _cachedAgentToolboxes, new AgentToolboxes(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentToolboxes;
         }
     }
 }

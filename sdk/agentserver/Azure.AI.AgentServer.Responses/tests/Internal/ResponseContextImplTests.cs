@@ -27,11 +27,11 @@ public class ResponseContextImplTests
     }
 
     // ═══════════════════════════════════════════════════════════════════════
-    // T044: Resolves inline ItemMessage to OutputItemMessage
+    // T044: Resolves inline ItemMessage — returned as ItemMessage (not OutputItemMessage)
     // ═══════════════════════════════════════════════════════════════════════
 
     [Test]
-    public async Task GetInputItemsAsync_Resolves_Inline_ItemMessage_To_OutputItemMessage()
+    public async Task GetInputItemsAsync_Returns_Inline_ItemMessage_Directly()
     {
         var request = CreateRequestWithJsonInput(
             """[{"type":"message","role":"user","content":[{"type":"input_text","text":"Hello, world!"}]}]""");
@@ -40,14 +40,13 @@ public class ResponseContextImplTests
         var items = await context.GetInputItemsAsync();
 
         XAssert.Single(items);
-        var msg = XAssert.IsType<OutputItemMessage>(items[0]);
-        XAssert.StartsWith("msg_", msg.Id);
-        Assert.That(msg.Status, Is.EqualTo(MessageStatus.Completed));
+        var msg = XAssert.IsType<ItemMessage>(items[0]);
         Assert.That(msg.Role, Is.EqualTo(MessageRole.User));
     }
 
     // ═══════════════════════════════════════════════════════════════════════
     // T045: Resolves ItemReferenceParam via ResponsesProvider.GetItemsAsync
+    //       and converts resolved OutputItem back to Item
     // ═══════════════════════════════════════════════════════════════════════
 
     [Test]
@@ -72,8 +71,8 @@ public class ResponseContextImplTests
         var items = await context.GetInputItemsAsync();
 
         XAssert.Single(items);
-        var msg = XAssert.IsType<OutputItemMessage>(items[0]);
-        Assert.That(msg.Id, Is.EqualTo("msg_existing"));
+        // Resolved reference is converted from OutputItemMessage to ItemMessage
+        var msg = XAssert.IsType<ItemMessage>(items[0]);
         Assert.That(msg.Role, Is.EqualTo(MessageRole.Assistant));
     }
 
@@ -119,7 +118,8 @@ public class ResponseContextImplTests
     }
 
     // ═══════════════════════════════════════════════════════════════════════
-    // T047: Preserves input item order
+    // T047: Preserves input item order (inline items stay as Item,
+    //       resolved references are converted from OutputItem to Item)
     // ═══════════════════════════════════════════════════════════════════════
 
     [Test]
@@ -143,20 +143,14 @@ public class ResponseContextImplTests
 
         Assert.That(items.Count, Is.EqualTo(3));
 
-        // First item: inline message
-        var first = XAssert.IsType<OutputItemMessage>(items[0]);
-        XAssert.StartsWith("msg_", first.Id);
+        // First item: inline message (stays as ItemMessage)
+        XAssert.IsType<ItemMessage>(items[0]);
 
-        // Second item: resolved reference
-        var second = XAssert.IsType<OutputItemMessage>(items[1]);
-        Assert.That(second.Id, Is.EqualTo("ref_middle"));
+        // Second item: resolved reference (converted from OutputItemMessage to ItemMessage)
+        XAssert.IsType<ItemMessage>(items[1]);
 
         // Third item: inline message
-        var third = XAssert.IsType<OutputItemMessage>(items[2]);
-        XAssert.StartsWith("msg_", third.Id);
-
-        // First and third should have different generated IDs
-        Assert.That(third.Id, Is.Not.EqualTo(first.Id));
+        XAssert.IsType<ItemMessage>(items[2]);
     }
 
     // ═══════════════════════════════════════════════════════════════════════
@@ -184,6 +178,122 @@ public class ResponseContextImplTests
         var items = await context.GetInputItemsAsync();
 
         Assert.That(items, Is.Empty);
+    }
+
+    // ═══════════════════════════════════════════════════════════════════════
+    // resolveReferences=false leaves ItemReferenceParam in result
+    // ═══════════════════════════════════════════════════════════════════════
+
+    [Test]
+    public async Task GetInputItemsAsync_ResolveReferencesFalse_Returns_ItemReferenceParam_AsIs()
+    {
+        var request = CreateRequestWithJsonInput("""
+            [
+                {"type":"message","role":"user","content":[{"type":"input_text","text":"inline"}]},
+                {"type":"item_reference","id":"ref_1"}
+            ]
+            """);
+
+        var context = CreateContext(request);
+        var items = await context.GetInputItemsAsync(resolveReferences: false);
+
+        Assert.That(items.Count, Is.EqualTo(2));
+        XAssert.IsType<ItemMessage>(items[0]);
+        XAssert.IsType<ItemReferenceParam>(items[1]);
+    }
+
+    [Test]
+    public async Task GetInputItemsAsync_ResolveReferencesFalse_DoesNotCallProvider()
+    {
+        var provider = new RecordingProvider();
+        provider.AddItem("ref_1", new OutputItemMessage(
+            "ref_1", MessageStatus.Completed, MessageRole.User,
+            new List<MessageContent> { new MessageContentInputTextContent("ref") }));
+
+        var request = CreateRequestWithJsonInput(
+            """[{"type":"item_reference","id":"ref_1"}]""");
+
+        var context = CreateContext(request, provider);
+        await context.GetInputItemsAsync(resolveReferences: false);
+
+        Assert.That(provider.GetItemsCallCount, Is.EqualTo(0));
+    }
+
+    [Test]
+    public async Task GetInputItemsAsync_BothModes_CacheIndependently()
+    {
+        var provider = new RecordingProvider();
+        provider.AddItem("ref_1", new OutputItemMessage(
+            "ref_1", MessageStatus.Completed, MessageRole.User,
+            new List<MessageContent> { new MessageContentInputTextContent("resolved") }));
+
+        var request = CreateRequestWithJsonInput(
+            """[{"type":"item_reference","id":"ref_1"}]""");
+
+        var context = CreateContext(request, provider);
+
+        var unresolved = await context.GetInputItemsAsync(resolveReferences: false);
+        var resolved = await context.GetInputItemsAsync(resolveReferences: true);
+
+        // Unresolved keeps the reference
+        XAssert.IsType<ItemReferenceParam>(unresolved[0]);
+
+        // Resolved converts to concrete type
+        XAssert.IsType<ItemMessage>(resolved[0]);
+
+        // Each mode is cached independently
+        Assert.That(await context.GetInputItemsAsync(resolveReferences: false), Is.SameAs(unresolved));
+        Assert.That(await context.GetInputItemsAsync(resolveReferences: true), Is.SameAs(resolved));
+    }
+
+    // ═══════════════════════════════════════════════════════════════════════
+    // GetInputTextAsync convenience method
+    // ═══════════════════════════════════════════════════════════════════════
+
+    [Test]
+    public async Task GetInputTextAsync_Returns_ConcatenatedText_FromInlineMessages()
+    {
+        var request = CreateRequestWithJsonInput("""
+            [
+                {"type":"message","role":"user","content":[{"type":"input_text","text":"Hello"}]},
+                {"type":"message","role":"user","content":[{"type":"input_text","text":"World"}]}
+            ]
+            """);
+
+        var context = CreateContext(request);
+        var text = await context.GetInputTextAsync();
+
+        Assert.That(text, Is.EqualTo("Hello\nWorld"));
+    }
+
+    [Test]
+    public async Task GetInputTextAsync_Returns_Empty_When_No_Input()
+    {
+        var request = new CreateResponse { Model = "test" };
+        var context = CreateContext(request);
+
+        var text = await context.GetInputTextAsync();
+
+        Assert.That(text, Is.EqualTo(string.Empty));
+    }
+
+    // ═══════════════════════════════════════════════════════════════════════
+    // GetInputItemsForPersistenceAsync returns OutputItem for orchestrator
+    // ═══════════════════════════════════════════════════════════════════════
+
+    [Test]
+    public async Task GetInputItemsForPersistenceAsync_Returns_OutputItems()
+    {
+        var request = CreateRequestWithJsonInput(
+            """[{"type":"message","role":"user","content":[{"type":"input_text","text":"Hello"}]}]""");
+
+        var context = CreateContext(request);
+        var items = await context.GetInputItemsForPersistenceAsync();
+
+        XAssert.Single(items);
+        var msg = XAssert.IsType<OutputItemMessage>(items[0]);
+        XAssert.StartsWith("msg_", msg.Id);
+        Assert.That(msg.Role, Is.EqualTo(MessageRole.User));
     }
 
     // ═══════════════════════════════════════════════════════════════════════

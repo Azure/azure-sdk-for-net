@@ -102,9 +102,32 @@ principles conflict, resolve in this priority order:
 | Protocol | Location | Notes |
 |---|---|---|
 | Core / Invocations | This file | — |
-| Responses | `Azure.AI.AgentServer.Responses/AGENTS.md` | Contract compliance (B1–B37, S-001–S-046) |
+| Responses | `Azure.AI.AgentServer.Responses/AGENTS.md` | Contract compliance (B1–B39, S-001–S-052) |
 
 > When adding a new protocol, create an `AGENTS.md` in the protocol directory.
+
+**AI agent instruction (MANDATORY):** Before modifying any file under a package
+directory listed above that has its own `AGENTS.md`, **read that file in full**
+and follow its rules in addition to this file. The per-protocol `AGENTS.md` contains
+package-specific rules (spec contracts, model governance, testing requirements)
+that are **not** duplicated here. Failure to load the per-protocol file risks
+introducing spec-violating code.
+
+### Authoritative spec documents
+
+The AgentServer libraries implement specifications maintained in an external repo.
+These docs define the contract for **all** packages — individual protocol specs
+are listed in the per-protocol `AGENTS.md` files.
+
+| Document | Location | Scope |
+|----------|----------|-------|
+| **Container Image Spec** | `/tmp/foundrysdk_specs/specs/hosted-agents/container-spec/docs/container-image-spec.md` | All packages — networking, health probe, env vars, observability, graceful shutdown, identity header |
+| **Package Architecture** | `/tmp/foundrysdk_specs/specs/hosted-agents/container-spec/docs/package-architecture.md` | All packages — package layering, developer tiers (zero-config → spec-only), dependency graph |
+| **Tools Integration Spec** | `/tmp/foundrysdk_specs/specs/hosted-agents/container-spec/docs/tools-integration-spec.md` | All packages — tool call routing, function execution, tool result reporting |
+| **Invocation Protocol Spec** | `/tmp/foundrysdk_specs/specs/hosted-agents/container-spec/docs/invocation-protocol-spec.md` | Invocations package — invocation endpoint protocol, session resolution, client header forwarding |
+| **Handler Implementation Guide** | `docs/handler-implementation-guide.md` | All packages — handler contract, builder pattern, cancellation, error handling, configuration |
+
+> **Dev setup**: Run `pwsh -File scripts/Bootstrap-Copilot.ps1` from `sdk/agentserver/` — it auto-clones the specs repo to `/tmp/foundrysdk_specs`. The repo requires EMU auth; the script skips gracefully if access is denied. Use `-Clean` to remove all generated artifacts.
 
 ---
 

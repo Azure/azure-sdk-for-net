@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Quota
         {
             if (id.ResourceType != ManagementGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ManagementGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ManagementGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.Quota
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<GroupQuotaEntityData, GroupQuotaEntityResource>(new GroupQuotasEntitiesGetAllAsyncCollectionResultOfT(_groupQuotasEntitiesRestClient, Id.Name, context), data => new GroupQuotaEntityResource(Client, data));
+            return new AsyncPageableWrapper<GroupQuotaEntityData, GroupQuotaEntityResource>(new GroupQuotasEntitiesGetAllAsyncCollectionResultOfT(_groupQuotasEntitiesRestClient, Id.Name, context, "GroupQuotaEntityCollection.GetAll"), data => new GroupQuotaEntityResource(Client, data));
         }
 
         /// <summary>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.Quota
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<GroupQuotaEntityData, GroupQuotaEntityResource>(new GroupQuotasEntitiesGetAllCollectionResultOfT(_groupQuotasEntitiesRestClient, Id.Name, context), data => new GroupQuotaEntityResource(Client, data));
+            return new PageableWrapper<GroupQuotaEntityData, GroupQuotaEntityResource>(new GroupQuotasEntitiesGetAllCollectionResultOfT(_groupQuotasEntitiesRestClient, Id.Name, context, "GroupQuotaEntityCollection.GetAll"), data => new GroupQuotaEntityResource(Client, data));
         }
 
         /// <summary>

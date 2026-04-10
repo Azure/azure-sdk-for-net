@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Maps
         {
             if (id.ResourceType != MapsAccountResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, MapsAccountResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, MapsAccountResource.ResourceType), nameof(id));
             }
         }
 
@@ -177,7 +177,13 @@ namespace Azure.ResourceManager.Maps
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MapsPrivateLinkResourceData, MapsPrivateLinkResource>(new PrivateLinkResourcesGetByAccountAsyncCollectionResultOfT(_privateLinkResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new MapsPrivateLinkResource(Client, data));
+            return new AsyncPageableWrapper<MapsPrivateLinkResourceData, MapsPrivateLinkResource>(new PrivateLinkResourcesGetByAccountAsyncCollectionResultOfT(
+                _privateLinkResourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "MapsPrivateLinkResourceCollection.GetAll"), data => new MapsPrivateLinkResource(Client, data));
         }
 
         /// <summary>
@@ -205,7 +211,13 @@ namespace Azure.ResourceManager.Maps
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MapsPrivateLinkResourceData, MapsPrivateLinkResource>(new PrivateLinkResourcesGetByAccountCollectionResultOfT(_privateLinkResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new MapsPrivateLinkResource(Client, data));
+            return new PageableWrapper<MapsPrivateLinkResourceData, MapsPrivateLinkResource>(new PrivateLinkResourcesGetByAccountCollectionResultOfT(
+                _privateLinkResourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "MapsPrivateLinkResourceCollection.GetAll"), data => new MapsPrivateLinkResource(Client, data));
         }
 
         /// <summary>

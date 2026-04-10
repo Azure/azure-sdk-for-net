@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.Relay
         private readonly string _resourceGroupName;
         private readonly string _namespaceName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of HybridConnectionsGetByNamespaceCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The HybridConnections client used to send requests. </param>
@@ -28,13 +29,15 @@ namespace Azure.ResourceManager.Relay
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="namespaceName"> The namespace name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public HybridConnectionsGetByNamespaceCollectionResultOfT(HybridConnections client, string subscriptionId, string resourceGroupName, string namespaceName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public HybridConnectionsGetByNamespaceCollectionResultOfT(HybridConnections client, string subscriptionId, string resourceGroupName, string namespaceName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
             _namespaceName = namespaceName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of HybridConnectionsGetByNamespaceCollectionResultOfT as an enumerable collection. </summary>
@@ -67,7 +70,7 @@ namespace Azure.ResourceManager.Relay
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByNamespaceRequest(nextLink, _subscriptionId, _resourceGroupName, _namespaceName, _context) : _client.CreateGetByNamespaceRequest(_subscriptionId, _resourceGroupName, _namespaceName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("RelayHybridConnectionCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

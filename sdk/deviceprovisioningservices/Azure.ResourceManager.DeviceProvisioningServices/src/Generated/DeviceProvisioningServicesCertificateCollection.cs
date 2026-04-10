@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         {
             if (id.ResourceType != DeviceProvisioningServiceResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DeviceProvisioningServiceResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DeviceProvisioningServiceResource.ResourceType), nameof(id));
             }
         }
 
@@ -291,7 +291,13 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DeviceProvisioningServicesCertificateData, DeviceProvisioningServicesCertificateResource>(new CertificateResponsesGetAllAsyncCollectionResultOfT(_certificateResponsesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new DeviceProvisioningServicesCertificateResource(Client, data));
+            return new AsyncPageableWrapper<DeviceProvisioningServicesCertificateData, DeviceProvisioningServicesCertificateResource>(new CertificateResponsesGetAllAsyncCollectionResultOfT(
+                _certificateResponsesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DeviceProvisioningServicesCertificateCollection.GetAll"), data => new DeviceProvisioningServicesCertificateResource(Client, data));
         }
 
         /// <summary>
@@ -319,7 +325,13 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DeviceProvisioningServicesCertificateData, DeviceProvisioningServicesCertificateResource>(new CertificateResponsesGetAllCollectionResultOfT(_certificateResponsesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new DeviceProvisioningServicesCertificateResource(Client, data));
+            return new PageableWrapper<DeviceProvisioningServicesCertificateData, DeviceProvisioningServicesCertificateResource>(new CertificateResponsesGetAllCollectionResultOfT(
+                _certificateResponsesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DeviceProvisioningServicesCertificateCollection.GetAll"), data => new DeviceProvisioningServicesCertificateResource(Client, data));
         }
 
         /// <summary>

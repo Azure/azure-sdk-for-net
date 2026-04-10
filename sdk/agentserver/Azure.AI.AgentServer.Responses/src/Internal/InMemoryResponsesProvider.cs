@@ -462,6 +462,20 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
         return await subject.SubscribeAsync(adapter, cursor).ConfigureAwait(false);
     }
 
+    /// <summary>
+    /// Removes the event stream for the specified response, freeing buffer memory.
+    /// After deletion, <see cref="SubscribeToEventsAsync"/> will throw for this response ID.
+    /// </summary>
+    public Task DeleteEventStreamAsync(string responseId)
+    {
+        if (_subjects.TryRemove(responseId, out var subject))
+        {
+            subject.Dispose();
+        }
+
+        return Task.CompletedTask;
+    }
+
     // --- Cancellation ---
 
     /// <summary>
