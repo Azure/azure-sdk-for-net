@@ -105,7 +105,7 @@ $guid = [System.Guid]::NewGuid()
 $tempInstallDirectory = Join-Path $tmp "azsdk-install-$($guid)"
 
 # If already installed, use first class version mechanism
-$azsdkCmd = Get-Command -ErrorAction SilentlyContinue $packageName
+$azsdkCmd = Get-Command -ErrorAction Ignore $packageName
 if ($azsdkCmd -and !$InstallDirectory) {
     $ErrorActionPreference = "Stop"
     $upgrade = & $packageName upgrade --check --output json | out-string
@@ -113,7 +113,7 @@ if ($azsdkCmd -and !$InstallDirectory) {
         $ErrorActionPreference = 'Ignore'
         $localVersion = $upgrade | ConvertFrom-Json -AsHashtable
         $ErrorActionPreference = 'Stop'
-        if ($localVersion.old_version -and $localVersion.old_version -eq ($Version ? $Version : $localVersion.new_version)) {
+        if ($localVersion -and $localVersion.old_version -and $localVersion.old_version -eq ($Version ? $Version : $localVersion.new_version)) {
             log "Version up to date at $($localVersion.old_version)"
             if ($Run) {
                 $proc = Start-Process -PassThru -WorkingDirectory $RunDirectory -FilePath $azsdkCmd.Path -ArgumentList 'mcp' -NoNewWindow -Wait
@@ -121,7 +121,12 @@ if ($azsdkCmd -and !$InstallDirectory) {
             }
             exit 0
         }
-        log "Version not up to date at " + $localVersion.old_version
+        if ($localVersion) {
+            log "Version not up to date at " + $localVersion.old_version
+        } else {
+            log "Failed to parse version:"
+            log $upgrade
+        }
     }
 }
 

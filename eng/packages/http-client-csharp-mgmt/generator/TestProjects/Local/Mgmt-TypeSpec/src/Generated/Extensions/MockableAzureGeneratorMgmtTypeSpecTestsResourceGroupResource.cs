@@ -1243,6 +1243,71 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             return GetSharedConfigs().Get(configName, cancellationToken);
         }
 
+        /// <summary> Gets a collection of CycleTestStores in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of CycleTestStores and their operations over a CycleTestStoreResource. </returns>
+        public virtual CycleTestStoreCollection GetCycleTestStores()
+        {
+            return GetCachedClient(client => new CycleTestStoreCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a CycleTestStore
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/cycleTestStores/{cycleTestStoreName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CycleTestStores_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cycleTestStoreName"> The name of the CycleTestStore. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="cycleTestStoreName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="cycleTestStoreName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<CycleTestStoreResource>> GetCycleTestStoreAsync(string cycleTestStoreName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(cycleTestStoreName, nameof(cycleTestStoreName));
+
+            return await GetCycleTestStores().GetAsync(cycleTestStoreName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a CycleTestStore
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/cycleTestStores/{cycleTestStoreName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CycleTestStores_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cycleTestStoreName"> The name of the CycleTestStore. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="cycleTestStoreName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="cycleTestStoreName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<CycleTestStoreResource> GetCycleTestStore(string cycleTestStoreName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(cycleTestStoreName, nameof(cycleTestStoreName));
+
+            return GetCycleTestStores().Get(cycleTestStoreName, cancellationToken);
+        }
+
         /// <summary>
         /// list private links on the given resource
         /// <list type="bullet">
