@@ -12,7 +12,7 @@ These rules enforce internal implementation correctness and **cannot be suppress
 
 | Rule | Description | Fix |
 |------|-------------|-----|
-| [**AZC0013**](docs/AZC0013.md) | Use `TaskCreationOptions.RunContinuationsAsynchronously` | — |
+| [**AZC0013**](docs/AZC0013.md) | Use `TaskCreationOptions.RunContinuationsAsynchronously` | ✅ |
 | [**AZC0101**](docs/AZC0101.md) | Do not use `ConfigureAwait(true)` | ✅ |
 | [**AZC0108**](docs/AZC0108.md) | Incorrect `async` parameter value | — |
 | [**AZC0109**](docs/AZC0109.md) | Misuse of `async` parameter | — |
