@@ -56,6 +56,64 @@ namespace Azure.ResourceManager.Chaos
         }
 
         /// <summary>
+        /// Gets a collection of <see cref="ChaosCapabilityCollection"/> objects within the specified scope.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableChaosArmClient.GetChaosCapabilities(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a collection of <see cref="ChaosCapabilityResource"/> objects. </returns>
+        public static ChaosCapabilityCollection GetChaosCapabilities(this ArmClient client, ResourceIdentifier scope)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableChaosArmClient(client).GetChaosCapabilities(scope);
+        }
+
+        /// <summary>
+        /// Get a Capability resource that extends a Target resource.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableChaosArmClient.GetChaosCapability(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="capabilityName"> String that represents a Capability resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<ChaosCapabilityResource> GetChaosCapability(this ArmClient client, ResourceIdentifier scope, string capabilityName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableChaosArmClient(client).GetChaosCapability(scope, capabilityName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get a Capability resource that extends a Target resource.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableChaosArmClient.GetChaosCapabilityAsync(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="capabilityName"> String that represents a Capability resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<ChaosCapabilityResource>> GetChaosCapabilityAsync(this ArmClient client, ResourceIdentifier scope, string capabilityName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return await GetMockableChaosArmClient(client).GetChaosCapabilityAsync(scope, capabilityName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="ChaosTargetResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
@@ -71,6 +129,64 @@ namespace Azure.ResourceManager.Chaos
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableChaosArmClient(client).GetChaosTargetResource(id);
+        }
+
+        /// <summary>
+        /// Gets a collection of <see cref="ChaosTargetCollection"/> objects within the specified scope.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableChaosArmClient.GetChaosTargets(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a collection of <see cref="ChaosTargetResource"/> objects. </returns>
+        public static ChaosTargetCollection GetChaosTargets(this ArmClient client, ResourceIdentifier scope)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableChaosArmClient(client).GetChaosTargets(scope);
+        }
+
+        /// <summary>
+        /// Get a Target resource that extends a tracked regional resource.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableChaosArmClient.GetChaosTarget(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="targetName"> String that represents a Target resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<ChaosTargetResource> GetChaosTarget(this ArmClient client, ResourceIdentifier scope, string targetName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableChaosArmClient(client).GetChaosTarget(scope, targetName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get a Target resource that extends a tracked regional resource.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableChaosArmClient.GetChaosTargetAsync(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="targetName"> String that represents a Target resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<ChaosTargetResource>> GetChaosTargetAsync(this ArmClient client, ResourceIdentifier scope, string targetName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return await GetMockableChaosArmClient(client).GetChaosTargetAsync(scope, targetName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -143,70 +259,6 @@ namespace Azure.ResourceManager.Chaos
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableChaosArmClient(client).GetChaosTargetMetadataResource(id);
-        }
-
-        /// <summary>
-        /// Gets a collection of ChaosTargets in the <see cref="ResourceGroupResource"/>
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableChaosResourceGroupResource.GetChaosTargets(string, string, string)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="parentProviderNamespace"> The parentProviderNamespace for the resource. </param>
-        /// <param name="parentResourceType"> The parentResourceType for the resource. </param>
-        /// <param name="parentResourceName"> The parentResourceName for the resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of ChaosTargets and their operations over a ChaosTargetResource. </returns>
-        public static ChaosTargetCollection GetChaosTargets(this ResourceGroupResource resourceGroupResource, string parentProviderNamespace, string parentResourceType, string parentResourceName)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableChaosResourceGroupResource(resourceGroupResource).GetChaosTargets(parentProviderNamespace, parentResourceType, parentResourceName);
-        }
-
-        /// <summary>
-        /// Get a Target resource that extends a tracked regional resource.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableChaosResourceGroupResource.GetChaosTargetAsync(string, string, string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="parentProviderNamespace"> The parentProviderNamespace for the resource. </param>
-        /// <param name="parentResourceType"> The parentResourceType for the resource. </param>
-        /// <param name="parentResourceName"> The parentResourceName for the resource. </param>
-        /// <param name="targetName"> String that represents a Target resource name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<ChaosTargetResource>> GetChaosTargetAsync(this ResourceGroupResource resourceGroupResource, string parentProviderNamespace, string parentResourceType, string parentResourceName, string targetName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return await GetMockableChaosResourceGroupResource(resourceGroupResource).GetChaosTargetAsync(parentProviderNamespace, parentResourceType, parentResourceName, targetName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a Target resource that extends a tracked regional resource.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableChaosResourceGroupResource.GetChaosTarget(string, string, string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="parentProviderNamespace"> The parentProviderNamespace for the resource. </param>
-        /// <param name="parentResourceType"> The parentResourceType for the resource. </param>
-        /// <param name="parentResourceName"> The parentResourceName for the resource. </param>
-        /// <param name="targetName"> String that represents a Target resource name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<ChaosTargetResource> GetChaosTarget(this ResourceGroupResource resourceGroupResource, string parentProviderNamespace, string parentResourceType, string parentResourceName, string targetName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableChaosResourceGroupResource(resourceGroupResource).GetChaosTarget(parentProviderNamespace, parentResourceType, parentResourceName, targetName, cancellationToken);
         }
 
         /// <summary>

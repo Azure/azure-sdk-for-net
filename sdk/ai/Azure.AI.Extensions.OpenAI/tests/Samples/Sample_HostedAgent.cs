@@ -3,12 +3,12 @@
 
 using System;
 using System.Threading.Tasks;
+using Azure.AI.Projects;
+using Azure.AI.Projects.Agents;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 using OpenAI.Responses;
-using Azure.AI.Projects;
-using Azure.AI.Projects.Agents;
 
 namespace Azure.AI.Extensions.OpenAI.Tests.Samples;
 
@@ -16,7 +16,7 @@ namespace Azure.AI.Extensions.OpenAI.Tests.Samples;
 public class Sample_HostedAgent : ProjectsOpenAITestBase
 {
     #region Snippet:Sample_ImageBasedHostedAgentDefinition_HostedAgent
-    private static  HostedAgentDefinition GetAgentDefinition(string dockerImage, string modelDeploymentName, string accountId, string applicationInsightConnectionString, string projectEndpoint)
+    private static HostedAgentDefinition GetAgentDefinition(string dockerImage, string modelDeploymentName, string accountId, string applicationInsightConnectionString, string projectEndpoint)
     {
         HostedAgentDefinition agentDefinition = new(
             versions: [new ProtocolVersionRecord(ProjectsAgentProtocol.ActivityProtocol, "v1")],

@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
-    internal class NetworkCloudStorageApplianceOperationSource : IOperationSource<NetworkCloudStorageApplianceResource>
+    /// <summary></summary>
+    internal partial class NetworkCloudStorageApplianceOperationSource : IOperationSource<NetworkCloudStorageApplianceResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal NetworkCloudStorageApplianceOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         NetworkCloudStorageApplianceResource IOperationSource<NetworkCloudStorageApplianceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetworkCloudStorageApplianceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkCloudContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            NetworkCloudStorageApplianceData data = NetworkCloudStorageApplianceData.DeserializeNetworkCloudStorageApplianceData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new NetworkCloudStorageApplianceResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<NetworkCloudStorageApplianceResource> IOperationSource<NetworkCloudStorageApplianceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetworkCloudStorageApplianceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkCloudContext.Default);
-            return await Task.FromResult(new NetworkCloudStorageApplianceResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            NetworkCloudStorageApplianceData data = NetworkCloudStorageApplianceData.DeserializeNetworkCloudStorageApplianceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new NetworkCloudStorageApplianceResource(_client, data);
         }
     }
 }

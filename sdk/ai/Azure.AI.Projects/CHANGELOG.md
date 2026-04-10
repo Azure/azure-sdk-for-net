@@ -1,8 +1,19 @@
 # Release History
 
-## 2.0.0-beta.3 (Unreleased)
+## 2.1.0-beta.1 (Unreleased)
 
 ### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+### Sample Updates
+- Added Toolboxes sample.
+
+## 2.0.0 (2026-04-01)
 
 ### Breaking Changes
 - `Insights` were renamed to `ProjectInsights`.
@@ -11,7 +22,6 @@
 - `Schedule` was renamed to `ProjectsSchedule`.
 - `Target` was renamed to `EvaluationTarget`.
 - `Trigger` was renamed to `ScheduleTrigger`.
-- `AzureAIAgentTarget` and `AzureAIModelTarget` became internal.
 - `ScheduleTask` was renamed to `ProjectsScheduleTask`.
 - `Evaluators` client was renamed to `ProjectEvaluators`.
 - `DetailEnum` was renamed to `InternalImageDetailLevel` and made internal.
@@ -33,10 +43,7 @@
 - `AIProjectClient.OpenAI` property was renamed to `AIProjectClient.ProjectOpenAIClient`.
 - `AIProjectClient.Agents` property was renamed to `AIProjectClient.AgentAdministrationClient`.
 - `RecurrenceTrigger.StartTime`, `RecurrenceTrigger.EndTime`, `OneTimeTrigger.TriggerAt`, `CronTrigger.StartTime`, `CronTrigger.EndTime` and `ScheduleRun.TriggerTime` properties type was changed from `string` to `DateTimeOffset`.
-
-### Bugs Fixed
-
-### Other Changes
+- Remove the `EvaluationScheduleTaskEvalRun` class.
 
 ## 2.0.0-beta.2 (2026-03-12)
 

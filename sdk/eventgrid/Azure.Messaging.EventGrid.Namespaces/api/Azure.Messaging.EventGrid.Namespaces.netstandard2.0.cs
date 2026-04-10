@@ -95,6 +95,8 @@ namespace Azure.Messaging.EventGrid.Namespaces
         public EventGridReceiverClientSettings() { }
         public System.Uri Endpoint { get { throw null; } set { } }
         public Azure.Messaging.EventGrid.Namespaces.EventGridReceiverClientOptions Options { get { throw null; } set { } }
+        public string SubscriptionName { get { throw null; } set { } }
+        public string TopicName { get { throw null; } set { } }
         protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
     public partial class EventGridSenderClient
@@ -129,6 +131,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         public EventGridSenderClientSettings() { }
         public System.Uri Endpoint { get { throw null; } set { } }
         public Azure.Messaging.EventGrid.Namespaces.EventGridSenderClientOptions Options { get { throw null; } set { } }
+        public string TopicName { get { throw null; } set { } }
         protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
     public partial class FailedLockToken : System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.Namespaces.FailedLockToken>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.Namespaces.FailedLockToken>

@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.NewRelicObservability;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
     /// <summary> The list of subscriptions and it's monitoring status by current NewRelic monitor. </summary>
     public partial class NewRelicMonitoredSubscriptionInfo
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NewRelicMonitoredSubscriptionInfo"/>. </summary>
         public NewRelicMonitoredSubscriptionInfo()
@@ -55,25 +27,28 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <param name="status"> The state of monitoring. </param>
         /// <param name="error"> The reason of not monitoring the subscription. </param>
         /// <param name="tagRules"> The resource-specific properties for this resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NewRelicMonitoredSubscriptionInfo(string subscriptionId, NewRelicMonitoringStatus? status, string error, NewRelicMonitoringTagRules tagRules, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NewRelicMonitoredSubscriptionInfo(string subscriptionId, NewRelicMonitoringStatus? status, string error, NewRelicMonitoringTagRules tagRules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SubscriptionId = subscriptionId;
             Status = status;
             Error = error;
             TagRules = tagRules;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The subscriptionId to be monitored. </summary>
         [WirePath("subscriptionId")]
         public string SubscriptionId { get; set; }
+
         /// <summary> The state of monitoring. </summary>
         [WirePath("status")]
         public NewRelicMonitoringStatus? Status { get; set; }
+
         /// <summary> The reason of not monitoring the subscription. </summary>
         [WirePath("error")]
         public string Error { get; set; }
+
         /// <summary> The resource-specific properties for this resource. </summary>
         [WirePath("tagRules")]
         public NewRelicMonitoringTagRules TagRules { get; set; }

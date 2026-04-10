@@ -90,7 +90,7 @@ namespace Azure.AI.Projects
                 "api-version",
                 _apiVersion,
                 conditionToEvaluate: request => request?.Uri?.AbsolutePath?.ToLowerInvariant()?.Contains("openai/v1") != true);
-            PipelinePolicyHelpers.AddRequestHeaderPolicy(options, "Foundry-Features", "MemoryStores=V1Preview,ContainerAgents=V1Preview,HostedAgents=V1Preview,WorkflowAgents=V1Preview,Evaluations=V1Preview,Schedules=V1Preview,RedTeams=V1Preview");
+            PipelinePolicyHelpers.AddRequestHeaderPolicy(options, "Foundry-Features", "MemoryStores=V1Preview,ContainerAgents=V1Preview,HostedAgents=V1Preview,WorkflowAgents=V1Preview,Evaluations=V1Preview,Schedules=V1Preview,RedTeams=V1Preview,Toolboxes=V1Preview");
             PipelinePolicyHelpers.AddRequestHeaderPolicy(options, "User-Agent", _telemetryDetails.UserAgent.ToString());
             PipelinePolicyHelpers.AddRequestHeaderPolicy(options, "x-ms-client-request-id", () => Guid.NewGuid().ToString().ToLowerInvariant());
             PipelinePolicyHelpers.OpenAI.AddResponseItemInputTransformPolicy(options);

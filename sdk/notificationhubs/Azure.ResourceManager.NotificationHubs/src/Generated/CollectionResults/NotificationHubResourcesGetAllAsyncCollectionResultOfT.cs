@@ -24,6 +24,7 @@ namespace Azure.ResourceManager.NotificationHubs
         private readonly string _skipToken;
         private readonly int? _top;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of NotificationHubResourcesGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The NotificationHubResources client used to send requests. </param>
@@ -33,7 +34,8 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="skipToken"> Continuation token. </param>
         /// <param name="top"> Page size. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public NotificationHubResourcesGetAllAsyncCollectionResultOfT(NotificationHubResources client, Guid subscriptionId, string resourceGroupName, string namespaceName, string skipToken, int? top, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public NotificationHubResourcesGetAllAsyncCollectionResultOfT(NotificationHubResources client, Guid subscriptionId, string resourceGroupName, string namespaceName, string skipToken, int? top, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -42,6 +44,7 @@ namespace Azure.ResourceManager.NotificationHubs
             _skipToken = skipToken;
             _top = top;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of NotificationHubResourcesGetAllAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -74,7 +77,7 @@ namespace Azure.ResourceManager.NotificationHubs
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _namespaceName, _skipToken, _top, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _namespaceName, _skipToken, _top, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("NotificationHubCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

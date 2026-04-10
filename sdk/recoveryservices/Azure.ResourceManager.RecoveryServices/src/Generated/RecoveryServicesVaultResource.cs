@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.RecoveryServices
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -546,7 +546,13 @@ namespace Azure.ResourceManager.RecoveryServices
             {
                 CancellationToken = cancellationToken
             };
-            return new VaultsGetReplicationUsagesAsyncCollectionResultOfT(_vaultsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+            return new VaultsGetReplicationUsagesAsyncCollectionResultOfT(
+                _vaultsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "RecoveryServicesVaultResource.GetReplicationUsages");
         }
 
         /// <summary>
@@ -578,7 +584,13 @@ namespace Azure.ResourceManager.RecoveryServices
             {
                 CancellationToken = cancellationToken
             };
-            return new VaultsGetReplicationUsagesCollectionResultOfT(_vaultsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+            return new VaultsGetReplicationUsagesCollectionResultOfT(
+                _vaultsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "RecoveryServicesVaultResource.GetReplicationUsages");
         }
 
         /// <summary>
@@ -610,7 +622,13 @@ namespace Azure.ResourceManager.RecoveryServices
             {
                 CancellationToken = cancellationToken
             };
-            return new VaultsGetUsagesByVaultsAsyncCollectionResultOfT(_vaultsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+            return new VaultsGetUsagesByVaultsAsyncCollectionResultOfT(
+                _vaultsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "RecoveryServicesVaultResource.GetUsagesByVaults");
         }
 
         /// <summary>
@@ -642,7 +660,13 @@ namespace Azure.ResourceManager.RecoveryServices
             {
                 CancellationToken = cancellationToken
             };
-            return new VaultsGetUsagesByVaultsCollectionResultOfT(_vaultsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+            return new VaultsGetUsagesByVaultsCollectionResultOfT(
+                _vaultsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "RecoveryServicesVaultResource.GetUsagesByVaults");
         }
 
         /// <summary>

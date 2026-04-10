@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.NewRelicObservability;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
     /// <summary> The type used for update operations of the NewRelicMonitorResource. </summary>
     public partial class NewRelicMonitorResourcePatch
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NewRelicMonitorResourcePatch"/>. </summary>
         public NewRelicMonitorResourcePatch()
@@ -55,61 +27,134 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <summary> Initializes a new instance of <see cref="NewRelicMonitorResourcePatch"/>. </summary>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="newRelicAccountProperties"> MarketplaceSubscriptionStatus of the resource. </param>
-        /// <param name="userInfo"> User Info. </param>
-        /// <param name="planData"> Plan details. </param>
-        /// <param name="saaSData"> SaaS details. </param>
-        /// <param name="orgCreationSource"> Source of org creation. </param>
-        /// <param name="accountCreationSource"> Source of account creation. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NewRelicMonitorResourcePatch(ManagedServiceIdentity identity, IDictionary<string, string> tags, NewRelicAccountProperties newRelicAccountProperties, NewRelicObservabilityUserInfo userInfo, NewRelicPlanDetails planData, NewRelicObservabilitySaaSContent saaSData, NewRelicObservabilityOrgCreationSource? orgCreationSource, NewRelicObservabilityAccountCreationSource? accountCreationSource, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> The updatable properties of the NewRelicMonitorResource. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NewRelicMonitorResourcePatch(ManagedServiceIdentity identity, IDictionary<string, string> tags, NewRelicMonitorResourceUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Identity = identity;
             Tags = tags;
-            NewRelicAccountProperties = newRelicAccountProperties;
-            UserInfo = userInfo;
-            PlanData = planData;
-            SaaSData = saaSData;
-            OrgCreationSource = orgCreationSource;
-            AccountCreationSource = accountCreationSource;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The managed service identities assigned to this resource. </summary>
         [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
+
         /// <summary> Resource tags. </summary>
         [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
+
+        /// <summary> The updatable properties of the NewRelicMonitorResource. </summary>
+        [WirePath("properties")]
+        internal NewRelicMonitorResourceUpdateProperties Properties { get; set; }
+
         /// <summary> MarketplaceSubscriptionStatus of the resource. </summary>
         [WirePath("properties.newRelicAccountProperties")]
-        public NewRelicAccountProperties NewRelicAccountProperties { get; set; }
-        /// <summary> User Info. </summary>
-        [WirePath("properties.userInfo")]
-        public NewRelicObservabilityUserInfo UserInfo { get; set; }
-        /// <summary> Plan details. </summary>
-        [WirePath("properties.planData")]
-        public NewRelicPlanDetails PlanData { get; set; }
-        /// <summary> SaaS details. </summary>
-        internal NewRelicObservabilitySaaSContent SaaSData { get; set; }
-        /// <summary> SaaS resource id. </summary>
-        [WirePath("properties.saaSData.saaSResourceId")]
-        public string SaaSResourceId
+        public NewRelicAccountProperties NewRelicAccountProperties
         {
-            get => SaaSData is null ? default : SaaSData.SaaSResourceId;
+            get
+            {
+                return Properties is null ? default : Properties.NewRelicAccountProperties;
+            }
             set
             {
-                if (SaaSData is null)
-                    SaaSData = new NewRelicObservabilitySaaSContent();
-                SaaSData.SaaSResourceId = value;
+                if (Properties is null)
+                {
+                    Properties = new NewRelicMonitorResourceUpdateProperties();
+                }
+                Properties.NewRelicAccountProperties = value;
+            }
+        }
+
+        /// <summary> User Info. </summary>
+        [WirePath("properties.userInfo")]
+        public NewRelicObservabilityUserInfo UserInfo
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UserInfo;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NewRelicMonitorResourceUpdateProperties();
+                }
+                Properties.UserInfo = value;
+            }
+        }
+
+        /// <summary> Plan details. </summary>
+        [WirePath("properties.planData")]
+        public NewRelicPlanDetails PlanData
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PlanData;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NewRelicMonitorResourceUpdateProperties();
+                }
+                Properties.PlanData = value;
             }
         }
 
         /// <summary> Source of org creation. </summary>
         [WirePath("properties.orgCreationSource")]
-        public NewRelicObservabilityOrgCreationSource? OrgCreationSource { get; set; }
+        public NewRelicObservabilityOrgCreationSource? OrgCreationSource
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OrgCreationSource;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NewRelicMonitorResourceUpdateProperties();
+                }
+                Properties.OrgCreationSource = value.Value;
+            }
+        }
+
         /// <summary> Source of account creation. </summary>
         [WirePath("properties.accountCreationSource")]
-        public NewRelicObservabilityAccountCreationSource? AccountCreationSource { get; set; }
+        public NewRelicObservabilityAccountCreationSource? AccountCreationSource
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AccountCreationSource;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NewRelicMonitorResourceUpdateProperties();
+                }
+                Properties.AccountCreationSource = value.Value;
+            }
+        }
+
+        /// <summary> SaaS resource id. </summary>
+        [WirePath("properties.saaSData.saaSResourceId")]
+        public string SaaSResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SaaSResourceId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NewRelicMonitorResourceUpdateProperties();
+                }
+                Properties.SaaSResourceId = value;
+            }
+        }
     }
 }

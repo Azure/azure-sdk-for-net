@@ -4,12 +4,12 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Azure.AI.Projects;
+using Azure.AI.Projects.Agents;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 using OpenAI.Responses;
-using Azure.AI.Projects;
-using Azure.AI.Projects.Agents;
 
 namespace Azure.AI.Extensions.OpenAI.Tests.Samples;
 
@@ -17,26 +17,31 @@ public class Sample_StructuredOutput : ProjectsOpenAITestBase
 {
     #region Snippet:Sample_Schema_StructuredOutput
     private static readonly BinaryData s_calendarSchema = BinaryData.FromObjectAsJson(
-        new {
+        new
+        {
             additionalProperties = false,
-            properties = new {
-                name = new {
+            properties = new
+            {
+                name = new
+                {
                     title = "Name",
                     type = "string"
                 },
-                date = new {
+                date = new
+                {
                     description = "Date in YYYY-MM-DD format",
                     title = "Date",
                     type = "string"
                 },
-                participants = new {
+                participants = new
+                {
                     items = new { type = "string" },
                     title = "Participants",
                     type = "array"
                 }
             },
             required = new List<string> { "name", "date", "participants" },
-            title ="CalendarEvent",
+            title = "CalendarEvent",
             type = "object",
         }
     );

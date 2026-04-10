@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DeviceRegistryAssetEndpointProfileData, DeviceRegistryAssetEndpointProfileResource>(new AssetEndpointProfilesGetByResourceGroupAsyncCollectionResultOfT(_assetEndpointProfilesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new DeviceRegistryAssetEndpointProfileResource(Client, data));
+            return new AsyncPageableWrapper<DeviceRegistryAssetEndpointProfileData, DeviceRegistryAssetEndpointProfileResource>(new AssetEndpointProfilesGetByResourceGroupAsyncCollectionResultOfT(_assetEndpointProfilesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DeviceRegistryAssetEndpointProfileCollection.GetAll"), data => new DeviceRegistryAssetEndpointProfileResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DeviceRegistryAssetEndpointProfileData, DeviceRegistryAssetEndpointProfileResource>(new AssetEndpointProfilesGetByResourceGroupCollectionResultOfT(_assetEndpointProfilesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new DeviceRegistryAssetEndpointProfileResource(Client, data));
+            return new PageableWrapper<DeviceRegistryAssetEndpointProfileData, DeviceRegistryAssetEndpointProfileResource>(new AssetEndpointProfilesGetByResourceGroupCollectionResultOfT(_assetEndpointProfilesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DeviceRegistryAssetEndpointProfileCollection.GetAll"), data => new DeviceRegistryAssetEndpointProfileResource(Client, data));
         }
 
         /// <summary>
