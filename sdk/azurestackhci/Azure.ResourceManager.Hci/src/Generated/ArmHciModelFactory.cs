@@ -273,9 +273,10 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="identityProvider"> Identity Provider for the cluster. </param>
         /// <param name="storageType"> Storage type of the cluster. Indicates whether the cluster uses S2D, SAN, or a combination. </param>
         /// <param name="nextBillingModel"> The next billing model to be applied to the cluster. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="kind"> This property identifies the purpose of the Cluster deployment. For example, a valid value is AzureLocal. </param>
         /// <returns> A new <see cref="Hci.HciClusterData"/> instance for mocking. </returns>
-        public static HciClusterData HciClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HciProvisioningState? provisioningState = default, HciClusterStatus? status = default, HciClusterConnectivityStatus? connectivityStatus = default, Guid? cloudId = default, string ring = default, string cloudManagementEndpoint = default, Guid? aadClientId = default, Guid? aadTenantId = default, Guid? aadApplicationObjectId = default, Guid? aadServicePrincipalObjectId = default, SoftwareAssuranceProperties softwareAssuranceProperties = default, bool? isManagementCluster = default, LogCollectionProperties logCollectionProperties = default, RemoteSupportProperties remoteSupportProperties = default, HciClusterDesiredProperties desiredProperties = default, HciClusterReportedProperties reportedProperties = default, IsolatedVmAttestationConfiguration isolatedVmAttestationConfiguration = default, float? trialDaysRemaining = default, string billingModel = default, DateTimeOffset? registrationTimestamp = default, DateTimeOffset? lastSyncTimestamp = default, DateTimeOffset? lastBillingTimestamp = default, string serviceEndpoint = default, string resourceProviderObjectId = default, IEnumerable<SecretsLocationDetails> secretsLocations = default, ClusterPattern? clusterPattern = default, ConfidentialVmProperties confidentialVmProperties = default, ClusterSdnProperties sdnProperties = default, IEnumerable<LocalAvailabilityZones> localAvailabilityZones = default, HciIdentityProvider? identityProvider = default, HciStorageType? storageType = default, NextBillingModel nextBillingModel = default, string kind = default)
+        public static HciClusterData HciClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HciProvisioningState? provisioningState = default, HciClusterStatus? status = default, HciClusterConnectivityStatus? connectivityStatus = default, Guid? cloudId = default, string ring = default, string cloudManagementEndpoint = default, Guid? aadClientId = default, Guid? aadTenantId = default, Guid? aadApplicationObjectId = default, Guid? aadServicePrincipalObjectId = default, SoftwareAssuranceProperties softwareAssuranceProperties = default, bool? isManagementCluster = default, LogCollectionProperties logCollectionProperties = default, RemoteSupportProperties remoteSupportProperties = default, HciClusterDesiredProperties desiredProperties = default, HciClusterReportedProperties reportedProperties = default, IsolatedVmAttestationConfiguration isolatedVmAttestationConfiguration = default, float? trialDaysRemaining = default, string billingModel = default, DateTimeOffset? registrationTimestamp = default, DateTimeOffset? lastSyncTimestamp = default, DateTimeOffset? lastBillingTimestamp = default, string serviceEndpoint = default, string resourceProviderObjectId = default, IEnumerable<SecretsLocationDetails> secretsLocations = default, ClusterPattern? clusterPattern = default, ConfidentialVmProperties confidentialVmProperties = default, ClusterSdnProperties sdnProperties = default, IEnumerable<LocalAvailabilityZones> localAvailabilityZones = default, HciIdentityProvider? identityProvider = default, HciStorageType? storageType = default, NextBillingModel nextBillingModel = default, ManagedServiceIdentity identity = default, string kind = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -321,6 +322,7 @@ namespace Azure.ResourceManager.Hci.Models
                     identityProvider,
                     storageType,
                     null),
+                identity,
                 kind);
         }
 
@@ -529,16 +531,17 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <param name="tags"> Resource tags. </param>
+        /// <param name="identity"> Identity of Cluster resource. </param>
         /// <param name="cloudManagementEndpoint"> Endpoint configured for management from the Azure portal. </param>
         /// <param name="aadClientId"> App id of cluster AAD identity. </param>
         /// <param name="aadTenantId"> Tenant id of cluster AAD identity. </param>
         /// <param name="desiredProperties"> Desired properties of the cluster. </param>
         /// <returns> A new <see cref="Models.HciClusterPatch"/> instance for mocking. </returns>
-        public static HciClusterPatch HciClusterPatch(IDictionary<string, string> tags = default, string cloudManagementEndpoint = default, Guid? aadClientId = default, Guid? aadTenantId = default, HciClusterDesiredProperties desiredProperties = default)
+        public static HciClusterPatch HciClusterPatch(IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default, string cloudManagementEndpoint = default, Guid? aadClientId = default, Guid? aadTenantId = default, HciClusterDesiredProperties desiredProperties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new HciClusterPatch(tags, cloudManagementEndpoint is null && aadClientId is null && aadTenantId is null && desiredProperties is null ? default : new ClusterPatchProperties(cloudManagementEndpoint, aadClientId, aadTenantId, desiredProperties, null), additionalBinaryDataProperties: null);
+            return new HciClusterPatch(tags, identity, cloudManagementEndpoint is null && aadClientId is null && aadTenantId is null && desiredProperties is null ? default : new ClusterPatchProperties(cloudManagementEndpoint, aadClientId, aadTenantId, desiredProperties, null), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Update secrets locations change  Request. </summary>
@@ -2697,6 +2700,7 @@ namespace Azure.ResourceManager.Hci.Models
                 tags,
                 location,
                 default,
+                default,
                 default);
         }
 
@@ -2799,7 +2803,7 @@ namespace Azure.ResourceManager.Hci.Models
             tags ??= new ChangeTrackingDictionary<string, string>();
             userAssignedIdentities ??= new ChangeTrackingDictionary<string, UserAssignedIdentity>();
 
-            return new HciClusterPatch(tags, default, additionalBinaryDataProperties: null);
+            return new HciClusterPatch(tags, default, default, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PerNodeExtensionState"/>. </summary>
@@ -3088,6 +3092,7 @@ namespace Azure.ResourceManager.Hci.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
+                default,
                 default,
                 default);
         }

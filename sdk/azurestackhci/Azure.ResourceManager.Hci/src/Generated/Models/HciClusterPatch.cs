@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.ResourceManager.Hci;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -25,11 +26,13 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Initializes a new instance of <see cref="HciClusterPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
+        /// <param name="identity"> Identity of Cluster resource. </param>
         /// <param name="properties"> Cluster properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HciClusterPatch(IDictionary<string, string> tags, ClusterPatchProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HciClusterPatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, ClusterPatchProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tags = tags;
+            Identity = identity;
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -37,6 +40,10 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Resource tags. </summary>
         [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
+
+        /// <summary> Identity of Cluster resource. </summary>
+        [WirePath("identity")]
+        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> Cluster properties. </summary>
         [WirePath("properties")]

@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Hci.Models;
+using Azure.ResourceManager.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Hci.Samples
@@ -106,7 +107,7 @@ namespace Azure.ResourceManager.Hci.Samples
                     WindowsServerSubscription = WindowsServerSubscription.Enabled,
                     DiagnosticLevel = HciClusterDiagnosticLevel.Basic,
                 },
-                ManagedServiceIdentityType = HciManagedServiceIdentityType.SystemAssigned,
+                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned),
             };
             HciClusterResource result = await hciCluster.UpdateAsync(patch);
 

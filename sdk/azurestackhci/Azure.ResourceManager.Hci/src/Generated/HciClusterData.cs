@@ -34,17 +34,23 @@ namespace Azure.ResourceManager.Hci
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Cluster properties. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="kind"> This property identifies the purpose of the Cluster deployment. For example, a valid value is AzureLocal. </param>
-        internal HciClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, ClusterProperties properties, string kind) : base(id, name, resourceType, systemData, tags, location)
+        internal HciClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, ClusterProperties properties, ManagedServiceIdentity identity, string kind) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
+            Identity = identity;
             Kind = kind;
         }
 
         /// <summary> Cluster properties. </summary>
         [WirePath("properties")]
         internal ClusterProperties Properties { get; set; }
+
+        /// <summary> The managed service identities assigned to this resource. </summary>
+        [WirePath("identity")]
+        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> This property identifies the purpose of the Cluster deployment. For example, a valid value is AzureLocal. </summary>
         [WirePath("kind")]

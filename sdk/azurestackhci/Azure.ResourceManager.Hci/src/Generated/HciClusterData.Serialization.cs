@@ -106,6 +106,11 @@ namespace Azure.ResourceManager.Hci
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options);
+            }
             if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
@@ -146,6 +151,7 @@ namespace Azure.ResourceManager.Hci
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ClusterProperties properties = default;
+            ManagedServiceIdentity identity = default;
             string kind = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -216,6 +222,15 @@ namespace Azure.ResourceManager.Hci
                     properties = ClusterProperties.DeserializeClusterProperties(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("identity"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options, AzureResourceManagerHciContext.Default);
+                    continue;
+                }
                 if (prop.NameEquals("kind"u8))
                 {
                     kind = prop.Value.GetString();
@@ -235,6 +250,7 @@ namespace Azure.ResourceManager.Hci
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                identity,
                 kind);
         }
     }
