@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         private const string CEValue = "CE";
         private const string ToRValue = "ToR";
-        private const string NPBValue = "NPB";
+        private const string NpbValue = "NPB";
         private const string TSValue = "TS";
         private const string ManagementValue = "Management";
 
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> NetworkDeviceRole-ToR(top of rack). </summary>
         public static NetworkDeviceRole ToR { get; } = new NetworkDeviceRole(ToRValue);
         /// <summary> NetworkDeviceRole-NPB(Network Packet Broker). </summary>
-        public static NetworkDeviceRole NPB { get; } = new NetworkDeviceRole(NPBValue);
+        public static NetworkDeviceRole Npb { get; } = new NetworkDeviceRole(NpbValue);
         /// <summary> NetworkDeviceRole-TS(Terminal Server). </summary>
         public static NetworkDeviceRole TS { get; } = new NetworkDeviceRole(TSValue);
         /// <summary> NetworkDeviceRole-Management. </summary>

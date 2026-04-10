@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> Route Policy Statement properties. </summary>
-    public partial class RoutePolicyStatementPatchProperties : AnnotationResource
+    public partial class RoutePolicyStatementPatchProperties : AnnotationResourceProperties
     {
         /// <summary> Initializes a new instance of <see cref="RoutePolicyStatementPatchProperties"/>. </summary>
         /// <param name="sequenceNumber"> Sequence to insert to/delete from existing route. </param>
@@ -47,10 +47,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Sequence to insert to/delete from existing route. </summary>
-        public long SequenceNumber { get; }
+        public long SequenceNumber { get; set; }
         /// <summary> Route policy condition properties. </summary>
-        public StatementConditionPatchProperties Condition { get; }
+        public StatementConditionPatchProperties Condition { get; set; }
         /// <summary> Route policy action properties. </summary>
-        public StatementActionPatchProperties Action { get; }
+        public StatementActionPatchProperties Action { get; set; }
     }
 }

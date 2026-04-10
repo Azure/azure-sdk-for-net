@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             writer.WritePropertyName("vlanId"u8);
             writer.WriteNumberValue(VlanId);
             writer.WritePropertyName("peerASN"u8);
-            writer.WriteNumberValue(PeerASN);
+            writer.WriteNumberValue(PeerAsn);
             if (Optional.IsDefined(BfdConfiguration))
             {
                 writer.WritePropertyName("bfdConfiguration"u8);
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
             int? mtu = default;
             int vlanId = default;
-            long peerASN = default;
+            long peerAsn = default;
             BfdConfiguration bfdConfiguration = default;
             string primaryIPv4Prefix = default;
             string primaryIPv6Prefix = default;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 if (property.NameEquals("peerASN"u8))
                 {
-                    peerASN = property.Value.GetInt64();
+                    peerAsn = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("bfdConfiguration"u8))
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 serializedAdditionalRawData,
                 mtu,
                 vlanId,
-                peerASN,
+                peerAsn,
                 bfdConfiguration);
         }
 

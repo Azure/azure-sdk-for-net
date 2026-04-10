@@ -54,10 +54,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(RoutePolicyConditionType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(RoutePolicyConditionType.Value.ToString());
             }
             if (Optional.IsDefined(IPPrefixId))
             {

@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         private const string CEValue = "CE";
         private const string ToRValue = "ToR";
-        private const string NPBValue = "NPB";
+        private const string NpbValue = "NPB";
         private const string ManagementSwitchValue = "ManagementSwitch";
 
         /// <summary> DeviceRole - Customer Edge (CE). </summary>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> DeviceRole - Top of Rack (ToR). </summary>
         public static DeviceRole ToR { get; } = new DeviceRole(ToRValue);
         /// <summary> DeviceRole - Network Packet Broker (NPB). </summary>
-        public static DeviceRole NPB { get; } = new DeviceRole(NPBValue);
+        public static DeviceRole Npb { get; } = new DeviceRole(NpbValue);
         /// <summary> Device Role Management Switch. </summary>
         public static DeviceRole ManagementSwitch { get; } = new DeviceRole(ManagementSwitchValue);
         /// <summary> Determines if two <see cref="DeviceRole"/> values are the same. </summary>

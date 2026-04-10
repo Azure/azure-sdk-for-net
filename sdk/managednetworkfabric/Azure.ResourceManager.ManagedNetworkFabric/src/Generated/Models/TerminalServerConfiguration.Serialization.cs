@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             string primaryIPv6Prefix = default;
             string secondaryIPv4Prefix = default;
             string secondaryIPv6Prefix = default;
-            string networkDeviceId = default;
+            ResourceIdentifier networkDeviceId = default;
             IReadOnlyList<SecretRotationStatus> secretRotationStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -159,7 +159,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 if (property.NameEquals("networkDeviceId"u8))
                 {
-                    networkDeviceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    networkDeviceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("secretRotationStatus"u8))

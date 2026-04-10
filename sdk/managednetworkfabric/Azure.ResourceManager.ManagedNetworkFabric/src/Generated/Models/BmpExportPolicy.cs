@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> Export Policy for the BGP Monitoring Protocol (BMP) Configuration. </summary>
+    /// <summary> Export Policy for the BMP Configuration. </summary>
     public readonly partial struct BmpExportPolicy : IEquatable<BmpExportPolicy>
     {
         private readonly string _value;

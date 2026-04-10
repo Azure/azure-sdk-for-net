@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkMonitor_Get</description>
+        /// <description>NetworkMonitors_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkMonitor_Get</description>
+        /// <description>NetworkMonitors_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkMonitor_Delete</description>
+        /// <description>NetworkMonitors_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkMonitor_Delete</description>
+        /// <description>NetworkMonitors_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkMonitor_Update</description>
+        /// <description>NetworkMonitors_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkMonitor_Update</description>
+        /// <description>NetworkMonitors_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -368,19 +368,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="body"> Request payload. </param>
+        /// <param name="content"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual async Task<ArmOperation<CommonPostActionResponseForDeviceUpdate>> UpdateAdministrativeStateAsync(WaitUntil waitUntil, UpdateAdministrativeState body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<DeviceUpdateCommonPostActionResult>> UpdateAdministrativeStateAsync(WaitUntil waitUntil, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _networkMonitorClientDiagnostics.CreateScope("NetworkMonitorResource.UpdateAdministrativeState");
             scope.Start();
             try
             {
-                var response = await _networkMonitorRestClient.UpdateAdministrativeStateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedNetworkFabricArmOperation<CommonPostActionResponseForDeviceUpdate>(new CommonPostActionResponseForDeviceUpdateOperationSource(), _networkMonitorClientDiagnostics, Pipeline, _networkMonitorRestClient.CreateUpdateAdministrativeStateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body).Request, response, OperationFinalStateVia.Location);
+                var response = await _networkMonitorRestClient.UpdateAdministrativeStateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new ManagedNetworkFabricArmOperation<DeviceUpdateCommonPostActionResult>(new DeviceUpdateCommonPostActionResultOperationSource(), _networkMonitorClientDiagnostics, Pipeline, _networkMonitorRestClient.CreateUpdateAdministrativeStateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -414,19 +414,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="body"> Request payload. </param>
+        /// <param name="content"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual ArmOperation<CommonPostActionResponseForDeviceUpdate> UpdateAdministrativeState(WaitUntil waitUntil, UpdateAdministrativeState body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<DeviceUpdateCommonPostActionResult> UpdateAdministrativeState(WaitUntil waitUntil, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _networkMonitorClientDiagnostics.CreateScope("NetworkMonitorResource.UpdateAdministrativeState");
             scope.Start();
             try
             {
-                var response = _networkMonitorRestClient.UpdateAdministrativeState(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken);
-                var operation = new ManagedNetworkFabricArmOperation<CommonPostActionResponseForDeviceUpdate>(new CommonPostActionResponseForDeviceUpdateOperationSource(), _networkMonitorClientDiagnostics, Pipeline, _networkMonitorRestClient.CreateUpdateAdministrativeStateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body).Request, response, OperationFinalStateVia.Location);
+                var response = _networkMonitorRestClient.UpdateAdministrativeState(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var operation = new ManagedNetworkFabricArmOperation<DeviceUpdateCommonPostActionResult>(new DeviceUpdateCommonPostActionResultOperationSource(), _networkMonitorClientDiagnostics, Pipeline, _networkMonitorRestClient.CreateUpdateAdministrativeStateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkMonitor_Get</description>
+        /// <description>NetworkMonitors_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -509,7 +509,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkMonitor_Get</description>
+        /// <description>NetworkMonitors_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -571,7 +571,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkMonitor_Get</description>
+        /// <description>NetworkMonitors_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -628,7 +628,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkMonitor_Get</description>
+        /// <description>NetworkMonitors_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -685,7 +685,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkMonitor_Get</description>
+        /// <description>NetworkMonitors_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -745,7 +745,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkMonitor_Get</description>
+        /// <description>NetworkMonitors_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -48,19 +49,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of <see cref="IPCommunityIdList"/>. </summary>
         public IPCommunityIdList()
         {
-            IPCommunityIds = new ChangeTrackingList<string>();
+            IPCommunityIds = new ChangeTrackingList<ResourceIdentifier>();
         }
 
         /// <summary> Initializes a new instance of <see cref="IPCommunityIdList"/>. </summary>
         /// <param name="ipCommunityIds"> List of IP Community resource IDs. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IPCommunityIdList(IList<string> ipCommunityIds, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal IPCommunityIdList(IList<ResourceIdentifier> ipCommunityIds, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IPCommunityIds = ipCommunityIds;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of IP Community resource IDs. </summary>
-        public IList<string> IPCommunityIds { get; }
+        public IList<ResourceIdentifier> IPCommunityIds { get; }
     }
 }

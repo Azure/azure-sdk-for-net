@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             if (Optional.IsDefined(DeviceConfigurationUri))
             {
                 writer.WritePropertyName("deviceConfigurationUrl"u8);
-                writer.WriteStringValue(DeviceConfigurationUri);
+                writer.WriteStringValue(DeviceConfigurationUri.AbsoluteUri);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -76,14 +76,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            string deviceConfigurationUrl = default;
+            Uri deviceConfigurationUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("deviceConfigurationUrl"u8))
                 {
-                    deviceConfigurationUrl = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    deviceConfigurationUrl = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

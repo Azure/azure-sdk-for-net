@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             ManagedServiceIdentityPatch identity = default;
             IDictionary<string, string> tags = default;
             string annotation = default;
-            ConfigurationType? configurationType = default;
+            NetworkFabricConfigurationType? configurationType = default;
             Uri tapRulesUrl = default;
             IList<NetworkTapRuleMatchConfigurationPatch> matchConfigurations = default;
             IList<CommonDynamicMatchConfigurationPatch> dynamicMatchConfigurations = default;
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             {
                                 continue;
                             }
-                            configurationType = new ConfigurationType(property0.Value.GetString());
+                            configurationType = new NetworkFabricConfigurationType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("tapRulesUrl"u8))
@@ -236,14 +236,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new NetworkTapRulePatch(
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData,
+                identity,
                 annotation,
                 configurationType,
                 tapRulesUrl,
                 matchConfigurations ?? new ChangeTrackingList<NetworkTapRuleMatchConfigurationPatch>(),
                 dynamicMatchConfigurations ?? new ChangeTrackingList<CommonDynamicMatchConfigurationPatch>(),
                 identitySelector,
-                globalNetworkTapRuleActions,
-                identity);
+                globalNetworkTapRuleActions);
         }
 
         BinaryData IPersistableModel<NetworkTapRulePatch>.Write(ModelReaderWriterOptions options)

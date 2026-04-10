@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> Community action types. Example: Permit | Deny. </summary>
+    /// <summary> Default action that needs to be applied when no condition is matched. Example: Permit | Deny. </summary>
     public readonly partial struct CommunityActionType : IEquatable<CommunityActionType>
     {
         private readonly string _value;

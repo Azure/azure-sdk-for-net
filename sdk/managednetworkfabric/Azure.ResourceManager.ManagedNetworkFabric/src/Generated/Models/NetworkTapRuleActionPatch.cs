@@ -52,15 +52,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkTapRuleActionPatch"/>. </summary>
-        /// <param name="type"> Type of actions that can be performed. </param>
+        /// <param name="tapRuleActionType"> Type of actions that can be performed. </param>
         /// <param name="truncate"> Truncate. 0 indicates do not truncate. </param>
         /// <param name="isTimestampEnabled"> The parameter to enable or disable the timestamp. </param>
         /// <param name="destinationId"> Destination Id. The ARM resource Id may be either Network To Network Interconnect or NeighborGroup. </param>
         /// <param name="matchConfigurationName"> The name of the match configuration. This is used when Goto type is provided. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkTapRuleActionPatch(TapRuleActionType? type, string truncate, BooleanEnumProperty? isTimestampEnabled, ResourceIdentifier destinationId, string matchConfigurationName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetworkTapRuleActionPatch(TapRuleActionType? tapRuleActionType, string truncate, NetworkFabricBooleanValue? isTimestampEnabled, ResourceIdentifier destinationId, string matchConfigurationName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Type = type;
+            TapRuleActionType = tapRuleActionType;
             Truncate = truncate;
             IsTimestampEnabled = isTimestampEnabled;
             DestinationId = destinationId;
@@ -69,11 +69,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Type of actions that can be performed. </summary>
-        public TapRuleActionType? Type { get; set; }
+        public TapRuleActionType? TapRuleActionType { get; set; }
         /// <summary> Truncate. 0 indicates do not truncate. </summary>
         public string Truncate { get; set; }
         /// <summary> The parameter to enable or disable the timestamp. </summary>
-        public BooleanEnumProperty? IsTimestampEnabled { get; set; }
+        public NetworkFabricBooleanValue? IsTimestampEnabled { get; set; }
         /// <summary> Destination Id. The ARM resource Id may be either Network To Network Interconnect or NeighborGroup. </summary>
         public ResourceIdentifier DestinationId { get; set; }
         /// <summary> The name of the match configuration. This is used when Goto type is provided. </summary>

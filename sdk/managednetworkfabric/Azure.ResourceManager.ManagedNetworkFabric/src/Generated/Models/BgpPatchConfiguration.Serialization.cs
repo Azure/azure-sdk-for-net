@@ -55,15 +55,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("allowASOverride"u8);
                 writer.WriteStringValue(AllowASOverride.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(FabricASN))
+            if (options.Format != "W" && Optional.IsDefined(FabricAsn))
             {
                 writer.WritePropertyName("fabricASN"u8);
-                writer.WriteNumberValue(FabricASN.Value);
+                writer.WriteNumberValue(FabricAsn.Value);
             }
-            if (Optional.IsDefined(PeerASN))
+            if (Optional.IsDefined(PeerAsn))
             {
                 writer.WritePropertyName("peerASN"u8);
-                writer.WriteNumberValue(PeerASN.Value);
+                writer.WriteNumberValue(PeerAsn.Value);
             }
             if (Optional.IsCollectionDefined(IPv4ListenRangePrefixes))
             {
@@ -143,11 +143,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 return null;
             }
             BfdPatchConfiguration bfdConfiguration = default;
-            BooleanEnumProperty? defaultRouteOriginate = default;
+            NetworkFabricBooleanValue? defaultRouteOriginate = default;
             int? allowAS = default;
             AllowASOverride? allowASOverride = default;
-            long? fabricASN = default;
-            long? peerASN = default;
+            long? fabricAsn = default;
+            long? peerAsn = default;
             IList<string> ipv4ListenRangePrefixes = default;
             IList<string> ipv6ListenRangePrefixes = default;
             IList<NeighborAddressPatch> ipv4NeighborAddress = default;
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    defaultRouteOriginate = new BooleanEnumProperty(property.Value.GetString());
+                    defaultRouteOriginate = new NetworkFabricBooleanValue(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("allowAS"u8))
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    fabricASN = property.Value.GetInt64();
+                    fabricAsn = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("peerASN"u8))
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    peerASN = property.Value.GetInt64();
+                    peerAsn = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("ipv4ListenRangePrefixes"u8))
@@ -315,8 +315,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 defaultRouteOriginate,
                 allowAS,
                 allowASOverride,
-                fabricASN,
-                peerASN,
+                fabricAsn,
+                peerAsn,
                 ipv4ListenRangePrefixes ?? new ChangeTrackingList<string>(),
                 ipv6ListenRangePrefixes ?? new ChangeTrackingList<string>(),
                 ipv4NeighborAddress ?? new ChangeTrackingList<NeighborAddressPatch>(),

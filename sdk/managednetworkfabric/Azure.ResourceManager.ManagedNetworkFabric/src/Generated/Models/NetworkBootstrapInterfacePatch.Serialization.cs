@@ -36,6 +36,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (Optional.IsDefined(Annotation))
+            {
+                writer.WritePropertyName("annotation"u8);
+                writer.WriteStringValue(Annotation);
+            }
             if (Optional.IsDefined(SerialNumber))
             {
                 writer.WritePropertyName("serialNumber"u8);
@@ -84,6 +89,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
+            string annotation = default;
             string serialNumber = default;
             string additionalDescription = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -99,6 +105,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
+                        if (property0.NameEquals("annotation"u8))
+                        {
+                            annotation = property0.Value.GetString();
+                            continue;
+                        }
                         if (property0.NameEquals("serialNumber"u8))
                         {
                             serialNumber = property0.Value.GetString();
@@ -118,7 +129,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NetworkBootstrapInterfacePatch(serialNumber, additionalDescription, serializedAdditionalRawData);
+            return new NetworkBootstrapInterfacePatch(annotation, serialNumber, additionalDescription, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkBootstrapInterfacePatch>.Write(ModelReaderWriterOptions options)

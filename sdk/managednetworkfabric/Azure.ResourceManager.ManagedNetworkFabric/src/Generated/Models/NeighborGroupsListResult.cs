@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of <see cref="NeighborGroupsListResult"/>. </summary>
         /// <param name="value"> The NeighborGroup items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal NeighborGroupsListResult(IEnumerable<NeighborGroupData> value)
+        internal NeighborGroupsListResult(IEnumerable<NetworkFabricNeighborGroupData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="value"> The NeighborGroup items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NeighborGroupsListResult(IReadOnlyList<NeighborGroupData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NeighborGroupsListResult(IReadOnlyList<NetworkFabricNeighborGroupData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> The NeighborGroup items on this page. </summary>
-        public IReadOnlyList<NeighborGroupData> Value { get; }
+        public IReadOnlyList<NetworkFabricNeighborGroupData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

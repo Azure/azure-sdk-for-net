@@ -68,6 +68,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="infrastructureExpressRouteConnections"> As part of an update, the Infrastructure ExpressRoute CircuitID should be provided to create and Provision a NFC. This Express route is dedicated for Infrastructure services. (This is a Mandatory attribute). </param>
         /// <param name="workloadExpressRouteConnections"> As part of an update, the workload ExpressRoute CircuitID should be provided to create and Provision a NFC. This Express route is dedicated for Workload services. (This is a Mandatory attribute). </param>
@@ -82,10 +83,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="nfcSku"> Network Fabric Controller SKU. </param>
         /// <param name="lastOperation"> Details of the last operation performed on the resource. </param>
         /// <param name="provisioningState"> Provides you the latest status of the NFC service, whether it is Accepted, updating, Succeeded or Failed. During this process, the states keep changing based on the status of NFC provisioning. </param>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkFabricControllerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, IList<ExpressRouteConnectionInformation> infrastructureExpressRouteConnections, IList<ExpressRouteConnectionInformation> workloadExpressRouteConnections, ControllerServices infrastructureServices, ControllerServices workloadServices, ManagedResourceGroupConfiguration managedResourceGroupConfiguration, IReadOnlyList<ResourceIdentifier> networkFabricIds, IsWorkloadManagementNetworkEnabled? isWorkloadManagementNetworkEnabled, IReadOnlyList<ResourceIdentifier> tenantInternetGatewayIds, string ipv4AddressSpace, string ipv6AddressSpace, NfcSku? nfcSku, LastOperationProperties lastOperation, ProvisioningState? provisioningState, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkFabricControllerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string annotation, IList<ExpressRouteConnectionInformation> infrastructureExpressRouteConnections, IList<ExpressRouteConnectionInformation> workloadExpressRouteConnections, NetworkFabricControllerServices infrastructureServices, NetworkFabricControllerServices workloadServices, ManagedResourceGroupConfiguration managedResourceGroupConfiguration, IReadOnlyList<ResourceIdentifier> networkFabricIds, IsWorkloadManagementNetworkEnabled? isWorkloadManagementNetworkEnabled, IReadOnlyList<ResourceIdentifier> tenantInternetGatewayIds, string ipv4AddressSpace, string ipv6AddressSpace, NetworkFabricControllerSKU? nfcSku, LastOperationProperties lastOperation, NetworkFabricProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
+            Identity = identity;
             Annotation = annotation;
             InfrastructureExpressRouteConnections = infrastructureExpressRouteConnections;
             WorkloadExpressRouteConnections = workloadExpressRouteConnections;
@@ -100,7 +101,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             NfcSku = nfcSku;
             LastOperation = lastOperation;
             ProvisioningState = provisioningState;
-            Identity = identity;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -109,6 +109,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
         }
 
+        /// <summary> The managed service identities assigned to this resource. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Switch configuration description. </summary>
         public string Annotation { get; set; }
         /// <summary> As part of an update, the Infrastructure ExpressRoute CircuitID should be provided to create and Provision a NFC. This Express route is dedicated for Infrastructure services. (This is a Mandatory attribute). </summary>
@@ -116,9 +118,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <summary> As part of an update, the workload ExpressRoute CircuitID should be provided to create and Provision a NFC. This Express route is dedicated for Workload services. (This is a Mandatory attribute). </summary>
         public IList<ExpressRouteConnectionInformation> WorkloadExpressRouteConnections { get; }
         /// <summary> InfrastructureServices IP ranges. </summary>
-        public ControllerServices InfrastructureServices { get; }
+        public NetworkFabricControllerServices InfrastructureServices { get; }
         /// <summary> WorkloadServices IP ranges. </summary>
-        public ControllerServices WorkloadServices { get; }
+        public NetworkFabricControllerServices WorkloadServices { get; }
         /// <summary> Managed Resource Group configuration properties. </summary>
         public ManagedResourceGroupConfiguration ManagedResourceGroupConfiguration { get; set; }
         /// <summary> The NF-ID will be an input parameter used by the NF to link and get associated with the parent NFC Service. </summary>
@@ -132,7 +134,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <summary> IPv6 Network Fabric Controller Address Space. </summary>
         public string IPv6AddressSpace { get; set; }
         /// <summary> Network Fabric Controller SKU. </summary>
-        public NfcSku? NfcSku { get; set; }
+        public NetworkFabricControllerSKU? NfcSku { get; set; }
         /// <summary> Details of the last operation performed on the resource. </summary>
         internal LastOperationProperties LastOperation { get; }
         /// <summary> Details status of the last operation performed on the resource. </summary>
@@ -142,8 +144,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary> Provides you the latest status of the NFC service, whether it is Accepted, updating, Succeeded or Failed. During this process, the states keep changing based on the status of NFC provisioning. </summary>
-        public ProvisioningState? ProvisioningState { get; }
-        /// <summary> The managed service identities assigned to this resource. </summary>
-        public ManagedServiceIdentity Identity { get; set; }
+        public NetworkFabricProvisioningState? ProvisioningState { get; }
     }
 }

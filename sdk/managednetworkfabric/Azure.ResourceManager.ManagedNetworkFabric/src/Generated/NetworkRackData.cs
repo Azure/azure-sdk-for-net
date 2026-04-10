@@ -70,6 +70,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
+        /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="networkRackType"> Network Rack SKU name. </param>
         /// <param name="networkFabricId"> ARM resource ID of the Network Fabric. </param>
         /// <param name="networkDevices"> List of network device ARM resource IDs. </param>
@@ -77,8 +78,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="configurationState"> Configuration state of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkRackData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NetworkRackType? networkRackType, ResourceIdentifier networkFabricId, IReadOnlyList<ResourceIdentifier> networkDevices, LastOperationProperties lastOperation, ProvisioningState? provisioningState, ConfigurationState? configurationState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkRackData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, NetworkRackType? networkRackType, ResourceIdentifier networkFabricId, IReadOnlyList<ResourceIdentifier> networkDevices, LastOperationProperties lastOperation, NetworkFabricProvisioningState? provisioningState, NetworkFabricConfigurationState? configurationState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
+            Annotation = annotation;
             NetworkRackType = networkRackType;
             NetworkFabricId = networkFabricId;
             NetworkDevices = networkDevices;
@@ -93,6 +95,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
         }
 
+        /// <summary> Switch configuration description. </summary>
+        public string Annotation { get; set; }
         /// <summary> Network Rack SKU name. </summary>
         public NetworkRackType? NetworkRackType { get; set; }
         /// <summary> ARM resource ID of the Network Fabric. </summary>
@@ -108,8 +112,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary> Provisioning state of the resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkFabricProvisioningState? ProvisioningState { get; }
         /// <summary> Configuration state of the resource. </summary>
-        public ConfigurationState? ConfigurationState { get; }
+        public NetworkFabricConfigurationState? ConfigurationState { get; }
     }
 }

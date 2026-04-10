@@ -45,6 +45,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (Optional.IsDefined(Annotation))
+            {
+                writer.WritePropertyName("annotation"u8);
+                writer.WriteStringValue(Annotation);
+            }
             writer.WritePropertyName("networkFabricSku"u8);
             writer.WriteStringValue(NetworkFabricSku);
             if (Optional.IsDefined(FabricVersion))
@@ -94,7 +99,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WriteStringValue(IPv6Prefix);
             }
             writer.WritePropertyName("fabricASN"u8);
-            writer.WriteNumberValue(FabricASN);
+            writer.WriteNumberValue(FabricAsn);
             writer.WritePropertyName("terminalServerConfiguration"u8);
             writer.WriteObjectValue(TerminalServerConfiguration, options);
             writer.WritePropertyName("managementNetworkConfiguration"u8);
@@ -259,6 +264,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
+            string annotation = default;
             string networkFabricSku = default;
             string fabricVersion = default;
             IReadOnlyList<string> routerIds = default;
@@ -269,7 +275,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             int serverCountPerRack = default;
             string ipv4Prefix = default;
             string ipv6Prefix = default;
-            long fabricASN = default;
+            long fabricAsn = default;
             TerminalServerConfiguration terminalServerConfiguration = default;
             ManagementNetworkConfigurationProperties managementNetworkConfiguration = default;
             IReadOnlyList<string> racks = default;
@@ -285,9 +291,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             SecretRotationSummary secretRotationSummary = default;
             LastOperationProperties lastOperation = default;
             AuthorizedTransceiverProperties authorizedTransceiver = default;
-            ConfigurationState? configurationState = default;
-            ProvisioningState? provisioningState = default;
-            AdministrativeState? administrativeState = default;
+            NetworkFabricConfigurationState? configurationState = default;
+            NetworkFabricProvisioningState? provisioningState = default;
+            NetworkFabricAdministrativeState? administrativeState = default;
             QosProperties qosConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -354,6 +360,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
+                        if (property0.NameEquals("annotation"u8))
+                        {
+                            annotation = property0.Value.GetString();
+                            continue;
+                        }
                         if (property0.NameEquals("networkFabricSku"u8))
                         {
                             networkFabricSku = property0.Value.GetString();
@@ -432,7 +443,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                         }
                         if (property0.NameEquals("fabricASN"u8))
                         {
-                            fabricASN = property0.Value.GetInt64();
+                            fabricAsn = property0.Value.GetInt64();
                             continue;
                         }
                         if (property0.NameEquals("terminalServerConfiguration"u8))
@@ -617,7 +628,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            configurationState = new ConfigurationState(property0.Value.GetString());
+                            configurationState = new NetworkFabricConfigurationState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -626,7 +637,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new NetworkFabricProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("administrativeState"u8))
@@ -635,7 +646,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            administrativeState = new AdministrativeState(property0.Value.GetString());
+                            administrativeState = new NetworkFabricAdministrativeState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("qosConfiguration"u8))
@@ -663,6 +674,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
+                identity,
+                annotation,
                 networkFabricSku,
                 fabricVersion,
                 routerIds ?? new ChangeTrackingList<string>(),
@@ -673,7 +686,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 serverCountPerRack,
                 ipv4Prefix,
                 ipv6Prefix,
-                fabricASN,
+                fabricAsn,
                 terminalServerConfiguration,
                 managementNetworkConfiguration,
                 racks ?? new ChangeTrackingList<string>(),
@@ -693,7 +706,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 provisioningState,
                 administrativeState,
                 qosConfiguration,
-                identity,
                 serializedAdditionalRawData);
         }
 

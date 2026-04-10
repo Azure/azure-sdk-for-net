@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 return null;
             }
             ResourceIdentifier networkToNetworkInterconnectId = default;
-            AdministrativeState? administrativeState = default;
+            NetworkFabricAdministrativeState? administrativeState = default;
             PeeringOption peeringOption = default;
             VpnOptionBProperties optionBProperties = default;
             VpnOptionAProperties optionAProperties = default;
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    administrativeState = new AdministrativeState(property.Value.GetString());
+                    administrativeState = new NetworkFabricAdministrativeState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("peeringOption"u8))

@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             SystemData systemData = default;
             NniType? nniType = default;
             IsManagementType? isManagementType = default;
-            BooleanEnumProperty useOptionB = default;
+            NetworkFabricBooleanValue useOptionB = default;
             Layer2Configuration layer2Configuration = default;
             OptionBLayer3Configuration optionBLayer3Configuration = default;
             NpbStaticRouteConfiguration npbStaticRouteConfiguration = default;
@@ -163,9 +163,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             MicroBfdState? microBfdState = default;
             ConditionalDefaultRouteProperties conditionalDefaultRouteConfiguration = default;
             LastOperationProperties lastOperation = default;
-            ConfigurationState? configurationState = default;
-            ProvisioningState? provisioningState = default;
-            AdministrativeState? administrativeState = default;
+            NetworkFabricConfigurationState? configurationState = default;
+            NetworkFabricProvisioningState? provisioningState = default;
+            NetworkFabricAdministrativeState? administrativeState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                         }
                         if (property0.NameEquals("useOptionB"u8))
                         {
-                            useOptionB = new BooleanEnumProperty(property0.Value.GetString());
+                            useOptionB = new NetworkFabricBooleanValue(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("layer2Configuration"u8))
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            configurationState = new ConfigurationState(property0.Value.GetString());
+                            configurationState = new NetworkFabricConfigurationState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new NetworkFabricProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("administrativeState"u8))
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            administrativeState = new AdministrativeState(property0.Value.GetString());
+                            administrativeState = new NetworkFabricAdministrativeState(property0.Value.GetString());
                             continue;
                         }
                     }

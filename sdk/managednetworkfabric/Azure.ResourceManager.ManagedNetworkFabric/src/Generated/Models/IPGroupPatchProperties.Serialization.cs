@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 return null;
             }
             string name = default;
-            IPAddressType? ipAddressType = default;
+            NetworkFabricIPAddressType? ipAddressType = default;
             IList<string> ipPrefixes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    ipAddressType = new IPAddressType(property.Value.GetString());
+                    ipAddressType = new NetworkFabricIPAddressType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("ipPrefixes"u8))

@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Local Preference of the route policy. </summary>
         public long? LocalPreference { get; set; }
         /// <summary> Action type. Example: Permit | Deny | Continue. </summary>
-        public RoutePolicyActionType ActionType { get; }
+        public RoutePolicyActionType ActionType { get; set; }
         /// <summary> IP Community Properties. </summary>
         public ActionIPCommunityPatchProperties IPCommunityProperties { get; set; }
         /// <summary> IP Extended Community Properties. </summary>

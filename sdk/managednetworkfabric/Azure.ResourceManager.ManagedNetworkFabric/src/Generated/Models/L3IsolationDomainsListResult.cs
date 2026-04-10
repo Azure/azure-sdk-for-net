@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of <see cref="L3IsolationDomainsListResult"/>. </summary>
         /// <param name="value"> The L3IsolationDomain items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal L3IsolationDomainsListResult(IEnumerable<L3IsolationDomainData> value)
+        internal L3IsolationDomainsListResult(IEnumerable<NetworkFabricL3IsolationDomainData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="value"> The L3IsolationDomain items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal L3IsolationDomainsListResult(IReadOnlyList<L3IsolationDomainData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal L3IsolationDomainsListResult(IReadOnlyList<NetworkFabricL3IsolationDomainData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> The L3IsolationDomain items on this page. </summary>
-        public IReadOnlyList<L3IsolationDomainData> Value { get; }
+        public IReadOnlyList<NetworkFabricL3IsolationDomainData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

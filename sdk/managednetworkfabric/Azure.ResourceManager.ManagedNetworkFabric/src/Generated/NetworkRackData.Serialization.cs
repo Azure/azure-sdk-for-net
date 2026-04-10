@@ -40,6 +40,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (Optional.IsDefined(Annotation))
+            {
+                writer.WritePropertyName("annotation"u8);
+                writer.WriteStringValue(Annotation);
+            }
             if (Optional.IsDefined(NetworkRackType))
             {
                 writer.WritePropertyName("networkRackType"u8);
@@ -106,12 +111,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
+            string annotation = default;
             NetworkRackType? networkRackType = default;
             ResourceIdentifier networkFabricId = default;
             IReadOnlyList<ResourceIdentifier> networkDevices = default;
             LastOperationProperties lastOperation = default;
-            ProvisioningState? provisioningState = default;
-            ConfigurationState? configurationState = default;
+            NetworkFabricProvisioningState? provisioningState = default;
+            NetworkFabricConfigurationState? configurationState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -168,6 +174,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
+                        if (property0.NameEquals("annotation"u8))
+                        {
+                            annotation = property0.Value.GetString();
+                            continue;
+                        }
                         if (property0.NameEquals("networkRackType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -218,7 +229,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new NetworkFabricProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("configurationState"u8))
@@ -227,7 +238,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            configurationState = new ConfigurationState(property0.Value.GetString());
+                            configurationState = new NetworkFabricConfigurationState(property0.Value.GetString());
                             continue;
                         }
                     }
@@ -246,6 +257,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
+                annotation,
                 networkRackType,
                 networkFabricId,
                 networkDevices ?? new ChangeTrackingList<ResourceIdentifier>(),

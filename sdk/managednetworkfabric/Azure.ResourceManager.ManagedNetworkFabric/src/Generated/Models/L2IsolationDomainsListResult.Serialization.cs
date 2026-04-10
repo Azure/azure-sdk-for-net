@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            IReadOnlyList<L2IsolationDomainData> value = default;
+            IReadOnlyList<NetworkFabricL2IsolationDomainData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<L2IsolationDomainData> array = new List<L2IsolationDomainData>();
+                    List<NetworkFabricL2IsolationDomainData> array = new List<NetworkFabricL2IsolationDomainData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(L2IsolationDomainData.DeserializeL2IsolationDomainData(item, options));
+                        array.Add(NetworkFabricL2IsolationDomainData.DeserializeNetworkFabricL2IsolationDomainData(item, options));
                     }
                     value = array;
                     continue;

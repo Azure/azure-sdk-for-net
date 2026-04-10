@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         private const string CEValue = "CE";
-        private const string NPBValue = "NPB";
+        private const string NpbValue = "NPB";
 
         /// <summary> NniType-CE(Customer Edge). </summary>
         public static NniType CE { get; } = new NniType(CEValue);
         /// <summary> NniType-NPB(Network Packet Broker). </summary>
-        public static NniType NPB { get; } = new NniType(NPBValue);
+        public static NniType Npb { get; } = new NniType(NpbValue);
         /// <summary> Determines if two <see cref="NniType"/> values are the same. </summary>
         public static bool operator ==(NniType left, NniType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NniType"/> values are not the same. </summary>

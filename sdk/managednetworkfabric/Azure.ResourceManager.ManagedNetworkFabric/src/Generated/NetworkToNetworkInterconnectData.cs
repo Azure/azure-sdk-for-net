@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 
         /// <summary> Initializes a new instance of <see cref="NetworkToNetworkInterconnectData"/>. </summary>
         /// <param name="useOptionB"> Based on this option layer3 parameters are mandatory. Example: True/False. </param>
-        public NetworkToNetworkInterconnectData(BooleanEnumProperty useOptionB)
+        public NetworkToNetworkInterconnectData(NetworkFabricBooleanValue useOptionB)
         {
             UseOptionB = useOptionB;
         }
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="administrativeState"> Administrative state of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkToNetworkInterconnectData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NniType? nniType, IsManagementType? isManagementType, BooleanEnumProperty useOptionB, Layer2Configuration layer2Configuration, OptionBLayer3Configuration optionBLayer3Configuration, NpbStaticRouteConfiguration npbStaticRouteConfiguration, NniStaticRouteConfiguration staticRouteConfiguration, ImportRoutePolicyInformation importRoutePolicy, ExportRoutePolicyInformation exportRoutePolicy, ResourceIdentifier egressAclId, ResourceIdentifier ingressAclId, MicroBfdState? microBfdState, ConditionalDefaultRouteProperties conditionalDefaultRouteConfiguration, LastOperationProperties lastOperation, ConfigurationState? configurationState, ProvisioningState? provisioningState, AdministrativeState? administrativeState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal NetworkToNetworkInterconnectData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NniType? nniType, IsManagementType? isManagementType, NetworkFabricBooleanValue useOptionB, Layer2Configuration layer2Configuration, OptionBLayer3Configuration optionBLayer3Configuration, NpbStaticRouteConfiguration npbStaticRouteConfiguration, NniStaticRouteConfiguration staticRouteConfiguration, ImportRoutePolicyInformation importRoutePolicy, ExportRoutePolicyInformation exportRoutePolicy, ResourceIdentifier egressAclId, ResourceIdentifier ingressAclId, MicroBfdState? microBfdState, ConditionalDefaultRouteProperties conditionalDefaultRouteConfiguration, LastOperationProperties lastOperation, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             NniType = nniType;
             IsManagementType = isManagementType;
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <summary> Configuration to use NNI for Infrastructure Management. Example: True/False. </summary>
         public IsManagementType? IsManagementType { get; set; }
         /// <summary> Based on this option layer3 parameters are mandatory. Example: True/False. </summary>
-        public BooleanEnumProperty UseOptionB { get; set; }
+        public NetworkFabricBooleanValue UseOptionB { get; set; }
         /// <summary> Common properties for Layer2 Configuration. </summary>
         public Layer2Configuration Layer2Configuration { get; set; }
         /// <summary> Common properties for Layer3Configuration. </summary>
@@ -143,10 +143,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary> Configuration state of the resource. </summary>
-        public ConfigurationState? ConfigurationState { get; }
+        public NetworkFabricConfigurationState? ConfigurationState { get; }
         /// <summary> Provisioning state of the resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkFabricProvisioningState? ProvisioningState { get; }
         /// <summary> Administrative state of the resource. </summary>
-        public AdministrativeState? AdministrativeState { get; }
+        public NetworkFabricAdministrativeState? AdministrativeState { get; }
     }
 }

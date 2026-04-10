@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            IReadOnlyList<IPCommunityData> value = default;
+            IReadOnlyList<NetworkFabricIPCommunityData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<IPCommunityData> array = new List<IPCommunityData>();
+                    List<NetworkFabricIPCommunityData> array = new List<NetworkFabricIPCommunityData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IPCommunityData.DeserializeIPCommunityData(item, options));
+                        array.Add(NetworkFabricIPCommunityData.DeserializeNetworkFabricIPCommunityData(item, options));
                     }
                     value = array;
                     continue;

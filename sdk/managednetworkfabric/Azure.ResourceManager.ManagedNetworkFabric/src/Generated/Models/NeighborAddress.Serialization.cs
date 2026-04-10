@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             string address = default;
             BfdAdministrativeState? bfdAdministrativeState = default;
             BgpAdministrativeState? bgpAdministrativeState = default;
-            ConfigurationState? configurationState = default;
+            NetworkFabricConfigurationState? configurationState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    configurationState = new ConfigurationState(property.Value.GetString());
+                    configurationState = new NetworkFabricConfigurationState(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

@@ -27,13 +27,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         private const string UserAssignedValue = "UserAssigned";
         private const string SystemAssignedUserAssignedValue = "SystemAssigned,UserAssigned";
 
-        /// <summary> No managed identity. </summary>
+        /// <summary> None. </summary>
         public static ManagedServiceIdentityType None { get; } = new ManagedServiceIdentityType(NoneValue);
-        /// <summary> System assigned managed identity. </summary>
+        /// <summary> SystemAssigned. </summary>
         public static ManagedServiceIdentityType SystemAssigned { get; } = new ManagedServiceIdentityType(SystemAssignedValue);
-        /// <summary> User assigned managed identity. </summary>
+        /// <summary> UserAssigned. </summary>
         public static ManagedServiceIdentityType UserAssigned { get; } = new ManagedServiceIdentityType(UserAssignedValue);
-        /// <summary> System and user assigned managed identity. </summary>
+        /// <summary> SystemAssigned,UserAssigned. </summary>
         public static ManagedServiceIdentityType SystemAssignedUserAssigned { get; } = new ManagedServiceIdentityType(SystemAssignedUserAssignedValue);
         /// <summary> Determines if two <see cref="ManagedServiceIdentityType"/> values are the same. </summary>
         public static bool operator ==(ManagedServiceIdentityType left, ManagedServiceIdentityType right) => left.Equals(right);

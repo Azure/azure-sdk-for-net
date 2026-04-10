@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 throw new FormatException($"The model {nameof(ControlPlaneAclActionPatch)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(ActionType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(ActionType.Value.ToString());
             }
             if (Optional.IsDefined(RemarkComment))
             {

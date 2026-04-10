@@ -21,25 +21,25 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of <see cref="NetworkBootstrapDevicePatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="hostName"> The host name of the device. </param>
         /// <param name="serialNumber"> Serial number of the device. Format of serial Number - Make;Model;HardwareRevisionId;SerialNumber. </param>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        internal NetworkBootstrapDevicePatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, string annotation, string hostName, string serialNumber, ManagedServiceIdentityPatch identity) : base(tags, serializedAdditionalRawData)
+        internal NetworkBootstrapDevicePatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ManagedServiceIdentityPatch identity, string annotation, string hostName, string serialNumber) : base(tags, serializedAdditionalRawData)
         {
+            Identity = identity;
             Annotation = annotation;
             HostName = hostName;
             SerialNumber = serialNumber;
-            Identity = identity;
         }
 
+        /// <summary> The managed service identities assigned to this resource. </summary>
+        public ManagedServiceIdentityPatch Identity { get; set; }
         /// <summary> Switch configuration description. </summary>
         public string Annotation { get; set; }
         /// <summary> The host name of the device. </summary>
         public string HostName { get; set; }
         /// <summary> Serial number of the device. Format of serial Number - Make;Model;HardwareRevisionId;SerialNumber. </summary>
         public string SerialNumber { get; set; }
-        /// <summary> The managed service identities assigned to this resource. </summary>
-        public ManagedServiceIdentityPatch Identity { get; set; }
     }
 }

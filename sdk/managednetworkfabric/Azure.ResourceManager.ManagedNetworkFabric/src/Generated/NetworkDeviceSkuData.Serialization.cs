@@ -111,10 +111,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             SystemData systemData = default;
             string model = default;
             string manufacturer = default;
-            IReadOnlyList<SupportedVersionProperties> supportedVersions = default;
-            IReadOnlyList<NetworkDeviceRoleName> supportedRoleTypes = default;
-            IReadOnlyList<DeviceInterfaceProperties> interfaces = default;
-            ProvisioningState? provisioningState = default;
+            IList<SupportedVersionProperties> supportedVersions = default;
+            IList<NetworkDeviceRoleName> supportedRoleTypes = default;
+            IList<NetworkDeviceInterfaceProperties> interfaces = default;
+            NetworkFabricProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -196,10 +196,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            List<DeviceInterfaceProperties> array = new List<DeviceInterfaceProperties>();
+                            List<NetworkDeviceInterfaceProperties> array = new List<NetworkDeviceInterfaceProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DeviceInterfaceProperties.DeserializeDeviceInterfaceProperties(item, options));
+                                array.Add(NetworkDeviceInterfaceProperties.DeserializeNetworkDeviceInterfaceProperties(item, options));
                             }
                             interfaces = array;
                             continue;
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new NetworkFabricProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 manufacturer,
                 supportedVersions ?? new ChangeTrackingList<SupportedVersionProperties>(),
                 supportedRoleTypes ?? new ChangeTrackingList<NetworkDeviceRoleName>(),
-                interfaces ?? new ChangeTrackingList<DeviceInterfaceProperties>(),
+                interfaces ?? new ChangeTrackingList<NetworkDeviceInterfaceProperties>(),
                 provisioningState,
                 serializedAdditionalRawData);
         }

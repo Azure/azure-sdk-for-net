@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of AccessControlListResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of AccessControlListResources and their operations over a AccessControlListResource. </returns>
-        public virtual AccessControlListCollection GetAccessControlLists()
+        /// <summary> Gets a collection of NetworkFabricAccessControlListResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of NetworkFabricAccessControlListResources and their operations over a NetworkFabricAccessControlListResource. </returns>
+        public virtual NetworkFabricAccessControlListCollection GetNetworkFabricAccessControlLists()
         {
-            return GetCachedClient(client => new AccessControlListCollection(client, Id));
+            return GetCachedClient(client => new NetworkFabricAccessControlListCollection(client, Id));
         }
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AccessControlList_Get</description>
+        /// <description>AccessControlLists_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AccessControlListResource"/></description>
+        /// <description><see cref="NetworkFabricAccessControlListResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -66,9 +66,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="accessControlListName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="accessControlListName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<AccessControlListResource>> GetAccessControlListAsync(string accessControlListName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetworkFabricAccessControlListResource>> GetNetworkFabricAccessControlListAsync(string accessControlListName, CancellationToken cancellationToken = default)
         {
-            return await GetAccessControlLists().GetAsync(accessControlListName, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkFabricAccessControlLists().GetAsync(accessControlListName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AccessControlList_Get</description>
+        /// <description>AccessControlLists_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AccessControlListResource"/></description>
+        /// <description><see cref="NetworkFabricAccessControlListResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -97,47 +97,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="accessControlListName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="accessControlListName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<AccessControlListResource> GetAccessControlList(string accessControlListName, CancellationToken cancellationToken = default)
+        public virtual Response<NetworkFabricAccessControlListResource> GetNetworkFabricAccessControlList(string accessControlListName, CancellationToken cancellationToken = default)
         {
-            return GetAccessControlLists().Get(accessControlListName, cancellationToken);
+            return GetNetworkFabricAccessControlLists().Get(accessControlListName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of InternetGatewayRuleResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of InternetGatewayRuleResources and their operations over a InternetGatewayRuleResource. </returns>
-        public virtual InternetGatewayRuleCollection GetInternetGatewayRules()
+        /// <summary> Gets a collection of NetworkFabricInternetGatewayRuleResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of NetworkFabricInternetGatewayRuleResources and their operations over a NetworkFabricInternetGatewayRuleResource. </returns>
+        public virtual NetworkFabricInternetGatewayRuleCollection GetNetworkFabricInternetGatewayRules()
         {
-            return GetCachedClient(client => new InternetGatewayRuleCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets an Internet Gateway Rule resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/internetGatewayRules/{internetGatewayRuleName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>InternetGatewayRule_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="InternetGatewayRuleResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="internetGatewayRuleName"> Name of the Internet Gateway rule. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="internetGatewayRuleName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="internetGatewayRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<InternetGatewayRuleResource>> GetInternetGatewayRuleAsync(string internetGatewayRuleName, CancellationToken cancellationToken = default)
-        {
-            return await GetInternetGatewayRules().GetAsync(internetGatewayRuleName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(client => new NetworkFabricInternetGatewayRuleCollection(client, Id));
         }
 
         /// <summary>
@@ -149,7 +118,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>InternetGatewayRule_Get</description>
+        /// <description>InternetGatewayRules_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -157,7 +126,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="InternetGatewayRuleResource"/></description>
+        /// <description><see cref="NetworkFabricInternetGatewayRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -166,16 +135,47 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="internetGatewayRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="internetGatewayRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<InternetGatewayRuleResource> GetInternetGatewayRule(string internetGatewayRuleName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetworkFabricInternetGatewayRuleResource>> GetNetworkFabricInternetGatewayRuleAsync(string internetGatewayRuleName, CancellationToken cancellationToken = default)
         {
-            return GetInternetGatewayRules().Get(internetGatewayRuleName, cancellationToken);
+            return await GetNetworkFabricInternetGatewayRules().GetAsync(internetGatewayRuleName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets a collection of InternetGatewayResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of InternetGatewayResources and their operations over a InternetGatewayResource. </returns>
-        public virtual InternetGatewayCollection GetInternetGateways()
+        /// <summary>
+        /// Gets an Internet Gateway Rule resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/internetGatewayRules/{internetGatewayRuleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>InternetGatewayRules_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFabricInternetGatewayRuleResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="internetGatewayRuleName"> Name of the Internet Gateway rule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="internetGatewayRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="internetGatewayRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<NetworkFabricInternetGatewayRuleResource> GetNetworkFabricInternetGatewayRule(string internetGatewayRuleName, CancellationToken cancellationToken = default)
         {
-            return GetCachedClient(client => new InternetGatewayCollection(client, Id));
+            return GetNetworkFabricInternetGatewayRules().Get(internetGatewayRuleName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of NetworkFabricInternetGatewayResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of NetworkFabricInternetGatewayResources and their operations over a NetworkFabricInternetGatewayResource. </returns>
+        public virtual NetworkFabricInternetGatewayCollection GetNetworkFabricInternetGateways()
+        {
+            return GetCachedClient(client => new NetworkFabricInternetGatewayCollection(client, Id));
         }
 
         /// <summary>
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>InternetGateway_Get</description>
+        /// <description>InternetGateways_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="InternetGatewayResource"/></description>
+        /// <description><see cref="NetworkFabricInternetGatewayResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -204,9 +204,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="internetGatewayName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="internetGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<InternetGatewayResource>> GetInternetGatewayAsync(string internetGatewayName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetworkFabricInternetGatewayResource>> GetNetworkFabricInternetGatewayAsync(string internetGatewayName, CancellationToken cancellationToken = default)
         {
-            return await GetInternetGateways().GetAsync(internetGatewayName, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkFabricInternetGateways().GetAsync(internetGatewayName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>InternetGateway_Get</description>
+        /// <description>InternetGateways_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="InternetGatewayResource"/></description>
+        /// <description><see cref="NetworkFabricInternetGatewayResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -235,47 +235,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="internetGatewayName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="internetGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<InternetGatewayResource> GetInternetGateway(string internetGatewayName, CancellationToken cancellationToken = default)
+        public virtual Response<NetworkFabricInternetGatewayResource> GetNetworkFabricInternetGateway(string internetGatewayName, CancellationToken cancellationToken = default)
         {
-            return GetInternetGateways().Get(internetGatewayName, cancellationToken);
+            return GetNetworkFabricInternetGateways().Get(internetGatewayName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of IPCommunityResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of IPCommunityResources and their operations over a IPCommunityResource. </returns>
-        public virtual IPCommunityCollection GetIPCommunities()
+        /// <summary> Gets a collection of NetworkFabricIPCommunityResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of NetworkFabricIPCommunityResources and their operations over a NetworkFabricIPCommunityResource. </returns>
+        public virtual NetworkFabricIPCommunityCollection GetNetworkFabricIPCommunities()
         {
-            return GetCachedClient(client => new IPCommunityCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Implements an IP Community GET method.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipCommunities/{ipCommunityName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IpCommunity_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IPCommunityResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="ipCommunityName"> Name of the IP Community. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ipCommunityName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="ipCommunityName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<IPCommunityResource>> GetIPCommunityAsync(string ipCommunityName, CancellationToken cancellationToken = default)
-        {
-            return await GetIPCommunities().GetAsync(ipCommunityName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(client => new NetworkFabricIPCommunityCollection(client, Id));
         }
 
         /// <summary>
@@ -287,7 +256,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IpCommunity_Get</description>
+        /// <description>IpCommunities_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -295,7 +264,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="IPCommunityResource"/></description>
+        /// <description><see cref="NetworkFabricIPCommunityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -304,16 +273,47 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="ipCommunityName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ipCommunityName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<IPCommunityResource> GetIPCommunity(string ipCommunityName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetworkFabricIPCommunityResource>> GetNetworkFabricIPCommunityAsync(string ipCommunityName, CancellationToken cancellationToken = default)
         {
-            return GetIPCommunities().Get(ipCommunityName, cancellationToken);
+            return await GetNetworkFabricIPCommunities().GetAsync(ipCommunityName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets a collection of IPExtendedCommunityResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of IPExtendedCommunityResources and their operations over a IPExtendedCommunityResource. </returns>
-        public virtual IPExtendedCommunityCollection GetIPExtendedCommunities()
+        /// <summary>
+        /// Implements an IP Community GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipCommunities/{ipCommunityName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IpCommunities_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFabricIPCommunityResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="ipCommunityName"> Name of the IP Community. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ipCommunityName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ipCommunityName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<NetworkFabricIPCommunityResource> GetNetworkFabricIPCommunity(string ipCommunityName, CancellationToken cancellationToken = default)
         {
-            return GetCachedClient(client => new IPExtendedCommunityCollection(client, Id));
+            return GetNetworkFabricIPCommunities().Get(ipCommunityName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of NetworkFabricIPExtendedCommunityResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of NetworkFabricIPExtendedCommunityResources and their operations over a NetworkFabricIPExtendedCommunityResource. </returns>
+        public virtual NetworkFabricIPExtendedCommunityCollection GetNetworkFabricIPExtendedCommunities()
+        {
+            return GetCachedClient(client => new NetworkFabricIPExtendedCommunityCollection(client, Id));
         }
 
         /// <summary>
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IpExtendedCommunity_Get</description>
+        /// <description>IpExtendedCommunities_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="IPExtendedCommunityResource"/></description>
+        /// <description><see cref="NetworkFabricIPExtendedCommunityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -342,9 +342,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="ipExtendedCommunityName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ipExtendedCommunityName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<IPExtendedCommunityResource>> GetIPExtendedCommunityAsync(string ipExtendedCommunityName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetworkFabricIPExtendedCommunityResource>> GetNetworkFabricIPExtendedCommunityAsync(string ipExtendedCommunityName, CancellationToken cancellationToken = default)
         {
-            return await GetIPExtendedCommunities().GetAsync(ipExtendedCommunityName, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkFabricIPExtendedCommunities().GetAsync(ipExtendedCommunityName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IpExtendedCommunity_Get</description>
+        /// <description>IpExtendedCommunities_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="IPExtendedCommunityResource"/></description>
+        /// <description><see cref="NetworkFabricIPExtendedCommunityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -373,47 +373,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="ipExtendedCommunityName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ipExtendedCommunityName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<IPExtendedCommunityResource> GetIPExtendedCommunity(string ipExtendedCommunityName, CancellationToken cancellationToken = default)
+        public virtual Response<NetworkFabricIPExtendedCommunityResource> GetNetworkFabricIPExtendedCommunity(string ipExtendedCommunityName, CancellationToken cancellationToken = default)
         {
-            return GetIPExtendedCommunities().Get(ipExtendedCommunityName, cancellationToken);
+            return GetNetworkFabricIPExtendedCommunities().Get(ipExtendedCommunityName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of IPPrefixResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of IPPrefixResources and their operations over a IPPrefixResource. </returns>
-        public virtual IPPrefixCollection GetIPPrefixes()
+        /// <summary> Gets a collection of NetworkFabricIPPrefixResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of NetworkFabricIPPrefixResources and their operations over a NetworkFabricIPPrefixResource. </returns>
+        public virtual NetworkFabricIPPrefixCollection GetNetworkFabricIPPrefixes()
         {
-            return GetCachedClient(client => new IPPrefixCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Implements IP Prefix GET method.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/{ipPrefixName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IpPrefix_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IPPrefixResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="ipPrefixName"> Name of the IP Prefix. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ipPrefixName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="ipPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<IPPrefixResource>> GetIPPrefixAsync(string ipPrefixName, CancellationToken cancellationToken = default)
-        {
-            return await GetIPPrefixes().GetAsync(ipPrefixName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(client => new NetworkFabricIPPrefixCollection(client, Id));
         }
 
         /// <summary>
@@ -425,7 +394,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IpPrefix_Get</description>
+        /// <description>IpPrefixes_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -433,7 +402,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="IPPrefixResource"/></description>
+        /// <description><see cref="NetworkFabricIPPrefixResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -442,16 +411,47 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="ipPrefixName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ipPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<IPPrefixResource> GetIPPrefix(string ipPrefixName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetworkFabricIPPrefixResource>> GetNetworkFabricIPPrefixAsync(string ipPrefixName, CancellationToken cancellationToken = default)
         {
-            return GetIPPrefixes().Get(ipPrefixName, cancellationToken);
+            return await GetNetworkFabricIPPrefixes().GetAsync(ipPrefixName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets a collection of L2IsolationDomainResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of L2IsolationDomainResources and their operations over a L2IsolationDomainResource. </returns>
-        public virtual L2IsolationDomainCollection GetL2IsolationDomains()
+        /// <summary>
+        /// Implements IP Prefix GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/{ipPrefixName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IpPrefixes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFabricIPPrefixResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="ipPrefixName"> Name of the IP Prefix. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ipPrefixName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ipPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<NetworkFabricIPPrefixResource> GetNetworkFabricIPPrefix(string ipPrefixName, CancellationToken cancellationToken = default)
         {
-            return GetCachedClient(client => new L2IsolationDomainCollection(client, Id));
+            return GetNetworkFabricIPPrefixes().Get(ipPrefixName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of NetworkFabricL2IsolationDomainResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of NetworkFabricL2IsolationDomainResources and their operations over a NetworkFabricL2IsolationDomainResource. </returns>
+        public virtual NetworkFabricL2IsolationDomainCollection GetNetworkFabricL2IsolationDomains()
+        {
+            return GetCachedClient(client => new NetworkFabricL2IsolationDomainCollection(client, Id));
         }
 
         /// <summary>
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>L2IsolationDomain_Get</description>
+        /// <description>L2IsolationDomains_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="L2IsolationDomainResource"/></description>
+        /// <description><see cref="NetworkFabricL2IsolationDomainResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -480,9 +480,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="l2IsolationDomainName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="l2IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<L2IsolationDomainResource>> GetL2IsolationDomainAsync(string l2IsolationDomainName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetworkFabricL2IsolationDomainResource>> GetNetworkFabricL2IsolationDomainAsync(string l2IsolationDomainName, CancellationToken cancellationToken = default)
         {
-            return await GetL2IsolationDomains().GetAsync(l2IsolationDomainName, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkFabricL2IsolationDomains().GetAsync(l2IsolationDomainName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -494,7 +494,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>L2IsolationDomain_Get</description>
+        /// <description>L2IsolationDomains_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -502,7 +502,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="L2IsolationDomainResource"/></description>
+        /// <description><see cref="NetworkFabricL2IsolationDomainResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -511,47 +511,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="l2IsolationDomainName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="l2IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<L2IsolationDomainResource> GetL2IsolationDomain(string l2IsolationDomainName, CancellationToken cancellationToken = default)
+        public virtual Response<NetworkFabricL2IsolationDomainResource> GetNetworkFabricL2IsolationDomain(string l2IsolationDomainName, CancellationToken cancellationToken = default)
         {
-            return GetL2IsolationDomains().Get(l2IsolationDomainName, cancellationToken);
+            return GetNetworkFabricL2IsolationDomains().Get(l2IsolationDomainName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of L3IsolationDomainResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of L3IsolationDomainResources and their operations over a L3IsolationDomainResource. </returns>
-        public virtual L3IsolationDomainCollection GetL3IsolationDomains()
+        /// <summary> Gets a collection of NetworkFabricL3IsolationDomainResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of NetworkFabricL3IsolationDomainResources and their operations over a NetworkFabricL3IsolationDomainResource. </returns>
+        public virtual NetworkFabricL3IsolationDomainCollection GetNetworkFabricL3IsolationDomains()
         {
-            return GetCachedClient(client => new L3IsolationDomainCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Retrieves details of this L3 Isolation Domain.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>L3IsolationDomain_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="L3IsolationDomainResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="l3IsolationDomainName"> Name of the L3 Isolation Domain. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="l3IsolationDomainName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="l3IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<L3IsolationDomainResource>> GetL3IsolationDomainAsync(string l3IsolationDomainName, CancellationToken cancellationToken = default)
-        {
-            return await GetL3IsolationDomains().GetAsync(l3IsolationDomainName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(client => new NetworkFabricL3IsolationDomainCollection(client, Id));
         }
 
         /// <summary>
@@ -563,7 +532,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>L3IsolationDomain_Get</description>
+        /// <description>L3IsolationDomains_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -571,7 +540,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="L3IsolationDomainResource"/></description>
+        /// <description><see cref="NetworkFabricL3IsolationDomainResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -580,16 +549,47 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="l3IsolationDomainName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="l3IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<L3IsolationDomainResource> GetL3IsolationDomain(string l3IsolationDomainName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetworkFabricL3IsolationDomainResource>> GetNetworkFabricL3IsolationDomainAsync(string l3IsolationDomainName, CancellationToken cancellationToken = default)
         {
-            return GetL3IsolationDomains().Get(l3IsolationDomainName, cancellationToken);
+            return await GetNetworkFabricL3IsolationDomains().GetAsync(l3IsolationDomainName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets a collection of NeighborGroupResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of NeighborGroupResources and their operations over a NeighborGroupResource. </returns>
-        public virtual NeighborGroupCollection GetNeighborGroups()
+        /// <summary>
+        /// Retrieves details of this L3 Isolation Domain.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>L3IsolationDomains_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFabricL3IsolationDomainResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="l3IsolationDomainName"> Name of the L3 Isolation Domain. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="l3IsolationDomainName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="l3IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<NetworkFabricL3IsolationDomainResource> GetNetworkFabricL3IsolationDomain(string l3IsolationDomainName, CancellationToken cancellationToken = default)
         {
-            return GetCachedClient(client => new NeighborGroupCollection(client, Id));
+            return GetNetworkFabricL3IsolationDomains().Get(l3IsolationDomainName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of NetworkFabricNeighborGroupResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of NetworkFabricNeighborGroupResources and their operations over a NetworkFabricNeighborGroupResource. </returns>
+        public virtual NetworkFabricNeighborGroupCollection GetNetworkFabricNeighborGroups()
+        {
+            return GetCachedClient(client => new NetworkFabricNeighborGroupCollection(client, Id));
         }
 
         /// <summary>
@@ -601,7 +601,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NeighborGroup_Get</description>
+        /// <description>NeighborGroups_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -609,7 +609,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NeighborGroupResource"/></description>
+        /// <description><see cref="NetworkFabricNeighborGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -618,9 +618,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="neighborGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="neighborGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<NeighborGroupResource>> GetNeighborGroupAsync(string neighborGroupName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetworkFabricNeighborGroupResource>> GetNetworkFabricNeighborGroupAsync(string neighborGroupName, CancellationToken cancellationToken = default)
         {
-            return await GetNeighborGroups().GetAsync(neighborGroupName, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkFabricNeighborGroups().GetAsync(neighborGroupName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -632,7 +632,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NeighborGroup_Get</description>
+        /// <description>NeighborGroups_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -640,7 +640,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NeighborGroupResource"/></description>
+        /// <description><see cref="NetworkFabricNeighborGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -649,9 +649,78 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="neighborGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="neighborGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<NeighborGroupResource> GetNeighborGroup(string neighborGroupName, CancellationToken cancellationToken = default)
+        public virtual Response<NetworkFabricNeighborGroupResource> GetNetworkFabricNeighborGroup(string neighborGroupName, CancellationToken cancellationToken = default)
         {
-            return GetNeighborGroups().Get(neighborGroupName, cancellationToken);
+            return GetNetworkFabricNeighborGroups().Get(neighborGroupName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of NetworkBootstrapDeviceResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of NetworkBootstrapDeviceResources and their operations over a NetworkBootstrapDeviceResource. </returns>
+        public virtual NetworkBootstrapDeviceCollection GetNetworkBootstrapDevices()
+        {
+            return GetCachedClient(client => new NetworkBootstrapDeviceCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets a Network Bootstrap Device resource details.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkBootstrapDevices/{networkBootstrapDeviceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkBootstrapDevices_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkBootstrapDeviceResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="networkBootstrapDeviceName"> Name of the Network Bootstrap Device. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkBootstrapDeviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkBootstrapDeviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<NetworkBootstrapDeviceResource>> GetNetworkBootstrapDeviceAsync(string networkBootstrapDeviceName, CancellationToken cancellationToken = default)
+        {
+            return await GetNetworkBootstrapDevices().GetAsync(networkBootstrapDeviceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a Network Bootstrap Device resource details.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkBootstrapDevices/{networkBootstrapDeviceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkBootstrapDevices_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkBootstrapDeviceResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="networkBootstrapDeviceName"> Name of the Network Bootstrap Device. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkBootstrapDeviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkBootstrapDeviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<NetworkBootstrapDeviceResource> GetNetworkBootstrapDevice(string networkBootstrapDeviceName, CancellationToken cancellationToken = default)
+        {
+            return GetNetworkBootstrapDevices().Get(networkBootstrapDeviceName, cancellationToken);
         }
 
         /// <summary> Gets a collection of NetworkDeviceResources in the ResourceGroupResource. </summary>
@@ -670,7 +739,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkDevice_Get</description>
+        /// <description>NetworkDevices_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -701,7 +770,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkDevice_Get</description>
+        /// <description>NetworkDevices_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -739,7 +808,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkFabricController_Get</description>
+        /// <description>NetworkFabricControllers_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -770,7 +839,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkFabricController_Get</description>
+        /// <description>NetworkFabricControllers_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -808,7 +877,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkFabric_Get</description>
+        /// <description>NetworkFabrics_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -839,7 +908,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkFabric_Get</description>
+        /// <description>NetworkFabrics_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -861,6 +930,75 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
             return GetNetworkFabrics().Get(networkFabricName, cancellationToken);
         }
 
+        /// <summary> Gets a collection of NetworkMonitorResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of NetworkMonitorResources and their operations over a NetworkMonitorResource. </returns>
+        public virtual NetworkMonitorCollection GetNetworkMonitors()
+        {
+            return GetCachedClient(client => new NetworkMonitorCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Implements NetworkMonitor GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkMonitors/{networkMonitorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkMonitors_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkMonitorResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="networkMonitorName"> Name of the Network Monitor. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkMonitorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkMonitorName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<NetworkMonitorResource>> GetNetworkMonitorAsync(string networkMonitorName, CancellationToken cancellationToken = default)
+        {
+            return await GetNetworkMonitors().GetAsync(networkMonitorName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Implements NetworkMonitor GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkMonitors/{networkMonitorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkMonitors_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkMonitorResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="networkMonitorName"> Name of the Network Monitor. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkMonitorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkMonitorName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<NetworkMonitorResource> GetNetworkMonitor(string networkMonitorName, CancellationToken cancellationToken = default)
+        {
+            return GetNetworkMonitors().Get(networkMonitorName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of NetworkPacketBrokerResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of NetworkPacketBrokerResources and their operations over a NetworkPacketBrokerResource. </returns>
         public virtual NetworkPacketBrokerCollection GetNetworkPacketBrokers()
@@ -877,7 +1015,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkPacketBroker_Get</description>
+        /// <description>NetworkPacketBrokers_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -908,7 +1046,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkPacketBroker_Get</description>
+        /// <description>NetworkPacketBrokers_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -946,7 +1084,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkRack_Get</description>
+        /// <description>NetworkRacks_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -977,7 +1115,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkRack_Get</description>
+        /// <description>NetworkRacks_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1015,7 +1153,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkTapRule_Get</description>
+        /// <description>NetworkTapRules_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1046,7 +1184,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkTapRule_Get</description>
+        /// <description>NetworkTapRules_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1084,7 +1222,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkTap_Get</description>
+        /// <description>NetworkTaps_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1115,7 +1253,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkTap_Get</description>
+        /// <description>NetworkTaps_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1137,11 +1275,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
             return GetNetworkTaps().Get(networkTapName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of RoutePolicyResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of RoutePolicyResources and their operations over a RoutePolicyResource. </returns>
-        public virtual RoutePolicyCollection GetRoutePolicies()
+        /// <summary> Gets a collection of NetworkFabricRoutePolicyResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of NetworkFabricRoutePolicyResources and their operations over a NetworkFabricRoutePolicyResource. </returns>
+        public virtual NetworkFabricRoutePolicyCollection GetNetworkFabricRoutePolicies()
         {
-            return GetCachedClient(client => new RoutePolicyCollection(client, Id));
+            return GetCachedClient(client => new NetworkFabricRoutePolicyCollection(client, Id));
         }
 
         /// <summary>
@@ -1153,7 +1291,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>RoutePolicy_Get</description>
+        /// <description>RoutePolicies_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1161,7 +1299,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="RoutePolicyResource"/></description>
+        /// <description><see cref="NetworkFabricRoutePolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1170,9 +1308,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="routePolicyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="routePolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<RoutePolicyResource>> GetRoutePolicyAsync(string routePolicyName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetworkFabricRoutePolicyResource>> GetNetworkFabricRoutePolicyAsync(string routePolicyName, CancellationToken cancellationToken = default)
         {
-            return await GetRoutePolicies().GetAsync(routePolicyName, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkFabricRoutePolicies().GetAsync(routePolicyName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1184,7 +1322,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>RoutePolicy_Get</description>
+        /// <description>RoutePolicies_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1192,7 +1330,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="RoutePolicyResource"/></description>
+        /// <description><see cref="NetworkFabricRoutePolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1201,147 +1339,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="routePolicyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="routePolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<RoutePolicyResource> GetRoutePolicy(string routePolicyName, CancellationToken cancellationToken = default)
+        public virtual Response<NetworkFabricRoutePolicyResource> GetNetworkFabricRoutePolicy(string routePolicyName, CancellationToken cancellationToken = default)
         {
-            return GetRoutePolicies().Get(routePolicyName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of NetworkMonitorResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of NetworkMonitorResources and their operations over a NetworkMonitorResource. </returns>
-        public virtual NetworkMonitorCollection GetNetworkMonitors()
-        {
-            return GetCachedClient(client => new NetworkMonitorCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Implements NetworkMonitor GET method.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkMonitors/{networkMonitorName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkMonitor_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkMonitorResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="networkMonitorName"> Name of the Network Monitor. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkMonitorName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="networkMonitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<NetworkMonitorResource>> GetNetworkMonitorAsync(string networkMonitorName, CancellationToken cancellationToken = default)
-        {
-            return await GetNetworkMonitors().GetAsync(networkMonitorName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Implements NetworkMonitor GET method.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkMonitors/{networkMonitorName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkMonitor_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkMonitorResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="networkMonitorName"> Name of the Network Monitor. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkMonitorName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="networkMonitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<NetworkMonitorResource> GetNetworkMonitor(string networkMonitorName, CancellationToken cancellationToken = default)
-        {
-            return GetNetworkMonitors().Get(networkMonitorName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of NetworkBootstrapDeviceResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of NetworkBootstrapDeviceResources and their operations over a NetworkBootstrapDeviceResource. </returns>
-        public virtual NetworkBootstrapDeviceCollection GetNetworkBootstrapDevices()
-        {
-            return GetCachedClient(client => new NetworkBootstrapDeviceCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets a Network Bootstrap Device resource details.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkBootstrapDevices/{networkBootstrapDeviceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkBootstrapDevice_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkBootstrapDeviceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="networkBootstrapDeviceName"> Name of the Network Bootstrap Device. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkBootstrapDeviceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="networkBootstrapDeviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<NetworkBootstrapDeviceResource>> GetNetworkBootstrapDeviceAsync(string networkBootstrapDeviceName, CancellationToken cancellationToken = default)
-        {
-            return await GetNetworkBootstrapDevices().GetAsync(networkBootstrapDeviceName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a Network Bootstrap Device resource details.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkBootstrapDevices/{networkBootstrapDeviceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkBootstrapDevice_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkBootstrapDeviceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="networkBootstrapDeviceName"> Name of the Network Bootstrap Device. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkBootstrapDeviceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="networkBootstrapDeviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<NetworkBootstrapDeviceResource> GetNetworkBootstrapDevice(string networkBootstrapDeviceName, CancellationToken cancellationToken = default)
-        {
-            return GetNetworkBootstrapDevices().Get(networkBootstrapDeviceName, cancellationToken);
+            return GetNetworkFabricRoutePolicies().Get(routePolicyName, cancellationToken);
         }
     }
 }

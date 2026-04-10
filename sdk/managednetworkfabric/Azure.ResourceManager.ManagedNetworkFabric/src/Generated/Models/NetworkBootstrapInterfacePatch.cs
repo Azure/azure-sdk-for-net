@@ -51,16 +51,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkBootstrapInterfacePatch"/>. </summary>
+        /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="serialNumber"> Serial number of the interface. Format of serial Number - Make;Model;HardwareRevisionId;SerialNumber. </param>
         /// <param name="additionalDescription"> Additional description of the interface. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkBootstrapInterfacePatch(string serialNumber, string additionalDescription, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetworkBootstrapInterfacePatch(string annotation, string serialNumber, string additionalDescription, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            Annotation = annotation;
             SerialNumber = serialNumber;
             AdditionalDescription = additionalDescription;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Switch configuration description. </summary>
+        public string Annotation { get; set; }
         /// <summary> Serial number of the interface. Format of serial Number - Make;Model;HardwareRevisionId;SerialNumber. </summary>
         public string SerialNumber { get; set; }
         /// <summary> Additional description of the interface. </summary>

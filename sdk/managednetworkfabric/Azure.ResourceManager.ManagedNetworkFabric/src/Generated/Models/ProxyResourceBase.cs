@@ -54,13 +54,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Initializes a new instance of <see cref="ProxyResourceBase"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. E.g. '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}'. </param>
-        /// <param name="type"> The type of the resource. E.g. 'Microsoft.Compute/virtualMachines' or 'Microsoft.Storage/storageAccounts'. </param>
+        /// <param name="proxyResourceBaseType"> The type of the resource. E.g. 'Microsoft.Compute/virtualMachines' or 'Microsoft.Storage/storageAccounts'. </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProxyResourceBase(ResourceIdentifier id, string type, SystemData systemData, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ProxyResourceBase(ResourceIdentifier id, string proxyResourceBaseType, SystemData systemData, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
-            Type = type;
+            ProxyResourceBaseType = proxyResourceBaseType;
             SystemData = systemData;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Fully qualified resource ID for the resource. E.g. '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}'. </summary>
         public ResourceIdentifier Id { get; }
         /// <summary> The type of the resource. E.g. 'Microsoft.Compute/virtualMachines' or 'Microsoft.Storage/storageAccounts'. </summary>
-        public string Type { get; }
+        public string ProxyResourceBaseType { get; }
         /// <summary> Azure Resource Manager metadata containing createdBy and modifiedBy information. </summary>
         public SystemData SystemData { get; }
     }

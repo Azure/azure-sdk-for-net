@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkPacketBroker_Get</description>
+        /// <description>NetworkPacketBrokers_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkPacketBroker_Get</description>
+        /// <description>NetworkPacketBrokers_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkPacketBroker_Delete</description>
+        /// <description>NetworkPacketBrokers_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkPacketBroker_Delete</description>
+        /// <description>NetworkPacketBrokers_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkPacketBroker_Update</description>
+        /// <description>NetworkPacketBrokers_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkPacketBroker_Update</description>
+        /// <description>NetworkPacketBrokers_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkPacketBroker_Get</description>
+        /// <description>NetworkPacketBrokers_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkPacketBroker_Get</description>
+        /// <description>NetworkPacketBrokers_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkPacketBroker_Get</description>
+        /// <description>NetworkPacketBrokers_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkPacketBroker_Get</description>
+        /// <description>NetworkPacketBrokers_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -593,7 +593,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkPacketBroker_Get</description>
+        /// <description>NetworkPacketBrokers_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -653,7 +653,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkPacketBroker_Get</description>
+        /// <description>NetworkPacketBrokers_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

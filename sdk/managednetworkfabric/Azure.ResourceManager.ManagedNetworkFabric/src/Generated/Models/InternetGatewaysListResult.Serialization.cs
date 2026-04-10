@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            IReadOnlyList<InternetGatewayData> value = default;
+            IReadOnlyList<NetworkFabricInternetGatewayData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<InternetGatewayData> array = new List<InternetGatewayData>();
+                    List<NetworkFabricInternetGatewayData> array = new List<NetworkFabricInternetGatewayData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InternetGatewayData.DeserializeInternetGatewayData(item, options));
+                        array.Add(NetworkFabricInternetGatewayData.DeserializeNetworkFabricInternetGatewayData(item, options));
                     }
                     value = array;
                     continue;

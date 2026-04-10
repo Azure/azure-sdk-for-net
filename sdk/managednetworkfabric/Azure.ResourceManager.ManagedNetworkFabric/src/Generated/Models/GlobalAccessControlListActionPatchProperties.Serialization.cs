@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            BooleanEnumProperty? enableCount = default;
+            NetworkFabricBooleanValue? enableCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    enableCount = new BooleanEnumProperty(property.Value.GetString());
+                    enableCount = new NetworkFabricBooleanValue(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

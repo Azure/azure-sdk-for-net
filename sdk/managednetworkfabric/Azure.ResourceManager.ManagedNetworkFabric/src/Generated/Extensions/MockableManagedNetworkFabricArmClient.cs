@@ -35,135 +35,123 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AccessControlListResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AccessControlListResource.CreateResourceIdentifier" /> to create an <see cref="AccessControlListResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="NetworkFabricAccessControlListResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkFabricAccessControlListResource.CreateResourceIdentifier" /> to create a <see cref="NetworkFabricAccessControlListResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AccessControlListResource"/> object. </returns>
-        public virtual AccessControlListResource GetAccessControlListResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetworkFabricAccessControlListResource"/> object. </returns>
+        public virtual NetworkFabricAccessControlListResource GetNetworkFabricAccessControlListResource(ResourceIdentifier id)
         {
-            AccessControlListResource.ValidateResourceId(id);
-            return new AccessControlListResource(Client, id);
+            NetworkFabricAccessControlListResource.ValidateResourceId(id);
+            return new NetworkFabricAccessControlListResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="InternetGatewayRuleResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="InternetGatewayRuleResource.CreateResourceIdentifier" /> to create an <see cref="InternetGatewayRuleResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="NetworkFabricInternetGatewayRuleResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkFabricInternetGatewayRuleResource.CreateResourceIdentifier" /> to create a <see cref="NetworkFabricInternetGatewayRuleResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="InternetGatewayRuleResource"/> object. </returns>
-        public virtual InternetGatewayRuleResource GetInternetGatewayRuleResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetworkFabricInternetGatewayRuleResource"/> object. </returns>
+        public virtual NetworkFabricInternetGatewayRuleResource GetNetworkFabricInternetGatewayRuleResource(ResourceIdentifier id)
         {
-            InternetGatewayRuleResource.ValidateResourceId(id);
-            return new InternetGatewayRuleResource(Client, id);
+            NetworkFabricInternetGatewayRuleResource.ValidateResourceId(id);
+            return new NetworkFabricInternetGatewayRuleResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="InternetGatewayResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="InternetGatewayResource.CreateResourceIdentifier" /> to create an <see cref="InternetGatewayResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="NetworkFabricInternetGatewayResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkFabricInternetGatewayResource.CreateResourceIdentifier" /> to create a <see cref="NetworkFabricInternetGatewayResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="InternetGatewayResource"/> object. </returns>
-        public virtual InternetGatewayResource GetInternetGatewayResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetworkFabricInternetGatewayResource"/> object. </returns>
+        public virtual NetworkFabricInternetGatewayResource GetNetworkFabricInternetGatewayResource(ResourceIdentifier id)
         {
-            InternetGatewayResource.ValidateResourceId(id);
-            return new InternetGatewayResource(Client, id);
+            NetworkFabricInternetGatewayResource.ValidateResourceId(id);
+            return new NetworkFabricInternetGatewayResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="IPCommunityResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="IPCommunityResource.CreateResourceIdentifier" /> to create an <see cref="IPCommunityResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="NetworkFabricIPCommunityResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkFabricIPCommunityResource.CreateResourceIdentifier" /> to create a <see cref="NetworkFabricIPCommunityResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="IPCommunityResource"/> object. </returns>
-        public virtual IPCommunityResource GetIPCommunityResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetworkFabricIPCommunityResource"/> object. </returns>
+        public virtual NetworkFabricIPCommunityResource GetNetworkFabricIPCommunityResource(ResourceIdentifier id)
         {
-            IPCommunityResource.ValidateResourceId(id);
-            return new IPCommunityResource(Client, id);
+            NetworkFabricIPCommunityResource.ValidateResourceId(id);
+            return new NetworkFabricIPCommunityResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="IPExtendedCommunityResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="IPExtendedCommunityResource.CreateResourceIdentifier" /> to create an <see cref="IPExtendedCommunityResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="NetworkFabricIPExtendedCommunityResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkFabricIPExtendedCommunityResource.CreateResourceIdentifier" /> to create a <see cref="NetworkFabricIPExtendedCommunityResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="IPExtendedCommunityResource"/> object. </returns>
-        public virtual IPExtendedCommunityResource GetIPExtendedCommunityResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetworkFabricIPExtendedCommunityResource"/> object. </returns>
+        public virtual NetworkFabricIPExtendedCommunityResource GetNetworkFabricIPExtendedCommunityResource(ResourceIdentifier id)
         {
-            IPExtendedCommunityResource.ValidateResourceId(id);
-            return new IPExtendedCommunityResource(Client, id);
+            NetworkFabricIPExtendedCommunityResource.ValidateResourceId(id);
+            return new NetworkFabricIPExtendedCommunityResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="IPPrefixResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="IPPrefixResource.CreateResourceIdentifier" /> to create an <see cref="IPPrefixResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="NetworkFabricIPPrefixResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkFabricIPPrefixResource.CreateResourceIdentifier" /> to create a <see cref="NetworkFabricIPPrefixResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="IPPrefixResource"/> object. </returns>
-        public virtual IPPrefixResource GetIPPrefixResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetworkFabricIPPrefixResource"/> object. </returns>
+        public virtual NetworkFabricIPPrefixResource GetNetworkFabricIPPrefixResource(ResourceIdentifier id)
         {
-            IPPrefixResource.ValidateResourceId(id);
-            return new IPPrefixResource(Client, id);
+            NetworkFabricIPPrefixResource.ValidateResourceId(id);
+            return new NetworkFabricIPPrefixResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="L2IsolationDomainResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="L2IsolationDomainResource.CreateResourceIdentifier" /> to create a <see cref="L2IsolationDomainResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="NetworkFabricL2IsolationDomainResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkFabricL2IsolationDomainResource.CreateResourceIdentifier" /> to create a <see cref="NetworkFabricL2IsolationDomainResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="L2IsolationDomainResource"/> object. </returns>
-        public virtual L2IsolationDomainResource GetL2IsolationDomainResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetworkFabricL2IsolationDomainResource"/> object. </returns>
+        public virtual NetworkFabricL2IsolationDomainResource GetNetworkFabricL2IsolationDomainResource(ResourceIdentifier id)
         {
-            L2IsolationDomainResource.ValidateResourceId(id);
-            return new L2IsolationDomainResource(Client, id);
+            NetworkFabricL2IsolationDomainResource.ValidateResourceId(id);
+            return new NetworkFabricL2IsolationDomainResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="L3IsolationDomainResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="L3IsolationDomainResource.CreateResourceIdentifier" /> to create a <see cref="L3IsolationDomainResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="NetworkFabricL3IsolationDomainResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkFabricL3IsolationDomainResource.CreateResourceIdentifier" /> to create a <see cref="NetworkFabricL3IsolationDomainResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="L3IsolationDomainResource"/> object. </returns>
-        public virtual L3IsolationDomainResource GetL3IsolationDomainResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetworkFabricL3IsolationDomainResource"/> object. </returns>
+        public virtual NetworkFabricL3IsolationDomainResource GetNetworkFabricL3IsolationDomainResource(ResourceIdentifier id)
         {
-            L3IsolationDomainResource.ValidateResourceId(id);
-            return new L3IsolationDomainResource(Client, id);
+            NetworkFabricL3IsolationDomainResource.ValidateResourceId(id);
+            return new NetworkFabricL3IsolationDomainResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="InternalNetworkResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="InternalNetworkResource.CreateResourceIdentifier" /> to create an <see cref="InternalNetworkResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="NetworkFabricNeighborGroupResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkFabricNeighborGroupResource.CreateResourceIdentifier" /> to create a <see cref="NetworkFabricNeighborGroupResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="InternalNetworkResource"/> object. </returns>
-        public virtual InternalNetworkResource GetInternalNetworkResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetworkFabricNeighborGroupResource"/> object. </returns>
+        public virtual NetworkFabricNeighborGroupResource GetNetworkFabricNeighborGroupResource(ResourceIdentifier id)
         {
-            InternalNetworkResource.ValidateResourceId(id);
-            return new InternalNetworkResource(Client, id);
+            NetworkFabricNeighborGroupResource.ValidateResourceId(id);
+            return new NetworkFabricNeighborGroupResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="ExternalNetworkResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ExternalNetworkResource.CreateResourceIdentifier" /> to create an <see cref="ExternalNetworkResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="NetworkBootstrapDeviceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkBootstrapDeviceResource.CreateResourceIdentifier" /> to create a <see cref="NetworkBootstrapDeviceResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ExternalNetworkResource"/> object. </returns>
-        public virtual ExternalNetworkResource GetExternalNetworkResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetworkBootstrapDeviceResource"/> object. </returns>
+        public virtual NetworkBootstrapDeviceResource GetNetworkBootstrapDeviceResource(ResourceIdentifier id)
         {
-            ExternalNetworkResource.ValidateResourceId(id);
-            return new ExternalNetworkResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="NeighborGroupResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NeighborGroupResource.CreateResourceIdentifier" /> to create a <see cref="NeighborGroupResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NeighborGroupResource"/> object. </returns>
-        public virtual NeighborGroupResource GetNeighborGroupResource(ResourceIdentifier id)
-        {
-            NeighborGroupResource.ValidateResourceId(id);
-            return new NeighborGroupResource(Client, id);
+            NetworkBootstrapDeviceResource.ValidateResourceId(id);
+            return new NetworkBootstrapDeviceResource(Client, id);
         }
 
         /// <summary>
@@ -188,18 +176,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         {
             NetworkDeviceResource.ValidateResourceId(id);
             return new NetworkDeviceResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="NetworkInterfaceResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetworkInterfaceResource.CreateResourceIdentifier" /> to create a <see cref="NetworkInterfaceResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkInterfaceResource"/> object. </returns>
-        public virtual NetworkInterfaceResource GetNetworkInterfaceResource(ResourceIdentifier id)
-        {
-            NetworkInterfaceResource.ValidateResourceId(id);
-            return new NetworkInterfaceResource(Client, id);
         }
 
         /// <summary>
@@ -239,15 +215,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="NetworkToNetworkInterconnectResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetworkToNetworkInterconnectResource.CreateResourceIdentifier" /> to create a <see cref="NetworkToNetworkInterconnectResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="NetworkMonitorResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkMonitorResource.CreateResourceIdentifier" /> to create a <see cref="NetworkMonitorResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkToNetworkInterconnectResource"/> object. </returns>
-        public virtual NetworkToNetworkInterconnectResource GetNetworkToNetworkInterconnectResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetworkMonitorResource"/> object. </returns>
+        public virtual NetworkMonitorResource GetNetworkMonitorResource(ResourceIdentifier id)
         {
-            NetworkToNetworkInterconnectResource.ValidateResourceId(id);
-            return new NetworkToNetworkInterconnectResource(Client, id);
+            NetworkMonitorResource.ValidateResourceId(id);
+            return new NetworkMonitorResource(Client, id);
         }
 
         /// <summary>
@@ -299,39 +275,39 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="RoutePolicyResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RoutePolicyResource.CreateResourceIdentifier" /> to create a <see cref="RoutePolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="NetworkFabricRoutePolicyResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkFabricRoutePolicyResource.CreateResourceIdentifier" /> to create a <see cref="NetworkFabricRoutePolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RoutePolicyResource"/> object. </returns>
-        public virtual RoutePolicyResource GetRoutePolicyResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetworkFabricRoutePolicyResource"/> object. </returns>
+        public virtual NetworkFabricRoutePolicyResource GetNetworkFabricRoutePolicyResource(ResourceIdentifier id)
         {
-            RoutePolicyResource.ValidateResourceId(id);
-            return new RoutePolicyResource(Client, id);
+            NetworkFabricRoutePolicyResource.ValidateResourceId(id);
+            return new NetworkFabricRoutePolicyResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="NetworkMonitorResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetworkMonitorResource.CreateResourceIdentifier" /> to create a <see cref="NetworkMonitorResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="NetworkFabricExternalNetworkResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkFabricExternalNetworkResource.CreateResourceIdentifier" /> to create a <see cref="NetworkFabricExternalNetworkResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkMonitorResource"/> object. </returns>
-        public virtual NetworkMonitorResource GetNetworkMonitorResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetworkFabricExternalNetworkResource"/> object. </returns>
+        public virtual NetworkFabricExternalNetworkResource GetNetworkFabricExternalNetworkResource(ResourceIdentifier id)
         {
-            NetworkMonitorResource.ValidateResourceId(id);
-            return new NetworkMonitorResource(Client, id);
+            NetworkFabricExternalNetworkResource.ValidateResourceId(id);
+            return new NetworkFabricExternalNetworkResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="NetworkBootstrapDeviceResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetworkBootstrapDeviceResource.CreateResourceIdentifier" /> to create a <see cref="NetworkBootstrapDeviceResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="NetworkFabricInternalNetworkResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkFabricInternalNetworkResource.CreateResourceIdentifier" /> to create a <see cref="NetworkFabricInternalNetworkResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkBootstrapDeviceResource"/> object. </returns>
-        public virtual NetworkBootstrapDeviceResource GetNetworkBootstrapDeviceResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetworkFabricInternalNetworkResource"/> object. </returns>
+        public virtual NetworkFabricInternalNetworkResource GetNetworkFabricInternalNetworkResource(ResourceIdentifier id)
         {
-            NetworkBootstrapDeviceResource.ValidateResourceId(id);
-            return new NetworkBootstrapDeviceResource(Client, id);
+            NetworkFabricInternalNetworkResource.ValidateResourceId(id);
+            return new NetworkFabricInternalNetworkResource(Client, id);
         }
 
         /// <summary>
@@ -344,6 +320,30 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         {
             NetworkBootstrapInterfaceResource.ValidateResourceId(id);
             return new NetworkBootstrapInterfaceResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="NetworkDeviceInterfaceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkDeviceInterfaceResource.CreateResourceIdentifier" /> to create a <see cref="NetworkDeviceInterfaceResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="NetworkDeviceInterfaceResource"/> object. </returns>
+        public virtual NetworkDeviceInterfaceResource GetNetworkDeviceInterfaceResource(ResourceIdentifier id)
+        {
+            NetworkDeviceInterfaceResource.ValidateResourceId(id);
+            return new NetworkDeviceInterfaceResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="NetworkToNetworkInterconnectResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkToNetworkInterconnectResource.CreateResourceIdentifier" /> to create a <see cref="NetworkToNetworkInterconnectResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="NetworkToNetworkInterconnectResource"/> object. </returns>
+        public virtual NetworkToNetworkInterconnectResource GetNetworkToNetworkInterconnectResource(ResourceIdentifier id)
+        {
+            NetworkToNetworkInterconnectResource.ValidateResourceId(id);
+            return new NetworkToNetworkInterconnectResource(Client, id);
         }
     }
 }

@@ -67,8 +67,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            EncapsulationType? encapsulationType = default;
-            PortCondition portCondition = default;
+            NetworkTapEncapsulationType? encapsulationType = default;
+            NetworkFabricPortCondition portCondition = default;
             IList<string> protocolTypes = default;
             VlanMatchCondition vlanMatchCondition = default;
             IPMatchCondition ipCondition = default;
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    encapsulationType = new EncapsulationType(property.Value.GetString());
+                    encapsulationType = new NetworkTapEncapsulationType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("portCondition"u8))
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    portCondition = PortCondition.DeserializePortCondition(property.Value, options);
+                    portCondition = NetworkFabricPortCondition.DeserializeNetworkFabricPortCondition(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("protocolTypes"u8))

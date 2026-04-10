@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkDeviceSku_Get</description>
+        /// <description>NetworkDeviceSkus_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkDeviceSku_Get</description>
+        /// <description>NetworkDeviceSkus_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkDeviceSku_ListBySubscription</description>
+        /// <description>NetworkDeviceSkus_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkDeviceSku_ListBySubscription</description>
+        /// <description>NetworkDeviceSkus_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkDeviceSku_Get</description>
+        /// <description>NetworkDeviceSkus_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkDeviceSku_Get</description>
+        /// <description>NetworkDeviceSkus_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkDeviceSku_Get</description>
+        /// <description>NetworkDeviceSkus_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkDeviceSku_Get</description>
+        /// <description>NetworkDeviceSkus_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

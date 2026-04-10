@@ -155,10 +155,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             string dhcpV4ServerIPAddress = default;
             string primaryManagementIPv6Address = default;
             string secondaryManagementIPv6Address = default;
-            ProvisioningState? provisioningState = default;
+            NetworkFabricProvisioningState? provisioningState = default;
             string primaryManagementIPv4Address = default;
-            AdministrativeState? administrativeState = default;
-            ConfigurationState? configurationState = default;
+            NetworkFabricAdministrativeState? administrativeState = default;
+            NetworkFabricConfigurationState? configurationState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new NetworkFabricProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("primaryManagementIpv4Address"u8))
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            administrativeState = new AdministrativeState(property0.Value.GetString());
+                            administrativeState = new NetworkFabricAdministrativeState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("configurationState"u8))
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            configurationState = new ConfigurationState(property0.Value.GetString());
+                            configurationState = new NetworkFabricConfigurationState(property0.Value.GetString());
                             continue;
                         }
                     }
@@ -326,6 +326,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
+                identity,
                 annotation,
                 hostName,
                 serialNumber,
@@ -340,7 +341,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 primaryManagementIPv4Address,
                 administrativeState,
                 configurationState,
-                identity,
                 serializedAdditionalRawData);
         }
 

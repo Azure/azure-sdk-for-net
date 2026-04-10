@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkFabricController_Get</description>
+        /// <description>NetworkFabricControllers_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkFabricController_Get</description>
+        /// <description>NetworkFabricControllers_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkFabricController_Delete</description>
+        /// <description>NetworkFabricControllers_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkFabricController_Delete</description>
+        /// <description>NetworkFabricControllers_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkFabricController_Update</description>
+        /// <description>NetworkFabricControllers_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkFabricController_Update</description>
+        /// <description>NetworkFabricControllers_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkFabricController_Get</description>
+        /// <description>NetworkFabricControllers_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkFabricController_Get</description>
+        /// <description>NetworkFabricControllers_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkFabricController_Get</description>
+        /// <description>NetworkFabricControllers_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkFabricController_Get</description>
+        /// <description>NetworkFabricControllers_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -593,7 +593,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkFabricController_Get</description>
+        /// <description>NetworkFabricControllers_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -653,7 +653,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkFabricController_Get</description>
+        /// <description>NetworkFabricControllers_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

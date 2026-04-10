@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> V4 over V6 BGP session state. </summary>
+    /// <summary> V4 over V6 bgp session. </summary>
     public readonly partial struct V4OverV6BgpSessionState : IEquatable<V4OverV6BgpSessionState>
     {
         private readonly string _value;

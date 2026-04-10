@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <summary> Initializes a new instance of <see cref="NetworkTapRuleData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="configurationType"> Input method to configure Network Tap Rule. </param>
-        public NetworkTapRuleData(AzureLocation location, ConfigurationType configurationType) : base(location)
+        public NetworkTapRuleData(AzureLocation location, NetworkFabricConfigurationType configurationType) : base(location)
         {
             ConfigurationType = configurationType;
             MatchConfigurations = new ChangeTrackingList<NetworkTapRuleMatchConfiguration>();
@@ -70,6 +70,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="configurationType"> Input method to configure Network Tap Rule. </param>
         /// <param name="tapRulesUri"> Network Tap Rules file URL. </param>
@@ -86,10 +87,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="configurationState"> Configuration state of the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="administrativeState"> Administrative state of the resource. </param>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkTapRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, ConfigurationType configurationType, Uri tapRulesUri, IdentitySelector identitySelector, IList<NetworkTapRuleMatchConfiguration> matchConfigurations, IList<CommonDynamicMatchConfiguration> dynamicMatchConfigurations, string networkTapId, IReadOnlyList<ResourceIdentifier> networkTapIds, int? pollingIntervalInSeconds, DateTimeOffset? lastSyncedOn, GlobalNetworkTapRuleActionProperties globalNetworkTapRuleActions, LastOperationProperties lastOperation, IReadOnlyList<ResourceIdentifier> networkFabricIds, ConfigurationState? configurationState, ProvisioningState? provisioningState, AdministrativeState? administrativeState, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkTapRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string annotation, NetworkFabricConfigurationType configurationType, Uri tapRulesUri, IdentitySelector identitySelector, IList<NetworkTapRuleMatchConfiguration> matchConfigurations, IList<CommonDynamicMatchConfiguration> dynamicMatchConfigurations, ResourceIdentifier networkTapId, IReadOnlyList<ResourceIdentifier> networkTapIds, int? pollingIntervalInSeconds, DateTimeOffset? lastSyncedOn, GlobalNetworkTapRuleActionProperties globalNetworkTapRuleActions, LastOperationProperties lastOperation, IReadOnlyList<ResourceIdentifier> networkFabricIds, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
+            Identity = identity;
             Annotation = annotation;
             ConfigurationType = configurationType;
             TapRulesUri = tapRulesUri;
@@ -106,7 +107,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             ConfigurationState = configurationState;
             ProvisioningState = provisioningState;
             AdministrativeState = administrativeState;
-            Identity = identity;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -115,10 +115,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
         }
 
+        /// <summary> The managed service identities assigned to this resource. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Switch configuration description. </summary>
         public string Annotation { get; set; }
         /// <summary> Input method to configure Network Tap Rule. </summary>
-        public ConfigurationType ConfigurationType { get; set; }
+        public NetworkFabricConfigurationType ConfigurationType { get; set; }
         /// <summary> Network Tap Rules file URL. </summary>
         public Uri TapRulesUri { get; set; }
         /// <summary> The selection of the managed identity to use with this storage account. The identity type must be either system assigned or user assigned. </summary>
@@ -128,7 +130,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <summary> List of dynamic match configurations. </summary>
         public IList<CommonDynamicMatchConfiguration> DynamicMatchConfigurations { get; }
         /// <summary> The ARM resource Id of the NetworkTap. </summary>
-        public string NetworkTapId { get; }
+        public ResourceIdentifier NetworkTapId { get; }
         /// <summary> The ARM resource Id of the NetworkTap Rules. </summary>
         public IReadOnlyList<ResourceIdentifier> NetworkTapIds { get; }
         /// <summary> Polling interval in seconds. </summary>
@@ -148,12 +150,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <summary> Associated Network Fabric Resource IDs. </summary>
         public IReadOnlyList<ResourceIdentifier> NetworkFabricIds { get; }
         /// <summary> Configuration state of the resource. </summary>
-        public ConfigurationState? ConfigurationState { get; }
+        public NetworkFabricConfigurationState? ConfigurationState { get; }
         /// <summary> Provisioning state of the resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkFabricProvisioningState? ProvisioningState { get; }
         /// <summary> Administrative state of the resource. </summary>
-        public AdministrativeState? AdministrativeState { get; }
-        /// <summary> The managed service identities assigned to this resource. </summary>
-        public ManagedServiceIdentity Identity { get; set; }
+        public NetworkFabricAdministrativeState? AdministrativeState { get; }
     }
 }

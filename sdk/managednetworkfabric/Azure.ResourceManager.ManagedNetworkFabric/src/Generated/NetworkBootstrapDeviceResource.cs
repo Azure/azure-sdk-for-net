@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkBootstrapInterface_Get</description>
+        /// <description>NetworkBootstrapInterfaces_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkBootstrapInterface_Get</description>
+        /// <description>NetworkBootstrapInterfaces_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkBootstrapDevice_Get</description>
+        /// <description>NetworkBootstrapDevices_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkBootstrapDevice_Get</description>
+        /// <description>NetworkBootstrapDevices_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkBootstrapDevice_Delete</description>
+        /// <description>NetworkBootstrapDevices_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkBootstrapDevice_Delete</description>
+        /// <description>NetworkBootstrapDevices_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkBootstrapDevice_Update</description>
+        /// <description>NetworkBootstrapDevices_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkBootstrapDevice_Update</description>
+        /// <description>NetworkBootstrapDevices_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -438,14 +438,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<NetworkBootstrapDeviceRebootResponse>> RebootAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NetworkBootstrapDeviceRebootResult>> RebootAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _networkBootstrapDeviceClientDiagnostics.CreateScope("NetworkBootstrapDeviceResource.Reboot");
             scope.Start();
             try
             {
                 var response = await _networkBootstrapDeviceRestClient.RebootAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedNetworkFabricArmOperation<NetworkBootstrapDeviceRebootResponse>(new NetworkBootstrapDeviceRebootResponseOperationSource(), _networkBootstrapDeviceClientDiagnostics, Pipeline, _networkBootstrapDeviceRestClient.CreateRebootRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new ManagedNetworkFabricArmOperation<NetworkBootstrapDeviceRebootResult>(new NetworkBootstrapDeviceRebootResultOperationSource(), _networkBootstrapDeviceClientDiagnostics, Pipeline, _networkBootstrapDeviceRestClient.CreateRebootRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -480,14 +480,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<NetworkBootstrapDeviceRebootResponse> Reboot(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NetworkBootstrapDeviceRebootResult> Reboot(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _networkBootstrapDeviceClientDiagnostics.CreateScope("NetworkBootstrapDeviceResource.Reboot");
             scope.Start();
             try
             {
                 var response = _networkBootstrapDeviceRestClient.Reboot(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new ManagedNetworkFabricArmOperation<NetworkBootstrapDeviceRebootResponse>(new NetworkBootstrapDeviceRebootResponseOperationSource(), _networkBootstrapDeviceClientDiagnostics, Pipeline, _networkBootstrapDeviceRestClient.CreateRebootRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new ManagedNetworkFabricArmOperation<NetworkBootstrapDeviceRebootResult>(new NetworkBootstrapDeviceRebootResultOperationSource(), _networkBootstrapDeviceClientDiagnostics, Pipeline, _networkBootstrapDeviceRestClient.CreateRebootRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -522,14 +522,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<NetworkBootstrapDeviceRefreshConfigurationResponse>> RefreshConfigurationAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NetworkBootstrapDeviceRefreshConfigurationResult>> RefreshConfigurationAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _networkBootstrapDeviceClientDiagnostics.CreateScope("NetworkBootstrapDeviceResource.RefreshConfiguration");
             scope.Start();
             try
             {
                 var response = await _networkBootstrapDeviceRestClient.RefreshConfigurationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedNetworkFabricArmOperation<NetworkBootstrapDeviceRefreshConfigurationResponse>(new NetworkBootstrapDeviceRefreshConfigurationResponseOperationSource(), _networkBootstrapDeviceClientDiagnostics, Pipeline, _networkBootstrapDeviceRestClient.CreateRefreshConfigurationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new ManagedNetworkFabricArmOperation<NetworkBootstrapDeviceRefreshConfigurationResult>(new NetworkBootstrapDeviceRefreshConfigurationResultOperationSource(), _networkBootstrapDeviceClientDiagnostics, Pipeline, _networkBootstrapDeviceRestClient.CreateRefreshConfigurationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -564,198 +564,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<NetworkBootstrapDeviceRefreshConfigurationResponse> RefreshConfiguration(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NetworkBootstrapDeviceRefreshConfigurationResult> RefreshConfiguration(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _networkBootstrapDeviceClientDiagnostics.CreateScope("NetworkBootstrapDeviceResource.RefreshConfiguration");
             scope.Start();
             try
             {
                 var response = _networkBootstrapDeviceRestClient.RefreshConfiguration(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new ManagedNetworkFabricArmOperation<NetworkBootstrapDeviceRefreshConfigurationResponse>(new NetworkBootstrapDeviceRefreshConfigurationResponseOperationSource(), _networkBootstrapDeviceClientDiagnostics, Pipeline, _networkBootstrapDeviceRestClient.CreateRefreshConfigurationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Upgrades the version of the Network Bootstrap Device.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkBootstrapDevices/{networkBootstrapDeviceName}/upgrade</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkBootstrapDevices_Upgrade</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkBootstrapDeviceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="body"> Request payload. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual async Task<ArmOperation<NetworkBootstrapDeviceUpgradeResponse>> UpgradeAsync(WaitUntil waitUntil, UpdateVersion body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(body, nameof(body));
-
-            using var scope = _networkBootstrapDeviceClientDiagnostics.CreateScope("NetworkBootstrapDeviceResource.Upgrade");
-            scope.Start();
-            try
-            {
-                var response = await _networkBootstrapDeviceRestClient.UpgradeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedNetworkFabricArmOperation<NetworkBootstrapDeviceUpgradeResponse>(new NetworkBootstrapDeviceUpgradeResponseOperationSource(), _networkBootstrapDeviceClientDiagnostics, Pipeline, _networkBootstrapDeviceRestClient.CreateUpgradeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Upgrades the version of the Network Bootstrap Device.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkBootstrapDevices/{networkBootstrapDeviceName}/upgrade</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkBootstrapDevices_Upgrade</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkBootstrapDeviceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="body"> Request payload. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual ArmOperation<NetworkBootstrapDeviceUpgradeResponse> Upgrade(WaitUntil waitUntil, UpdateVersion body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(body, nameof(body));
-
-            using var scope = _networkBootstrapDeviceClientDiagnostics.CreateScope("NetworkBootstrapDeviceResource.Upgrade");
-            scope.Start();
-            try
-            {
-                var response = _networkBootstrapDeviceRestClient.Upgrade(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken);
-                var operation = new ManagedNetworkFabricArmOperation<NetworkBootstrapDeviceUpgradeResponse>(new NetworkBootstrapDeviceUpgradeResponseOperationSource(), _networkBootstrapDeviceClientDiagnostics, Pipeline, _networkBootstrapDeviceRestClient.CreateUpgradeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Updates the Administrative state of the Network Bootstrap Device.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkBootstrapDevices/{networkBootstrapDeviceName}/updateAdministrativeState</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkBootstrapDevices_UpdateAdministrativeState</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkBootstrapDeviceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="body"> Request payload. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual async Task<ArmOperation<NetworkBootstrapDeviceUpdateAdministrativeStateResponse>> UpdateAdministrativeStateAsync(WaitUntil waitUntil, UpdateDeviceAdministrativeState body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(body, nameof(body));
-
-            using var scope = _networkBootstrapDeviceClientDiagnostics.CreateScope("NetworkBootstrapDeviceResource.UpdateAdministrativeState");
-            scope.Start();
-            try
-            {
-                var response = await _networkBootstrapDeviceRestClient.UpdateAdministrativeStateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedNetworkFabricArmOperation<NetworkBootstrapDeviceUpdateAdministrativeStateResponse>(new NetworkBootstrapDeviceUpdateAdministrativeStateResponseOperationSource(), _networkBootstrapDeviceClientDiagnostics, Pipeline, _networkBootstrapDeviceRestClient.CreateUpdateAdministrativeStateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Updates the Administrative state of the Network Bootstrap Device.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkBootstrapDevices/{networkBootstrapDeviceName}/updateAdministrativeState</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkBootstrapDevices_UpdateAdministrativeState</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkBootstrapDeviceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="body"> Request payload. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual ArmOperation<NetworkBootstrapDeviceUpdateAdministrativeStateResponse> UpdateAdministrativeState(WaitUntil waitUntil, UpdateDeviceAdministrativeState body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(body, nameof(body));
-
-            using var scope = _networkBootstrapDeviceClientDiagnostics.CreateScope("NetworkBootstrapDeviceResource.UpdateAdministrativeState");
-            scope.Start();
-            try
-            {
-                var response = _networkBootstrapDeviceRestClient.UpdateAdministrativeState(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken);
-                var operation = new ManagedNetworkFabricArmOperation<NetworkBootstrapDeviceUpdateAdministrativeStateResponse>(new NetworkBootstrapDeviceUpdateAdministrativeStateResponseOperationSource(), _networkBootstrapDeviceClientDiagnostics, Pipeline, _networkBootstrapDeviceRestClient.CreateUpdateAdministrativeStateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body).Request, response, OperationFinalStateVia.Location);
+                var operation = new ManagedNetworkFabricArmOperation<NetworkBootstrapDeviceRefreshConfigurationResult>(new NetworkBootstrapDeviceRefreshConfigurationResultOperationSource(), _networkBootstrapDeviceClientDiagnostics, Pipeline, _networkBootstrapDeviceRestClient.CreateRefreshConfigurationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -790,14 +606,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<NetworkBootstrapDeviceResyncPasswordsResponse>> ResyncPasswordsAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NetworkBootstrapDeviceResyncPasswordsResult>> ResyncPasswordsAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _networkBootstrapDeviceClientDiagnostics.CreateScope("NetworkBootstrapDeviceResource.ResyncPasswords");
             scope.Start();
             try
             {
                 var response = await _networkBootstrapDeviceRestClient.ResyncPasswordsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedNetworkFabricArmOperation<NetworkBootstrapDeviceResyncPasswordsResponse>(new NetworkBootstrapDeviceResyncPasswordsResponseOperationSource(), _networkBootstrapDeviceClientDiagnostics, Pipeline, _networkBootstrapDeviceRestClient.CreateResyncPasswordsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new ManagedNetworkFabricArmOperation<NetworkBootstrapDeviceResyncPasswordsResult>(new NetworkBootstrapDeviceResyncPasswordsResultOperationSource(), _networkBootstrapDeviceClientDiagnostics, Pipeline, _networkBootstrapDeviceRestClient.CreateResyncPasswordsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -832,14 +648,198 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<NetworkBootstrapDeviceResyncPasswordsResponse> ResyncPasswords(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NetworkBootstrapDeviceResyncPasswordsResult> ResyncPasswords(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _networkBootstrapDeviceClientDiagnostics.CreateScope("NetworkBootstrapDeviceResource.ResyncPasswords");
             scope.Start();
             try
             {
                 var response = _networkBootstrapDeviceRestClient.ResyncPasswords(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new ManagedNetworkFabricArmOperation<NetworkBootstrapDeviceResyncPasswordsResponse>(new NetworkBootstrapDeviceResyncPasswordsResponseOperationSource(), _networkBootstrapDeviceClientDiagnostics, Pipeline, _networkBootstrapDeviceRestClient.CreateResyncPasswordsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new ManagedNetworkFabricArmOperation<NetworkBootstrapDeviceResyncPasswordsResult>(new NetworkBootstrapDeviceResyncPasswordsResultOperationSource(), _networkBootstrapDeviceClientDiagnostics, Pipeline, _networkBootstrapDeviceRestClient.CreateResyncPasswordsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Updates the Administrative state of the Network Bootstrap Device.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkBootstrapDevices/{networkBootstrapDeviceName}/updateAdministrativeState</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkBootstrapDevices_UpdateAdministrativeState</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkBootstrapDeviceResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<NetworkBootstrapDeviceUpdateAdministrativeStateResult>> UpdateAdministrativeStateAsync(WaitUntil waitUntil, UpdateDeviceAdministrativeStateContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _networkBootstrapDeviceClientDiagnostics.CreateScope("NetworkBootstrapDeviceResource.UpdateAdministrativeState");
+            scope.Start();
+            try
+            {
+                var response = await _networkBootstrapDeviceRestClient.UpdateAdministrativeStateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new ManagedNetworkFabricArmOperation<NetworkBootstrapDeviceUpdateAdministrativeStateResult>(new NetworkBootstrapDeviceUpdateAdministrativeStateResultOperationSource(), _networkBootstrapDeviceClientDiagnostics, Pipeline, _networkBootstrapDeviceRestClient.CreateUpdateAdministrativeStateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Updates the Administrative state of the Network Bootstrap Device.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkBootstrapDevices/{networkBootstrapDeviceName}/updateAdministrativeState</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkBootstrapDevices_UpdateAdministrativeState</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkBootstrapDeviceResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<NetworkBootstrapDeviceUpdateAdministrativeStateResult> UpdateAdministrativeState(WaitUntil waitUntil, UpdateDeviceAdministrativeStateContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _networkBootstrapDeviceClientDiagnostics.CreateScope("NetworkBootstrapDeviceResource.UpdateAdministrativeState");
+            scope.Start();
+            try
+            {
+                var response = _networkBootstrapDeviceRestClient.UpdateAdministrativeState(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var operation = new ManagedNetworkFabricArmOperation<NetworkBootstrapDeviceUpdateAdministrativeStateResult>(new NetworkBootstrapDeviceUpdateAdministrativeStateResultOperationSource(), _networkBootstrapDeviceClientDiagnostics, Pipeline, _networkBootstrapDeviceRestClient.CreateUpdateAdministrativeStateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Upgrades the version of the Network Bootstrap Device.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkBootstrapDevices/{networkBootstrapDeviceName}/upgrade</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkBootstrapDevices_Upgrade</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkBootstrapDeviceResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<NetworkBootstrapDeviceUpgradeResult>> UpgradeAsync(WaitUntil waitUntil, NetworkFabricUpdateVersionContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _networkBootstrapDeviceClientDiagnostics.CreateScope("NetworkBootstrapDeviceResource.Upgrade");
+            scope.Start();
+            try
+            {
+                var response = await _networkBootstrapDeviceRestClient.UpgradeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new ManagedNetworkFabricArmOperation<NetworkBootstrapDeviceUpgradeResult>(new NetworkBootstrapDeviceUpgradeResultOperationSource(), _networkBootstrapDeviceClientDiagnostics, Pipeline, _networkBootstrapDeviceRestClient.CreateUpgradeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Upgrades the version of the Network Bootstrap Device.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkBootstrapDevices/{networkBootstrapDeviceName}/upgrade</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkBootstrapDevices_Upgrade</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkBootstrapDeviceResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<NetworkBootstrapDeviceUpgradeResult> Upgrade(WaitUntil waitUntil, NetworkFabricUpdateVersionContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _networkBootstrapDeviceClientDiagnostics.CreateScope("NetworkBootstrapDeviceResource.Upgrade");
+            scope.Start();
+            try
+            {
+                var response = _networkBootstrapDeviceRestClient.Upgrade(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var operation = new ManagedNetworkFabricArmOperation<NetworkBootstrapDeviceUpgradeResult>(new NetworkBootstrapDeviceUpgradeResultOperationSource(), _networkBootstrapDeviceClientDiagnostics, Pipeline, _networkBootstrapDeviceRestClient.CreateUpgradeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -860,7 +860,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkBootstrapDevice_Get</description>
+        /// <description>NetworkBootstrapDevices_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -922,7 +922,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkBootstrapDevice_Get</description>
+        /// <description>NetworkBootstrapDevices_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -984,7 +984,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkBootstrapDevice_Get</description>
+        /// <description>NetworkBootstrapDevices_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1041,7 +1041,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkBootstrapDevice_Get</description>
+        /// <description>NetworkBootstrapDevices_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1098,7 +1098,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkBootstrapDevice_Get</description>
+        /// <description>NetworkBootstrapDevices_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1158,7 +1158,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkBootstrapDevice_Get</description>
+        /// <description>NetworkBootstrapDevices_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

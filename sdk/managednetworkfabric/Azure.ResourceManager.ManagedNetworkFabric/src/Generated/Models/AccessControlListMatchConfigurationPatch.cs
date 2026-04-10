@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="matchConditions"> List of the match conditions. </param>
         /// <param name="actions"> List of actions that need to be performed for the matched conditions. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AccessControlListMatchConfigurationPatch(string matchConfigurationName, long? sequenceNumber, IPAddressType? ipAddressType, IList<AccessControlListMatchConditionPatch> matchConditions, IList<AccessControlListActionPatch> actions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AccessControlListMatchConfigurationPatch(string matchConfigurationName, long? sequenceNumber, NetworkFabricIPAddressType? ipAddressType, IList<AccessControlListMatchConditionPatch> matchConditions, IList<AccessControlListActionPatch> actions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MatchConfigurationName = matchConfigurationName;
             SequenceNumber = sequenceNumber;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Sequence Number of the match configuration. </summary>
         public long? SequenceNumber { get; set; }
         /// <summary> Type of IP Address. IPv4 or IPv6. </summary>
-        public IPAddressType? IPAddressType { get; set; }
+        public NetworkFabricIPAddressType? IPAddressType { get; set; }
         /// <summary> List of the match conditions. </summary>
         public IList<AccessControlListMatchConditionPatch> MatchConditions { get; }
         /// <summary> List of actions that need to be performed for the matched conditions. </summary>

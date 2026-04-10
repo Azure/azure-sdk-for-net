@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="optionBProperties"> option B properties. </param>
         /// <param name="optionAProperties"> option A properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VpnConfigurationProperties(ResourceIdentifier networkToNetworkInterconnectId, AdministrativeState? administrativeState, PeeringOption peeringOption, VpnOptionBProperties optionBProperties, VpnOptionAProperties optionAProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VpnConfigurationProperties(ResourceIdentifier networkToNetworkInterconnectId, NetworkFabricAdministrativeState? administrativeState, PeeringOption peeringOption, VpnOptionBProperties optionBProperties, VpnOptionAProperties optionAProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NetworkToNetworkInterconnectId = networkToNetworkInterconnectId;
             AdministrativeState = administrativeState;
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> ARM Resource ID of the Network To Network Interconnect. </summary>
         public ResourceIdentifier NetworkToNetworkInterconnectId { get; set; }
         /// <summary> Administrative state of the resource. </summary>
-        public AdministrativeState? AdministrativeState { get; }
+        public NetworkFabricAdministrativeState? AdministrativeState { get; }
         /// <summary> Peering option list. </summary>
         public PeeringOption PeeringOption { get; set; }
         /// <summary> option B properties. </summary>

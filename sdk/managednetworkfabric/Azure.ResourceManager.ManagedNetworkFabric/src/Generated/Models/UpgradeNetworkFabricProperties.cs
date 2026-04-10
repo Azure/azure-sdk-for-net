@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> Model used for Upgrade Network Fabric Properties. </summary>
-    public partial class UpgradeNetworkFabricProperties : UpdateVersion
+    public partial class UpgradeNetworkFabricProperties : NetworkFabricUpdateVersionContent
     {
         /// <summary> Initializes a new instance of <see cref="UpgradeNetworkFabricProperties"/>. </summary>
         public UpgradeNetworkFabricProperties()

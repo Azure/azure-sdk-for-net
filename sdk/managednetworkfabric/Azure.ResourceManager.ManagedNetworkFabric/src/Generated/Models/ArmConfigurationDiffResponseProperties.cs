@@ -53,13 +53,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of <see cref="ArmConfigurationDiffResponseProperties"/>. </summary>
         /// <param name="configurationDiffUri"> Storage URL to the diff file. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ArmConfigurationDiffResponseProperties(string configurationDiffUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ArmConfigurationDiffResponseProperties(Uri configurationDiffUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ConfigurationDiffUri = configurationDiffUri;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Storage URL to the diff file. </summary>
-        public string ConfigurationDiffUri { get; }
+        public Uri ConfigurationDiffUri { get; }
     }
 }

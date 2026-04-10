@@ -51,14 +51,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AccessControlListActionPatch"/>. </summary>
-        /// <param name="type"> Type of actions that can be performed. </param>
+        /// <param name="aclActionType"> Type of actions that can be performed. </param>
         /// <param name="counterName"> Name of the counter block to get match count information. </param>
         /// <param name="remarkComment"> Remark comment. </param>
         /// <param name="policeRateConfiguration"> Police rate configuration. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AccessControlListActionPatch(AclActionType? type, string counterName, string remarkComment, PoliceRateConfigurationProperties policeRateConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AccessControlListActionPatch(AclActionType? aclActionType, string counterName, string remarkComment, PoliceRateConfigurationProperties policeRateConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Type = type;
+            AclActionType = aclActionType;
             CounterName = counterName;
             RemarkComment = remarkComment;
             PoliceRateConfiguration = policeRateConfiguration;
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Type of actions that can be performed. </summary>
-        public AclActionType? Type { get; set; }
+        public AclActionType? AclActionType { get; set; }
         /// <summary> Name of the counter block to get match count information. </summary>
         public string CounterName { get; set; }
         /// <summary> Remark comment. </summary>

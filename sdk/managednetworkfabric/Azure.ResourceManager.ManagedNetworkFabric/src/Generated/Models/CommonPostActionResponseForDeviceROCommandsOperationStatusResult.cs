@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> The current status of an async operation. </summary>
-    public partial class CommonPostActionResponseForDeviceROCommandsOperationStatusResult : CommonErrorResponse
+    public partial class CommonPostActionResponseForDeviceROCommandsOperationStatusResult : NetworkFabricErrorResult
     {
         /// <summary> Initializes a new instance of <see cref="CommonPostActionResponseForDeviceROCommandsOperationStatusResult"/>. </summary>
         /// <param name="status"> Operation status. </param>

@@ -26,13 +26,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="mtu"> MTU to use for option A peering. </param>
         /// <param name="vlanId"> Vlan Id.Example : 501. </param>
-        /// <param name="peerASN"> Peer ASN number.Example : 28. </param>
+        /// <param name="peerAsn"> Peer ASN number.Example : 28. </param>
         /// <param name="bfdConfiguration"> BFD Configuration properties. </param>
-        internal VpnOptionAPatchProperties(string primaryIPv4Prefix, string primaryIPv6Prefix, string secondaryIPv4Prefix, string secondaryIPv6Prefix, IDictionary<string, BinaryData> serializedAdditionalRawData, int? mtu, int? vlanId, long? peerASN, BfdPatchConfiguration bfdConfiguration) : base(primaryIPv4Prefix, primaryIPv6Prefix, secondaryIPv4Prefix, secondaryIPv6Prefix, serializedAdditionalRawData)
+        internal VpnOptionAPatchProperties(string primaryIPv4Prefix, string primaryIPv6Prefix, string secondaryIPv4Prefix, string secondaryIPv6Prefix, IDictionary<string, BinaryData> serializedAdditionalRawData, int? mtu, int? vlanId, long? peerAsn, BfdPatchConfiguration bfdConfiguration) : base(primaryIPv4Prefix, primaryIPv6Prefix, secondaryIPv4Prefix, secondaryIPv6Prefix, serializedAdditionalRawData)
         {
             Mtu = mtu;
             VlanId = vlanId;
-            PeerASN = peerASN;
+            PeerAsn = peerAsn;
             BfdConfiguration = bfdConfiguration;
         }
 
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Vlan Id.Example : 501. </summary>
         public int? VlanId { get; set; }
         /// <summary> Peer ASN number.Example : 28. </summary>
-        public long? PeerASN { get; set; }
+        public long? PeerAsn { get; set; }
         /// <summary> BFD Configuration properties. </summary>
         public BfdPatchConfiguration BfdConfiguration { get; set; }
     }

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="networkPacketBrokerId"> ARM resource ID of the Network Packet Broker. </param>
         /// <param name="destinations"> List of destinations to send the filter traffic. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="networkPacketBrokerId"/> or <paramref name="destinations"/> is null. </exception>
-        public NetworkTapData(AzureLocation location, ResourceIdentifier networkPacketBrokerId, IEnumerable<DestinationProperties> destinations) : base(location)
+        public NetworkTapData(AzureLocation location, ResourceIdentifier networkPacketBrokerId, IEnumerable<NetworkTapDestinationProperties> destinations) : base(location)
         {
             Argument.AssertNotNull(networkPacketBrokerId, nameof(networkPacketBrokerId));
             Argument.AssertNotNull(destinations, nameof(destinations));
@@ -74,6 +74,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="networkPacketBrokerId"> ARM resource ID of the Network Packet Broker. </param>
         /// <param name="sourceTapRuleId"> Source Tap Rule Id. ARM Resource ID of the Network Tap Rule. </param>
         /// <param name="networkFabricIds"> Associated Network Fabric Resource IDs. </param>
@@ -83,10 +85,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="configurationState"> Gets the configurations state of the resource. </param>
         /// <param name="provisioningState"> Provides you the latest status of the NFC service, whether it is Accepted, updating, Succeeded or Failed. During this process, the states keep changing based on the status of Network Tap provisioning. </param>
         /// <param name="administrativeState"> Administrative state of the resource. Example -Enabled/Disabled. </param>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkTapData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceIdentifier networkPacketBrokerId, ResourceIdentifier sourceTapRuleId, IReadOnlyList<ResourceIdentifier> networkFabricIds, IList<DestinationProperties> destinations, PollingType? pollingType, LastOperationProperties lastOperation, ConfigurationState? configurationState, ProvisioningState? provisioningState, AdministrativeState? administrativeState, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkTapData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string annotation, ResourceIdentifier networkPacketBrokerId, ResourceIdentifier sourceTapRuleId, IReadOnlyList<ResourceIdentifier> networkFabricIds, IList<NetworkTapDestinationProperties> destinations, NetworkTapPollingType? pollingType, LastOperationProperties lastOperation, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
+            Identity = identity;
+            Annotation = annotation;
             NetworkPacketBrokerId = networkPacketBrokerId;
             SourceTapRuleId = sourceTapRuleId;
             NetworkFabricIds = networkFabricIds;
@@ -96,7 +99,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             ConfigurationState = configurationState;
             ProvisioningState = provisioningState;
             AdministrativeState = administrativeState;
-            Identity = identity;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -105,6 +107,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
         }
 
+        /// <summary> The managed service identities assigned to this resource. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
+        /// <summary> Switch configuration description. </summary>
+        public string Annotation { get; set; }
         /// <summary> ARM resource ID of the Network Packet Broker. </summary>
         public ResourceIdentifier NetworkPacketBrokerId { get; set; }
         /// <summary> Source Tap Rule Id. ARM Resource ID of the Network Tap Rule. </summary>
@@ -112,9 +118,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <summary> Associated Network Fabric Resource IDs. </summary>
         public IReadOnlyList<ResourceIdentifier> NetworkFabricIds { get; }
         /// <summary> List of destinations to send the filter traffic. </summary>
-        public IList<DestinationProperties> Destinations { get; }
+        public IList<NetworkTapDestinationProperties> Destinations { get; }
         /// <summary> Polling type. </summary>
-        public PollingType? PollingType { get; set; }
+        public NetworkTapPollingType? PollingType { get; set; }
         /// <summary> Details of the last operation performed on the resource. </summary>
         internal LastOperationProperties LastOperation { get; }
         /// <summary> Details status of the last operation performed on the resource. </summary>
@@ -124,12 +130,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary> Gets the configurations state of the resource. </summary>
-        public ConfigurationState? ConfigurationState { get; }
+        public NetworkFabricConfigurationState? ConfigurationState { get; }
         /// <summary> Provides you the latest status of the NFC service, whether it is Accepted, updating, Succeeded or Failed. During this process, the states keep changing based on the status of Network Tap provisioning. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkFabricProvisioningState? ProvisioningState { get; }
         /// <summary> Administrative state of the resource. Example -Enabled/Disabled. </summary>
-        public AdministrativeState? AdministrativeState { get; }
-        /// <summary> The managed service identities assigned to this resource. </summary>
-        public ManagedServiceIdentity Identity { get; set; }
+        public NetworkFabricAdministrativeState? AdministrativeState { get; }
     }
 }

@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            IList<IPGroupProperties> ipGroups = default;
+            IList<MatchConfigurationIPGroupProperties> ipGroups = default;
             IList<VlanGroupProperties> vlanGroups = default;
             IList<PortGroupProperties> portGroups = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -114,10 +114,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    List<IPGroupProperties> array = new List<IPGroupProperties>();
+                    List<MatchConfigurationIPGroupProperties> array = new List<MatchConfigurationIPGroupProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IPGroupProperties.DeserializeIPGroupProperties(item, options));
+                        array.Add(MatchConfigurationIPGroupProperties.DeserializeMatchConfigurationIPGroupProperties(item, options));
                     }
                     ipGroups = array;
                     continue;
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new CommonDynamicMatchConfiguration(ipGroups ?? new ChangeTrackingList<IPGroupProperties>(), vlanGroups ?? new ChangeTrackingList<VlanGroupProperties>(), portGroups ?? new ChangeTrackingList<PortGroupProperties>(), serializedAdditionalRawData);
+            return new CommonDynamicMatchConfiguration(ipGroups ?? new ChangeTrackingList<MatchConfigurationIPGroupProperties>(), vlanGroups ?? new ChangeTrackingList<VlanGroupProperties>(), portGroups ?? new ChangeTrackingList<PortGroupProperties>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CommonDynamicMatchConfiguration>.Write(ModelReaderWriterOptions options)

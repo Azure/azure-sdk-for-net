@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            IReadOnlyList<NeighborGroupData> value = default;
+            IReadOnlyList<NetworkFabricNeighborGroupData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<NeighborGroupData> array = new List<NeighborGroupData>();
+                    List<NetworkFabricNeighborGroupData> array = new List<NetworkFabricNeighborGroupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NeighborGroupData.DeserializeNeighborGroupData(item, options));
+                        array.Add(NetworkFabricNeighborGroupData.DeserializeNetworkFabricNeighborGroupData(item, options));
                     }
                     value = array;
                     continue;

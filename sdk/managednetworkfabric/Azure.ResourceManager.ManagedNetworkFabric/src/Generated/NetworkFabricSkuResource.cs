@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkFabricSku_Get</description>
+        /// <description>NetworkFabricSkus_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkFabricSku_Get</description>
+        /// <description>NetworkFabricSkus_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

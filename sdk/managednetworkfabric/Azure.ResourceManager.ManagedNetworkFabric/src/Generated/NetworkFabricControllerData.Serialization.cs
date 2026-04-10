@@ -178,17 +178,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             string annotation = default;
             IList<ExpressRouteConnectionInformation> infrastructureExpressRouteConnections = default;
             IList<ExpressRouteConnectionInformation> workloadExpressRouteConnections = default;
-            ControllerServices infrastructureServices = default;
-            ControllerServices workloadServices = default;
+            NetworkFabricControllerServices infrastructureServices = default;
+            NetworkFabricControllerServices workloadServices = default;
             ManagedResourceGroupConfiguration managedResourceGroupConfiguration = default;
             IReadOnlyList<ResourceIdentifier> networkFabricIds = default;
             IsWorkloadManagementNetworkEnabled? isWorkloadManagementNetworkEnabled = default;
             IReadOnlyList<ResourceIdentifier> tenantInternetGatewayIds = default;
             string ipv4AddressSpace = default;
             string ipv6AddressSpace = default;
-            NfcSku? nfcSku = default;
+            NetworkFabricControllerSKU? nfcSku = default;
             LastOperationProperties lastOperation = default;
-            ProvisioningState? provisioningState = default;
+            NetworkFabricProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            infrastructureServices = ControllerServices.DeserializeControllerServices(property0.Value, options);
+                            infrastructureServices = NetworkFabricControllerServices.DeserializeNetworkFabricControllerServices(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("workloadServices"u8))
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            workloadServices = ControllerServices.DeserializeControllerServices(property0.Value, options);
+                            workloadServices = NetworkFabricControllerServices.DeserializeNetworkFabricControllerServices(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("managedResourceGroupConfiguration"u8))
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            nfcSku = new NfcSku(property0.Value.GetString());
+                            nfcSku = new NetworkFabricControllerSKU(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("lastOperation"u8))
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new NetworkFabricProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }
@@ -418,6 +418,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
+                identity,
                 annotation,
                 infrastructureExpressRouteConnections ?? new ChangeTrackingList<ExpressRouteConnectionInformation>(),
                 workloadExpressRouteConnections ?? new ChangeTrackingList<ExpressRouteConnectionInformation>(),
@@ -432,7 +433,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 nfcSku,
                 lastOperation,
                 provisioningState,
-                identity,
                 serializedAdditionalRawData);
         }
 

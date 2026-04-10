@@ -163,11 +163,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new NetworkDevicePatch(
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData,
+                identity,
                 annotation,
                 hostName,
                 serialNumber,
-                identitySelector,
-                identity);
+                identitySelector);
         }
 
         BinaryData IPersistableModel<NetworkDevicePatch>.Write(ModelReaderWriterOptions options)

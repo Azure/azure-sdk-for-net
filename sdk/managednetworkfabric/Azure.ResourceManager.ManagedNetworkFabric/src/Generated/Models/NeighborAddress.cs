@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="bgpAdministrativeState"> BGP Administrative State for each Neighbor Address. Example: Enabled | Disabled. </param>
         /// <param name="configurationState"> Configuration state of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NeighborAddress(string address, BfdAdministrativeState? bfdAdministrativeState, BgpAdministrativeState? bgpAdministrativeState, ConfigurationState? configurationState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NeighborAddress(string address, BfdAdministrativeState? bfdAdministrativeState, BgpAdministrativeState? bgpAdministrativeState, NetworkFabricConfigurationState? configurationState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Address = address;
             BfdAdministrativeState = bfdAdministrativeState;
@@ -72,6 +72,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> BGP Administrative State for each Neighbor Address. Example: Enabled | Disabled. </summary>
         public BgpAdministrativeState? BgpAdministrativeState { get; }
         /// <summary> Configuration state of the resource. </summary>
-        public ConfigurationState? ConfigurationState { get; }
+        public NetworkFabricConfigurationState? ConfigurationState { get; }
     }
 }

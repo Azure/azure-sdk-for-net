@@ -51,18 +51,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ControlPlaneAclActionPatch"/>. </summary>
-        /// <param name="type"> Type of actions that can be performed. </param>
+        /// <param name="actionType"> Type of actions that can be performed. </param>
         /// <param name="remarkComment"> Remark comment. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ControlPlaneAclActionPatch(ControlPlaneAclActionType? type, string remarkComment, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ControlPlaneAclActionPatch(ControlPlaneAclActionType? actionType, string remarkComment, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Type = type;
+            ActionType = actionType;
             RemarkComment = remarkComment;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Type of actions that can be performed. </summary>
-        public ControlPlaneAclActionType? Type { get; set; }
+        public ControlPlaneAclActionType? ActionType { get; set; }
         /// <summary> Remark comment. </summary>
         public string RemarkComment { get; set; }
     }

@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="outputUri"> Predefined link containing Device RO Command output. </param>
         /// <param name="deviceConfigurationPreview"> Device RO command Response limited to 4000 characters. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CommonPostActionResponseForDeviceROCommands(ConfigurationState? configurationState, string outputUri, string deviceConfigurationPreview, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CommonPostActionResponseForDeviceROCommands(NetworkFabricConfigurationState? configurationState, Uri outputUri, string deviceConfigurationPreview, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ConfigurationState = configurationState;
             OutputUri = outputUri;
@@ -64,9 +64,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Gets the configuration state. </summary>
-        public ConfigurationState? ConfigurationState { get; }
+        public NetworkFabricConfigurationState? ConfigurationState { get; }
         /// <summary> Predefined link containing Device RO Command output. </summary>
-        public string OutputUri { get; }
+        public Uri OutputUri { get; }
         /// <summary> Device RO command Response limited to 4000 characters. </summary>
         public string DeviceConfigurationPreview { get; }
     }

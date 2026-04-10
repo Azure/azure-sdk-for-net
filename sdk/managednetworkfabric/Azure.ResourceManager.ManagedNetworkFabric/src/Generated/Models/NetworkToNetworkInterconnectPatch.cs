@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Initializes a new instance of <see cref="NetworkToNetworkInterconnectPatch"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. E.g. '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}'. </param>
-        /// <param name="type"> The type of the resource. E.g. 'Microsoft.Compute/virtualMachines' or 'Microsoft.Storage/storageAccounts'. </param>
+        /// <param name="proxyResourceBaseType"> The type of the resource. E.g. 'Microsoft.Compute/virtualMachines' or 'Microsoft.Storage/storageAccounts'. </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="layer2Configuration"> Common properties for Layer2Configuration. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="egressAclId"> Egress Acl. ARM resource ID of Access Control Lists. </param>
         /// <param name="ingressAclId"> Ingress Acl. ARM resource ID of Access Control Lists. </param>
         /// <param name="microBfdState"> Micro BFD enabled/disabled state. </param>
-        internal NetworkToNetworkInterconnectPatch(ResourceIdentifier id, string type, SystemData systemData, IDictionary<string, BinaryData> serializedAdditionalRawData, Layer2ConfigurationPatch layer2Configuration, OptionBLayer3ConfigurationPatchProperties optionBLayer3Configuration, NpbStaticRouteConfigurationPatch npbStaticRouteConfiguration, NniStaticRoutePatchConfiguration staticRouteConfiguration, ImportRoutePolicyInformationPatch importRoutePolicy, ExportRoutePolicyInformationPatch exportRoutePolicy, ResourceIdentifier egressAclId, ResourceIdentifier ingressAclId, MicroBfdState? microBfdState) : base(id, type, systemData, serializedAdditionalRawData)
+        internal NetworkToNetworkInterconnectPatch(ResourceIdentifier id, string proxyResourceBaseType, SystemData systemData, IDictionary<string, BinaryData> serializedAdditionalRawData, Layer2ConfigurationPatch layer2Configuration, OptionBLayer3ConfigurationPatchProperties optionBLayer3Configuration, NpbStaticRouteConfigurationPatch npbStaticRouteConfiguration, NniStaticRoutePatchConfiguration staticRouteConfiguration, ImportRoutePolicyInformationPatch importRoutePolicy, ExportRoutePolicyInformationPatch exportRoutePolicy, ResourceIdentifier egressAclId, ResourceIdentifier ingressAclId, MicroBfdState? microBfdState) : base(id, proxyResourceBaseType, systemData, serializedAdditionalRawData)
         {
             Layer2Configuration = layer2Configuration;
             OptionBLayer3Configuration = optionBLayer3Configuration;

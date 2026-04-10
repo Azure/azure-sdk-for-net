@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkBootstrapInterface_Create</description>
+        /// <description>NetworkBootstrapInterfaces_Create</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkBootstrapInterface_Create</description>
+        /// <description>NetworkBootstrapInterfaces_Create</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkBootstrapInterface_Get</description>
+        /// <description>NetworkBootstrapInterfaces_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkBootstrapInterface_Get</description>
+        /// <description>NetworkBootstrapInterfaces_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkBootstrapInterface_ListByNetworkBootstrapDevice</description>
+        /// <description>NetworkBootstrapInterfaces_ListByNetworkBootstrapDevice</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkBootstrapInterface_ListByNetworkBootstrapDevice</description>
+        /// <description>NetworkBootstrapInterfaces_ListByNetworkBootstrapDevice</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkBootstrapInterface_Get</description>
+        /// <description>NetworkBootstrapInterfaces_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkBootstrapInterface_Get</description>
+        /// <description>NetworkBootstrapInterfaces_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkBootstrapInterface_Get</description>
+        /// <description>NetworkBootstrapInterfaces_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkBootstrapInterface_Get</description>
+        /// <description>NetworkBootstrapInterfaces_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
