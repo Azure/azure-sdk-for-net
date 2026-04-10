@@ -1,17 +1,49 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    // Backward-compat: restores the legacy public constructor overload that includes ManifestLevelPropertyBag.
-    // The generated constructor shape changed during migration, so this ApiCompat signature must stay in custom code.
     public partial class ProviderFrontloadPayloadProperties
     {
+        /// <summary> Initializes a new instance of <see cref="ProviderFrontloadPayloadProperties"/>. </summary>
+        public ProviderFrontloadPayloadProperties(
+            string operationType,
+            string providerNamespace,
+            string frontloadLocation,
+            string copyFromLocation,
+            AvailableCheckInManifestEnvironment environmentType,
+            ServiceFeatureFlagAction serviceFeatureFlag,
+            IEnumerable<string> includeResourceTypes,
+            IEnumerable<string> excludeResourceTypes,
+            ResourceTypeEndpointBase overrideEndpointLevelFields,
+            IEnumerable<string> ignoreFields)
+            : this(
+                operationType,
+                providerNamespace,
+                frontloadLocation,
+                copyFromLocation,
+                environmentType,
+                serviceFeatureFlag,
+                includeResourceTypes?.ToList(),
+                excludeResourceTypes?.ToList(),
+                overrideManifestLevelFields: null,
+                overrideEndpointLevelFields,
+                ignoreFields?.ToList(),
+                additionalBinaryDataProperties: null)
+        {
+        }
+
+        // Backward-compat: restores the legacy public constructor overload that includes ManifestLevelPropertyBag.
+        // The generated constructor shape changed during migration, so this ApiCompat signature must stay in custom code.
         /// <summary> Backward-compat constructor with ManifestLevelPropertyBag parameter. </summary>
+        [EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         public ProviderFrontloadPayloadProperties(
             string operationType,
             string providerNamespace,

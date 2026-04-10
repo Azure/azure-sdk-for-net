@@ -3,8 +3,9 @@
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    // PostProcessor visibility fix: keeps this model public after @@alternateType collapses wrapper types.
-    // The symbol must stay rooted in custom code so post-processing does not internalize it.
+    // This empty partial class is added for backward compatibility to keep ManifestLevelPropertyBag public.
+    // Tracked by: https://github.com/microsoft/typespec/issues/10272
+    // TODO: This customization can be removed once the above issue is resolved.
     /// <summary> The ManifestLevelPropertyBag. </summary>
     public partial class ManifestLevelPropertyBag
     {
