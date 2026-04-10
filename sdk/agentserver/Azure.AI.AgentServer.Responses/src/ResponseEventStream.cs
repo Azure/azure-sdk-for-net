@@ -681,6 +681,234 @@ public class ResponseEventStream
         yield return builder.EmitDone(item);
     }
 
+    /// <summary>
+    /// Convenience generator that yields the complete computer tool call output-item lifecycle.
+    /// Computer call outputs have no intermediate events — only <c>output_item.added</c> and
+    /// <c>output_item.done</c>.
+    /// </summary>
+    /// <param name="callId">The call ID of the computer tool call.</param>
+    /// <param name="action">The computer action to perform.</param>
+    /// <param name="pendingSafetyChecks">The safety checks that must pass before execution.</param>
+    /// <param name="status">The status of the computer tool call.</param>
+    /// <returns>An enumerable of events: <c>output_item.added</c> → <c>output_item.done</c>.</returns>
+    public IEnumerable<ResponseStreamEvent> OutputItemComputerCall(
+        string callId,
+        ComputerAction action,
+        IEnumerable<ComputerCallSafetyCheckParam> pendingSafetyChecks,
+        OutputItemComputerToolCallStatus status)
+    {
+        var builder = AddOutputItemComputerCall();
+        var item = new OutputItemComputerToolCall(builder.ItemId, callId, action, pendingSafetyChecks, status);
+        yield return builder.EmitAdded(item);
+        yield return builder.EmitDone(item);
+    }
+
+    /// <summary>
+    /// Convenience generator that yields the complete computer tool call output resource lifecycle.
+    /// Computer call outputs have no intermediate events — only <c>output_item.added</c> and
+    /// <c>output_item.done</c>.
+    /// </summary>
+    /// <param name="callId">The call ID of the computer tool call this output is for.</param>
+    /// <param name="output">The screenshot image output from the computer tool.</param>
+    /// <returns>An enumerable of events: <c>output_item.added</c> → <c>output_item.done</c>.</returns>
+    public IEnumerable<ResponseStreamEvent> OutputItemComputerCallOutput(
+        string callId,
+        ComputerScreenshotImage output)
+    {
+        var builder = AddOutputItemComputerCallOutput();
+        var item = new OutputItemComputerToolCallOutputResource(callId, output);
+        item.Id = builder.ItemId;
+        yield return builder.EmitAdded(item);
+        yield return builder.EmitDone(item);
+    }
+
+    /// <summary>
+    /// Convenience generator that yields the complete local shell tool call lifecycle.
+    /// Local shell calls have no intermediate events — only <c>output_item.added</c> and
+    /// <c>output_item.done</c>.
+    /// </summary>
+    /// <param name="callId">The call ID for the shell call.</param>
+    /// <param name="action">The shell exec action to perform.</param>
+    /// <param name="status">The status of the shell tool call.</param>
+    /// <returns>An enumerable of events: <c>output_item.added</c> → <c>output_item.done</c>.</returns>
+    public IEnumerable<ResponseStreamEvent> OutputItemLocalShellCall(
+        string callId,
+        LocalShellExecAction action,
+        OutputItemLocalShellToolCallStatus status)
+    {
+        var builder = AddOutputItemLocalShellCall();
+        var item = new OutputItemLocalShellToolCall(builder.ItemId, callId, action, status);
+        yield return builder.EmitAdded(item);
+        yield return builder.EmitDone(item);
+    }
+
+    /// <summary>
+    /// Convenience generator that yields the complete local shell tool call output lifecycle.
+    /// Local shell call outputs have no intermediate events — only <c>output_item.added</c> and
+    /// <c>output_item.done</c>.
+    /// </summary>
+    /// <param name="output">The output text from the shell command.</param>
+    /// <returns>An enumerable of events: <c>output_item.added</c> → <c>output_item.done</c>.</returns>
+    public IEnumerable<ResponseStreamEvent> OutputItemLocalShellCallOutput(string output)
+    {
+        var builder = AddOutputItemLocalShellCallOutput();
+        var item = new OutputItemLocalShellToolCallOutput(builder.ItemId, output);
+        yield return builder.EmitAdded(item);
+        yield return builder.EmitDone(item);
+    }
+
+    /// <summary>
+    /// Convenience generator that yields the complete function shell call lifecycle.
+    /// Function shell calls have no intermediate events — only <c>output_item.added</c> and
+    /// <c>output_item.done</c>.
+    /// </summary>
+    /// <param name="callId">The call ID for the function shell call.</param>
+    /// <param name="action">The function shell action to perform.</param>
+    /// <param name="status">The status of the function shell call.</param>
+    /// <param name="environment">The execution environment for the shell call.</param>
+    /// <returns>An enumerable of events: <c>output_item.added</c> → <c>output_item.done</c>.</returns>
+    public IEnumerable<ResponseStreamEvent> OutputItemFunctionShellCall(
+        string callId,
+        FunctionShellAction action,
+        LocalShellCallStatus status,
+        FunctionShellCallEnvironment environment)
+    {
+        var builder = AddOutputItemFunctionShellCall();
+        var item = new OutputItemFunctionShellCall(builder.ItemId, callId, action, status, environment);
+        yield return builder.EmitAdded(item);
+        yield return builder.EmitDone(item);
+    }
+
+    /// <summary>
+    /// Convenience generator that yields the complete function shell call output lifecycle.
+    /// Function shell call outputs have no intermediate events — only <c>output_item.added</c> and
+    /// <c>output_item.done</c>.
+    /// </summary>
+    /// <param name="callId">The call ID of the function shell call this output is for.</param>
+    /// <param name="status">The output status.</param>
+    /// <param name="output">The output content from the shell call.</param>
+    /// <param name="maxOutputLength">Optional maximum output length.</param>
+    /// <returns>An enumerable of events: <c>output_item.added</c> → <c>output_item.done</c>.</returns>
+    public IEnumerable<ResponseStreamEvent> OutputItemFunctionShellCallOutput(
+        string callId,
+        LocalShellCallOutputStatusEnum status,
+        IEnumerable<FunctionShellCallOutputContent> output,
+        long? maxOutputLength = null)
+    {
+        var builder = AddOutputItemFunctionShellCallOutput();
+        var item = new OutputItemFunctionShellCallOutput(builder.ItemId, callId, status, output, maxOutputLength);
+        yield return builder.EmitAdded(item);
+        yield return builder.EmitDone(item);
+    }
+
+    /// <summary>
+    /// Convenience generator that yields the complete apply-patch tool call lifecycle.
+    /// Apply-patch calls have no intermediate events — only <c>output_item.added</c> and
+    /// <c>output_item.done</c>.
+    /// </summary>
+    /// <param name="callId">The call ID for the apply-patch call.</param>
+    /// <param name="status">The status of the apply-patch call.</param>
+    /// <param name="operation">The file operation to apply.</param>
+    /// <returns>An enumerable of events: <c>output_item.added</c> → <c>output_item.done</c>.</returns>
+    public IEnumerable<ResponseStreamEvent> OutputItemApplyPatchCall(
+        string callId,
+        ApplyPatchCallStatus status,
+        ApplyPatchFileOperation operation)
+    {
+        var builder = AddOutputItemApplyPatchCall();
+        var item = new OutputItemApplyPatchToolCall(builder.ItemId, callId, status, operation);
+        yield return builder.EmitAdded(item);
+        yield return builder.EmitDone(item);
+    }
+
+    /// <summary>
+    /// Convenience generator that yields the complete apply-patch tool call output lifecycle.
+    /// Apply-patch call outputs have no intermediate events — only <c>output_item.added</c> and
+    /// <c>output_item.done</c>.
+    /// </summary>
+    /// <param name="callId">The call ID of the apply-patch call this output is for.</param>
+    /// <param name="status">The output status.</param>
+    /// <returns>An enumerable of events: <c>output_item.added</c> → <c>output_item.done</c>.</returns>
+    public IEnumerable<ResponseStreamEvent> OutputItemApplyPatchCallOutput(
+        string callId,
+        ApplyPatchCallOutputStatus status)
+    {
+        var builder = AddOutputItemApplyPatchCallOutput();
+        var item = new OutputItemApplyPatchToolCallOutput(builder.ItemId, callId, status);
+        yield return builder.EmitAdded(item);
+        yield return builder.EmitDone(item);
+    }
+
+    /// <summary>
+    /// Convenience generator that yields the complete custom tool call output lifecycle.
+    /// Custom tool call outputs have no intermediate events — only <c>output_item.added</c> and
+    /// <c>output_item.done</c>.
+    /// </summary>
+    /// <param name="callId">The call ID of the custom tool call this output is for.</param>
+    /// <param name="output">The output data from the custom tool call.</param>
+    /// <returns>An enumerable of events: <c>output_item.added</c> → <c>output_item.done</c>.</returns>
+    public IEnumerable<ResponseStreamEvent> OutputItemCustomToolCallOutput(string callId, BinaryData output)
+    {
+        var builder = AddOutputItemCustomToolCallOutput();
+        var item = new OutputItemCustomToolCallOutput(callId, output);
+        item.Id = builder.ItemId;
+        yield return builder.EmitAdded(item);
+        yield return builder.EmitDone(item);
+    }
+
+    /// <summary>
+    /// Convenience generator that yields the complete MCP approval request lifecycle.
+    /// MCP approval requests have no intermediate events — only <c>output_item.added</c> and
+    /// <c>output_item.done</c>.
+    /// </summary>
+    /// <param name="serverLabel">The label of the MCP server.</param>
+    /// <param name="name">The name of the tool requiring approval.</param>
+    /// <param name="arguments">The arguments JSON for the tool call.</param>
+    /// <returns>An enumerable of events: <c>output_item.added</c> → <c>output_item.done</c>.</returns>
+    public IEnumerable<ResponseStreamEvent> OutputItemMcpApprovalRequest(
+        string serverLabel,
+        string name,
+        string arguments)
+    {
+        var builder = AddOutputItemMcpApprovalRequest();
+        var item = new OutputItemMcpApprovalRequest(builder.ItemId, serverLabel, name, arguments);
+        yield return builder.EmitAdded(item);
+        yield return builder.EmitDone(item);
+    }
+
+    /// <summary>
+    /// Convenience generator that yields the complete MCP approval response lifecycle.
+    /// MCP approval responses have no intermediate events — only <c>output_item.added</c> and
+    /// <c>output_item.done</c>.
+    /// </summary>
+    /// <param name="approvalRequestId">The ID of the approval request being responded to.</param>
+    /// <param name="approve">Whether the MCP tool call is approved.</param>
+    /// <returns>An enumerable of events: <c>output_item.added</c> → <c>output_item.done</c>.</returns>
+    public IEnumerable<ResponseStreamEvent> OutputItemMcpApprovalResponse(
+        string approvalRequestId,
+        bool approve)
+    {
+        var builder = AddOutputItemMcpApprovalResponse();
+        var item = new OutputItemMcpApprovalResponseResource(builder.ItemId, approvalRequestId, approve);
+        yield return builder.EmitAdded(item);
+        yield return builder.EmitDone(item);
+    }
+
+    /// <summary>
+    /// Convenience generator that yields the complete compaction output-item lifecycle.
+    /// Compaction items have no intermediate events — only <c>output_item.added</c> and
+    /// <c>output_item.done</c>.
+    /// </summary>
+    /// <param name="encryptedContent">The encrypted compaction content.</param>
+    /// <returns>An enumerable of events: <c>output_item.added</c> → <c>output_item.done</c>.</returns>
+    public IEnumerable<ResponseStreamEvent> OutputItemCompaction(string encryptedContent)
+    {
+        var builder = AddOutputItemCompaction();
+        var item = new OutputItemCompactionBody(builder.ItemId, encryptedContent);
+        yield return builder.EmitAdded(item);
+        yield return builder.EmitDone(item);
+    }
+
     // ── Raw Event Interop ─────────────────────────────────────
 
     /// <summary>
