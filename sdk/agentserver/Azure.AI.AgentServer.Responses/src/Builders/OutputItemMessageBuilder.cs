@@ -201,31 +201,31 @@ public class OutputItemMessageBuilder : OutputItemBuilder<OutputItemMessage>
             object builder = _contentBuilders[i];
             if (builder is TextContentBuilder tc)
             {
-                if (tc.FinalText is null)
+                if (!tc.IsDone)
                 {
                     throw new ResponseValidationException(
                     [
-                        new ValidationError($"$.content[{i}]", "Text content must be finalized (EmitTextDone + EmitDone) before message EmitDone().")
+                        new ValidationError($"$.content[{i}]", "Text content builder must complete its full lifecycle (EmitTextDone + EmitDone) before message EmitDone().")
                     ]);
                 }
 
                 completedContents.Add(new MessageContentOutputTextContent(
-                    text: tc.FinalText,
+                    text: tc.FinalText!,
                     annotations: tc.Annotations,
                     logprobs: Array.Empty<LogProb>()));
             }
             else if (builder is RefusalContentBuilder rc)
             {
-                if (rc.FinalRefusal is null)
+                if (!rc.IsDone)
                 {
                     throw new ResponseValidationException(
                     [
-                        new ValidationError($"$.content[{i}]", "Refusal content must be finalized (EmitRefusalDone + EmitDone) before message EmitDone().")
+                        new ValidationError($"$.content[{i}]", "Refusal content builder must complete its full lifecycle (EmitRefusalDone + EmitDone) before message EmitDone().")
                     ]);
                 }
 
                 completedContents.Add(new MessageContentRefusalContent(
-                    refusal: rc.FinalRefusal));
+                    refusal: rc.FinalRefusal!));
             }
         }
 

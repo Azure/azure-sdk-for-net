@@ -50,8 +50,11 @@ public class TextContentBuilder
     /// <summary>The content index assigned to this text content part.</summary>
     public long ContentIndex => _contentIndex;
 
+    /// <summary>Whether this builder has completed its full lifecycle (<see cref="EmitDone"/> called).</summary>
+    internal bool IsDone => _lifecycleState == BuilderLifecycleState.Done;
+
     /// <summary>The annotations emitted via <see cref="EmitAnnotationAdded"/>.</summary>
-    public IReadOnlyList<Annotation> Annotations => _annotations;
+    public IReadOnlyList<Annotation> Annotations => _annotations.AsReadOnly();
 
     /// <summary>
     /// Produces a <c>response.content_part.added</c> event with an empty text content part.
@@ -78,6 +81,11 @@ public class TextContentBuilder
     /// <returns>A <see cref="ResponseTextDeltaEvent"/> with the text delta.</returns>
     public virtual ResponseTextDeltaEvent EmitDelta(string text)
     {
+        if (_lifecycleState != BuilderLifecycleState.Added)
+            throw new InvalidOperationException($"Cannot call EmitDelta — builder is in '{_lifecycleState}' state.");
+        if (_textDone)
+            throw new InvalidOperationException("Cannot emit deltas after EmitTextDone has been called.");
+
         _deltaFragments.Add(text);
         return new ResponseTextDeltaEvent(
             _stream.NextSequenceNumber(), _itemId, _outputIndex, _contentIndex,
@@ -118,6 +126,11 @@ public class TextContentBuilder
     /// <returns>A <see cref="ResponseOutputTextAnnotationAddedEvent"/> with the annotation.</returns>
     public virtual ResponseOutputTextAnnotationAddedEvent EmitAnnotationAdded(Annotation annotation)
     {
+        if (_lifecycleState != BuilderLifecycleState.Added)
+            throw new InvalidOperationException($"Cannot call EmitAnnotationAdded — builder is in '{_lifecycleState}' state.");
+        if (!_textDone)
+            throw new InvalidOperationException("Must call EmitTextDone() before EmitAnnotationAdded().");
+
         _annotations.Add(annotation);
         var annotationIndex = _annotationIndex++;
         return new ResponseOutputTextAnnotationAddedEvent(

@@ -46,6 +46,9 @@ public class RefusalContentBuilder
     /// <summary>The content index assigned to this refusal content part.</summary>
     public long ContentIndex => _contentIndex;
 
+    /// <summary>Whether this builder has completed its full lifecycle (<see cref="EmitDone"/> called).</summary>
+    internal bool IsDone => _lifecycleState == BuilderLifecycleState.Done;
+
     /// <summary>
     /// Produces a <c>response.content_part.added</c> event with an empty refusal content part.
     /// </summary>
@@ -68,6 +71,11 @@ public class RefusalContentBuilder
     /// <returns>A <see cref="ResponseRefusalDeltaEvent"/> with the delta.</returns>
     public virtual ResponseRefusalDeltaEvent EmitDelta(string text)
     {
+        if (_lifecycleState != BuilderLifecycleState.Added)
+            throw new InvalidOperationException($"Cannot call EmitDelta — builder is in '{_lifecycleState}' state.");
+        if (_refusalDone)
+            throw new InvalidOperationException("Cannot emit deltas after EmitRefusalDone has been called.");
+
         return new ResponseRefusalDeltaEvent(
             _stream.NextSequenceNumber(), _itemId, _outputIndex, _contentIndex, text);
     }

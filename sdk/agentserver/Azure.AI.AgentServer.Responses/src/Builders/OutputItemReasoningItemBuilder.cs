@@ -116,11 +116,11 @@ public class OutputItemReasoningItemBuilder : OutputItemBuilder<OutputItemReason
         for (int i = 0; i < _summaryBuilders.Count; i++)
         {
             var builder = _summaryBuilders[i];
-            if (builder.FinalText is null)
+            if (!builder.IsDone)
             {
                 throw new ResponseValidationException(
                 [
-                    new ValidationError($"$.summary[{i}]", "Summary part must be finalized (EmitTextDone + EmitDone) before reasoning EmitDone().")
+                    new ValidationError($"$.summary[{i}]", "Summary part builder must complete its full lifecycle (EmitTextDone + EmitDone) before reasoning EmitDone().")
                 ]);
             }
 

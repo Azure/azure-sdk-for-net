@@ -97,6 +97,7 @@ public class TextContentBuilderTests
     {
         var (_, msg) = CreateMessageScope();
         var text = msg.AddTextContent();
+        text.EmitAdded();
 
         var evt = text.EmitDelta("Hello, ");
 
@@ -109,6 +110,7 @@ public class TextContentBuilderTests
     {
         var (_, msg) = CreateMessageScope();
         var text = msg.AddTextContent();
+        text.EmitAdded();
 
         var evt = text.EmitDelta("chunk");
 
@@ -122,6 +124,7 @@ public class TextContentBuilderTests
     {
         var (_, msg) = CreateMessageScope();
         var text = msg.AddTextContent();
+        text.EmitAdded();
 
         var d1 = text.EmitDelta("Hello, ");
         var d2 = text.EmitDelta("world!");

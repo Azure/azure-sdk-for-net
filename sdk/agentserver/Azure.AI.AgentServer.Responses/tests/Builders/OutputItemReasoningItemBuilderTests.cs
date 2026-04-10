@@ -159,10 +159,12 @@ public class OutputItemReasoningItemBuilderTests
         var s0 = builder.AddSummaryPart();
         s0.EmitAdded();
         s0.EmitTextDone("First summary");
+        s0.EmitDone();
 
         var s1 = builder.AddSummaryPart();
         s1.EmitAdded();
         s1.EmitTextDone("Second summary");
+        s1.EmitDone();
 
         var evt = builder.EmitDone();
         var item = XAssert.IsType<OutputItemReasoningItem>(evt.Item);

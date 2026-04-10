@@ -84,6 +84,7 @@ public class RefusalContentBuilderTests
     {
         var (_, msg) = CreateMessageScope();
         var refusal = msg.AddRefusalContent();
+        refusal.EmitAdded();
         var evt = refusal.EmitDelta("I can't ");
         XAssert.IsType<ResponseRefusalDeltaEvent>(evt);
         Assert.That(evt.Delta, Is.EqualTo("I can't "));
@@ -94,6 +95,7 @@ public class RefusalContentBuilderTests
     {
         var (_, msg) = CreateMessageScope();
         var refusal = msg.AddRefusalContent();
+        refusal.EmitAdded();
         var evt = refusal.EmitDelta("chunk");
         Assert.That(evt.ItemId, Is.EqualTo(msg.ItemId));
         Assert.That(evt.OutputIndex, Is.EqualTo(msg.OutputIndex));
@@ -105,6 +107,7 @@ public class RefusalContentBuilderTests
     {
         var (_, msg) = CreateMessageScope();
         var refusal = msg.AddRefusalContent();
+        refusal.EmitAdded();
         var d1 = refusal.EmitDelta("I can't ");
         var d2 = refusal.EmitDelta("help with that.");
         Assert.That(d1.Delta, Is.EqualTo("I can't "));
