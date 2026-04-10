@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            IReadOnlyList<RoutePolicyData> value = default;
+            IReadOnlyList<NetworkFabricRoutePolicyData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<RoutePolicyData> array = new List<RoutePolicyData>();
+                    List<NetworkFabricRoutePolicyData> array = new List<NetworkFabricRoutePolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RoutePolicyData.DeserializeRoutePolicyData(item, options));
+                        array.Add(NetworkFabricRoutePolicyData.DeserializeNetworkFabricRoutePolicyData(item, options));
                     }
                     value = array;
                     continue;

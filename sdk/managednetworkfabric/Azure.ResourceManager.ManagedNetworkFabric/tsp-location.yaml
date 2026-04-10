@@ -1,6 +1,0 @@
-directory: specification/managednetworkfabric/ManagedNetworkFabric.ResourceManager.Management
-commit: 1a3542f46375ced453982cf69f035d9a9a3924d5
-repo: Azure/azure-rest-api-specs
-additionalDirectories: 
-
-emitterPackageJsonPath: eng/legacy-emitter-package.json

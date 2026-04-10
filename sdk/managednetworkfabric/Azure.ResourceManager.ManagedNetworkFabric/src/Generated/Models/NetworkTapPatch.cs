@@ -22,21 +22,25 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of <see cref="NetworkTapPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="pollingType"> Polling type. </param>
         /// <param name="destinations"> List of destination properties to send the filter traffic. </param>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        internal NetworkTapPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, PollingType? pollingType, IList<DestinationPatchProperties> destinations, ManagedServiceIdentityPatch identity) : base(tags, serializedAdditionalRawData)
+        internal NetworkTapPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ManagedServiceIdentityPatch identity, string annotation, NetworkTapPollingType? pollingType, IList<DestinationPatchProperties> destinations) : base(tags, serializedAdditionalRawData)
         {
+            Identity = identity;
+            Annotation = annotation;
             PollingType = pollingType;
             Destinations = destinations;
-            Identity = identity;
         }
 
-        /// <summary> Polling type. </summary>
-        public PollingType? PollingType { get; set; }
-        /// <summary> List of destination properties to send the filter traffic. </summary>
-        public IList<DestinationPatchProperties> Destinations { get; }
         /// <summary> The managed service identities assigned to this resource. </summary>
         public ManagedServiceIdentityPatch Identity { get; set; }
+        /// <summary> Switch configuration description. </summary>
+        public string Annotation { get; set; }
+        /// <summary> Polling type. </summary>
+        public NetworkTapPollingType? PollingType { get; set; }
+        /// <summary> List of destination properties to send the filter traffic. </summary>
+        public IList<DestinationPatchProperties> Destinations { get; }
     }
 }

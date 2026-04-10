@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="ipv6Routes"> List of IPv6 Routes. </param>
         /// <param name="extension"> Extension. Example: NoExtension | NPB. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StaticRouteConfiguration(BfdConfiguration bfdConfiguration, IList<StaticRouteProperties> ipv4Routes, IList<StaticRouteProperties> ipv6Routes, Extension? extension, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StaticRouteConfiguration(BfdConfiguration bfdConfiguration, IList<StaticRouteProperties> ipv4Routes, IList<StaticRouteProperties> ipv6Routes, StaticRouteConfigurationExtension? extension, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             BfdConfiguration = bfdConfiguration;
             IPv4Routes = ipv4Routes;
@@ -74,6 +74,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> List of IPv6 Routes. </summary>
         public IList<StaticRouteProperties> IPv6Routes { get; }
         /// <summary> Extension. Example: NoExtension | NPB. </summary>
-        public Extension? Extension { get; set; }
+        public StaticRouteConfigurationExtension? Extension { get; set; }
     }
 }

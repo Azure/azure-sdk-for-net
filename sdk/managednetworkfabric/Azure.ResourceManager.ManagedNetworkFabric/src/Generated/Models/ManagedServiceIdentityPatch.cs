@@ -53,18 +53,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedServiceIdentityPatch"/>. </summary>
-        /// <param name="type"> The type of managed identity assigned to this resource. </param>
+        /// <param name="identityType"> The type of managed identity assigned to this resource. </param>
         /// <param name="userAssignedIdentities"> The identities assigned to this resource by the user. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedServiceIdentityPatch(ManagedServiceIdentityType? type, IDictionary<string, UserAssignedIdentity> userAssignedIdentities, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ManagedServiceIdentityPatch(ManagedServiceIdentityType? identityType, IDictionary<string, UserAssignedIdentity> userAssignedIdentities, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Type = type;
+            IdentityType = identityType;
             UserAssignedIdentities = userAssignedIdentities;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The type of managed identity assigned to this resource. </summary>
-        public ManagedServiceIdentityType? Type { get; set; }
+        public ManagedServiceIdentityType? IdentityType { get; set; }
         /// <summary> The identities assigned to this resource by the user. </summary>
         public IDictionary<string, UserAssignedIdentity> UserAssignedIdentities { get; }
     }

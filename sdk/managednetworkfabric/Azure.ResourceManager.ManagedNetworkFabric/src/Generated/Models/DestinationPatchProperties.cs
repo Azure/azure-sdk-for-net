@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="isolationDomainProperties"> Isolation Domain Properties. </param>
         /// <param name="destinationTapRuleId"> ARM Resource ID of destination Tap Rule that contains match configurations. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DestinationPatchProperties(string name, DestinationType? destinationType, ResourceIdentifier destinationId, IsolationDomainPatchProperties isolationDomainProperties, ResourceIdentifier destinationTapRuleId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DestinationPatchProperties(string name, NetworkTapDestinationType? destinationType, ResourceIdentifier destinationId, IsolationDomainPatchProperties isolationDomainProperties, ResourceIdentifier destinationTapRuleId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             DestinationType = destinationType;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Destination name. </summary>
         public string Name { get; set; }
         /// <summary> Type of destination. Input can be IsolationDomain or Direct. </summary>
-        public DestinationType? DestinationType { get; set; }
+        public NetworkTapDestinationType? DestinationType { get; set; }
         /// <summary> The destination Id. ARM Resource ID of either NNI or Internal Networks. </summary>
         public ResourceIdentifier DestinationId { get; set; }
         /// <summary> Isolation Domain Properties. </summary>

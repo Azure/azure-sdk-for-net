@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricSkuData"/>. </summary>
-        internal NetworkFabricSkuData()
+        public NetworkFabricSkuData()
         {
             SupportedVersions = new ChangeTrackingList<string>();
         }
@@ -62,16 +62,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="type"> Type of Network Fabric SKU. </param>
+        /// <param name="typePropertiesType"> Type of Network Fabric SKU. </param>
         /// <param name="maxComputeRacks"> Maximum number of compute racks available for this Network Fabric SKU. The value of max count racks is 4 for 4 rack SKU and 8 for 8 rack SKU. </param>
         /// <param name="maximumServerCount"> Maximum number of servers available for this Network Fabric SKU. </param>
         /// <param name="supportedVersions"> List of supported Network Fabric SKU versions. </param>
         /// <param name="details"> URL providing detailed configuration of the fabric SKU. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkFabricSkuData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, FabricSkuType? type, int? maxComputeRacks, int? maximumServerCount, IReadOnlyList<string> supportedVersions, string details, ProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal NetworkFabricSkuData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NetworkFabricSkuType? typePropertiesType, int? maxComputeRacks, int? maximumServerCount, IReadOnlyList<string> supportedVersions, string details, NetworkFabricProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            Type = type;
+            TypePropertiesType = typePropertiesType;
             MaxComputeRacks = maxComputeRacks;
             MaximumServerCount = maximumServerCount;
             SupportedVersions = supportedVersions;
@@ -81,16 +81,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary> Type of Network Fabric SKU. </summary>
-        public FabricSkuType? Type { get; }
+        public NetworkFabricSkuType? TypePropertiesType { get; }
         /// <summary> Maximum number of compute racks available for this Network Fabric SKU. The value of max count racks is 4 for 4 rack SKU and 8 for 8 rack SKU. </summary>
-        public int? MaxComputeRacks { get; }
+        public int? MaxComputeRacks { get; set; }
         /// <summary> Maximum number of servers available for this Network Fabric SKU. </summary>
-        public int? MaximumServerCount { get; }
+        public int? MaximumServerCount { get; set; }
         /// <summary> List of supported Network Fabric SKU versions. </summary>
         public IReadOnlyList<string> SupportedVersions { get; }
         /// <summary> URL providing detailed configuration of the fabric SKU. </summary>
         public string Details { get; }
         /// <summary> Provisioning state of the resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkFabricProvisioningState? ProvisioningState { get; }
     }
 }

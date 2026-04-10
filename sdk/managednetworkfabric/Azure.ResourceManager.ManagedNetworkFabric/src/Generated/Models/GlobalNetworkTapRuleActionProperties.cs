@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="enableCount"> Configuration to enable network tap rule counter. </param>
         /// <param name="truncate"> Truncate. 0 indicates do not truncate. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GlobalNetworkTapRuleActionProperties(BooleanEnumProperty? enableCount, string truncate, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GlobalNetworkTapRuleActionProperties(NetworkFabricBooleanValue? enableCount, string truncate, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EnableCount = enableCount;
             Truncate = truncate;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Configuration to enable network tap rule counter. </summary>
-        public BooleanEnumProperty? EnableCount { get; set; }
+        public NetworkFabricBooleanValue? EnableCount { get; set; }
         /// <summary> Truncate. 0 indicates do not truncate. </summary>
         public string Truncate { get; set; }
     }

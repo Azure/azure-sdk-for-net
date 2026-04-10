@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="ports"> List of the Ports that need to be matched. </param>
         /// <param name="portGroupNames"> List of the port Group Names that need to be matched. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PortConditionPatch(PortType? portType, Layer4Protocol? layer4Protocol, IList<string> ports, IList<string> portGroupNames, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PortConditionPatch(NetworkFabricPortType? portType, Layer4Protocol? layer4Protocol, IList<string> ports, IList<string> portGroupNames, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PortType = portType;
             Layer4Protocol = layer4Protocol;
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Port type that needs to be matched. </summary>
-        public PortType? PortType { get; set; }
+        public NetworkFabricPortType? PortType { get; set; }
         /// <summary> Layer4 protocol type that needs to be matched. </summary>
         public Layer4Protocol? Layer4Protocol { get; set; }
         /// <summary> List of the Ports that need to be matched. </summary>

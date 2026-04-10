@@ -158,8 +158,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             IReadOnlyList<ResourceIdentifier> networkTapIds = default;
             IReadOnlyList<ResourceIdentifier> neighborGroupIds = default;
             LastOperationProperties lastOperation = default;
-            ProvisioningState? provisioningState = default;
-            ConfigurationState? configurationState = default;
+            NetworkFabricProvisioningState? provisioningState = default;
+            NetworkFabricConfigurationState? configurationState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new NetworkFabricProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("configurationState"u8))
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            configurationState = new ConfigurationState(property0.Value.GetString());
+                            configurationState = new NetworkFabricConfigurationState(property0.Value.GetString());
                             continue;
                         }
                     }
@@ -357,6 +357,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
+                identity,
                 networkFabricId,
                 networkDeviceIds ?? new ChangeTrackingList<ResourceIdentifier>(),
                 sourceInterfaceIds ?? new ChangeTrackingList<ResourceIdentifier>(),
@@ -365,7 +366,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 lastOperation,
                 provisioningState,
                 configurationState,
-                identity,
                 serializedAdditionalRawData);
         }
 

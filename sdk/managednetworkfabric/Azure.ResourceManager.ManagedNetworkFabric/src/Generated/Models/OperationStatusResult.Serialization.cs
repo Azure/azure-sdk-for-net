@@ -40,6 +40,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
+            if (options.Format != "W" && Optional.IsDefined(ResourceId))
+            {
+                writer.WritePropertyName("resourceId"u8);
+                writer.WriteStringValue(ResourceId);
+            }
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
@@ -76,11 +81,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 writer.WritePropertyName("error"u8);
                 ((IJsonModel<ResponseError>)Error).Write(writer, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ResourceId))
-            {
-                writer.WritePropertyName("resourceId"u8);
-                writer.WriteStringValue(ResourceId);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -120,14 +120,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 return null;
             }
             ResourceIdentifier id = default;
+            ResourceIdentifier resourceId = default;
             string name = default;
             string status = default;
-            double? percentComplete = default;
+            float? percentComplete = default;
             DateTimeOffset? startTime = default;
             DateTimeOffset? endTime = default;
             IReadOnlyList<OperationStatusResult> operations = default;
             ResponseError error = default;
-            ResourceIdentifier resourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -139,6 +139,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                         continue;
                     }
                     id = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("resourceId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -157,7 +166,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    percentComplete = property.Value.GetDouble();
+                    percentComplete = property.Value.GetSingle();
                     continue;
                 }
                 if (property.NameEquals("startTime"u8))
@@ -201,15 +210,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     error = ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerManagedNetworkFabricContext.Default);
                     continue;
                 }
-                if (property.NameEquals("resourceId"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    resourceId = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -218,6 +218,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             serializedAdditionalRawData = rawDataDictionary;
             return new OperationStatusResult(
                 id,
+                resourceId,
                 name,
                 status,
                 percentComplete,
@@ -225,7 +226,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 endTime,
                 operations ?? new ChangeTrackingList<OperationStatusResult>(),
                 error,
-                resourceId,
                 serializedAdditionalRawData);
         }
 

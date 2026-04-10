@@ -148,10 +148,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new NetworkBootstrapDevicePatch(
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData,
+                identity,
                 annotation,
                 hostName,
-                serialNumber,
-                identity);
+                serialNumber);
         }
 
         BinaryData IPersistableModel<NetworkBootstrapDevicePatch>.Write(ModelReaderWriterOptions options)

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("commitBatchId"u8);
                 writer.WriteStringValue(CommitBatchId);
             }
-            if (Optional.IsDefined(CommitBatchState))
+            if (options.Format != "W" && Optional.IsDefined(CommitBatchState))
             {
                 writer.WritePropertyName("commitBatchState"u8);
                 writer.WriteStringValue(CommitBatchState.Value.ToString());

@@ -53,13 +53,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of <see cref="GlobalAccessControlListActionProperties"/>. </summary>
         /// <param name="enableCount"> Configuration to enable or disable ACL action count. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GlobalAccessControlListActionProperties(BooleanEnumProperty? enableCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GlobalAccessControlListActionProperties(NetworkFabricBooleanValue? enableCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EnableCount = enableCount;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Configuration to enable or disable ACL action count. </summary>
-        public BooleanEnumProperty? EnableCount { get; set; }
+        public NetworkFabricBooleanValue? EnableCount { get; set; }
     }
 }

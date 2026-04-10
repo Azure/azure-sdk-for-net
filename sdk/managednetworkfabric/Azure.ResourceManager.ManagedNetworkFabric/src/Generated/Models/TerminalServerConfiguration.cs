@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -76,7 +77,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="networkDeviceId"> ARM Resource ID used for the NetworkDevice. </param>
         /// <param name="secretRotationStatus"> Secret rotation status for the terminal server's secrets. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TerminalServerConfiguration(string username, string password, string serialNumber, string primaryIPv4Prefix, string primaryIPv6Prefix, string secondaryIPv4Prefix, string secondaryIPv6Prefix, string networkDeviceId, IReadOnlyList<SecretRotationStatus> secretRotationStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TerminalServerConfiguration(string username, string password, string serialNumber, string primaryIPv4Prefix, string primaryIPv6Prefix, string secondaryIPv4Prefix, string secondaryIPv6Prefix, ResourceIdentifier networkDeviceId, IReadOnlyList<SecretRotationStatus> secretRotationStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Username = username;
             Password = password;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Secondary IPv6 Address Prefix. </summary>
         public string SecondaryIPv6Prefix { get; set; }
         /// <summary> ARM Resource ID used for the NetworkDevice. </summary>
-        public string NetworkDeviceId { get; }
+        public ResourceIdentifier NetworkDeviceId { get; }
         /// <summary> Secret rotation status for the terminal server's secrets. </summary>
         public IReadOnlyList<SecretRotationStatus> SecretRotationStatus { get; }
     }

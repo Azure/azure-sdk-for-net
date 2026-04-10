@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="configurationState"> Gets the configuration state. </param>
         /// <param name="outputUri"> Predefined link containing Device Rw Command output. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkDeviceRwCommandResponseProperties(ConfigurationState? configurationState, Uri outputUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetworkDeviceRwCommandResponseProperties(NetworkFabricConfigurationState? configurationState, Uri outputUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ConfigurationState = configurationState;
             OutputUri = outputUri;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Gets the configuration state. </summary>
-        public ConfigurationState? ConfigurationState { get; }
+        public NetworkFabricConfigurationState? ConfigurationState { get; }
         /// <summary> Predefined link containing Device Rw Command output. </summary>
         public Uri OutputUri { get; }
     }

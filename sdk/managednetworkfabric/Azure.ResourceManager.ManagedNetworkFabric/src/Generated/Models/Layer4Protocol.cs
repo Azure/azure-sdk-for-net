@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string TCPValue = "TCP";
-        private const string UDPValue = "UDP";
-        private const string SCTPValue = "SCTP";
+        private const string TcpValue = "TCP";
+        private const string UdpValue = "UDP";
+        private const string SctpValue = "SCTP";
 
         /// <summary> TCP(Transmission Control Protocol) Protocol. </summary>
-        public static Layer4Protocol TCP { get; } = new Layer4Protocol(TCPValue);
+        public static Layer4Protocol Tcp { get; } = new Layer4Protocol(TcpValue);
         /// <summary> UDP(User Datagram Protocol) Protocol. </summary>
-        public static Layer4Protocol UDP { get; } = new Layer4Protocol(UDPValue);
+        public static Layer4Protocol Udp { get; } = new Layer4Protocol(UdpValue);
         /// <summary> SCTP(Streaming Control Transmission Protocol) Protocol. </summary>
-        public static Layer4Protocol SCTP { get; } = new Layer4Protocol(SCTPValue);
+        public static Layer4Protocol Sctp { get; } = new Layer4Protocol(SctpValue);
         /// <summary> Determines if two <see cref="Layer4Protocol"/> values are the same. </summary>
         public static bool operator ==(Layer4Protocol left, Layer4Protocol right) => left.Equals(right);
         /// <summary> Determines if two <see cref="Layer4Protocol"/> values are not the same. </summary>

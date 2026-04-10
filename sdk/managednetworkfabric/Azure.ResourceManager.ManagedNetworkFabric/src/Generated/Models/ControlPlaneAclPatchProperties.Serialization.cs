@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            IPAddressType? ipAddressType = default;
+            NetworkFabricIPAddressType? ipAddressType = default;
             IList<ControlPlaneAclMatchConfigurationPatchProperties> matchConfigurations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    ipAddressType = new IPAddressType(property.Value.GetString());
+                    ipAddressType = new NetworkFabricIPAddressType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("matchConfigurations"u8))

@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="ipAddressType"> IP Address Type. IPv4 or IPv6. </param>
         /// <param name="matchConfigurations"> Access Control List (ACL) match configurations. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ControlPlaneAclPatchProperties(IPAddressType? ipAddressType, IList<ControlPlaneAclMatchConfigurationPatchProperties> matchConfigurations, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ControlPlaneAclPatchProperties(NetworkFabricIPAddressType? ipAddressType, IList<ControlPlaneAclMatchConfigurationPatchProperties> matchConfigurations, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IPAddressType = ipAddressType;
             MatchConfigurations = matchConfigurations;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> IP Address Type. IPv4 or IPv6. </summary>
-        public IPAddressType? IPAddressType { get; set; }
+        public NetworkFabricIPAddressType? IPAddressType { get; set; }
         /// <summary> Access Control List (ACL) match configurations. </summary>
         public IList<ControlPlaneAclMatchConfigurationPatchProperties> MatchConfigurations { get; }
     }

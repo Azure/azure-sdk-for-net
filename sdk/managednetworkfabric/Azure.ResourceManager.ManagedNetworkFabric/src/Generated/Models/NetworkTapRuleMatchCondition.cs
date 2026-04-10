@@ -25,15 +25,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="encapsulationType"> Encapsulation Type that needs to be matched. </param>
         /// <param name="portCondition"> Defines the port condition that needs to be matched. </param>
-        internal NetworkTapRuleMatchCondition(IList<string> protocolTypes, VlanMatchCondition vlanMatchCondition, IPMatchCondition ipCondition, IDictionary<string, BinaryData> serializedAdditionalRawData, EncapsulationType? encapsulationType, PortCondition portCondition) : base(protocolTypes, vlanMatchCondition, ipCondition, serializedAdditionalRawData)
+        internal NetworkTapRuleMatchCondition(IList<string> protocolTypes, VlanMatchCondition vlanMatchCondition, IPMatchCondition ipCondition, IDictionary<string, BinaryData> serializedAdditionalRawData, NetworkTapEncapsulationType? encapsulationType, NetworkFabricPortCondition portCondition) : base(protocolTypes, vlanMatchCondition, ipCondition, serializedAdditionalRawData)
         {
             EncapsulationType = encapsulationType;
             PortCondition = portCondition;
         }
 
         /// <summary> Encapsulation Type that needs to be matched. </summary>
-        public EncapsulationType? EncapsulationType { get; set; }
+        public NetworkTapEncapsulationType? EncapsulationType { get; set; }
         /// <summary> Defines the port condition that needs to be matched. </summary>
-        public PortCondition PortCondition { get; set; }
+        public NetworkFabricPortCondition PortCondition { get; set; }
     }
 }

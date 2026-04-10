@@ -67,10 +67,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("ipv6Prefix"u8);
                 writer.WriteStringValue(IPv6Prefix);
             }
-            if (Optional.IsDefined(FabricASN))
+            if (Optional.IsDefined(FabricAsn))
             {
                 writer.WritePropertyName("fabricASN"u8);
-                writer.WriteNumberValue(FabricASN.Value);
+                writer.WriteNumberValue(FabricAsn.Value);
             }
             if (Optional.IsDefined(TerminalServerConfiguration))
             {
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             int? serverCountPerRack = default;
             string ipv4Prefix = default;
             string ipv6Prefix = default;
-            long? fabricASN = default;
+            long? fabricAsn = default;
             TerminalServerPatchConfiguration terminalServerConfiguration = default;
             ManagementNetworkPatchConfiguration managementNetworkConfiguration = default;
             StorageAccountPatchConfiguration storageAccountConfiguration = default;
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             {
                                 continue;
                             }
-                            fabricASN = property0.Value.GetInt64();
+                            fabricAsn = property0.Value.GetInt64();
                             continue;
                         }
                         if (property0.NameEquals("terminalServerConfiguration"u8))
@@ -397,12 +397,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new NetworkFabricPatch(
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData,
+                identity,
                 annotation,
                 rackCount,
                 serverCountPerRack,
                 ipv4Prefix,
                 ipv6Prefix,
-                fabricASN,
+                fabricAsn,
                 terminalServerConfiguration,
                 managementNetworkConfiguration,
                 storageAccountConfiguration,
@@ -412,8 +413,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 uniqueRdConfiguration,
                 qosConfiguration,
                 featureFlags ?? new ChangeTrackingList<FeatureFlagProperties>(),
-                authorizedTransceiver,
-                identity);
+                authorizedTransceiver);
         }
 
         BinaryData IPersistableModel<NetworkFabricPatch>.Write(ModelReaderWriterOptions options)

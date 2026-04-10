@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="administrativeState"> Administrative state of the resource. </param>
         /// <param name="configurationState"> Configuration state of the resource. </param>
@@ -73,8 +74,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="ipv6Address"> IPv6Address of the interface. </param>
         /// <param name="serialNumber"> Serial number of the interface. Format of serial Number - Make;Model;HardwareRevisionId;SerialNumber. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkBootstrapInterfaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ProvisioningState? provisioningState, AdministrativeState? administrativeState, ConfigurationState? configurationState, string physicalIdentifier, string connectedTo, InterfaceType? interfaceType, string description, string additionalDescription, string ipv4Address, string ipv6Address, string serialNumber, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal NetworkBootstrapInterfaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string annotation, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, NetworkFabricConfigurationState? configurationState, string physicalIdentifier, string connectedTo, NetworkDeviceInterfaceType? interfaceType, string description, string additionalDescription, string ipv4Address, string ipv6Address, string serialNumber, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            Annotation = annotation;
             ProvisioningState = provisioningState;
             AdministrativeState = administrativeState;
             ConfigurationState = configurationState;
@@ -89,18 +91,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Switch configuration description. </summary>
+        public string Annotation { get; set; }
         /// <summary> Provisioning state of the resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkFabricProvisioningState? ProvisioningState { get; }
         /// <summary> Administrative state of the resource. </summary>
-        public AdministrativeState? AdministrativeState { get; }
+        public NetworkFabricAdministrativeState? AdministrativeState { get; }
         /// <summary> Configuration state of the resource. </summary>
-        public ConfigurationState? ConfigurationState { get; }
+        public NetworkFabricConfigurationState? ConfigurationState { get; }
         /// <summary> Physical identifier of the device. </summary>
         public string PhysicalIdentifier { get; }
         /// <summary> Connected to information of the device. </summary>
         public string ConnectedTo { get; }
         /// <summary> Type of the interface. </summary>
-        public InterfaceType? InterfaceType { get; }
+        public NetworkDeviceInterfaceType? InterfaceType { get; }
         /// <summary> Description of the interface. </summary>
         public string Description { get; }
         /// <summary> Additional description of the interface. </summary>

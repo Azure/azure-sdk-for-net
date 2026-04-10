@@ -40,6 +40,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (Optional.IsDefined(Annotation))
+            {
+                writer.WritePropertyName("annotation"u8);
+                writer.WriteStringValue(Annotation);
+            }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -122,12 +127,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            ProvisioningState? provisioningState = default;
-            AdministrativeState? administrativeState = default;
-            ConfigurationState? configurationState = default;
+            string annotation = default;
+            NetworkFabricProvisioningState? provisioningState = default;
+            NetworkFabricAdministrativeState? administrativeState = default;
+            NetworkFabricConfigurationState? configurationState = default;
             string physicalIdentifier = default;
             string connectedTo = default;
-            InterfaceType? interfaceType = default;
+            NetworkDeviceInterfaceType? interfaceType = default;
             string description = default;
             string additionalDescription = default;
             string ipv4Address = default;
@@ -170,13 +176,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
+                        if (property0.NameEquals("annotation"u8))
+                        {
+                            annotation = property0.Value.GetString();
+                            continue;
+                        }
                         if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new NetworkFabricProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("administrativeState"u8))
@@ -185,7 +196,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            administrativeState = new AdministrativeState(property0.Value.GetString());
+                            administrativeState = new NetworkFabricAdministrativeState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("configurationState"u8))
@@ -194,7 +205,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            configurationState = new ConfigurationState(property0.Value.GetString());
+                            configurationState = new NetworkFabricConfigurationState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("physicalIdentifier"u8))
@@ -213,7 +224,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            interfaceType = new InterfaceType(property0.Value.GetString());
+                            interfaceType = new NetworkDeviceInterfaceType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("description"u8))
@@ -255,6 +266,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 name,
                 type,
                 systemData,
+                annotation,
                 provisioningState,
                 administrativeState,
                 configurationState,

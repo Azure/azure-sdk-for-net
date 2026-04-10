@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Net;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
@@ -85,7 +86,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             if (options.Format != "W" && Optional.IsDefined(ManagementIPv4Address))
             {
                 writer.WritePropertyName("managementIpv4Address"u8);
-                writer.WriteStringValue(ManagementIPv4Address);
+                writer.WriteStringValue(ManagementIPv4Address.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(ManagementIPv6Address))
             {
@@ -179,14 +180,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             string version = default;
             string networkDeviceSku = default;
             NetworkDeviceRole? networkDeviceRole = default;
-            string networkRackId = default;
-            string managementIPv4Address = default;
+            ResourceIdentifier networkRackId = default;
+            IPAddress managementIPv4Address = default;
             string managementIPv6Address = default;
             string rwDeviceConfig = default;
             LastOperationProperties lastOperation = default;
-            ConfigurationState? configurationState = default;
-            ProvisioningState? provisioningState = default;
-            AdministrativeState? administrativeState = default;
+            NetworkFabricConfigurationState? configurationState = default;
+            NetworkFabricProvisioningState? provisioningState = default;
+            NetworkFabricAdministrativeState? administrativeState = default;
             IReadOnlyList<SecretRotationStatus> secretRotationStatus = default;
             IReadOnlyList<CertificateRotationStatus> certificateRotationStatus = default;
             ResourceIdentifier networkFabricId = default;
@@ -300,12 +301,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                         }
                         if (property0.NameEquals("networkRackId"u8))
                         {
-                            networkRackId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            networkRackId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("managementIpv4Address"u8))
                         {
-                            managementIPv4Address = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            managementIPv4Address = IPAddress.Parse(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("managementIpv6Address"u8))
@@ -333,7 +342,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            configurationState = new ConfigurationState(property0.Value.GetString());
+                            configurationState = new NetworkFabricConfigurationState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -342,7 +351,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new NetworkFabricProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("administrativeState"u8))
@@ -351,7 +360,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            administrativeState = new AdministrativeState(property0.Value.GetString());
+                            administrativeState = new NetworkFabricAdministrativeState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("secretRotationStatus"u8))
@@ -407,6 +416,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
+                identity,
                 annotation,
                 hostName,
                 serialNumber,
@@ -425,7 +435,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 secretRotationStatus ?? new ChangeTrackingList<SecretRotationStatus>(),
                 certificateRotationStatus ?? new ChangeTrackingList<CertificateRotationStatus>(),
                 networkFabricId,
-                identity,
                 serializedAdditionalRawData);
         }
 

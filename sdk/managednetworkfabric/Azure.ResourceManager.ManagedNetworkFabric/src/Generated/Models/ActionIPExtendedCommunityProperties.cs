@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -66,7 +67,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> List of IP Extended Community IDs. </summary>
         internal IPExtendedCommunityIdList Add { get; set; }
         /// <summary> List of IP Extended Community resource IDs. </summary>
-        public IList<string> AddIPExtendedCommunityIds
+        public IList<ResourceIdentifier> AddIPExtendedCommunityIds
         {
             get
             {
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> List of IP Extended Community IDs. </summary>
         internal IPExtendedCommunityIdList Delete { get; set; }
         /// <summary> List of IP Extended Community resource IDs. </summary>
-        public IList<string> DeleteIPExtendedCommunityIds
+        public IList<ResourceIdentifier> DeleteIPExtendedCommunityIds
         {
             get
             {
@@ -92,7 +93,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> List of IP Extended Community IDs. </summary>
         internal IPExtendedCommunityIdList Set { get; set; }
         /// <summary> List of IP Extended Community resource IDs. </summary>
-        public IList<string> SetIPExtendedCommunityIds
+        public IList<ResourceIdentifier> SetIPExtendedCommunityIds
         {
             get
             {

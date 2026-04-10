@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            ConfigurationState? configurationState = default;
+            NetworkFabricConfigurationState? configurationState = default;
             Uri outputUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    configurationState = new ConfigurationState(property.Value.GetString());
+                    configurationState = new NetworkFabricConfigurationState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("outputUrl"u8))

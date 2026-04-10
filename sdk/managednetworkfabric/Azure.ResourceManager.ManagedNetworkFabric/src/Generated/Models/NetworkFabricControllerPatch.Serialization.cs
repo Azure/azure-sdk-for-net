@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NetworkFabricControllerPatch(tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, infrastructureExpressRouteConnections ?? new ChangeTrackingList<ExpressRouteConnectionInformation>(), workloadExpressRouteConnections ?? new ChangeTrackingList<ExpressRouteConnectionInformation>(), identity);
+            return new NetworkFabricControllerPatch(tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, identity, infrastructureExpressRouteConnections ?? new ChangeTrackingList<ExpressRouteConnectionInformation>(), workloadExpressRouteConnections ?? new ChangeTrackingList<ExpressRouteConnectionInformation>());
         }
 
         BinaryData IPersistableModel<NetworkFabricControllerPatch>.Write(ModelReaderWriterOptions options)

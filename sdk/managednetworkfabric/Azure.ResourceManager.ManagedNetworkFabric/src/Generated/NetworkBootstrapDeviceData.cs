@@ -64,6 +64,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="hostName"> The host name of the device. </param>
         /// <param name="serialNumber"> Serial number of the device. Format of serial Number - Make;Model;HardwareRevisionId;SerialNumber. </param>
@@ -78,10 +79,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="primaryManagementIPv4Address"> Primary Management IPv4 Address. </param>
         /// <param name="administrativeState"> Administrative state of the resource. </param>
         /// <param name="configurationState"> Configuration state of the resource. </param>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkBootstrapDeviceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, string hostName, string serialNumber, string version, string networkDeviceSku, ResourceIdentifier networkFabricId, string secondaryManagementIPv4Address, string dhcpV4ServerIPAddress, string primaryManagementIPv6Address, string secondaryManagementIPv6Address, ProvisioningState? provisioningState, string primaryManagementIPv4Address, AdministrativeState? administrativeState, ConfigurationState? configurationState, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkBootstrapDeviceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string annotation, string hostName, string serialNumber, string version, string networkDeviceSku, ResourceIdentifier networkFabricId, string secondaryManagementIPv4Address, string dhcpV4ServerIPAddress, string primaryManagementIPv6Address, string secondaryManagementIPv6Address, NetworkFabricProvisioningState? provisioningState, string primaryManagementIPv4Address, NetworkFabricAdministrativeState? administrativeState, NetworkFabricConfigurationState? configurationState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
+            Identity = identity;
             Annotation = annotation;
             HostName = hostName;
             SerialNumber = serialNumber;
@@ -96,7 +97,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             PrimaryManagementIPv4Address = primaryManagementIPv4Address;
             AdministrativeState = administrativeState;
             ConfigurationState = configurationState;
-            Identity = identity;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -105,6 +105,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
         }
 
+        /// <summary> The managed service identities assigned to this resource. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Switch configuration description. </summary>
         public string Annotation { get; set; }
         /// <summary> The host name of the device. </summary>
@@ -126,14 +128,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <summary> Secondary Management IPv6 Address. </summary>
         public string SecondaryManagementIPv6Address { get; }
         /// <summary> Provisioning state of the resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkFabricProvisioningState? ProvisioningState { get; }
         /// <summary> Primary Management IPv4 Address. </summary>
         public string PrimaryManagementIPv4Address { get; }
         /// <summary> Administrative state of the resource. </summary>
-        public AdministrativeState? AdministrativeState { get; }
+        public NetworkFabricAdministrativeState? AdministrativeState { get; }
         /// <summary> Configuration state of the resource. </summary>
-        public ConfigurationState? ConfigurationState { get; }
-        /// <summary> The managed service identities assigned to this resource. </summary>
-        public ManagedServiceIdentity Identity { get; set; }
+        public NetworkFabricConfigurationState? ConfigurationState { get; }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
 using Azure.ResourceManager.Models;
@@ -71,6 +72,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="hostName"> The host name of the device. </param>
         /// <param name="serialNumber"> Serial number of the device. Format of serial Number - Make;Model;HardwareRevisionId;SerialNumber. </param>
@@ -89,10 +91,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="secretRotationStatus"> Secret rotation status for the device's secrets. </param>
         /// <param name="certificateRotationStatus"> Certificate rotation status for the device's certificates. </param>
         /// <param name="networkFabricId"> Associated Network Fabric Resource ID. </param>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkDeviceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, string hostName, string serialNumber, IdentitySelector identitySelector, string version, string networkDeviceSku, NetworkDeviceRole? networkDeviceRole, string networkRackId, string managementIPv4Address, string managementIPv6Address, string rwDeviceConfig, LastOperationProperties lastOperation, ConfigurationState? configurationState, ProvisioningState? provisioningState, AdministrativeState? administrativeState, IReadOnlyList<SecretRotationStatus> secretRotationStatus, IReadOnlyList<CertificateRotationStatus> certificateRotationStatus, ResourceIdentifier networkFabricId, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkDeviceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string annotation, string hostName, string serialNumber, IdentitySelector identitySelector, string version, string networkDeviceSku, NetworkDeviceRole? networkDeviceRole, ResourceIdentifier networkRackId, IPAddress managementIPv4Address, string managementIPv6Address, string rwDeviceConfig, LastOperationProperties lastOperation, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, IReadOnlyList<SecretRotationStatus> secretRotationStatus, IReadOnlyList<CertificateRotationStatus> certificateRotationStatus, ResourceIdentifier networkFabricId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
+            Identity = identity;
             Annotation = annotation;
             HostName = hostName;
             SerialNumber = serialNumber;
@@ -111,7 +113,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             SecretRotationStatus = secretRotationStatus;
             CertificateRotationStatus = certificateRotationStatus;
             NetworkFabricId = networkFabricId;
-            Identity = identity;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -120,6 +121,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
         }
 
+        /// <summary> The managed service identities assigned to this resource. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Switch configuration description. </summary>
         public string Annotation { get; set; }
         /// <summary> The host name of the device. </summary>
@@ -135,9 +138,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <summary> NetworkDeviceRole is the device role: Example: CE | ToR. </summary>
         public NetworkDeviceRole? NetworkDeviceRole { get; }
         /// <summary> Reference to network rack resource id. </summary>
-        public string NetworkRackId { get; }
+        public ResourceIdentifier NetworkRackId { get; }
         /// <summary> Management IPv4 Address. </summary>
-        public string ManagementIPv4Address { get; }
+        public IPAddress ManagementIPv4Address { get; }
         /// <summary> Management IPv6 Address. </summary>
         public string ManagementIPv6Address { get; }
         /// <summary> User configured read-write configuration applied on the network devices. </summary>
@@ -151,18 +154,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary> Configuration state of the resource. </summary>
-        public ConfigurationState? ConfigurationState { get; }
+        public NetworkFabricConfigurationState? ConfigurationState { get; }
         /// <summary> Provisioning state of the resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkFabricProvisioningState? ProvisioningState { get; }
         /// <summary> Administrative state of the resource. </summary>
-        public AdministrativeState? AdministrativeState { get; }
+        public NetworkFabricAdministrativeState? AdministrativeState { get; }
         /// <summary> Secret rotation status for the device's secrets. </summary>
         public IReadOnlyList<SecretRotationStatus> SecretRotationStatus { get; }
         /// <summary> Certificate rotation status for the device's certificates. </summary>
         public IReadOnlyList<CertificateRotationStatus> CertificateRotationStatus { get; }
         /// <summary> Associated Network Fabric Resource ID. </summary>
         public ResourceIdentifier NetworkFabricId { get; }
-        /// <summary> The managed service identities assigned to this resource. </summary>
-        public ManagedServiceIdentity Identity { get; set; }
     }
 }

@@ -53,13 +53,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of <see cref="ViewDeviceConfigurationResponseProperties"/>. </summary>
         /// <param name="deviceConfigurationUri"> Storage URL to the device configuration file. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ViewDeviceConfigurationResponseProperties(string deviceConfigurationUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ViewDeviceConfigurationResponseProperties(Uri deviceConfigurationUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DeviceConfigurationUri = deviceConfigurationUri;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Storage URL to the device configuration file. </summary>
-        public string DeviceConfigurationUri { get; }
+        public Uri DeviceConfigurationUri { get; }
     }
 }

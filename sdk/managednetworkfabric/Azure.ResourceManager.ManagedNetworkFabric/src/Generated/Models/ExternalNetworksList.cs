@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of <see cref="ExternalNetworksList"/>. </summary>
         /// <param name="value"> The ExternalNetwork items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal ExternalNetworksList(IEnumerable<ExternalNetworkData> value)
+        internal ExternalNetworksList(IEnumerable<NetworkFabricExternalNetworkData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="value"> The ExternalNetwork items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExternalNetworksList(IReadOnlyList<ExternalNetworkData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ExternalNetworksList(IReadOnlyList<NetworkFabricExternalNetworkData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> The ExternalNetwork items on this page. </summary>
-        public IReadOnlyList<ExternalNetworkData> Value { get; }
+        public IReadOnlyList<NetworkFabricExternalNetworkData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

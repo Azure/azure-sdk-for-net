@@ -55,14 +55,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of <see cref="StatementConditionPatchProperties"/>. </summary>
         /// <param name="ipCommunityIds"> List of IP Community resource IDs. </param>
         /// <param name="ipExtendedCommunityIds"> List of IP Extended Community resource IDs. </param>
-        /// <param name="type"> Type of the condition used. </param>
+        /// <param name="routePolicyConditionType"> Type of the condition used. </param>
         /// <param name="ipPrefixId"> Arm Resource Id of IpPrefix. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StatementConditionPatchProperties(IList<string> ipCommunityIds, IList<string> ipExtendedCommunityIds, RoutePolicyConditionType? type, string ipPrefixId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StatementConditionPatchProperties(IList<string> ipCommunityIds, IList<string> ipExtendedCommunityIds, RoutePolicyConditionType? routePolicyConditionType, string ipPrefixId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IPCommunityIds = ipCommunityIds;
             IPExtendedCommunityIds = ipExtendedCommunityIds;
-            Type = type;
+            RoutePolicyConditionType = routePolicyConditionType;
             IPPrefixId = ipPrefixId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> List of IP Extended Community resource IDs. </summary>
         public IList<string> IPExtendedCommunityIds { get; }
         /// <summary> Type of the condition used. </summary>
-        public RoutePolicyConditionType? Type { get; set; }
+        public RoutePolicyConditionType? RoutePolicyConditionType { get; set; }
         /// <summary> Arm Resource Id of IpPrefix. </summary>
         public string IPPrefixId { get; set; }
     }

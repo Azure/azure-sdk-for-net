@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of <see cref="RoutePoliciesListResult"/>. </summary>
         /// <param name="value"> The RoutePolicy items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal RoutePoliciesListResult(IEnumerable<RoutePolicyData> value)
+        internal RoutePoliciesListResult(IEnumerable<NetworkFabricRoutePolicyData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="value"> The RoutePolicy items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RoutePoliciesListResult(IReadOnlyList<RoutePolicyData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RoutePoliciesListResult(IReadOnlyList<NetworkFabricRoutePolicyData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> The RoutePolicy items on this page. </summary>
-        public IReadOnlyList<RoutePolicyData> Value { get; }
+        public IReadOnlyList<NetworkFabricRoutePolicyData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }
