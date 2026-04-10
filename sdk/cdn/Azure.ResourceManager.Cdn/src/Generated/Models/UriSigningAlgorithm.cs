@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Cdn.Models
     public readonly partial struct UriSigningAlgorithm : IEquatable<UriSigningAlgorithm>
     {
         private readonly string _value;
-        private const string SHA256Value = "SHA256";
+        private const string Sha256Value = "SHA256";
 
         /// <summary> Initializes a new instance of <see cref="UriSigningAlgorithm"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Cdn.Models
 
             _value = value;
         }
+
+        /// <summary> Gets the Sha256. </summary>
+        public static UriSigningAlgorithm Sha256 { get; } = new UriSigningAlgorithm(Sha256Value);
 
         /// <summary> Determines if two <see cref="UriSigningAlgorithm"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

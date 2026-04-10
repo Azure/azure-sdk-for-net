@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string LowercaseValue = "Lowercase";
         private const string UppercaseValue = "Uppercase";
         private const string TrimValue = "Trim";
-        private const string UrlDecodeValue = "UrlDecode";
-        private const string UrlEncodeValue = "UrlEncode";
+        private const string UriDecodeValue = "UrlDecode";
+        private const string UriEncodeValue = "UrlEncode";
         private const string RemoveNullsValue = "RemoveNulls";
 
         /// <summary> Initializes a new instance of <see cref="PreTransformCategory"/>. </summary>
@@ -40,6 +40,12 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Gets the Trim. </summary>
         public static PreTransformCategory Trim { get; } = new PreTransformCategory(TrimValue);
+
+        /// <summary> Gets the UriDecode. </summary>
+        public static PreTransformCategory UriDecode { get; } = new PreTransformCategory(UriDecodeValue);
+
+        /// <summary> Gets the UriEncode. </summary>
+        public static PreTransformCategory UriEncode { get; } = new PreTransformCategory(UriEncodeValue);
 
         /// <summary> Gets the RemoveNulls. </summary>
         public static PreTransformCategory RemoveNulls { get; } = new PreTransformCategory(RemoveNullsValue);

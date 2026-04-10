@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string LowercaseValue = "Lowercase";
         private const string UppercaseValue = "Uppercase";
         private const string TrimValue = "Trim";
-        private const string UrlDecodeValue = "UrlDecode";
-        private const string UrlEncodeValue = "UrlEncode";
+        private const string UriDecodeValue = "UrlDecode";
+        private const string UriEncodeValue = "UrlEncode";
         private const string RemoveNullsValue = "RemoveNulls";
 
         /// <summary> Initializes a new instance of <see cref="TransformType"/>. </summary>
@@ -40,6 +40,12 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Gets the Trim. </summary>
         public static TransformType Trim { get; } = new TransformType(TrimValue);
+
+        /// <summary> Gets the UriDecode. </summary>
+        public static TransformType UriDecode { get; } = new TransformType(UriDecodeValue);
+
+        /// <summary> Gets the UriEncode. </summary>
+        public static TransformType UriEncode { get; } = new TransformType(UriEncodeValue);
 
         /// <summary> Gets the RemoveNulls. </summary>
         public static TransformType RemoveNulls { get; } = new TransformType(RemoveNullsValue);

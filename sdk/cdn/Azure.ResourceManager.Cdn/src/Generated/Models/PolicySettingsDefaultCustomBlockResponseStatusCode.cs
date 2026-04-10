@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.Cdn.Models
     public readonly partial struct PolicySettingsDefaultCustomBlockResponseStatusCode : IEquatable<PolicySettingsDefaultCustomBlockResponseStatusCode>
     {
         private readonly int _value;
-        private const int _200Value = 200;
-        private const int _403Value = 403;
-        private const int _405Value = 405;
-        private const int _406Value = 406;
-        private const int _429Value = 429;
+        private const int TwoHundredValue = 200;
+        private const int FourHundredThreeValue = 403;
+        private const int FourHundredFiveValue = 405;
+        private const int FourHundredSixValue = 406;
+        private const int FourHundredTwentyNineValue = 429;
 
         /// <summary> Initializes a new instance of <see cref="PolicySettingsDefaultCustomBlockResponseStatusCode"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -27,6 +27,21 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             _value = value;
         }
+
+        /// <summary> Gets the TwoHundred. </summary>
+        public static PolicySettingsDefaultCustomBlockResponseStatusCode TwoHundred { get; } = new PolicySettingsDefaultCustomBlockResponseStatusCode(TwoHundredValue);
+
+        /// <summary> Gets the FourHundredThree. </summary>
+        public static PolicySettingsDefaultCustomBlockResponseStatusCode FourHundredThree { get; } = new PolicySettingsDefaultCustomBlockResponseStatusCode(FourHundredThreeValue);
+
+        /// <summary> Gets the FourHundredFive. </summary>
+        public static PolicySettingsDefaultCustomBlockResponseStatusCode FourHundredFive { get; } = new PolicySettingsDefaultCustomBlockResponseStatusCode(FourHundredFiveValue);
+
+        /// <summary> Gets the FourHundredSix. </summary>
+        public static PolicySettingsDefaultCustomBlockResponseStatusCode FourHundredSix { get; } = new PolicySettingsDefaultCustomBlockResponseStatusCode(FourHundredSixValue);
+
+        /// <summary> Gets the FourHundredTwentyNine. </summary>
+        public static PolicySettingsDefaultCustomBlockResponseStatusCode FourHundredTwentyNine { get; } = new PolicySettingsDefaultCustomBlockResponseStatusCode(FourHundredTwentyNineValue);
 
         /// <summary> Determines if two <see cref="PolicySettingsDefaultCustomBlockResponseStatusCode"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

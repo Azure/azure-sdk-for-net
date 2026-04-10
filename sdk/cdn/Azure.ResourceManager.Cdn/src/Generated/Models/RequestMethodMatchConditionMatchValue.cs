@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.Cdn.Models
     public readonly partial struct RequestMethodMatchConditionMatchValue : IEquatable<RequestMethodMatchConditionMatchValue>
     {
         private readonly string _value;
-        private const string GETValue = "GET";
-        private const string HEADValue = "HEAD";
-        private const string POSTValue = "POST";
-        private const string PUTValue = "PUT";
-        private const string DELETEValue = "DELETE";
-        private const string OPTIONSValue = "OPTIONS";
-        private const string TRACEValue = "TRACE";
+        private const string GetValue = "GET";
+        private const string HeadValue = "HEAD";
+        private const string PostValue = "POST";
+        private const string PutValue = "PUT";
+        private const string DeleteValue = "DELETE";
+        private const string OptionsValue = "OPTIONS";
+        private const string TraceValue = "TRACE";
 
         /// <summary> Initializes a new instance of <see cref="RequestMethodMatchConditionMatchValue"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -32,6 +32,27 @@ namespace Azure.ResourceManager.Cdn.Models
 
             _value = value;
         }
+
+        /// <summary> Gets the Get. </summary>
+        public static RequestMethodMatchConditionMatchValue Get { get; } = new RequestMethodMatchConditionMatchValue(GetValue);
+
+        /// <summary> Gets the Head. </summary>
+        public static RequestMethodMatchConditionMatchValue Head { get; } = new RequestMethodMatchConditionMatchValue(HeadValue);
+
+        /// <summary> Gets the Post. </summary>
+        public static RequestMethodMatchConditionMatchValue Post { get; } = new RequestMethodMatchConditionMatchValue(PostValue);
+
+        /// <summary> Gets the Put. </summary>
+        public static RequestMethodMatchConditionMatchValue Put { get; } = new RequestMethodMatchConditionMatchValue(PutValue);
+
+        /// <summary> Gets the Delete. </summary>
+        public static RequestMethodMatchConditionMatchValue Delete { get; } = new RequestMethodMatchConditionMatchValue(DeleteValue);
+
+        /// <summary> Gets the Options. </summary>
+        public static RequestMethodMatchConditionMatchValue Options { get; } = new RequestMethodMatchConditionMatchValue(OptionsValue);
+
+        /// <summary> Gets the Trace. </summary>
+        public static RequestMethodMatchConditionMatchValue Trace { get; } = new RequestMethodMatchConditionMatchValue(TraceValue);
 
         /// <summary> Determines if two <see cref="RequestMethodMatchConditionMatchValue"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

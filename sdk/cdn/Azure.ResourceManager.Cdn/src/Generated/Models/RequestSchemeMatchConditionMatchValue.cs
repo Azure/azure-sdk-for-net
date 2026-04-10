@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.Cdn.Models
     public readonly partial struct RequestSchemeMatchConditionMatchValue : IEquatable<RequestSchemeMatchConditionMatchValue>
     {
         private readonly string _value;
-        private const string HTTPValue = "HTTP";
-        private const string HTTPSValue = "HTTPS";
+        private const string HttpValue = "HTTP";
+        private const string HttpsValue = "HTTPS";
 
         /// <summary> Initializes a new instance of <see cref="RequestSchemeMatchConditionMatchValue"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -27,6 +27,12 @@ namespace Azure.ResourceManager.Cdn.Models
 
             _value = value;
         }
+
+        /// <summary> Gets the Http. </summary>
+        public static RequestSchemeMatchConditionMatchValue Http { get; } = new RequestSchemeMatchConditionMatchValue(HttpValue);
+
+        /// <summary> Gets the Https. </summary>
+        public static RequestSchemeMatchConditionMatchValue Https { get; } = new RequestSchemeMatchConditionMatchValue(HttpsValue);
 
         /// <summary> Determines if two <see cref="RequestSchemeMatchConditionMatchValue"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

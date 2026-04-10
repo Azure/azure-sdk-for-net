@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string RuleGroupValue = "ruleGroup";
         private const string RuleIdValue = "ruleId";
         private const string UserAgentValue = "userAgent";
-        private const string ClientIpValue = "clientIp";
-        private const string UrlValue = "url";
+        private const string ClientIPValue = "clientIp";
+        private const string UriValue = "url";
         private const string CountryOrRegionValue = "countryOrRegion";
         private const string RuleTypeValue = "ruleType";
 
@@ -45,6 +45,12 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Gets the UserAgent. </summary>
         public static WafRankingType UserAgent { get; } = new WafRankingType(UserAgentValue);
+
+        /// <summary> Gets the ClientIP. </summary>
+        public static WafRankingType ClientIP { get; } = new WafRankingType(ClientIPValue);
+
+        /// <summary> Gets the Uri. </summary>
+        public static WafRankingType Uri { get; } = new WafRankingType(UriValue);
 
         /// <summary> Gets the CountryOrRegion. </summary>
         public static WafRankingType CountryOrRegion { get; } = new WafRankingType(CountryOrRegionValue);

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Cdn.Models
     public readonly partial struct KeyVaultSigningKeyType : IEquatable<KeyVaultSigningKeyType>
     {
         private readonly string _value;
-        private const string KeyVaultSigningKeyParametersValue = "KeyVaultSigningKeyParameters";
+        private const string KeyVaultSigningKeyValue = "KeyVaultSigningKeyParameters";
 
         /// <summary> Initializes a new instance of <see cref="KeyVaultSigningKeyType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Cdn.Models
 
             _value = value;
         }
+
+        /// <summary> Gets the KeyVaultSigningKey. </summary>
+        public static KeyVaultSigningKeyType KeyVaultSigningKey { get; } = new KeyVaultSigningKeyType(KeyVaultSigningKeyValue);
 
         /// <summary> Determines if two <see cref="KeyVaultSigningKeyType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

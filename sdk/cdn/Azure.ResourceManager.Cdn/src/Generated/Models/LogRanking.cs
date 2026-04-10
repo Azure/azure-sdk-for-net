@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Cdn.Models
     public readonly partial struct LogRanking : IEquatable<LogRanking>
     {
         private readonly string _value;
-        private const string UrlValue = "url";
+        private const string UriValue = "url";
         private const string ReferrerValue = "referrer";
         private const string BrowserValue = "browser";
         private const string UserAgentValue = "userAgent";
@@ -30,6 +30,9 @@ namespace Azure.ResourceManager.Cdn.Models
 
             _value = value;
         }
+
+        /// <summary> Gets the Uri. </summary>
+        public static LogRanking Uri { get; } = new LogRanking(UriValue);
 
         /// <summary> Gets the Referrer. </summary>
         public static LogRanking Referrer { get; } = new LogRanking(ReferrerValue);

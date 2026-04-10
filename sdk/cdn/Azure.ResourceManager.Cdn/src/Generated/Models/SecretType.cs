@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Cdn.Models
     public readonly partial struct SecretType : IEquatable<SecretType>
     {
         private readonly string _value;
-        private const string UrlSigningKeyValue = "UrlSigningKey";
+        private const string UriSigningKeyValue = "UrlSigningKey";
         private const string CustomerCertificateValue = "CustomerCertificate";
         private const string ManagedCertificateValue = "ManagedCertificate";
         private const string AzureFirstPartyManagedCertificateValue = "AzureFirstPartyManagedCertificate";
@@ -30,6 +30,9 @@ namespace Azure.ResourceManager.Cdn.Models
 
             _value = value;
         }
+
+        /// <summary> Gets the UriSigningKey. </summary>
+        public static SecretType UriSigningKey { get; } = new SecretType(UriSigningKeyValue);
 
         /// <summary> Gets the CustomerCertificate. </summary>
         public static SecretType CustomerCertificate { get; } = new SecretType(CustomerCertificateValue);
