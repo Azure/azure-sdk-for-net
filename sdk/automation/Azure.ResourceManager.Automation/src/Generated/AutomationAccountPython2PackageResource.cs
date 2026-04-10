@@ -279,18 +279,18 @@ namespace Azure.ResourceManager.Automation
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="pythonPackageUpdateParameters"> The update parameters for python package. </param>
+        /// <param name="patch"> The update parameters for python package. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pythonPackageUpdateParameters"/> is null. </exception>
-        public virtual async Task<Response<AutomationAccountPython2PackageResource>> UpdateAsync(PythonPackageUpdateParameters pythonPackageUpdateParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<Response<AutomationAccountPython2PackageResource>> UpdateAsync(AutomationAccountPython2PackagePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(pythonPackageUpdateParameters, nameof(pythonPackageUpdateParameters));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _automationAccountPython2PackagePython2PackageClientDiagnostics.CreateScope("AutomationAccountPython2PackageResource.Update");
             scope.Start();
             try
             {
-                var response = await _automationAccountPython2PackagePython2PackageRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, pythonPackageUpdateParameters, cancellationToken).ConfigureAwait(false);
+                var response = await _automationAccountPython2PackagePython2PackageRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new AutomationAccountPython2PackageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -321,18 +321,18 @@ namespace Azure.ResourceManager.Automation
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="pythonPackageUpdateParameters"> The update parameters for python package. </param>
+        /// <param name="patch"> The update parameters for python package. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pythonPackageUpdateParameters"/> is null. </exception>
-        public virtual Response<AutomationAccountPython2PackageResource> Update(PythonPackageUpdateParameters pythonPackageUpdateParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual Response<AutomationAccountPython2PackageResource> Update(AutomationAccountPython2PackagePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(pythonPackageUpdateParameters, nameof(pythonPackageUpdateParameters));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _automationAccountPython2PackagePython2PackageClientDiagnostics.CreateScope("AutomationAccountPython2PackageResource.Update");
             scope.Start();
             try
             {
-                var response = _automationAccountPython2PackagePython2PackageRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, pythonPackageUpdateParameters, cancellationToken);
+                var response = _automationAccountPython2PackagePython2PackageRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
                 return Response.FromValue(new AutomationAccountPython2PackageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.Automation
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new PythonPackageUpdateParameters();
+                    var patch = new AutomationAccountPython2PackagePatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -449,7 +449,7 @@ namespace Azure.ResourceManager.Automation
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new PythonPackageUpdateParameters();
+                    var patch = new AutomationAccountPython2PackagePatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -510,7 +510,7 @@ namespace Azure.ResourceManager.Automation
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new PythonPackageUpdateParameters();
+                    var patch = new AutomationAccountPython2PackagePatch();
                     patch.Tags.ReplaceWith(tags);
                     var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return result;
@@ -567,7 +567,7 @@ namespace Azure.ResourceManager.Automation
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new PythonPackageUpdateParameters();
+                    var patch = new AutomationAccountPython2PackagePatch();
                     patch.Tags.ReplaceWith(tags);
                     var result = Update(patch, cancellationToken: cancellationToken);
                     return result;
@@ -623,7 +623,7 @@ namespace Azure.ResourceManager.Automation
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new PythonPackageUpdateParameters();
+                    var patch = new AutomationAccountPython2PackagePatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -683,7 +683,7 @@ namespace Azure.ResourceManager.Automation
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new PythonPackageUpdateParameters();
+                    var patch = new AutomationAccountPython2PackagePatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

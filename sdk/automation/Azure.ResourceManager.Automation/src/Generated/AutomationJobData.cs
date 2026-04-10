@@ -151,6 +151,6 @@ namespace Azure.ResourceManager.Automation
         /// <summary> Gets or sets the parameters of the job. </summary>
         public IDictionary<string, string> Parameters { get; }
         /// <summary> The current provisioning state of the job. </summary>
-        public JobProvisioningState? ProvisioningState { get; }
+        public JobProvisioningState? ProvisioningState { get; set; }
     }
 }

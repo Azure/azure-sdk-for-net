@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="lastModifiedOn"> Gets or sets the last modified time. </param>
         /// <param name="description"> Gets or sets the description. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AutomationRunbookData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, string runtimeEnvironment, AutomationRunbookType? runbookType, AutomationContentLink publishContentLink, RunbookState? state, bool? isLogVerboseEnabled, bool? isLogProgressEnabled, int? logActivityTrace, int? jobCount, IDictionary<string, RunbookParameterDefinition> parameters, IList<string> outputTypes, AutomationRunbookDraft draft, RunbookPropertiesProvisioningState? provisioningState, string lastModifiedBy, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string description, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal AutomationRunbookData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, string runtimeEnvironment, AutomationRunbookType? runbookType, AutomationContentLink publishContentLink, RunbookState? state, bool? isLogVerboseEnabled, bool? isLogProgressEnabled, int? logActivityTrace, int? jobCount, IDictionary<string, RunbookParameterDefinition> parameters, IList<string> outputTypes, AutomationRunbookDraft draft, RunbookProvisioningState? provisioningState, string lastModifiedBy, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string description, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
             RuntimeEnvironment = runtimeEnvironment;
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Automation
         /// <summary> Gets or sets the draft runbook properties. </summary>
         public AutomationRunbookDraft Draft { get; set; }
         /// <summary> Gets or sets the provisioning state of the runbook. </summary>
-        public RunbookPropertiesProvisioningState? ProvisioningState { get; set; }
+        public RunbookProvisioningState? ProvisioningState { get; set; }
         /// <summary> Gets or sets the last modified by. </summary>
         public string LastModifiedBy { get; set; }
         /// <summary> Gets or sets the creation time. </summary>

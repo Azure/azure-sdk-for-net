@@ -37,7 +37,6 @@ input-file:
   - https://github.com/Azure/azure-rest-api-specs/blob/e191949499d1d3b60a1b2a979d9e35f122a94978/specification/automation/resource-manager/Microsoft.Automation/preview/2020-01-13-preview/dscCompilationJob.json
 
 rename-mapping:
-  Python2PackageCreateParameters: AutomationAccountPython2PackageCreateOrUpdateContent
   AutomationAccount.properties.publicNetworkAccess: IsPublicNetworkAccessAllowed
   AutomationAccount.properties.disableLocalAuth: IsLocalAuthDisabled
   DscConfiguration.properties.logVerbose: IsLogVerboseEnabled
@@ -315,6 +314,18 @@ directive:
     where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/python2Packages/{packageName}'].put.parameters[?(@.name=='parameters')]
     transform: >
       $.schema = { '$ref': '#/definitions/Python2PackageCreateParameters' };
+  # New swagger shares PythonPackageUpdateParameters between Python2 and Python3.
+  # Clone a dedicated definition for Python2 to preserve backward-compatible type name.
+  - from: openapi.json
+    where: $.definitions
+    transform: >
+      if (!$['Python2PackageUpdateParameters']) {
+        $['Python2PackageUpdateParameters'] = JSON.parse(JSON.stringify($['PythonPackageUpdateParameters']));
+      }
+  - from: openapi.json
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/python2Packages/{packageName}'].patch.parameters[?(@.name=='parameters')]
+    transform: >
+      $.schema = { '$ref': '#/definitions/Python2PackageUpdateParameters' };
   - from: openapi.json
     where: $.definitions
     transform: >
@@ -364,5 +375,17 @@ directive:
     where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/nodes/{nodeId}/reports/{reportId}/content'].get
     transform: >
       $.produces = ["application/json"]
+  - from: openapi.json
+    where: $.definitions.JobProperties.properties.provisioningState
+    transform: >
+      delete $['readOnly'];
+  - from: openapi.json
+    where: $.definitions.JobScheduleProperties.properties.parameters
+    transform: >
+      $['readOnly'] = true;
+  - from: openapi.json
+    where: $.definitions.RunbookProperties.properties.provisioningState
+    transform: >
+      $['x-ms-enum']['name'] = 'RunbookProvisioningState';
 
 ```

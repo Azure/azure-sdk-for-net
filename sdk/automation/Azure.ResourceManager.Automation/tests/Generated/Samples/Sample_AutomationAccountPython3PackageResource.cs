@@ -96,11 +96,11 @@ namespace Azure.ResourceManager.Automation.Samples
             AutomationAccountPython3PackageResource automationAccountPython3Package = client.GetAutomationAccountPython3PackageResource(automationAccountPython3PackageResourceId);
 
             // invoke the operation
-            PythonPackageUpdateParameters pythonPackageUpdateParameters = new PythonPackageUpdateParameters
+            AutomationAccountPython3PackagePatch patch = new AutomationAccountPython3PackagePatch
             {
                 Tags = { },
             };
-            AutomationAccountPython3PackageResource result = await automationAccountPython3Package.UpdateAsync(pythonPackageUpdateParameters);
+            AutomationAccountPython3PackageResource result = await automationAccountPython3Package.UpdateAsync(patch);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance

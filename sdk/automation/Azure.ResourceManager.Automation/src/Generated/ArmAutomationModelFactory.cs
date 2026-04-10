@@ -482,7 +482,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="runOn"> Gets or sets the hybrid worker group that the scheduled job should run on. </param>
         /// <param name="parameters"> Gets or sets the parameters of the job schedule. </param>
         /// <returns> A new <see cref="Automation.AutomationJobScheduleData"/> instance for mocking. </returns>
-        public static AutomationJobScheduleData AutomationJobScheduleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? jobScheduleId = null, string scheduleName = null, string runbookName = null, string runOn = null, IDictionary<string, string> parameters = null)
+        public static AutomationJobScheduleData AutomationJobScheduleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? jobScheduleId = null, string scheduleName = null, string runbookName = null, string runOn = null, IReadOnlyDictionary<string, string> parameters = null)
         {
             parameters ??= new Dictionary<string, string>();
 
@@ -1107,7 +1107,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="lastModifiedOn"> Gets or sets the last modified time. </param>
         /// <param name="description"> Gets or sets the description. </param>
         /// <returns> A new <see cref="Automation.AutomationRunbookData"/> instance for mocking. </returns>
-        public static AutomationRunbookData AutomationRunbookData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, string runtimeEnvironment = null, AutomationRunbookType? runbookType = null, AutomationContentLink publishContentLink = null, RunbookState? state = null, bool? isLogVerboseEnabled = null, bool? isLogProgressEnabled = null, int? logActivityTrace = null, int? jobCount = null, IDictionary<string, RunbookParameterDefinition> parameters = null, IEnumerable<string> outputTypes = null, AutomationRunbookDraft draft = null, RunbookPropertiesProvisioningState? provisioningState = null, string lastModifiedBy = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastModifiedOn = null, string description = null)
+        public static AutomationRunbookData AutomationRunbookData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, string runtimeEnvironment = null, AutomationRunbookType? runbookType = null, AutomationContentLink publishContentLink = null, RunbookState? state = null, bool? isLogVerboseEnabled = null, bool? isLogProgressEnabled = null, int? logActivityTrace = null, int? jobCount = null, IDictionary<string, RunbookParameterDefinition> parameters = null, IEnumerable<string> outputTypes = null, AutomationRunbookDraft draft = null, RunbookProvisioningState? provisioningState = null, string lastModifiedBy = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastModifiedOn = null, string description = null)
         {
             tags ??= new Dictionary<string, string>();
             parameters ??= new Dictionary<string, RunbookParameterDefinition>();
@@ -2000,6 +2000,36 @@ namespace Azure.ResourceManager.Automation.Models
         public static AutomationJobCollectionItemData AutomationJobCollectionItemData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string runbookName, Guid? jobId, DateTimeOffset? createdOn, AutomationJobStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, DateTimeOffset? lastModifiedOn, string provisioningState, string runOn)
         {
             return AutomationJobCollectionItemData(id: id, name: name, resourceType: resourceType, systemData: systemData, runbookName: runbookName, jobId: jobId, startedBy: default, createdOn: createdOn, status: status, startOn: startOn, endOn: endOn, lastModifiedOn: lastModifiedOn, provisioningState: provisioningState, runtimeEnvironmentName: default, runOn: runOn);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Automation.AutomationRunbookData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="etag"> Gets or sets the etag of the resource. </param>
+        /// <param name="runbookType"> Gets or sets the type of the runbook. </param>
+        /// <param name="publishContentLink"> Gets or sets the published runbook content link. </param>
+        /// <param name="state"> Gets or sets the state of the runbook. </param>
+        /// <param name="isLogVerboseEnabled"> Gets or sets verbose log option. </param>
+        /// <param name="isLogProgressEnabled"> Gets or sets progress log option. </param>
+        /// <param name="logActivityTrace"> Gets or sets the option to log activity trace of the runbook. </param>
+        /// <param name="jobCount"> Gets or sets the job count of the runbook. </param>
+        /// <param name="parameters"> Gets or sets the runbook parameters. </param>
+        /// <param name="outputTypes"> Gets or sets the runbook output types. </param>
+        /// <param name="draft"> Gets or sets the draft runbook properties. </param>
+        /// <param name="provisioningState"> Gets or sets the provisioning state of the runbook. </param>
+        /// <param name="lastModifiedBy"> Gets or sets the last modified by. </param>
+        /// <param name="createdOn"> Gets or sets the creation time. </param>
+        /// <param name="lastModifiedOn"> Gets or sets the last modified time. </param>
+        /// <param name="description"> Gets or sets the description. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Automation.AutomationRunbookData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AutomationRunbookData AutomationRunbookData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, AutomationRunbookType? runbookType, AutomationContentLink publishContentLink, RunbookState? state, bool? isLogVerboseEnabled, bool? isLogProgressEnabled, int? logActivityTrace, int? jobCount, IDictionary<string, RunbookParameterDefinition> parameters, IEnumerable<string> outputTypes, AutomationRunbookDraft draft, RunbookProvisioningState? provisioningState, string lastModifiedBy, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string description)
+        {
+            return AutomationRunbookData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, etag: etag, runtimeEnvironment: default, runbookType: runbookType, publishContentLink: publishContentLink, state: state, isLogVerboseEnabled: isLogVerboseEnabled, isLogProgressEnabled: isLogProgressEnabled, logActivityTrace: logActivityTrace, jobCount: jobCount, parameters: parameters, outputTypes: outputTypes, draft: draft, provisioningState: provisioningState, lastModifiedBy: lastModifiedBy, createdOn: createdOn, lastModifiedOn: lastModifiedOn, description: description);
         }
 
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Automation.Models.AutomationRunbookCreateOrUpdateContent" />. </summary>

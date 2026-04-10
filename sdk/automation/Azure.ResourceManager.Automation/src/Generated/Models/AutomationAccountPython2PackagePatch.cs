@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Automation.Models
 {
     /// <summary> The parameters supplied to the update module operation. </summary>
-    public partial class PythonPackageUpdateParameters
+    public partial class AutomationAccountPython2PackagePatch
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,16 +45,16 @@ namespace Azure.ResourceManager.Automation.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="PythonPackageUpdateParameters"/>. </summary>
-        public PythonPackageUpdateParameters()
+        /// <summary> Initializes a new instance of <see cref="AutomationAccountPython2PackagePatch"/>. </summary>
+        public AutomationAccountPython2PackagePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="PythonPackageUpdateParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationAccountPython2PackagePatch"/>. </summary>
         /// <param name="tags"> Gets or sets the tags attached to the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PythonPackageUpdateParameters(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AutomationAccountPython2PackagePatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tags = tags;
             _serializedAdditionalRawData = serializedAdditionalRawData;

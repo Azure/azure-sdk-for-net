@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Automation
             IDictionary<string, RunbookParameterDefinition> parameters = default;
             IList<string> outputTypes = default;
             AutomationRunbookDraft draft = default;
-            RunbookPropertiesProvisioningState? provisioningState = default;
+            RunbookProvisioningState? provisioningState = default;
             string lastModifiedBy = default;
             DateTimeOffset? creationTime = default;
             DateTimeOffset? lastModifiedTime = default;
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.Automation
                             {
                                 continue;
                             }
-                            provisioningState = new RunbookPropertiesProvisioningState(property0.Value.GetString());
+                            provisioningState = new RunbookProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("lastModifiedBy"u8))

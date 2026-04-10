@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.Automation
             }
         }
 
-        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string automationAccountName, string packageName, PythonPackageUpdateParameters pythonPackageUpdateParameters)
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string automationAccountName, string packageName, AutomationAccountPython3PackagePatch patch)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.Automation
             return uri;
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string automationAccountName, string packageName, PythonPackageUpdateParameters pythonPackageUpdateParameters)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string automationAccountName, string packageName, AutomationAccountPython3PackagePatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.Automation
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(pythonPackageUpdateParameters, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -391,19 +391,19 @@ namespace Azure.ResourceManager.Automation
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="automationAccountName"> The name of the automation account. </param>
         /// <param name="packageName"> The python package name. </param>
-        /// <param name="pythonPackageUpdateParameters"> The update parameters for python package. </param>
+        /// <param name="patch"> The update parameters for python package. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/>, <paramref name="packageName"/> or <paramref name="pythonPackageUpdateParameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/>, <paramref name="packageName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="packageName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AutomationModuleData>> UpdateAsync(string subscriptionId, string resourceGroupName, string automationAccountName, string packageName, PythonPackageUpdateParameters pythonPackageUpdateParameters, CancellationToken cancellationToken = default)
+        public async Task<Response<AutomationModuleData>> UpdateAsync(string subscriptionId, string resourceGroupName, string automationAccountName, string packageName, AutomationAccountPython3PackagePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(automationAccountName, nameof(automationAccountName));
             Argument.AssertNotNullOrEmpty(packageName, nameof(packageName));
-            Argument.AssertNotNull(pythonPackageUpdateParameters, nameof(pythonPackageUpdateParameters));
+            Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, automationAccountName, packageName, pythonPackageUpdateParameters);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, automationAccountName, packageName, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -424,19 +424,19 @@ namespace Azure.ResourceManager.Automation
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="automationAccountName"> The name of the automation account. </param>
         /// <param name="packageName"> The python package name. </param>
-        /// <param name="pythonPackageUpdateParameters"> The update parameters for python package. </param>
+        /// <param name="patch"> The update parameters for python package. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/>, <paramref name="packageName"/> or <paramref name="pythonPackageUpdateParameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/>, <paramref name="packageName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="packageName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AutomationModuleData> Update(string subscriptionId, string resourceGroupName, string automationAccountName, string packageName, PythonPackageUpdateParameters pythonPackageUpdateParameters, CancellationToken cancellationToken = default)
+        public Response<AutomationModuleData> Update(string subscriptionId, string resourceGroupName, string automationAccountName, string packageName, AutomationAccountPython3PackagePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(automationAccountName, nameof(automationAccountName));
             Argument.AssertNotNullOrEmpty(packageName, nameof(packageName));
-            Argument.AssertNotNull(pythonPackageUpdateParameters, nameof(pythonPackageUpdateParameters));
+            Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, automationAccountName, packageName, pythonPackageUpdateParameters);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, automationAccountName, packageName, patch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

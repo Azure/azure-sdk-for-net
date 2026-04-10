@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Automation
                 writer.WritePropertyName("runOn"u8);
                 writer.WriteStringValue(RunOn);
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Automation
             ScheduleAssociationProperty schedule = default;
             RunbookAssociationProperty runbook = default;
             string runOn = default;
-            IDictionary<string, string> parameters = default;
+            IReadOnlyDictionary<string, string> parameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
