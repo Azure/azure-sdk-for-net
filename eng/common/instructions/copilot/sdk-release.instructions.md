@@ -1,3 +1,8 @@
+---
+description: 'SDK release readiness and publishing'
+related_skill: "azsdk-common-sdk-release"
+---
+
 # SDK release
 
 > **Related Skill:** See `.github/skills/azsdk-common-sdk-release/SKILL.md` for the complete release workflow with step-by-step guidance and troubleshooting.

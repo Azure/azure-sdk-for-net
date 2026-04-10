@@ -4,12 +4,16 @@ related_skills:
   - "azsdk-common-generate-sdk-locally"
   - "azsdk-common-prepare-release-plan"
   - "azsdk-common-sdk-release"
+  - "azsdk-common-pipeline-troubleshooting"
+  - "azsdk-common-apiview-feedback-resolution"
 ---
 
 > **Related Skills:** This orchestration workflow references multiple shared skills:
 > - `.github/skills/azsdk-common-generate-sdk-locally/SKILL.md` — SDK generation, build, and test
 > - `.github/skills/azsdk-common-prepare-release-plan/SKILL.md` — Release plan creation and management
 > - `.github/skills/azsdk-common-sdk-release/SKILL.md` — Release readiness checks and publishing
+> - `.github/skills/azsdk-common-pipeline-troubleshooting/SKILL.md` — CI/generation pipeline failure diagnosis
+> - `.github/skills/azsdk-common-apiview-feedback-resolution/SKILL.md` — Resolve APIView review feedback on SDK PRs
 
 Your goal is to guide the user through the process of generating SDKs from TypeSpec projects. **Before starting**, show all the high level steps to the user and ask: 
 
@@ -61,8 +65,8 @@ Follow the steps in #file:local-sdk-workflow.instructions.md to generate and bui
         For data plane: `Python`, `.NET`, `JavaScript`, `Java`
     - Each SDK generation tool call should show a label to indicate the language being generated.
 2. Monitor pipeline status after 15 minutes and provide updates. If pipeline is in progress, inform user that it may take additional time and check the status later.
-3. Display generated SDK PR links when available. If pipeline fails, inform user with error details and suggest to check pipeline logs for more information.
-4. If SDK pull request is available for all languages, ask user to review generated SDK pull request and mark them as ready for review when they are ready to get them reviewed and merged.
+3. Display generated SDK PR links when available. If pipeline fails, inform user with error details and suggest to check pipeline logs for more information. Use the `azsdk-common-pipeline-troubleshooting` skill to diagnose and resolve pipeline failures.
+4. If SDK pull request is available for all languages, ask user to review generated SDK pull request and mark them as ready for review when they are ready to get them reviewed and merged. If APIView feedback is received, use the `azsdk-common-apiview-feedback-resolution` skill to analyze and resolve review comments.
 5. Inform the user that they can checkout generated SDK pull request locally and add more tests, samples or code customizations if needed using local SDK generation tools.
 6. If SDK pull request was created for test purposes, inform user to close the test SDK pull request.
 **Success Criteria**: SDK generation pipeline initiated and SDKs generated
