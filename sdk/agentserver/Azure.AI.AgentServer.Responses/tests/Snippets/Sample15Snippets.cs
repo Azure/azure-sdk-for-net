@@ -9,7 +9,7 @@ using NUnit.Framework;
 namespace Azure.AI.AgentServer.Responses.Tests.Snippets
 {
     /// <summary>
-    /// Code snippets backing Sample15_StructuredOutputs.md. Compiled to prevent rot.
+    /// Code snippets backing Sample15_FileAnnotations.md. Compiled to prevent rot.
     /// </summary>
     [TestFixture]
     [Explicit("Snippets are compiled to prevent rot but require a running server to execute.")]
@@ -20,19 +20,19 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
         {
             #region Snippet:Responses_Sample15_StartServer
 
-            ResponsesServer.Run<StructuredOutputHandler>();
+            ResponsesServer.Run<FileAnnotationsHandler>();
 
             #endregion
         }
 
         [Test]
-        public void Implement_StructuredOutputHandler()
+        public void Implement_FileAnnotationsHandler()
         {
         }
 
-        #region Snippet:Responses_Sample15_StructuredOutputHandler
+        #region Snippet:Responses_Sample15_FileAnnotationsHandler
 
-        public class StructuredOutputHandler : ResponseHandler
+        public class FileAnnotationsHandler : ResponseHandler
         {
             public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
                 CreateResponse request,
@@ -44,70 +44,25 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
                 yield return stream.EmitCreated();
                 yield return stream.EmitInProgress();
 
-                // Build structured data — any serializable object works.
-                // This example returns analytics alongside generated file references
-                // to demonstrate that the payload shape is entirely up to the developer.
-                var result = new
+                // Mix different annotation types on the same message.
+                // file_path — references a file by ID in your own store.
+                // file_citation — cites a file stored in your own file store.
+                // url_citation — cites a web URL referenced in the text.
+                var annotations = new Annotation[]
                 {
-                    sentiment = "positive",
-                    confidence = 0.95,
-                    topics = new[] { "product-quality", "customer-service" },
-                    files = new object[]
-                    {
-                        new { name = "report.pdf", url = "https://storage.example.com/files/report.pdf", mediaType = "application/pdf" },
-                        new { name = "chart.png", url = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUg...", mediaType = "image/png" },
-                    },
+                    new FilePath(fileId: "file-abc123", index: 0),
+                    new FilePath(fileId: "file-def456", index: 1),
+                    new FileCitationBody(fileId: "file-src-001", index: 2, filename: "research-paper.pdf"),
+                    new UrlCitationBody(url: new Uri("https://example.com/docs/guide"), startIndex: 0, endIndex: 29, title: "Developer Guide"),
                 };
 
-                // Emit as a structured outputs item.
-                foreach (var evt in stream.OutputItemStructuredOutputs(
-                    BinaryData.FromObjectAsJson(result)))
+                // Emit a message with the annotations attached to the text content.
+                foreach (var evt in stream.OutputItemMessage(
+                    "Here are your files and sources.",
+                    annotations))
                 {
                     yield return evt;
                 }
-
-                yield return stream.EmitCompleted();
-                await Task.CompletedTask;
-            }
-        }
-
-        #endregion
-
-        [Test]
-        public void Implement_StructuredOutputFullControlHandler()
-        {
-        }
-
-        #region Snippet:Responses_Sample15_StructuredOutputFullControl
-
-        public class StructuredOutputFullControlHandler : ResponseHandler
-        {
-            public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-                CreateResponse request,
-                ResponseContext context,
-                [EnumeratorCancellation] CancellationToken cancellationToken)
-            {
-                var stream = new ResponseEventStream(context, request);
-
-                yield return stream.EmitCreated();
-                yield return stream.EmitInProgress();
-
-                // Get a builder for explicit event control.
-                var builder = stream.AddOutputItemStructuredOutputs();
-
-                var payload = BinaryData.FromObjectAsJson(new
-                {
-                    classification = "urgent",
-                    entities = new[]
-                    {
-                        new { name = "Order #12345", type = "order_id" },
-                        new { name = "2024-01-15", type = "date" },
-                    },
-                });
-
-                var item = new StructuredOutputsOutputItem(payload, builder.ItemId);
-                yield return builder.EmitAdded(item);
-                yield return builder.EmitDone(item);
 
                 yield return stream.EmitCompleted();
                 await Task.CompletedTask;

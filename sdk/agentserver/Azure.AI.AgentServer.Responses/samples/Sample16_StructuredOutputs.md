@@ -1,4 +1,4 @@
-# Sample 15: Structured outputs
+# Sample 16: Structured outputs
 
 Developers can return structured data from a handler in two ways:
 
@@ -20,7 +20,7 @@ dotnet add package Azure.AI.AgentServer.Responses --prerelease
 
 Use the `OutputItemStructuredOutputs()` convenience method to emit a complete structured output item in one call. The method takes a `BinaryData` parameter — serialize your object with `BinaryData.FromObjectAsJson()`. The payload shape is entirely up to you — analytics, file references, classification labels, or any combination:
 
-```C# Snippet:Responses_Sample15_StructuredOutputHandler
+```C# Snippet:Responses_Sample16_StructuredOutputHandler
 public class StructuredOutputHandler : ResponseHandler
 {
     public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
@@ -65,7 +65,7 @@ public class StructuredOutputHandler : ResponseHandler
 
 For more control, use `AddOutputItemStructuredOutputs()` to get a builder, then emit the `added` and `done` events yourself:
 
-```C# Snippet:Responses_Sample15_StructuredOutputFullControl
+```C# Snippet:Responses_Sample16_StructuredOutputFullControl
 public class StructuredOutputFullControlHandler : ResponseHandler
 {
     public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
@@ -103,7 +103,7 @@ public class StructuredOutputFullControlHandler : ResponseHandler
 
 ## Run the server
 
-```C# Snippet:Responses_Sample15_StartServer
+```C# Snippet:Responses_Sample16_StartServer
 ResponsesServer.Run<StructuredOutputHandler>();
 ```
 

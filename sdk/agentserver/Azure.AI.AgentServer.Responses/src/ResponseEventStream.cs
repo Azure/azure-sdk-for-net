@@ -345,9 +345,22 @@ public class ResponseEventStream
     /// <returns>An enumerable of events: <c>output_item.added</c> → text content convenience → <c>output_item.done</c>.</returns>
     public IEnumerable<ResponseStreamEvent> OutputItemMessage(string text)
     {
+        return OutputItemMessage(text, Array.Empty<Annotation>());
+    }
+
+    /// <summary>
+    /// Convenience generator that yields the complete message output-item lifecycle
+    /// with a single text content part and annotations (S-056).
+    /// </summary>
+    /// <param name="text">The complete message text.</param>
+    /// <param name="annotations">The annotations to attach to the text content part.</param>
+    /// <returns>An enumerable of events: <c>output_item.added</c> → text content convenience (with annotations) → <c>output_item.done</c>.</returns>
+    public IEnumerable<ResponseStreamEvent> OutputItemMessage(
+        string text, IEnumerable<Annotation> annotations)
+    {
         var builder = AddOutputItemMessage();
         yield return builder.EmitAdded();
-        foreach (var evt in builder.TextContent(text))
+        foreach (var evt in builder.TextContent(text, annotations))
         {
             yield return evt;
         }

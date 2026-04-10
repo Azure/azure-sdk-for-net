@@ -898,16 +898,61 @@ public class SampleEndToEndTests
     }
 
     // ═══════════════════════════════════════════════════════════════════
-    //  Sample 15 — Structured Outputs
+    //  Sample 15 — File Annotations
     // ═══════════════════════════════════════════════════════════════════
 
     [Test]
-    public async Task Sample15_StructuredOutputHandler_ReturnsStructuredOutputItem()
+    public async Task Sample15_FileAnnotationsHandler_ReturnsMixedAnnotations()
     {
         using var factory = new TestWebApplicationFactory(
             configureTestServices: services =>
             {
-                services.AddSingleton<ResponseHandler, Sample15Snippets.StructuredOutputHandler>();
+                services.AddSingleton<ResponseHandler, Sample15Snippets.FileAnnotationsHandler>();
+            });
+        using var client = factory.CreateClient();
+
+        string body = await PostJsonAsync(client, """
+            { "model": "test", "input": "Generate the monthly reports" }
+            """);
+
+        using var doc = JsonDocument.Parse(body);
+        var message = doc.RootElement.GetProperty("output").EnumerateArray()
+            .First(i => i.GetProperty("type").GetString() == "message");
+        var content = message.GetProperty("content")[0];
+        Assert.That(content.GetProperty("type").GetString(), Is.EqualTo("output_text"));
+        Assert.That(content.GetProperty("text").GetString(), Is.EqualTo("Here are your files and sources."));
+
+        var annotations = content.GetProperty("annotations");
+        Assert.That(annotations.GetArrayLength(), Is.EqualTo(4));
+
+        // file_path annotations
+        Assert.That(annotations[0].GetProperty("type").GetString(), Is.EqualTo("file_path"));
+        Assert.That(annotations[0].GetProperty("file_id").GetString(), Is.EqualTo("file-abc123"));
+        Assert.That(annotations[1].GetProperty("type").GetString(), Is.EqualTo("file_path"));
+        Assert.That(annotations[1].GetProperty("file_id").GetString(), Is.EqualTo("file-def456"));
+
+        // file_citation annotation
+        Assert.That(annotations[2].GetProperty("type").GetString(), Is.EqualTo("file_citation"));
+        Assert.That(annotations[2].GetProperty("file_id").GetString(), Is.EqualTo("file-src-001"));
+        Assert.That(annotations[2].GetProperty("filename").GetString(), Is.EqualTo("research-paper.pdf"));
+
+        // url_citation annotation
+        Assert.That(annotations[3].GetProperty("type").GetString(), Is.EqualTo("url_citation"));
+        Assert.That(annotations[3].GetProperty("url").GetString(), Is.EqualTo("https://example.com/docs/guide"));
+        Assert.That(annotations[3].GetProperty("title").GetString(), Is.EqualTo("Developer Guide"));
+    }
+
+    // ═══════════════════════════════════════════════════════════════════
+    //  Sample 16 — Structured Outputs
+    // ═══════════════════════════════════════════════════════════════════
+
+    [Test]
+    public async Task Sample16_StructuredOutputHandler_ReturnsStructuredOutputItem()
+    {
+        using var factory = new TestWebApplicationFactory(
+            configureTestServices: services =>
+            {
+                services.AddSingleton<ResponseHandler, Sample16Snippets.StructuredOutputHandler>();
             });
         using var client = factory.CreateClient();
 
@@ -928,12 +973,12 @@ public class SampleEndToEndTests
     }
 
     [Test]
-    public async Task Sample15_StructuredOutputFullControlHandler_ReturnsStructuredOutputItem()
+    public async Task Sample16_StructuredOutputFullControlHandler_ReturnsStructuredOutputItem()
     {
         using var factory = new TestWebApplicationFactory(
             configureTestServices: services =>
             {
-                services.AddSingleton<ResponseHandler, Sample15Snippets.StructuredOutputFullControlHandler>();
+                services.AddSingleton<ResponseHandler, Sample16Snippets.StructuredOutputFullControlHandler>();
             });
         using var client = factory.CreateClient();
 
