@@ -1,19 +1,6 @@
 ---
 description: 'Generate SDKs from TypeSpec'
-related_skills:
-  - "azsdk-common-generate-sdk-locally"
-  - "azsdk-common-prepare-release-plan"
-  - "azsdk-common-sdk-release"
-  - "azsdk-common-pipeline-troubleshooting"
-  - "azsdk-common-apiview-feedback-resolution"
 ---
-
-> **Related Skills:** This orchestration workflow references multiple shared skills:
-> - `.github/skills/azsdk-common-generate-sdk-locally/SKILL.md` — SDK generation, build, and test
-> - `.github/skills/azsdk-common-prepare-release-plan/SKILL.md` — Release plan creation and management
-> - `.github/skills/azsdk-common-sdk-release/SKILL.md` — Release readiness checks and publishing
-> - `.github/skills/azsdk-common-pipeline-troubleshooting/SKILL.md` — CI/generation pipeline failure diagnosis
-> - `.github/skills/azsdk-common-apiview-feedback-resolution/SKILL.md` — Resolve APIView review feedback on SDK PRs
 
 Your goal is to guide the user through the process of generating SDKs from TypeSpec projects. **Before starting**, show all the high level steps to the user and ask: 
 
@@ -47,7 +34,7 @@ Generate SDK using pipeline:
 **Condition**: If user chooses to generate SDK locally
 **Message to user**: "Generating SDKs locally requires you to have the development environment set up for each language. Prompt the user to create a pull request for each language after completing the following steps successfully: generation, validation, build, test and update of metadata, change log, and version."
 **Actions**:
-Follow the steps in #file:local-sdk-workflow.instructions.md to generate and build SDKs locally from TypeSpec project.
+Follow the steps in #file:.github/skills/azsdk-common-generate-sdk-locally/SKILL.md to generate and build SDKs locally from TypeSpec project.
 
 ### Generate SDK using pipeline:
 
@@ -84,7 +71,7 @@ Follow the steps in #file:local-sdk-workflow.instructions.md to generate and bui
 3. Prompt the user to provide the API spec pull request link if not already available in the current context.
 4. If unsure, check if a release plan already exists for API spec pull request.
 5. Prompt user to find the service id and product id in service tree `aka.ms/st` and provide them. Stress the importance of correct service id and product id for proper release plan creation.
-6. If a new release plan is needed, refer to #file:create-release-plan.instructions.md to create a release plan using the spec pull request. API spec pull request is required to create a release plan.
+6. If a new release plan is needed, refer to #file:.github/skills/azsdk-common-prepare-release-plan/SKILL.md to create a release plan using the spec pull request. API spec pull request is required to create a release plan.
 7. Prompt user to change spec PR to ready for review: "Please change the spec pull request to ready for review status"
 8. Suggest users to follow the instructions on spec PR to get approval from API reviewers and merge the spec PR.
 9. Link SDK pull requests to the release plan.
