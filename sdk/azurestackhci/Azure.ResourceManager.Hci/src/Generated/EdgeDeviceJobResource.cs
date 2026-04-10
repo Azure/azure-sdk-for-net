@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Hci
     /// <summary>
     /// A class representing a EdgeDeviceJob along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="EdgeDeviceJobResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetEdgeDeviceJobs method.
+    /// Otherwise you can get one from its parent resource <see cref="HciEdgeDeviceResource"/> using the GetEdgeDeviceJobs method.
     /// </summary>
     public partial class EdgeDeviceJobResource : ArmResource
     {

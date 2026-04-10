@@ -24,14 +24,14 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Initializes a new instance of <see cref="ArcExtensionInstanceView"/>. </summary>
         /// <param name="name"> The extension name. </param>
-        /// <param name="type"> Specifies the type of the extension; an example is "MicrosoftMonitoringAgent". </param>
+        /// <param name="extensionInstanceViewType"> Specifies the type of the extension; an example is "MicrosoftMonitoringAgent". </param>
         /// <param name="typeHandlerVersion"> Specifies the version of the script handler. </param>
         /// <param name="status"> Instance view status. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ArcExtensionInstanceView(string name, string @type, string typeHandlerVersion, ArcExtensionInstanceViewStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ArcExtensionInstanceView(string name, string extensionInstanceViewType, string typeHandlerVersion, ArcExtensionInstanceViewStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
-            Type = @type;
+            ExtensionInstanceViewType = extensionInstanceViewType;
             TypeHandlerVersion = typeHandlerVersion;
             Status = status;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Specifies the type of the extension; an example is "MicrosoftMonitoringAgent". </summary>
         [WirePath("type")]
-        public string Type { get; }
+        public string ExtensionInstanceViewType { get; }
 
         /// <summary> Specifies the version of the script handler. </summary>
         [WirePath("typeHandlerVersion")]

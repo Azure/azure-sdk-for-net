@@ -135,24 +135,6 @@ namespace Azure.ResourceManager.Hci
             }
         }
 
-        /// <summary> Name of the step. </summary>
-        [WirePath("properties.progress.name")]
-        public string Name
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Name;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new UpdateRunProperties();
-                }
-                Properties.Name = value;
-            }
-        }
-
         /// <summary> More detailed description of the step. </summary>
         [WirePath("properties.progress.description")]
         public string Description
@@ -207,6 +189,60 @@ namespace Azure.ResourceManager.Hci
             }
         }
 
+        /// <summary> When the step started, or empty if it has not started executing. </summary>
+        [WirePath("properties.progress.startTimeUtc")]
+        public DateTimeOffset? StartOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StartOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UpdateRunProperties();
+                }
+                Properties.StartOn = value.Value;
+            }
+        }
+
+        /// <summary> When the step reached a terminal state. </summary>
+        [WirePath("properties.progress.endTimeUtc")]
+        public DateTimeOffset? EndOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EndOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UpdateRunProperties();
+                }
+                Properties.EndOn = value.Value;
+            }
+        }
+
+        /// <summary> Completion time of this step or the last completed sub-step. </summary>
+        [WirePath("properties.progress.lastUpdatedTimeUtc")]
+        public DateTimeOffset? LastUpdatedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastUpdatedOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UpdateRunProperties();
+                }
+                Properties.LastUpdatedOn = value.Value;
+            }
+        }
+
         /// <summary> Expected execution time of a given step. This is optionally authored in the update action plan and can be empty. </summary>
         [WirePath("properties.progress.expectedExecutionTime")]
         public string ExpectedExecutionTime
@@ -236,60 +272,6 @@ namespace Azure.ResourceManager.Hci
                     Properties = new UpdateRunProperties();
                 }
                 return Properties.Steps;
-            }
-        }
-
-        /// <summary> When the step started, or empty if it has not started executing. </summary>
-        [WirePath("properties.progress.startTimeUtc")]
-        public DateTimeOffset? StartTimeUtc
-        {
-            get
-            {
-                return Properties is null ? default : Properties.StartTimeUtc;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new UpdateRunProperties();
-                }
-                Properties.StartTimeUtc = value.Value;
-            }
-        }
-
-        /// <summary> When the step reached a terminal state. </summary>
-        [WirePath("properties.progress.endTimeUtc")]
-        public DateTimeOffset? EndTimeUtc
-        {
-            get
-            {
-                return Properties is null ? default : Properties.EndTimeUtc;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new UpdateRunProperties();
-                }
-                Properties.EndTimeUtc = value.Value;
-            }
-        }
-
-        /// <summary> Completion time of this step or the last completed sub-step. </summary>
-        [WirePath("properties.progress.lastUpdatedTimeUtc")]
-        public DateTimeOffset? LastUpdatedTimeUtc
-        {
-            get
-            {
-                return Properties is null ? default : Properties.LastUpdatedTimeUtc;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new UpdateRunProperties();
-                }
-                Properties.LastUpdatedTimeUtc = value.Value;
             }
         }
     }

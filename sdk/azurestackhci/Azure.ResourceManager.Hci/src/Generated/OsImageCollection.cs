@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Hci
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<OsImageData, OsImageResource>(new OsImagesGetBySubscriptionLocationResourceAsyncCollectionResultOfT(_osImagesRestClient, Guid.Parse(Id.SubscriptionId), _location, context), data => new OsImageResource(Client, data));
+            return new AsyncPageableWrapper<OsImageData, OsImageResource>(new OsImagesGetBySubscriptionLocationResourceAsyncCollectionResultOfT(_osImagesRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "OsImageCollection.GetAll"), data => new OsImageResource(Client, data));
         }
 
         /// <summary>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Hci
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<OsImageData, OsImageResource>(new OsImagesGetBySubscriptionLocationResourceCollectionResultOfT(_osImagesRestClient, Guid.Parse(Id.SubscriptionId), _location, context), data => new OsImageResource(Client, data));
+            return new PageableWrapper<OsImageData, OsImageResource>(new OsImagesGetBySubscriptionLocationResourceCollectionResultOfT(_osImagesRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "OsImageCollection.GetAll"), data => new OsImageResource(Client, data));
         }
 
         /// <summary>

@@ -287,7 +287,13 @@ namespace Azure.ResourceManager.Hci
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HciClusterUpdateData, HciClusterUpdateResource>(new UpdatesGetAllAsyncCollectionResultOfT(_updatesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new HciClusterUpdateResource(Client, data));
+            return new AsyncPageableWrapper<HciClusterUpdateData, HciClusterUpdateResource>(new UpdatesGetAllAsyncCollectionResultOfT(
+                _updatesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "HciClusterUpdateCollection.GetAll"), data => new HciClusterUpdateResource(Client, data));
         }
 
         /// <summary>
@@ -315,7 +321,13 @@ namespace Azure.ResourceManager.Hci
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HciClusterUpdateData, HciClusterUpdateResource>(new UpdatesGetAllCollectionResultOfT(_updatesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new HciClusterUpdateResource(Client, data));
+            return new PageableWrapper<HciClusterUpdateData, HciClusterUpdateResource>(new UpdatesGetAllCollectionResultOfT(
+                _updatesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "HciClusterUpdateCollection.GetAll"), data => new HciClusterUpdateResource(Client, data));
         }
 
         /// <summary>

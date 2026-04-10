@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.Hci
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HciClusterDeploymentSettingData, HciClusterDeploymentSettingResource>(new DeploymentSettingsGetByClustersAsyncCollectionResultOfT(_deploymentSettingsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new HciClusterDeploymentSettingResource(Client, data));
+            return new AsyncPageableWrapper<HciClusterDeploymentSettingData, HciClusterDeploymentSettingResource>(new DeploymentSettingsGetByClustersAsyncCollectionResultOfT(
+                _deploymentSettingsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "HciClusterDeploymentSettingCollection.GetAll"), data => new HciClusterDeploymentSettingResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.Hci
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HciClusterDeploymentSettingData, HciClusterDeploymentSettingResource>(new DeploymentSettingsGetByClustersCollectionResultOfT(_deploymentSettingsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new HciClusterDeploymentSettingResource(Client, data));
+            return new PageableWrapper<HciClusterDeploymentSettingData, HciClusterDeploymentSettingResource>(new DeploymentSettingsGetByClustersCollectionResultOfT(
+                _deploymentSettingsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "HciClusterDeploymentSettingCollection.GetAll"), data => new HciClusterDeploymentSettingResource(Client, data));
         }
 
         /// <summary>

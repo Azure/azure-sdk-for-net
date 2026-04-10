@@ -520,7 +520,7 @@ namespace Azure.ResourceManager.Hci
             }
         }
 
-        /// <summary> Gets a collection of EdgeDeviceJobs in the <see cref="ArmResource"/>. </summary>
+        /// <summary> Gets a collection of EdgeDeviceJobs in the <see cref="HciEdgeDeviceResource"/>. </summary>
         /// <returns> An object representing collection of EdgeDeviceJobs and their operations over a EdgeDeviceJobResource. </returns>
         public virtual EdgeDeviceJobCollection GetEdgeDeviceJobs()
         {

@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.Hci
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HciClusterSecuritySettingData, HciClusterSecuritySettingResource>(new SecuritySettingsGetByClustersAsyncCollectionResultOfT(_securitySettingsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new HciClusterSecuritySettingResource(Client, data));
+            return new AsyncPageableWrapper<HciClusterSecuritySettingData, HciClusterSecuritySettingResource>(new SecuritySettingsGetByClustersAsyncCollectionResultOfT(
+                _securitySettingsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "HciClusterSecuritySettingCollection.GetAll"), data => new HciClusterSecuritySettingResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.Hci
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HciClusterSecuritySettingData, HciClusterSecuritySettingResource>(new SecuritySettingsGetByClustersCollectionResultOfT(_securitySettingsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new HciClusterSecuritySettingResource(Client, data));
+            return new PageableWrapper<HciClusterSecuritySettingData, HciClusterSecuritySettingResource>(new SecuritySettingsGetByClustersCollectionResultOfT(
+                _securitySettingsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "HciClusterSecuritySettingCollection.GetAll"), data => new HciClusterSecuritySettingResource(Client, data));
         }
 
         /// <summary>

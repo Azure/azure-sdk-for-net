@@ -299,7 +299,8 @@ namespace Azure.ResourceManager.Hci
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new ArcExtensionResource(Client, data));
+                context,
+                "ArcExtensionCollection.GetAll"), data => new ArcExtensionResource(Client, data));
         }
 
         /// <summary>
@@ -333,7 +334,8 @@ namespace Azure.ResourceManager.Hci
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new ArcExtensionResource(Client, data));
+                context,
+                "ArcExtensionCollection.GetAll"), data => new ArcExtensionResource(Client, data));
         }
 
         /// <summary>

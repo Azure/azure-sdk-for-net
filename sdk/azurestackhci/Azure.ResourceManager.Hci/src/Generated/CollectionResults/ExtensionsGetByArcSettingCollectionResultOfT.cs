@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.Hci
         private readonly string _clusterName;
         private readonly string _arcSettingName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of ExtensionsGetByArcSettingCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Extensions client used to send requests. </param>
@@ -30,7 +31,8 @@ namespace Azure.ResourceManager.Hci
         /// <param name="clusterName"> The name of the cluster. </param>
         /// <param name="arcSettingName"> The name of the proxy resource holding details of HCI ArcSetting information. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ExtensionsGetByArcSettingCollectionResultOfT(Extensions client, Guid subscriptionId, string resourceGroupName, string clusterName, string arcSettingName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public ExtensionsGetByArcSettingCollectionResultOfT(Extensions client, Guid subscriptionId, string resourceGroupName, string clusterName, string arcSettingName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -38,6 +40,7 @@ namespace Azure.ResourceManager.Hci
             _clusterName = clusterName;
             _arcSettingName = arcSettingName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of ExtensionsGetByArcSettingCollectionResultOfT as an enumerable collection. </summary>
@@ -70,7 +73,7 @@ namespace Azure.ResourceManager.Hci
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByArcSettingRequest(nextLink, _subscriptionId, _resourceGroupName, _clusterName, _arcSettingName, _context) : _client.CreateGetByArcSettingRequest(_subscriptionId, _resourceGroupName, _clusterName, _arcSettingName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ArcExtensionCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

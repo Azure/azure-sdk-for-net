@@ -94,20 +94,20 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (Optional.IsDefined(StartTimeUtc))
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTimeUtc"u8);
-                writer.WriteStringValue(StartTimeUtc.Value, "O");
+                writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Optional.IsDefined(EndTimeUtc))
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTimeUtc"u8);
-                writer.WriteStringValue(EndTimeUtc.Value, "O");
+                writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Optional.IsDefined(LastUpdatedTimeUtc))
+            if (Optional.IsDefined(LastUpdatedOn))
             {
                 writer.WritePropertyName("lastUpdatedTimeUtc"u8);
-                writer.WriteStringValue(LastUpdatedTimeUtc.Value, "O");
+                writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
             if (Optional.IsDefined(ExpectedExecutionTime))
             {
@@ -170,9 +170,9 @@ namespace Azure.ResourceManager.Hci.Models
             string description = default;
             string errorMessage = default;
             string status = default;
-            DateTimeOffset? startTimeUtc = default;
-            DateTimeOffset? endTimeUtc = default;
-            DateTimeOffset? lastUpdatedTimeUtc = default;
+            DateTimeOffset? startOn = default;
+            DateTimeOffset? endOn = default;
+            DateTimeOffset? lastUpdatedOn = default;
             string expectedExecutionTime = default;
             IList<HciUpdateStep> steps = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    startTimeUtc = prop.Value.GetDateTimeOffset("O");
+                    startOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endTimeUtc"u8))
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    endTimeUtc = prop.Value.GetDateTimeOffset("O");
+                    endOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("lastUpdatedTimeUtc"u8))
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    lastUpdatedTimeUtc = prop.Value.GetDateTimeOffset("O");
+                    lastUpdatedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("expectedExecutionTime"u8))
@@ -254,9 +254,9 @@ namespace Azure.ResourceManager.Hci.Models
                 description,
                 errorMessage,
                 status,
-                startTimeUtc,
-                endTimeUtc,
-                lastUpdatedTimeUtc,
+                startOn,
+                endOn,
+                lastUpdatedOn,
                 expectedExecutionTime,
                 steps ?? new ChangeTrackingList<HciUpdateStep>(),
                 additionalBinaryDataProperties);

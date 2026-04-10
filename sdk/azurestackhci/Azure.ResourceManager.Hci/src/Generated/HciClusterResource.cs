@@ -431,7 +431,8 @@ namespace Azure.ResourceManager.Hci
                 Id.ResourceGroupName,
                 Id.Name,
                 expand,
-                context), data => new HciClusterOfferResource(Client, data));
+                context,
+                "HciClusterResource.GetByCluster"), data => new HciClusterOfferResource(Client, data));
         }
 
         /// <summary>
@@ -470,7 +471,8 @@ namespace Azure.ResourceManager.Hci
                 Id.ResourceGroupName,
                 Id.Name,
                 expand,
-                context), data => new HciClusterOfferResource(Client, data));
+                context,
+                "HciClusterResource.GetByCluster"), data => new HciClusterOfferResource(Client, data));
         }
 
         /// <summary>

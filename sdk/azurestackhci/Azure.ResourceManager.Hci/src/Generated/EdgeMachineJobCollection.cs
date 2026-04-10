@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.Hci
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EdgeMachineJobData, EdgeMachineJobResource>(new EdgeMachineJobsGetAllAsyncCollectionResultOfT(_edgeMachineJobsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new EdgeMachineJobResource(Client, data));
+            return new AsyncPageableWrapper<EdgeMachineJobData, EdgeMachineJobResource>(new EdgeMachineJobsGetAllAsyncCollectionResultOfT(
+                _edgeMachineJobsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "EdgeMachineJobCollection.GetAll"), data => new EdgeMachineJobResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.Hci
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EdgeMachineJobData, EdgeMachineJobResource>(new EdgeMachineJobsGetAllCollectionResultOfT(_edgeMachineJobsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new EdgeMachineJobResource(Client, data));
+            return new PageableWrapper<EdgeMachineJobData, EdgeMachineJobResource>(new EdgeMachineJobsGetAllCollectionResultOfT(
+                _edgeMachineJobsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "EdgeMachineJobCollection.GetAll"), data => new EdgeMachineJobResource(Client, data));
         }
 
         /// <summary>

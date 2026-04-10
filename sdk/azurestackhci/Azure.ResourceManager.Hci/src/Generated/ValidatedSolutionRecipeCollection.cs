@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Hci
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ValidatedSolutionRecipeData, ValidatedSolutionRecipeResource>(new ValidatedSolutionRecipesGetBySubscriptionLocationResourceAsyncCollectionResultOfT(_validatedSolutionRecipesRestClient, Guid.Parse(Id.SubscriptionId), _location, context), data => new ValidatedSolutionRecipeResource(Client, data));
+            return new AsyncPageableWrapper<ValidatedSolutionRecipeData, ValidatedSolutionRecipeResource>(new ValidatedSolutionRecipesGetBySubscriptionLocationResourceAsyncCollectionResultOfT(_validatedSolutionRecipesRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "ValidatedSolutionRecipeCollection.GetAll"), data => new ValidatedSolutionRecipeResource(Client, data));
         }
 
         /// <summary>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Hci
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ValidatedSolutionRecipeData, ValidatedSolutionRecipeResource>(new ValidatedSolutionRecipesGetBySubscriptionLocationResourceCollectionResultOfT(_validatedSolutionRecipesRestClient, Guid.Parse(Id.SubscriptionId), _location, context), data => new ValidatedSolutionRecipeResource(Client, data));
+            return new PageableWrapper<ValidatedSolutionRecipeData, ValidatedSolutionRecipeResource>(new ValidatedSolutionRecipesGetBySubscriptionLocationResourceCollectionResultOfT(_validatedSolutionRecipesRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "ValidatedSolutionRecipeCollection.GetAll"), data => new ValidatedSolutionRecipeResource(Client, data));
         }
 
         /// <summary>

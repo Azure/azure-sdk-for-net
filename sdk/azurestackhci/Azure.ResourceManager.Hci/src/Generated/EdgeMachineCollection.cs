@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Hci
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EdgeMachineData, EdgeMachineResource>(new EdgeMachinesGetByResourceGroupAsyncCollectionResultOfT(_edgeMachinesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new EdgeMachineResource(Client, data));
+            return new AsyncPageableWrapper<EdgeMachineData, EdgeMachineResource>(new EdgeMachinesGetByResourceGroupAsyncCollectionResultOfT(_edgeMachinesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "EdgeMachineCollection.GetAll"), data => new EdgeMachineResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Hci
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EdgeMachineData, EdgeMachineResource>(new EdgeMachinesGetByResourceGroupCollectionResultOfT(_edgeMachinesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new EdgeMachineResource(Client, data));
+            return new PageableWrapper<EdgeMachineData, EdgeMachineResource>(new EdgeMachinesGetByResourceGroupCollectionResultOfT(_edgeMachinesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "EdgeMachineCollection.GetAll"), data => new EdgeMachineResource(Client, data));
         }
 
         /// <summary>

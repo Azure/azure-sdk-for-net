@@ -24,6 +24,7 @@ namespace Azure.ResourceManager.Hci
         private readonly string _offerName;
         private readonly string _expand;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of SkusGetByOfferCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Skus client used to send requests. </param>
@@ -34,7 +35,8 @@ namespace Azure.ResourceManager.Hci
         /// <param name="offerName"> The name of the offer available within HCI cluster. </param>
         /// <param name="expand"> Specify $expand=content,contentVersion to populate additional fields related to the marketplace offer. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public SkusGetByOfferCollectionResultOfT(Skus client, Guid subscriptionId, string resourceGroupName, string clusterName, string publisherName, string offerName, string expand, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public SkusGetByOfferCollectionResultOfT(Skus client, Guid subscriptionId, string resourceGroupName, string clusterName, string publisherName, string offerName, string expand, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -44,6 +46,7 @@ namespace Azure.ResourceManager.Hci
             _offerName = offerName;
             _expand = expand;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of SkusGetByOfferCollectionResultOfT as an enumerable collection. </summary>
@@ -76,7 +79,7 @@ namespace Azure.ResourceManager.Hci
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByOfferRequest(nextLink, _subscriptionId, _resourceGroupName, _clusterName, _publisherName, _offerName, _expand, _context) : _client.CreateGetByOfferRequest(_subscriptionId, _resourceGroupName, _clusterName, _publisherName, _offerName, _expand, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("HciSkuCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

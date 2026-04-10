@@ -287,7 +287,13 @@ namespace Azure.ResourceManager.Hci
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ArcSettingData, ArcSettingResource>(new ArcSettingsGetByClusterAsyncCollectionResultOfT(_arcSettingsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ArcSettingResource(Client, data));
+            return new AsyncPageableWrapper<ArcSettingData, ArcSettingResource>(new ArcSettingsGetByClusterAsyncCollectionResultOfT(
+                _arcSettingsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ArcSettingCollection.GetAll"), data => new ArcSettingResource(Client, data));
         }
 
         /// <summary>
@@ -315,7 +321,13 @@ namespace Azure.ResourceManager.Hci
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ArcSettingData, ArcSettingResource>(new ArcSettingsGetByClusterCollectionResultOfT(_arcSettingsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ArcSettingResource(Client, data));
+            return new PageableWrapper<ArcSettingData, ArcSettingResource>(new ArcSettingsGetByClusterCollectionResultOfT(
+                _arcSettingsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ArcSettingCollection.GetAll"), data => new ArcSettingResource(Client, data));
         }
 
         /// <summary>

@@ -28,21 +28,21 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="description"> More detailed description of the step. </param>
         /// <param name="errorMessage"> Error message, specified if the step is in a failed state. </param>
         /// <param name="status"> Status of the step, bubbled up from the ECE action plan for installation attempts. Values are: 'Success', 'Error', 'InProgress', and 'Unknown status'. </param>
-        /// <param name="startTimeUtc"> When the step started, or empty if it has not started executing. </param>
-        /// <param name="endTimeUtc"> When the step reached a terminal state. </param>
-        /// <param name="lastUpdatedTimeUtc"> Completion time of this step or the last completed sub-step. </param>
+        /// <param name="startOn"> When the step started, or empty if it has not started executing. </param>
+        /// <param name="endOn"> When the step reached a terminal state. </param>
+        /// <param name="lastUpdatedOn"> Completion time of this step or the last completed sub-step. </param>
         /// <param name="expectedExecutionTime"> Expected execution time of a given step. This is optionally authored in the update action plan and can be empty. </param>
         /// <param name="steps"> Recursive model for child steps of this step. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HciUpdateStep(string name, string description, string errorMessage, string status, DateTimeOffset? startTimeUtc, DateTimeOffset? endTimeUtc, DateTimeOffset? lastUpdatedTimeUtc, string expectedExecutionTime, IList<HciUpdateStep> steps, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HciUpdateStep(string name, string description, string errorMessage, string status, DateTimeOffset? startOn, DateTimeOffset? endOn, DateTimeOffset? lastUpdatedOn, string expectedExecutionTime, IList<HciUpdateStep> steps, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
             ErrorMessage = errorMessage;
             Status = status;
-            StartTimeUtc = startTimeUtc;
-            EndTimeUtc = endTimeUtc;
-            LastUpdatedTimeUtc = lastUpdatedTimeUtc;
+            StartOn = startOn;
+            EndOn = endOn;
+            LastUpdatedOn = lastUpdatedOn;
             ExpectedExecutionTime = expectedExecutionTime;
             Steps = steps;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -63,6 +63,18 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Status of the step, bubbled up from the ECE action plan for installation attempts. Values are: 'Success', 'Error', 'InProgress', and 'Unknown status'. </summary>
         [WirePath("status")]
         public string Status { get; set; }
+
+        /// <summary> When the step started, or empty if it has not started executing. </summary>
+        [WirePath("startTimeUtc")]
+        public DateTimeOffset? StartOn { get; set; }
+
+        /// <summary> When the step reached a terminal state. </summary>
+        [WirePath("endTimeUtc")]
+        public DateTimeOffset? EndOn { get; set; }
+
+        /// <summary> Completion time of this step or the last completed sub-step. </summary>
+        [WirePath("lastUpdatedTimeUtc")]
+        public DateTimeOffset? LastUpdatedOn { get; set; }
 
         /// <summary> Expected execution time of a given step. This is optionally authored in the update action plan and can be empty. </summary>
         [WirePath("expectedExecutionTime")]

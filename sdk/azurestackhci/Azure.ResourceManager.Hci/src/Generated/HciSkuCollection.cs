@@ -188,7 +188,8 @@ namespace Azure.ResourceManager.Hci
                 Id.Parent.Name,
                 Id.Name,
                 expand,
-                context), data => new HciSkuResource(Client, data));
+                context,
+                "HciSkuCollection.GetAll"), data => new HciSkuResource(Client, data));
         }
 
         /// <summary>
@@ -225,7 +226,8 @@ namespace Azure.ResourceManager.Hci
                 Id.Parent.Name,
                 Id.Name,
                 expand,
-                context), data => new HciSkuResource(Client, data));
+                context,
+                "HciSkuCollection.GetAll"), data => new HciSkuResource(Client, data));
         }
 
         /// <summary>

@@ -13,7 +13,6 @@ using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> Details of an Update run. </summary>
     internal partial class UpdateRunProperties : IJsonModel<UpdateRunProperties>
     {
         /// <param name="data"> The data to parse. </param>

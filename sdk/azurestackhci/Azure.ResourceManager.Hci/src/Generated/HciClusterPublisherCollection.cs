@@ -177,7 +177,13 @@ namespace Azure.ResourceManager.Hci
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HciClusterPublisherData, HciClusterPublisherResource>(new PublishersGetByClusterAsyncCollectionResultOfT(_publishersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new HciClusterPublisherResource(Client, data));
+            return new AsyncPageableWrapper<HciClusterPublisherData, HciClusterPublisherResource>(new PublishersGetByClusterAsyncCollectionResultOfT(
+                _publishersRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "HciClusterPublisherCollection.GetAll"), data => new HciClusterPublisherResource(Client, data));
         }
 
         /// <summary>
@@ -205,7 +211,13 @@ namespace Azure.ResourceManager.Hci
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HciClusterPublisherData, HciClusterPublisherResource>(new PublishersGetByClusterCollectionResultOfT(_publishersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new HciClusterPublisherResource(Client, data));
+            return new PageableWrapper<HciClusterPublisherData, HciClusterPublisherResource>(new PublishersGetByClusterCollectionResultOfT(
+                _publishersRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "HciClusterPublisherCollection.GetAll"), data => new HciClusterPublisherResource(Client, data));
         }
 
         /// <summary>

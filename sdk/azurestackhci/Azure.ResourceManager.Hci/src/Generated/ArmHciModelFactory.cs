@@ -1533,13 +1533,13 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Describes the Extension Instance View. </summary>
         /// <param name="name"> The extension name. </param>
-        /// <param name="type"> Specifies the type of the extension; an example is "MicrosoftMonitoringAgent". </param>
+        /// <param name="extensionInstanceViewType"> Specifies the type of the extension; an example is "MicrosoftMonitoringAgent". </param>
         /// <param name="typeHandlerVersion"> Specifies the version of the script handler. </param>
         /// <param name="status"> Instance view status. </param>
         /// <returns> A new <see cref="Models.ArcExtensionInstanceView"/> instance for mocking. </returns>
-        public static ArcExtensionInstanceView ArcExtensionInstanceView(string name = default, string @type = default, string typeHandlerVersion = default, ArcExtensionInstanceViewStatus status = default)
+        public static ArcExtensionInstanceView ArcExtensionInstanceView(string name = default, string extensionInstanceViewType = default, string typeHandlerVersion = default, ArcExtensionInstanceViewStatus status = default)
         {
-            return new ArcExtensionInstanceView(name, @type, typeHandlerVersion, status, additionalBinaryDataProperties: null);
+            return new ArcExtensionInstanceView(name, extensionInstanceViewType, typeHandlerVersion, status, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Instance view status. </summary>
@@ -1664,18 +1664,19 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="description"> More detailed description of the step. </param>
         /// <param name="errorMessage"> Error message, specified if the step is in a failed state. </param>
         /// <param name="status"> Status of the step, bubbled up from the ECE action plan for installation attempts. Values are: 'Success', 'Error', 'InProgress', and 'Unknown status'. </param>
+        /// <param name="startOn"> When the step started, or empty if it has not started executing. </param>
+        /// <param name="endOn"> When the step reached a terminal state. </param>
+        /// <param name="lastUpdatedOn"> Completion time of this step or the last completed sub-step. </param>
         /// <param name="expectedExecutionTime"> Expected execution time of a given step. This is optionally authored in the update action plan and can be empty. </param>
         /// <param name="steps"> Recursive model for child steps of this step. </param>
-        /// <param name="startOn"> Gets or sets the StartOn. </param>
-        /// <param name="endOn"> Gets or sets the EndOn. </param>
-        /// <param name="lastUpdatedOn"> Gets or sets the LastUpdatedOn. </param>
-        /// <param name="startTimeUtc"> When the step started, or empty if it has not started executing. </param>
-        /// <param name="endTimeUtc"> When the step reached a terminal state. </param>
-        /// <param name="lastUpdatedTimeUtc"> Completion time of this step or the last completed sub-step. </param>
+        /// <param name="startTimeUtc"> Gets or sets the StartTimeUtc. </param>
+        /// <param name="endTimeUtc"> Gets or sets the EndTimeUtc. </param>
+        /// <param name="lastUpdatedTimeUtc"> Gets or sets the LastUpdatedTimeUtc. </param>
+        /// <param name="namePropertiesProgressName"> Gets or sets the NamePropertiesProgressName. </param>
         /// <param name="updateRunName"> The name of the Update Run. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <returns> A new <see cref="Hci.HciClusterUpdateRunData"/> instance for mocking. </returns>
-        public static HciClusterUpdateRunData HciClusterUpdateRunData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HciProvisioningState? provisioningState = default, DateTimeOffset? timeStarted = default, DateTimeOffset? lastCompletedOn = default, string duration = default, UpdateRunPropertiesState? state = default, string name0 = default, string description = default, string errorMessage = default, string status = default, string expectedExecutionTime = default, IEnumerable<HciUpdateStep> steps = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, DateTimeOffset? lastUpdatedOn = default, DateTimeOffset? startTimeUtc = default, DateTimeOffset? endTimeUtc = default, DateTimeOffset? lastUpdatedTimeUtc = default, string updateRunName = default, AzureLocation? location = default)
+        public static HciClusterUpdateRunData HciClusterUpdateRunData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HciProvisioningState? provisioningState = default, DateTimeOffset? timeStarted = default, DateTimeOffset? lastCompletedOn = default, string duration = default, UpdateRunPropertiesState? state = default, string name0 = default, string description = default, string errorMessage = default, string status = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, DateTimeOffset? lastUpdatedOn = default, string expectedExecutionTime = default, IEnumerable<HciUpdateStep> steps = default, DateTimeOffset? startTimeUtc = default, DateTimeOffset? endTimeUtc = default, DateTimeOffset? lastUpdatedTimeUtc = default, string namePropertiesProgressName = default, string updateRunName = default, AzureLocation? location = default)
         {
             return new HciClusterUpdateRunData(
                 id,
@@ -1683,7 +1684,7 @@ namespace Azure.ResourceManager.Hci.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                provisioningState is null && timeStarted is null && lastCompletedOn is null && duration is null && state is null && name0 is null && description is null && errorMessage is null && status is null && expectedExecutionTime is null && steps is null && startOn is null && endOn is null && lastUpdatedOn is null && startTimeUtc is null && endTimeUtc is null && lastUpdatedTimeUtc is null ? default : new UpdateRunProperties(
+                provisioningState is null && timeStarted is null && lastCompletedOn is null && duration is null && state is null && name0 is null && description is null && errorMessage is null && status is null && startOn is null && endOn is null && lastUpdatedOn is null && expectedExecutionTime is null && steps is null && startTimeUtc is null && endTimeUtc is null && lastUpdatedTimeUtc is null && namePropertiesProgressName is null ? default : new UpdateRunProperties(
                     provisioningState,
                     timeStarted,
                     lastCompletedOn,
@@ -1694,9 +1695,9 @@ namespace Azure.ResourceManager.Hci.Models
                         description,
                         errorMessage,
                         status,
-                        startTimeUtc,
-                        endTimeUtc,
-                        lastUpdatedTimeUtc,
+                        startOn,
+                        endOn,
+                        lastUpdatedOn,
                         expectedExecutionTime,
                         (steps ?? new ChangeTrackingList<HciUpdateStep>()).ToList(),
                         null),
@@ -1710,13 +1711,13 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="description"> More detailed description of the step. </param>
         /// <param name="errorMessage"> Error message, specified if the step is in a failed state. </param>
         /// <param name="status"> Status of the step, bubbled up from the ECE action plan for installation attempts. Values are: 'Success', 'Error', 'InProgress', and 'Unknown status'. </param>
-        /// <param name="startTimeUtc"> When the step started, or empty if it has not started executing. </param>
-        /// <param name="endTimeUtc"> When the step reached a terminal state. </param>
-        /// <param name="lastUpdatedTimeUtc"> Completion time of this step or the last completed sub-step. </param>
+        /// <param name="startOn"> When the step started, or empty if it has not started executing. </param>
+        /// <param name="endOn"> When the step reached a terminal state. </param>
+        /// <param name="lastUpdatedOn"> Completion time of this step or the last completed sub-step. </param>
         /// <param name="expectedExecutionTime"> Expected execution time of a given step. This is optionally authored in the update action plan and can be empty. </param>
         /// <param name="steps"> Recursive model for child steps of this step. </param>
         /// <returns> A new <see cref="Models.HciUpdateStep"/> instance for mocking. </returns>
-        public static HciUpdateStep HciUpdateStep(string name = default, string description = default, string errorMessage = default, string status = default, DateTimeOffset? startTimeUtc = default, DateTimeOffset? endTimeUtc = default, DateTimeOffset? lastUpdatedTimeUtc = default, string expectedExecutionTime = default, IEnumerable<HciUpdateStep> steps = default)
+        public static HciUpdateStep HciUpdateStep(string name = default, string description = default, string errorMessage = default, string status = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, DateTimeOffset? lastUpdatedOn = default, string expectedExecutionTime = default, IEnumerable<HciUpdateStep> steps = default)
         {
             steps ??= new ChangeTrackingList<HciUpdateStep>();
 
@@ -1725,9 +1726,9 @@ namespace Azure.ResourceManager.Hci.Models
                 description,
                 errorMessage,
                 status,
-                startTimeUtc,
-                endTimeUtc,
-                lastUpdatedTimeUtc,
+                startOn,
+                endOn,
+                lastUpdatedOn,
                 expectedExecutionTime,
                 steps.ToList(),
                 additionalBinaryDataProperties: null);
@@ -2893,17 +2894,7 @@ namespace Azure.ResourceManager.Hci.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static HciClusterUpdateRunData HciClusterUpdateRunData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, HciProvisioningState? provisioningState, DateTimeOffset? timeStarted, DateTimeOffset? lastUpdatedOn, string duration, UpdateRunPropertiesState? state, string namePropertiesProgressName, string description, string errorMessage, string status, DateTimeOffset? startOn, DateTimeOffset? endOn, DateTimeOffset? lastCompletedOn, string expectedExecutionTime, IEnumerable<HciUpdateStep> steps)
         {
-            steps ??= new ChangeTrackingList<HciUpdateStep>();
-
-            return new HciClusterUpdateRunData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                default,
-                default,
-                location);
+            return HciClusterUpdateRunData(id, name, resourceType, systemData, provisioningState, timeStarted, lastCompletedOn, duration, state, name, description, errorMessage, status, startOn, endOn, lastUpdatedOn, expectedExecutionTime, steps, startTimeUtc: default, endTimeUtc: default, lastUpdatedTimeUtc: default, namePropertiesProgressName, updateRunName: default, location);
         }
 
         /// <summary> Initializes a new instance of <see cref="Hci.HciClusterUpdateSummaryData"/>. </summary>

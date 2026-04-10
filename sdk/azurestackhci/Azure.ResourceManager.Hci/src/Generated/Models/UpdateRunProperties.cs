@@ -11,7 +11,6 @@ using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> Details of an Update run. </summary>
     internal partial class UpdateRunProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -64,24 +63,6 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Progress representation of the update run steps. </summary>
         [WirePath("progress")]
         internal HciUpdateStep Progress { get; set; }
-
-        /// <summary> Name of the step. </summary>
-        [WirePath("progress.name")]
-        public string Name
-        {
-            get
-            {
-                return Progress is null ? default : Progress.Name;
-            }
-            set
-            {
-                if (Progress is null)
-                {
-                    Progress = new HciUpdateStep();
-                }
-                Progress.Name = value;
-            }
-        }
 
         /// <summary> More detailed description of the step. </summary>
         [WirePath("progress.description")]
@@ -137,6 +118,60 @@ namespace Azure.ResourceManager.Hci.Models
             }
         }
 
+        /// <summary> When the step started, or empty if it has not started executing. </summary>
+        [WirePath("progress.startTimeUtc")]
+        public DateTimeOffset? StartOn
+        {
+            get
+            {
+                return Progress is null ? default : Progress.StartOn;
+            }
+            set
+            {
+                if (Progress is null)
+                {
+                    Progress = new HciUpdateStep();
+                }
+                Progress.StartOn = value.Value;
+            }
+        }
+
+        /// <summary> When the step reached a terminal state. </summary>
+        [WirePath("progress.endTimeUtc")]
+        public DateTimeOffset? EndOn
+        {
+            get
+            {
+                return Progress is null ? default : Progress.EndOn;
+            }
+            set
+            {
+                if (Progress is null)
+                {
+                    Progress = new HciUpdateStep();
+                }
+                Progress.EndOn = value.Value;
+            }
+        }
+
+        /// <summary> Completion time of this step or the last completed sub-step. </summary>
+        [WirePath("progress.lastUpdatedTimeUtc")]
+        public DateTimeOffset? LastUpdatedOn
+        {
+            get
+            {
+                return Progress is null ? default : Progress.LastUpdatedOn;
+            }
+            set
+            {
+                if (Progress is null)
+                {
+                    Progress = new HciUpdateStep();
+                }
+                Progress.LastUpdatedOn = value.Value;
+            }
+        }
+
         /// <summary> Expected execution time of a given step. This is optionally authored in the update action plan and can be empty. </summary>
         [WirePath("progress.expectedExecutionTime")]
         public string ExpectedExecutionTime
@@ -166,111 +201,6 @@ namespace Azure.ResourceManager.Hci.Models
                     Progress = new HciUpdateStep();
                 }
                 return Progress.Steps;
-            }
-        }
-
-        /// <summary> Gets or sets the StartOn. </summary>
-        public DateTimeOffset? StartOn
-        {
-            get
-            {
-                return Progress is null ? default : Progress.StartOn;
-            }
-            set
-            {
-                if (Progress is null)
-                {
-                    Progress = new HciUpdateStep();
-                }
-                Progress.StartOn = value.Value;
-            }
-        }
-
-        /// <summary> Gets or sets the EndOn. </summary>
-        public DateTimeOffset? EndOn
-        {
-            get
-            {
-                return Progress is null ? default : Progress.EndOn;
-            }
-            set
-            {
-                if (Progress is null)
-                {
-                    Progress = new HciUpdateStep();
-                }
-                Progress.EndOn = value.Value;
-            }
-        }
-
-        /// <summary> Gets or sets the LastUpdatedOn. </summary>
-        public DateTimeOffset? LastUpdatedOn
-        {
-            get
-            {
-                return Progress is null ? default : Progress.LastUpdatedOn;
-            }
-            set
-            {
-                if (Progress is null)
-                {
-                    Progress = new HciUpdateStep();
-                }
-                Progress.LastUpdatedOn = value.Value;
-            }
-        }
-
-        /// <summary> When the step started, or empty if it has not started executing. </summary>
-        [WirePath("progress.startTimeUtc")]
-        public DateTimeOffset? StartTimeUtc
-        {
-            get
-            {
-                return Progress is null ? default : Progress.StartTimeUtc;
-            }
-            set
-            {
-                if (Progress is null)
-                {
-                    Progress = new HciUpdateStep();
-                }
-                Progress.StartTimeUtc = value.Value;
-            }
-        }
-
-        /// <summary> When the step reached a terminal state. </summary>
-        [WirePath("progress.endTimeUtc")]
-        public DateTimeOffset? EndTimeUtc
-        {
-            get
-            {
-                return Progress is null ? default : Progress.EndTimeUtc;
-            }
-            set
-            {
-                if (Progress is null)
-                {
-                    Progress = new HciUpdateStep();
-                }
-                Progress.EndTimeUtc = value.Value;
-            }
-        }
-
-        /// <summary> Completion time of this step or the last completed sub-step. </summary>
-        [WirePath("progress.lastUpdatedTimeUtc")]
-        public DateTimeOffset? LastUpdatedTimeUtc
-        {
-            get
-            {
-                return Progress is null ? default : Progress.LastUpdatedTimeUtc;
-            }
-            set
-            {
-                if (Progress is null)
-                {
-                    Progress = new HciUpdateStep();
-                }
-                Progress.LastUpdatedTimeUtc = value.Value;
             }
         }
     }

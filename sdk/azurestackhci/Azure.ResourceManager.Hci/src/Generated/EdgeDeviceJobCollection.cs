@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Hci
 {
     /// <summary>
     /// A class representing a collection of <see cref="EdgeDeviceJobResource"/> and their operations.
-    /// Each <see cref="EdgeDeviceJobResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
-    /// To get a <see cref="EdgeDeviceJobCollection"/> instance call the GetEdgeDeviceJobs method from an instance of <see cref="ArmResource"/>.
+    /// Each <see cref="EdgeDeviceJobResource"/> in the collection will belong to the same instance of <see cref="HciEdgeDeviceResource"/>.
+    /// To get a <see cref="EdgeDeviceJobCollection"/> instance call the GetEdgeDeviceJobs method from an instance of <see cref="HciEdgeDeviceResource"/>.
     /// </summary>
     public partial class EdgeDeviceJobCollection : ArmCollection, IEnumerable<EdgeDeviceJobResource>, IAsyncEnumerable<EdgeDeviceJobResource>
     {
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.Hci
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EdgeDeviceJobData, EdgeDeviceJobResource>(new EdgeDeviceJobsGetByEdgeDeviceAsyncCollectionResultOfT(_edgeDeviceJobsRestClient, Id.Parent, Id.Name, context), data => new EdgeDeviceJobResource(Client, data));
+            return new AsyncPageableWrapper<EdgeDeviceJobData, EdgeDeviceJobResource>(new EdgeDeviceJobsGetByEdgeDeviceAsyncCollectionResultOfT(_edgeDeviceJobsRestClient, Id.Parent, Id.Name, context, "EdgeDeviceJobCollection.GetAll"), data => new EdgeDeviceJobResource(Client, data));
         }
 
         /// <summary>
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.Hci
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EdgeDeviceJobData, EdgeDeviceJobResource>(new EdgeDeviceJobsGetByEdgeDeviceCollectionResultOfT(_edgeDeviceJobsRestClient, Id.Parent, Id.Name, context), data => new EdgeDeviceJobResource(Client, data));
+            return new PageableWrapper<EdgeDeviceJobData, EdgeDeviceJobResource>(new EdgeDeviceJobsGetByEdgeDeviceCollectionResultOfT(_edgeDeviceJobsRestClient, Id.Parent, Id.Name, context, "EdgeDeviceJobCollection.GetAll"), data => new EdgeDeviceJobResource(Client, data));
         }
 
         /// <summary>

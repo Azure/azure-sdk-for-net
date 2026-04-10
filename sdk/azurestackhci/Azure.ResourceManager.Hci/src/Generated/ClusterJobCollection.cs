@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.Hci
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ClusterJobData, ClusterJobResource>(new ClusterJobsGetAllAsyncCollectionResultOfT(_clusterJobsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ClusterJobResource(Client, data));
+            return new AsyncPageableWrapper<ClusterJobData, ClusterJobResource>(new ClusterJobsGetAllAsyncCollectionResultOfT(
+                _clusterJobsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ClusterJobCollection.GetAll"), data => new ClusterJobResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.Hci
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ClusterJobData, ClusterJobResource>(new ClusterJobsGetAllCollectionResultOfT(_clusterJobsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ClusterJobResource(Client, data));
+            return new PageableWrapper<ClusterJobData, ClusterJobResource>(new ClusterJobsGetAllCollectionResultOfT(
+                _clusterJobsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ClusterJobCollection.GetAll"), data => new ClusterJobResource(Client, data));
         }
 
         /// <summary>

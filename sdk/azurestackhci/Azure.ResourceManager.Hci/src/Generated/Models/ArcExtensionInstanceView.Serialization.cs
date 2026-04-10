@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(ExtensionInstanceViewType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type);
+                writer.WriteStringValue(ExtensionInstanceViewType);
             }
             if (Optional.IsDefined(TypeHandlerVersion))
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Hci.Models
                 return null;
             }
             string name = default;
-            string @type = default;
+            string extensionInstanceViewType = default;
             string typeHandlerVersion = default;
             ArcExtensionInstanceViewStatus status = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    extensionInstanceViewType = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("typeHandlerVersion"u8))
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Hci.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ArcExtensionInstanceView(name, @type, typeHandlerVersion, status, additionalBinaryDataProperties);
+            return new ArcExtensionInstanceView(name, extensionInstanceViewType, typeHandlerVersion, status, additionalBinaryDataProperties);
         }
     }
 }

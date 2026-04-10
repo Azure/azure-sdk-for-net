@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Hci
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DevicePoolData, DevicePoolResource>(new DevicePoolsGetByResourceGroupAsyncCollectionResultOfT(_devicePoolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new DevicePoolResource(Client, data));
+            return new AsyncPageableWrapper<DevicePoolData, DevicePoolResource>(new DevicePoolsGetByResourceGroupAsyncCollectionResultOfT(_devicePoolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DevicePoolCollection.GetAll"), data => new DevicePoolResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Hci
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DevicePoolData, DevicePoolResource>(new DevicePoolsGetByResourceGroupCollectionResultOfT(_devicePoolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new DevicePoolResource(Client, data));
+            return new PageableWrapper<DevicePoolData, DevicePoolResource>(new DevicePoolsGetByResourceGroupCollectionResultOfT(_devicePoolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DevicePoolCollection.GetAll"), data => new DevicePoolResource(Client, data));
         }
 
         /// <summary>

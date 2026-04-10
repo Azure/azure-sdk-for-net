@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.Hci.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HciClusterData, HciClusterResource>(new ClustersGetBySubscriptionAsyncCollectionResultOfT(ClustersRestClient, Guid.Parse(Id.SubscriptionId), context), data => new HciClusterResource(Client, data));
+            return new AsyncPageableWrapper<HciClusterData, HciClusterResource>(new ClustersGetBySubscriptionAsyncCollectionResultOfT(ClustersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHciSubscriptionResource.GetHciClusters"), data => new HciClusterResource(Client, data));
         }
 
         /// <summary>
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.Hci.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HciClusterData, HciClusterResource>(new ClustersGetBySubscriptionCollectionResultOfT(ClustersRestClient, Guid.Parse(Id.SubscriptionId), context), data => new HciClusterResource(Client, data));
+            return new PageableWrapper<HciClusterData, HciClusterResource>(new ClustersGetBySubscriptionCollectionResultOfT(ClustersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHciSubscriptionResource.GetHciClusters"), data => new HciClusterResource(Client, data));
         }
 
         /// <summary>
@@ -411,7 +411,7 @@ namespace Azure.ResourceManager.Hci.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EdgeMachineData, EdgeMachineResource>(new EdgeMachinesGetBySubscriptionAsyncCollectionResultOfT(EdgeMachinesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new EdgeMachineResource(Client, data));
+            return new AsyncPageableWrapper<EdgeMachineData, EdgeMachineResource>(new EdgeMachinesGetBySubscriptionAsyncCollectionResultOfT(EdgeMachinesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHciSubscriptionResource.GetEdgeMachines"), data => new EdgeMachineResource(Client, data));
         }
 
         /// <summary>
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.Hci.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EdgeMachineData, EdgeMachineResource>(new EdgeMachinesGetBySubscriptionCollectionResultOfT(EdgeMachinesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new EdgeMachineResource(Client, data));
+            return new PageableWrapper<EdgeMachineData, EdgeMachineResource>(new EdgeMachinesGetBySubscriptionCollectionResultOfT(EdgeMachinesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHciSubscriptionResource.GetEdgeMachines"), data => new EdgeMachineResource(Client, data));
         }
 
         /// <summary>
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.Hci.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DevicePoolData, DevicePoolResource>(new DevicePoolsGetBySubscriptionAsyncCollectionResultOfT(DevicePoolsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DevicePoolResource(Client, data));
+            return new AsyncPageableWrapper<DevicePoolData, DevicePoolResource>(new DevicePoolsGetBySubscriptionAsyncCollectionResultOfT(DevicePoolsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHciSubscriptionResource.GetDevicePools"), data => new DevicePoolResource(Client, data));
         }
 
         /// <summary>
@@ -495,7 +495,7 @@ namespace Azure.ResourceManager.Hci.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DevicePoolData, DevicePoolResource>(new DevicePoolsGetBySubscriptionCollectionResultOfT(DevicePoolsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DevicePoolResource(Client, data));
+            return new PageableWrapper<DevicePoolData, DevicePoolResource>(new DevicePoolsGetBySubscriptionCollectionResultOfT(DevicePoolsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHciSubscriptionResource.GetDevicePools"), data => new DevicePoolResource(Client, data));
         }
 
         /// <summary>
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.Hci.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new KubernetesVersionsGetBySubscriptionLocationResourceAsyncCollectionResultOfT(KubernetesVersionsRestClient, Guid.Parse(Id.SubscriptionId), location, context);
+            return new KubernetesVersionsGetBySubscriptionLocationResourceAsyncCollectionResultOfT(KubernetesVersionsRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableHciSubscriptionResource.GetBySubscriptionLocationResource");
         }
 
         /// <summary>
@@ -553,7 +553,7 @@ namespace Azure.ResourceManager.Hci.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new KubernetesVersionsGetBySubscriptionLocationResourceCollectionResultOfT(KubernetesVersionsRestClient, Guid.Parse(Id.SubscriptionId), location, context);
+            return new KubernetesVersionsGetBySubscriptionLocationResourceCollectionResultOfT(KubernetesVersionsRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableHciSubscriptionResource.GetBySubscriptionLocationResource");
         }
     }
 }

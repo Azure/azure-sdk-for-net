@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Hci
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<UpdateContentData, UpdateContentResource>(new UpdateContentsGetAllAsyncCollectionResultOfT(_updateContentsRestClient, Guid.Parse(Id.SubscriptionId), _location, context), data => new UpdateContentResource(Client, data));
+            return new AsyncPageableWrapper<UpdateContentData, UpdateContentResource>(new UpdateContentsGetAllAsyncCollectionResultOfT(_updateContentsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "UpdateContentCollection.GetAll"), data => new UpdateContentResource(Client, data));
         }
 
         /// <summary>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Hci
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<UpdateContentData, UpdateContentResource>(new UpdateContentsGetAllCollectionResultOfT(_updateContentsRestClient, Guid.Parse(Id.SubscriptionId), _location, context), data => new UpdateContentResource(Client, data));
+            return new PageableWrapper<UpdateContentData, UpdateContentResource>(new UpdateContentsGetAllCollectionResultOfT(_updateContentsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "UpdateContentCollection.GetAll"), data => new UpdateContentResource(Client, data));
         }
 
         /// <summary>
