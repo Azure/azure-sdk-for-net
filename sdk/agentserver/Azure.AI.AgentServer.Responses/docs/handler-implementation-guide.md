@@ -343,7 +343,7 @@ It provides:
 |---|---|
 | **Response** | `Response` — the underlying `Response` object. Set custom `Metadata` or `Instructions` before `EmitCreated()` |
 | **Lifecycle** | `EmitCreated()`, `EmitInProgress()`, `EmitQueued()`, `EmitCompleted()`, `EmitFailed()`, `EmitIncomplete()` |
-| **Output factories** | `AddOutputItemMessage()`, `AddOutputItemFunctionCall()`, `AddOutputItemReasoningItem()`, `AddOutputItemCodeInterpreterCall()`, `AddOutputItemFileSearchCall()`, `AddOutputItemWebSearchCall()`, `AddOutputItemImageGenCall()`, `AddOutputItemMcpCall()`, `AddOutputItemCustomToolCall()`, and more |
+| **Output factories** | `AddOutputItemMessage()`, `AddOutputItemFunctionCall()`, `AddOutputItemReasoningItem()`, `AddOutputItemCodeInterpreterCall()`, `AddOutputItemFileSearchCall()`, `AddOutputItemWebSearchCall()`, `AddOutputItemImageGenCall()`, `AddOutputItemMcpCall()`, `AddOutputItemCustomToolCall()`, `AddOutputItemStructuredOutputs()`, `AddOutputItemComputerCall()`, `AddOutputItemLocalShellCall()`, `AddOutputItemApplyPatchCall()`, `AddOutputItemMcpApprovalRequest()`, `AddOutputItemCompaction()`, and more |
 
 ### Setting Custom Metadata
 
@@ -802,6 +802,42 @@ The library provides specialised builders for each tool call type. Each also has
 | `OutputItemCustomToolCallBuilder` | `AddOutputItemCustomToolCall(callId, name)` | `EmitAdded()` → `EmitInputDelta()` → `EmitInputDone()` → `EmitDone()` | `Input(string\|IAsyncEnumerable<string>)` |
 
 Each builder enforces its own lifecycle ordering — follow the method progression from left to right.
+
+### Simple Output Items (Add + Done)
+
+Many output item types have no intermediate SSE events — just `output_item.added` and `output_item.done`. For these, `ResponseEventStream` provides one-liner convenience generators that accept the domain-specific parameters, auto-generate the item ID, and yield the complete event pair:
+
+| Convenience Method | Description |
+|---|---|
+| `OutputItemFunctionCallOutput(callId, output)` | Server-side tool execution result |
+| `OutputItemStructuredOutputs(output)` | Arbitrary structured JSON data |
+| `OutputItemImageGenCall(resultBase64)` | Image generation result (with status transitions) |
+| `OutputItemComputerCall(callId, action, pendingSafetyChecks, status)` | Computer tool call |
+| `OutputItemComputerCallOutput(callId, output)` | Computer tool call output |
+| `OutputItemLocalShellCall(callId, action, status)` | Local shell tool call |
+| `OutputItemLocalShellCallOutput(output)` | Local shell tool call output |
+| `OutputItemFunctionShellCall(callId, action, status, environment)` | Function shell call |
+| `OutputItemFunctionShellCallOutput(callId, status, output, maxOutputLength?)` | Function shell call output |
+| `OutputItemApplyPatchCall(callId, status, operation)` | Apply-patch tool call |
+| `OutputItemApplyPatchCallOutput(callId, status)` | Apply-patch tool call output |
+| `OutputItemCustomToolCallOutput(callId, output)` | Custom tool call output |
+| `OutputItemMcpApprovalRequest(serverLabel, name, arguments)` | MCP approval request |
+| `OutputItemMcpApprovalResponse(approvalRequestId, approve)` | MCP approval response |
+| `OutputItemCompaction(encryptedContent)` | Compaction item |
+
+Example:
+
+```csharp
+// Emit a function call output (no deltas — just added + done)
+foreach (var evt in stream.OutputItemFunctionCallOutput("call_1", BinaryData.FromString(resultJson)))
+    yield return evt;
+
+// Emit a structured JSON payload
+foreach (var evt in stream.OutputItemStructuredOutputs(BinaryData.FromObjectAsJson(new { score = 0.95 })))
+    yield return evt;
+```
+
+For fine-grained control, use the corresponding `Add*()` builder factory and call `EmitAdded(item)` / `EmitDone(item)` manually.
 
 ### MCP Terminal State
 
