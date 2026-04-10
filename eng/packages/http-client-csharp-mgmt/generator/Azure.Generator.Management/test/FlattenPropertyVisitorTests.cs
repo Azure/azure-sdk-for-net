@@ -654,6 +654,123 @@ namespace Azure.Generator.Mgmt.Tests
                 $"Base initializer should pass the flattened 'wrapperValue'. Args: [{string.Join(", ", initializerArgNames)}]");
         }
 
+        /// <summary>
+        /// Verifies that when a derived model has its own flattenable property AND its base model was
+        /// also safe-flattened, both the inherited base parameters and the derived model's own
+        /// parameters are correctly updated in the public constructor and base initializer.
+        ///
+        /// Scenario:
+        ///   - WrapperModel has one required public property: Value (string)
+        ///   - ExtraModel has one required public property: Detail (string)
+        ///   - BaseModel has: wrapper (WrapperModel, required), name (string, required)
+        ///   - DerivedModel extends BaseModel with: extra (ExtraModel, required)
+        ///
+        /// After safe-flatten:
+        ///   - BaseModel.wrapper becomes internal, WrapperValue (string) is promoted
+        ///   - DerivedModel.extra becomes internal, ExtraDetail (string) is promoted
+        ///   - DerivedModel public ctor must be (string wrapperValue, string name, string extraDetail)
+        ///     NOT (WrapperModel wrapper, string name, string extraDetail)
+        ///   - DerivedModel base initializer must pass wrapperValue (not wrapper)
+        /// </summary>
+        [Test]
+        public void TestSafeFlattenUpdatesDerivedCtorWhenBothBaseAndDerivedHaveFlattenableProperties()
+        {
+            // WrapperModel has a single required property: Value (string).
+            var valueProp = InputFactory.Property("value", InputPrimitiveType.String, isRequired: true, serializedName: "value");
+            var wrapperModel = InputFactory.Model(
+                "WrapperModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [valueProp]);
+
+            // ExtraModel has a single required property: Detail (string).
+            var detailProp = InputFactory.Property("detail", InputPrimitiveType.String, isRequired: true, serializedName: "detail");
+            var extraModel = InputFactory.Model(
+                "ExtraModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [detailProp]);
+
+            // BaseModel has wrapper (WrapperModel, required) and name (string, required).
+            var wrapperProp = InputFactory.Property("wrapper", wrapperModel, isRequired: true, serializedName: "wrapper");
+            var nameProp = InputFactory.Property("name", InputPrimitiveType.String, isRequired: true, serializedName: "name");
+            var baseModel = InputFactory.Model(
+                "BaseModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [wrapperProp, nameProp]);
+
+            // DerivedModel extends BaseModel with its own flattenable property: extra (ExtraModel, required).
+            var extraProp = InputFactory.Property("extra", extraModel, isRequired: true, serializedName: "extra");
+            var derivedModel = InputFactory.Model(
+                "DerivedModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                baseModel: baseModel,
+                properties: [extraProp]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [wrapperModel, extraModel, baseModel, derivedModel]);
+
+            var derivedModelProvider = plugin.Object.TypeFactory.CreateModel(derivedModel)!;
+            Assert.IsNotNull(derivedModelProvider);
+
+            // Precondition: DerivedModel public ctor has both WrapperModel and ExtraModel params before flatten.
+            var preVisitPublicCtor = derivedModelProvider.Constructors
+                .SingleOrDefault(c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public));
+            Assert.IsNotNull(preVisitPublicCtor, "DerivedModel should have a public ctor before visitors");
+            Assert.IsTrue(
+                preVisitPublicCtor!.Signature.Parameters.Any(p => p.Type.Name == "WrapperModel"),
+                "Precondition: DerivedModel ctor should have WrapperModel param before flatten");
+            Assert.IsTrue(
+                preVisitPublicCtor.Signature.Parameters.Any(p => p.Type.Name == "ExtraModel"),
+                "Precondition: DerivedModel ctor should have ExtraModel param before flatten");
+
+            // Visit only the derived model; FlattenModel recurses into the base automatically.
+            var visitor = new FlattenPropertyVisitor();
+            var visitTypeCore = typeof(LibraryVisitor).GetMethod(
+                "VisitTypeCore",
+                BindingFlags.NonPublic | BindingFlags.Instance);
+            Assert.IsNotNull(visitTypeCore);
+
+            visitTypeCore!.Invoke(visitor, [derivedModelProvider]);
+
+            // After visitors: both wrapper types should be replaced with their promoted properties.
+            var publicCtor = derivedModelProvider.Constructors
+                .SingleOrDefault(c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public));
+            Assert.IsNotNull(publicCtor, "DerivedModel should still have a public ctor after flatten");
+
+            var paramNames = publicCtor!.Signature.Parameters.Select(p => p.Name).ToList();
+
+            Assert.IsFalse(
+                publicCtor.Signature.Parameters.Any(p => p.Type.Name == "WrapperModel"),
+                $"DerivedModel public ctor should NOT have WrapperModel param after safe-flatten. Params: [{string.Join(", ", paramNames)}]");
+            Assert.IsFalse(
+                publicCtor.Signature.Parameters.Any(p => p.Type.Name == "ExtraModel"),
+                $"DerivedModel public ctor should NOT have ExtraModel param after safe-flatten. Params: [{string.Join(", ", paramNames)}]");
+
+            // wrapperValue comes from the base safe-flatten; extraDetail from the derived safe-flatten.
+            Assert.IsTrue(
+                paramNames.Contains("wrapperValue"),
+                $"DerivedModel public ctor should have 'wrapperValue' (from base flatten). Params: [{string.Join(", ", paramNames)}]");
+            Assert.IsTrue(
+                paramNames.Contains("extraDetail"),
+                $"DerivedModel public ctor should have 'extraDetail' (from derived flatten). Params: [{string.Join(", ", paramNames)}]");
+
+            // The base initializer must pass wrapperValue (not wrapper) and name.
+            var initializer = publicCtor.Signature.Initializer;
+            Assert.IsNotNull(initializer, "DerivedModel public ctor should have a base initializer");
+            Assert.IsTrue(initializer!.IsBase, "Initializer should be a base call");
+
+            var initializerArgNames = initializer.Arguments
+                .OfType<VariableExpression>()
+                .Select(v => v.Declaration.RequestedName)
+                .ToList();
+
+            Assert.IsFalse(
+                initializerArgNames.Contains("wrapper"),
+                $"Base initializer should NOT pass 'wrapper' (WrapperModel). Args: [{string.Join(", ", initializerArgNames)}]");
+            Assert.IsTrue(
+                initializerArgNames.Contains("wrapperValue"),
+                $"Base initializer should pass 'wrapperValue' (flattened). Args: [{string.Join(", ", initializerArgNames)}]");
+        }
+
         private class ObsoletePropertyCustomCodeView : TypeProvider
         {
             private readonly TypeProvider _enclosingType;
