@@ -1,19 +1,24 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.ComponentModel;
+
 namespace Azure.ResourceManager.Hci.Models
 {
     public readonly partial struct HciClusterStatus
     {
-        private const string FailedValue = "Failed";
-        private const string InProgressValue = "InProgress";
-        private const string SucceededValue = "Succeeded";
-
         /// <summary> Failed. </summary>
-        public static HciClusterStatus Failed { get; } = new HciClusterStatus(FailedValue);
+        [Obsolete("This property is now deprecated. Please use the new property `DeploymentFailed` moving forward.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static HciClusterStatus Failed { get; } = new HciClusterStatus("DeploymentFailed");
         /// <summary> InProgress. </summary>
-        public static HciClusterStatus InProgress { get; } = new HciClusterStatus(InProgressValue);
+        [Obsolete("This property is now deprecated. Please use the new property `DeploymentInProgress` moving forward.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static HciClusterStatus InProgress { get; } = new HciClusterStatus("DeploymentInProgress");
         /// <summary> Succeeded. </summary>
-        public static HciClusterStatus Succeeded { get; } = new HciClusterStatus(SucceededValue);
+        [Obsolete("This property is now deprecated. Please use the new property `DeploymentSuccess` moving forward.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static HciClusterStatus Succeeded { get; } = new HciClusterStatus("DeploymentSuccess");
     }
 }

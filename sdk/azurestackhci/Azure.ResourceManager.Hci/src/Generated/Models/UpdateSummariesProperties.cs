@@ -32,14 +32,14 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="packageVersions"> Current version of each updatable component. </param>
         /// <param name="currentVersion"> Current Solution Bundle version of the stamp. </param>
         /// <param name="currentSbeVersion"> Current Sbe version of the stamp. </param>
-        /// <param name="lastUpdated"> Last time an update installation completed successfully. </param>
-        /// <param name="lastChecked"> Last time the update service successfully checked for updates. </param>
+        /// <param name="lastUpdatedOn"> Last time an update installation completed successfully. </param>
+        /// <param name="lastCheckedOn"> Last time the update service successfully checked for updates. </param>
         /// <param name="healthState"> Overall health state for update-specific health checks. </param>
         /// <param name="healthCheckResult"> An array of pre-check result objects. </param>
         /// <param name="healthCheckOn"> Last time the package-specific checks were run. </param>
         /// <param name="state"> Overall update state of the stamp. Indicates the current status of update deployment across the stamp, including preparation, application, and any issues encountered. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UpdateSummariesProperties(HciProvisioningState? provisioningState, string oemFamily, string currentOemVersion, string hardwareModel, IList<HciPackageVersionInfo> packageVersions, string currentVersion, string currentSbeVersion, DateTimeOffset? lastUpdated, DateTimeOffset? lastChecked, HciHealthState? healthState, IList<HciPrecheckResult> healthCheckResult, DateTimeOffset? healthCheckOn, HciClusterUpdateState? state, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal UpdateSummariesProperties(HciProvisioningState? provisioningState, string oemFamily, string currentOemVersion, string hardwareModel, IList<HciPackageVersionInfo> packageVersions, string currentVersion, string currentSbeVersion, DateTimeOffset? lastUpdatedOn, DateTimeOffset? lastCheckedOn, HciHealthState? healthState, IList<HciPrecheckResult> healthCheckResult, DateTimeOffset? healthCheckOn, HciClusterUpdateState? state, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             OemFamily = oemFamily;
@@ -48,8 +48,8 @@ namespace Azure.ResourceManager.Hci.Models
             PackageVersions = packageVersions;
             CurrentVersion = currentVersion;
             CurrentSbeVersion = currentSbeVersion;
-            LastUpdated = lastUpdated;
-            LastChecked = lastChecked;
+            LastUpdatedOn = lastUpdatedOn;
+            LastCheckedOn = lastCheckedOn;
             HealthState = healthState;
             HealthCheckResult = healthCheckResult;
             HealthCheckOn = healthCheckOn;
@@ -87,11 +87,11 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Last time an update installation completed successfully. </summary>
         [WirePath("lastUpdated")]
-        public DateTimeOffset? LastUpdated { get; set; }
+        public DateTimeOffset? LastUpdatedOn { get; set; }
 
         /// <summary> Last time the update service successfully checked for updates. </summary>
         [WirePath("lastChecked")]
-        public DateTimeOffset? LastChecked { get; set; }
+        public DateTimeOffset? LastCheckedOn { get; set; }
 
         /// <summary> Overall health state for update-specific health checks. </summary>
         [WirePath("healthState")]

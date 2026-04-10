@@ -163,11 +163,11 @@ namespace Azure.ResourceManager.Hci
 
         /// <summary> Last time an update installation completed successfully. </summary>
         [WirePath("properties.lastUpdated")]
-        public DateTimeOffset? LastUpdated
+        public DateTimeOffset? LastUpdatedOn
         {
             get
             {
-                return Properties is null ? default : Properties.LastUpdated;
+                return Properties is null ? default : Properties.LastUpdatedOn;
             }
             set
             {
@@ -175,17 +175,17 @@ namespace Azure.ResourceManager.Hci
                 {
                     Properties = new UpdateSummariesProperties();
                 }
-                Properties.LastUpdated = value.Value;
+                Properties.LastUpdatedOn = value.Value;
             }
         }
 
         /// <summary> Last time the update service successfully checked for updates. </summary>
         [WirePath("properties.lastChecked")]
-        public DateTimeOffset? LastChecked
+        public DateTimeOffset? LastCheckedOn
         {
             get
             {
-                return Properties is null ? default : Properties.LastChecked;
+                return Properties is null ? default : Properties.LastCheckedOn;
             }
             set
             {
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     Properties = new UpdateSummariesProperties();
                 }
-                Properties.LastChecked = value.Value;
+                Properties.LastCheckedOn = value.Value;
             }
         }
 

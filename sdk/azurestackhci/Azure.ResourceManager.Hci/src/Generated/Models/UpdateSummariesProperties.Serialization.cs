@@ -114,15 +114,15 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("currentSbeVersion"u8);
                 writer.WriteStringValue(CurrentSbeVersion);
             }
-            if (Optional.IsDefined(LastUpdated))
+            if (Optional.IsDefined(LastUpdatedOn))
             {
                 writer.WritePropertyName("lastUpdated"u8);
-                writer.WriteStringValue(LastUpdated.Value, "O");
+                writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
-            if (Optional.IsDefined(LastChecked))
+            if (Optional.IsDefined(LastCheckedOn))
             {
                 writer.WritePropertyName("lastChecked"u8);
-                writer.WriteStringValue(LastChecked.Value, "O");
+                writer.WriteStringValue(LastCheckedOn.Value, "O");
             }
             if (Optional.IsDefined(HealthState))
             {
@@ -198,8 +198,8 @@ namespace Azure.ResourceManager.Hci.Models
             IList<HciPackageVersionInfo> packageVersions = default;
             string currentVersion = default;
             string currentSbeVersion = default;
-            DateTimeOffset? lastUpdated = default;
-            DateTimeOffset? lastChecked = default;
+            DateTimeOffset? lastUpdatedOn = default;
+            DateTimeOffset? lastCheckedOn = default;
             HciHealthState? healthState = default;
             IList<HciPrecheckResult> healthCheckResult = default;
             DateTimeOffset? healthCheckOn = default;
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    lastUpdated = prop.Value.GetDateTimeOffset("O");
+                    lastUpdatedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("lastChecked"u8))
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    lastChecked = prop.Value.GetDateTimeOffset("O");
+                    lastCheckedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("healthState"u8))
@@ -327,8 +327,8 @@ namespace Azure.ResourceManager.Hci.Models
                 packageVersions ?? new ChangeTrackingList<HciPackageVersionInfo>(),
                 currentVersion,
                 currentSbeVersion,
-                lastUpdated,
-                lastChecked,
+                lastUpdatedOn,
+                lastCheckedOn,
                 healthState,
                 healthCheckResult ?? new ChangeTrackingList<HciPrecheckResult>(),
                 healthCheckOn,

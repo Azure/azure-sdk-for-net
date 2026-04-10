@@ -2648,51 +2648,6 @@ namespace Azure.ResourceManager.Hci.Models
             return new ReleaseDeviceContent(devices.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="provisioningState"> Provisioning state of the UpdateSummaries proxy resource. Indicates the current lifecycle status of the update summary operation, such as whether it has been accepted, is in progress, or has completed. </param>
-        /// <param name="oemFamily"> OEM family name. </param>
-        /// <param name="currentOemVersion"> Current OEM Version. </param>
-        /// <param name="hardwareModel"> Name of the hardware model. </param>
-        /// <param name="packageVersions"> Current version of each updatable component. </param>
-        /// <param name="currentVersion"> Current Solution Bundle version of the stamp. </param>
-        /// <param name="currentSbeVersion"> Current Sbe version of the stamp. </param>
-        /// <param name="lastUpdated"> Last time an update installation completed successfully. </param>
-        /// <param name="lastChecked"> Last time the update service successfully checked for updates. </param>
-        /// <param name="healthState"> Overall health state for update-specific health checks. </param>
-        /// <param name="healthCheckResult"> An array of pre-check result objects. </param>
-        /// <param name="healthCheckOn"> Last time the package-specific checks were run. </param>
-        /// <param name="state"> Overall update state of the stamp. Indicates the current status of update deployment across the stamp, including preparation, application, and any issues encountered. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <returns> A new <see cref="Hci.HciClusterUpdateSummaryData"/> instance for mocking. </returns>
-        public static HciClusterUpdateSummaryData HciClusterUpdateSummaryData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HciProvisioningState? provisioningState = default, string oemFamily = default, string currentOemVersion = default, string hardwareModel = default, IEnumerable<HciPackageVersionInfo> packageVersions = default, string currentVersion = default, string currentSbeVersion = default, DateTimeOffset? lastUpdated = default, DateTimeOffset? lastChecked = default, HciHealthState? healthState = default, IEnumerable<HciPrecheckResult> healthCheckResult = default, DateTimeOffset? healthCheckOn = default, HciClusterUpdateState? state = default, AzureLocation? location = default)
-        {
-            return new HciClusterUpdateSummaryData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                provisioningState is null && oemFamily is null && currentOemVersion is null && hardwareModel is null && packageVersions is null && currentVersion is null && currentSbeVersion is null && lastUpdated is null && lastChecked is null && healthState is null && healthCheckResult is null && healthCheckOn is null && state is null ? default : new UpdateSummariesProperties(
-                    provisioningState,
-                    oemFamily,
-                    currentOemVersion,
-                    hardwareModel,
-                    (packageVersions ?? new ChangeTrackingList<HciPackageVersionInfo>()).ToList(),
-                    currentVersion,
-                    currentSbeVersion,
-                    lastUpdated,
-                    lastChecked,
-                    healthState,
-                    (healthCheckResult ?? new ChangeTrackingList<HciPrecheckResult>()).ToList(),
-                    healthCheckOn,
-                    state,
-                    null),
-                location);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Hci.HciClusterData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -2913,8 +2868,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="healthCheckOn"> Last time the package-specific checks were run. </param>
         /// <param name="state"> Overall update state of the stamp. </param>
         /// <returns> A new <see cref="Hci.HciClusterUpdateSummaryData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static HciClusterUpdateSummaryData HciClusterUpdateSummaryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, HciProvisioningState? provisioningState, string oemFamily, string currentOemVersion, string hardwareModel, IEnumerable<HciPackageVersionInfo> packageVersions, string currentVersion, string currentSbeVersion, DateTimeOffset? lastUpdatedOn, DateTimeOffset? lastCheckedOn, HciHealthState? healthState, IEnumerable<HciPrecheckResult> healthCheckResult, DateTimeOffset? healthCheckOn, HciClusterUpdateState? state)
+        public static HciClusterUpdateSummaryData HciClusterUpdateSummaryData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation? location = default, HciProvisioningState? provisioningState = default, string oemFamily = default, string currentOemVersion = default, string hardwareModel = default, IEnumerable<HciPackageVersionInfo> packageVersions = default, string currentVersion = default, string currentSbeVersion = default, DateTimeOffset? lastUpdatedOn = default, DateTimeOffset? lastCheckedOn = default, HciHealthState? healthState = default, IEnumerable<HciPrecheckResult> healthCheckResult = default, DateTimeOffset? healthCheckOn = default, HciClusterUpdateState? state = default)
         {
             packageVersions ??= new ChangeTrackingList<HciPackageVersionInfo>();
             healthCheckResult ??= new ChangeTrackingList<HciPrecheckResult>();

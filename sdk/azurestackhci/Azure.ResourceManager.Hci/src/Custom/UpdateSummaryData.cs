@@ -4,11 +4,8 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using Azure.Core;
 using Azure.ResourceManager.Hci.Models;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Hci
 {
@@ -19,18 +16,6 @@ namespace Azure.ResourceManager.Hci
     {
         /// <summary> Initializes a new instance of UpdateSummaryData. </summary>
         public UpdateSummaryData() : base()
-        {
-        }
-
-        /// <summary> Initializes a new instance of UpdateSummaryData from base type. </summary>
-        internal UpdateSummaryData(HciClusterUpdateSummaryData data) : base(
-            data?.Id,
-            data?.Name,
-            data?.ResourceType ?? default,
-            data?.SystemData,
-            additionalBinaryDataProperties: null,
-            default,
-            data?.Location)
         {
         }
 
@@ -50,5 +35,10 @@ namespace Azure.ResourceManager.Hci
                 }
             }
         }
+
+        /// <summary> Last time an update installation completed successfully. </summary>
+        public DateTimeOffset? LastUpdated { get; set; }
+        /// <summary> Last time the update service successfully checked for updates. </summary>
+        public DateTimeOffset? LastChecked { get; set; }
     }
 }
