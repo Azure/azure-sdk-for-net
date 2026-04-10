@@ -310,6 +310,150 @@ public class ResponseEventStream
     }
 
     /// <summary>
+    /// Creates a computer tool call output item scope with the next output index
+    /// and an auto-generated item ID.
+    /// </summary>
+    /// <returns>A new <see cref="OutputItemBuilder{T}"/> for the computer tool call output item.</returns>
+    public virtual OutputItemBuilder<OutputItemComputerToolCall> AddOutputItemComputerCall()
+    {
+        var outputIndex = _outputIndex++;
+        var itemId = IdGenerator.NewComputerCallItemId(_context.ResponseId);
+        return new OutputItemBuilder<OutputItemComputerToolCall>(this, outputIndex, itemId);
+    }
+
+    /// <summary>
+    /// Creates a computer tool call output result scope with the next output index
+    /// and an auto-generated item ID.
+    /// </summary>
+    /// <returns>A new <see cref="OutputItemBuilder{T}"/> for the computer tool call output result.</returns>
+    public virtual OutputItemBuilder<OutputItemComputerToolCallOutputResource> AddOutputItemComputerCallOutput()
+    {
+        var outputIndex = _outputIndex++;
+        var itemId = IdGenerator.NewComputerCallOutputItemId(_context.ResponseId);
+        return new OutputItemBuilder<OutputItemComputerToolCallOutputResource>(this, outputIndex, itemId);
+    }
+
+    /// <summary>
+    /// Creates a local shell call output item scope with the next output index
+    /// and an auto-generated item ID.
+    /// </summary>
+    /// <returns>A new <see cref="OutputItemBuilder{T}"/> for the local shell call output item.</returns>
+    public virtual OutputItemBuilder<OutputItemLocalShellToolCall> AddOutputItemLocalShellCall()
+    {
+        var outputIndex = _outputIndex++;
+        var itemId = IdGenerator.NewLocalShellCallItemId(_context.ResponseId);
+        return new OutputItemBuilder<OutputItemLocalShellToolCall>(this, outputIndex, itemId);
+    }
+
+    /// <summary>
+    /// Creates a local shell call output result scope with the next output index
+    /// and an auto-generated item ID.
+    /// </summary>
+    /// <returns>A new <see cref="OutputItemBuilder{T}"/> for the local shell call output result.</returns>
+    public virtual OutputItemBuilder<OutputItemLocalShellToolCallOutput> AddOutputItemLocalShellCallOutput()
+    {
+        var outputIndex = _outputIndex++;
+        var itemId = IdGenerator.NewLocalShellCallOutputItemId(_context.ResponseId);
+        return new OutputItemBuilder<OutputItemLocalShellToolCallOutput>(this, outputIndex, itemId);
+    }
+
+    /// <summary>
+    /// Creates a function shell call output item scope with the next output index
+    /// and an auto-generated item ID.
+    /// </summary>
+    /// <returns>A new <see cref="OutputItemBuilder{T}"/> for the function shell call output item.</returns>
+    public virtual OutputItemBuilder<OutputItemFunctionShellCall> AddOutputItemFunctionShellCall()
+    {
+        var outputIndex = _outputIndex++;
+        var itemId = IdGenerator.NewFunctionShellCallItemId(_context.ResponseId);
+        return new OutputItemBuilder<OutputItemFunctionShellCall>(this, outputIndex, itemId);
+    }
+
+    /// <summary>
+    /// Creates a function shell call output result scope with the next output index
+    /// and an auto-generated item ID.
+    /// </summary>
+    /// <returns>A new <see cref="OutputItemBuilder{T}"/> for the function shell call output result.</returns>
+    public virtual OutputItemBuilder<OutputItemFunctionShellCallOutput> AddOutputItemFunctionShellCallOutput()
+    {
+        var outputIndex = _outputIndex++;
+        var itemId = IdGenerator.NewFunctionShellCallOutputItemId(_context.ResponseId);
+        return new OutputItemBuilder<OutputItemFunctionShellCallOutput>(this, outputIndex, itemId);
+    }
+
+    /// <summary>
+    /// Creates an apply-patch call output item scope with the next output index
+    /// and an auto-generated item ID.
+    /// </summary>
+    /// <returns>A new <see cref="OutputItemBuilder{T}"/> for the apply-patch call output item.</returns>
+    public virtual OutputItemBuilder<OutputItemApplyPatchToolCall> AddOutputItemApplyPatchCall()
+    {
+        var outputIndex = _outputIndex++;
+        var itemId = IdGenerator.NewApplyPatchCallItemId(_context.ResponseId);
+        return new OutputItemBuilder<OutputItemApplyPatchToolCall>(this, outputIndex, itemId);
+    }
+
+    /// <summary>
+    /// Creates an apply-patch call output result scope with the next output index
+    /// and an auto-generated item ID.
+    /// </summary>
+    /// <returns>A new <see cref="OutputItemBuilder{T}"/> for the apply-patch call output result.</returns>
+    public virtual OutputItemBuilder<OutputItemApplyPatchToolCallOutput> AddOutputItemApplyPatchCallOutput()
+    {
+        var outputIndex = _outputIndex++;
+        var itemId = IdGenerator.NewApplyPatchCallOutputItemId(_context.ResponseId);
+        return new OutputItemBuilder<OutputItemApplyPatchToolCallOutput>(this, outputIndex, itemId);
+    }
+
+    /// <summary>
+    /// Creates a custom tool call output result scope with the next output index
+    /// and an auto-generated item ID.
+    /// </summary>
+    /// <returns>A new <see cref="OutputItemBuilder{T}"/> for the custom tool call output result.</returns>
+    public virtual OutputItemBuilder<OutputItemCustomToolCallOutput> AddOutputItemCustomToolCallOutput()
+    {
+        var outputIndex = _outputIndex++;
+        var itemId = IdGenerator.NewCustomToolCallOutputItemId(_context.ResponseId);
+        return new OutputItemBuilder<OutputItemCustomToolCallOutput>(this, outputIndex, itemId);
+    }
+
+    /// <summary>
+    /// Creates an MCP approval request output item scope with the next output index
+    /// and an auto-generated item ID.
+    /// </summary>
+    /// <returns>A new <see cref="OutputItemBuilder{T}"/> for the MCP approval request output item.</returns>
+    public virtual OutputItemBuilder<OutputItemMcpApprovalRequest> AddOutputItemMcpApprovalRequest()
+    {
+        var outputIndex = _outputIndex++;
+        var itemId = IdGenerator.NewMcpApprovalRequestItemId(_context.ResponseId);
+        return new OutputItemBuilder<OutputItemMcpApprovalRequest>(this, outputIndex, itemId);
+    }
+
+    /// <summary>
+    /// Creates an MCP approval response output item scope with the next output index
+    /// and an auto-generated item ID.
+    /// </summary>
+    /// <returns>A new <see cref="OutputItemBuilder{T}"/> for the MCP approval response output item.</returns>
+    public virtual OutputItemBuilder<OutputItemMcpApprovalResponseResource> AddOutputItemMcpApprovalResponse()
+    {
+        var outputIndex = _outputIndex++;
+        var itemId = IdGenerator.NewMcpApprovalResponseItemId(_context.ResponseId);
+        return new OutputItemBuilder<OutputItemMcpApprovalResponseResource>(this, outputIndex, itemId);
+    }
+
+    /// <summary>
+    /// Creates a compaction output item scope with the next output index
+    /// and an auto-generated item ID.
+    /// </summary>
+    /// <returns>A new <see cref="OutputItemBuilder{T}"/> for the compaction output item.</returns>
+    public virtual OutputItemBuilder<OutputItemCompactionBody> AddOutputItemCompaction()
+    {
+        var outputIndex = _outputIndex++;
+        var itemId = IdGenerator.NewCompactionItemId(_context.ResponseId);
+        return new OutputItemBuilder<OutputItemCompactionBody>(this, outputIndex, itemId);
+    }
+
+    /// <summary>
     /// Creates an output item scope with the next output index.
     /// Use for output item types that have no dedicated <c>Add*()</c> factory
     /// and no streaming sub-events (no deltas, no status transitions).
