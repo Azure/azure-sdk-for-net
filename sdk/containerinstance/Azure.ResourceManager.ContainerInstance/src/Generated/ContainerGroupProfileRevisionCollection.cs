@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.ContainerInstance
 {
     /// <summary>
     /// A class representing a collection of <see cref="ContainerGroupProfileRevisionResource"/> and their operations.
-    /// Each <see cref="ContainerGroupProfileRevisionResource"/> in the collection will belong to the same instance of <see cref="CGProfileResource"/>.
-    /// To get a <see cref="ContainerGroupProfileRevisionCollection"/> instance call the GetContainerGroupProfileRevisions method from an instance of <see cref="CGProfileResource"/>.
+    /// Each <see cref="ContainerGroupProfileRevisionResource"/> in the collection will belong to the same instance of <see cref="ContainerGroupProfileResource"/>.
+    /// To get a <see cref="ContainerGroupProfileRevisionCollection"/> instance call the GetContainerGroupProfileRevisions method from an instance of <see cref="ContainerGroupProfileResource"/>.
     /// </summary>
     public partial class ContainerGroupProfileRevisionCollection : ArmCollection, IEnumerable<ContainerGroupProfileRevisionResource>, IAsyncEnumerable<ContainerGroupProfileRevisionResource>
     {
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.ContainerInstance
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != CGProfileResource.ResourceType)
+            if (id.ResourceType != ContainerGroupProfileResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, CGProfileResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ContainerGroupProfileResource.ResourceType), id);
             }
         }
 

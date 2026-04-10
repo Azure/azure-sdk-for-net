@@ -75,6 +75,24 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="ContainerGroupProfileResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableContainerInstanceArmClient.GetContainerGroupProfileResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ContainerGroupProfileResource"/> object. </returns>
+        public static ContainerGroupProfileResource GetContainerGroupProfileResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableContainerInstanceArmClient(client).GetContainerGroupProfileResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="ContainerGroupProfileRevisionResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
@@ -90,24 +108,6 @@ namespace Azure.ResourceManager.ContainerInstance
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableContainerInstanceArmClient(client).GetContainerGroupProfileRevisionResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="CGProfileResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableContainerInstanceArmClient.GetCGProfileResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="CGProfileResource"/> object. </returns>
-        public static CGProfileResource GetCGProfileResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableContainerInstanceArmClient(client).GetCGProfileResource(id);
         }
 
         /// <summary>
@@ -221,27 +221,27 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary>
-        /// Gets a collection of CGProfiles in the <see cref="ResourceGroupResource"/>
+        /// Gets a collection of ContainerGroupProfiles in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableContainerInstanceResourceGroupResource.GetCGProfiles()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableContainerInstanceResourceGroupResource.GetContainerGroupProfiles()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of CGProfiles and their operations over a CGProfileResource. </returns>
-        public static CGProfileCollection GetCGProfiles(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of ContainerGroupProfiles and their operations over a ContainerGroupProfileResource. </returns>
+        public static ContainerGroupProfileCollection GetContainerGroupProfiles(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableContainerInstanceResourceGroupResource(resourceGroupResource).GetCGProfiles();
+            return GetMockableContainerInstanceResourceGroupResource(resourceGroupResource).GetContainerGroupProfiles();
         }
 
         /// <summary>
         /// Get the properties of the specified container group profile.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableContainerInstanceResourceGroupResource.GetCGProfileAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableContainerInstanceResourceGroupResource.GetContainerGroupProfileAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -249,18 +249,18 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<CGProfileResource>> GetCGProfileAsync(this ResourceGroupResource resourceGroupResource, string containerGroupProfileName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ContainerGroupProfileResource>> GetContainerGroupProfileAsync(this ResourceGroupResource resourceGroupResource, string containerGroupProfileName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableContainerInstanceResourceGroupResource(resourceGroupResource).GetCGProfileAsync(containerGroupProfileName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableContainerInstanceResourceGroupResource(resourceGroupResource).GetContainerGroupProfileAsync(containerGroupProfileName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get the properties of the specified container group profile.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableContainerInstanceResourceGroupResource.GetCGProfile(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableContainerInstanceResourceGroupResource.GetContainerGroupProfile(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -268,11 +268,11 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<CGProfileResource> GetCGProfile(this ResourceGroupResource resourceGroupResource, string containerGroupProfileName, CancellationToken cancellationToken = default)
+        public static Response<ContainerGroupProfileResource> GetContainerGroupProfile(this ResourceGroupResource resourceGroupResource, string containerGroupProfileName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableContainerInstanceResourceGroupResource(resourceGroupResource).GetCGProfile(containerGroupProfileName, cancellationToken);
+            return GetMockableContainerInstanceResourceGroupResource(resourceGroupResource).GetContainerGroupProfile(containerGroupProfileName, cancellationToken);
         }
 
         /// <summary>
@@ -351,36 +351,36 @@ namespace Azure.ResourceManager.ContainerInstance
         /// Gets a list of all container group profiles under a subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableContainerInstanceSubscriptionResource.GetCGProfilesAsync(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableContainerInstanceSubscriptionResource.GetContainerGroupProfilesAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="CGProfileResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<CGProfileResource> GetCGProfilesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ContainerGroupProfileResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ContainerGroupProfileResource> GetContainerGroupProfilesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableContainerInstanceSubscriptionResource(subscriptionResource).GetCGProfilesAsync(cancellationToken);
+            return GetMockableContainerInstanceSubscriptionResource(subscriptionResource).GetContainerGroupProfilesAsync(cancellationToken);
         }
 
         /// <summary>
         /// Gets a list of all container group profiles under a subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableContainerInstanceSubscriptionResource.GetCGProfiles(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableContainerInstanceSubscriptionResource.GetContainerGroupProfiles(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="CGProfileResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<CGProfileResource> GetCGProfiles(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ContainerGroupProfileResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ContainerGroupProfileResource> GetContainerGroupProfiles(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableContainerInstanceSubscriptionResource(subscriptionResource).GetCGProfiles(cancellationToken);
+            return GetMockableContainerInstanceSubscriptionResource(subscriptionResource).GetContainerGroupProfiles(cancellationToken);
         }
 
         /// <summary>

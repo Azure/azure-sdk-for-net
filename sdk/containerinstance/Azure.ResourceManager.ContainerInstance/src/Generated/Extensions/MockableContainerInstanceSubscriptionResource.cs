@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         private ContainerGroups _containerGroupsRestClient;
         private ClientDiagnostics _nGroupsClientDiagnostics;
         private NGroups _nGroupsRestClient;
-        private ClientDiagnostics _cgProfilesClientDiagnostics;
-        private CGProfiles _cgProfilesRestClient;
+        private ClientDiagnostics _containerGroupProfilesClientDiagnostics;
+        private ContainerGroupProfiles _containerGroupProfilesRestClient;
         private ClientDiagnostics _locationClientDiagnostics;
         private Location _locationRestClient;
         private ClientDiagnostics _subnetServiceAssociationLinkClientDiagnostics;
@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
 
         private NGroups NGroupsRestClient => _nGroupsRestClient ??= new NGroups(NGroupsClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
 
-        private ClientDiagnostics CGProfilesClientDiagnostics => _cgProfilesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerInstance.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics ContainerGroupProfilesClientDiagnostics => _containerGroupProfilesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerInstance.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CGProfiles CGProfilesRestClient => _cgProfilesRestClient ??= new CGProfiles(CGProfilesClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
+        private ContainerGroupProfiles ContainerGroupProfilesRestClient => _containerGroupProfilesRestClient ??= new ContainerGroupProfiles(ContainerGroupProfilesClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
 
         private ClientDiagnostics LocationClientDiagnostics => _locationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerInstance.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -194,14 +194,14 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CGProfileResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CGProfileResource> GetCGProfilesAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ContainerGroupProfileResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ContainerGroupProfileResource> GetContainerGroupProfilesAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ContainerGroupProfileData, CGProfileResource>(new CGProfilesGetBySubscriptionAsyncCollectionResultOfT(CGProfilesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new CGProfileResource(Client, data));
+            return new AsyncPageableWrapper<ContainerGroupProfileData, ContainerGroupProfileResource>(new ContainerGroupProfilesGetBySubscriptionAsyncCollectionResultOfT(ContainerGroupProfilesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new ContainerGroupProfileResource(Client, data));
         }
 
         /// <summary>
@@ -222,14 +222,14 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CGProfileResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CGProfileResource> GetCGProfiles(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ContainerGroupProfileResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ContainerGroupProfileResource> GetContainerGroupProfiles(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ContainerGroupProfileData, CGProfileResource>(new CGProfilesGetBySubscriptionCollectionResultOfT(CGProfilesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new CGProfileResource(Client, data));
+            return new PageableWrapper<ContainerGroupProfileData, ContainerGroupProfileResource>(new ContainerGroupProfilesGetBySubscriptionCollectionResultOfT(ContainerGroupProfilesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new ContainerGroupProfileResource(Client, data));
         }
 
         /// <summary>

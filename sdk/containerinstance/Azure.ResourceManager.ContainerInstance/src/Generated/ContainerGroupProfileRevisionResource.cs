@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ContainerInstance
     /// <summary>
     /// A class representing a ContainerGroupProfileRevision along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ContainerGroupProfileRevisionResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="CGProfileResource"/> using the GetContainerGroupProfileRevisions method.
+    /// Otherwise you can get one from its parent resource <see cref="ContainerGroupProfileResource"/> using the GetContainerGroupProfileRevisions method.
     /// </summary>
     public partial class ContainerGroupProfileRevisionResource : ArmResource
     {

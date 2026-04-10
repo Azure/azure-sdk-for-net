@@ -161,11 +161,11 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
             return GetNGroups().Get(ngroupsName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of CGProfiles in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of CGProfiles and their operations over a CGProfileResource. </returns>
-        public virtual CGProfileCollection GetCGProfiles()
+        /// <summary> Gets a collection of ContainerGroupProfiles in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of ContainerGroupProfiles and their operations over a ContainerGroupProfileResource. </returns>
+        public virtual ContainerGroupProfileCollection GetContainerGroupProfiles()
         {
-            return GetCachedClient(client => new CGProfileCollection(client, Id));
+            return GetCachedClient(client => new ContainerGroupProfileCollection(client, Id));
         }
 
         /// <summary>
@@ -190,11 +190,11 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="containerGroupProfileName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="containerGroupProfileName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<CGProfileResource>> GetCGProfileAsync(string containerGroupProfileName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerGroupProfileResource>> GetContainerGroupProfileAsync(string containerGroupProfileName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(containerGroupProfileName, nameof(containerGroupProfileName));
 
-            return await GetCGProfiles().GetAsync(containerGroupProfileName, cancellationToken).ConfigureAwait(false);
+            return await GetContainerGroupProfiles().GetAsync(containerGroupProfileName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -219,11 +219,11 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="containerGroupProfileName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="containerGroupProfileName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<CGProfileResource> GetCGProfile(string containerGroupProfileName, CancellationToken cancellationToken = default)
+        public virtual Response<ContainerGroupProfileResource> GetContainerGroupProfile(string containerGroupProfileName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(containerGroupProfileName, nameof(containerGroupProfileName));
 
-            return GetCGProfiles().Get(containerGroupProfileName, cancellationToken);
+            return GetContainerGroupProfiles().Get(containerGroupProfileName, cancellationToken);
         }
     }
 }

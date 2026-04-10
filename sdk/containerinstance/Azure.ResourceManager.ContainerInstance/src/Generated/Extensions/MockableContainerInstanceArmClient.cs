@@ -44,6 +44,15 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
             return new NGroupResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="ContainerGroupProfileResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ContainerGroupProfileResource"/> object. </returns>
+        public virtual ContainerGroupProfileResource GetContainerGroupProfileResource(ResourceIdentifier id)
+        {
+            ContainerGroupProfileResource.ValidateResourceId(id);
+            return new ContainerGroupProfileResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="ContainerGroupProfileRevisionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ContainerGroupProfileRevisionResource"/> object. </returns>
@@ -51,15 +60,6 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         {
             ContainerGroupProfileRevisionResource.ValidateResourceId(id);
             return new ContainerGroupProfileRevisionResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="CGProfileResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CGProfileResource"/> object. </returns>
-        public virtual CGProfileResource GetCGProfileResource(ResourceIdentifier id)
-        {
-            CGProfileResource.ValidateResourceId(id);
-            return new CGProfileResource(Client, id);
         }
     }
 }

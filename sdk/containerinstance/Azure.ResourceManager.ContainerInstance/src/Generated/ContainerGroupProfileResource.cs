@@ -20,44 +20,40 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.ContainerInstance
 {
     /// <summary>
-    /// A class representing a CGProfile along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CGProfileResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetCGProfiles method.
+    /// A class representing a ContainerGroupProfile along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ContainerGroupProfileResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetContainerGroupProfiles method.
     /// </summary>
-    public partial class CGProfileResource : ArmResource
+    public partial class ContainerGroupProfileResource : ArmResource
     {
-        private readonly ClientDiagnostics _cgProfileClientDiagnostics;
-        private readonly CGProfile _cgProfileRestClient;
-        private readonly ClientDiagnostics _cgProfilesClientDiagnostics;
-        private readonly CGProfiles _cgProfilesRestClient;
+        private readonly ClientDiagnostics _containerGroupProfilesClientDiagnostics;
+        private readonly ContainerGroupProfiles _containerGroupProfilesRestClient;
         private readonly ContainerGroupProfileData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ContainerInstance/containerGroupProfiles";
 
-        /// <summary> Initializes a new instance of CGProfileResource for mocking. </summary>
-        protected CGProfileResource()
+        /// <summary> Initializes a new instance of ContainerGroupProfileResource for mocking. </summary>
+        protected ContainerGroupProfileResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="CGProfileResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupProfileResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal CGProfileResource(ArmClient client, ContainerGroupProfileData data) : this(client, data.Id)
+        internal ContainerGroupProfileResource(ArmClient client, ContainerGroupProfileData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CGProfileResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupProfileResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal CGProfileResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ContainerGroupProfileResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string cgProfileApiVersion);
-            _cgProfileClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerInstance", ResourceType.Namespace, Diagnostics);
-            _cgProfileRestClient = new CGProfile(_cgProfileClientDiagnostics, Pipeline, Endpoint, cgProfileApiVersion ?? "2025-09-01");
-            _cgProfilesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerInstance", ResourceType.Namespace, Diagnostics);
-            _cgProfilesRestClient = new CGProfiles(_cgProfilesClientDiagnostics, Pipeline, Endpoint, cgProfileApiVersion ?? "2025-09-01");
+            TryGetApiVersion(ResourceType, out string containerGroupProfileApiVersion);
+            _containerGroupProfilesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerInstance", ResourceType.Namespace, Diagnostics);
+            _containerGroupProfilesRestClient = new ContainerGroupProfiles(_containerGroupProfilesClientDiagnostics, Pipeline, Endpoint, containerGroupProfileApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -114,14 +110,14 @@ namespace Azure.ResourceManager.ContainerInstance
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="CGProfileResource"/>. </description>
+        /// <description> <see cref="ContainerGroupProfileResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CGProfileResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerGroupProfileResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _cgProfileClientDiagnostics.CreateScope("CGProfileResource.Get");
+            using DiagnosticScope scope = _containerGroupProfilesClientDiagnostics.CreateScope("ContainerGroupProfileResource.Get");
             scope.Start();
             try
             {
@@ -129,14 +125,14 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cgProfileRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _containerGroupProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ContainerGroupProfileData> response = Response.FromValue(ContainerGroupProfileData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new CGProfileResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerGroupProfileResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -162,14 +158,14 @@ namespace Azure.ResourceManager.ContainerInstance
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="CGProfileResource"/>. </description>
+        /// <description> <see cref="ContainerGroupProfileResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CGProfileResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<ContainerGroupProfileResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _cgProfileClientDiagnostics.CreateScope("CGProfileResource.Get");
+            using DiagnosticScope scope = _containerGroupProfilesClientDiagnostics.CreateScope("ContainerGroupProfileResource.Get");
             scope.Start();
             try
             {
@@ -177,14 +173,14 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cgProfileRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _containerGroupProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ContainerGroupProfileData> response = Response.FromValue(ContainerGroupProfileData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new CGProfileResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerGroupProfileResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -210,18 +206,18 @@ namespace Azure.ResourceManager.ContainerInstance
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="CGProfileResource"/>. </description>
+        /// <description> <see cref="ContainerGroupProfileResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="patch"> The container group profile properties that need to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<CGProfileResource>> UpdateAsync(ContainerGroupProfilePatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerGroupProfileResource>> UpdateAsync(ContainerGroupProfilePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _cgProfileClientDiagnostics.CreateScope("CGProfileResource.Update");
+            using DiagnosticScope scope = _containerGroupProfilesClientDiagnostics.CreateScope("ContainerGroupProfileResource.Update");
             scope.Start();
             try
             {
@@ -229,14 +225,14 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cgProfileRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ContainerGroupProfilePatch.ToRequestContent(patch), context);
+                HttpMessage message = _containerGroupProfilesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ContainerGroupProfilePatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ContainerGroupProfileData> response = Response.FromValue(ContainerGroupProfileData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new CGProfileResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerGroupProfileResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -262,18 +258,18 @@ namespace Azure.ResourceManager.ContainerInstance
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="CGProfileResource"/>. </description>
+        /// <description> <see cref="ContainerGroupProfileResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="patch"> The container group profile properties that need to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<CGProfileResource> Update(ContainerGroupProfilePatch patch, CancellationToken cancellationToken = default)
+        public virtual Response<ContainerGroupProfileResource> Update(ContainerGroupProfilePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _cgProfileClientDiagnostics.CreateScope("CGProfileResource.Update");
+            using DiagnosticScope scope = _containerGroupProfilesClientDiagnostics.CreateScope("ContainerGroupProfileResource.Update");
             scope.Start();
             try
             {
@@ -281,14 +277,14 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cgProfileRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ContainerGroupProfilePatch.ToRequestContent(patch), context);
+                HttpMessage message = _containerGroupProfilesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ContainerGroupProfilePatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ContainerGroupProfileData> response = Response.FromValue(ContainerGroupProfileData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new CGProfileResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerGroupProfileResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -314,7 +310,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="CGProfileResource"/>. </description>
+        /// <description> <see cref="ContainerGroupProfileResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -322,7 +318,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _cgProfileClientDiagnostics.CreateScope("CGProfileResource.Delete");
+            using DiagnosticScope scope = _containerGroupProfilesClientDiagnostics.CreateScope("ContainerGroupProfileResource.Delete");
             scope.Start();
             try
             {
@@ -330,7 +326,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cgProfileRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _containerGroupProfilesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -365,7 +361,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="CGProfileResource"/>. </description>
+        /// <description> <see cref="ContainerGroupProfileResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -373,7 +369,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _cgProfileClientDiagnostics.CreateScope("CGProfileResource.Delete");
+            using DiagnosticScope scope = _containerGroupProfilesClientDiagnostics.CreateScope("ContainerGroupProfileResource.Delete");
             scope.Start();
             try
             {
@@ -381,7 +377,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cgProfileRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _containerGroupProfilesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -404,12 +400,12 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual async Task<Response<CGProfileResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerGroupProfileResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _cgProfileClientDiagnostics.CreateScope("CGProfileResource.AddTag");
+            using DiagnosticScope scope = _containerGroupProfilesClientDiagnostics.CreateScope("ContainerGroupProfileResource.AddTag");
             scope.Start();
             try
             {
@@ -422,10 +418,10 @@ namespace Azure.ResourceManager.ContainerInstance
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _cgProfileRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _containerGroupProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ContainerGroupProfileData> response = Response.FromValue(ContainerGroupProfileData.FromResponse(result), result);
-                    return Response.FromValue(new CGProfileResource(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue(new ContainerGroupProfileResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
@@ -436,7 +432,7 @@ namespace Azure.ResourceManager.ContainerInstance
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    Response<CGProfileResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    Response<ContainerGroupProfileResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -452,12 +448,12 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Response<CGProfileResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public virtual Response<ContainerGroupProfileResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _cgProfileClientDiagnostics.CreateScope("CGProfileResource.AddTag");
+            using DiagnosticScope scope = _containerGroupProfilesClientDiagnostics.CreateScope("ContainerGroupProfileResource.AddTag");
             scope.Start();
             try
             {
@@ -470,10 +466,10 @@ namespace Azure.ResourceManager.ContainerInstance
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _cgProfileRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _containerGroupProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ContainerGroupProfileData> response = Response.FromValue(ContainerGroupProfileData.FromResponse(result), result);
-                    return Response.FromValue(new CGProfileResource(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue(new ContainerGroupProfileResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
@@ -484,7 +480,7 @@ namespace Azure.ResourceManager.ContainerInstance
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    Response<CGProfileResource> result = Update(patch, cancellationToken: cancellationToken);
+                    Response<ContainerGroupProfileResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -499,11 +495,11 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<CGProfileResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerGroupProfileResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _cgProfileClientDiagnostics.CreateScope("CGProfileResource.SetTags");
+            using DiagnosticScope scope = _containerGroupProfilesClientDiagnostics.CreateScope("ContainerGroupProfileResource.SetTags");
             scope.Start();
             try
             {
@@ -517,17 +513,17 @@ namespace Azure.ResourceManager.ContainerInstance
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _cgProfileRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _containerGroupProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ContainerGroupProfileData> response = Response.FromValue(ContainerGroupProfileData.FromResponse(result), result);
-                    return Response.FromValue(new CGProfileResource(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue(new ContainerGroupProfileResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
                     ContainerGroupProfileData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     ContainerGroupProfilePatch patch = new ContainerGroupProfilePatch();
                     patch.Tags.ReplaceWith(tags);
-                    Response<CGProfileResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    Response<ContainerGroupProfileResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -542,11 +538,11 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<CGProfileResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual Response<ContainerGroupProfileResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _cgProfileClientDiagnostics.CreateScope("CGProfileResource.SetTags");
+            using DiagnosticScope scope = _containerGroupProfilesClientDiagnostics.CreateScope("ContainerGroupProfileResource.SetTags");
             scope.Start();
             try
             {
@@ -560,17 +556,17 @@ namespace Azure.ResourceManager.ContainerInstance
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _cgProfileRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _containerGroupProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ContainerGroupProfileData> response = Response.FromValue(ContainerGroupProfileData.FromResponse(result), result);
-                    return Response.FromValue(new CGProfileResource(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue(new ContainerGroupProfileResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
                     ContainerGroupProfileData current = Get(cancellationToken: cancellationToken).Value.Data;
                     ContainerGroupProfilePatch patch = new ContainerGroupProfilePatch();
                     patch.Tags.ReplaceWith(tags);
-                    Response<CGProfileResource> result = Update(patch, cancellationToken: cancellationToken);
+                    Response<ContainerGroupProfileResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -585,11 +581,11 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<CGProfileResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerGroupProfileResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _cgProfileClientDiagnostics.CreateScope("CGProfileResource.RemoveTag");
+            using DiagnosticScope scope = _containerGroupProfilesClientDiagnostics.CreateScope("ContainerGroupProfileResource.RemoveTag");
             scope.Start();
             try
             {
@@ -602,10 +598,10 @@ namespace Azure.ResourceManager.ContainerInstance
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _cgProfileRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _containerGroupProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ContainerGroupProfileData> response = Response.FromValue(ContainerGroupProfileData.FromResponse(result), result);
-                    return Response.FromValue(new CGProfileResource(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue(new ContainerGroupProfileResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
@@ -616,7 +612,7 @@ namespace Azure.ResourceManager.ContainerInstance
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    Response<CGProfileResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    Response<ContainerGroupProfileResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -631,11 +627,11 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Response<CGProfileResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public virtual Response<ContainerGroupProfileResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _cgProfileClientDiagnostics.CreateScope("CGProfileResource.RemoveTag");
+            using DiagnosticScope scope = _containerGroupProfilesClientDiagnostics.CreateScope("ContainerGroupProfileResource.RemoveTag");
             scope.Start();
             try
             {
@@ -648,10 +644,10 @@ namespace Azure.ResourceManager.ContainerInstance
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _cgProfileRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _containerGroupProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ContainerGroupProfileData> response = Response.FromValue(ContainerGroupProfileData.FromResponse(result), result);
-                    return Response.FromValue(new CGProfileResource(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue(new ContainerGroupProfileResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
@@ -662,7 +658,7 @@ namespace Azure.ResourceManager.ContainerInstance
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    Response<CGProfileResource> result = Update(patch, cancellationToken: cancellationToken);
+                    Response<ContainerGroupProfileResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -673,7 +669,7 @@ namespace Azure.ResourceManager.ContainerInstance
             }
         }
 
-        /// <summary> Gets a collection of ContainerGroupProfileRevisions in the <see cref="CGProfileResource"/>. </summary>
+        /// <summary> Gets a collection of ContainerGroupProfileRevisions in the <see cref="ContainerGroupProfileResource"/>. </summary>
         /// <returns> An object representing collection of ContainerGroupProfileRevisions and their operations over a ContainerGroupProfileRevisionResource. </returns>
         public virtual ContainerGroupProfileRevisionCollection GetContainerGroupProfileRevisions()
         {

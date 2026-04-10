@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -15,33 +14,33 @@ using Azure.ResourceManager.ContainerInstance.Models;
 
 namespace Azure.ResourceManager.ContainerInstance
 {
-    internal partial class CGProfilesGetBySubscriptionAsyncCollectionResultOfT : AsyncPageable<ContainerGroupProfileData>
+    internal partial class ContainerGroupProfilesGetBySubscriptionCollectionResultOfT : Pageable<ContainerGroupProfileData>
     {
-        private readonly CGProfiles _client;
+        private readonly ContainerGroupProfiles _client;
         private readonly Guid _subscriptionId;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of CGProfilesGetBySubscriptionAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The CGProfiles client used to send requests. </param>
+        /// <summary> Initializes a new instance of ContainerGroupProfilesGetBySubscriptionCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The ContainerGroupProfiles client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public CGProfilesGetBySubscriptionAsyncCollectionResultOfT(CGProfiles client, Guid subscriptionId, RequestContext context) : base(context?.CancellationToken ?? default)
+        public ContainerGroupProfilesGetBySubscriptionCollectionResultOfT(ContainerGroupProfiles client, Guid subscriptionId, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _context = context;
         }
 
-        /// <summary> Gets the pages of CGProfilesGetBySubscriptionAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of ContainerGroupProfilesGetBySubscriptionCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of CGProfilesGetBySubscriptionAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<ContainerGroupProfileData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of ContainerGroupProfilesGetBySubscriptionCollectionResultOfT as an enumerable collection. </returns>
+        public override IEnumerable<Page<ContainerGroupProfileData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
             {
-                Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
+                Response response = GetNextResponse(pageSizeHint, nextPage);
                 if (response is null)
                 {
                     yield break;
@@ -59,14 +58,14 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
+        private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetBySubscriptionRequest(nextLink, _subscriptionId, _context) : _client.CreateGetBySubscriptionRequest(_subscriptionId, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableContainerInstanceSubscriptionResource.GetCGProfiles");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableContainerInstanceSubscriptionResource.GetContainerGroupProfiles");
             scope.Start();
             try
             {
-                return await _client.Pipeline.ProcessMessageAsync(message, _context).ConfigureAwait(false);
+                return _client.Pipeline.ProcessMessage(message, _context);
             }
             catch (Exception e)
             {

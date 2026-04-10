@@ -12,7 +12,7 @@ using System.Text.Json;
 namespace Azure.ResourceManager.ContainerInstance
 {
     /// <summary></summary>
-    public partial class CGProfileResource : IJsonModel<ContainerGroupProfileData>
+    public partial class ContainerGroupProfileResource : IJsonModel<ContainerGroupProfileData>
     {
         private static IJsonModel<ContainerGroupProfileData> s_dataDeserializationInstance;
 
