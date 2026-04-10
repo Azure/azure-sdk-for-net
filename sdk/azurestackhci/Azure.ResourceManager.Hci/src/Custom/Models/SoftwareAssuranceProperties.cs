@@ -7,7 +7,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    [CodeGenSuppress("SoftwareAssuranceStatus")]
     public partial class SoftwareAssuranceProperties
     {
         /// <summary> Status of the Software Assurance for the cluster. </summary>
