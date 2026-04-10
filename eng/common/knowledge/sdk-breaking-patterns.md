@@ -39,23 +39,42 @@ When generating an authoring plan for TypeSpec changes, check if the planned cha
 
 **Mitigation:**
 
-This is a complex multi-step case. The mitigation combines `@@alternateType` and `@@clientName`:
+This is a complex multi-step case. The mitigation combines `@@alternateType` and `@@clientName` with a critical "make room" step:
 
 ```typespec
 // In client.tsp
-// Step 1: Keep the original enum name for the property that changed return type
+// Step 1: CRITICAL — Rename the ORIGINAL enum out of the way first
+// Without this, you get "duplicate-client-name" errors
+@@clientName(MyService.ProvisioningState, "StorageProvisioningState", "java");
+
+// Step 2: Create merged enum with ALL values from both enums
+enum ProvisioningStateEnum {
+  Creating,
+  ResolvingDNS,
+  Succeeded,
+  // ... all values from original ProvisioningState
+  Canceled,
+  Failed,
+  // ... plus values from StorageTaskAssignmentProvisioningState
+}
+
+// Step 3: Give the merged enum the original name
+@@clientName(MyService.ProvisioningStateEnum, "ProvisioningState", "java");
+
+// Step 4: Point properties at the merged enum
 @@alternateType(
-  MyService.StorageTaskAssignmentProperties.provisioningState,
-  MyService.ProvisioningState,
+  MyService.StorageAccountProperties.provisioningState,
+  MyService.ProvisioningStateEnum,
   "java"
 );
-
-// Step 2: Add missing members back to the original enum via clientName
-// if members were moved to a new enum, use @@clientName to alias them
-@@clientName(MyService.StorageTaskAssignmentProvisioningState.Succeeded, "Succeeded");
+@@alternateType(
+  MyService.StorageTaskAssignmentProperties.provisioningState,
+  MyService.ProvisioningStateEnum,
+  "java"
+);
 ```
 
-**Known limitation:** The exact mitigation depends on how the enum was split and which members moved. Review the specific changelog entries to determine the correct decorator combination.
+**Key learning from Storage dogfood:** Step 1 (the "make room" step) is critical. Without renaming the original enum first, creating a new enum with `@@clientName` to the same name causes `duplicate-client-name` errors. This multi-step interaction is the most common failure point.
 
 ---
 
