@@ -162,7 +162,7 @@ public static class ResponseContextExtensions
 
     /// <summary>Generates a new structured output item ID sharing the response's partition key.</summary>
     /// <param name="context">The response context.</param>
-    /// <returns>A structured output item ID in the format <c>fco_{partitionKey}{entropy}</c>.</returns>
+    /// <returns>A structured output item ID generated for the current response.</returns>
     public static string NewStructuredOutputItemId(this ResponseContext context)
         => IdGenerator.NewStructuredOutputItemId(context.ResponseId);
 
