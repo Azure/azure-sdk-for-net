@@ -14,7 +14,7 @@ using Azure.ResourceManager.Compute;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes the properties of a virtual machine scale set virtual machine. </summary>
-    internal partial class VirtualMachineScaleSetVmProperties : IJsonModel<VirtualMachineScaleSetVmProperties>
+    public partial class VirtualMachineScaleSetVmProperties : IJsonModel<VirtualMachineScaleSetVmProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
