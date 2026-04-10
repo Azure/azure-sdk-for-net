@@ -320,9 +320,9 @@ public class EchoHandler : ResponseHandler
         var text = message.AddTextContent();
         yield return text.EmitAdded();
         yield return text.EmitDelta("Hello, world!");
-        yield return text.EmitDone("Hello, world!");
+        yield return text.EmitTextDone("Hello, world!");
 
-        yield return message.EmitContentDone(text);
+        yield return text.EmitDone();
         yield return message.EmitDone();
 
         // 3. Signal completion
@@ -643,9 +643,9 @@ yield return text.EmitDelta("First chunk of text. ");
 yield return text.EmitDelta("Second chunk. ");
 
 // Finalise the text content (final text = full accumulated text)
-yield return text.EmitDone("First chunk of text. Second chunk. ");
+yield return text.EmitTextDone("First chunk of text. Second chunk. ");
 
-yield return message.EmitContentDone(text);
+yield return text.EmitDone();
 yield return message.EmitDone();
 ```
 
@@ -765,7 +765,6 @@ yield return summary.EmitAdded();
 yield return summary.EmitTextDelta("Let me think about this...");
 yield return summary.EmitTextDone("Let me think about this...");
 yield return summary.EmitDone();
-reasoning.EmitSummaryPartDone(summary);
 yield return reasoning.EmitDone();
 ```
 
@@ -972,8 +971,8 @@ public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
         yield return text.EmitDelta(chunk);
     }
 
-    yield return text.EmitDone(fullText);
-    yield return message.EmitContentDone(text);
+    yield return text.EmitTextDone(fullText);
+    yield return text.EmitDone();
     yield return message.EmitDone();
     yield return stream.EmitCompleted();
 }
@@ -1554,17 +1553,17 @@ yield return stream.EmitCompleted();
 ### Not Closing Content Builders
 
 ```csharp
-// ❌ Missing EmitContentDone
+// ❌ Missing EmitDone on the content builder
 var text = message.AddTextContent();
 yield return text.EmitAdded();
-yield return text.EmitDone("text");
+yield return text.EmitTextDone("text");
 yield return message.EmitDone(); // Content wasn't properly closed
 
-// ✅ Always call EmitContentDone before closing the message
+// ✅ Always call EmitDone on the content builder before closing the message
 var text = message.AddTextContent();
 yield return text.EmitAdded();
-yield return text.EmitDone("text");
-yield return message.EmitContentDone(text); // Close the content part
+yield return text.EmitTextDone("text");
+yield return text.EmitDone(); // Close the content part
 yield return message.EmitDone();
 ```
 

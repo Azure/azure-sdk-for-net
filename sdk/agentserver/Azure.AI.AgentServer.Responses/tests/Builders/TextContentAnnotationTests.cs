@@ -82,7 +82,7 @@ public class TextContentAnnotationTests
         var added = text.EmitAdded();                                // seq 0
         var delta = text.EmitDelta("Hi");                            // seq 1
         var ann = text.EmitAnnotationAdded(CreateTestAnnotation());  // seq 2
-        var done = text.EmitDone("Hi");                              // seq 3
+        var done = text.EmitTextDone("Hi");                              // seq 3
         Assert.That(added.SequenceNumber, Is.EqualTo(0));
         Assert.That(delta.SequenceNumber, Is.EqualTo(1));
         Assert.That(ann.SequenceNumber, Is.EqualTo(2));

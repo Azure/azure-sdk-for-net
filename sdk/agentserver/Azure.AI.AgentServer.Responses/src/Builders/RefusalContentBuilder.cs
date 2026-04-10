@@ -6,8 +6,9 @@ using Azure.AI.AgentServer.Responses.Models;
 namespace Azure.AI.AgentServer.Responses;
 
 /// <summary>
-/// Scoped builder for a refusal content part within a message. Provides methods
-/// for the refusal content lifecycle: added, delta, and done events.
+/// Scoped builder for a refusal content part within a message. Owns its full
+/// lifecycle: <c>EmitAdded</c> → <c>EmitDelta</c> (0+) → <c>EmitRefusalDone</c>
+/// → <c>EmitDone</c>.
 /// </summary>
 public class RefusalContentBuilder
 {
@@ -16,6 +17,7 @@ public class RefusalContentBuilder
     private readonly long _contentIndex;
     private readonly string _itemId;
     private string? _finalRefusal;
+    private bool _refusalDone;
     private BuilderLifecycleState _lifecycleState;
 
     /// <summary>
@@ -38,7 +40,7 @@ public class RefusalContentBuilder
         _itemId = string.Empty;
     }
 
-    /// <summary>The final refusal text passed to <see cref="EmitDone"/>. Null if not yet finalized.</summary>
+    /// <summary>The final refusal text set by <see cref="EmitRefusalDone"/>. Null if not yet finalized.</summary>
     public string? FinalRefusal => _finalRefusal;
 
     /// <summary>The content index assigned to this refusal content part.</summary>
@@ -72,17 +74,39 @@ public class RefusalContentBuilder
 
     /// <summary>
     /// Produces a <c>response.refusal.done</c> event with the final complete refusal text.
+    /// Call this after all deltas have been emitted and before <see cref="EmitDone"/>.
     /// </summary>
     /// <param name="finalRefusal">The final complete refusal text.</param>
     /// <returns>A <see cref="ResponseRefusalDoneEvent"/> with the final refusal.</returns>
-    public virtual ResponseRefusalDoneEvent EmitDone(string finalRefusal)
+    public virtual ResponseRefusalDoneEvent EmitRefusalDone(string finalRefusal)
     {
         if (_lifecycleState != BuilderLifecycleState.Added)
-            throw new InvalidOperationException($"Cannot call EmitDone — builder is in '{_lifecycleState}' state.");
-        _lifecycleState = BuilderLifecycleState.Done;
+            throw new InvalidOperationException($"Cannot call EmitRefusalDone — builder is in '{_lifecycleState}' state.");
+        if (_refusalDone)
+            throw new InvalidOperationException("EmitRefusalDone has already been called.");
 
+        _refusalDone = true;
         _finalRefusal = finalRefusal;
         return new ResponseRefusalDoneEvent(
             _stream.NextSequenceNumber(), _itemId, _outputIndex, _contentIndex, finalRefusal);
+    }
+
+    /// <summary>
+    /// Produces a <c>response.content_part.done</c> event, closing this content part.
+    /// Must be called after <see cref="EmitRefusalDone"/>.
+    /// </summary>
+    /// <returns>A <see cref="ResponseContentPartDoneEvent"/> for this content part.</returns>
+    public virtual ResponseContentPartDoneEvent EmitDone()
+    {
+        if (_lifecycleState != BuilderLifecycleState.Added)
+            throw new InvalidOperationException($"Cannot call EmitDone — builder is in '{_lifecycleState}' state.");
+        if (!_refusalDone)
+            throw new InvalidOperationException("Must call EmitRefusalDone() before EmitDone().");
+        _lifecycleState = BuilderLifecycleState.Done;
+
+        var part = new OutputContentRefusalContent(
+            refusal: _finalRefusal ?? string.Empty);
+        return new ResponseContentPartDoneEvent(
+            _stream.NextSequenceNumber(), _itemId, _outputIndex, _contentIndex, part);
     }
 }

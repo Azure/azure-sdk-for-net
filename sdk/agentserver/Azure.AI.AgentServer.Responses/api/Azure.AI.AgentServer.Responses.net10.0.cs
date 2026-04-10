@@ -505,9 +505,6 @@ namespace Azure.AI.AgentServer.Responses
         public virtual Azure.AI.AgentServer.Responses.RefusalContentBuilder AddRefusalContent() { throw null; }
         public virtual Azure.AI.AgentServer.Responses.TextContentBuilder AddTextContent() { throw null; }
         public virtual Azure.AI.AgentServer.Responses.Models.ResponseOutputItemAddedEvent EmitAdded() { throw null; }
-        public virtual Azure.AI.AgentServer.Responses.Models.ResponseContentPartDoneEvent EmitContentDone(Azure.AI.AgentServer.Responses.RefusalContentBuilder refusalContent) { throw null; }
-        public virtual Azure.AI.AgentServer.Responses.Models.ResponseContentPartDoneEvent EmitContentDone(Azure.AI.AgentServer.Responses.TextContentBuilder textContent) { throw null; }
-        public virtual Azure.AI.AgentServer.Responses.Models.ResponseContentPartDoneEvent EmitContentDone(Azure.AI.AgentServer.Responses.TextContentBuilder textContent, System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.Annotation> annotations) { throw null; }
         public virtual Azure.AI.AgentServer.Responses.Models.ResponseOutputItemDoneEvent EmitDone() { throw null; }
         public virtual System.Collections.Generic.IAsyncEnumerable<Azure.AI.AgentServer.Responses.Models.ResponseStreamEvent> RefusalContent(System.Collections.Generic.IAsyncEnumerable<string> chunks, [System.Runtime.CompilerServices.EnumeratorCancellationAttribute] System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.ResponseStreamEvent> RefusalContent(string text) { throw null; }
@@ -521,7 +518,6 @@ namespace Azure.AI.AgentServer.Responses
         public virtual Azure.AI.AgentServer.Responses.ReasoningSummaryPartBuilder AddSummaryPart() { throw null; }
         public virtual Azure.AI.AgentServer.Responses.Models.ResponseOutputItemAddedEvent EmitAdded() { throw null; }
         public virtual Azure.AI.AgentServer.Responses.Models.ResponseOutputItemDoneEvent EmitDone() { throw null; }
-        public virtual void EmitSummaryPartDone(Azure.AI.AgentServer.Responses.ReasoningSummaryPartBuilder summaryPart) { }
         public virtual System.Collections.Generic.IAsyncEnumerable<Azure.AI.AgentServer.Responses.Models.ResponseStreamEvent> SummaryPart(System.Collections.Generic.IAsyncEnumerable<string> chunks, [System.Runtime.CompilerServices.EnumeratorCancellationAttribute] System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.ResponseStreamEvent> SummaryPart(string text) { throw null; }
     }
@@ -556,7 +552,8 @@ namespace Azure.AI.AgentServer.Responses
         public string? FinalRefusal { get { throw null; } }
         public virtual Azure.AI.AgentServer.Responses.Models.ResponseContentPartAddedEvent EmitAdded() { throw null; }
         public virtual Azure.AI.AgentServer.Responses.Models.ResponseRefusalDeltaEvent EmitDelta(string text) { throw null; }
-        public virtual Azure.AI.AgentServer.Responses.Models.ResponseRefusalDoneEvent EmitDone(string finalRefusal) { throw null; }
+        public virtual Azure.AI.AgentServer.Responses.Models.ResponseContentPartDoneEvent EmitDone() { throw null; }
+        public virtual Azure.AI.AgentServer.Responses.Models.ResponseRefusalDoneEvent EmitRefusalDone(string finalRefusal) { throw null; }
     }
     public partial class ResourceNotFoundException : System.Exception
     {
@@ -779,12 +776,14 @@ namespace Azure.AI.AgentServer.Responses
     public partial class TextContentBuilder
     {
         protected TextContentBuilder() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.AI.AgentServer.Responses.Models.Annotation> Annotations { get { throw null; } }
         public long ContentIndex { get { throw null; } }
         public string? FinalText { get { throw null; } }
         public virtual Azure.AI.AgentServer.Responses.Models.ResponseContentPartAddedEvent EmitAdded() { throw null; }
         public virtual Azure.AI.AgentServer.Responses.Models.ResponseOutputTextAnnotationAddedEvent EmitAnnotationAdded(Azure.AI.AgentServer.Responses.Models.Annotation annotation) { throw null; }
         public virtual Azure.AI.AgentServer.Responses.Models.ResponseTextDeltaEvent EmitDelta(string text) { throw null; }
-        public virtual Azure.AI.AgentServer.Responses.Models.ResponseTextDoneEvent EmitDone(string finalText) { throw null; }
+        public virtual Azure.AI.AgentServer.Responses.Models.ResponseContentPartDoneEvent EmitDone() { throw null; }
+        public virtual Azure.AI.AgentServer.Responses.Models.ResponseTextDoneEvent EmitTextDone(string? finalText = null) { throw null; }
     }
     public partial class TextResponse : System.Collections.Generic.IAsyncEnumerable<Azure.AI.AgentServer.Responses.Models.ResponseStreamEvent>
     {

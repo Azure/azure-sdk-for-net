@@ -136,9 +136,9 @@ public class EchoHandlerFullControl : ResponseHandler
         var text = message.AddTextContent();
         yield return text.EmitAdded();
         yield return text.EmitDelta("Hello, world!");
-        yield return text.EmitDone("Hello, world!");
+        yield return text.EmitTextDone("Hello, world!");
 
-        yield return message.EmitContentDone(text);
+        yield return text.EmitDone();
         yield return message.EmitDone();
         yield return stream.EmitCompleted();
     }

@@ -33,9 +33,9 @@ public class SimpleTextResponseTests
         events.Add(text.EmitAdded());                 // 3: content_part.added
         events.Add(text.EmitDelta("Hello, "));        // 4: output_text.delta
         events.Add(text.EmitDelta("world!"));         // 5: output_text.delta
-        events.Add(text.EmitDone("Hello, world!"));   // 6: output_text.done
+        events.Add(text.EmitTextDone("Hello, world!"));   // 6: output_text.done
 
-        events.Add(message.EmitContentDone(text));    // 7: content_part.done
+        events.Add(text.EmitDone());    // 7: content_part.done
         events.Add(message.EmitDone());               // 8: output_item.done
         events.Add(stream.EmitCompleted());           // 9: response.completed
 
@@ -134,9 +134,9 @@ public class SimpleTextResponseTests
         yield return text.EmitAdded();
         yield return text.EmitDelta("Hello, ");
         yield return text.EmitDelta("world!");
-        yield return text.EmitDone("Hello, world!");
+        yield return text.EmitTextDone("Hello, world!");
 
-        yield return message.EmitContentDone(text);
+        yield return text.EmitDone();
         yield return message.EmitDone();
         yield return stream.EmitCompleted();
     }

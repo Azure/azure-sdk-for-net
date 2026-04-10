@@ -7,8 +7,9 @@ using Azure.AI.AgentServer.Responses.Models;
 namespace Azure.AI.AgentServer.Responses;
 
 /// <summary>
-/// Scoped builder for a text content part within a message. Provides methods
-/// for the text content lifecycle: added, delta, and done events.
+/// Scoped builder for a text content part within a message. Owns its full
+/// lifecycle: <c>EmitAdded</c> → <c>EmitDelta</c> (0+) → <c>EmitTextDone</c>
+/// → <c>EmitAnnotationAdded</c> (0+) → <c>EmitDone</c>.
 /// </summary>
 public class TextContentBuilder
 {
@@ -16,8 +17,11 @@ public class TextContentBuilder
     private readonly long _outputIndex;
     private readonly long _contentIndex;
     private readonly string _itemId;
+    private readonly List<string> _deltaFragments = new();
+    private readonly List<Annotation> _annotations = new();
     private string? _finalText;
     private long _annotationIndex;
+    private bool _textDone;
     private BuilderLifecycleState _lifecycleState;
 
     /// <summary>
@@ -40,11 +44,14 @@ public class TextContentBuilder
         _itemId = string.Empty;
     }
 
-    /// <summary>The final text passed to <see cref="EmitDone"/>. Null if not yet finalized.</summary>
+    /// <summary>The final text set by <see cref="EmitTextDone"/>. Null if not yet finalized.</summary>
     public string? FinalText => _finalText;
 
     /// <summary>The content index assigned to this text content part.</summary>
     public long ContentIndex => _contentIndex;
+
+    /// <summary>The annotations emitted via <see cref="EmitAnnotationAdded"/>.</summary>
+    public IReadOnlyList<Annotation> Annotations => _annotations;
 
     /// <summary>
     /// Produces a <c>response.content_part.added</c> event with an empty text content part.
@@ -71,6 +78,7 @@ public class TextContentBuilder
     /// <returns>A <see cref="ResponseTextDeltaEvent"/> with the text delta.</returns>
     public virtual ResponseTextDeltaEvent EmitDelta(string text)
     {
+        _deltaFragments.Add(text);
         return new ResponseTextDeltaEvent(
             _stream.NextSequenceNumber(), _itemId, _outputIndex, _contentIndex,
             text, Array.Empty<ResponseLogProb>());
@@ -78,30 +86,65 @@ public class TextContentBuilder
 
     /// <summary>
     /// Produces a <c>response.output_text.done</c> event with the final complete text.
+    /// Call this after all deltas have been emitted. After this, you may call
+    /// <see cref="EmitAnnotationAdded"/> and then <see cref="EmitDone"/>.
     /// </summary>
-    /// <param name="finalText">The final complete text.</param>
+    /// <param name="finalText">
+    /// Optional override for the final text. When <c>null</c>, the accumulated delta
+    /// fragments are merged automatically.
+    /// </param>
     /// <returns>A <see cref="ResponseTextDoneEvent"/> with the final text.</returns>
-    public virtual ResponseTextDoneEvent EmitDone(string finalText)
+    public virtual ResponseTextDoneEvent EmitTextDone(string? finalText = null)
     {
         if (_lifecycleState != BuilderLifecycleState.Added)
-            throw new InvalidOperationException($"Cannot call EmitDone — builder is in '{_lifecycleState}' state.");
-        _lifecycleState = BuilderLifecycleState.Done;
+            throw new InvalidOperationException($"Cannot call EmitTextDone — builder is in '{_lifecycleState}' state.");
+        if (_textDone)
+            throw new InvalidOperationException("EmitTextDone has already been called.");
 
-        _finalText = finalText;
+        _textDone = true;
+        var merged = string.Concat(_deltaFragments);
+        if (string.IsNullOrEmpty(merged) && finalText != null)
+            merged = finalText;
+        _finalText = merged;
+
         return new ResponseTextDoneEvent(
             _stream.NextSequenceNumber(), _itemId, _outputIndex, _contentIndex,
-            finalText, Array.Empty<ResponseLogProb>());
+            merged, Array.Empty<ResponseLogProb>());
     }
 
     /// <summary>
     /// Produces a <c>response.output_text.annotation.added</c> event with the given annotation.
+    /// The annotation is also tracked so that <see cref="EmitDone"/> can include it in
+    /// the <c>content_part.done</c> event.
     /// </summary>
     /// <param name="annotation">The annotation to emit.</param>
     /// <returns>A <see cref="ResponseOutputTextAnnotationAddedEvent"/> with the annotation.</returns>
     public virtual ResponseOutputTextAnnotationAddedEvent EmitAnnotationAdded(Annotation annotation)
     {
+        _annotations.Add(annotation);
         var annotationIndex = _annotationIndex++;
         return new ResponseOutputTextAnnotationAddedEvent(
             _stream.NextSequenceNumber(), _itemId, _outputIndex, _contentIndex, annotationIndex, annotation);
+    }
+
+    /// <summary>
+    /// Produces a <c>response.content_part.done</c> event, closing this content part.
+    /// Must be called after <see cref="EmitTextDone"/>.
+    /// </summary>
+    /// <returns>A <see cref="ResponseContentPartDoneEvent"/> for this content part.</returns>
+    public virtual ResponseContentPartDoneEvent EmitDone()
+    {
+        if (_lifecycleState != BuilderLifecycleState.Added)
+            throw new InvalidOperationException($"Cannot call EmitDone — builder is in '{_lifecycleState}' state.");
+        if (!_textDone)
+            throw new InvalidOperationException("Must call EmitTextDone() before EmitDone().");
+        _lifecycleState = BuilderLifecycleState.Done;
+
+        var part = new OutputContentOutputTextContent(
+            text: _finalText ?? string.Empty,
+            annotations: _annotations,
+            logprobs: Array.Empty<LogProb>());
+        return new ResponseContentPartDoneEvent(
+            _stream.NextSequenceNumber(), _itemId, _outputIndex, _contentIndex, part);
     }
 }
