@@ -23,7 +23,7 @@ These rules enforce internal implementation correctness and **cannot be suppress
 | Rule | Description | Fix |
 |------|-------------|-----|
 | [**AZC0012**](docs/list-of-diagnostics.md#azc0012) | Avoid single word type names | ✅ |
-| [**AZC0020**](docs/AZC0020.md) | Propagate CancellationToken to RequestContext | — |
+| [**AZC0020**](docs/AZC0020.md) | Propagate CancellationToken to RequestContext | ✅ |
 
 ## For Library Authors
 
