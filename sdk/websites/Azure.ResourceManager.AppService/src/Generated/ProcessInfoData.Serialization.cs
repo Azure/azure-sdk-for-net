@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.AppService
             double? iisProfileTimeoutInSeconds = default;
             string parent = default;
             IList<string> children = default;
-            IList<WebAppProcessThreadProperties> threads = default;
+            IList<WebAppProcessThreadInfo> threads = default;
             IList<string> openFileHandles = default;
             IList<ProcessModuleInfoData> modules = default;
             string fileName = default;
@@ -434,10 +434,10 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            List<WebAppProcessThreadProperties> array = new List<WebAppProcessThreadProperties>();
+                            List<WebAppProcessThreadInfo> array = new List<WebAppProcessThreadInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(WebAppProcessThreadProperties.DeserializeWebAppProcessThreadProperties(item, options));
+                                array.Add(WebAppProcessThreadInfo.DeserializeWebAppProcessThreadInfo(item, options));
                             }
                             threads = array;
                             continue;
@@ -677,6 +677,7 @@ namespace Azure.ResourceManager.AppService
                 name,
                 type,
                 systemData,
+                kind,
                 identifier,
                 deploymentName,
                 href,
@@ -686,7 +687,7 @@ namespace Azure.ResourceManager.AppService
                 iisProfileTimeoutInSeconds,
                 parent,
                 children ?? new ChangeTrackingList<string>(),
-                threads ?? new ChangeTrackingList<WebAppProcessThreadProperties>(),
+                threads ?? new ChangeTrackingList<WebAppProcessThreadInfo>(),
                 openFileHandles ?? new ChangeTrackingList<string>(),
                 modules ?? new ChangeTrackingList<ProcessModuleInfoData>(),
                 fileName,
@@ -713,7 +714,6 @@ namespace Azure.ResourceManager.AppService
                 isScmSite,
                 isWebjob,
                 description,
-                kind,
                 serializedAdditionalRawData);
         }
 

@@ -54,12 +54,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="deployment"> Function app deployment configuration. </param>
         /// <param name="runtime"> Function app runtime settings. </param>
         /// <param name="scaleAndConcurrency"> Function app scale and concurrency settings. </param>
+        /// <param name="siteUpdateStrategy"> Function app site update strategy configuration. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FunctionAppConfig(FunctionsDeployment deployment, FunctionAppRuntime runtime, FunctionAppScaleAndConcurrency scaleAndConcurrency, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FunctionAppConfig(FunctionsDeployment deployment, FunctionAppRuntime runtime, FunctionAppScaleAndConcurrency scaleAndConcurrency, FunctionsSiteUpdateStrategy siteUpdateStrategy, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Deployment = deployment;
             Runtime = runtime;
             ScaleAndConcurrency = scaleAndConcurrency;
+            SiteUpdateStrategy = siteUpdateStrategy;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -84,5 +86,19 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Function app scale and concurrency settings. </summary>
         [WirePath("scaleAndConcurrency")]
         public FunctionAppScaleAndConcurrency ScaleAndConcurrency { get; set; }
+        /// <summary> Function app site update strategy configuration. </summary>
+        internal FunctionsSiteUpdateStrategy SiteUpdateStrategy { get; set; }
+        /// <summary> Function app site update strategy type. Available options: Recreate, RollingUpdate. </summary>
+        [WirePath("siteUpdateStrategy.type")]
+        public SiteUpdateStrategyType? SiteUpdateStrategyType
+        {
+            get => SiteUpdateStrategy is null ? default : SiteUpdateStrategy.SiteUpdateStrategyType;
+            set
+            {
+                if (SiteUpdateStrategy is null)
+                    SiteUpdateStrategy = new FunctionsSiteUpdateStrategy();
+                SiteUpdateStrategy.SiteUpdateStrategyType = value;
+            }
+        }
     }
 }

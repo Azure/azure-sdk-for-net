@@ -51,6 +51,7 @@ namespace Azure.ResourceManager.AppService.Models
         public WebAppMSDeploy()
         {
             SetParameters = new ChangeTrackingDictionary<string, string>();
+            AddOnPackages = new ChangeTrackingList<MSDeployCore>();
         }
 
         /// <summary> Initializes a new instance of <see cref="WebAppMSDeploy"/>. </summary>
@@ -73,9 +74,10 @@ namespace Azure.ResourceManager.AppService.Models
         /// Sets the AppOffline rule while the MSDeploy operation executes.
         /// Setting is &lt;code&gt;false&lt;/code&gt; by default.
         /// </param>
+        /// <param name="addOnPackages"> List of Add-On packages. Add-On packages implicitly enable the Do Not Delete MSDeploy rule. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WebAppMSDeploy(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Uri packageUri, string connectionString, string dbType, Uri setParametersXmlFileUri, IDictionary<string, string> setParameters, bool? skipAppData, bool? isAppOffline, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal WebAppMSDeploy(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Uri packageUri, string connectionString, string dbType, Uri setParametersXmlFileUri, IDictionary<string, string> setParameters, bool? skipAppData, bool? isAppOffline, IList<MSDeployCore> addOnPackages, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             PackageUri = packageUri;
             ConnectionString = connectionString;
@@ -84,6 +86,7 @@ namespace Azure.ResourceManager.AppService.Models
             SetParameters = setParameters;
             SkipAppData = skipAppData;
             IsAppOffline = isAppOffline;
+            AddOnPackages = addOnPackages;
             Kind = kind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -117,6 +120,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// </summary>
         [WirePath("properties.appOffline")]
         public bool? IsAppOffline { get; set; }
+        /// <summary> List of Add-On packages. Add-On packages implicitly enable the Do Not Delete MSDeploy rule. </summary>
+        [WirePath("properties.addOnPackages")]
+        public IList<MSDeployCore> AddOnPackages { get; }
         /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
         public string Kind { get; set; }

@@ -11,12 +11,6 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary>
-    /// A Class representing a WebSiteSlot along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="WebSiteSlotResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetWebSiteSlotResource method.
-    /// Otherwise you can get one from its parent resource <see cref="WebSiteResource" /> using the GetWebSiteSlot method.
-    /// </summary>
     public partial class WebSiteSlotResource : ArmResource
     {
         /// <summary>
@@ -43,7 +37,7 @@ namespace Azure.ResourceManager.AppService
                 try
                 {
                     var response = await _webSiteSlotWebAppsRestClient.ListConfigurationsSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink?.AbsoluteUri, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -58,7 +52,7 @@ namespace Azure.ResourceManager.AppService
                 try
                 {
                     var response = await _webSiteSlotWebAppsRestClient.ListConfigurationsSlotNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink?.AbsoluteUri, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -93,7 +87,7 @@ namespace Azure.ResourceManager.AppService
                 try
                 {
                     var response = _webSiteSlotWebAppsRestClient.ListConfigurationsSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink?.AbsoluteUri, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -108,7 +102,7 @@ namespace Azure.ResourceManager.AppService
                 try
                 {
                     var response = _webSiteSlotWebAppsRestClient.ListConfigurationsSlotNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink?.AbsoluteUri, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -247,7 +241,7 @@ namespace Azure.ResourceManager.AppService
                 try
                 {
                     var response = await _webSiteSlotWebAppsRestClient.ListSiteBackupsSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink?.AbsoluteUri, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -262,7 +256,7 @@ namespace Azure.ResourceManager.AppService
                 try
                 {
                     var response = await _webSiteSlotWebAppsRestClient.ListSiteBackupsSlotNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink?.AbsoluteUri, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -297,7 +291,7 @@ namespace Azure.ResourceManager.AppService
                 try
                 {
                     var response = _webSiteSlotWebAppsRestClient.ListSiteBackupsSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink?.AbsoluteUri, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -312,7 +306,7 @@ namespace Azure.ResourceManager.AppService
                 try
                 {
                     var response = _webSiteSlotWebAppsRestClient.ListSiteBackupsSlotNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink?.AbsoluteUri, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

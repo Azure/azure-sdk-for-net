@@ -10,9 +10,6 @@ using Azure.ResourceManager.AppService.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    //we do this change due to the rest api accordingly did not followed the swagger spec which responsed the post wrapped by a "Properties" as a name. It just response the content like "{default="ABC", default2 ="CDE"}".
-    //so we retrived the post and iterate the  json object above then Add to the AppServiceConfigurationDictionary.Properties.
-    // then we can convert the Dictionary result to AppServiceConfigurationDictionary without Deserialization.
     internal partial class WebAppsRestOperations
     {
         /// <summary> Description for Get function keys for a function in a web site, or a deployment slot. </summary>

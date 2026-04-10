@@ -63,22 +63,25 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="kind"> Kind of resource. </param>
         /// <param name="virtualNetworkName"> The Virtual Network name. </param>
         /// <param name="virtualNetworkConnection"> The Virtual Network summary view. </param>
         /// <param name="hybridConnections"> The Hybrid Connections summary view. </param>
         /// <param name="hybridConnectionsV2"> The Hybrid Connection V2 (Service Bus) view. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkFeatureData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string virtualNetworkName, AppServiceVirtualNetworkProperties virtualNetworkConnection, IReadOnlyList<RelayServiceConnectionEntityData> hybridConnections, IReadOnlyList<HybridConnectionData> hybridConnectionsV2, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal NetworkFeatureData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string virtualNetworkName, AppServiceVirtualNetworkProperties virtualNetworkConnection, IReadOnlyList<RelayServiceConnectionEntityData> hybridConnections, IReadOnlyList<HybridConnectionData> hybridConnectionsV2, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            Kind = kind;
             VirtualNetworkName = virtualNetworkName;
             VirtualNetworkConnection = virtualNetworkConnection;
             HybridConnections = hybridConnections;
             HybridConnectionsV2 = hybridConnectionsV2;
-            Kind = kind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
+        public string Kind { get; set; }
         /// <summary> The Virtual Network name. </summary>
         [WirePath("properties.virtualNetworkName")]
         public string VirtualNetworkName { get; }
@@ -91,8 +94,5 @@ namespace Azure.ResourceManager.AppService
         /// <summary> The Hybrid Connection V2 (Service Bus) view. </summary>
         [WirePath("properties.hybridConnectionsV2")]
         public IReadOnlyList<HybridConnectionData> HybridConnectionsV2 { get; }
-        /// <summary> Kind of resource. </summary>
-        [WirePath("kind")]
-        public string Kind { get; set; }
     }
 }

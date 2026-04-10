@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppService
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            ResourceIdentifier functionAppResourceId = default;
+            string functionAppResourceId = default;
             string functionAppRegion = default;
             DateTimeOffset? createdOn = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -134,11 +134,7 @@ namespace Azure.ResourceManager.AppService
                     {
                         if (property0.NameEquals("functionAppResourceId"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            functionAppResourceId = new ResourceIdentifier(property0.Value.GetString());
+                            functionAppResourceId = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("functionAppRegion"u8))
@@ -169,10 +165,10 @@ namespace Azure.ResourceManager.AppService
                 name,
                 type,
                 systemData,
+                kind,
                 functionAppResourceId,
                 functionAppRegion,
                 createdOn,
-                kind,
                 serializedAdditionalRawData);
         }
 
@@ -276,7 +272,15 @@ namespace Azure.ResourceManager.AppService
                 if (Optional.IsDefined(FunctionAppResourceId))
                 {
                     builder.Append("    functionAppResourceId: ");
-                    builder.AppendLine($"'{FunctionAppResourceId.ToString()}'");
+                    if (FunctionAppResourceId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{FunctionAppResourceId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{FunctionAppResourceId}'");
+                    }
                 }
             }
 

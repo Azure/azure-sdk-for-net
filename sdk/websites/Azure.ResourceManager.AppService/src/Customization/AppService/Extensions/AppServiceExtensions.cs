@@ -13,7 +13,6 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class to add extension methods to Azure.ResourceManager.AppService. </summary>
     public static partial class AppServiceExtensions
     {
         /// <summary>

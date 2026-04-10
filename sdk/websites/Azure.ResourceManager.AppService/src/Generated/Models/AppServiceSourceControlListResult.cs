@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.AppService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AppServiceSourceControlListResult"/>. </summary>
-        /// <param name="value"> Collection of resources. </param>
+        /// <param name="value"> The SourceControl items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal AppServiceSourceControlListResult(IEnumerable<AppServiceSourceControlData> value)
         {
@@ -57,10 +57,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AppServiceSourceControlListResult"/>. </summary>
-        /// <param name="value"> Collection of resources. </param>
-        /// <param name="nextLink"> Link to next page of resources. </param>
+        /// <param name="value"> The SourceControl items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppServiceSourceControlListResult(IReadOnlyList<AppServiceSourceControlData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AppServiceSourceControlListResult(IReadOnlyList<AppServiceSourceControlData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -72,9 +72,9 @@ namespace Azure.ResourceManager.AppService.Models
         {
         }
 
-        /// <summary> Collection of resources. </summary>
+        /// <summary> The SourceControl items on this page. </summary>
         public IReadOnlyList<AppServiceSourceControlData> Value { get; }
-        /// <summary> Link to next page of resources. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

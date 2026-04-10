@@ -9,10 +9,6 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary>
-    /// A class representing the WebSite data model.
-    /// A web app, a mobile app backend, or an API app.
-    /// </summary>
     public partial class WebSiteData : TrackedResourceData
     {
         /// <summary> Virtual Network Route All enabled. This causes all outbound traffic to have Virtual Network Security Groups and User Defined Routes applied. </summary>

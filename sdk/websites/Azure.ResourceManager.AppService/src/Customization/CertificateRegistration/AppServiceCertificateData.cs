@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="provisioningState"> Status of the Key Vault secret. </param>
         /// <param name="kind"> Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppServiceCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceIdentifier keyVaultId, string keyVaultSecretName, KeyVaultSecretStatus? provisioningState, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal AppServiceCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceIdentifier keyVaultId, string keyVaultSecretName, KeyVaultSecretStatus? provisioningState, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             KeyVaultId = keyVaultId;
             KeyVaultSecretName = keyVaultSecretName;

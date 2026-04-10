@@ -11,12 +11,6 @@ using Azure.ResourceManager.AppService.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary>
-    /// A Class representing a SiteInstanceProcess along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SiteInstanceProcessResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetSiteInstanceProcessResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SiteInstanceResource"/> using the GetSiteInstanceProcess method.
-    /// </summary>
     public partial class SiteInstanceProcessResource : ArmResource
     {
         /// <summary>

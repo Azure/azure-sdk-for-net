@@ -15,11 +15,6 @@ using Azure.ResourceManager.AppService.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary>
-    /// A class representing a collection of <see cref="HostingEnvironmentPrivateEndpointConnectionResource"/> and their operations.
-    /// Each <see cref="HostingEnvironmentPrivateEndpointConnectionResource"/> in the collection will belong to the same instance of <see cref="AppServiceEnvironmentResource"/>.
-    /// To get a <see cref="HostingEnvironmentPrivateEndpointConnectionCollection"/> instance call the GetHostingEnvironmentPrivateEndpointConnections method from an instance of <see cref="AppServiceEnvironmentResource"/>.
-    /// </summary>
     public partial class HostingEnvironmentPrivateEndpointConnectionCollection
     {
         /// <summary>
@@ -47,7 +42,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> or <paramref name="info"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<HostingEnvironmentPrivateEndpointConnectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string privateEndpointConnectionName, PrivateLinkConnectionApprovalRequestInfo info, CancellationToken cancellationToken)
-            => await CreateOrUpdateAsync(waitUntil, privateEndpointConnectionName, new RemotePrivateEndpointConnectionARMResourceData(info.Id, info.Name, info.ResourceType, info.SystemData, null, null, info.PrivateLinkServiceConnectionState, new List<IPAddress>(), info.Kind, null), cancellationToken).ConfigureAwait(false);
+            => await CreateOrUpdateAsync(waitUntil, privateEndpointConnectionName, new RemotePrivateEndpointConnectionARMResourceData(info.Id, info.Name, info.ResourceType, info.SystemData, info.Kind, null, null, info.PrivateLinkServiceConnectionState, null, null), cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Description for Approves or rejects a private endpoint connection
@@ -74,6 +69,6 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> or <paramref name="info"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<HostingEnvironmentPrivateEndpointConnectionResource> CreateOrUpdate(WaitUntil waitUntil, string privateEndpointConnectionName, PrivateLinkConnectionApprovalRequestInfo info, CancellationToken cancellationToken = default)
-            => CreateOrUpdate(waitUntil, privateEndpointConnectionName, new RemotePrivateEndpointConnectionARMResourceData(info.Id, info.Name, info.ResourceType, info.SystemData, null, null, info.PrivateLinkServiceConnectionState, new List<IPAddress>(), info.Kind, null), cancellationToken);
+            => CreateOrUpdate(waitUntil, privateEndpointConnectionName, new RemotePrivateEndpointConnectionARMResourceData(info.Id, info.Name, info.ResourceType, info.SystemData, info.Kind, null, null, info.PrivateLinkServiceConnectionState, null, null), cancellationToken);
     }
 }

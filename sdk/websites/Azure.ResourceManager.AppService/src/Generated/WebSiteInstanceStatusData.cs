@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing the WebSiteInstanceStatus data model. </summary>
+    /// <summary>
+    /// A class representing the WebSiteInstanceStatus data model.
+    /// Concrete proxy resource types can be created by aliasing this type using a specific property type.
+    /// </summary>
     public partial class WebSiteInstanceStatusData : ResourceData
     {
         /// <summary>
@@ -59,6 +62,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="kind"> Kind of resource. </param>
         /// <param name="state"></param>
         /// <param name="statusUri"> Link to the GetStatusApi in Kudu. </param>
         /// <param name="detectorUri"> Link to the Diagnose and Solve Portal. </param>
@@ -66,10 +70,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="healthCheckUrlString"> Link to the console to web app instance. </param>
         /// <param name="containers"> Dictionary of &lt;ContainerInfo&gt;. </param>
         /// <param name="physicalZone"> The physical zone that the instance is in. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WebSiteInstanceStatusData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SiteRuntimeState? state, Uri statusUri, Uri detectorUri, Uri consoleUri, string healthCheckUrlString, IDictionary<string, ContainerInfo> containers, string physicalZone, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal WebSiteInstanceStatusData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, SiteRuntimeState? state, Uri statusUri, Uri detectorUri, Uri consoleUri, string healthCheckUrlString, IDictionary<string, ContainerInfo> containers, string physicalZone, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            Kind = kind;
             State = state;
             StatusUri = statusUri;
             DetectorUri = detectorUri;
@@ -77,10 +81,12 @@ namespace Azure.ResourceManager.AppService
             HealthCheckUrlString = healthCheckUrlString;
             Containers = containers;
             PhysicalZone = physicalZone;
-            Kind = kind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
+        public string Kind { get; set; }
         /// <summary> Gets or sets the state. </summary>
         [WirePath("properties.state")]
         public SiteRuntimeState? State { get; set; }
@@ -102,8 +108,5 @@ namespace Azure.ResourceManager.AppService
         /// <summary> The physical zone that the instance is in. </summary>
         [WirePath("properties.physicalZone")]
         public string PhysicalZone { get; set; }
-        /// <summary> Kind of resource. </summary>
-        [WirePath("kind")]
-        public string Kind { get; set; }
     }
 }

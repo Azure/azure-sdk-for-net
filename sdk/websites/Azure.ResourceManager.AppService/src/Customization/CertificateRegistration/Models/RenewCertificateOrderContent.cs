@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="isPrivateKeyExternal"> Should we change the ASC type (from managed private key to external private key and vice versa). </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RenewCertificateOrderContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? keySize, string csr, bool? isPrivateKeyExternal, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal RenewCertificateOrderContent(ResourceIdentifier id, string name, ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, int? keySize, string csr, bool? isPrivateKeyExternal, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             KeySize = keySize;
             Csr = csr;

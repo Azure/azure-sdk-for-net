@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.AppService
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Azure.ResourceManager.Models.SystemData systemData = default;
             RegistrationContactInfo contactAdmin = default;
             RegistrationContactInfo contactBilling = default;
             RegistrationContactInfo contactRegistrant = default;
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.AppService
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAppServiceContext.Default);
+                    systemData = ModelReaderWriter.Read<Azure.ResourceManager.Models.SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAppServiceContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

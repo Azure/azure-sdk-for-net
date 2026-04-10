@@ -94,10 +94,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// - ClientCertEnabled: true and ClientCertMode: Optional means ClientCert is optional or accepted.
         /// </param>
         /// <param name="clientCertExclusionPaths"> client certificate authentication comma-separated exclusion paths. </param>
-        /// <param name="isHostNameDisabled">
-        /// &lt;code&gt;true&lt;/code&gt; to disable the public hostnames of the app; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        ///  If &lt;code&gt;true&lt;/code&gt;, the app is only accessible via API management process.
-        /// </param>
+        /// <param name="isHostNameDisabled"> &lt;code&gt;true&lt;/code&gt; to disable the public hostnames of the app; otherwise, &lt;code&gt;false&lt;/code&gt;.\n If &lt;code&gt;true&lt;/code&gt;, the app is only accessible via API management process. </param>
         /// <param name="customDomainVerificationId"> Unique identifier that verifies the custom domains assigned to the app. Customer will add this id to a txt record for verification. </param>
         /// <param name="outboundIPAddresses"> List of IP addresses that the app uses for outbound connections (e.g. database access). Includes VIPs from tenants that site can be hosted with current settings. Read-only. </param>
         /// <param name="possibleOutboundIPAddresses"> List of IP addresses that the app uses for outbound connections (e.g. database access). Includes VIPs from all tenants except dataComponent. Read-only. </param>
@@ -119,6 +116,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// </param>
         /// <param name="redundancyMode"> Site redundancy mode. </param>
         /// <param name="inProgressOperationId"> Specifies an operation id if this site has a pending operation. </param>
+        /// <param name="publicNetworkAccess"> Property to allow or block all public traffic. Allowed Values: 'Enabled', 'Disabled' or an empty string. </param>
         /// <param name="isStorageAccountRequired"> Checks if Customer provided storage account is required. </param>
         /// <param name="keyVaultReferenceIdentity"> Identity to use for Key Vault Reference authentication. </param>
         /// <param name="virtualNetworkSubnetId">
@@ -127,7 +125,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SitePatchInfo(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, string state, IReadOnlyList<string> hostNames, string repositorySiteName, AppServiceUsageState? usageState, bool? isEnabled, IReadOnlyList<string> enabledHostNames, WebSiteAvailabilityState? availabilityState, IList<HostNameSslState> hostNameSslStates, ResourceIdentifier serverFarmId, bool? isReserved, bool? isXenon, bool? isHyperV, DateTimeOffset? lastModifiedOn, SiteDnsConfig dnsConfiguration, SiteConfigProperties siteConfig, IReadOnlyList<string> trafficManagerHostNames, bool? isScmSiteAlsoStopped, string targetSwapSlot, HostingEnvironmentProfile hostingEnvironmentProfile, bool? isClientAffinityEnabled, bool? isClientAffinityProxyEnabled, bool? isClientCertEnabled, ClientCertMode? clientCertMode, string clientCertExclusionPaths, bool? isHostNameDisabled, string customDomainVerificationId, string outboundIPAddresses, string possibleOutboundIPAddresses, int? containerSize, int? dailyMemoryTimeQuota, DateTimeOffset? suspendOn, int? maxNumberOfWorkers, CloningInfo cloningInfo, string resourceGroup, bool? isDefaultContainer, string defaultHostName, SlotSwapStatus slotSwapStatus, bool? isHttpsOnly, RedundancyMode? redundancyMode, Guid? inProgressOperationId, bool? isStorageAccountRequired, string keyVaultReferenceIdentity, ResourceIdentifier virtualNetworkSubnetId, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SitePatchInfo(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, string state, IReadOnlyList<string> hostNames, string repositorySiteName, AppServiceUsageState? usageState, bool? isEnabled, IReadOnlyList<string> enabledHostNames, WebSiteAvailabilityState? availabilityState, IList<HostNameSslState> hostNameSslStates, ResourceIdentifier serverFarmId, bool? isReserved, bool? isXenon, bool? isHyperV, DateTimeOffset? lastModifiedOn, SiteDnsConfig dnsConfiguration, SiteConfigProperties siteConfig, IReadOnlyList<string> trafficManagerHostNames, bool? isScmSiteAlsoStopped, string targetSwapSlot, HostingEnvironmentProfile hostingEnvironmentProfile, bool? isClientAffinityEnabled, bool? isClientAffinityProxyEnabled, bool? isClientCertEnabled, ClientCertMode? clientCertMode, string clientCertExclusionPaths, bool? isHostNameDisabled, string customDomainVerificationId, string outboundIPAddresses, string possibleOutboundIPAddresses, int? containerSize, int? dailyMemoryTimeQuota, DateTimeOffset? suspendOn, int? maxNumberOfWorkers, CloningInfo cloningInfo, string resourceGroup, bool? isDefaultContainer, string defaultHostName, SlotSwapStatus slotSwapStatus, bool? isHttpsOnly, RedundancyMode? redundancyMode, Guid? inProgressOperationId, string publicNetworkAccess, bool? isStorageAccountRequired, string keyVaultReferenceIdentity, ResourceIdentifier virtualNetworkSubnetId, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Identity = identity;
             State = state;
@@ -170,6 +168,7 @@ namespace Azure.ResourceManager.AppService.Models
             IsHttpsOnly = isHttpsOnly;
             RedundancyMode = redundancyMode;
             InProgressOperationId = inProgressOperationId;
+            PublicNetworkAccess = publicNetworkAccess;
             IsStorageAccountRequired = isStorageAccountRequired;
             KeyVaultReferenceIdentity = keyVaultReferenceIdentity;
             VirtualNetworkSubnetId = virtualNetworkSubnetId;
@@ -260,10 +259,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> client certificate authentication comma-separated exclusion paths. </summary>
         [WirePath("properties.clientCertExclusionPaths")]
         public string ClientCertExclusionPaths { get; set; }
-        /// <summary>
-        /// &lt;code&gt;true&lt;/code&gt; to disable the public hostnames of the app; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        ///  If &lt;code&gt;true&lt;/code&gt;, the app is only accessible via API management process.
-        /// </summary>
+        /// <summary> &lt;code&gt;true&lt;/code&gt; to disable the public hostnames of the app; otherwise, &lt;code&gt;false&lt;/code&gt;.\n If &lt;code&gt;true&lt;/code&gt;, the app is only accessible via API management process. </summary>
         [WirePath("properties.hostNamesDisabled")]
         public bool? IsHostNameDisabled { get; set; }
         /// <summary> Unique identifier that verifies the custom domains assigned to the app. Customer will add this id to a txt record for verification. </summary>
@@ -317,6 +313,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Specifies an operation id if this site has a pending operation. </summary>
         [WirePath("properties.inProgressOperationId")]
         public Guid? InProgressOperationId { get; }
+        /// <summary> Property to allow or block all public traffic. Allowed Values: 'Enabled', 'Disabled' or an empty string. </summary>
+        [WirePath("properties.publicNetworkAccess")]
+        public string PublicNetworkAccess { get; set; }
         /// <summary> Checks if Customer provided storage account is required. </summary>
         [WirePath("properties.storageAccountRequired")]
         public bool? IsStorageAccountRequired { get; set; }

@@ -10,7 +10,6 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
     public partial class MockableAppServiceResourceGroupResource : ArmResource
     {
         /// <summary>
@@ -29,7 +28,7 @@ namespace Azure.ResourceManager.AppService.Mocking
                 try
                 {
                     var response = await ResourceHealthMetadataRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink?.AbsoluteUri, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -44,7 +43,7 @@ namespace Azure.ResourceManager.AppService.Mocking
                 try
                 {
                     var response = await ResourceHealthMetadataRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink?.AbsoluteUri, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -71,7 +70,7 @@ namespace Azure.ResourceManager.AppService.Mocking
                 try
                 {
                     var response = ResourceHealthMetadataRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink?.AbsoluteUri, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -86,7 +85,7 @@ namespace Azure.ResourceManager.AppService.Mocking
                 try
                 {
                     var response = ResourceHealthMetadataRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink?.AbsoluteUri, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

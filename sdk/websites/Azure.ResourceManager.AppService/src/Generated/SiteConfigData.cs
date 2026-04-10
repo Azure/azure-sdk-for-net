@@ -70,6 +70,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="kind"> Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind. </param>
         /// <param name="numberOfWorkers"> Number of workers. </param>
         /// <param name="defaultDocuments"> Default documents. </param>
         /// <param name="netFrameworkVersion"> .NET Framework version. </param>
@@ -159,10 +160,10 @@ namespace Azure.ResourceManager.AppService
         /// </param>
         /// <param name="azureStorageAccounts"> List of Azure Storage Accounts. </param>
         /// <param name="publicNetworkAccess"> Property to allow or block all public traffic. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SiteConfigData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? numberOfWorkers, IList<string> defaultDocuments, string netFrameworkVersion, string phpVersion, string pythonVersion, string nodeVersion, string powerShellVersion, string linuxFxVersion, string windowsFxVersion, bool? isRequestTracingEnabled, DateTimeOffset? requestTracingExpirationOn, bool? isRemoteDebuggingEnabled, string remoteDebuggingVersion, bool? isHttpLoggingEnabled, bool? useManagedIdentityCreds, string acrUserManagedIdentityId, int? logsDirectorySizeLimit, bool? isDetailedErrorLoggingEnabled, string publishingUsername, IList<AppServiceNameValuePair> appSettings, IList<AppServiceNameValuePair> metadata, IList<ConnStringInfo> connectionStrings, SiteMachineKey machineKey, IList<HttpRequestHandlerMapping> handlerMappings, string documentRoot, ScmType? scmType, bool? use32BitWorkerProcess, bool? isWebSocketsEnabled, bool? isAlwaysOn, string javaVersion, string javaContainer, string javaContainerVersion, string appCommandLine, ManagedPipelineMode? managedPipelineMode, IList<VirtualApplication> virtualApplications, SiteLoadBalancing? loadBalancing, RoutingRuleExperiments experiments, SiteLimits limits, bool? isAutoHealEnabled, AutoHealRules autoHealRules, string tracingOptions, string vnetName, bool? isVnetRouteAllEnabled, int? vnetPrivatePortsCount, AppServiceCorsSettings cors, WebAppPushSettings push, AppServiceApiDefinitionInfo apiDefinition, ApiManagementConfig apiManagementConfig, string autoSwapSlotName, bool? isLocalMySqlEnabled, int? managedServiceIdentityId, int? xManagedServiceIdentityId, string keyVaultReferenceIdentity, IList<AppServiceIPSecurityRestriction> ipSecurityRestrictions, SiteDefaultAction? ipSecurityRestrictionsDefaultAction, IList<AppServiceIPSecurityRestriction> scmIPSecurityRestrictions, SiteDefaultAction? scmIPSecurityRestrictionsDefaultAction, bool? allowIPSecurityRestrictionsForScmToUseMain, bool? isHttp20Enabled, int? http20ProxyFlag, AppServiceSupportedTlsVersion? minTlsVersion, AppServiceTlsCipherSuite? minTlsCipherSuite, AppServiceSupportedTlsVersion? scmMinTlsVersion, AppServiceFtpsState? ftpsState, int? preWarmedInstanceCount, int? functionAppScaleLimit, int? elasticWebAppScaleLimit, string healthCheckPath, bool? isFunctionsRuntimeScaleMonitoringEnabled, string websiteTimeZone, int? minimumElasticInstanceCount, IDictionary<string, AppServiceStorageAccessInfo> azureStorageAccounts, string publicNetworkAccess, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SiteConfigData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, int? numberOfWorkers, IList<string> defaultDocuments, string netFrameworkVersion, string phpVersion, string pythonVersion, string nodeVersion, string powerShellVersion, string linuxFxVersion, string windowsFxVersion, bool? isRequestTracingEnabled, DateTimeOffset? requestTracingExpirationOn, bool? isRemoteDebuggingEnabled, string remoteDebuggingVersion, bool? isHttpLoggingEnabled, bool? useManagedIdentityCreds, string acrUserManagedIdentityId, int? logsDirectorySizeLimit, bool? isDetailedErrorLoggingEnabled, string publishingUsername, IList<AppServiceNameValuePair> appSettings, IList<AppServiceNameValuePair> metadata, IList<ConnStringInfo> connectionStrings, SiteMachineKey machineKey, IList<HttpRequestHandlerMapping> handlerMappings, string documentRoot, ScmType? scmType, bool? use32BitWorkerProcess, bool? isWebSocketsEnabled, bool? isAlwaysOn, string javaVersion, string javaContainer, string javaContainerVersion, string appCommandLine, ManagedPipelineMode? managedPipelineMode, IList<VirtualApplication> virtualApplications, SiteLoadBalancing? loadBalancing, RoutingRuleExperiments experiments, SiteLimits limits, bool? isAutoHealEnabled, AutoHealRules autoHealRules, string tracingOptions, string vnetName, bool? isVnetRouteAllEnabled, int? vnetPrivatePortsCount, AppServiceCorsSettings cors, WebAppPushSettings push, AppServiceApiDefinitionInfo apiDefinition, ApiManagementConfig apiManagementConfig, string autoSwapSlotName, bool? isLocalMySqlEnabled, int? managedServiceIdentityId, int? xManagedServiceIdentityId, string keyVaultReferenceIdentity, IList<AppServiceIPSecurityRestriction> ipSecurityRestrictions, SiteDefaultAction? ipSecurityRestrictionsDefaultAction, IList<AppServiceIPSecurityRestriction> scmIPSecurityRestrictions, SiteDefaultAction? scmIPSecurityRestrictionsDefaultAction, bool? allowIPSecurityRestrictionsForScmToUseMain, bool? isHttp20Enabled, int? http20ProxyFlag, AppServiceSupportedTlsVersion? minTlsVersion, AppServiceTlsCipherSuite? minTlsCipherSuite, AppServiceSupportedTlsVersion? scmMinTlsVersion, AppServiceFtpsState? ftpsState, int? preWarmedInstanceCount, int? functionAppScaleLimit, int? elasticWebAppScaleLimit, string healthCheckPath, bool? isFunctionsRuntimeScaleMonitoringEnabled, string websiteTimeZone, int? minimumElasticInstanceCount, IDictionary<string, AppServiceStorageAccessInfo> azureStorageAccounts, string publicNetworkAccess, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            Kind = kind;
             NumberOfWorkers = numberOfWorkers;
             DefaultDocuments = defaultDocuments;
             NetFrameworkVersion = netFrameworkVersion;
@@ -236,10 +237,12 @@ namespace Azure.ResourceManager.AppService
             MinimumElasticInstanceCount = minimumElasticInstanceCount;
             AzureStorageAccounts = azureStorageAccounts;
             PublicNetworkAccess = publicNetworkAccess;
-            Kind = kind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind. </summary>
+        [WirePath("kind")]
+        public string Kind { get; set; }
         /// <summary> Number of workers. </summary>
         [WirePath("properties.numberOfWorkers")]
         public int? NumberOfWorkers { get; set; }
@@ -510,8 +513,5 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Property to allow or block all public traffic. </summary>
         [WirePath("properties.publicNetworkAccess")]
         public string PublicNetworkAccess { get; set; }
-        /// <summary> Kind of resource. </summary>
-        [WirePath("kind")]
-        public string Kind { get; set; }
     }
 }

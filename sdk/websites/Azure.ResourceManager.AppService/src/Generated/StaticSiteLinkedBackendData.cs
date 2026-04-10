@@ -60,22 +60,25 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="kind"> Kind of resource. </param>
         /// <param name="backendResourceId"> The resource id of the backend linked to the static site. </param>
         /// <param name="region"> The region of the backend linked to the static site. </param>
         /// <param name="createdOn"> The date and time on which the backend was linked to the static site. </param>
         /// <param name="provisioningState"> The provisioning state of the linking process. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StaticSiteLinkedBackendData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier backendResourceId, string region, DateTimeOffset? createdOn, string provisioningState, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal StaticSiteLinkedBackendData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, ResourceIdentifier backendResourceId, string region, DateTimeOffset? createdOn, string provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            Kind = kind;
             BackendResourceId = backendResourceId;
             Region = region;
             CreatedOn = createdOn;
             ProvisioningState = provisioningState;
-            Kind = kind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
+        public string Kind { get; set; }
         /// <summary> The resource id of the backend linked to the static site. </summary>
         [WirePath("properties.backendResourceId")]
         public ResourceIdentifier BackendResourceId { get; set; }
@@ -88,8 +91,5 @@ namespace Azure.ResourceManager.AppService
         /// <summary> The provisioning state of the linking process. </summary>
         [WirePath("properties.provisioningState")]
         public string ProvisioningState { get; }
-        /// <summary> Kind of resource. </summary>
-        [WirePath("kind")]
-        public string Kind { get; set; }
     }
 }

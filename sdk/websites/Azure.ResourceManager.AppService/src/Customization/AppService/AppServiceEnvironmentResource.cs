@@ -11,12 +11,6 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary>
-    /// A Class representing an AppServiceEnvironment along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AppServiceEnvironmentResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAppServiceEnvironmentResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetAppServiceEnvironment method.
-    /// </summary>
     public partial class AppServiceEnvironmentResource : ArmResource
     {
         /// <summary>
@@ -44,7 +38,7 @@ namespace Azure.ResourceManager.AppService
                 try
                 {
                     var response = await _appServiceEnvironmentRestClient.ListWebAppsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, propertiesToInclude, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink?.AbsoluteUri, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -59,7 +53,7 @@ namespace Azure.ResourceManager.AppService
                 try
                 {
                     var response = await _appServiceEnvironmentRestClient.ListWebAppsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, propertiesToInclude, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink?.AbsoluteUri, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -95,7 +89,7 @@ namespace Azure.ResourceManager.AppService
                 try
                 {
                     var response = _appServiceEnvironmentRestClient.ListWebApps(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, propertiesToInclude, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink?.AbsoluteUri, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -110,7 +104,7 @@ namespace Azure.ResourceManager.AppService
                 try
                 {
                     var response = _appServiceEnvironmentRestClient.ListWebAppsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, propertiesToInclude, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink?.AbsoluteUri, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

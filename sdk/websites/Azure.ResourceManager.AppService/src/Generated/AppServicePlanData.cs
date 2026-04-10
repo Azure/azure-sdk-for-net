@@ -56,6 +56,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="location"> The location. </param>
         public AppServicePlanData(AzureLocation location) : base(location)
         {
+            RegistryAdapters = new ChangeTrackingList<RegistryAdapter>();
+            InstallScripts = new ChangeTrackingList<InstallScript>();
+            StorageMounts = new ChangeTrackingList<StorageMount>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AppServicePlanData"/>. </summary>
@@ -67,6 +70,8 @@ namespace Azure.ResourceManager.AppService
         /// <param name="location"> The location. </param>
         /// <param name="sku"> Description of a SKU for a scalable resource. </param>
         /// <param name="extendedLocation"> Extended Location. </param>
+        /// <param name="kind"> Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind. </param>
+        /// <param name="identity"> Managed service identity. </param>
         /// <param name="workerTierName"> Target worker tier assigned to the App Service plan. </param>
         /// <param name="status"> App Service plan status. </param>
         /// <param name="subscription"> App Service plan subscription. </param>
@@ -100,12 +105,23 @@ namespace Azure.ResourceManager.AppService
         /// If &lt;code&gt;true&lt;/code&gt;, this App Service Plan will attempt to scale asynchronously if there are insufficient workers to scale synchronously.
         /// If &lt;code&gt;false&lt;/code&gt;, this App Service Plan will only attempt sync scaling.
         /// </param>
-        /// <param name="kind"> Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind. </param>
+        /// <param name="planDefaultIdentity"> Identity to use by platform for various features and integrations using managed identity. </param>
+        /// <param name="isCustomMode"> Whether this server farm is in custom mode. </param>
+        /// <param name="registryAdapters"> Registry adapters associated with this App Service plan. </param>
+        /// <param name="installScripts"> Install scripts associated with this App Service plan. </param>
+        /// <param name="network"> All network settings for the server farm. </param>
+        /// <param name="storageMounts"> Storage mounts associated with this App Service plan. </param>
+        /// <param name="rdpEnabled">
+        /// If &lt;code&gt;true&lt;/code&gt;, RDP access is enabled for this App Service plan. Only applicable for IsCustomMode ASPs.
+        /// If &lt;code&gt;false&lt;/code&gt;, RDP access is disabled.
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppServicePlanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AppServiceSkuDescription sku, ExtendedLocation extendedLocation, string workerTierName, AppServicePlanStatus? status, string subscription, HostingEnvironmentProfile hostingEnvironmentProfile, int? maximumNumberOfWorkers, int? numberOfWorkers, string geoRegion, bool? isPerSiteScaling, bool? isElasticScaleEnabled, int? maximumElasticWorkerCount, int? numberOfSites, bool? isSpot, DateTimeOffset? spotExpireOn, DateTimeOffset? freeOfferExpireOn, string resourceGroup, bool? isReserved, bool? isXenon, bool? isHyperV, int? targetWorkerCount, int? targetWorkerSizeId, ProvisioningState? provisioningState, KubeEnvironmentProfile kubeEnvironmentProfile, bool? isZoneRedundant, bool? isAsyncScalingEnabled, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal AppServicePlanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AppServiceSkuDescription sku, ExtendedLocation extendedLocation, string kind, ManagedServiceIdentity identity, string workerTierName, AppServicePlanStatus? status, string subscription, HostingEnvironmentProfile hostingEnvironmentProfile, int? maximumNumberOfWorkers, int? numberOfWorkers, string geoRegion, bool? isPerSiteScaling, bool? isElasticScaleEnabled, int? maximumElasticWorkerCount, int? numberOfSites, bool? isSpot, DateTimeOffset? spotExpireOn, DateTimeOffset? freeOfferExpireOn, string resourceGroup, bool? isReserved, bool? isXenon, bool? isHyperV, int? targetWorkerCount, int? targetWorkerSizeId, ProvisioningState? provisioningState, KubeEnvironmentProfile kubeEnvironmentProfile, bool? isZoneRedundant, bool? isAsyncScalingEnabled, DefaultIdentity planDefaultIdentity, bool? isCustomMode, IList<RegistryAdapter> registryAdapters, IList<InstallScript> installScripts, ServerFarmNetworkSettings network, IList<StorageMount> storageMounts, bool? rdpEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             ExtendedLocation = extendedLocation;
+            Kind = kind;
+            Identity = identity;
             WorkerTierName = workerTierName;
             Status = status;
             Subscription = subscription;
@@ -130,7 +146,13 @@ namespace Azure.ResourceManager.AppService
             KubeEnvironmentProfile = kubeEnvironmentProfile;
             IsZoneRedundant = isZoneRedundant;
             IsAsyncScalingEnabled = isAsyncScalingEnabled;
-            Kind = kind;
+            PlanDefaultIdentity = planDefaultIdentity;
+            IsCustomMode = isCustomMode;
+            RegistryAdapters = registryAdapters;
+            InstallScripts = installScripts;
+            Network = network;
+            StorageMounts = storageMounts;
+            RdpEnabled = rdpEnabled;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -145,6 +167,12 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Extended Location. </summary>
         [WirePath("extendedLocation")]
         public ExtendedLocation ExtendedLocation { get; set; }
+        /// <summary> Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind. </summary>
+        [WirePath("kind")]
+        public string Kind { get; set; }
+        /// <summary> Managed service identity. </summary>
+        [WirePath("identity")]
+        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Target worker tier assigned to the App Service plan. </summary>
         [WirePath("properties.workerTierName")]
         public string WorkerTierName { get; set; }
@@ -226,8 +254,41 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         [WirePath("properties.asyncScalingEnabled")]
         public bool? IsAsyncScalingEnabled { get; set; }
-        /// <summary> Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind. </summary>
-        [WirePath("kind")]
-        public string Kind { get; set; }
+        /// <summary> Identity to use by platform for various features and integrations using managed identity. </summary>
+        [WirePath("properties.planDefaultIdentity")]
+        public DefaultIdentity PlanDefaultIdentity { get; set; }
+        /// <summary> Whether this server farm is in custom mode. </summary>
+        [WirePath("properties.isCustomMode")]
+        public bool? IsCustomMode { get; set; }
+        /// <summary> Registry adapters associated with this App Service plan. </summary>
+        [WirePath("properties.registryAdapters")]
+        public IList<RegistryAdapter> RegistryAdapters { get; }
+        /// <summary> Install scripts associated with this App Service plan. </summary>
+        [WirePath("properties.installScripts")]
+        public IList<InstallScript> InstallScripts { get; }
+        /// <summary> All network settings for the server farm. </summary>
+        internal ServerFarmNetworkSettings Network { get; set; }
+        /// <summary> Azure Resource Manager ID of the Virtual network and subnet to be joined by Regional VNET Integration. This must be of the form /subscriptions/{subscriptionName}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{vnetName}/subnets/{subnetName}. </summary>
+        [WirePath("properties.network.virtualNetworkSubnetId")]
+        public string VirtualNetworkSubnetId
+        {
+            get => Network is null ? default : Network.VirtualNetworkSubnetId;
+            set
+            {
+                if (Network is null)
+                    Network = new ServerFarmNetworkSettings();
+                Network.VirtualNetworkSubnetId = value;
+            }
+        }
+
+        /// <summary> Storage mounts associated with this App Service plan. </summary>
+        [WirePath("properties.storageMounts")]
+        public IList<StorageMount> StorageMounts { get; }
+        /// <summary>
+        /// If &lt;code&gt;true&lt;/code&gt;, RDP access is enabled for this App Service plan. Only applicable for IsCustomMode ASPs.
+        /// If &lt;code&gt;false&lt;/code&gt;, RDP access is disabled.
+        /// </summary>
+        [WirePath("properties.rdpEnabled")]
+        public bool? RdpEnabled { get; set; }
     }
 }

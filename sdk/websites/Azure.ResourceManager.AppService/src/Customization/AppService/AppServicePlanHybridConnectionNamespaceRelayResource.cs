@@ -11,12 +11,6 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary>
-    /// A Class representing an AppServicePlanHybridConnectionNamespaceRelay along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AppServicePlanHybridConnectionNamespaceRelayResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetAppServicePlanHybridConnectionNamespaceRelayResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AppServicePlanResource"/> using the GetAppServicePlanHybridConnectionNamespaceRelay method.
-    /// </summary>
     public partial class AppServicePlanHybridConnectionNamespaceRelayResource
     {
         /// <summary>

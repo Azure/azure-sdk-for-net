@@ -12,12 +12,6 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary>
-    /// A Class representing a WebSite along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="WebSiteResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetWebSiteResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetWebSite method.
-    /// </summary>
     public partial class WebSiteResource : ArmResource
     {
         /// <summary>
@@ -44,7 +38,7 @@ namespace Azure.ResourceManager.AppService
                 try
                 {
                     var response = await _webSiteWebAppsRestClient.ListConfigurationsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink?.AbsoluteUri, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -59,7 +53,7 @@ namespace Azure.ResourceManager.AppService
                 try
                 {
                     var response = await _webSiteWebAppsRestClient.ListConfigurationsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink?.AbsoluteUri, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -94,7 +88,7 @@ namespace Azure.ResourceManager.AppService
                 try
                 {
                     var response = _webSiteWebAppsRestClient.ListConfigurations(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink?.AbsoluteUri, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -109,7 +103,7 @@ namespace Azure.ResourceManager.AppService
                 try
                 {
                     var response = _webSiteWebAppsRestClient.ListConfigurationsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink?.AbsoluteUri, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -249,7 +243,7 @@ namespace Azure.ResourceManager.AppService
                 try
                 {
                     var response = await _webSiteWebAppsRestClient.ListSiteBackupsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink?.AbsoluteUri, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -264,7 +258,7 @@ namespace Azure.ResourceManager.AppService
                 try
                 {
                     var response = await _webSiteWebAppsRestClient.ListSiteBackupsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink?.AbsoluteUri, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -299,7 +293,7 @@ namespace Azure.ResourceManager.AppService
                 try
                 {
                     var response = _webSiteWebAppsRestClient.ListSiteBackups(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink?.AbsoluteUri, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -314,7 +308,7 @@ namespace Azure.ResourceManager.AppService
                 try
                 {
                     var response = _webSiteWebAppsRestClient.ListSiteBackupsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink?.AbsoluteUri, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

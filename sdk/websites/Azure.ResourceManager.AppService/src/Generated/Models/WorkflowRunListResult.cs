@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The list of workflow runs. </summary>
+    /// <summary> The response of a WorkflowRun list operation. </summary>
     internal partial class WorkflowRunListResult
     {
         /// <summary>
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.AppService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="WorkflowRunListResult"/>. </summary>
-        internal WorkflowRunListResult()
+        /// <param name="value"> The WorkflowRun items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal WorkflowRunListResult(IEnumerable<WorkflowRunData> value)
         {
-            Value = new ChangeTrackingList<WorkflowRunData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkflowRunListResult"/>. </summary>
-        /// <param name="value"> A list of workflow runs. </param>
-        /// <param name="nextLink"> The URL to get the next set of results. </param>
+        /// <param name="value"> The WorkflowRun items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WorkflowRunListResult(IReadOnlyList<WorkflowRunData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal WorkflowRunListResult(IReadOnlyList<WorkflowRunData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> A list of workflow runs. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkflowRunListResult"/> for deserialization. </summary>
+        internal WorkflowRunListResult()
+        {
+        }
+
+        /// <summary> The WorkflowRun items on this page. </summary>
         public IReadOnlyList<WorkflowRunData> Value { get; }
-        /// <summary> The URL to get the next set of results. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

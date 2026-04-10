@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="provisioningState"> Status of the Key Vault secret. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppServiceCertificatePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier keyVaultId, string keyVaultSecretName, KeyVaultSecretStatus? provisioningState, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal AppServiceCertificatePatch(ResourceIdentifier id, string name, ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, ResourceIdentifier keyVaultId, string keyVaultSecretName, KeyVaultSecretStatus? provisioningState, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             KeyVaultId = keyVaultId;
             KeyVaultSecretName = keyVaultSecretName;

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="method"> The method that should be used to authenticate the user. </param>
         /// <param name="clientSecretSettingName"> The app setting that contains the client secret for the custom Open ID Connect provider. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OpenIdConnectClientCredential(ClientCredentialMethod? method, string clientSecretSettingName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal OpenIdConnectClientCredential(OpenIdConnectClientCredentialMethod? method, string clientSecretSettingName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Method = method;
             ClientSecretSettingName = clientSecretSettingName;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> The method that should be used to authenticate the user. </summary>
         [WirePath("method")]
-        public ClientCredentialMethod? Method { get; set; }
+        public OpenIdConnectClientCredentialMethod? Method { get; set; }
         /// <summary> The app setting that contains the client secret for the custom Open ID Connect provider. </summary>
         [WirePath("clientSecretSettingName")]
         public string ClientSecretSettingName { get; set; }

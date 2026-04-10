@@ -11,10 +11,6 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary>
-    /// A class representing the ProcessInfo data model.
-    /// Process Information.
-    /// </summary>
     public partial class ProcessInfoData : ResourceData
     {
         /// <summary> Thread list. </summary>
@@ -24,9 +20,9 @@ namespace Azure.ResourceManager.AppService
             get
             {
                 List<ProcessThreadInfo> threads = new List<ProcessThreadInfo>();
-                foreach (WebAppProcessThreadProperties thread in ProcessThreads)
+                foreach (WebAppProcessThreadInfo thread in ProcessThreads)
                 {
-                    ProcessThreadInfo processThread = new ProcessThreadInfo(default, default, default, default, thread.Id, thread.Href.AbsoluteUri, default, default, default, default, default, default, default, default, thread.State, default, default, new Dictionary<string, BinaryData>());
+                    ProcessThreadInfo processThread = new ProcessThreadInfo(thread.Id, thread.Name, thread.ResourceType, thread.SystemData, thread.Properties.Id, thread.Properties.Href.AbsoluteUri, default, default, default, default, default, default, default, default, thread.Properties.State, default, thread.Kind, null);
                     threads.Add(processThread);
                 }
                 return threads;

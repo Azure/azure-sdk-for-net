@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.AppService.Models
             SystemData systemData = default;
             DateTimeOffset? creationTime = default;
             Guid? recommendationId = default;
-            ResourceIdentifier resourceId = default;
+            string resourceId = default;
             ResourceScopeType? resourceScope = default;
             string ruleName = default;
             string displayName = default;
@@ -283,11 +283,7 @@ namespace Azure.ResourceManager.AppService.Models
                         }
                         if (property0.NameEquals("resourceId"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            resourceId = new ResourceIdentifier(property0.Value.GetString());
+                            resourceId = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("resourceScope"u8))
@@ -624,7 +620,15 @@ namespace Azure.ResourceManager.AppService.Models
                 if (Optional.IsDefined(ResourceId))
                 {
                     builder.Append("    resourceId: ");
-                    builder.AppendLine($"'{ResourceId.ToString()}'");
+                    if (ResourceId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ResourceId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ResourceId}'");
+                    }
                 }
             }
 

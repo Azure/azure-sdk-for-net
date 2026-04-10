@@ -12,7 +12,6 @@ using Azure.ResourceManager.AppService.Models;
 
 namespace Azure.ResourceManager.AppService.Mocking
 {
-    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     public partial class MockableAppServiceSubscriptionResource : ArmResource
     {
         /// <summary>
@@ -34,7 +33,7 @@ namespace Azure.ResourceManager.AppService.Mocking
                 try
                 {
                     var response = await DefaultRestClient.ListSiteIdentifiersAssignedToHostNameAsync(Id.SubscriptionId, nameIdentifier, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink?.AbsoluteUri, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -49,7 +48,7 @@ namespace Azure.ResourceManager.AppService.Mocking
                 try
                 {
                     var response = await DefaultRestClient.ListSiteIdentifiersAssignedToHostNameNextPageAsync(nextLink, Id.SubscriptionId, nameIdentifier, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink?.AbsoluteUri, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -79,7 +78,7 @@ namespace Azure.ResourceManager.AppService.Mocking
                 try
                 {
                     var response = DefaultRestClient.ListSiteIdentifiersAssignedToHostName(Id.SubscriptionId, nameIdentifier, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink?.AbsoluteUri, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -94,7 +93,7 @@ namespace Azure.ResourceManager.AppService.Mocking
                 try
                 {
                     var response = DefaultRestClient.ListSiteIdentifiersAssignedToHostNameNextPage(nextLink, Id.SubscriptionId, nameIdentifier, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink?.AbsoluteUri, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

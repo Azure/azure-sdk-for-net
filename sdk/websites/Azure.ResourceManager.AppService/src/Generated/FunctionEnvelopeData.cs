@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="kind"> Kind of resource. </param>
         /// <param name="functionAppId"> Function App ID. </param>
         /// <param name="scriptRootPathHref"> Script root path URI. </param>
         /// <param name="scriptHref"> Script URI. </param>
@@ -74,10 +75,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="invokeUrlTemplate"> The invocation URL. </param>
         /// <param name="language"> The function language. </param>
         /// <param name="isDisabled"> Gets or sets a value indicating whether the function is disabled. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FunctionEnvelopeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string functionAppId, string scriptRootPathHref, string scriptHref, string configHref, string testDataHref, string secretsFileHref, string href, BinaryData config, IDictionary<string, string> files, string testData, string invokeUrlTemplate, string language, bool? isDisabled, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal FunctionEnvelopeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string functionAppId, string scriptRootPathHref, string scriptHref, string configHref, string testDataHref, string secretsFileHref, string href, BinaryData config, IDictionary<string, string> files, string testData, string invokeUrlTemplate, string language, bool? isDisabled, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            Kind = kind;
             FunctionAppId = functionAppId;
             ScriptRootPathHref = scriptRootPathHref;
             ScriptHref = scriptHref;
@@ -91,10 +92,12 @@ namespace Azure.ResourceManager.AppService
             InvokeUrlTemplate = invokeUrlTemplate;
             Language = language;
             IsDisabled = isDisabled;
-            Kind = kind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
+        public string Kind { get; set; }
         /// <summary> Function App ID. </summary>
         [WirePath("properties.function_app_id")]
         public string FunctionAppId { get; set; }
@@ -163,8 +166,5 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Gets or sets a value indicating whether the function is disabled. </summary>
         [WirePath("properties.isDisabled")]
         public bool? IsDisabled { get; set; }
-        /// <summary> Kind of resource. </summary>
-        [WirePath("kind")]
-        public string Kind { get; set; }
     }
 }
