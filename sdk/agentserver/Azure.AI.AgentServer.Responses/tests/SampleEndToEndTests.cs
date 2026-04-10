@@ -11,7 +11,7 @@ using NUnit.Framework;
 namespace Azure.AI.AgentServer.Responses.Tests;
 
 /// <summary>
-/// End-to-end tests that validate every sample handler (Samples 1–15) works
+/// End-to-end tests that validate every sample handler (Samples 1–16) works
 /// correctly when wired into a real ASP.NET Core test server. Each test
 /// registers the actual handler class from the sample snippets, sends an
 /// HTTP request, and asserts on the response content.

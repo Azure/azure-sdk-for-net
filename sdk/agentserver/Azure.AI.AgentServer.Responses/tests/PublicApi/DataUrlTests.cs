@@ -111,6 +111,14 @@ public class DataUrlTests
         Assert.That(() => DataUrl.DecodeBytes("data:image/png;base64"), Throws.TypeOf<FormatException>());
     }
 
+    [Test]
+    public void DecodeBytes_String_ThrowsForMissingBase64Marker()
+    {
+        Assert.That(
+            () => DataUrl.DecodeBytes("data:text/plain,Hello"),
+            Throws.TypeOf<FormatException>().With.Message.Contains(";base64"));
+    }
+
     // ═══════════════════════════════════════════════════════════════════
     //  TryDecodeBytes
     // ═══════════════════════════════════════════════════════════════════
@@ -161,6 +169,14 @@ public class DataUrlTests
     public void TryDecodeBytes_String_ReturnsFalseForNull()
     {
         bool result = DataUrl.TryDecodeBytes((string?)null, out byte[] bytes);
+        Assert.That(result, Is.False);
+        Assert.That(bytes, Is.Empty);
+    }
+
+    [Test]
+    public void TryDecodeBytes_String_ReturnsFalseForMissingBase64Marker()
+    {
+        bool result = DataUrl.TryDecodeBytes("data:text/plain,Hello", out byte[] bytes);
         Assert.That(result, Is.False);
         Assert.That(bytes, Is.Empty);
     }

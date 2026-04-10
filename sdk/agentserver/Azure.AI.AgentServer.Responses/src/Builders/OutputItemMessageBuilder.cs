@@ -87,6 +87,9 @@ public class OutputItemMessageBuilder : OutputItemBuilder<OutputItemMessage>
     public virtual ResponseContentPartDoneEvent EmitContentDone(
         TextContentBuilder textContent, IEnumerable<Annotation> annotations)
     {
+        ArgumentNullException.ThrowIfNull(textContent);
+        ArgumentNullException.ThrowIfNull(annotations);
+
         var annotationList = annotations as IList<Annotation> ?? annotations.ToList();
         var part = new OutputContentOutputTextContent(
             text: textContent.FinalText ?? string.Empty,

@@ -120,6 +120,10 @@ public static class DataUrl
         if (commaIndex < 0 || !value.StartsWith("data:", StringComparison.OrdinalIgnoreCase))
             throw new FormatException("Invalid data URL: expected format 'data:[<mediatype>][;base64],<data>'.");
 
+        string header = value[..commaIndex];
+        if (header.IndexOf(Base64Marker, StringComparison.OrdinalIgnoreCase) < 0)
+            throw new FormatException("Data URL does not contain the ';base64' marker. Only base64-encoded data URLs are supported.");
+
         string base64Part = value[(commaIndex + 1)..];
         return Convert.FromBase64String(base64Part);
     }
@@ -130,6 +134,10 @@ public static class DataUrl
 
         int commaIndex = value.IndexOf(',');
         if (commaIndex < 0 || !value.StartsWith("data:", StringComparison.OrdinalIgnoreCase))
+            return false;
+
+        string header = value[..commaIndex];
+        if (header.IndexOf(Base64Marker, StringComparison.OrdinalIgnoreCase) < 0)
             return false;
 
         string base64Part = value[(commaIndex + 1)..];
