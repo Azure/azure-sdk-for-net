@@ -307,9 +307,19 @@ It is possible to further organize data within a collection as part of the lates
 Specify the `tags` parameter as part of the create entry operation. Multiple tags can be specified using commas. There is a limit of five tags per transaction.
 
 ```C# Snippet:CreateLedgerEntryWithTags
+RequestContent content = RequestContent.Create(new { contents = "Hello world with tags!" });
+string collectionId = "my-collection";
+string tags = "tag1,tag2";
+
+Response result = await client.CreateLedgerEntryAsync(content, collectionId, tags);
 ```
 
 ```C# Snippet:GetLedgerEntriesWithTags
+string collectionIdForQuery = "my-collection";
+
+// Specify collection ID and tag. Optionally add a range of transaction IDs.
+// Only one tag is permitted in each retrieval operation.
+var queryResult = client.GetLedgerEntriesAsync(collectionIdForQuery, tag: "tag1");
 ```
 ### User management
 
