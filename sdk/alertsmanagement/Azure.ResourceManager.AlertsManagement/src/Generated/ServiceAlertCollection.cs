@@ -105,7 +105,8 @@ namespace Azure.ResourceManager.AlertsManagement
                 @select,
                 timeRange?.ToString(),
                 customTimeRange,
-                context), data => new ServiceAlertResource(Client, data));
+                context,
+                "ServiceAlertCollection.GetAll"), data => new ServiceAlertResource(Client, data));
         }
 
         /// <summary>
@@ -170,7 +171,8 @@ namespace Azure.ResourceManager.AlertsManagement
                 @select,
                 timeRange?.ToString(),
                 customTimeRange,
-                context), data => new ServiceAlertResource(Client, data));
+                context,
+                "ServiceAlertCollection.GetAll"), data => new ServiceAlertResource(Client, data));
         }
 
         /// <summary>

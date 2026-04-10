@@ -20,18 +20,21 @@ namespace Azure.ResourceManager.AlertsManagement
         private readonly string _scope;
         private readonly Guid _alertId;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of ServiceAlertGetEnrichmentsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The ServiceAlert client used to send requests. </param>
         /// <param name="scope"> undefined. </param>
         /// <param name="alertId"> Unique ID of an alert instance. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ServiceAlertGetEnrichmentsCollectionResultOfT(ServiceAlert client, string scope, Guid alertId, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public ServiceAlertGetEnrichmentsCollectionResultOfT(ServiceAlert client, string scope, Guid alertId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _scope = scope;
             _alertId = alertId;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of ServiceAlertGetEnrichmentsCollectionResultOfT as an enumerable collection. </summary>
@@ -64,7 +67,7 @@ namespace Azure.ResourceManager.AlertsManagement
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetEnrichmentsRequest(nextLink, _scope, _alertId, _context) : _client.CreateGetEnrichmentsRequest(_scope, _alertId, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ServiceAlertResource.GetEnrichments");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

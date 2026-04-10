@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.AlertsManagement
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.AlertsManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new ServiceAlertGetEnrichmentsAsyncCollectionResultOfT(_serviceAlertRestClient, Id.Parent, Guid.Parse(Id.Name), context);
+            return new ServiceAlertGetEnrichmentsAsyncCollectionResultOfT(_serviceAlertRestClient, Id.Parent, Guid.Parse(Id.Name), context, "ServiceAlertResource.GetEnrichments");
         }
 
         /// <summary>
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.AlertsManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new ServiceAlertGetEnrichmentsCollectionResultOfT(_serviceAlertRestClient, Id.Parent, Guid.Parse(Id.Name), context);
+            return new ServiceAlertGetEnrichmentsCollectionResultOfT(_serviceAlertRestClient, Id.Parent, Guid.Parse(Id.Name), context, "ServiceAlertResource.GetEnrichments");
         }
 
         /// <summary>

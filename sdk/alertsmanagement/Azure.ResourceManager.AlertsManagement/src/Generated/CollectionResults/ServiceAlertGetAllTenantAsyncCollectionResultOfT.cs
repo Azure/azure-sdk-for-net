@@ -36,6 +36,7 @@ namespace Azure.ResourceManager.AlertsManagement
         private readonly string _timeRange;
         private readonly string _customTimeRange;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of ServiceAlertGetAllTenantAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The ServiceAlert client used to send requests. </param>
@@ -57,7 +58,8 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="timeRange"> Filter by time range by below listed values. Default value is 1 day. </param>
         /// <param name="customTimeRange"> Filter by custom time range in the format &lt;start-time&gt;/&lt;end-time&gt;  where time is in (ISO-8601 format)'. Permissible values is within 30 days from  query time. Either timeRange or customTimeRange could be used but not both. Default is none. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ServiceAlertGetAllTenantAsyncCollectionResultOfT(ServiceAlert client, string targetResource, string targetResourceType, string targetResourceGroup, string monitorService, string monitorCondition, string severity, string alertState, string alertRule, string smartGroupId, bool? includeContext, bool? includeEgressConfig, long? pageCount, string sortBy, string sortOrder, string @select, string timeRange, string customTimeRange, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public ServiceAlertGetAllTenantAsyncCollectionResultOfT(ServiceAlert client, string targetResource, string targetResourceType, string targetResourceGroup, string monitorService, string monitorCondition, string severity, string alertState, string alertRule, string smartGroupId, bool? includeContext, bool? includeEgressConfig, long? pageCount, string sortBy, string sortOrder, string @select, string timeRange, string customTimeRange, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _targetResource = targetResource;
@@ -78,6 +80,7 @@ namespace Azure.ResourceManager.AlertsManagement
             _timeRange = timeRange;
             _customTimeRange = customTimeRange;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of ServiceAlertGetAllTenantAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -110,7 +113,7 @@ namespace Azure.ResourceManager.AlertsManagement
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllTenantRequest(nextLink, _targetResource, _targetResourceType, _targetResourceGroup, _monitorService, _monitorCondition, _severity, _alertState, _alertRule, _smartGroupId, _includeContext, _includeEgressConfig, _pageCount, _sortBy, _sortOrder, _select, _timeRange, _customTimeRange, _context) : _client.CreateGetAllTenantRequest(_targetResource, _targetResourceType, _targetResourceGroup, _monitorService, _monitorCondition, _severity, _alertState, _alertRule, _smartGroupId, _includeContext, _includeEgressConfig, _pageCount, _sortBy, _sortOrder, _select, _timeRange, _customTimeRange, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ServiceAlertCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {
