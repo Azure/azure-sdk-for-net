@@ -1672,11 +1672,10 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="startTimeUtc"> Gets or sets the StartTimeUtc. </param>
         /// <param name="endTimeUtc"> Gets or sets the EndTimeUtc. </param>
         /// <param name="lastUpdatedTimeUtc"> Gets or sets the LastUpdatedTimeUtc. </param>
-        /// <param name="namePropertiesProgressName"> Gets or sets the NamePropertiesProgressName. </param>
         /// <param name="updateRunName"> The name of the Update Run. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <returns> A new <see cref="Hci.HciClusterUpdateRunData"/> instance for mocking. </returns>
-        public static HciClusterUpdateRunData HciClusterUpdateRunData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HciProvisioningState? provisioningState = default, DateTimeOffset? timeStarted = default, DateTimeOffset? lastCompletedOn = default, string duration = default, UpdateRunPropertiesState? state = default, string name0 = default, string description = default, string errorMessage = default, string status = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, DateTimeOffset? lastUpdatedOn = default, string expectedExecutionTime = default, IEnumerable<HciUpdateStep> steps = default, DateTimeOffset? startTimeUtc = default, DateTimeOffset? endTimeUtc = default, DateTimeOffset? lastUpdatedTimeUtc = default, string namePropertiesProgressName = default, string updateRunName = default, AzureLocation? location = default)
+        public static HciClusterUpdateRunData HciClusterUpdateRunData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HciProvisioningState? provisioningState = default, DateTimeOffset? timeStarted = default, DateTimeOffset? lastCompletedOn = default, string duration = default, UpdateRunPropertiesState? state = default, string name0 = default, string description = default, string errorMessage = default, string status = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, DateTimeOffset? lastUpdatedOn = default, string expectedExecutionTime = default, IEnumerable<HciUpdateStep> steps = default, DateTimeOffset? startTimeUtc = default, DateTimeOffset? endTimeUtc = default, DateTimeOffset? lastUpdatedTimeUtc = default, string updateRunName = default, AzureLocation? location = default)
         {
             return new HciClusterUpdateRunData(
                 id,
@@ -1684,7 +1683,7 @@ namespace Azure.ResourceManager.Hci.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                provisioningState is null && timeStarted is null && lastCompletedOn is null && duration is null && state is null && name0 is null && description is null && errorMessage is null && status is null && startOn is null && endOn is null && lastUpdatedOn is null && expectedExecutionTime is null && steps is null && startTimeUtc is null && endTimeUtc is null && lastUpdatedTimeUtc is null && namePropertiesProgressName is null ? default : new UpdateRunProperties(
+                provisioningState is null && timeStarted is null && lastCompletedOn is null && duration is null && state is null && name0 is null && description is null && errorMessage is null && status is null && startOn is null && endOn is null && lastUpdatedOn is null && expectedExecutionTime is null && steps is null && startTimeUtc is null && endTimeUtc is null && lastUpdatedTimeUtc is null ? default : new UpdateRunProperties(
                     provisioningState,
                     timeStarted,
                     lastCompletedOn,
@@ -2849,7 +2848,17 @@ namespace Azure.ResourceManager.Hci.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static HciClusterUpdateRunData HciClusterUpdateRunData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, HciProvisioningState? provisioningState, DateTimeOffset? timeStarted, DateTimeOffset? lastUpdatedOn, string duration, UpdateRunPropertiesState? state, string namePropertiesProgressName, string description, string errorMessage, string status, DateTimeOffset? startOn, DateTimeOffset? endOn, DateTimeOffset? lastCompletedOn, string expectedExecutionTime, IEnumerable<HciUpdateStep> steps)
         {
-            return HciClusterUpdateRunData(id, name, resourceType, systemData, provisioningState, timeStarted, lastCompletedOn, duration, state, name, description, errorMessage, status, startOn, endOn, lastUpdatedOn, expectedExecutionTime, steps, startTimeUtc: default, endTimeUtc: default, lastUpdatedTimeUtc: default, namePropertiesProgressName, updateRunName: default, location);
+            steps ??= new ChangeTrackingList<HciUpdateStep>();
+
+            return new HciClusterUpdateRunData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                default,
+                default,
+                location);
         }
 
         /// <summary> Initializes a new instance of <see cref="Hci.HciClusterUpdateSummaryData"/>. </summary>

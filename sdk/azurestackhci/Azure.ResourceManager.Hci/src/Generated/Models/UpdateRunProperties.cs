@@ -64,6 +64,24 @@ namespace Azure.ResourceManager.Hci.Models
         [WirePath("progress")]
         internal HciUpdateStep Progress { get; set; }
 
+        /// <summary> Name of the step. </summary>
+        [WirePath("progress.name")]
+        public string Name
+        {
+            get
+            {
+                return Progress is null ? default : Progress.Name;
+            }
+            set
+            {
+                if (Progress is null)
+                {
+                    Progress = new HciUpdateStep();
+                }
+                Progress.Name = value;
+            }
+        }
+
         /// <summary> More detailed description of the step. </summary>
         [WirePath("progress.description")]
         public string Description

@@ -6,10 +6,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary>
-    /// Backward-compat type alias for HciManagedServiceIdentityType.
     /// Old autorest SDK used prepend-rp-prefix to create this from ManagedServiceIdentityType.
-    /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public readonly struct HciManagedServiceIdentityType : IEquatable<HciManagedServiceIdentityType>
     {

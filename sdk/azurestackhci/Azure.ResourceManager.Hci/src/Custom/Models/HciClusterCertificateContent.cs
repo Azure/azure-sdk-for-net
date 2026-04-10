@@ -6,11 +6,11 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    // The new generator flatten this property name as RawCertificateDataCertificates
-    [CodeGenSuppress("RawCertificateDataCertificates")]
     public partial class HciClusterCertificateContent
     {
         /// <summary> Cluster certificates. </summary>
+        // The new generator flatten this property name as RawCertificateDataCertificates
+        [CodeGenMember("RawCertificateDataCertificates")]
         [WirePath("rawCertificateData.certificates")]
         public IList<string> Certificates
         {
