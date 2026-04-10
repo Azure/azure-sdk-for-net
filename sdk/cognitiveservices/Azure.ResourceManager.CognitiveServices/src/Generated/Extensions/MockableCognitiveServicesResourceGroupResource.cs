@@ -10,7 +10,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.CognitiveServices;
 using Azure.ResourceManager.Resources;
@@ -20,9 +19,6 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
     /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableCognitiveServicesResourceGroupResource : ArmResource
     {
-        private ClientDiagnostics _cognitiveServicesCommitmentPlanOperationsClientDiagnostics;
-        private CognitiveServicesCommitmentPlanOperations _cognitiveServicesCommitmentPlanOperationsRestClient;
-
         /// <summary> Initializes a new instance of MockableCognitiveServicesResourceGroupResource for mocking. </summary>
         protected MockableCognitiveServicesResourceGroupResource()
         {
@@ -35,15 +31,11 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         {
         }
 
-        private ClientDiagnostics CognitiveServicesCommitmentPlanOperationsClientDiagnostics => _cognitiveServicesCommitmentPlanOperationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CognitiveServices.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private CognitiveServicesCommitmentPlanOperations CognitiveServicesCommitmentPlanOperationsRestClient => _cognitiveServicesCommitmentPlanOperationsRestClient ??= new CognitiveServicesCommitmentPlanOperations(CognitiveServicesCommitmentPlanOperationsClientDiagnostics, Pipeline, Endpoint, "2026-03-01");
-
-        /// <summary> Gets a collection of Accounts in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of Accounts and their operations over a AccountResource. </returns>
-        public virtual AccountCollection GetAccounts()
+        /// <summary> Gets a collection of CognitiveServicesAccounts in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of CognitiveServicesAccounts and their operations over a CognitiveServicesAccountResource. </returns>
+        public virtual CognitiveServicesAccountCollection GetCognitiveServicesAccounts()
         {
-            return GetCachedClient(client => new AccountCollection(client, Id));
+            return GetCachedClient(client => new CognitiveServicesAccountCollection(client, Id));
         }
 
         /// <summary>
@@ -68,11 +60,11 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<AccountResource>> GetAccountAsync(string accountName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CognitiveServicesAccountResource>> GetCognitiveServicesAccountAsync(string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
-            return await GetAccounts().GetAsync(accountName, cancellationToken).ConfigureAwait(false);
+            return await GetCognitiveServicesAccounts().GetAsync(accountName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -97,67 +89,11 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<AccountResource> GetAccount(string accountName, CancellationToken cancellationToken = default)
+        public virtual Response<CognitiveServicesAccountResource> GetCognitiveServicesAccount(string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
-            return GetAccounts().Get(accountName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Returns all the resources of a particular type belonging to a resource group
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/commitmentPlans. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> CommitmentPlanOperationGroup_ListPlansByResourceGroup. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CognitiveServicesCommitmentPlanOperationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CognitiveServicesCommitmentPlanOperationResource> GetCognitiveServicesCommitmentPlanOperationsAsync(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<CommitmentPlanData, CognitiveServicesCommitmentPlanOperationResource>(new CognitiveServicesCommitmentPlanOperationsGetPlansByResourceGroupAsyncCollectionResultOfT(CognitiveServicesCommitmentPlanOperationsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "MockableCognitiveServicesResourceGroupResource.GetCognitiveServicesCommitmentPlanOperations"), data => new CognitiveServicesCommitmentPlanOperationResource(Client, data));
-        }
-
-        /// <summary>
-        /// Returns all the resources of a particular type belonging to a resource group
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/commitmentPlans. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> CommitmentPlanOperationGroup_ListPlansByResourceGroup. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CognitiveServicesCommitmentPlanOperationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CognitiveServicesCommitmentPlanOperationResource> GetCognitiveServicesCommitmentPlanOperations(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<CommitmentPlanData, CognitiveServicesCommitmentPlanOperationResource>(new CognitiveServicesCommitmentPlanOperationsGetPlansByResourceGroupCollectionResultOfT(CognitiveServicesCommitmentPlanOperationsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "MockableCognitiveServicesResourceGroupResource.GetCognitiveServicesCommitmentPlanOperations"), data => new CognitiveServicesCommitmentPlanOperationResource(Client, data));
+            return GetCognitiveServicesAccounts().Get(accountName, cancellationToken);
         }
     }
 }

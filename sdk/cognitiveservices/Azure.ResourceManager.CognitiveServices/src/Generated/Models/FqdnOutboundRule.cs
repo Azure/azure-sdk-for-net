@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> FQDN Outbound Rule for the managed network of a cognitive services account. </summary>
-    public partial class FqdnOutboundRule : OutboundRule
+    public partial class FqdnOutboundRule : CognitiveServicesOutboundRuleBasicProperties
     {
         /// <summary> Initializes a new instance of <see cref="FqdnOutboundRule"/>. </summary>
         public FqdnOutboundRule() : base(RuleType.FQDN)

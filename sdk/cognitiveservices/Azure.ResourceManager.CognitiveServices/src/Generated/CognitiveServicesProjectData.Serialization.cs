@@ -18,8 +18,13 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.CognitiveServices
 {
     /// <summary> Cognitive Services project is an Azure resource representing the provisioned account's project, it's type, location and SKU. </summary>
-    public partial class CognitiveServicesProjectData : ResourceData, IJsonModel<CognitiveServicesProjectData>
+    public partial class CognitiveServicesProjectData : TrackedResourceData, IJsonModel<CognitiveServicesProjectData>
     {
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesProjectData"/> for deserialization. </summary>
+        internal CognitiveServicesProjectData()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -101,36 +106,15 @@ namespace Azure.ResourceManager.CognitiveServices
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
-            if (Optional.IsCollectionDefined(Tags))
-            {
-                writer.WritePropertyName("tags"u8);
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            if (Optional.IsDefined(Location))
-            {
-                writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location);
-            }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
-                writer.WriteStringValue(ETag);
+                writer.WriteStringValue(ETag.Value.ToString());
             }
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options);
             }
         }
 
@@ -164,11 +148,11 @@ namespace Azure.ResourceManager.CognitiveServices
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            AzureLocation location = default;
             CognitiveServicesProjectProperties properties = default;
             IDictionary<string, string> tags = default;
-            string location = default;
-            string eTag = default;
-            Identity identity = default;
+            ETag? eTag = default;
+            ManagedServiceIdentity identity = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -203,6 +187,11 @@ namespace Azure.ResourceManager.CognitiveServices
                     systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerCognitiveServicesContext.Default);
                     continue;
                 }
+                if (prop.NameEquals("location"u8))
+                {
+                    location = new AzureLocation(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("properties"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -233,14 +222,13 @@ namespace Azure.ResourceManager.CognitiveServices
                     tags = dictionary;
                     continue;
                 }
-                if (prop.NameEquals("location"u8))
-                {
-                    location = prop.Value.GetString();
-                    continue;
-                }
                 if (prop.NameEquals("etag"u8))
                 {
-                    eTag = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    eTag = new ETag(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("identity"u8))
@@ -249,7 +237,7 @@ namespace Azure.ResourceManager.CognitiveServices
                     {
                         continue;
                     }
-                    identity = Identity.DeserializeIdentity(prop.Value, options);
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options, AzureResourceManagerCognitiveServicesContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
@@ -263,9 +251,9 @@ namespace Azure.ResourceManager.CognitiveServices
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties,
+                location,
                 properties,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
                 eTag,
                 identity);
         }

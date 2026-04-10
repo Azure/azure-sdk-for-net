@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Initializes a new instance of <see cref="ManagedNetworkSettings"/>. </summary>
         public ManagedNetworkSettings()
         {
-            OutboundRules = new ChangeTrackingDictionary<string, OutboundRule>();
+            OutboundRules = new ChangeTrackingDictionary<string, CognitiveServicesOutboundRuleBasicProperties>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedNetworkSettings"/>. </summary>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="firewallPublicIpAddress"> Public IP address assigned to the Azure Firewall. </param>
         /// <param name="provisioningState"> The provisioning state of the managed network settings. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedNetworkSettings(IsolationMode? isolationMode, string networkId, IDictionary<string, OutboundRule> outboundRules, ManagedNetworkProvisionStatus status, FirewallSku? firewallSku, ManagedNetworkKind? managedNetworkKind, string firewallPublicIpAddress, ManagedNetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedNetworkSettings(IsolationMode? isolationMode, string networkId, IDictionary<string, CognitiveServicesOutboundRuleBasicProperties> outboundRules, ManagedNetworkProvisionStatus status, FirewallSku? firewallSku, ManagedNetworkKind? managedNetworkKind, string firewallPublicIpAddress, ManagedNetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsolationMode = isolationMode;
             NetworkId = networkId;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public string NetworkId { get; }
 
         /// <summary> Dictionary of &lt;OutboundRule&gt;. </summary>
-        public IDictionary<string, OutboundRule> OutboundRules { get; set; }
+        public IDictionary<string, CognitiveServicesOutboundRuleBasicProperties> OutboundRules { get; set; }
 
         /// <summary> Status of the Provisioning for the managed network of a cognitive services account. </summary>
         internal ManagedNetworkProvisionStatus Status { get; set; }

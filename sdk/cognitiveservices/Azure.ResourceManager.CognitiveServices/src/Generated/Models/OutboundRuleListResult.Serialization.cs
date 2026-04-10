@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (OutboundRuleBasicResourceData item in Value)
+                foreach (CognitiveServicesOutboundRuleBasicData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 return null;
             }
             string nextLink = default;
-            IList<OutboundRuleBasicResourceData> value = default;
+            IList<CognitiveServicesOutboundRuleBasicData> value = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -155,10 +155,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    List<OutboundRuleBasicResourceData> array = new List<OutboundRuleBasicResourceData>();
+                    List<CognitiveServicesOutboundRuleBasicData> array = new List<CognitiveServicesOutboundRuleBasicData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(OutboundRuleBasicResourceData.DeserializeOutboundRuleBasicResourceData(item, options));
+                        array.Add(CognitiveServicesOutboundRuleBasicData.DeserializeCognitiveServicesOutboundRuleBasicData(item, options));
                     }
                     value = array;
                     continue;
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new OutboundRuleListResult(nextLink, value ?? new ChangeTrackingList<OutboundRuleBasicResourceData>(), additionalBinaryDataProperties);
+            return new OutboundRuleListResult(nextLink, value ?? new ChangeTrackingList<CognitiveServicesOutboundRuleBasicData>(), additionalBinaryDataProperties);
         }
     }
 }

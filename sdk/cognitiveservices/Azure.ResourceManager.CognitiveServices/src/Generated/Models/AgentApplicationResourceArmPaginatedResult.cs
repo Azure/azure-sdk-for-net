@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Initializes a new instance of <see cref="AgentApplicationResourceArmPaginatedResult"/>. </summary>
         internal AgentApplicationResourceArmPaginatedResult()
         {
-            Value = new ChangeTrackingList<AgentApplicationData>();
+            Value = new ChangeTrackingList<CognitiveServicesAgentApplicationData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AgentApplicationResourceArmPaginatedResult"/>. </summary>
         /// <param name="nextLink"> The link to the next page of Agent Application objects. If null, there are no additional pages. </param>
         /// <param name="value"> An array of objects of type Agent Application. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentApplicationResourceArmPaginatedResult(string nextLink, IList<AgentApplicationData> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentApplicationResourceArmPaginatedResult(string nextLink, IList<CognitiveServicesAgentApplicationData> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NextLink = nextLink;
             Value = value;
@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public string NextLink { get; }
 
         /// <summary> An array of objects of type Agent Application. </summary>
-        public IList<AgentApplicationData> Value { get; }
+        public IList<CognitiveServicesAgentApplicationData> Value { get; }
     }
 }

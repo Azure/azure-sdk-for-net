@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.CognitiveServices
     {
         private readonly CognitiveServicesModels _client;
         private readonly string _subscriptionId;
-        private readonly string _location;
+        private readonly AzureLocation _location;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="location"> The location name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public CognitiveServicesModelsGetModelsCollectionResultOfT(CognitiveServicesModels client, string subscriptionId, string location, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public CognitiveServicesModelsGetModelsCollectionResultOfT(CognitiveServicesModels client, string subscriptionId, AzureLocation location, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;

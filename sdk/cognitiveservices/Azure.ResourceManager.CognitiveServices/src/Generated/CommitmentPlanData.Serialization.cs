@@ -120,12 +120,12 @@ namespace Azure.ResourceManager.CognitiveServices
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location);
+                writer.WriteStringValue(Location.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
-                writer.WriteStringValue(ETag);
+                writer.WriteStringValue(ETag.Value.ToString());
             }
             if (Optional.IsDefined(Kind))
             {
@@ -171,8 +171,8 @@ namespace Azure.ResourceManager.CognitiveServices
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             CommitmentPlanProperties properties = default;
             IDictionary<string, string> tags = default;
-            string location = default;
-            string eTag = default;
+            AzureLocation? location = default;
+            ETag? eTag = default;
             string kind = default;
             CognitiveServicesSku sku = default;
             foreach (var prop in element.EnumerateObject())
@@ -241,12 +241,20 @@ namespace Azure.ResourceManager.CognitiveServices
                 }
                 if (prop.NameEquals("location"u8))
                 {
-                    location = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("etag"u8))
                 {
-                    eTag = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    eTag = new ETag(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("kind"u8))

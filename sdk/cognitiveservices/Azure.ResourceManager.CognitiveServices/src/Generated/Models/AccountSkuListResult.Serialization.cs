@@ -15,7 +15,7 @@ using Azure.ResourceManager.CognitiveServices;
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> The list of cognitive services accounts operation response. </summary>
-    public partial class AccountSkuListResult : IJsonModel<AccountSkuListResult>
+    internal partial class AccountSkuListResult : IJsonModel<AccountSkuListResult>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

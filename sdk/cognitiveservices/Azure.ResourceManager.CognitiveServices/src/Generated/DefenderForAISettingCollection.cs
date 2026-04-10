@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.CognitiveServices
 {
     /// <summary>
     /// A class representing a collection of <see cref="DefenderForAISettingResource"/> and their operations.
-    /// Each <see cref="DefenderForAISettingResource"/> in the collection will belong to the same instance of <see cref="AccountResource"/>.
-    /// To get a <see cref="DefenderForAISettingCollection"/> instance call the GetDefenderForAISettings method from an instance of <see cref="AccountResource"/>.
+    /// Each <see cref="DefenderForAISettingResource"/> in the collection will belong to the same instance of <see cref="CognitiveServicesAccountResource"/>.
+    /// To get a <see cref="DefenderForAISettingCollection"/> instance call the GetDefenderForAISettings method from an instance of <see cref="CognitiveServicesAccountResource"/>.
     /// </summary>
     public partial class DefenderForAISettingCollection : ArmCollection, IEnumerable<DefenderForAISettingResource>, IAsyncEnumerable<DefenderForAISettingResource>
     {
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.CognitiveServices
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != AccountResource.ResourceType)
+            if (id.ResourceType != CognitiveServicesAccountResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AccountResource.ResourceType), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, CognitiveServicesAccountResource.ResourceType), nameof(id));
             }
         }
 

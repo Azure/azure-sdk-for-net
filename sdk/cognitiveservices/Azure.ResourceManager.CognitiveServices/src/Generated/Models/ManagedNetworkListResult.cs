@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Initializes a new instance of <see cref="ManagedNetworkListResult"/>. </summary>
         internal ManagedNetworkListResult()
         {
-            Value = new ChangeTrackingList<ManagedNetworkSettingsPropertiesBasicResourceData>();
+            Value = new ChangeTrackingList<CognitiveServicesManagedNetworkSettingsData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedNetworkListResult"/>. </summary>
         /// <param name="nextLink"> The link to the next page constructed using the continuationToken.  If null, there are no additional pages. </param>
         /// <param name="value"> The list of managed network settings of an account. Since this list may be incomplete, the nextLink field should be used to request the next list of cognitive services accounts. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedNetworkListResult(string nextLink, IList<ManagedNetworkSettingsPropertiesBasicResourceData> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedNetworkListResult(string nextLink, IList<CognitiveServicesManagedNetworkSettingsData> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NextLink = nextLink;
             Value = value;
@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public string NextLink { get; }
 
         /// <summary> The list of managed network settings of an account. Since this list may be incomplete, the nextLink field should be used to request the next list of cognitive services accounts. </summary>
-        public IList<ManagedNetworkSettingsPropertiesBasicResourceData> Value { get; }
+        public IList<CognitiveServicesManagedNetworkSettingsData> Value { get; }
     }
 }

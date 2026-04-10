@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
             IsolationMode? isolationMode = default;
             string networkId = default;
-            IDictionary<string, OutboundRule> outboundRules = default;
+            IDictionary<string, CognitiveServicesOutboundRuleBasicProperties> outboundRules = default;
             ManagedNetworkProvisionStatus status = default;
             FirewallSku? firewallSku = default;
             ManagedNetworkKind? managedNetworkKind = default;
@@ -144,10 +144,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    Dictionary<string, OutboundRule> dictionary = new Dictionary<string, OutboundRule>();
+                    Dictionary<string, CognitiveServicesOutboundRuleBasicProperties> dictionary = new Dictionary<string, CognitiveServicesOutboundRuleBasicProperties>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(prop0.Name, OutboundRule.DeserializeOutboundRule(prop0.Value, options));
+                        dictionary.Add(prop0.Name, CognitiveServicesOutboundRuleBasicProperties.DeserializeCognitiveServicesOutboundRuleBasicProperties(prop0.Value, options));
                     }
                     outboundRules = dictionary;
                     continue;
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             return new ManagedNetworkSettingsEx(
                 isolationMode,
                 networkId,
-                outboundRules ?? new ChangeTrackingDictionary<string, OutboundRule>(),
+                outboundRules ?? new ChangeTrackingDictionary<string, CognitiveServicesOutboundRuleBasicProperties>(),
                 status,
                 firewallSku,
                 managedNetworkKind,

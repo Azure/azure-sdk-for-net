@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> Represents a managed agent deployment where the underlying infrastructure is managed by the platform in the deployer's subscription. </summary>
-    public partial class ManagedAgentDeployment : AgentDeploymentProperties
+    public partial class ManagedAgentDeployment : CognitiveServicesAgentDeploymentProperties
     {
         /// <summary> Initializes a new instance of <see cref="ManagedAgentDeployment"/>. </summary>
         public ManagedAgentDeployment() : base(AgentDeploymentType.Managed)
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="agents"> Returns a flat list of agent:version deployed in this deployment. </param>
         /// <param name="deploymentType"> Gets or sets the type of deployment for the agent. </param>
         /// <param name="provisioningState"> Gets or sets the provisioning state of the agent deployment. </param>
-        internal ManagedAgentDeployment(string description, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, string displayName, string deploymentId, AgentDeploymentState? state, IList<AgentProtocolVersion> protocols, IList<VersionedAgentReference> agents, AgentDeploymentType deploymentType, AgentDeploymentProvisioningState? provisioningState) : base(description, tags, additionalBinaryDataProperties, displayName, deploymentId, state, protocols, agents, deploymentType, provisioningState)
+        internal ManagedAgentDeployment(string description, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, string displayName, string deploymentId, CognitiveServicesAgentDeploymentState? state, IList<CognitiveServicesAgentProtocolVersion> protocols, IList<VersionedAgentReference> agents, AgentDeploymentType deploymentType, CognitiveServicesAgentDeploymentProvisioningState? provisioningState) : base(description, tags, additionalBinaryDataProperties, displayName, deploymentId, state, protocols, agents, deploymentType, provisioningState)
         {
         }
     }

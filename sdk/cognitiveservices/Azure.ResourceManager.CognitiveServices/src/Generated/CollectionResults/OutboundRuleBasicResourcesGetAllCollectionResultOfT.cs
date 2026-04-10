@@ -14,7 +14,7 @@ using Azure.ResourceManager.CognitiveServices.Models;
 
 namespace Azure.ResourceManager.CognitiveServices
 {
-    internal partial class OutboundRuleBasicResourcesGetAllCollectionResultOfT : Pageable<OutboundRuleBasicResourceData>
+    internal partial class OutboundRuleBasicResourcesGetAllCollectionResultOfT : Pageable<CognitiveServicesOutboundRuleBasicData>
     {
         private readonly OutboundRuleBasicResources _client;
         private readonly string _subscriptionId;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of OutboundRuleBasicResourcesGetAllCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<OutboundRuleBasicResourceData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<CognitiveServicesOutboundRuleBasicData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.CognitiveServices
                     yield break;
                 }
                 OutboundRuleListResult result = OutboundRuleListResult.FromResponse(response);
-                yield return Page<OutboundRuleBasicResourceData>.FromValues((IReadOnlyList<OutboundRuleBasicResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<CognitiveServicesOutboundRuleBasicData>.FromValues((IReadOnlyList<CognitiveServicesOutboundRuleBasicData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 string nextPageString = result.NextLink;
                 if (string.IsNullOrEmpty(nextPageString))
                 {

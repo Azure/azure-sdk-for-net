@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> Service Tag outbound rule for the managed network of a cognitive services account. </summary>
-    public partial class ServiceTagOutboundRule : OutboundRule
+    public partial class ServiceTagOutboundRule : CognitiveServicesOutboundRuleBasicProperties
     {
         /// <summary> Initializes a new instance of <see cref="ServiceTagOutboundRule"/>. </summary>
         public ServiceTagOutboundRule() : base(RuleType.ServiceTag)

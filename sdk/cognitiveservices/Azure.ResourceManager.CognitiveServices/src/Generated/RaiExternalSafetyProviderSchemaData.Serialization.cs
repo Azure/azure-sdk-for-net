@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.CognitiveServices
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
-                writer.WriteStringValue(ETag);
+                writer.WriteStringValue(ETag.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Tags))
             {
@@ -155,8 +155,8 @@ namespace Azure.ResourceManager.CognitiveServices
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             RaiExternalSafetyProviderSchemaProperties properties = default;
-            string eTag = default;
-            IReadOnlyDictionary<string, string> tags = default;
+            ETag? eTag = default;
+            IDictionary<string, string> tags = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -202,7 +202,11 @@ namespace Azure.ResourceManager.CognitiveServices
                 }
                 if (prop.NameEquals("etag"u8))
                 {
-                    eTag = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    eTag = new ETag(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("tags"u8))
@@ -239,7 +243,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 additionalBinaryDataProperties,
                 properties,
                 eTag,
-                null);
+                tags ?? new ChangeTrackingDictionary<string, string>());
         }
     }
 }

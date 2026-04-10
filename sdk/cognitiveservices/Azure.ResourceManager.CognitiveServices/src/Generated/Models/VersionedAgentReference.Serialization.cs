@@ -14,11 +14,11 @@ using Azure.ResourceManager.CognitiveServices;
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> Type modeling a reference to a version of an agent definition. </summary>
-    public partial class VersionedAgentReference : AgentReferenceProperties, IJsonModel<VersionedAgentReference>
+    public partial class VersionedAgentReference : CognitiveServicesAgentReferenceProperties, IJsonModel<VersionedAgentReference>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AgentReferenceProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override CognitiveServicesAgentReferenceProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<VersionedAgentReference>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AgentReferenceProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override CognitiveServicesAgentReferenceProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<VersionedAgentReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

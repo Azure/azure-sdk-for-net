@@ -15,7 +15,7 @@ using Azure.ResourceManager.CognitiveServices;
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> A list of private link resources. </summary>
-    public partial class CognitiveServicesPrivateLinkResourceListResult : IJsonModel<CognitiveServicesPrivateLinkResourceListResult>
+    internal partial class CognitiveServicesPrivateLinkResourceListResult : IJsonModel<CognitiveServicesPrivateLinkResourceListResult>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

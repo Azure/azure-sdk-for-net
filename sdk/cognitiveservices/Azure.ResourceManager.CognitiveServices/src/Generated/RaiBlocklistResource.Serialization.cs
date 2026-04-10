@@ -8,11 +8,12 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CognitiveServices
 {
     /// <summary></summary>
-    public partial class RaiBlocklistResource : IJsonModel<RaiBlocklistData>
+    public partial class RaiBlocklistResource : ArmResource, IJsonModel<RaiBlocklistData>
     {
         private static IJsonModel<RaiBlocklistData> s_dataDeserializationInstance;
 

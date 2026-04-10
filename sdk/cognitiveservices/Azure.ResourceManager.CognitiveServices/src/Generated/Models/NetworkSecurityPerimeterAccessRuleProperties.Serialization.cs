@@ -212,15 +212,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 if (prop.NameEquals("subscriptions"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<WritableSubResource> array = new List<WritableSubResource>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                    }
-                    subscriptions = array;
+                    DeserializeSubscriptions(prop, ref subscriptions, options);
                     continue;
                 }
                 if (prop.NameEquals("networkSecurityPerimeters"u8))

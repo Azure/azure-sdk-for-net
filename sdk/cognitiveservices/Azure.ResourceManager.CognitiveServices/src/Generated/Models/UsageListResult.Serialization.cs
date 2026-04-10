@@ -15,7 +15,7 @@ using Azure.ResourceManager.CognitiveServices;
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> The response to a list usage request. </summary>
-    public partial class UsageListResult : IJsonModel<UsageListResult>
+    internal partial class UsageListResult : IJsonModel<UsageListResult>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

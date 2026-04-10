@@ -41,14 +41,14 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetModelsRequest(string subscriptionId, string location, RequestContext context)
+        internal HttpMessage CreateGetModelsRequest(string subscriptionId, AzureLocation location, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.CognitiveServices/locations/", false);
-            uri.AppendPath(location, true);
+            uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/models", false);
             if (_apiVersion != null)
             {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.CognitiveServices
             return message;
         }
 
-        internal HttpMessage CreateNextGetModelsRequest(Uri nextPage, string subscriptionId, string location, RequestContext context)
+        internal HttpMessage CreateNextGetModelsRequest(Uri nextPage, string subscriptionId, AzureLocation location, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

@@ -14,6 +14,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.CognitiveServices.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.CognitiveServices
@@ -21,15 +22,15 @@ namespace Azure.ResourceManager.CognitiveServices
     /// <summary>
     /// A class representing a CognitiveServicesCommitmentPlan along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CognitiveServicesCommitmentPlanResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AccountResource"/> using the GetCognitiveServicesCommitmentPlans method.
+    /// Otherwise you can get one from its parent resource <see cref="CognitiveServicesAccountResource"/> using the GetCognitiveServicesCommitmentPlans method.
     /// </summary>
     public partial class CognitiveServicesCommitmentPlanResource : ArmResource
     {
-        private readonly ClientDiagnostics _cognitiveServicesCommitmentPlanClientDiagnostics;
-        private readonly CognitiveServicesCommitmentPlan _cognitiveServicesCommitmentPlanRestClient;
+        private readonly ClientDiagnostics _commitmentPlanOperationGroupClientDiagnostics;
+        private readonly CommitmentPlanOperationGroup _commitmentPlanOperationGroupRestClient;
         private readonly CommitmentPlanData _data;
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.CognitiveServices/accounts/commitmentPlans";
+        public static readonly ResourceType ResourceType = "Microsoft.CognitiveServices/commitmentPlans";
 
         /// <summary> Initializes a new instance of CognitiveServicesCommitmentPlanResource for mocking. </summary>
         protected CognitiveServicesCommitmentPlanResource()
@@ -51,8 +52,8 @@ namespace Azure.ResourceManager.CognitiveServices
         internal CognitiveServicesCommitmentPlanResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string cognitiveServicesCommitmentPlanApiVersion);
-            _cognitiveServicesCommitmentPlanClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", ResourceType.Namespace, Diagnostics);
-            _cognitiveServicesCommitmentPlanRestClient = new CognitiveServicesCommitmentPlan(_cognitiveServicesCommitmentPlanClientDiagnostics, Pipeline, Endpoint, cognitiveServicesCommitmentPlanApiVersion ?? "2026-03-01");
+            _commitmentPlanOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", ResourceType.Namespace, Diagnostics);
+            _commitmentPlanOperationGroupRestClient = new CommitmentPlanOperationGroup(_commitmentPlanOperationGroupClientDiagnostics, Pipeline, Endpoint, cognitiveServicesCommitmentPlanApiVersion ?? "2026-03-01");
             ValidateResourceId(id);
         }
 
@@ -75,11 +76,10 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <summary> Generate the resource identifier for this resource. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="accountName"> The accountName. </param>
         /// <param name="commitmentPlanName"> The commitmentPlanName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string commitmentPlanName)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string commitmentPlanName)
         {
-            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/commitmentPlans/{commitmentPlanName}";
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/commitmentPlans/{commitmentPlanName}";
             return new ResourceIdentifier(resourceId);
         }
 
@@ -94,15 +94,15 @@ namespace Azure.ResourceManager.CognitiveServices
         }
 
         /// <summary>
-        /// Gets the specified commitmentPlans associated with the Cognitive Services account.
+        /// Returns a Cognitive Services commitment plan specified by the parameters.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/commitmentPlans/{commitmentPlanName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/commitmentPlans/{commitmentPlanName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CommitmentPlans_Get. </description>
+        /// <description> CommitmentPlanOperationGroup_GetPlan. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<CognitiveServicesCommitmentPlanResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _cognitiveServicesCommitmentPlanClientDiagnostics.CreateScope("CognitiveServicesCommitmentPlanResource.Get");
+            using DiagnosticScope scope = _commitmentPlanOperationGroupClientDiagnostics.CreateScope("CognitiveServicesCommitmentPlanResource.Get");
             scope.Start();
             try
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cognitiveServicesCommitmentPlanRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _commitmentPlanOperationGroupRestClient.CreateGetPlanRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CommitmentPlanData> response = Response.FromValue(CommitmentPlanData.FromResponse(result), result);
                 if (response.Value == null)
@@ -142,15 +142,15 @@ namespace Azure.ResourceManager.CognitiveServices
         }
 
         /// <summary>
-        /// Gets the specified commitmentPlans associated with the Cognitive Services account.
+        /// Returns a Cognitive Services commitment plan specified by the parameters.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/commitmentPlans/{commitmentPlanName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/commitmentPlans/{commitmentPlanName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CommitmentPlans_Get. </description>
+        /// <description> CommitmentPlanOperationGroup_GetPlan. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<CognitiveServicesCommitmentPlanResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _cognitiveServicesCommitmentPlanClientDiagnostics.CreateScope("CognitiveServicesCommitmentPlanResource.Get");
+            using DiagnosticScope scope = _commitmentPlanOperationGroupClientDiagnostics.CreateScope("CognitiveServicesCommitmentPlanResource.Get");
             scope.Start();
             try
             {
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cognitiveServicesCommitmentPlanRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _commitmentPlanOperationGroupRestClient.CreateGetPlanRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CommitmentPlanData> response = Response.FromValue(CommitmentPlanData.FromResponse(result), result);
                 if (response.Value == null)
@@ -190,15 +190,133 @@ namespace Azure.ResourceManager.CognitiveServices
         }
 
         /// <summary>
-        /// Deletes the specified commitmentPlan associated with the Cognitive Services account.
+        /// Create Cognitive Services commitment plan.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/commitmentPlans/{commitmentPlanName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/commitmentPlans/{commitmentPlanName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CommitmentPlans_Delete. </description>
+        /// <description> CommitmentPlanOperationGroup_UpdatePlan. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="CognitiveServicesCommitmentPlanResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="commitmentPlan"> The parameters to provide for the created commitment plan. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="commitmentPlan"/> is null. </exception>
+        public virtual async Task<ArmOperation<CognitiveServicesCommitmentPlanResource>> UpdateAsync(WaitUntil waitUntil, PatchResourceTagsAndSku commitmentPlan, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(commitmentPlan, nameof(commitmentPlan));
+
+            using DiagnosticScope scope = _commitmentPlanOperationGroupClientDiagnostics.CreateScope("CognitiveServicesCommitmentPlanResource.Update");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _commitmentPlanOperationGroupRestClient.CreateUpdatePlanRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, PatchResourceTagsAndSku.ToRequestContent(commitmentPlan), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                CognitiveServicesArmOperation<CognitiveServicesCommitmentPlanResource> operation = new CognitiveServicesArmOperation<CognitiveServicesCommitmentPlanResource>(
+                    new CognitiveServicesCommitmentPlanOperationSource(Client),
+                    _commitmentPlanOperationGroupClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Create Cognitive Services commitment plan.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/commitmentPlans/{commitmentPlanName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CommitmentPlanOperationGroup_UpdatePlan. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="CognitiveServicesCommitmentPlanResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="commitmentPlan"> The parameters to provide for the created commitment plan. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="commitmentPlan"/> is null. </exception>
+        public virtual ArmOperation<CognitiveServicesCommitmentPlanResource> Update(WaitUntil waitUntil, PatchResourceTagsAndSku commitmentPlan, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(commitmentPlan, nameof(commitmentPlan));
+
+            using DiagnosticScope scope = _commitmentPlanOperationGroupClientDiagnostics.CreateScope("CognitiveServicesCommitmentPlanResource.Update");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _commitmentPlanOperationGroupRestClient.CreateUpdatePlanRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, PatchResourceTagsAndSku.ToRequestContent(commitmentPlan), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                CognitiveServicesArmOperation<CognitiveServicesCommitmentPlanResource> operation = new CognitiveServicesArmOperation<CognitiveServicesCommitmentPlanResource>(
+                    new CognitiveServicesCommitmentPlanOperationSource(Client),
+                    _commitmentPlanOperationGroupClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deletes a Cognitive Services commitment plan from the resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/commitmentPlans/{commitmentPlanName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CommitmentPlanOperationGroup_DeletePlan. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -214,7 +332,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _cognitiveServicesCommitmentPlanClientDiagnostics.CreateScope("CognitiveServicesCommitmentPlanResource.Delete");
+            using DiagnosticScope scope = _commitmentPlanOperationGroupClientDiagnostics.CreateScope("CognitiveServicesCommitmentPlanResource.Delete");
             scope.Start();
             try
             {
@@ -222,9 +340,9 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cognitiveServicesCommitmentPlanRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _commitmentPlanOperationGroupRestClient.CreateDeletePlanRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                CognitiveServicesArmOperation operation = new CognitiveServicesArmOperation(_cognitiveServicesCommitmentPlanClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                CognitiveServicesArmOperation operation = new CognitiveServicesArmOperation(_commitmentPlanOperationGroupClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -239,15 +357,15 @@ namespace Azure.ResourceManager.CognitiveServices
         }
 
         /// <summary>
-        /// Deletes the specified commitmentPlan associated with the Cognitive Services account.
+        /// Deletes a Cognitive Services commitment plan from the resource group.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/commitmentPlans/{commitmentPlanName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/commitmentPlans/{commitmentPlanName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CommitmentPlans_Delete. </description>
+        /// <description> CommitmentPlanOperationGroup_DeletePlan. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -263,7 +381,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _cognitiveServicesCommitmentPlanClientDiagnostics.CreateScope("CognitiveServicesCommitmentPlanResource.Delete");
+            using DiagnosticScope scope = _commitmentPlanOperationGroupClientDiagnostics.CreateScope("CognitiveServicesCommitmentPlanResource.Delete");
             scope.Start();
             try
             {
@@ -271,124 +389,12 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cognitiveServicesCommitmentPlanRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _commitmentPlanOperationGroupRestClient.CreateDeletePlanRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                CognitiveServicesArmOperation operation = new CognitiveServicesArmOperation(_cognitiveServicesCommitmentPlanClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                CognitiveServicesArmOperation operation = new CognitiveServicesArmOperation(_commitmentPlanOperationGroupClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletionResponse(cancellationToken);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Update a CognitiveServicesCommitmentPlan.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/commitmentPlans/{commitmentPlanName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> CommitmentPlans_CreateOrUpdate. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="CognitiveServicesCommitmentPlanResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The commitmentPlan properties. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<CognitiveServicesCommitmentPlanResource>> UpdateAsync(WaitUntil waitUntil, CommitmentPlanData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(data, nameof(data));
-
-            using DiagnosticScope scope = _cognitiveServicesCommitmentPlanClientDiagnostics.CreateScope("CognitiveServicesCommitmentPlanResource.Update");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _cognitiveServicesCommitmentPlanRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, CommitmentPlanData.ToRequestContent(data), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<CommitmentPlanData> response = Response.FromValue(CommitmentPlanData.FromResponse(result), result);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                CognitiveServicesArmOperation<CognitiveServicesCommitmentPlanResource> operation = new CognitiveServicesArmOperation<CognitiveServicesCommitmentPlanResource>(Response.FromValue(new CognitiveServicesCommitmentPlanResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Update a CognitiveServicesCommitmentPlan.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/commitmentPlans/{commitmentPlanName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> CommitmentPlans_CreateOrUpdate. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="CognitiveServicesCommitmentPlanResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The commitmentPlan properties. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<CognitiveServicesCommitmentPlanResource> Update(WaitUntil waitUntil, CommitmentPlanData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(data, nameof(data));
-
-            using DiagnosticScope scope = _cognitiveServicesCommitmentPlanClientDiagnostics.CreateScope("CognitiveServicesCommitmentPlanResource.Update");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _cognitiveServicesCommitmentPlanRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, CommitmentPlanData.ToRequestContent(data), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<CommitmentPlanData> response = Response.FromValue(CommitmentPlanData.FromResponse(result), result);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                CognitiveServicesArmOperation<CognitiveServicesCommitmentPlanResource> operation = new CognitiveServicesArmOperation<CognitiveServicesCommitmentPlanResource>(Response.FromValue(new CognitiveServicesCommitmentPlanResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    operation.WaitForCompletion(cancellationToken);
                 }
                 return operation;
             }
@@ -409,7 +415,7 @@ namespace Azure.ResourceManager.CognitiveServices
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _cognitiveServicesCommitmentPlanClientDiagnostics.CreateScope("CognitiveServicesCommitmentPlanResource.AddTag");
+            using DiagnosticScope scope = _commitmentPlanOperationGroupClientDiagnostics.CreateScope("CognitiveServicesCommitmentPlanResource.AddTag");
             scope.Start();
             try
             {
@@ -422,7 +428,7 @@ namespace Azure.ResourceManager.CognitiveServices
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _cognitiveServicesCommitmentPlanRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    HttpMessage message = _commitmentPlanOperationGroupRestClient.CreateGetPlanRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<CommitmentPlanData> response = Response.FromValue(CommitmentPlanData.FromResponse(result), result);
                     return Response.FromValue(new CognitiveServicesCommitmentPlanResource(Client, response.Value), response.GetRawResponse());
@@ -430,8 +436,13 @@ namespace Azure.ResourceManager.CognitiveServices
                 else
                 {
                     CommitmentPlanData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    current.Tags[key] = value;
-                    ArmOperation<CognitiveServicesCommitmentPlanResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    PatchResourceTagsAndSku patch = new PatchResourceTagsAndSku();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
+                    {
+                        patch.Tags.Add(tag);
+                    }
+                    patch.Tags[key] = value;
+                    ArmOperation<CognitiveServicesCommitmentPlanResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -452,7 +463,7 @@ namespace Azure.ResourceManager.CognitiveServices
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _cognitiveServicesCommitmentPlanClientDiagnostics.CreateScope("CognitiveServicesCommitmentPlanResource.AddTag");
+            using DiagnosticScope scope = _commitmentPlanOperationGroupClientDiagnostics.CreateScope("CognitiveServicesCommitmentPlanResource.AddTag");
             scope.Start();
             try
             {
@@ -465,7 +476,7 @@ namespace Azure.ResourceManager.CognitiveServices
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _cognitiveServicesCommitmentPlanRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    HttpMessage message = _commitmentPlanOperationGroupRestClient.CreateGetPlanRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<CommitmentPlanData> response = Response.FromValue(CommitmentPlanData.FromResponse(result), result);
                     return Response.FromValue(new CognitiveServicesCommitmentPlanResource(Client, response.Value), response.GetRawResponse());
@@ -473,8 +484,13 @@ namespace Azure.ResourceManager.CognitiveServices
                 else
                 {
                     CommitmentPlanData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    current.Tags[key] = value;
-                    ArmOperation<CognitiveServicesCommitmentPlanResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
+                    PatchResourceTagsAndSku patch = new PatchResourceTagsAndSku();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
+                    {
+                        patch.Tags.Add(tag);
+                    }
+                    patch.Tags[key] = value;
+                    ArmOperation<CognitiveServicesCommitmentPlanResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -493,7 +509,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _cognitiveServicesCommitmentPlanClientDiagnostics.CreateScope("CognitiveServicesCommitmentPlanResource.SetTags");
+            using DiagnosticScope scope = _commitmentPlanOperationGroupClientDiagnostics.CreateScope("CognitiveServicesCommitmentPlanResource.SetTags");
             scope.Start();
             try
             {
@@ -507,7 +523,7 @@ namespace Azure.ResourceManager.CognitiveServices
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _cognitiveServicesCommitmentPlanRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    HttpMessage message = _commitmentPlanOperationGroupRestClient.CreateGetPlanRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<CommitmentPlanData> response = Response.FromValue(CommitmentPlanData.FromResponse(result), result);
                     return Response.FromValue(new CognitiveServicesCommitmentPlanResource(Client, response.Value), response.GetRawResponse());
@@ -515,8 +531,9 @@ namespace Azure.ResourceManager.CognitiveServices
                 else
                 {
                     CommitmentPlanData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    current.Tags.ReplaceWith(tags);
-                    ArmOperation<CognitiveServicesCommitmentPlanResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    PatchResourceTagsAndSku patch = new PatchResourceTagsAndSku();
+                    patch.Tags.ReplaceWith(tags);
+                    ArmOperation<CognitiveServicesCommitmentPlanResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -535,7 +552,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _cognitiveServicesCommitmentPlanClientDiagnostics.CreateScope("CognitiveServicesCommitmentPlanResource.SetTags");
+            using DiagnosticScope scope = _commitmentPlanOperationGroupClientDiagnostics.CreateScope("CognitiveServicesCommitmentPlanResource.SetTags");
             scope.Start();
             try
             {
@@ -549,7 +566,7 @@ namespace Azure.ResourceManager.CognitiveServices
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _cognitiveServicesCommitmentPlanRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    HttpMessage message = _commitmentPlanOperationGroupRestClient.CreateGetPlanRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<CommitmentPlanData> response = Response.FromValue(CommitmentPlanData.FromResponse(result), result);
                     return Response.FromValue(new CognitiveServicesCommitmentPlanResource(Client, response.Value), response.GetRawResponse());
@@ -557,8 +574,9 @@ namespace Azure.ResourceManager.CognitiveServices
                 else
                 {
                     CommitmentPlanData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    current.Tags.ReplaceWith(tags);
-                    ArmOperation<CognitiveServicesCommitmentPlanResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
+                    PatchResourceTagsAndSku patch = new PatchResourceTagsAndSku();
+                    patch.Tags.ReplaceWith(tags);
+                    ArmOperation<CognitiveServicesCommitmentPlanResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -577,7 +595,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _cognitiveServicesCommitmentPlanClientDiagnostics.CreateScope("CognitiveServicesCommitmentPlanResource.RemoveTag");
+            using DiagnosticScope scope = _commitmentPlanOperationGroupClientDiagnostics.CreateScope("CognitiveServicesCommitmentPlanResource.RemoveTag");
             scope.Start();
             try
             {
@@ -590,7 +608,7 @@ namespace Azure.ResourceManager.CognitiveServices
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _cognitiveServicesCommitmentPlanRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    HttpMessage message = _commitmentPlanOperationGroupRestClient.CreateGetPlanRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<CommitmentPlanData> response = Response.FromValue(CommitmentPlanData.FromResponse(result), result);
                     return Response.FromValue(new CognitiveServicesCommitmentPlanResource(Client, response.Value), response.GetRawResponse());
@@ -598,8 +616,13 @@ namespace Azure.ResourceManager.CognitiveServices
                 else
                 {
                     CommitmentPlanData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    current.Tags.Remove(key);
-                    ArmOperation<CognitiveServicesCommitmentPlanResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    PatchResourceTagsAndSku patch = new PatchResourceTagsAndSku();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
+                    {
+                        patch.Tags.Add(tag);
+                    }
+                    patch.Tags.Remove(key);
+                    ArmOperation<CognitiveServicesCommitmentPlanResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -618,7 +641,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _cognitiveServicesCommitmentPlanClientDiagnostics.CreateScope("CognitiveServicesCommitmentPlanResource.RemoveTag");
+            using DiagnosticScope scope = _commitmentPlanOperationGroupClientDiagnostics.CreateScope("CognitiveServicesCommitmentPlanResource.RemoveTag");
             scope.Start();
             try
             {
@@ -631,7 +654,7 @@ namespace Azure.ResourceManager.CognitiveServices
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _cognitiveServicesCommitmentPlanRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    HttpMessage message = _commitmentPlanOperationGroupRestClient.CreateGetPlanRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<CommitmentPlanData> response = Response.FromValue(CommitmentPlanData.FromResponse(result), result);
                     return Response.FromValue(new CognitiveServicesCommitmentPlanResource(Client, response.Value), response.GetRawResponse());
@@ -639,8 +662,13 @@ namespace Azure.ResourceManager.CognitiveServices
                 else
                 {
                     CommitmentPlanData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    current.Tags.Remove(key);
-                    ArmOperation<CognitiveServicesCommitmentPlanResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
+                    PatchResourceTagsAndSku patch = new PatchResourceTagsAndSku();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
+                    {
+                        patch.Tags.Add(tag);
+                    }
+                    patch.Tags.Remove(key);
+                    ArmOperation<CognitiveServicesCommitmentPlanResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -649,6 +677,39 @@ namespace Azure.ResourceManager.CognitiveServices
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Gets a collection of CommitmentPlanAccountAssociations in the <see cref="CognitiveServicesCommitmentPlanResource"/>. </summary>
+        /// <returns> An object representing collection of CommitmentPlanAccountAssociations and their operations over a CommitmentPlanAccountAssociationResource. </returns>
+        public virtual CommitmentPlanAccountAssociationCollection GetCommitmentPlanAccountAssociations()
+        {
+            return GetCachedClient(client => new CommitmentPlanAccountAssociationCollection(client, Id));
+        }
+
+        /// <summary> Gets the association of the Cognitive Services commitment plan. </summary>
+        /// <param name="commitmentPlanAssociationName"> The name of the commitment plan association with the Cognitive Services Account. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="commitmentPlanAssociationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="commitmentPlanAssociationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<CommitmentPlanAccountAssociationResource>> GetCommitmentPlanAccountAssociationAsync(string commitmentPlanAssociationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(commitmentPlanAssociationName, nameof(commitmentPlanAssociationName));
+
+            return await GetCommitmentPlanAccountAssociations().GetAsync(commitmentPlanAssociationName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets the association of the Cognitive Services commitment plan. </summary>
+        /// <param name="commitmentPlanAssociationName"> The name of the commitment plan association with the Cognitive Services Account. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="commitmentPlanAssociationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="commitmentPlanAssociationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<CommitmentPlanAccountAssociationResource> GetCommitmentPlanAccountAssociation(string commitmentPlanAssociationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(commitmentPlanAssociationName, nameof(commitmentPlanAssociationName));
+
+            return GetCommitmentPlanAccountAssociations().Get(commitmentPlanAssociationName, cancellationToken);
         }
     }
 }

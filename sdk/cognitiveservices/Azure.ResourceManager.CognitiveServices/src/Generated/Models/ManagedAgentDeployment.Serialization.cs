@@ -14,7 +14,7 @@ using Azure.ResourceManager.CognitiveServices;
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> Represents a managed agent deployment where the underlying infrastructure is managed by the platform in the deployer's subscription. </summary>
-    public partial class ManagedAgentDeployment : AgentDeploymentProperties, IJsonModel<ManagedAgentDeployment>
+    public partial class ManagedAgentDeployment : CognitiveServicesAgentDeploymentProperties, IJsonModel<ManagedAgentDeployment>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -107,11 +107,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string displayName = default;
             string deploymentId = default;
-            AgentDeploymentState? state = default;
-            IList<AgentProtocolVersion> protocols = default;
+            CognitiveServicesAgentDeploymentState? state = default;
+            IList<CognitiveServicesAgentProtocolVersion> protocols = default;
             IList<VersionedAgentReference> agents = default;
             AgentDeploymentType deploymentType = default;
-            AgentDeploymentProvisioningState? provisioningState = default;
+            CognitiveServicesAgentDeploymentProvisioningState? provisioningState = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("description"u8))
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                         state = null;
                         continue;
                     }
-                    state = new AgentDeploymentState(prop.Value.GetString());
+                    state = new CognitiveServicesAgentDeploymentState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("protocols"u8))
@@ -181,10 +181,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    List<AgentProtocolVersion> array = new List<AgentProtocolVersion>();
+                    List<CognitiveServicesAgentProtocolVersion> array = new List<CognitiveServicesAgentProtocolVersion>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AgentProtocolVersion.DeserializeAgentProtocolVersion(item, options));
+                        array.Add(CognitiveServicesAgentProtocolVersion.DeserializeCognitiveServicesAgentProtocolVersion(item, options));
                     }
                     protocols = array;
                     continue;
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    provisioningState = new AgentDeploymentProvisioningState(prop.Value.GetString());
+                    provisioningState = new CognitiveServicesAgentDeploymentProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 displayName,
                 deploymentId,
                 state,
-                protocols ?? new ChangeTrackingList<AgentProtocolVersion>(),
+                protocols ?? new ChangeTrackingList<CognitiveServicesAgentProtocolVersion>(),
                 agents ?? new ChangeTrackingList<VersionedAgentReference>(),
                 deploymentType,
                 provisioningState);

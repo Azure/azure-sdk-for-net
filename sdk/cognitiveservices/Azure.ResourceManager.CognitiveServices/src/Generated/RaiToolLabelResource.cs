@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.CognitiveServices
     /// <summary>
     /// A class representing a RaiToolLabel along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="RaiToolLabelResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AccountResource"/> using the GetRaiToolLabels method.
+    /// Otherwise you can get one from its parent resource <see cref="CognitiveServicesAccountResource"/> using the GetRaiToolLabels method.
     /// </summary>
     public partial class RaiToolLabelResource : ArmResource
     {

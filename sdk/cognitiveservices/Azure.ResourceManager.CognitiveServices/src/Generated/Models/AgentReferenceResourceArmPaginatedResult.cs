@@ -12,7 +12,7 @@ using Azure.ResourceManager.CognitiveServices;
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> A paginated list of Agent Reference entities. </summary>
-    public partial class AgentReferenceResourceArmPaginatedResult
+    internal partial class AgentReferenceResourceArmPaginatedResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Initializes a new instance of <see cref="AgentReferenceResourceArmPaginatedResult"/>. </summary>
         internal AgentReferenceResourceArmPaginatedResult()
         {
-            Value = new ChangeTrackingList<AgentReference>();
+            Value = new ChangeTrackingList<CognitiveServicesAgentReference>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AgentReferenceResourceArmPaginatedResult"/>. </summary>
         /// <param name="nextLink"> The link to the next page of Agent Reference objects. If null, there are no additional pages. </param>
         /// <param name="value"> An array of objects of type Agent Reference. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentReferenceResourceArmPaginatedResult(string nextLink, IList<AgentReference> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentReferenceResourceArmPaginatedResult(string nextLink, IList<CognitiveServicesAgentReference> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NextLink = nextLink;
             Value = value;
@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public string NextLink { get; }
 
         /// <summary> An array of objects of type Agent Reference. </summary>
-        public IList<AgentReference> Value { get; }
+        public IList<CognitiveServicesAgentReference> Value { get; }
     }
 }

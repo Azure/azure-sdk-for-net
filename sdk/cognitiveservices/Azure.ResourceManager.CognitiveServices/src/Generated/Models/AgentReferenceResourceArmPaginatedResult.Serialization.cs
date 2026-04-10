@@ -15,7 +15,7 @@ using Azure.ResourceManager.CognitiveServices;
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> A paginated list of Agent Reference entities. </summary>
-    public partial class AgentReferenceResourceArmPaginatedResult : IJsonModel<AgentReferenceResourceArmPaginatedResult>
+    internal partial class AgentReferenceResourceArmPaginatedResult : IJsonModel<AgentReferenceResourceArmPaginatedResult>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (AgentReference item in Value)
+                foreach (CognitiveServicesAgentReference item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -140,17 +140,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 return null;
             }
             string nextLink = default;
-            IList<AgentReference> value = default;
+            IList<CognitiveServicesAgentReference> value = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("nextLink"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        nextLink = null;
-                        continue;
-                    }
                     nextLink = prop.Value.GetString();
                     continue;
                 }
@@ -160,10 +155,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    List<AgentReference> array = new List<AgentReference>();
+                    List<CognitiveServicesAgentReference> array = new List<CognitiveServicesAgentReference>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AgentReference.DeserializeAgentReference(item, options));
+                        array.Add(CognitiveServicesAgentReference.DeserializeCognitiveServicesAgentReference(item, options));
                     }
                     value = array;
                     continue;
@@ -173,7 +168,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AgentReferenceResourceArmPaginatedResult(nextLink, value ?? new ChangeTrackingList<AgentReference>(), additionalBinaryDataProperties);
+            return new AgentReferenceResourceArmPaginatedResult(nextLink, value ?? new ChangeTrackingList<CognitiveServicesAgentReference>(), additionalBinaryDataProperties);
         }
     }
 }

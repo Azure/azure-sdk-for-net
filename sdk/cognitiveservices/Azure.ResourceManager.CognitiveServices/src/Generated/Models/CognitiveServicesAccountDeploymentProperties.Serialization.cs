@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             string parentDeploymentName = default;
             string spilloverDeploymentName = default;
             ServiceTier? serviceTier = default;
-            DeploymentState? deploymentState = default;
+            CognitiveServicesDeploymentState? deploymentState = default;
             DeploymentRouting routing = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                         deploymentState = null;
                         continue;
                     }
-                    deploymentState = new DeploymentState(prop.Value.GetString());
+                    deploymentState = new CognitiveServicesDeploymentState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("routing"u8))

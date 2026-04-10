@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.CognitiveServices
 {
     /// <summary>
     /// A class representing a collection of <see cref="CommitmentPlanAccountAssociationResource"/> and their operations.
-    /// Each <see cref="CommitmentPlanAccountAssociationResource"/> in the collection will belong to the same instance of <see cref="CognitiveServicesCommitmentPlanOperationResource"/>.
-    /// To get a <see cref="CommitmentPlanAccountAssociationCollection"/> instance call the GetCommitmentPlanAccountAssociations method from an instance of <see cref="CognitiveServicesCommitmentPlanOperationResource"/>.
+    /// Each <see cref="CommitmentPlanAccountAssociationResource"/> in the collection will belong to the same instance of <see cref="CognitiveServicesCommitmentPlanResource"/>.
+    /// To get a <see cref="CommitmentPlanAccountAssociationCollection"/> instance call the GetCommitmentPlanAccountAssociations method from an instance of <see cref="CognitiveServicesCommitmentPlanResource"/>.
     /// </summary>
     public partial class CommitmentPlanAccountAssociationCollection : ArmCollection, IEnumerable<CommitmentPlanAccountAssociationResource>, IAsyncEnumerable<CommitmentPlanAccountAssociationResource>
     {
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.CognitiveServices
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != CognitiveServicesCommitmentPlanOperationResource.ResourceType)
+            if (id.ResourceType != CognitiveServicesCommitmentPlanResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, CognitiveServicesCommitmentPlanOperationResource.ResourceType), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, CognitiveServicesCommitmentPlanResource.ResourceType), nameof(id));
             }
         }
 

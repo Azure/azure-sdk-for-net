@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (QuotaTierData item in Value)
+                foreach (CognitiveServicesQuotaTierData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 return null;
             }
             string nextLink = default;
-            IReadOnlyList<QuotaTierData> value = default;
+            IReadOnlyList<CognitiveServicesQuotaTierData> value = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -155,10 +155,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    List<QuotaTierData> array = new List<QuotaTierData>();
+                    List<CognitiveServicesQuotaTierData> array = new List<CognitiveServicesQuotaTierData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(QuotaTierData.DeserializeQuotaTierData(item, options));
+                        array.Add(CognitiveServicesQuotaTierData.DeserializeCognitiveServicesQuotaTierData(item, options));
                     }
                     value = array;
                     continue;
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new QuotaTierListResult(nextLink, value ?? new ChangeTrackingList<QuotaTierData>(), additionalBinaryDataProperties);
+            return new QuotaTierListResult(nextLink, value ?? new ChangeTrackingList<CognitiveServicesQuotaTierData>(), additionalBinaryDataProperties);
         }
     }
 }

@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Initializes a new instance of <see cref="OutboundRuleListResult"/>. </summary>
         internal OutboundRuleListResult()
         {
-            Value = new ChangeTrackingList<OutboundRuleBasicResourceData>();
+            Value = new ChangeTrackingList<CognitiveServicesOutboundRuleBasicData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="OutboundRuleListResult"/>. </summary>
         /// <param name="nextLink"> The link to the next page constructed using the continuationToken.  If null, there are no additional pages. </param>
         /// <param name="value"> The list of cognitive services accounts. Since this list may be incomplete, the nextLink field should be used to request the next list of cognitive services accounts. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OutboundRuleListResult(string nextLink, IList<OutboundRuleBasicResourceData> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OutboundRuleListResult(string nextLink, IList<CognitiveServicesOutboundRuleBasicData> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NextLink = nextLink;
             Value = value;
@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public string NextLink { get; }
 
         /// <summary> The list of cognitive services accounts. Since this list may be incomplete, the nextLink field should be used to request the next list of cognitive services accounts. </summary>
-        public IList<OutboundRuleBasicResourceData> Value { get; }
+        public IList<CognitiveServicesOutboundRuleBasicData> Value { get; }
     }
 }

@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.CognitiveServices
             return message;
         }
 
-        internal HttpMessage CreateGetAllRequest(string subscriptionId, RequestContext context)
+        internal HttpMessage CreateGetCognitiveServicesAccountsRequest(string subscriptionId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.CognitiveServices
             return message;
         }
 
-        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, string subscriptionId, RequestContext context)
+        internal HttpMessage CreateNextGetCognitiveServicesAccountsRequest(Uri nextPage, string subscriptionId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.CognitiveServices
             return message;
         }
 
-        internal HttpMessage CreateGetAllRequest(string subscriptionId, string resourceGroupName, string accountName, RequestContext context)
+        internal HttpMessage CreateGetPrivateLinkResourcesRequest(string subscriptionId, string resourceGroupName, string accountName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

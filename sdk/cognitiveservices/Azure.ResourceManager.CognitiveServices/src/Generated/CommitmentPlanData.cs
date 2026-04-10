@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.CognitiveServices.Models;
 using Azure.ResourceManager.Models;
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="eTag"> Resource Etag. </param>
         /// <param name="kind"> The kind (type) of cognitive service account. </param>
         /// <param name="sku"> The resource model definition representing SKU. </param>
-        internal CommitmentPlanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, CommitmentPlanProperties properties, IDictionary<string, string> tags, string location, string eTag, string kind, CognitiveServicesSku sku) : base(id, name, resourceType, systemData)
+        internal CommitmentPlanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, CommitmentPlanProperties properties, IDictionary<string, string> tags, AzureLocation? location, ETag? eTag, string kind, CognitiveServicesSku sku) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -55,10 +56,10 @@ namespace Azure.ResourceManager.CognitiveServices
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> The geo-location where the resource lives. </summary>
-        public string Location { get; set; }
+        public AzureLocation? Location { get; set; }
 
         /// <summary> Resource Etag. </summary>
-        public string ETag { get; }
+        public ETag? ETag { get; }
 
         /// <summary> The kind (type) of cognitive service account. </summary>
         public string Kind { get; set; }

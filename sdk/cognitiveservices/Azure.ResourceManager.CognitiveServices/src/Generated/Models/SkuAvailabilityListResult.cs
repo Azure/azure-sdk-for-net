@@ -12,7 +12,7 @@ using Azure.ResourceManager.CognitiveServices;
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> Check SKU availability result list. </summary>
-    public partial class SkuAvailabilityListResult
+    internal partial class SkuAvailabilityListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

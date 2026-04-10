@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.CognitiveServices
     /// <summary>
     /// A class representing a NetworkSecurityPerimeterConfiguration along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetworkSecurityPerimeterConfigurationResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AccountResource"/> using the GetNetworkSecurityPerimeterConfigurations method.
+    /// Otherwise you can get one from its parent resource <see cref="CognitiveServicesAccountResource"/> using the GetNetworkSecurityPerimeterConfigurations method.
     /// </summary>
     public partial class NetworkSecurityPerimeterConfigurationResource : ArmResource
     {

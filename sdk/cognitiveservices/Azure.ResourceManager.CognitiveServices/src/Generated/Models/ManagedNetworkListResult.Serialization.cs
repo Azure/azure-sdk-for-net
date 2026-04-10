@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (ManagedNetworkSettingsPropertiesBasicResourceData item in Value)
+                foreach (CognitiveServicesManagedNetworkSettingsData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 return null;
             }
             string nextLink = default;
-            IList<ManagedNetworkSettingsPropertiesBasicResourceData> value = default;
+            IList<CognitiveServicesManagedNetworkSettingsData> value = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -155,10 +155,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    List<ManagedNetworkSettingsPropertiesBasicResourceData> array = new List<ManagedNetworkSettingsPropertiesBasicResourceData>();
+                    List<CognitiveServicesManagedNetworkSettingsData> array = new List<CognitiveServicesManagedNetworkSettingsData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ManagedNetworkSettingsPropertiesBasicResourceData.DeserializeManagedNetworkSettingsPropertiesBasicResourceData(item, options));
+                        array.Add(CognitiveServicesManagedNetworkSettingsData.DeserializeCognitiveServicesManagedNetworkSettingsData(item, options));
                     }
                     value = array;
                     continue;
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ManagedNetworkListResult(nextLink, value ?? new ChangeTrackingList<ManagedNetworkSettingsPropertiesBasicResourceData>(), additionalBinaryDataProperties);
+            return new ManagedNetworkListResult(nextLink, value ?? new ChangeTrackingList<CognitiveServicesManagedNetworkSettingsData>(), additionalBinaryDataProperties);
         }
     }
 }

@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (AgentApplicationData item in Value)
+                foreach (CognitiveServicesAgentApplicationData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 return null;
             }
             string nextLink = default;
-            IList<AgentApplicationData> value = default;
+            IList<CognitiveServicesAgentApplicationData> value = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -160,10 +160,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    List<AgentApplicationData> array = new List<AgentApplicationData>();
+                    List<CognitiveServicesAgentApplicationData> array = new List<CognitiveServicesAgentApplicationData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AgentApplicationData.DeserializeAgentApplicationData(item, options));
+                        array.Add(CognitiveServicesAgentApplicationData.DeserializeCognitiveServicesAgentApplicationData(item, options));
                     }
                     value = array;
                     continue;
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AgentApplicationResourceArmPaginatedResult(nextLink, value ?? new ChangeTrackingList<AgentApplicationData>(), additionalBinaryDataProperties);
+            return new AgentApplicationResourceArmPaginatedResult(nextLink, value ?? new ChangeTrackingList<CognitiveServicesAgentApplicationData>(), additionalBinaryDataProperties);
         }
     }
 }

@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.CognitiveServices
             return message;
         }
 
-        internal HttpMessage CreateBatchAddRequest(string subscriptionId, string resourceGroupName, string accountName, string raiBlocklistName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateBatchAddRaiBlocklistItemRequest(string subscriptionId, string resourceGroupName, string accountName, string raiBlocklistName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.CognitiveServices
             return message;
         }
 
-        internal HttpMessage CreateBatchDeleteRequest(string subscriptionId, string resourceGroupName, string accountName, string raiBlocklistName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateBatchDeleteRaiBlocklistItemRequest(string subscriptionId, string resourceGroupName, string accountName, string raiBlocklistName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

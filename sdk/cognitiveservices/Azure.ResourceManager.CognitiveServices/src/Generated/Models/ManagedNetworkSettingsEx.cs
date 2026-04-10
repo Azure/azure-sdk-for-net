@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="provisioningState"> The provisioning state of the managed network settings. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="changeableIsolationModes"></param>
-        internal ManagedNetworkSettingsEx(IsolationMode? isolationMode, string networkId, IDictionary<string, OutboundRule> outboundRules, ManagedNetworkProvisionStatus status, FirewallSku? firewallSku, ManagedNetworkKind? managedNetworkKind, string firewallPublicIpAddress, ManagedNetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties, IReadOnlyList<IsolationMode> changeableIsolationModes) : base(isolationMode, networkId, outboundRules, status, firewallSku, managedNetworkKind, firewallPublicIpAddress, provisioningState, additionalBinaryDataProperties)
+        internal ManagedNetworkSettingsEx(IsolationMode? isolationMode, string networkId, IDictionary<string, CognitiveServicesOutboundRuleBasicProperties> outboundRules, ManagedNetworkProvisionStatus status, FirewallSku? firewallSku, ManagedNetworkKind? managedNetworkKind, string firewallPublicIpAddress, ManagedNetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties, IReadOnlyList<IsolationMode> changeableIsolationModes) : base(isolationMode, networkId, outboundRules, status, firewallSku, managedNetworkKind, firewallPublicIpAddress, provisioningState, additionalBinaryDataProperties)
         {
             ChangeableIsolationModes = changeableIsolationModes;
         }

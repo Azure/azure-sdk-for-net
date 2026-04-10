@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Initializes a new instance of <see cref="AgentDeploymentResourceArmPaginatedResult"/>. </summary>
         internal AgentDeploymentResourceArmPaginatedResult()
         {
-            Value = new ChangeTrackingList<AgentDeploymentData>();
+            Value = new ChangeTrackingList<CognitiveServicesAgentDeploymentData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AgentDeploymentResourceArmPaginatedResult"/>. </summary>
         /// <param name="nextLink"> The link to the next page of Agent Deployment objects. If null, there are no additional pages. </param>
         /// <param name="value"> An array of objects of type Agent Deployment. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentDeploymentResourceArmPaginatedResult(string nextLink, IList<AgentDeploymentData> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentDeploymentResourceArmPaginatedResult(string nextLink, IList<CognitiveServicesAgentDeploymentData> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NextLink = nextLink;
             Value = value;
@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public string NextLink { get; }
 
         /// <summary> An array of objects of type Agent Deployment. </summary>
-        public IList<AgentDeploymentData> Value { get; }
+        public IList<CognitiveServicesAgentDeploymentData> Value { get; }
     }
 }

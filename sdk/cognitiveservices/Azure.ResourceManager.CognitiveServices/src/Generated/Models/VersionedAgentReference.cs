@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> Type modeling a reference to a version of an agent definition. </summary>
-    public partial class VersionedAgentReference : AgentReferenceProperties
+    public partial class VersionedAgentReference : CognitiveServicesAgentReferenceProperties
     {
         /// <summary> Initializes a new instance of <see cref="VersionedAgentReference"/>. </summary>
         public VersionedAgentReference()

@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.CognitiveServices
     /// </summary>
     public partial class CognitiveServicesDeletedAccountResource : ArmResource
     {
-        private readonly ClientDiagnostics _cognitiveServicesDeletedAccountClientDiagnostics;
-        private readonly CognitiveServicesDeletedAccount _cognitiveServicesDeletedAccountRestClient;
+        private readonly ClientDiagnostics _deletedAccountsClientDiagnostics;
+        private readonly DeletedAccounts _deletedAccountsRestClient;
         private readonly CognitiveServicesAccountData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.CognitiveServices/locations/resourceGroups/deletedAccounts";
@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.CognitiveServices
         internal CognitiveServicesDeletedAccountResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string cognitiveServicesDeletedAccountApiVersion);
-            _cognitiveServicesDeletedAccountClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", ResourceType.Namespace, Diagnostics);
-            _cognitiveServicesDeletedAccountRestClient = new CognitiveServicesDeletedAccount(_cognitiveServicesDeletedAccountClientDiagnostics, Pipeline, Endpoint, cognitiveServicesDeletedAccountApiVersion ?? "2026-03-01");
+            _deletedAccountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", ResourceType.Namespace, Diagnostics);
+            _deletedAccountsRestClient = new DeletedAccounts(_deletedAccountsClientDiagnostics, Pipeline, Endpoint, cognitiveServicesDeletedAccountApiVersion ?? "2026-03-01");
             ValidateResourceId(id);
         }
 
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="location"> The location. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="accountName"> The accountName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string location, string resourceGroupName, string accountName)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation location, string resourceGroupName, string accountName)
         {
             string resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/locations/{location}/resourceGroups/{resourceGroupName}/deletedAccounts/{accountName}";
             return new ResourceIdentifier(resourceId);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<CognitiveServicesDeletedAccountResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _cognitiveServicesDeletedAccountClientDiagnostics.CreateScope("CognitiveServicesDeletedAccountResource.Get");
+            using DiagnosticScope scope = _deletedAccountsClientDiagnostics.CreateScope("CognitiveServicesDeletedAccountResource.Get");
             scope.Start();
             try
             {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cognitiveServicesDeletedAccountRestClient.CreateGetRequest(Id.SubscriptionId, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _deletedAccountsRestClient.CreateGetRequest(Id.SubscriptionId, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CognitiveServicesAccountData> response = Response.FromValue(CognitiveServicesAccountData.FromResponse(result), result);
                 if (response.Value == null)
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<CognitiveServicesDeletedAccountResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _cognitiveServicesDeletedAccountClientDiagnostics.CreateScope("CognitiveServicesDeletedAccountResource.Get");
+            using DiagnosticScope scope = _deletedAccountsClientDiagnostics.CreateScope("CognitiveServicesDeletedAccountResource.Get");
             scope.Start();
             try
             {
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cognitiveServicesDeletedAccountRestClient.CreateGetRequest(Id.SubscriptionId, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _deletedAccountsRestClient.CreateGetRequest(Id.SubscriptionId, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CognitiveServicesAccountData> response = Response.FromValue(CognitiveServicesAccountData.FromResponse(result), result);
                 if (response.Value == null)
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _cognitiveServicesDeletedAccountClientDiagnostics.CreateScope("CognitiveServicesDeletedAccountResource.Delete");
+            using DiagnosticScope scope = _deletedAccountsClientDiagnostics.CreateScope("CognitiveServicesDeletedAccountResource.Delete");
             scope.Start();
             try
             {
@@ -221,9 +221,9 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cognitiveServicesDeletedAccountRestClient.CreatePurgeRequest(Id.SubscriptionId, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _deletedAccountsRestClient.CreatePurgeRequest(Id.SubscriptionId, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                CognitiveServicesArmOperation operation = new CognitiveServicesArmOperation(_cognitiveServicesDeletedAccountClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                CognitiveServicesArmOperation operation = new CognitiveServicesArmOperation(_deletedAccountsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _cognitiveServicesDeletedAccountClientDiagnostics.CreateScope("CognitiveServicesDeletedAccountResource.Delete");
+            using DiagnosticScope scope = _deletedAccountsClientDiagnostics.CreateScope("CognitiveServicesDeletedAccountResource.Delete");
             scope.Start();
             try
             {
@@ -270,9 +270,9 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cognitiveServicesDeletedAccountRestClient.CreatePurgeRequest(Id.SubscriptionId, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _deletedAccountsRestClient.CreatePurgeRequest(Id.SubscriptionId, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                CognitiveServicesArmOperation operation = new CognitiveServicesArmOperation(_cognitiveServicesDeletedAccountClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                CognitiveServicesArmOperation operation = new CognitiveServicesArmOperation(_deletedAccountsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletionResponse(cancellationToken);

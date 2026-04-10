@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> Represents a hosted agent deployment where the underlying infrastructure is owned by the platform. </summary>
-    public partial class HostedAgentDeployment : AgentDeploymentProperties
+    public partial class HostedAgentDeployment : CognitiveServicesAgentDeploymentProperties
     {
         /// <summary> Initializes a new instance of <see cref="HostedAgentDeployment"/>. </summary>
         public HostedAgentDeployment() : base(AgentDeploymentType.Hosted)
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="provisioningState"> Gets or sets the provisioning state of the agent deployment. </param>
         /// <param name="minReplicas"> Gets or sets the minimum number of replicas for this hosted deployment. </param>
         /// <param name="maxReplicas"> Gets or sets the maximum number of replicas for this hosted deployment. </param>
-        internal HostedAgentDeployment(string description, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, string displayName, string deploymentId, AgentDeploymentState? state, IList<AgentProtocolVersion> protocols, IList<VersionedAgentReference> agents, AgentDeploymentType deploymentType, AgentDeploymentProvisioningState? provisioningState, int? minReplicas, int? maxReplicas) : base(description, tags, additionalBinaryDataProperties, displayName, deploymentId, state, protocols, agents, deploymentType, provisioningState)
+        internal HostedAgentDeployment(string description, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, string displayName, string deploymentId, CognitiveServicesAgentDeploymentState? state, IList<CognitiveServicesAgentProtocolVersion> protocols, IList<VersionedAgentReference> agents, AgentDeploymentType deploymentType, CognitiveServicesAgentDeploymentProvisioningState? provisioningState, int? minReplicas, int? maxReplicas) : base(description, tags, additionalBinaryDataProperties, displayName, deploymentId, state, protocols, agents, deploymentType, provisioningState)
         {
             MinReplicas = minReplicas;
             MaxReplicas = maxReplicas;

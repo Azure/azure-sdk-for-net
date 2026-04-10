@@ -12,7 +12,7 @@ using Azure.ResourceManager.CognitiveServices;
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> Private Endpoint outbound rule for the managed network of a cognitive services account. </summary>
-    public partial class PrivateEndpointOutboundRule : OutboundRule
+    public partial class PrivateEndpointOutboundRule : CognitiveServicesOutboundRuleBasicProperties
     {
         /// <summary> Initializes a new instance of <see cref="PrivateEndpointOutboundRule"/>. </summary>
         public PrivateEndpointOutboundRule() : base(RuleType.PrivateEndpoint)

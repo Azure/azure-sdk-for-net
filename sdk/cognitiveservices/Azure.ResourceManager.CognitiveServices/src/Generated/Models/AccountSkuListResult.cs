@@ -12,7 +12,7 @@ using Azure.ResourceManager.CognitiveServices;
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> The list of cognitive services accounts operation response. </summary>
-    public partial class AccountSkuListResult
+    internal partial class AccountSkuListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

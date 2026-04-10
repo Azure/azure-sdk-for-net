@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Initializes a new instance of <see cref="QuotaTierListResult"/>. </summary>
         internal QuotaTierListResult()
         {
-            Value = new ChangeTrackingList<QuotaTierData>();
+            Value = new ChangeTrackingList<CognitiveServicesQuotaTierData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="QuotaTierListResult"/>. </summary>
         /// <param name="nextLink"> The link used to get the next page of quota tiers. </param>
         /// <param name="value"> Gets the list of Quota Tiers and their properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal QuotaTierListResult(string nextLink, IReadOnlyList<QuotaTierData> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal QuotaTierListResult(string nextLink, IReadOnlyList<CognitiveServicesQuotaTierData> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NextLink = nextLink;
             Value = value;
@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public string NextLink { get; }
 
         /// <summary> Gets the list of Quota Tiers and their properties. </summary>
-        public IReadOnlyList<QuotaTierData> Value { get; }
+        public IReadOnlyList<CognitiveServicesQuotaTierData> Value { get; }
     }
 }

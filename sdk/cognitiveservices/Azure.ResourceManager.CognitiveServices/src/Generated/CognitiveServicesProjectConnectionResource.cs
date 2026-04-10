@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.CognitiveServices
     /// </summary>
     public partial class CognitiveServicesProjectConnectionResource : ArmResource
     {
-        private readonly ClientDiagnostics _cognitiveServicesProjectConnectionClientDiagnostics;
-        private readonly CognitiveServicesProjectConnection _cognitiveServicesProjectConnectionRestClient;
+        private readonly ClientDiagnostics _projectConnectionsClientDiagnostics;
+        private readonly ProjectConnections _projectConnectionsRestClient;
         private readonly CognitiveServicesConnectionData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.CognitiveServices/accounts/projects/connections";
@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.CognitiveServices
         internal CognitiveServicesProjectConnectionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string cognitiveServicesProjectConnectionApiVersion);
-            _cognitiveServicesProjectConnectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", ResourceType.Namespace, Diagnostics);
-            _cognitiveServicesProjectConnectionRestClient = new CognitiveServicesProjectConnection(_cognitiveServicesProjectConnectionClientDiagnostics, Pipeline, Endpoint, cognitiveServicesProjectConnectionApiVersion ?? "2026-03-01");
+            _projectConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", ResourceType.Namespace, Diagnostics);
+            _projectConnectionsRestClient = new ProjectConnections(_projectConnectionsClientDiagnostics, Pipeline, Endpoint, cognitiveServicesProjectConnectionApiVersion ?? "2026-03-01");
             ValidateResourceId(id);
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<CognitiveServicesProjectConnectionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _cognitiveServicesProjectConnectionClientDiagnostics.CreateScope("CognitiveServicesProjectConnectionResource.Get");
+            using DiagnosticScope scope = _projectConnectionsClientDiagnostics.CreateScope("CognitiveServicesProjectConnectionResource.Get");
             scope.Start();
             try
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cognitiveServicesProjectConnectionRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _projectConnectionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CognitiveServicesConnectionData> response = Response.FromValue(CognitiveServicesConnectionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<CognitiveServicesProjectConnectionResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _cognitiveServicesProjectConnectionClientDiagnostics.CreateScope("CognitiveServicesProjectConnectionResource.Get");
+            using DiagnosticScope scope = _projectConnectionsClientDiagnostics.CreateScope("CognitiveServicesProjectConnectionResource.Get");
             scope.Start();
             try
             {
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cognitiveServicesProjectConnectionRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _projectConnectionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CognitiveServicesConnectionData> response = Response.FromValue(CognitiveServicesConnectionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<CognitiveServicesProjectConnectionResource>> UpdateAsync(CognitiveServicesConnectionPatch patch, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _cognitiveServicesProjectConnectionClientDiagnostics.CreateScope("CognitiveServicesProjectConnectionResource.Update");
+            using DiagnosticScope scope = _projectConnectionsClientDiagnostics.CreateScope("CognitiveServicesProjectConnectionResource.Update");
             scope.Start();
             try
             {
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cognitiveServicesProjectConnectionRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, CognitiveServicesConnectionPatch.ToRequestContent(patch), context);
+                HttpMessage message = _projectConnectionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, CognitiveServicesConnectionPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CognitiveServicesConnectionData> response = Response.FromValue(CognitiveServicesConnectionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<CognitiveServicesProjectConnectionResource> Update(CognitiveServicesConnectionPatch patch, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _cognitiveServicesProjectConnectionClientDiagnostics.CreateScope("CognitiveServicesProjectConnectionResource.Update");
+            using DiagnosticScope scope = _projectConnectionsClientDiagnostics.CreateScope("CognitiveServicesProjectConnectionResource.Update");
             scope.Start();
             try
             {
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cognitiveServicesProjectConnectionRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, CognitiveServicesConnectionPatch.ToRequestContent(patch), context);
+                HttpMessage message = _projectConnectionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, CognitiveServicesConnectionPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CognitiveServicesConnectionData> response = Response.FromValue(CognitiveServicesConnectionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _cognitiveServicesProjectConnectionClientDiagnostics.CreateScope("CognitiveServicesProjectConnectionResource.Delete");
+            using DiagnosticScope scope = _projectConnectionsClientDiagnostics.CreateScope("CognitiveServicesProjectConnectionResource.Delete");
             scope.Start();
             try
             {
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cognitiveServicesProjectConnectionRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _projectConnectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _cognitiveServicesProjectConnectionClientDiagnostics.CreateScope("CognitiveServicesProjectConnectionResource.Delete");
+            using DiagnosticScope scope = _projectConnectionsClientDiagnostics.CreateScope("CognitiveServicesProjectConnectionResource.Delete");
             scope.Start();
             try
             {
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cognitiveServicesProjectConnectionRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _projectConnectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());

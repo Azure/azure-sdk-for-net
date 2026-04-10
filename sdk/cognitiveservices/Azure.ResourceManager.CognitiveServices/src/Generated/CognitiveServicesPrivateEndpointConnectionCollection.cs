@@ -15,14 +15,13 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.CognitiveServices.Models;
 
 namespace Azure.ResourceManager.CognitiveServices
 {
     /// <summary>
     /// A class representing a collection of <see cref="CognitiveServicesPrivateEndpointConnectionResource"/> and their operations.
-    /// Each <see cref="CognitiveServicesPrivateEndpointConnectionResource"/> in the collection will belong to the same instance of <see cref="AccountResource"/>.
-    /// To get a <see cref="CognitiveServicesPrivateEndpointConnectionCollection"/> instance call the GetCognitiveServicesPrivateEndpointConnections method from an instance of <see cref="AccountResource"/>.
+    /// Each <see cref="CognitiveServicesPrivateEndpointConnectionResource"/> in the collection will belong to the same instance of <see cref="CognitiveServicesAccountResource"/>.
+    /// To get a <see cref="CognitiveServicesPrivateEndpointConnectionCollection"/> instance call the GetCognitiveServicesPrivateEndpointConnections method from an instance of <see cref="CognitiveServicesAccountResource"/>.
     /// </summary>
     public partial class CognitiveServicesPrivateEndpointConnectionCollection : ArmCollection, IEnumerable<CognitiveServicesPrivateEndpointConnectionResource>, IAsyncEnumerable<CognitiveServicesPrivateEndpointConnectionResource>
     {
@@ -49,9 +48,9 @@ namespace Azure.ResourceManager.CognitiveServices
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != AccountResource.ResourceType)
+            if (id.ResourceType != CognitiveServicesAccountResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AccountResource.ResourceType), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, CognitiveServicesAccountResource.ResourceType), nameof(id));
             }
         }
 
@@ -287,30 +286,20 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CognitiveServicesPrivateEndpointConnectionListResult>> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CognitiveServicesPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CognitiveServicesPrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("CognitiveServicesPrivateEndpointConnectionCollection.GetAll");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetAllRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<CognitiveServicesPrivateEndpointConnectionListResult> response = Response.FromValue(CognitiveServicesPrivateEndpointConnectionListResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<CognitiveServicesPrivateEndpointConnectionData, CognitiveServicesPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetAllAsyncCollectionResultOfT(
+                _privateEndpointConnectionsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "CognitiveServicesPrivateEndpointConnectionCollection.GetAll"), data => new CognitiveServicesPrivateEndpointConnectionResource(Client, data));
         }
 
         /// <summary>
@@ -331,30 +320,20 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CognitiveServicesPrivateEndpointConnectionListResult> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CognitiveServicesPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CognitiveServicesPrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("CognitiveServicesPrivateEndpointConnectionCollection.GetAll");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetAllRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<CognitiveServicesPrivateEndpointConnectionListResult> response = Response.FromValue(CognitiveServicesPrivateEndpointConnectionListResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<CognitiveServicesPrivateEndpointConnectionData, CognitiveServicesPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetAllCollectionResultOfT(
+                _privateEndpointConnectionsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "CognitiveServicesPrivateEndpointConnectionCollection.GetAll"), data => new CognitiveServicesPrivateEndpointConnectionResource(Client, data));
         }
 
         /// <summary>
@@ -595,18 +574,18 @@ namespace Azure.ResourceManager.CognitiveServices
 
         IEnumerator<CognitiveServicesPrivateEndpointConnectionResource> IEnumerable<CognitiveServicesPrivateEndpointConnectionResource>.GetEnumerator()
         {
-            throw new NotImplementedException("The collection does not support enumeration. Please use GetAll or GetAllAsync to retrieve the list of resources.");
+            return GetAll().GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            throw new NotImplementedException("The collection does not support enumeration. Please use GetAll or GetAllAsync to retrieve the list of resources.");
+            return GetAll().GetEnumerator();
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<CognitiveServicesPrivateEndpointConnectionResource> IAsyncEnumerable<CognitiveServicesPrivateEndpointConnectionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
-            throw new NotImplementedException("The collection does not support enumeration. Please use GetAll or GetAllAsync to retrieve the list of resources.");
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.CognitiveServices
     /// </summary>
     public partial class CognitiveServicesDeletedAccountCollection : ArmCollection
     {
-        private readonly ClientDiagnostics _cognitiveServicesDeletedAccountClientDiagnostics;
-        private readonly CognitiveServicesDeletedAccount _cognitiveServicesDeletedAccountRestClient;
+        private readonly ClientDiagnostics _deletedAccountsClientDiagnostics;
+        private readonly DeletedAccounts _deletedAccountsRestClient;
 
         /// <summary> Initializes a new instance of CognitiveServicesDeletedAccountCollection for mocking. </summary>
         protected CognitiveServicesDeletedAccountCollection()
@@ -38,8 +38,8 @@ namespace Azure.ResourceManager.CognitiveServices
         internal CognitiveServicesDeletedAccountCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(CognitiveServicesDeletedAccountResource.ResourceType, out string cognitiveServicesDeletedAccountApiVersion);
-            _cognitiveServicesDeletedAccountClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", CognitiveServicesDeletedAccountResource.ResourceType.Namespace, Diagnostics);
-            _cognitiveServicesDeletedAccountRestClient = new CognitiveServicesDeletedAccount(_cognitiveServicesDeletedAccountClientDiagnostics, Pipeline, Endpoint, cognitiveServicesDeletedAccountApiVersion ?? "2026-03-01");
+            _deletedAccountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", CognitiveServicesDeletedAccountResource.ResourceType.Namespace, Diagnostics);
+            _deletedAccountsRestClient = new DeletedAccounts(_deletedAccountsClientDiagnostics, Pipeline, Endpoint, cognitiveServicesDeletedAccountApiVersion ?? "2026-03-01");
             ValidateResourceId(id);
         }
 
@@ -74,15 +74,14 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of Cognitive Services account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="location"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<CognitiveServicesDeletedAccountResource>> GetAsync(string location, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<CognitiveServicesDeletedAccountResource>> GetAsync(AzureLocation location, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
-            using DiagnosticScope scope = _cognitiveServicesDeletedAccountClientDiagnostics.CreateScope("CognitiveServicesDeletedAccountCollection.Get");
+            using DiagnosticScope scope = _deletedAccountsClientDiagnostics.CreateScope("CognitiveServicesDeletedAccountCollection.Get");
             scope.Start();
             try
             {
@@ -90,7 +89,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cognitiveServicesDeletedAccountRestClient.CreateGetRequest(Id.SubscriptionId, location, resourceGroupName, accountName, context);
+                HttpMessage message = _deletedAccountsRestClient.CreateGetRequest(Id.SubscriptionId, location, resourceGroupName, accountName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CognitiveServicesAccountData> response = Response.FromValue(CognitiveServicesAccountData.FromResponse(result), result);
                 if (response.Value == null)
@@ -127,15 +126,14 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of Cognitive Services account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="location"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<CognitiveServicesDeletedAccountResource> Get(string location, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<CognitiveServicesDeletedAccountResource> Get(AzureLocation location, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
-            using DiagnosticScope scope = _cognitiveServicesDeletedAccountClientDiagnostics.CreateScope("CognitiveServicesDeletedAccountCollection.Get");
+            using DiagnosticScope scope = _deletedAccountsClientDiagnostics.CreateScope("CognitiveServicesDeletedAccountCollection.Get");
             scope.Start();
             try
             {
@@ -143,7 +141,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cognitiveServicesDeletedAccountRestClient.CreateGetRequest(Id.SubscriptionId, location, resourceGroupName, accountName, context);
+                HttpMessage message = _deletedAccountsRestClient.CreateGetRequest(Id.SubscriptionId, location, resourceGroupName, accountName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CognitiveServicesAccountData> response = Response.FromValue(CognitiveServicesAccountData.FromResponse(result), result);
                 if (response.Value == null)
@@ -180,15 +178,14 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of Cognitive Services account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="location"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string location, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(AzureLocation location, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
-            using DiagnosticScope scope = _cognitiveServicesDeletedAccountClientDiagnostics.CreateScope("CognitiveServicesDeletedAccountCollection.Exists");
+            using DiagnosticScope scope = _deletedAccountsClientDiagnostics.CreateScope("CognitiveServicesDeletedAccountCollection.Exists");
             scope.Start();
             try
             {
@@ -196,7 +193,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cognitiveServicesDeletedAccountRestClient.CreateGetRequest(Id.SubscriptionId, location, resourceGroupName, accountName, context);
+                HttpMessage message = _deletedAccountsRestClient.CreateGetRequest(Id.SubscriptionId, location, resourceGroupName, accountName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<CognitiveServicesAccountData> response = default;
@@ -241,15 +238,14 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of Cognitive Services account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="location"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<bool> Exists(string location, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<bool> Exists(AzureLocation location, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
-            using DiagnosticScope scope = _cognitiveServicesDeletedAccountClientDiagnostics.CreateScope("CognitiveServicesDeletedAccountCollection.Exists");
+            using DiagnosticScope scope = _deletedAccountsClientDiagnostics.CreateScope("CognitiveServicesDeletedAccountCollection.Exists");
             scope.Start();
             try
             {
@@ -257,7 +253,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cognitiveServicesDeletedAccountRestClient.CreateGetRequest(Id.SubscriptionId, location, resourceGroupName, accountName, context);
+                HttpMessage message = _deletedAccountsRestClient.CreateGetRequest(Id.SubscriptionId, location, resourceGroupName, accountName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<CognitiveServicesAccountData> response = default;
@@ -302,15 +298,14 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of Cognitive Services account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="location"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<CognitiveServicesDeletedAccountResource>> GetIfExistsAsync(string location, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<NullableResponse<CognitiveServicesDeletedAccountResource>> GetIfExistsAsync(AzureLocation location, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
-            using DiagnosticScope scope = _cognitiveServicesDeletedAccountClientDiagnostics.CreateScope("CognitiveServicesDeletedAccountCollection.GetIfExists");
+            using DiagnosticScope scope = _deletedAccountsClientDiagnostics.CreateScope("CognitiveServicesDeletedAccountCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -318,7 +313,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cognitiveServicesDeletedAccountRestClient.CreateGetRequest(Id.SubscriptionId, location, resourceGroupName, accountName, context);
+                HttpMessage message = _deletedAccountsRestClient.CreateGetRequest(Id.SubscriptionId, location, resourceGroupName, accountName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<CognitiveServicesAccountData> response = default;
@@ -367,15 +362,14 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of Cognitive Services account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="location"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<CognitiveServicesDeletedAccountResource> GetIfExists(string location, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual NullableResponse<CognitiveServicesDeletedAccountResource> GetIfExists(AzureLocation location, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
-            using DiagnosticScope scope = _cognitiveServicesDeletedAccountClientDiagnostics.CreateScope("CognitiveServicesDeletedAccountCollection.GetIfExists");
+            using DiagnosticScope scope = _deletedAccountsClientDiagnostics.CreateScope("CognitiveServicesDeletedAccountCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -383,7 +377,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cognitiveServicesDeletedAccountRestClient.CreateGetRequest(Id.SubscriptionId, location, resourceGroupName, accountName, context);
+                HttpMessage message = _deletedAccountsRestClient.CreateGetRequest(Id.SubscriptionId, location, resourceGroupName, accountName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<CognitiveServicesAccountData> response = default;

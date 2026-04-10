@@ -15,7 +15,7 @@ using Azure.ResourceManager.CognitiveServices;
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> Check SKU availability result list. </summary>
-    public partial class SkuAvailabilityListResult : IJsonModel<SkuAvailabilityListResult>
+    internal partial class SkuAvailabilityListResult : IJsonModel<SkuAvailabilityListResult>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

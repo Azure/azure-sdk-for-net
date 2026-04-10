@@ -14,11 +14,11 @@ using Azure.ResourceManager.CognitiveServices;
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> Private Endpoint outbound rule for the managed network of a cognitive services account. </summary>
-    public partial class PrivateEndpointOutboundRule : OutboundRule, IJsonModel<PrivateEndpointOutboundRule>
+    public partial class PrivateEndpointOutboundRule : CognitiveServicesOutboundRuleBasicProperties, IJsonModel<PrivateEndpointOutboundRule>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override OutboundRule PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override CognitiveServicesOutboundRuleBasicProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<PrivateEndpointOutboundRule>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override OutboundRule JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override CognitiveServicesOutboundRuleBasicProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<PrivateEndpointOutboundRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

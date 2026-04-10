@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (AgentDeploymentData item in Value)
+                foreach (CognitiveServicesAgentDeploymentData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 return null;
             }
             string nextLink = default;
-            IList<AgentDeploymentData> value = default;
+            IList<CognitiveServicesAgentDeploymentData> value = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -160,10 +160,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    List<AgentDeploymentData> array = new List<AgentDeploymentData>();
+                    List<CognitiveServicesAgentDeploymentData> array = new List<CognitiveServicesAgentDeploymentData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AgentDeploymentData.DeserializeAgentDeploymentData(item, options));
+                        array.Add(CognitiveServicesAgentDeploymentData.DeserializeCognitiveServicesAgentDeploymentData(item, options));
                     }
                     value = array;
                     continue;
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AgentDeploymentResourceArmPaginatedResult(nextLink, value ?? new ChangeTrackingList<AgentDeploymentData>(), additionalBinaryDataProperties);
+            return new AgentDeploymentResourceArmPaginatedResult(nextLink, value ?? new ChangeTrackingList<CognitiveServicesAgentDeploymentData>(), additionalBinaryDataProperties);
         }
     }
 }

@@ -164,20 +164,20 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("apiProperties"u8);
                 writer.WriteObjectValue(ApiProperties, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(DateCreated))
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("dateCreated"u8);
-                writer.WriteStringValue(DateCreated);
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(CallRateLimit))
             {
                 writer.WritePropertyName("callRateLimit"u8);
                 writer.WriteObjectValue(CallRateLimit, options);
             }
-            if (Optional.IsDefined(DynamicThrottlingEnabled))
+            if (Optional.IsDefined(EnableDynamicThrottling))
             {
                 writer.WritePropertyName("dynamicThrottlingEnabled"u8);
-                writer.WriteBooleanValue(DynamicThrottlingEnabled.Value);
+                writer.WriteBooleanValue(EnableDynamicThrottling.Value);
             }
             if (Optional.IsDefined(StoredCompletionsDisabled))
             {
@@ -235,10 +235,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("restore"u8);
                 writer.WriteBooleanValue(Restore.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(DeletionDate))
+            if (options.Format != "W" && Optional.IsDefined(DeletedOn))
             {
                 writer.WritePropertyName("deletionDate"u8);
-                writer.WriteStringValue(DeletionDate);
+                writer.WriteStringValue(DeletedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(ScheduledPurgeDate))
             {
@@ -357,9 +357,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             IReadOnlyList<CognitiveServicesPrivateEndpointConnectionData> privateEndpointConnections = default;
             ServiceAccountPublicNetworkAccess? publicNetworkAccess = default;
             ServiceAccountApiProperties apiProperties = default;
-            string dateCreated = default;
+            DateTimeOffset? createdOn = default;
             ServiceAccountCallRateLimit callRateLimit = default;
-            bool? dynamicThrottlingEnabled = default;
+            bool? enableDynamicThrottling = default;
             bool? storedCompletionsDisabled = default;
             ServiceAccountQuotaLimit quotaLimit = default;
             bool? restrictOutboundNetworkAccess = default;
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             bool? disableLocalAuth = default;
             IReadOnlyDictionary<string, string> endpoints = default;
             bool? restore = default;
-            string deletionDate = default;
+            DateTimeOffset? deletedOn = default;
             string scheduledPurgeDate = default;
             CognitiveServicesMultiRegionSettings locations = default;
             IReadOnlyList<CommitmentPlanAssociation> commitmentPlanAssociations = default;
@@ -516,7 +516,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 if (prop.NameEquals("dateCreated"u8))
                 {
-                    dateCreated = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("callRateLimit"u8))
@@ -534,7 +538,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    dynamicThrottlingEnabled = prop.Value.GetBoolean();
+                    enableDynamicThrottling = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("storedCompletionsDisabled"u8))
@@ -626,7 +630,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 if (prop.NameEquals("deletionDate"u8))
                 {
-                    deletionDate = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    deletedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("scheduledPurgeDate"u8))
@@ -740,9 +748,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 privateEndpointConnections ?? new ChangeTrackingList<CognitiveServicesPrivateEndpointConnectionData>(),
                 publicNetworkAccess,
                 apiProperties,
-                dateCreated,
+                createdOn,
                 callRateLimit,
-                dynamicThrottlingEnabled,
+                enableDynamicThrottling,
                 storedCompletionsDisabled,
                 quotaLimit,
                 restrictOutboundNetworkAccess,
@@ -750,7 +758,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 disableLocalAuth,
                 endpoints ?? new ChangeTrackingDictionary<string, string>(),
                 restore,
-                deletionDate,
+                deletedOn,
                 scheduledPurgeDate,
                 locations,
                 commitmentPlanAssociations ?? new ChangeTrackingList<CommitmentPlanAssociation>(),

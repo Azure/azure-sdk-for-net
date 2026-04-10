@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (ProjectCapabilityHostData item in Value)
+                foreach (CognitiveServicesProjectCapabilityHostData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 return null;
             }
             string nextLink = default;
-            IList<ProjectCapabilityHostData> value = default;
+            IList<CognitiveServicesProjectCapabilityHostData> value = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -160,10 +160,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    List<ProjectCapabilityHostData> array = new List<ProjectCapabilityHostData>();
+                    List<CognitiveServicesProjectCapabilityHostData> array = new List<CognitiveServicesProjectCapabilityHostData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ProjectCapabilityHostData.DeserializeProjectCapabilityHostData(item, options));
+                        array.Add(CognitiveServicesProjectCapabilityHostData.DeserializeCognitiveServicesProjectCapabilityHostData(item, options));
                     }
                     value = array;
                     continue;
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ProjectCapabilityHostResourceArmPaginatedResult(nextLink, value ?? new ChangeTrackingList<ProjectCapabilityHostData>(), additionalBinaryDataProperties);
+            return new ProjectCapabilityHostResourceArmPaginatedResult(nextLink, value ?? new ChangeTrackingList<CognitiveServicesProjectCapabilityHostData>(), additionalBinaryDataProperties);
         }
     }
 }

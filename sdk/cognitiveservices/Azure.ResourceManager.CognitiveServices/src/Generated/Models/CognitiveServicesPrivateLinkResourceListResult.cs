@@ -12,7 +12,7 @@ using Azure.ResourceManager.CognitiveServices;
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> A list of private link resources. </summary>
-    public partial class CognitiveServicesPrivateLinkResourceListResult
+    internal partial class CognitiveServicesPrivateLinkResourceListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
