@@ -137,7 +137,13 @@ public static class ResponsesServerServiceCollectionExtensions
                 "FoundryEnvironment.ProjectEndpoint contains an invalid absolute URI.");
         }
 
-        if (!string.Equals(uri.Scheme, Uri.UriSchemeHttps, StringComparison.OrdinalIgnoreCase))
+        // Require HTTPS in non-development environments.
+        var hostingEnv = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")
+            ?? Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT");
+        bool isDevelopment = string.Equals(hostingEnv, "Development", StringComparison.OrdinalIgnoreCase);
+
+        if (!isDevelopment
+            && !string.Equals(uri.Scheme, Uri.UriSchemeHttps, StringComparison.OrdinalIgnoreCase))
         {
             throw new InvalidOperationException(
                 "FoundryEnvironment.ProjectEndpoint must use the HTTPS scheme.");

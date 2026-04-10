@@ -1,6 +1,12 @@
 # Sample 15: Structured outputs
 
-This sample shows how to return structured data using the `structured_outputs` output item type. Use this when none of the existing output item types (message, function call, image, etc.) fit your needs — for example, returning analytics results, classification labels, form data, or any custom JSON payload.
+Developers can return structured data from a handler in two ways:
+
+1. **JSON in message text** — serialize the JSON payload as the text of a regular message output item. Many agent APIs use this approach, and clients can control the format via the `text` property on the create request (e.g., requesting `json_object` or `json_schema`). This is the simplest option when you only need one structured result per response.
+
+2. **`structured_outputs` item** (shown below) — a first-class output item type designed specifically for structured data. This gives the server more control: it can return both unstructured messages and structured data in the same response, each as a separate output item. The server decides what to emit — or the developer can make it client-controlled by inspecting the request's tools or text format to decide which style to use.
+
+Use the `structured_outputs` item when the existing output types (message, function call, image, etc.) don't fit your use case — for example, returning analytics results, classification labels, form data, or any custom JSON payload alongside a natural language summary.
 
 The `structured_outputs` item carries a single `output` property, which is an arbitrary JSON object. Clients can deserialize it into their own strongly typed models or work with it as raw JSON.
 
