@@ -50,7 +50,7 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
             {
                 await Task.CompletedTask;
                 var stream = new ResponseEventStream(context, request);
-                var question = request.GetInputText();
+                var question = await context.GetInputTextAsync(cancellationToken: cancellationToken);
 
                 yield return stream.EmitCreated();
                 yield return stream.EmitInProgress();
@@ -85,7 +85,7 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
             {
                 await Task.CompletedTask;
                 var stream = new ResponseEventStream(context, request);
-                var question = request.GetInputText();
+                var question = await context.GetInputTextAsync(cancellationToken: cancellationToken);
 
                 yield return stream.EmitCreated();
                 yield return stream.EmitInProgress();

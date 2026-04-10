@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.HybridConnectivity
     /// <summary>
     /// A class representing a PublicCloudInventory along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PublicCloudInventoryResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetPublicCloudInventories method.
+    /// Otherwise you can get one from its parent resource <see cref="PublicCloudConnectorSolutionConfigurationResource"/> using the GetPublicCloudInventories method.
     /// </summary>
     public partial class PublicCloudInventoryResource : ArmResource
     {

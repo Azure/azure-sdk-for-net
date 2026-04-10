@@ -1009,21 +1009,21 @@ namespace Azure.ResourceManager.Hci.Vm
             }
         }
 
-        /// <summary> Gets an object representing a <see cref="HciVmHybridIdentityMetadataResource"/> along with the instance operations that can be performed on it in the <see cref="ArmResource"/>. </summary>
+        /// <summary> Gets an object representing a <see cref="HciVmHybridIdentityMetadataResource"/> along with the instance operations that can be performed on it in the <see cref="HciVmInstanceResource"/>. </summary>
         /// <returns> Returns a <see cref="HciVmHybridIdentityMetadataResource"/> object. </returns>
         public virtual HciVmHybridIdentityMetadataResource GetHciVmHybridIdentityMetadata()
         {
             return new HciVmHybridIdentityMetadataResource(Client, Id.AppendChildResource("hybridIdentityMetadata", "default"));
         }
 
-        /// <summary> Gets an object representing a <see cref="HciVmAttestationStatusResource"/> along with the instance operations that can be performed on it in the <see cref="ArmResource"/>. </summary>
+        /// <summary> Gets an object representing a <see cref="HciVmAttestationStatusResource"/> along with the instance operations that can be performed on it in the <see cref="HciVmInstanceResource"/>. </summary>
         /// <returns> Returns a <see cref="HciVmAttestationStatusResource"/> object. </returns>
         public virtual HciVmAttestationStatusResource GetHciVmAttestationStatus()
         {
             return new HciVmAttestationStatusResource(Client, Id.AppendChildResource("attestationStatus", "default"));
         }
 
-        /// <summary> Gets an object representing a <see cref="HciVmGuestAgentResource"/> along with the instance operations that can be performed on it in the <see cref="ArmResource"/>. </summary>
+        /// <summary> Gets an object representing a <see cref="HciVmGuestAgentResource"/> along with the instance operations that can be performed on it in the <see cref="HciVmInstanceResource"/>. </summary>
         /// <returns> Returns a <see cref="HciVmGuestAgentResource"/> object. </returns>
         public virtual HciVmGuestAgentResource GetHciVmGuestAgent()
         {

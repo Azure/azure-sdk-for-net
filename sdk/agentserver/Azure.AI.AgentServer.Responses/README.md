@@ -60,18 +60,56 @@ public class EchoHandler : ResponseHandler
         CancellationToken cancellationToken)
     {
         return new TextResponse(context, request,
-            createText: ct =>
+            createText: async ct =>
             {
-                var input = request.GetInputText();
-                return Task.FromResult($"Echo: {input}");
+                var input = await context.GetInputTextAsync(cancellationToken: ct);
+                return $"Echo: {input}";
             });
     }
 }
 ```
 
-**`ResponseEventStream` — full control over every SSE event:**
+**`ResponseEventStream` convenience generators — recommended for multi-output scenarios:**
 
-Use `ResponseEventStream` when you need multiple output types (reasoning, function calls), fine-grained delta control, or custom Response properties.
+When `TextResponse` is too simple but the full builder API is more than you need, use the convenience generators on `ResponseEventStream`. They handle all inner events (`output_item.added`, content deltas, `output_item.done`) automatically:
+
+```C# Snippet:Responses_ReadMe_EchoHandler_Convenience
+public class EchoHandlerConvenience : ResponseHandler
+{
+    public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
+        CreateResponse request,
+        ResponseContext context,
+        [EnumeratorCancellation] CancellationToken cancellationToken)
+    {
+        var stream = new ResponseEventStream(context, request);
+
+        yield return stream.EmitCreated();
+        yield return stream.EmitInProgress();
+
+        // One call emits all text output events automatically.
+        var input = await context.GetInputTextAsync(cancellationToken: cancellationToken);
+        foreach (var evt in stream.OutputItemMessage($"Echo: {input}"))
+            yield return evt;
+
+        yield return stream.EmitCompleted();
+    }
+}
+```
+
+Available convenience generators:
+
+| Method | Description |
+|--------|-------------|
+| `OutputItemMessage(string)` | Emits a complete text message output item |
+| `OutputItemMessage(IAsyncEnumerable<string>, CancellationToken)` | Streams tokens as `response.output_text.delta` events |
+| `OutputItemFunctionCall(name, callId, arguments)` | Emits a complete function call output item |
+| `OutputItemReasoningItem(...)` | Emits a reasoning output item |
+
+See [Sample 3 — Full control ResponseStream](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Responses/samples/Sample3_FullControlResponseStream.md) and [Sample 4 — Function calling](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Responses/samples/Sample4_FunctionCalling.md) for more examples.
+
+**`ResponseEventStream` — full builder control:**
+
+Use the full builder API only when you need fine-grained control over individual delta/done events within a content part, or to set custom properties on output items:
 
 ```C# Snippet:Responses_ReadMe_EchoHandler_FullControl
 public class EchoHandlerFullControl : ResponseHandler
