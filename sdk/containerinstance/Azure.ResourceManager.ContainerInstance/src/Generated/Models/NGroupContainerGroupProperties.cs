@@ -7,70 +7,44 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ContainerInstance;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
     /// <summary> Container Group properties which can be set while creating or updating the NGroups. </summary>
     public partial class NGroupContainerGroupProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NGroupContainerGroupProperties"/>. </summary>
         public NGroupContainerGroupProperties()
         {
             SubnetIds = new ChangeTrackingList<ContainerGroupSubnetId>();
-            Volumes = new ChangeTrackingList<NGroupContainerGroupPropertyVolume>();
-            Containers = new ChangeTrackingList<NGroupContainerGroupPropertyContainer>();
+            Volumes = new ChangeTrackingList<Models.NGroupContainerGroupPropertyVolume>();
+            Containers = new ChangeTrackingList<Models.NGroupContainerGroupPropertyContainer>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NGroupContainerGroupProperties"/>. </summary>
         /// <param name="subnetIds"> Contains information about Virtual Network Subnet ARM Resource. </param>
         /// <param name="volumes"> Contains information about the volumes that can be mounted by Containers in the Container Groups. </param>
         /// <param name="containers"> Contains information about Container which can be set while creating or updating the NGroups. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NGroupContainerGroupProperties(IList<ContainerGroupSubnetId> subnetIds, IList<NGroupContainerGroupPropertyVolume> volumes, IList<NGroupContainerGroupPropertyContainer> containers, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NGroupContainerGroupProperties(IList<ContainerGroupSubnetId> subnetIds, IList<Models.NGroupContainerGroupPropertyVolume> volumes, IList<Models.NGroupContainerGroupPropertyContainer> containers, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SubnetIds = subnetIds;
             Volumes = volumes;
             Containers = containers;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Contains information about Virtual Network Subnet ARM Resource. </summary>
         public IList<ContainerGroupSubnetId> SubnetIds { get; }
+
         /// <summary> Contains information about the volumes that can be mounted by Containers in the Container Groups. </summary>
-        public IList<NGroupContainerGroupPropertyVolume> Volumes { get; }
+        public IList<Models.NGroupContainerGroupPropertyVolume> Volumes { get; }
+
         /// <summary> Contains information about Container which can be set while creating or updating the NGroups. </summary>
-        public IList<NGroupContainerGroupPropertyContainer> Containers { get; }
+        public IList<Models.NGroupContainerGroupPropertyContainer> Containers { get; }
     }
 }
