@@ -564,6 +564,42 @@ public class ConvenienceGeneratorTests
         }
     }
 
+    [Test]
+    public void OutputItemStructuredOutputs_ProducesCompleteLifecycle()
+    {
+        var context = new ResponseContext("resp_test");
+        var stream = new ResponseEventStream(context, new CreateResponse { Model = "m" });
+        var payload = BinaryData.FromObjectAsJson(new { score = 42 });
+
+        var events = stream.OutputItemStructuredOutputs(payload).ToList();
+
+        Assert.That(events, Has.Count.EqualTo(2));
+        var added = XAssert.IsType<ResponseOutputItemAddedEvent>(events[0]);
+        var addedItem = XAssert.IsType<StructuredOutputsOutputItem>(added.Item);
+        Assert.That(addedItem.Output.ToString(), Does.Contain("42"));
+        Assert.That(addedItem.Id, Does.StartWith("fco_"));
+
+        var done = XAssert.IsType<ResponseOutputItemDoneEvent>(events[1]);
+        var doneItem = XAssert.IsType<StructuredOutputsOutputItem>(done.Item);
+        Assert.That(doneItem.Output.ToString(), Does.Contain("42"));
+    }
+
+    [Test]
+    public void OutputItemStructuredOutputs_SequenceNumbersAreMonotonic()
+    {
+        var context = new ResponseContext("resp_test");
+        var stream = new ResponseEventStream(context, new CreateResponse { Model = "m" });
+        var payload = BinaryData.FromObjectAsJson(new { value = "test" });
+
+        var events = stream.OutputItemStructuredOutputs(payload).ToList();
+
+        for (int i = 1; i < events.Count; i++)
+        {
+            Assert.That(events[i].SequenceNumber, Is.GreaterThan(events[i - 1].SequenceNumber),
+                $"Event {i} should have a greater sequence number than event {i - 1}");
+        }
+    }
+
     // ── Helpers ──────────────────────────────────────────────
 
     private static async Task<List<ResponseStreamEvent>> CollectAsync(

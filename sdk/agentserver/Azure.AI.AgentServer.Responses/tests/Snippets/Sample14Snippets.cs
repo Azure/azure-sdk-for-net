@@ -63,10 +63,9 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
                     .ToList();
 
                 string reply;
-                if (files.Count > 0 && files[0].FileData != null)
+                if (files.Count > 0 && DataUrl.TryDecodeBytes(files[0].FileData, out byte[] fileBytes))
                 {
                     string filename = files[0].Filename ?? "unknown";
-                    byte[] fileBytes = DecodeDataUrl(files[0].FileData);
                     reply = $"Received file '{filename}' ({fileBytes.Length} bytes inline).";
                 }
                 else
@@ -78,20 +77,6 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
                     yield return evt;
 
                 yield return stream.EmitCompleted();
-            }
-
-            /// <summary>
-            /// Extracts the raw bytes from a base64 data URL.
-            /// Expected format: <c>data:{mime};base64,{base64data}</c>.
-            /// </summary>
-            private static byte[] DecodeDataUrl(string dataUrl)
-            {
-                int commaIndex = dataUrl.IndexOf(',');
-                if (commaIndex < 0)
-                    throw new FormatException("Invalid data URL: missing comma separator.");
-
-                string base64Part = dataUrl[(commaIndex + 1)..];
-                return Convert.FromBase64String(base64Part);
             }
         }
 

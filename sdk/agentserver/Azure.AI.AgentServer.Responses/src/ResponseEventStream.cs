@@ -298,6 +298,18 @@ public class ResponseEventStream
     }
 
     /// <summary>
+    /// Creates a structured outputs item scope with the next output index
+    /// and an auto-generated item ID.
+    /// </summary>
+    /// <returns>A new <see cref="OutputItemBuilder{T}"/> for the structured outputs item.</returns>
+    public virtual OutputItemBuilder<StructuredOutputsOutputItem> AddOutputItemStructuredOutputs()
+    {
+        var outputIndex = _outputIndex++;
+        var itemId = IdGenerator.NewStructuredOutputItemId(_context.ResponseId);
+        return new OutputItemBuilder<StructuredOutputsOutputItem>(this, outputIndex, itemId);
+    }
+
+    /// <summary>
     /// Creates an output item scope with the next output index.
     /// Use for output item types that have no dedicated <c>Add*()</c> factory
     /// and no streaming sub-events (no deltas, no status transitions).
@@ -486,6 +498,30 @@ public class ResponseEventStream
         yield return builder.EmitGenerating();
         yield return builder.EmitCompleted();
         yield return builder.EmitDone(resultBase64);
+    }
+
+    /// <summary>
+    /// Convenience generator that yields the complete structured outputs item lifecycle.
+    /// Use this to return any open-ended structured information as a JSON object. This is
+    /// useful when none of the existing output item types (message, function call, image, etc.)
+    /// fit your use case — for example, returning analytics results, classification labels,
+    /// form data, or any custom JSON payload.
+    /// </summary>
+    /// <param name="output">
+    /// The structured data to return. Use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>
+    /// to serialize a strongly typed object, or <see cref="BinaryData.FromString(string)"/> to pass raw JSON.
+    /// <para>
+    /// Example:
+    /// <c>BinaryData.FromObjectAsJson(new { sentiment = "positive", confidence = 0.95 })</c>
+    /// </para>
+    /// </param>
+    /// <returns>An enumerable of events: <c>output_item.added</c> → <c>output_item.done</c>.</returns>
+    public IEnumerable<ResponseStreamEvent> OutputItemStructuredOutputs(BinaryData output)
+    {
+        var builder = AddOutputItemStructuredOutputs();
+        var item = new StructuredOutputsOutputItem(output, builder.ItemId);
+        yield return builder.EmitAdded(item);
+        yield return builder.EmitDone(item);
     }
 
     // ── Raw Event Interop ─────────────────────────────────────

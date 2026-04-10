@@ -187,7 +187,7 @@ curl -X POST http://localhost:8088/responses \
   --no-buffer
 ```
 
-The SSE stream will contain an `image_generation_call` output item. The `result` field in the `response.output_item.done` event holds the base64-encoded image. Clients decode it to get the raw image bytes:
+The response body contains an `image_generation_call` item in the `output` array. The `result` field holds the base64-encoded image. When streaming (`"stream": true`), the same data appears in the `response.output_item.done` SSE event. Clients decode it to get the raw image bytes:
 
 ```python
 import base64

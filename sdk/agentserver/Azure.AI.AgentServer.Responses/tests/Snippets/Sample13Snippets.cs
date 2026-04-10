@@ -102,11 +102,10 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
                     .ToList();
 
                 string reply;
-                if (images.Count > 0 && IsBase64DataUrl(images[0].ImageUrl))
+                if (images.Count > 0 && DataUrl.TryDecodeBytes(images[0].ImageUrl, out byte[] imageBytes))
                 {
-                    // Extract image bytes from the data URL.
-                    byte[] imageBytes = DecodeDataUrl(images[0].ImageUrl);
-                    reply = $"Received a base64 image ({imageBytes.Length} bytes).";
+                    string? mediaType = DataUrl.GetMediaType(images[0].ImageUrl);
+                    reply = $"Received a {mediaType ?? "unknown"} image ({imageBytes.Length} bytes).";
                 }
                 else
                 {
@@ -117,28 +116,6 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
                     yield return evt;
 
                 yield return stream.EmitCompleted();
-            }
-
-            /// <summary>
-            /// Checks whether the URI is a base64 data URL (e.g., "data:image/png;base64,...").
-            /// </summary>
-            private static bool IsBase64DataUrl(Uri uri)
-                => uri.Scheme == "data";
-
-            /// <summary>
-            /// Extracts the raw image bytes from a base64 data URL.
-            /// Expected format: <c>data:image/{format};base64,{base64data}</c>.
-            /// </summary>
-            private static byte[] DecodeDataUrl(Uri uri)
-            {
-                // The data URL format is: data:[<mediatype>][;base64],<data>
-                string dataUrl = uri.OriginalString;
-                int commaIndex = dataUrl.IndexOf(',');
-                if (commaIndex < 0)
-                    throw new FormatException("Invalid data URL: missing comma separator.");
-
-                string base64Part = dataUrl[(commaIndex + 1)..];
-                return Convert.FromBase64String(base64Part);
             }
         }
 

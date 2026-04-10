@@ -388,6 +388,17 @@ namespace Azure.AI.AgentServer.Responses
         public System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.OutputItem> InputItems { get { throw null; } }
         public Azure.AI.AgentServer.Responses.Models.ResponseObject Response { get { throw null; } }
     }
+    public static partial class DataUrl
+    {
+        public static byte[] DecodeBytes(string dataUrl) { throw null; }
+        public static byte[] DecodeBytes(System.Uri uri) { throw null; }
+        public static string? GetMediaType(string? dataUrl) { throw null; }
+        public static string? GetMediaType(System.Uri? uri) { throw null; }
+        public static bool IsDataUrl(string? value) { throw null; }
+        public static bool IsDataUrl(System.Uri? uri) { throw null; }
+        public static bool TryDecodeBytes(string? dataUrl, out byte[] bytes) { throw null; }
+        public static bool TryDecodeBytes(System.Uri? uri, out byte[] bytes) { throw null; }
+    }
     public partial interface IAsyncObserver<in T>
     {
         System.Threading.Tasks.ValueTask OnCompletedAsync();
@@ -589,6 +600,7 @@ namespace Azure.AI.AgentServer.Responses
         public static string NewMessageItemId(this Azure.AI.AgentServer.Responses.ResponseContext context) { throw null; }
         public static string NewOutputMessageItemId(this Azure.AI.AgentServer.Responses.ResponseContext context) { throw null; }
         public static string NewReasoningItemId(this Azure.AI.AgentServer.Responses.ResponseContext context) { throw null; }
+        public static string NewStructuredOutputItemId(this Azure.AI.AgentServer.Responses.ResponseContext context) { throw null; }
         public static string NewWebSearchCallItemId(this Azure.AI.AgentServer.Responses.ResponseContext context) { throw null; }
         public static string NewWorkflowActionItemId(this Azure.AI.AgentServer.Responses.ResponseContext context) { throw null; }
     }
@@ -606,6 +618,7 @@ namespace Azure.AI.AgentServer.Responses
         public virtual Azure.AI.AgentServer.Responses.OutputItemMcpListToolsBuilder AddOutputItemMcpListTools(string serverLabel) { throw null; }
         public virtual Azure.AI.AgentServer.Responses.OutputItemMessageBuilder AddOutputItemMessage() { throw null; }
         public virtual Azure.AI.AgentServer.Responses.OutputItemReasoningItemBuilder AddOutputItemReasoningItem() { throw null; }
+        public virtual Azure.AI.AgentServer.Responses.OutputItemBuilder<Azure.AI.AgentServer.Responses.Models.StructuredOutputsOutputItem> AddOutputItemStructuredOutputs() { throw null; }
         public virtual Azure.AI.AgentServer.Responses.OutputItemWebSearchCallBuilder AddOutputItemWebSearchCall() { throw null; }
         public virtual Azure.AI.AgentServer.Responses.OutputItemBuilder<T> AddOutputItem<T>(string itemId) where T : Azure.AI.AgentServer.Responses.Models.OutputItem { throw null; }
         public virtual Azure.AI.AgentServer.Responses.Models.ResponseCompletedEvent EmitCompleted(Azure.AI.AgentServer.Responses.Models.ResponseUsage? usage = null) { throw null; }
@@ -623,6 +636,7 @@ namespace Azure.AI.AgentServer.Responses
         public System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.ResponseStreamEvent> OutputItemMessage(string text) { throw null; }
         public System.Collections.Generic.IAsyncEnumerable<Azure.AI.AgentServer.Responses.Models.ResponseStreamEvent> OutputItemReasoningItem(System.Collections.Generic.IAsyncEnumerable<string> chunks, [System.Runtime.CompilerServices.EnumeratorCancellationAttribute] System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.ResponseStreamEvent> OutputItemReasoningItem(string summaryText) { throw null; }
+        public System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.ResponseStreamEvent> OutputItemStructuredOutputs(System.BinaryData output) { throw null; }
     }
     public abstract partial class ResponseHandler
     {

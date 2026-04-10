@@ -11,7 +11,7 @@ using NUnit.Framework;
 namespace Azure.AI.AgentServer.Responses.Tests;
 
 /// <summary>
-/// End-to-end tests that validate every sample handler (Samples 1–11) works
+/// End-to-end tests that validate every sample handler (Samples 1–15) works
 /// correctly when wired into a real ASP.NET Core test server. Each test
 /// registers the actual handler class from the sample snippets, sends an
 /// HTTP request, and asserts on the response content.
@@ -824,7 +824,7 @@ public class SampleEndToEndTests
 
         using var doc = JsonDocument.Parse(body);
         var text = GetOutputText(doc.RootElement);
-        Assert.That(text, Does.Contain("base64 image"));
+        Assert.That(text, Does.Contain("image/png"));
         Assert.That(text, Does.Match(@"\d+ bytes")); // Confirms image bytes were decoded
     }
 
@@ -898,6 +898,51 @@ public class SampleEndToEndTests
     }
 
     // ═══════════════════════════════════════════════════════════════════
+    //  Sample 15 — Structured Outputs
+    // ═══════════════════════════════════════════════════════════════════
+
+    [Test]
+    public async Task Sample15_StructuredOutputHandler_ReturnsStructuredOutputItem()
+    {
+        using var factory = new TestWebApplicationFactory(
+            configureTestServices: services =>
+            {
+                services.AddSingleton<ResponseHandler, Sample15Snippets.StructuredOutputHandler>();
+            });
+        using var client = factory.CreateClient();
+
+        string body = await PostJsonAsync(client, """
+            { "model": "test", "input": "Analyze this product review" }
+            """);
+
+        using var doc = JsonDocument.Parse(body);
+        var output = GetStructuredOutput(doc.RootElement);
+        Assert.That(output.GetProperty("sentiment").GetString(), Is.EqualTo("positive"));
+        Assert.That(output.GetProperty("confidence").GetDouble(), Is.EqualTo(0.95));
+        Assert.That(output.GetProperty("topics").GetArrayLength(), Is.EqualTo(2));
+    }
+
+    [Test]
+    public async Task Sample15_StructuredOutputFullControlHandler_ReturnsStructuredOutputItem()
+    {
+        using var factory = new TestWebApplicationFactory(
+            configureTestServices: services =>
+            {
+                services.AddSingleton<ResponseHandler, Sample15Snippets.StructuredOutputFullControlHandler>();
+            });
+        using var client = factory.CreateClient();
+
+        string body = await PostJsonAsync(client, """
+            { "model": "test", "input": "Classify this ticket" }
+            """);
+
+        using var doc = JsonDocument.Parse(body);
+        var output = GetStructuredOutput(doc.RootElement);
+        Assert.That(output.GetProperty("classification").GetString(), Is.EqualTo("urgent"));
+        Assert.That(output.GetProperty("entities").GetArrayLength(), Is.EqualTo(2));
+    }
+
+    // ═══════════════════════════════════════════════════════════════════
     //  Helpers
     // ═══════════════════════════════════════════════════════════════════
 
@@ -943,5 +988,21 @@ public class SampleEndToEndTests
         }
 
         throw new InvalidOperationException("No output_text content found in message item.");
+    }
+
+    /// <summary>
+    /// Extracts the output JSON from the first structured_outputs item in a JSON response.
+    /// </summary>
+    private static JsonElement GetStructuredOutput(JsonElement root)
+    {
+        foreach (var item in root.GetProperty("output").EnumerateArray())
+        {
+            if (item.GetProperty("type").GetString() == "structured_outputs")
+            {
+                return item.GetProperty("output");
+            }
+        }
+
+        throw new InvalidOperationException("No structured_outputs item found in response.");
     }
 }
