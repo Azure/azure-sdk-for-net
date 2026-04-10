@@ -117,6 +117,6 @@ curl -X POST http://localhost:8088/responses \
   --no-buffer
 ```
 
-The SSE stream will contain events for two output items in sequence:
+The response body contains two output items in the `output` array. When streaming (`"stream": true`), the same items appear as SSE events:
 1. A **reasoning** item (output index 0) — the agent’s thought process
 2. A **message** item (output index 1) — the final answer with explanation

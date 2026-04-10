@@ -91,7 +91,7 @@ public class Sample_Toolboxes_CRUD : SamplesBase
         #endregion
 
         #region Snippet:Sample_ListToolboxVersions_ToolboxesAgentsCRUD_Async
-        List <ToolboxVersion> toolboxes = await toolboxClient.GetToolboxVersionsAsync(toolBox.Name).ToListAsync();
+        List<ToolboxVersion> toolboxes = await toolboxClient.GetToolboxVersionsAsync(toolBox.Name).ToListAsync();
         Console.WriteLine($"Found {toolboxes.Count} toolbox version(s).");
         foreach (ToolboxVersion item in toolboxes)
         {
@@ -177,7 +177,7 @@ public class Sample_Toolboxes_CRUD : SamplesBase
         #endregion
 
         #region Snippet:Sample_ListToolboxVersions_ToolboxesAgentsCRUD_Sync
-        List<ToolboxVersion> toolboxes = [..toolboxClient.GetToolboxVersions(toolBox.Name)];
+        List<ToolboxVersion> toolboxes = [.. toolboxClient.GetToolboxVersions(toolBox.Name)];
         Console.WriteLine($"Found {toolboxes.Count} toolbox version(s).");
         foreach (ToolboxVersion item in toolboxes)
         {
@@ -186,7 +186,7 @@ public class Sample_Toolboxes_CRUD : SamplesBase
         #endregion
 
         #region Snippet:Sample_ListToolboxes_ToolboxesAgentsCRUD_Sync
-        List<ToolboxRecord> records = [..toolboxClient.GetToolboxes()];
+        List<ToolboxRecord> records = [.. toolboxClient.GetToolboxes()];
         Console.WriteLine($"Found {records.Count} toolbox(es).");
         foreach (ToolboxRecord item in records)
         {

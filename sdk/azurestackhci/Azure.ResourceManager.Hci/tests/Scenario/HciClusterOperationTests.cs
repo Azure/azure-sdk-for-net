@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Hci.Tests
                 {
                     DiagnosticLevel = HciClusterDiagnosticLevel.Enhanced
                 },
-                ManagedServiceIdentityType = Models.HciManagedServiceIdentityType.None
+                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.None)
             };
 
             HciClusterResource clusterFromUpdate = await cluster.UpdateAsync(patch);

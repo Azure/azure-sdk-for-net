@@ -4,10 +4,10 @@
 using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Responses.Internal;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.Extensions.Options;
 
 namespace Azure.AI.AgentServer.Responses;
 
@@ -17,6 +17,11 @@ namespace Azure.AI.AgentServer.Responses;
 /// </summary>
 public static class ResponsesServerServiceCollectionExtensions
 {
+    /// <summary>
+    /// The OAuth scope used for authenticating with the Azure AI Foundry storage API.
+    /// </summary>
+    internal const string FoundryStorageScope = "https://ai.azure.com/.default";
+
     /// <summary>
     /// Registers the Responses API server SDK services into the dependency injection container.
     /// </summary>
@@ -76,16 +81,26 @@ public static class ResponsesServerServiceCollectionExtensions
         // use FoundryStorageProvider for persistence; otherwise use in-memory.
         if (FoundryEnvironment.IsHosted)
         {
-            services.TryAddSingleton<ResponsesProvider, FoundryStorageProvider>();
-
             services.TryAddSingleton<TokenCredential>(_ => new DefaultAzureCredential());
 
-            services.AddTransient<BearerTokenHandler>();
-            services.AddTransient<BaseUrlRewriteHandler>();
+            // Build the Azure.Core HttpPipeline with BearerTokenAuthenticationPolicy.
+            // This automatically provides: retry, request ID, user-agent telemetry,
+            // distributed tracing, logging, and token caching.
+            services.TryAddSingleton(sp =>
+            {
+                var credential = sp.GetRequiredService<TokenCredential>();
+                var options = new FoundryStorageClientOptions();
+                return HttpPipelineBuilder.Build(
+                    options,
+                    new BearerTokenAuthenticationPolicy(credential, FoundryStorageScope));
+            });
 
-            services.AddHttpClient(FoundryStorageProvider.HttpClientName)
-                .AddHttpMessageHandler<BaseUrlRewriteHandler>()
-                .AddHttpMessageHandler<BearerTokenHandler>();
+            services.TryAddSingleton<ResponsesProvider>(sp =>
+            {
+                var pipeline = sp.GetRequiredService<HttpPipeline>();
+                var storageBaseUri = ResolveStorageBaseUri();
+                return new FoundryStorageProvider(pipeline, storageBaseUri);
+            });
         }
         else
         {
@@ -100,5 +115,40 @@ public static class ResponsesServerServiceCollectionExtensions
         services.AddScoped<ResponsesExceptionFilter>();
 
         return services;
+    }
+
+    /// <summary>
+    /// Resolves the Foundry storage base URI from the project endpoint environment variable.
+    /// </summary>
+    internal static Uri ResolveStorageBaseUri()
+    {
+        var endpoint = FoundryEnvironment.ProjectEndpoint;
+
+        if (string.IsNullOrWhiteSpace(endpoint))
+        {
+            throw new InvalidOperationException(
+                "FoundryEnvironment.ProjectEndpoint is required. " +
+                "In hosted environments, the Azure AI Foundry platform must set the FOUNDRY_PROJECT_ENDPOINT variable.");
+        }
+
+        if (!Uri.TryCreate(endpoint, UriKind.Absolute, out var uri))
+        {
+            throw new InvalidOperationException(
+                "FoundryEnvironment.ProjectEndpoint contains an invalid absolute URI.");
+        }
+
+        // Require HTTPS in non-development environments.
+        var hostingEnv = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")
+            ?? Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT");
+        bool isDevelopment = string.Equals(hostingEnv, "Development", StringComparison.OrdinalIgnoreCase);
+
+        if (!isDevelopment
+            && !string.Equals(uri.Scheme, Uri.UriSchemeHttps, StringComparison.OrdinalIgnoreCase))
+        {
+            throw new InvalidOperationException(
+                "FoundryEnvironment.ProjectEndpoint must use the HTTPS scheme.");
+        }
+
+        return new Uri(uri.GetLeftPart(UriPartial.Path).TrimEnd('/') + "/storage/");
     }
 }

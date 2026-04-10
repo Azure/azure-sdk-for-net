@@ -74,13 +74,30 @@ public class OutputItemMessageBuilder : OutputItemBuilder<OutputItemMessage>
     /// <returns>A <see cref="ResponseContentPartDoneEvent"/> for this content part.</returns>
     public virtual ResponseContentPartDoneEvent EmitContentDone(TextContentBuilder textContent)
     {
+        return EmitContentDone(textContent, Array.Empty<Annotation>());
+    }
+
+    /// <summary>
+    /// Produces a <c>response.content_part.done</c> event for the given
+    /// text content builder, including the specified annotations.
+    /// </summary>
+    /// <param name="textContent">The text content builder whose final text to use.</param>
+    /// <param name="annotations">The annotations to include in the completed content part.</param>
+    /// <returns>A <see cref="ResponseContentPartDoneEvent"/> for this content part.</returns>
+    public virtual ResponseContentPartDoneEvent EmitContentDone(
+        TextContentBuilder textContent, IEnumerable<Annotation> annotations)
+    {
+        ArgumentNullException.ThrowIfNull(textContent);
+        ArgumentNullException.ThrowIfNull(annotations);
+
+        var annotationList = annotations as IList<Annotation> ?? annotations.ToList();
         var part = new OutputContentOutputTextContent(
             text: textContent.FinalText ?? string.Empty,
-            annotations: Array.Empty<Annotation>(),
+            annotations: annotationList,
             logprobs: Array.Empty<LogProb>());
         _completedContents.Add(new MessageContentOutputTextContent(
             text: textContent.FinalText ?? string.Empty,
-            annotations: Array.Empty<Annotation>(),
+            annotations: annotationList,
             logprobs: Array.Empty<LogProb>()));
         return new ResponseContentPartDoneEvent(
             _stream.NextSequenceNumber(), _itemId, _outputIndex, textContent.ContentIndex, part);
@@ -112,11 +129,33 @@ public class OutputItemMessageBuilder : OutputItemBuilder<OutputItemMessage>
     /// <returns>An enumerable of events: <c>content_part.added</c> → <c>output_text.delta</c> → <c>output_text.done</c> → <c>content_part.done</c>.</returns>
     public virtual IEnumerable<ResponseStreamEvent> TextContent(string text)
     {
+        return TextContent(text, Array.Empty<Annotation>());
+    }
+
+    /// <summary>
+    /// Convenience generator that yields the complete text content sub-item
+    /// event sequence from a single string with annotations. Each annotation is
+    /// emitted as a <c>response.output_text.annotation.added</c> event after the
+    /// text done event.
+    /// </summary>
+    /// <param name="text">The complete text to emit.</param>
+    /// <param name="annotations">The annotations to attach to this text content part.</param>
+    /// <returns>An enumerable of events: <c>content_part.added</c> → <c>output_text.delta</c> → <c>output_text.done</c> → N × <c>annotation.added</c> → <c>content_part.done</c>.</returns>
+    public virtual IEnumerable<ResponseStreamEvent> TextContent(
+        string text, IEnumerable<Annotation> annotations)
+    {
+        var annotationList = annotations as IList<Annotation> ?? annotations.ToList();
         var builder = AddTextContent();
         yield return builder.EmitAdded();
         yield return builder.EmitDelta(text);
         yield return builder.EmitDone(text);
-        yield return EmitContentDone(builder);
+
+        foreach (var annotation in annotationList)
+        {
+            yield return builder.EmitAnnotationAdded(annotation);
+        }
+
+        yield return EmitContentDone(builder, annotationList);
     }
 
     /// <summary>

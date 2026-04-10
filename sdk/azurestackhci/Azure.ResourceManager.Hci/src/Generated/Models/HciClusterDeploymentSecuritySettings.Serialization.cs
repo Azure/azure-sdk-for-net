@@ -8,16 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    public partial class HciClusterDeploymentSecuritySettings : IUtf8JsonSerializable, IJsonModel<HciClusterDeploymentSecuritySettings>
+    /// <summary> The SecuritySettings of AzureStackHCI Cluster. </summary>
+    public partial class HciClusterDeploymentSecuritySettings : IJsonModel<HciClusterDeploymentSecuritySettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HciClusterDeploymentSecuritySettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual HciClusterDeploymentSecuritySettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HciClusterDeploymentSecuritySettings>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeHciClusterDeploymentSecuritySettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HciClusterDeploymentSecuritySettings)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HciClusterDeploymentSecuritySettings>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHciContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(HciClusterDeploymentSecuritySettings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<HciClusterDeploymentSecuritySettings>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HciClusterDeploymentSecuritySettings IPersistableModel<HciClusterDeploymentSecuritySettings>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<HciClusterDeploymentSecuritySettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HciClusterDeploymentSecuritySettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +69,11 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HciClusterDeploymentSecuritySettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HciClusterDeploymentSecuritySettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HciClusterDeploymentSecuritySettings)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(IsHvciProtectionEnabled))
             {
                 writer.WritePropertyName("hvciProtection"u8);
@@ -85,15 +124,15 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("wdacEnforced"u8);
                 writer.WriteBooleanValue(IsWdacEnforced.Value);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -102,356 +141,151 @@ namespace Azure.ResourceManager.Hci.Models
             }
         }
 
-        HciClusterDeploymentSecuritySettings IJsonModel<HciClusterDeploymentSecuritySettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HciClusterDeploymentSecuritySettings IJsonModel<HciClusterDeploymentSecuritySettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual HciClusterDeploymentSecuritySettings JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HciClusterDeploymentSecuritySettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HciClusterDeploymentSecuritySettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HciClusterDeploymentSecuritySettings)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeHciClusterDeploymentSecuritySettings(document.RootElement, options);
         }
 
-        internal static HciClusterDeploymentSecuritySettings DeserializeHciClusterDeploymentSecuritySettings(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static HciClusterDeploymentSecuritySettings DeserializeHciClusterDeploymentSecuritySettings(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            bool? hvciProtection = default;
-            bool? drtmProtection = default;
-            bool? driftControlEnforced = default;
-            bool? credentialGuardEnforced = default;
-            bool? smbSigningEnforced = default;
-            bool? smbClusterEncryption = default;
-            bool? sideChannelMitigationEnforced = default;
-            bool? bitlockerBootVolume = default;
-            bool? bitlockerDataVolumes = default;
-            bool? wdacEnforced = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            bool? isHvciProtectionEnabled = default;
+            bool? isDrtmProtectionEnabled = default;
+            bool? isDriftControlEnforced = default;
+            bool? isCredentialGuardEnforced = default;
+            bool? isSmbSigningEnforced = default;
+            bool? isSmbClusterEncryptionEnabled = default;
+            bool? isSideChannelMitigationEnforced = default;
+            bool? isBitlockerBootVolumeEnabled = default;
+            bool? areBitlockerDataVolumesEnabled = default;
+            bool? isWdacEnforced = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("hvciProtection"u8))
+                if (prop.NameEquals("hvciProtection"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    hvciProtection = property.Value.GetBoolean();
+                    isHvciProtectionEnabled = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("drtmProtection"u8))
+                if (prop.NameEquals("drtmProtection"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    drtmProtection = property.Value.GetBoolean();
+                    isDrtmProtectionEnabled = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("driftControlEnforced"u8))
+                if (prop.NameEquals("driftControlEnforced"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    driftControlEnforced = property.Value.GetBoolean();
+                    isDriftControlEnforced = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("credentialGuardEnforced"u8))
+                if (prop.NameEquals("credentialGuardEnforced"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    credentialGuardEnforced = property.Value.GetBoolean();
+                    isCredentialGuardEnforced = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("smbSigningEnforced"u8))
+                if (prop.NameEquals("smbSigningEnforced"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    smbSigningEnforced = property.Value.GetBoolean();
+                    isSmbSigningEnforced = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("smbClusterEncryption"u8))
+                if (prop.NameEquals("smbClusterEncryption"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    smbClusterEncryption = property.Value.GetBoolean();
+                    isSmbClusterEncryptionEnabled = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("sideChannelMitigationEnforced"u8))
+                if (prop.NameEquals("sideChannelMitigationEnforced"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    sideChannelMitigationEnforced = property.Value.GetBoolean();
+                    isSideChannelMitigationEnforced = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("bitlockerBootVolume"u8))
+                if (prop.NameEquals("bitlockerBootVolume"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    bitlockerBootVolume = property.Value.GetBoolean();
+                    isBitlockerBootVolumeEnabled = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("bitlockerDataVolumes"u8))
+                if (prop.NameEquals("bitlockerDataVolumes"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    bitlockerDataVolumes = property.Value.GetBoolean();
+                    areBitlockerDataVolumesEnabled = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("wdacEnforced"u8))
+                if (prop.NameEquals("wdacEnforced"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    wdacEnforced = property.Value.GetBoolean();
+                    isWdacEnforced = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new HciClusterDeploymentSecuritySettings(
-                hvciProtection,
-                drtmProtection,
-                driftControlEnforced,
-                credentialGuardEnforced,
-                smbSigningEnforced,
-                smbClusterEncryption,
-                sideChannelMitigationEnforced,
-                bitlockerBootVolume,
-                bitlockerDataVolumes,
-                wdacEnforced,
-                serializedAdditionalRawData);
+                isHvciProtectionEnabled,
+                isDrtmProtectionEnabled,
+                isDriftControlEnforced,
+                isCredentialGuardEnforced,
+                isSmbSigningEnforced,
+                isSmbClusterEncryptionEnabled,
+                isSideChannelMitigationEnforced,
+                isBitlockerBootVolumeEnabled,
+                areBitlockerDataVolumesEnabled,
+                isWdacEnforced,
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsHvciProtectionEnabled), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  hvciProtection: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsHvciProtectionEnabled))
-                {
-                    builder.Append("  hvciProtection: ");
-                    var boolValue = IsHvciProtectionEnabled.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsDrtmProtectionEnabled), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  drtmProtection: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsDrtmProtectionEnabled))
-                {
-                    builder.Append("  drtmProtection: ");
-                    var boolValue = IsDrtmProtectionEnabled.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsDriftControlEnforced), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  driftControlEnforced: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsDriftControlEnforced))
-                {
-                    builder.Append("  driftControlEnforced: ");
-                    var boolValue = IsDriftControlEnforced.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsCredentialGuardEnforced), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  credentialGuardEnforced: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsCredentialGuardEnforced))
-                {
-                    builder.Append("  credentialGuardEnforced: ");
-                    var boolValue = IsCredentialGuardEnforced.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsSmbSigningEnforced), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  smbSigningEnforced: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsSmbSigningEnforced))
-                {
-                    builder.Append("  smbSigningEnforced: ");
-                    var boolValue = IsSmbSigningEnforced.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsSmbClusterEncryptionEnabled), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  smbClusterEncryption: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsSmbClusterEncryptionEnabled))
-                {
-                    builder.Append("  smbClusterEncryption: ");
-                    var boolValue = IsSmbClusterEncryptionEnabled.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsSideChannelMitigationEnforced), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  sideChannelMitigationEnforced: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsSideChannelMitigationEnforced))
-                {
-                    builder.Append("  sideChannelMitigationEnforced: ");
-                    var boolValue = IsSideChannelMitigationEnforced.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsBitlockerBootVolumeEnabled), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  bitlockerBootVolume: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsBitlockerBootVolumeEnabled))
-                {
-                    builder.Append("  bitlockerBootVolume: ");
-                    var boolValue = IsBitlockerBootVolumeEnabled.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AreBitlockerDataVolumesEnabled), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  bitlockerDataVolumes: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(AreBitlockerDataVolumesEnabled))
-                {
-                    builder.Append("  bitlockerDataVolumes: ");
-                    var boolValue = AreBitlockerDataVolumesEnabled.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsWdacEnforced), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  wdacEnforced: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsWdacEnforced))
-                {
-                    builder.Append("  wdacEnforced: ");
-                    var boolValue = IsWdacEnforced.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<HciClusterDeploymentSecuritySettings>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<HciClusterDeploymentSecuritySettings>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHciContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(HciClusterDeploymentSecuritySettings)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        HciClusterDeploymentSecuritySettings IPersistableModel<HciClusterDeploymentSecuritySettings>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<HciClusterDeploymentSecuritySettings>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeHciClusterDeploymentSecuritySettings(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(HciClusterDeploymentSecuritySettings)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<HciClusterDeploymentSecuritySettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

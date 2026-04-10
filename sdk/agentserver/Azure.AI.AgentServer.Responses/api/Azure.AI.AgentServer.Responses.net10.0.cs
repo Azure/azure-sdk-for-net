@@ -388,6 +388,17 @@ namespace Azure.AI.AgentServer.Responses
         public System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.OutputItem> InputItems { get { throw null; } }
         public Azure.AI.AgentServer.Responses.Models.ResponseObject Response { get { throw null; } }
     }
+    public static partial class DataUrl
+    {
+        public static byte[] DecodeBytes(string dataUrl) { throw null; }
+        public static byte[] DecodeBytes(System.Uri uri) { throw null; }
+        public static string? GetMediaType(string? dataUrl) { throw null; }
+        public static string? GetMediaType(System.Uri? uri) { throw null; }
+        public static bool IsDataUrl(string? value) { throw null; }
+        public static bool IsDataUrl(System.Uri? uri) { throw null; }
+        public static bool TryDecodeBytes(string? dataUrl, out byte[] bytes) { throw null; }
+        public static bool TryDecodeBytes(System.Uri? uri, out byte[] bytes) { throw null; }
+    }
     public partial interface IAsyncObserver<in T>
     {
         System.Threading.Tasks.ValueTask OnCompletedAsync();
@@ -458,7 +469,7 @@ namespace Azure.AI.AgentServer.Responses
         protected OutputItemImageGenCallBuilder() { }
         public virtual Azure.AI.AgentServer.Responses.Models.ResponseOutputItemAddedEvent EmitAdded() { throw null; }
         public virtual Azure.AI.AgentServer.Responses.Models.ResponseImageGenCallCompletedEvent EmitCompleted() { throw null; }
-        public virtual Azure.AI.AgentServer.Responses.Models.ResponseOutputItemDoneEvent EmitDone() { throw null; }
+        public virtual Azure.AI.AgentServer.Responses.Models.ResponseOutputItemDoneEvent EmitDone(string result) { throw null; }
         public virtual Azure.AI.AgentServer.Responses.Models.ResponseImageGenCallGeneratingEvent EmitGenerating() { throw null; }
         public virtual Azure.AI.AgentServer.Responses.Models.ResponseImageGenCallInProgressEvent EmitInProgress() { throw null; }
         public virtual Azure.AI.AgentServer.Responses.Models.ResponseImageGenCallPartialImageEvent EmitPartialImage(string partialImageB64) { throw null; }
@@ -496,11 +507,13 @@ namespace Azure.AI.AgentServer.Responses
         public virtual Azure.AI.AgentServer.Responses.Models.ResponseOutputItemAddedEvent EmitAdded() { throw null; }
         public virtual Azure.AI.AgentServer.Responses.Models.ResponseContentPartDoneEvent EmitContentDone(Azure.AI.AgentServer.Responses.RefusalContentBuilder refusalContent) { throw null; }
         public virtual Azure.AI.AgentServer.Responses.Models.ResponseContentPartDoneEvent EmitContentDone(Azure.AI.AgentServer.Responses.TextContentBuilder textContent) { throw null; }
+        public virtual Azure.AI.AgentServer.Responses.Models.ResponseContentPartDoneEvent EmitContentDone(Azure.AI.AgentServer.Responses.TextContentBuilder textContent, System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.Annotation> annotations) { throw null; }
         public virtual Azure.AI.AgentServer.Responses.Models.ResponseOutputItemDoneEvent EmitDone() { throw null; }
         public virtual System.Collections.Generic.IAsyncEnumerable<Azure.AI.AgentServer.Responses.Models.ResponseStreamEvent> RefusalContent(System.Collections.Generic.IAsyncEnumerable<string> chunks, [System.Runtime.CompilerServices.EnumeratorCancellationAttribute] System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.ResponseStreamEvent> RefusalContent(string text) { throw null; }
         public virtual System.Collections.Generic.IAsyncEnumerable<Azure.AI.AgentServer.Responses.Models.ResponseStreamEvent> TextContent(System.Collections.Generic.IAsyncEnumerable<string> chunks, [System.Runtime.CompilerServices.EnumeratorCancellationAttribute] System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.ResponseStreamEvent> TextContent(string text) { throw null; }
+        public virtual System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.ResponseStreamEvent> TextContent(string text, System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.Annotation> annotations) { throw null; }
     }
     public partial class OutputItemReasoningItemBuilder : Azure.AI.AgentServer.Responses.OutputItemBuilder<Azure.AI.AgentServer.Responses.Models.OutputItemReasoningItem>
     {
@@ -579,6 +592,7 @@ namespace Azure.AI.AgentServer.Responses
         public static string NewFunctionShellCallItemId(this Azure.AI.AgentServer.Responses.ResponseContext context) { throw null; }
         public static string NewFunctionShellCallOutputItemId(this Azure.AI.AgentServer.Responses.ResponseContext context) { throw null; }
         public static string NewImageGenCallItemId(this Azure.AI.AgentServer.Responses.ResponseContext context) { throw null; }
+        public static string NewItemId(this Azure.AI.AgentServer.Responses.ResponseContext context) { throw null; }
         public static string NewLocalShellCallItemId(this Azure.AI.AgentServer.Responses.ResponseContext context) { throw null; }
         public static string NewLocalShellCallOutputItemId(this Azure.AI.AgentServer.Responses.ResponseContext context) { throw null; }
         public static string NewMcpApprovalRequestItemId(this Azure.AI.AgentServer.Responses.ResponseContext context) { throw null; }
@@ -588,6 +602,7 @@ namespace Azure.AI.AgentServer.Responses
         public static string NewMessageItemId(this Azure.AI.AgentServer.Responses.ResponseContext context) { throw null; }
         public static string NewOutputMessageItemId(this Azure.AI.AgentServer.Responses.ResponseContext context) { throw null; }
         public static string NewReasoningItemId(this Azure.AI.AgentServer.Responses.ResponseContext context) { throw null; }
+        public static string NewStructuredOutputItemId(this Azure.AI.AgentServer.Responses.ResponseContext context) { throw null; }
         public static string NewWebSearchCallItemId(this Azure.AI.AgentServer.Responses.ResponseContext context) { throw null; }
         public static string NewWorkflowActionItemId(this Azure.AI.AgentServer.Responses.ResponseContext context) { throw null; }
     }
@@ -596,15 +611,28 @@ namespace Azure.AI.AgentServer.Responses
         protected ResponseEventStream() { }
         public ResponseEventStream(Azure.AI.AgentServer.Responses.ResponseContext context, Azure.AI.AgentServer.Responses.Models.CreateResponse request) { }
         public Azure.AI.AgentServer.Responses.Models.ResponseObject Response { get { throw null; } }
+        public virtual Azure.AI.AgentServer.Responses.OutputItemBuilder<Azure.AI.AgentServer.Responses.Models.OutputItemApplyPatchToolCall> AddOutputItemApplyPatchCall() { throw null; }
+        public virtual Azure.AI.AgentServer.Responses.OutputItemBuilder<Azure.AI.AgentServer.Responses.Models.OutputItemApplyPatchToolCallOutput> AddOutputItemApplyPatchCallOutput() { throw null; }
         public virtual Azure.AI.AgentServer.Responses.OutputItemCodeInterpreterCallBuilder AddOutputItemCodeInterpreterCall() { throw null; }
+        public virtual Azure.AI.AgentServer.Responses.OutputItemBuilder<Azure.AI.AgentServer.Responses.Models.OutputItemCompactionBody> AddOutputItemCompaction() { throw null; }
+        public virtual Azure.AI.AgentServer.Responses.OutputItemBuilder<Azure.AI.AgentServer.Responses.Models.OutputItemComputerToolCall> AddOutputItemComputerCall() { throw null; }
+        public virtual Azure.AI.AgentServer.Responses.OutputItemBuilder<Azure.AI.AgentServer.Responses.Models.OutputItemComputerToolCallOutputResource> AddOutputItemComputerCallOutput() { throw null; }
         public virtual Azure.AI.AgentServer.Responses.OutputItemCustomToolCallBuilder AddOutputItemCustomToolCall(string callId, string name) { throw null; }
+        public virtual Azure.AI.AgentServer.Responses.OutputItemBuilder<Azure.AI.AgentServer.Responses.Models.OutputItemCustomToolCallOutput> AddOutputItemCustomToolCallOutput() { throw null; }
         public virtual Azure.AI.AgentServer.Responses.OutputItemFileSearchCallBuilder AddOutputItemFileSearchCall() { throw null; }
         public virtual Azure.AI.AgentServer.Responses.OutputItemFunctionCallBuilder AddOutputItemFunctionCall(string name, string callId) { throw null; }
+        public virtual Azure.AI.AgentServer.Responses.OutputItemBuilder<Azure.AI.AgentServer.Responses.Models.OutputItemFunctionShellCall> AddOutputItemFunctionShellCall() { throw null; }
+        public virtual Azure.AI.AgentServer.Responses.OutputItemBuilder<Azure.AI.AgentServer.Responses.Models.OutputItemFunctionShellCallOutput> AddOutputItemFunctionShellCallOutput() { throw null; }
         public virtual Azure.AI.AgentServer.Responses.OutputItemImageGenCallBuilder AddOutputItemImageGenCall() { throw null; }
+        public virtual Azure.AI.AgentServer.Responses.OutputItemBuilder<Azure.AI.AgentServer.Responses.Models.OutputItemLocalShellToolCall> AddOutputItemLocalShellCall() { throw null; }
+        public virtual Azure.AI.AgentServer.Responses.OutputItemBuilder<Azure.AI.AgentServer.Responses.Models.OutputItemLocalShellToolCallOutput> AddOutputItemLocalShellCallOutput() { throw null; }
+        public virtual Azure.AI.AgentServer.Responses.OutputItemBuilder<Azure.AI.AgentServer.Responses.Models.OutputItemMcpApprovalRequest> AddOutputItemMcpApprovalRequest() { throw null; }
+        public virtual Azure.AI.AgentServer.Responses.OutputItemBuilder<Azure.AI.AgentServer.Responses.Models.OutputItemMcpApprovalResponseResource> AddOutputItemMcpApprovalResponse() { throw null; }
         public virtual Azure.AI.AgentServer.Responses.OutputItemMcpCallBuilder AddOutputItemMcpCall(string serverLabel, string name) { throw null; }
         public virtual Azure.AI.AgentServer.Responses.OutputItemMcpListToolsBuilder AddOutputItemMcpListTools(string serverLabel) { throw null; }
         public virtual Azure.AI.AgentServer.Responses.OutputItemMessageBuilder AddOutputItemMessage() { throw null; }
         public virtual Azure.AI.AgentServer.Responses.OutputItemReasoningItemBuilder AddOutputItemReasoningItem() { throw null; }
+        public virtual Azure.AI.AgentServer.Responses.OutputItemBuilder<Azure.AI.AgentServer.Responses.Models.StructuredOutputsOutputItem> AddOutputItemStructuredOutputs() { throw null; }
         public virtual Azure.AI.AgentServer.Responses.OutputItemWebSearchCallBuilder AddOutputItemWebSearchCall() { throw null; }
         public virtual Azure.AI.AgentServer.Responses.OutputItemBuilder<T> AddOutputItem<T>(string itemId) where T : Azure.AI.AgentServer.Responses.Models.OutputItem { throw null; }
         public virtual Azure.AI.AgentServer.Responses.Models.ResponseCompletedEvent EmitCompleted(Azure.AI.AgentServer.Responses.Models.ResponseUsage? usage = null) { throw null; }
@@ -614,13 +642,28 @@ namespace Azure.AI.AgentServer.Responses
         public virtual Azure.AI.AgentServer.Responses.Models.ResponseInProgressEvent EmitInProgress() { throw null; }
         public virtual Azure.AI.AgentServer.Responses.Models.ResponseQueuedEvent EmitQueued() { throw null; }
         public virtual long NextSequenceNumber() { throw null; }
+        public System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.ResponseStreamEvent> OutputItemApplyPatchCall(string callId, Azure.AI.AgentServer.Responses.Models.ApplyPatchCallStatus status, Azure.AI.AgentServer.Responses.Models.ApplyPatchFileOperation operation) { throw null; }
+        public System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.ResponseStreamEvent> OutputItemApplyPatchCallOutput(string callId, Azure.AI.AgentServer.Responses.Models.ApplyPatchCallOutputStatus status) { throw null; }
+        public System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.ResponseStreamEvent> OutputItemCompaction(string encryptedContent) { throw null; }
+        public System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.ResponseStreamEvent> OutputItemComputerCall(string callId, Azure.AI.AgentServer.Responses.Models.ComputerAction action, System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.ComputerCallSafetyCheckParam> pendingSafetyChecks, Azure.AI.AgentServer.Responses.Models.OutputItemComputerToolCallStatus status) { throw null; }
+        public System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.ResponseStreamEvent> OutputItemComputerCallOutput(string callId, Azure.AI.AgentServer.Responses.Models.ComputerScreenshotImage output) { throw null; }
+        public System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.ResponseStreamEvent> OutputItemCustomToolCallOutput(string callId, System.BinaryData output) { throw null; }
         public System.Collections.Generic.IAsyncEnumerable<Azure.AI.AgentServer.Responses.Models.ResponseStreamEvent> OutputItemFunctionCall(string name, string callId, System.Collections.Generic.IAsyncEnumerable<string> chunks, [System.Runtime.CompilerServices.EnumeratorCancellationAttribute] System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.ResponseStreamEvent> OutputItemFunctionCall(string name, string callId, string arguments) { throw null; }
         public System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.ResponseStreamEvent> OutputItemFunctionCallOutput(string callId, System.BinaryData output) { throw null; }
+        public System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.ResponseStreamEvent> OutputItemFunctionShellCall(string callId, Azure.AI.AgentServer.Responses.Models.FunctionShellAction action, Azure.AI.AgentServer.Responses.Models.LocalShellCallStatus status, Azure.AI.AgentServer.Responses.Models.FunctionShellCallEnvironment environment) { throw null; }
+        public System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.ResponseStreamEvent> OutputItemFunctionShellCallOutput(string callId, Azure.AI.AgentServer.Responses.Models.LocalShellCallOutputStatusEnum status, System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.FunctionShellCallOutputContent> output, long? maxOutputLength = default(long?)) { throw null; }
+        public System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.ResponseStreamEvent> OutputItemImageGenCall(string resultBase64) { throw null; }
+        public System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.ResponseStreamEvent> OutputItemLocalShellCall(string callId, Azure.AI.AgentServer.Responses.Models.LocalShellExecAction action, Azure.AI.AgentServer.Responses.Models.OutputItemLocalShellToolCallStatus status) { throw null; }
+        public System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.ResponseStreamEvent> OutputItemLocalShellCallOutput(string output) { throw null; }
+        public System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.ResponseStreamEvent> OutputItemMcpApprovalRequest(string serverLabel, string name, string arguments) { throw null; }
+        public System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.ResponseStreamEvent> OutputItemMcpApprovalResponse(string approvalRequestId, bool approve) { throw null; }
         public System.Collections.Generic.IAsyncEnumerable<Azure.AI.AgentServer.Responses.Models.ResponseStreamEvent> OutputItemMessage(System.Collections.Generic.IAsyncEnumerable<string> chunks, [System.Runtime.CompilerServices.EnumeratorCancellationAttribute] System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.ResponseStreamEvent> OutputItemMessage(string text) { throw null; }
+        public System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.ResponseStreamEvent> OutputItemMessage(string text, System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.Annotation> annotations) { throw null; }
         public System.Collections.Generic.IAsyncEnumerable<Azure.AI.AgentServer.Responses.Models.ResponseStreamEvent> OutputItemReasoningItem(System.Collections.Generic.IAsyncEnumerable<string> chunks, [System.Runtime.CompilerServices.EnumeratorCancellationAttribute] System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.ResponseStreamEvent> OutputItemReasoningItem(string summaryText) { throw null; }
+        public System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.ResponseStreamEvent> OutputItemStructuredOutputs(System.BinaryData output) { throw null; }
     }
     public abstract partial class ResponseHandler
     {

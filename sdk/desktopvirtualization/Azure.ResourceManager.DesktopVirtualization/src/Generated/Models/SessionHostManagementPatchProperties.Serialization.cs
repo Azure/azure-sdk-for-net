@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             string scheduledDateTimeZone = default;
             HostPoolUpdateConfigurationPatchProperties update = default;
             SessionHostProvisioningConfigurationPatchProperties provisioning = default;
-            FailedSessionHostCleanupPolicySessionHostConfiguration? failedSessionHostCleanupPolicy = default;
+            SessionHostConfigurationFailedSessionHostCleanupPolicy? failedSessionHostCleanupPolicy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    failedSessionHostCleanupPolicy = new FailedSessionHostCleanupPolicySessionHostConfiguration(prop.Value.GetString());
+                    failedSessionHostCleanupPolicy = new SessionHostConfigurationFailedSessionHostCleanupPolicy(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

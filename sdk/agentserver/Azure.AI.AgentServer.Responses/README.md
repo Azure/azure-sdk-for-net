@@ -96,14 +96,20 @@ public class EchoHandlerConvenience : ResponseHandler
 }
 ```
 
-Available convenience generators:
+Available convenience generators (commonly used):
 
 | Method | Description |
 |--------|-------------|
 | `OutputItemMessage(string)` | Emits a complete text message output item |
+| `OutputItemMessage(string, IEnumerable<Annotation>)` | Emits a text message with file annotations |
 | `OutputItemMessage(IAsyncEnumerable<string>, CancellationToken)` | Streams tokens as `response.output_text.delta` events |
 | `OutputItemFunctionCall(name, callId, arguments)` | Emits a complete function call output item |
+| `OutputItemFunctionCallOutput(callId, output)` | Emits a function call output (no deltas) |
 | `OutputItemReasoningItem(...)` | Emits a reasoning output item |
+| `OutputItemImageGenCall(resultBase64)` | Emits an image generation result with status transitions |
+| `OutputItemStructuredOutputs(output)` | Emits an arbitrary structured JSON output item |
+
+Additional convenience generators are available for computer calls, local shell calls, function shell calls, apply-patch calls, custom tool call outputs, MCP approval requests/responses, and compaction. Each follows the same pattern — accepts domain parameters and yields the complete `output_item.added` → `output_item.done` event pair.
 
 See [Sample 3 — Full control ResponseStream](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Responses/samples/Sample3_FullControlResponseStream.md) and [Sample 4 — Function calling](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Responses/samples/Sample4_FunctionCalling.md) for more examples.
 
