@@ -560,7 +560,8 @@ namespace Azure.AI.AgentServer.Responses
         public virtual System.BinaryData? RawBody { get { throw null; } }
         public string ResponseId { get { throw null; } }
         public virtual System.Threading.Tasks.Task<System.Collections.Generic.IReadOnlyList<Azure.AI.AgentServer.Responses.Models.OutputItem>> GetHistoryAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IReadOnlyList<Azure.AI.AgentServer.Responses.Models.OutputItem>> GetInputItemsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IReadOnlyList<Azure.AI.AgentServer.Responses.Models.Item>> GetInputItemsAsync(bool resolveReferences = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<string> GetInputTextAsync(bool resolveReferences = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public static partial class ResponseContextExtensions
     {
@@ -2267,7 +2268,6 @@ namespace Azure.AI.AgentServer.Responses.Models
         public static Azure.AI.AgentServer.Responses.Models.ConversationParam? GetConversationExpanded(this Azure.AI.AgentServer.Responses.Models.CreateResponse request) { throw null; }
         public static string? GetConversationId(this Azure.AI.AgentServer.Responses.Models.CreateResponse request) { throw null; }
         public static System.Collections.Generic.List<Azure.AI.AgentServer.Responses.Models.Item> GetInputExpanded(this Azure.AI.AgentServer.Responses.Models.CreateResponse request) { throw null; }
-        public static string GetInputText(this Azure.AI.AgentServer.Responses.Models.CreateResponse request) { throw null; }
         public static System.BinaryData? GetInstructionsBinaryData(this Azure.AI.AgentServer.Responses.Models.CreateResponse request) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.ToolChoiceParam? GetToolChoiceExpanded(this Azure.AI.AgentServer.Responses.Models.CreateResponse request) { throw null; }
     }
@@ -3459,6 +3459,10 @@ namespace Azure.AI.AgentServer.Responses.Models
         Azure.AI.AgentServer.Responses.Models.ItemCustomToolCallOutput System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.ItemCustomToolCallOutput>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.ItemCustomToolCallOutput>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.ItemCustomToolCallOutput>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public static partial class ItemExtensions
+    {
+        public static string GetInputText(this System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.Item> items) { throw null; }
     }
     public abstract partial class ItemField : System.ClientModel.Primitives.IJsonModel<Azure.AI.AgentServer.Responses.Models.ItemField>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.ItemField>
     {

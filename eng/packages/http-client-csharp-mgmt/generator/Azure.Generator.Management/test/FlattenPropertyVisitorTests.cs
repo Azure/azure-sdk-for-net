@@ -14,6 +14,7 @@ using Microsoft.TypeSpec.Generator.Snippets;
 using Microsoft.TypeSpec.Generator.Statements;
 using Moq;
 using NUnit.Framework;
+using System;
 using System.ComponentModel;
 using System.Reflection;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
@@ -420,6 +421,264 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.IsTrue(
                 backupPolicyProp!.Modifiers.HasFlag(MethodSignatureModifiers.Public),
                 "BackupPolicy property should remain public (not flattened to internal)");
+        }
+
+        /// <summary>
+        /// Verifies that properties marked [Obsolete] on a child model's custom code (partial class)
+        /// are skipped during property flattening. Only non-obsolete public properties should be
+        /// flattened onto the parent model, avoiding CS0618 warnings.
+        /// </summary>
+        [Test]
+        public void TestFlattenSkipsObsoletePropertiesFromCustomCode()
+        {
+            // Create a child model "Step" with one normal property.
+            var startTimeUtcProp = InputFactory.Property("startTimeUtc", InputPrimitiveType.PlainDate, isRequired: false, serializedName: "startTimeUtc");
+            var stepModel = InputFactory.Model(
+                "Step",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [startTimeUtcProp]);
+
+            // Create a "properties" property on the parent model referencing the Step model,
+            // then apply the @flattenProperty decorator to it.
+            var progressProperty = InputFactory.Property("progress", stepModel, isRequired: false, serializedName: "progress");
+            ApplyFlattenDecorator(progressProperty);
+
+            // Create the parent model.
+            var parentModel = InputFactory.Model(
+                "MyProperties",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [progressProperty]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [parentModel, stepModel]);
+
+            // Create the model providers.
+            var parentModelProvider = plugin.Object.TypeFactory.CreateModel(parentModel);
+            Assert.IsNotNull(parentModelProvider);
+
+            var stepModelProvider = plugin.Object.TypeFactory.CreateModel(stepModel);
+            Assert.IsNotNull(stepModelProvider);
+
+            // Set up a custom code view on the Step model that has an [Obsolete] property.
+            var customCodeView = new ObsoletePropertyCustomCodeView(stepModelProvider!);
+            ManagementMockHelpers.SetCustomCodeView(stepModelProvider!, customCodeView);
+
+            // Run all visitors on the parent model.
+            var visitTypeCore = typeof(LibraryVisitor).GetMethod(
+                "VisitTypeCore",
+                BindingFlags.NonPublic | BindingFlags.Instance);
+            Assert.IsNotNull(visitTypeCore, "Could not find LibraryVisitor.VisitTypeCore method");
+
+            foreach (var visitor in ManagementClientGenerator.Instance.Visitors)
+            {
+                visitTypeCore!.Invoke(visitor, [parentModelProvider]);
+            }
+
+            // After flattening, the parent model should have:
+            // 1. The original "Progress" property (now internal)
+            // 2. A flattened "StartTimeUtc" property (from the non-obsolete property)
+            // It should NOT have a flattened "OldPropertyName" (the obsolete property from custom code).
+
+            var flattenedStartTimeUtc = parentModelProvider!.Properties.FirstOrDefault(p => p.Name == "StartTimeUtc");
+            Assert.IsNotNull(flattenedStartTimeUtc, "Non-obsolete property 'StartTimeUtc' should be flattened onto the parent model");
+
+            var flattenedObsolete = parentModelProvider.Properties.FirstOrDefault(p => p.Name == "OldPropertyName");
+            Assert.IsNull(flattenedObsolete, "Obsolete property 'OldPropertyName' should NOT be flattened onto the parent model");
+        }
+
+        /// <summary>
+        /// Verifies that when the child model has multiple normal properties and an [Obsolete]
+        /// property from custom code, all non-obsolete properties are flattened via PropertyFlatten
+        /// while the obsolete one is skipped. This exercises the PropertyFlatten iteration loop
+        /// (as opposed to SafeFlatten which handles the single-property case).
+        /// </summary>
+        [Test]
+        public void TestPropertyFlattenSkipsObsoleteWithMultipleProperties()
+        {
+            // Create a child model "Step" with two normal properties.
+            var startTimeUtcProp = InputFactory.Property("startTimeUtc", InputPrimitiveType.PlainDate, isRequired: false, serializedName: "startTimeUtc");
+            var endTimeUtcProp = InputFactory.Property("endTimeUtc", InputPrimitiveType.PlainDate, isRequired: false, serializedName: "endTimeUtc");
+            var stepModel = InputFactory.Model(
+                "Step",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [startTimeUtcProp, endTimeUtcProp]);
+
+            // Create a "properties" property on the parent model referencing the Step model,
+            // then apply the @flattenProperty decorator to it.
+            var progressProperty = InputFactory.Property("progress", stepModel, isRequired: false, serializedName: "progress");
+            ApplyFlattenDecorator(progressProperty);
+
+            // Create the parent model.
+            var parentModel = InputFactory.Model(
+                "MyProperties",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [progressProperty]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [parentModel, stepModel]);
+
+            // Create the model providers.
+            var parentModelProvider = plugin.Object.TypeFactory.CreateModel(parentModel);
+            Assert.IsNotNull(parentModelProvider);
+
+            var stepModelProvider = plugin.Object.TypeFactory.CreateModel(stepModel);
+            Assert.IsNotNull(stepModelProvider);
+
+            // Set up a custom code view on the Step model that has an [Obsolete] property.
+            var customCodeView = new ObsoletePropertyCustomCodeView(stepModelProvider!);
+            ManagementMockHelpers.SetCustomCodeView(stepModelProvider!, customCodeView);
+
+            // Run all visitors on the parent model.
+            var visitTypeCore = typeof(LibraryVisitor).GetMethod(
+                "VisitTypeCore",
+                BindingFlags.NonPublic | BindingFlags.Instance);
+            Assert.IsNotNull(visitTypeCore, "Could not find LibraryVisitor.VisitTypeCore method");
+
+            foreach (var visitor in ManagementClientGenerator.Instance.Visitors)
+            {
+                visitTypeCore!.Invoke(visitor, [parentModelProvider]);
+            }
+
+            // After property flattening, the parent model should have:
+            // 1. The original "Progress" property (now internal)
+            // 2. Flattened "StartTimeUtc" and "EndTimeUtc" properties (non-obsolete)
+            // It should NOT have a flattened "OldPropertyName" (the obsolete property from custom code).
+
+            var flattenedStartTimeUtc = parentModelProvider!.Properties.FirstOrDefault(p => p.Name == "StartTimeUtc");
+            Assert.IsNotNull(flattenedStartTimeUtc, "Non-obsolete property 'StartTimeUtc' should be flattened onto the parent model");
+
+            var flattenedEndTimeUtc = parentModelProvider.Properties.FirstOrDefault(p => p.Name == "EndTimeUtc");
+            Assert.IsNotNull(flattenedEndTimeUtc, "Non-obsolete property 'EndTimeUtc' should be flattened onto the parent model");
+
+            var flattenedObsolete = parentModelProvider.Properties.FirstOrDefault(p => p.Name == "OldPropertyName");
+            Assert.IsNull(flattenedObsolete, "Obsolete property 'OldPropertyName' should NOT be flattened onto the parent model");
+        }
+
+        /// <summary>
+        /// Verifies the bug fix: when a base model is safe-flattened (a single-property wrapper type
+        /// becomes internal and its property is promoted), the derived class's public constructor
+        /// parameters AND base initializer (: base(...)) are both updated to use the flattened type.
+        ///
+        /// Scenario (mirrors CommonExportProperties / ExportProperties):
+        ///   - WrapperModel has one required public property: Value (string)
+        ///   - BaseModel has: wrapper (WrapperModel, required), name (string, required)
+        ///   - DerivedModel extends BaseModel with: description (string, optional)
+        ///
+        /// After safe-flatten:
+        ///   - BaseModel.wrapper becomes internal, WrapperValue (string) is promoted
+        ///   - BaseModel public ctor: (string wrapperValue, string name)
+        ///   - DerivedModel public ctor must also use (string wrapperValue, string name), NOT (WrapperModel wrapper, string name)
+        ///   - DerivedModel base initializer must pass wrapperValue, not wrapper
+        /// </summary>
+        [Test]
+        public void TestSafeFlattenUpdatesDerivedClassCtorParamsAndBaseInitializer()
+        {
+            // Create WrapperModel with a single required property.
+            var valueProp = InputFactory.Property("value", InputPrimitiveType.String, isRequired: true, serializedName: "value");
+            var wrapperModel = InputFactory.Model(
+                "WrapperModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [valueProp]);
+
+            // Create BaseModel with wrapper (WrapperModel, required) + name (string, required).
+            var wrapperProp = InputFactory.Property("wrapper", wrapperModel, isRequired: true, serializedName: "wrapper");
+            var nameProp = InputFactory.Property("name", InputPrimitiveType.String, isRequired: true, serializedName: "name");
+            var baseModel = InputFactory.Model(
+                "BaseModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [wrapperProp, nameProp]);
+
+            // Create DerivedModel extending BaseModel with an optional description.
+            var descriptionProp = InputFactory.Property("description", InputPrimitiveType.String, isRequired: false, serializedName: "description");
+            var derivedModel = InputFactory.Model(
+                "DerivedModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                baseModel: baseModel,
+                properties: [descriptionProp]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [wrapperModel, baseModel, derivedModel]);
+
+            var baseModelProvider = plugin.Object.TypeFactory.CreateModel(baseModel)!;
+            var derivedModelProvider = plugin.Object.TypeFactory.CreateModel(derivedModel)!;
+            Assert.IsNotNull(baseModelProvider);
+            Assert.IsNotNull(derivedModelProvider);
+
+            // Precondition: before visitors, DerivedModel public ctor has WrapperModel param.
+            var preVisitPublicCtor = derivedModelProvider.Constructors
+                .SingleOrDefault(c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public));
+            Assert.IsNotNull(preVisitPublicCtor, "DerivedModel should have a public ctor before visitors");
+            Assert.IsTrue(
+                preVisitPublicCtor!.Signature.Parameters.Any(p => p.Type.Name == "WrapperModel"),
+                "Precondition: DerivedModel ctor should have WrapperModel param before flatten");
+
+            // Run only the FlattenPropertyVisitor on both models (base must be processed first to populate the flatten map).
+            var visitor = new FlattenPropertyVisitor();
+            var visitTypeCore = typeof(LibraryVisitor).GetMethod(
+                "VisitTypeCore",
+                BindingFlags.NonPublic | BindingFlags.Instance);
+            Assert.IsNotNull(visitTypeCore);
+
+            visitTypeCore!.Invoke(visitor, [derivedModelProvider]);
+            visitTypeCore!.Invoke(visitor, [baseModelProvider]);
+
+            // After visitors: DerivedModel public ctor should use the flattened type (string), not WrapperModel.
+            var publicCtor = derivedModelProvider.Constructors
+                .SingleOrDefault(c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public));
+            Assert.IsNotNull(publicCtor, "DerivedModel should still have a public ctor after flatten");
+
+            Assert.IsFalse(
+                publicCtor!.Signature.Parameters.Any(p => p.Type.Name == "WrapperModel"),
+                "DerivedModel public ctor should NOT have WrapperModel param after safe-flatten");
+            Assert.IsTrue(
+                publicCtor.Signature.Parameters.Any(p => p.Name == "wrapperValue"),
+                "DerivedModel public ctor should have the flattened 'wrapperValue' (string) param");
+
+            // The base initializer must exist and be a base (not this) call.
+            var initializer = publicCtor.Signature.Initializer;
+            Assert.IsNotNull(initializer, "DerivedModel public ctor should have a base initializer");
+            Assert.IsTrue(initializer!.IsBase, "Initializer should be a base call");
+
+            // None of the base initializer arguments should reference the old WrapperModel param.
+            var initializerArgNames = initializer.Arguments
+                .OfType<VariableExpression>()
+                .Select(v => v.Declaration.RequestedName)
+                .ToList();
+
+            Assert.IsFalse(
+                initializerArgNames.Contains("wrapper"),
+                $"Base initializer should NOT pass 'wrapper' (WrapperModel). Args: [{string.Join(", ", initializerArgNames)}]");
+            Assert.IsTrue(
+                initializerArgNames.Contains("wrapperValue"),
+                $"Base initializer should pass the flattened 'wrapperValue'. Args: [{string.Join(", ", initializerArgNames)}]");
+        }
+
+        private class ObsoletePropertyCustomCodeView : TypeProvider
+        {
+            private readonly TypeProvider _enclosingType;
+
+            public ObsoletePropertyCustomCodeView(TypeProvider enclosingType)
+            {
+                _enclosingType = enclosingType;
+            }
+
+            protected override string BuildName() => _enclosingType.Name;
+            protected override string BuildRelativeFilePath() => $"{Name}.cs";
+
+            protected override PropertyProvider[] BuildProperties()
+            {
+                return
+                [
+                    new PropertyProvider(
+                        null,
+                        MethodSignatureModifiers.Public,
+                        typeof(DateTimeOffset?),
+                        "OldPropertyName",
+                        new AutoPropertyBody(true),
+                        _enclosingType,
+                        attributes: [new AttributeStatement(typeof(ObsoleteAttribute), Literal("Use StartTimeUtc instead."))])
+                ];
+            }
         }
     }
 }

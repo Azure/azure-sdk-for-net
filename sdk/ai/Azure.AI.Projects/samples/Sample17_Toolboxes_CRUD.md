@@ -118,7 +118,7 @@ Console.WriteLine($"The default version for a toolbox {record.Name} is now {reco
 
 Synchronous sample:
 ```C# Snippet:Sample_ListToolboxVersions_ToolboxesCRUD_Sync
-List<ToolboxVersion> toolboxes = [..toolboxClient.GetToolboxVersions(toolBox.Name)];
+List<ToolboxVersion> toolboxes = [.. toolboxClient.GetToolboxVersions(toolBox.Name)];
 Console.WriteLine($"Found {toolboxes.Count} toolbox version(s).");
 foreach (ToolboxVersion item in toolboxes)
 {
@@ -128,7 +128,7 @@ foreach (ToolboxVersion item in toolboxes)
 
 Asynchronous sample:
 ```C# Snippet:Sample_ListToolboxVersions_ToolboxesCRUD_Async
-List <ToolboxVersion> toolboxes = await toolboxClient.GetToolboxVersionsAsync(toolBox.Name).ToListAsync();
+List<ToolboxVersion> toolboxes = await toolboxClient.GetToolboxVersionsAsync(toolBox.Name).ToListAsync();
 Console.WriteLine($"Found {toolboxes.Count} toolbox version(s).");
 foreach (ToolboxVersion item in toolboxes)
 {
@@ -140,7 +140,7 @@ foreach (ToolboxVersion item in toolboxes)
 
 Synchronous sample:
 ```C# Snippet:Sample_ListToolboxes_ToolboxesCRUD_Sync
-List<ToolboxRecord> records = [..toolboxClient.GetToolboxes()];
+List<ToolboxRecord> records = [.. toolboxClient.GetToolboxes()];
 Console.WriteLine($"Found {records.Count} toolbox(es).");
 foreach (ToolboxRecord item in records)
 {

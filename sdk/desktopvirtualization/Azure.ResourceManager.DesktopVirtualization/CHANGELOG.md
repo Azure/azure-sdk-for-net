@@ -1,14 +1,16 @@
 # Release History
 
-## 1.4.0-beta.1 (Unreleased)
+## 1.4.0-beta.1 (2026-04-09)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Upgraded API version to `2026-01-01-preview`.
+- Added `SessionHostConfigurationResource` for managing session host configurations on a host pool.
+- Added `SessionHostManagementResource` for managing session host lifecycle, including initiating updates and controlling provisioning and updates.
+- Added `ActiveSessionHostConfigurationResource` for retrieving the active session host configuration.
+- Added `GetRegistrationTokens` and `GetSingleSessionHostRegistrationTokens` operations on `HostPoolResource` and `SessionHostCollection`.
+- Added `RetryProvisioning` operation on `SessionHostResource`.
+- Migrated SDK from Swagger/AutoRest to TypeSpec-based code generation.
 
 ## 1.3.2 (2025-08-11)
 

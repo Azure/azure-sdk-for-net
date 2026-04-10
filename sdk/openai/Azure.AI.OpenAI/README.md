@@ -1,7 +1,7 @@
 # Azure OpenAI client library for .NET
 
 > [!NOTE]
-Consider removing the Azure OpenAI SDK from your application in favor of using the OpenAI SDK only for broader models, unified APIs, latest features, and simpler authentication.
+> Consider [removing the Azure OpenAI SDK from your application](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/openai/Azure.AI.OpenAI/migration-guidance.md) in favor of using the OpenAI SDK only for broader models, unified APIs, latest features, and simpler authentication.
 
 The Azure OpenAI client library for .NET is a companion to the official [OpenAI client library for .NET](https://github.com/openai/openai-dotnet). The Azure OpenAI library configures a client for use with Azure OpenAI and provides additional strongly typed extension support for request and response models specific to Azure OpenAI scenarios.
 

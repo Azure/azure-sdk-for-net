@@ -83,6 +83,8 @@ namespace Azure.Generator.Management.Providers
 
         internal ResourceScope ResourceScope => _resourceMetadata.ResourceScope;
         internal string? ParentResourceIdPattern => _resourceMetadata.ParentResourceId;
+        internal string ResourceIdPattern => _resourceMetadata.ResourceIdPattern;
+        internal string? ParentResourceType => _resourceMetadata.ParentResourceType;
 
         internal bool IsExtensionResource => ResourceScope == ResourceScope.Extension;
 
@@ -130,16 +132,18 @@ namespace Azure.Generator.Management.Providers
 
         private CSharpType BuildTypeOfParentResource()
         {
-            if (_resourceMetadata.ResourceScope == ResourceScope.Extension)
-            {
-                return typeof(ArmResource);
-            }
-
             // if the resource has a parent resource id, we can find it in the output library
             if (_resourceMetadata.ParentResourceId is not null)
             {
                 return ManagementClientGenerator.Instance.OutputLibrary.GetResourceById(_resourceMetadata.ParentResourceId).Type;
             }
+
+            // if not and this is an extension resource, we return ArmResource as the parent type as fallback
+            if (_resourceMetadata.ResourceScope == ResourceScope.Extension)
+            {
+                return typeof(ArmResource);
+            }
+
             // if it does not, this resource's parent must be one of the MockableResource
             return ManagementClientGenerator.Instance.OutputLibrary.GetMockableResourceByScope(_resourceMetadata.ResourceScope).ArmCoreType;
         }
