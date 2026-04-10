@@ -123,10 +123,10 @@ public class OutputItemMessageBuilderTests
         Assert.That(evt.OutputIndex, Is.EqualTo(0));
     }
 
-    // ── T009: EmitContentDone ─────────────────────────────────
+    // ── T009: TextContentBuilder.EmitDone (content_part.done) ──
 
     [Test]
-    public void EmitContentDone_ReturnsContentPartDoneEvent()
+    public void TextContentEmitDone_ReturnsContentPartDoneEvent()
     {
         var stream = CreateStream();
         var msg = stream.AddOutputItemMessage();
@@ -143,7 +143,7 @@ public class OutputItemMessageBuilderTests
     }
 
     [Test]
-    public void EmitContentDone_ContainsFinalText()
+    public void TextContentEmitDone_ContainsFinalText()
     {
         var stream = CreateStream();
         var msg = stream.AddOutputItemMessage();

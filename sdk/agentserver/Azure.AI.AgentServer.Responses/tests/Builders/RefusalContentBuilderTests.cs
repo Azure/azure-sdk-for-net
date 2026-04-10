@@ -147,10 +147,10 @@ public class RefusalContentBuilderTests
         Assert.That(evt.ContentIndex, Is.EqualTo(refusal.ContentIndex));
     }
 
-    // ── RefusalContentBuilder.EmitDone() ─
+    // ── RefusalContentBuilder.EmitDone (content_part.done) ─
 
     [Test]
-    public void EmitContentDone_Refusal_ReturnsContentPartDoneEvent()
+    public void RefusalEmitDone_ReturnsContentPartDoneEvent()
     {
         var (_, msg) = CreateMessageScope();
         var refusal = msg.AddRefusalContent();
@@ -161,7 +161,7 @@ public class RefusalContentBuilderTests
     }
 
     [Test]
-    public void EmitContentDone_Refusal_ContainsFinalRefusalText()
+    public void RefusalEmitDone_ContainsFinalRefusalText()
     {
         var (_, msg) = CreateMessageScope();
         var refusal = msg.AddRefusalContent();
@@ -173,7 +173,7 @@ public class RefusalContentBuilderTests
     }
 
     [Test]
-    public void EmitContentDone_Refusal_HasCorrectBookkeepingFields()
+    public void RefusalEmitDone_HasCorrectBookkeepingFields()
     {
         var (_, msg) = CreateMessageScope();
         var refusal = msg.AddRefusalContent();
