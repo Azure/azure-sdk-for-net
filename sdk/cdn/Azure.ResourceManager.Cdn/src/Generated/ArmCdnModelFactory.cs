@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Threading;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Cdn;
@@ -1592,6 +1591,15 @@ namespace Azure.ResourceManager.Cdn.Models
             return new ResponseBasedOriginErrorDetectionSettings(responseBasedDetectedErrorType, responseBasedFailoverThresholdPercentage, httpErrorRanges.ToList(), additionalBinaryDataProperties: null);
         }
 
+        /// <param name="name"> Custom domain name. </param>
+        /// <param name="hostName"> The host name of the custom domain. Must be a domain name. </param>
+        /// <param name="validationData"> Special validation or data may be required when delivering CDN to some regions due to local compliance reasons. E.g. ICP license number of a custom domain is required to deliver content in China. </param>
+        /// <returns> A new <see cref="Models.DeepCreatedCustomDomain"/> instance for mocking. </returns>
+        public static DeepCreatedCustomDomain DeepCreatedCustomDomain(string name = default, string hostName = default, string validationData = default)
+        {
+            return new DeepCreatedCustomDomain(name, hostName is null && validationData is null ? default : new DeepCreatedCustomDomainProperties(hostName, validationData, null), additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Rules defining user's geo access within a CDN endpoint. </summary>
         /// <param name="relativePath"> Relative path applicable to geo filter. (e.g. '/mypictures', '/mypicture/kitty.jpg', and etc.). </param>
         /// <param name="action"> Action of the geo filter, i.e. allow or block access. </param>
@@ -2842,17 +2850,6 @@ namespace Azure.ResourceManager.Cdn.Models
             return new DeepCreatedOrigin(name, default, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DeepCreatedCustomDomain"/>. </summary>
-        /// <param name="name"> Custom domain name. </param>
-        /// <param name="hostName"> The host name of the custom domain. Must be a domain name. </param>
-        /// <param name="validationData"> Special validation or data may be required when delivering CDN to some regions due to local compliance reasons. E.g. ICP license number of a custom domain is required to deliver content in China. </param>
-        /// <returns> A new <see cref="Models.DeepCreatedCustomDomain"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DeepCreatedCustomDomain DeepCreatedCustomDomain(string name, string hostName, string validationData)
-        {
-            return new DeepCreatedCustomDomain(name, default, additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Cdn.CdnWebApplicationFirewallPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -3002,51 +2999,6 @@ namespace Azure.ResourceManager.Cdn.Models
         public static FrontDoorCustomDomainData FrontDoorCustomDomainData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string profileName, FrontDoorCustomDomainHttpsContent tlsSettings, ResourceIdentifier dnsZoneId, ResourceIdentifier preValidatedCustomDomainResourceId, FrontDoorProvisioningState? provisioningState, FrontDoorDeploymentStatus? deploymentStatus, DomainValidationState? domainValidationState, string hostName, DomainValidationProperties validationProperties)
         {
             return FrontDoorCustomDomainData(id, name, resourceType, systemData, profileName, tlsSettings, mtlsSettings: default, provisioningState, deploymentStatus, domainValidationState, hostName, extendedProperties: default, validationProperties, dnsZoneId, preValidatedCustomDomainResourceId);
-        }
-
-        /// <summary> Initializes a new instance of ProfileData. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="skuName"> The pricing tier (defines Azure Front Door Standard or Premium or a CDN provider, feature list and rate) of the profile. </param>
-        /// <param name="kind"> Kind of the profile. Used by portal to differentiate traditional CDN profile and new AFD profile. </param>
-        /// <param name="resourceState"> Resource status of the profile. </param>
-        /// <param name="provisioningState"> Provisioning status of the profile. </param>
-        /// <param name="frontDoorId"> The Id of the frontdoor. </param>
-        /// <param name="originResponseTimeoutSeconds"> Send and receive timeout on forwarding request to the origin. When timeout is reached, the request fails and returns. </param>
-        /// <returns> A new <see cref="Cdn.ProfileData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ProfileData ProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CdnSkuName? skuName, string kind, ProfileResourceState? resourceState, ProfileProvisioningState? provisioningState, Guid? frontDoorId, int? originResponseTimeoutSeconds)
-        {
-            //return ProfileData(id, name, resourceType, systemData, tags, location, resourceState, provisioningState, extendedProperties: default, frontDoorId, originResponseTimeoutSeconds, logScrubbing: default, skuName, kind, identity: default);
-            throw new NotImplementedException();
-        }
-
-        /// <summary> Initializes a new instance of CdnWebApplicationFirewallPolicyData. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="etag"> Gets a unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="skuName"> The pricing tier (defines a CDN provider, feature list and rate) of the CdnWebApplicationFirewallPolicy. </param>
-        /// <param name="policySettings"> Describes  policySettings for policy. </param>
-        /// <param name="rateLimitRules"> Describes rate limit rules inside the policy. </param>
-        /// <param name="customRules"> Describes custom rules inside the policy. </param>
-        /// <param name="managedRuleSets"> Describes managed rules inside the policy. </param>
-        /// <param name="endpointLinks"> Describes Azure CDN endpoints associated with this Web Application Firewall policy. </param>
-        /// <param name="provisioningState"> Provisioning state of the WebApplicationFirewallPolicy. </param>
-        /// <param name="resourceState"> Resource status of the policy. </param>
-        /// <returns> A new <see cref="Cdn.CdnWebApplicationFirewallPolicyData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static CdnWebApplicationFirewallPolicyData CdnWebApplicationFirewallPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, CdnSkuName? skuName, WafPolicySettings policySettings, IEnumerable<RateLimitRule> rateLimitRules, IEnumerable<CustomRule> customRules, IEnumerable<WafPolicyManagedRuleSet> managedRuleSets, IEnumerable<SubResource> endpointLinks, WebApplicationFirewallPolicyProvisioningState? provisioningState, PolicyResourceState? resourceState)
-        {
-            //return CdnWebApplicationFirewallPolicyData(id, name, resourceType, systemData, tags, location, policySettings, endpointLinks, extendedProperties: default, provisioningState, resourceState, rateLimitRules, customRules, managedRuleSets, etag, skuName);
-            throw new NotImplementedException();
         }
     }
 }

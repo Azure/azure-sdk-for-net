@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Cdn
         {
             if (id.ResourceType != ProfileResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ProfileResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ProfileResource.ResourceType), nameof(id));
             }
         }
 
@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.Cdn
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<FrontDoorOriginGroupData, FrontDoorOriginGroupResource>(new AFDOriginGroupsGetByProfileAsyncCollectionResultOfT(_afdOriginGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new FrontDoorOriginGroupResource(Client, data));
+            return new AsyncPageableWrapper<FrontDoorOriginGroupData, FrontDoorOriginGroupResource>(new AFDOriginGroupsGetByProfileAsyncCollectionResultOfT(
+                _afdOriginGroupsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "FrontDoorOriginGroupCollection.GetAll"), data => new FrontDoorOriginGroupResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.Cdn
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<FrontDoorOriginGroupData, FrontDoorOriginGroupResource>(new AFDOriginGroupsGetByProfileCollectionResultOfT(_afdOriginGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new FrontDoorOriginGroupResource(Client, data));
+            return new PageableWrapper<FrontDoorOriginGroupData, FrontDoorOriginGroupResource>(new AFDOriginGroupsGetByProfileCollectionResultOfT(
+                _afdOriginGroupsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "FrontDoorOriginGroupCollection.GetAll"), data => new FrontDoorOriginGroupResource(Client, data));
         }
 
         /// <summary>

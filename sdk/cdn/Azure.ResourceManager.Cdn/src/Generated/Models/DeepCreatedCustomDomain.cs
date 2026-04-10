@@ -19,11 +19,8 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Initializes a new instance of <see cref="DeepCreatedCustomDomain"/>. </summary>
         /// <param name="name"> Custom domain name. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public DeepCreatedCustomDomain(string name)
+        internal DeepCreatedCustomDomain(string name)
         {
-            Argument.AssertNotNull(name, nameof(name));
-
             Name = name;
         }
 
@@ -40,11 +37,11 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Custom domain name. </summary>
         [WirePath("name")]
-        public string Name { get; set; }
+        public string Name { get; }
 
         /// <summary> Properties of the custom domain created on the CDN endpoint. </summary>
         [WirePath("properties")]
-        internal DeepCreatedCustomDomainProperties Properties { get; set; }
+        internal DeepCreatedCustomDomainProperties Properties { get; }
 
         /// <summary> The host name of the custom domain. Must be a domain name. </summary>
         [WirePath("properties.hostName")]
@@ -52,15 +49,7 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             get
             {
-                return Properties is null ? default : Properties.HostName;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new DeepCreatedCustomDomainProperties();
-                }
-                Properties.HostName = value;
+                return Properties.HostName;
             }
         }
 
@@ -70,15 +59,7 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             get
             {
-                return Properties is null ? default : Properties.ValidationData;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new DeepCreatedCustomDomainProperties();
-                }
-                Properties.ValidationData = value;
+                return Properties.ValidationData;
             }
         }
     }

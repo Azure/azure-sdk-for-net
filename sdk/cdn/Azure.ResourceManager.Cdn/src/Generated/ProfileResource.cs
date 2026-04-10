@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Cdn
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -1582,7 +1582,13 @@ namespace Azure.ResourceManager.Cdn
             {
                 CancellationToken = cancellationToken
             };
-            return new AFDProfilesGetFrontDoorProfileResourceUsagesAsyncCollectionResultOfT(_afdProfilesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new AFDProfilesGetFrontDoorProfileResourceUsagesAsyncCollectionResultOfT(
+                _afdProfilesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ProfileResource.GetFrontDoorProfileResourceUsages");
         }
 
         /// <summary>
@@ -1614,7 +1620,13 @@ namespace Azure.ResourceManager.Cdn
             {
                 CancellationToken = cancellationToken
             };
-            return new AFDProfilesGetFrontDoorProfileResourceUsagesCollectionResultOfT(_afdProfilesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new AFDProfilesGetFrontDoorProfileResourceUsagesCollectionResultOfT(
+                _afdProfilesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ProfileResource.GetFrontDoorProfileResourceUsages");
         }
 
         /// <summary>
@@ -1938,7 +1950,13 @@ namespace Azure.ResourceManager.Cdn
             {
                 CancellationToken = cancellationToken
             };
-            return new ProfilesGetResourceUsagesAsyncCollectionResultOfT(_profilesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new ProfilesGetResourceUsagesAsyncCollectionResultOfT(
+                _profilesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ProfileResource.GetResourceUsages");
         }
 
         /// <summary>
@@ -1970,7 +1988,13 @@ namespace Azure.ResourceManager.Cdn
             {
                 CancellationToken = cancellationToken
             };
-            return new ProfilesGetResourceUsagesCollectionResultOfT(_profilesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new ProfilesGetResourceUsagesCollectionResultOfT(
+                _profilesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ProfileResource.GetResourceUsages");
         }
 
         /// <summary>

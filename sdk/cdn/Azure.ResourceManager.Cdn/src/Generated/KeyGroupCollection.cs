@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Cdn
         {
             if (id.ResourceType != ProfileResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ProfileResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ProfileResource.ResourceType), nameof(id));
             }
         }
 
@@ -281,7 +281,13 @@ namespace Azure.ResourceManager.Cdn
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<KeyGroupData, KeyGroupResource>(new KeyGroupsGetByProfileAsyncCollectionResultOfT(_keyGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new KeyGroupResource(Client, data));
+            return new AsyncPageableWrapper<KeyGroupData, KeyGroupResource>(new KeyGroupsGetByProfileAsyncCollectionResultOfT(
+                _keyGroupsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "KeyGroupCollection.GetAll"), data => new KeyGroupResource(Client, data));
         }
 
         /// <summary>
@@ -309,7 +315,13 @@ namespace Azure.ResourceManager.Cdn
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<KeyGroupData, KeyGroupResource>(new KeyGroupsGetByProfileCollectionResultOfT(_keyGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new KeyGroupResource(Client, data));
+            return new PageableWrapper<KeyGroupData, KeyGroupResource>(new KeyGroupsGetByProfileCollectionResultOfT(
+                _keyGroupsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "KeyGroupCollection.GetAll"), data => new KeyGroupResource(Client, data));
         }
 
         /// <summary>

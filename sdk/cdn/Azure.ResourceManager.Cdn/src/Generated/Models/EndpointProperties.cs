@@ -12,12 +12,16 @@ using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
+    /// <summary> The JSON object that contains the properties required to create an endpoint. </summary>
     internal partial class EndpointProperties : EndpointPropertiesUpdateParameters
     {
         /// <summary> Initializes a new instance of <see cref="EndpointProperties"/>. </summary>
         /// <param name="origins"> The source of the content being delivered via CDN. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="origins"/> is null. </exception>
         public EndpointProperties(IEnumerable<DeepCreatedOrigin> origins)
         {
+            Argument.AssertNotNull(origins, nameof(origins));
+
             Origins = origins.ToList();
             OriginGroups = new ChangeTrackingList<DeepCreatedOriginGroup>();
             DeepCreatedCustomDomains = new ChangeTrackingList<DeepCreatedCustomDomain>();
@@ -66,6 +70,10 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> The origin groups comprising of origins that are used for load balancing the traffic based on availability. </summary>
         [WirePath("originGroups")]
         public IList<DeepCreatedOriginGroup> OriginGroups { get; } = new ChangeTrackingList<DeepCreatedOriginGroup>();
+
+        /// <summary> The custom domains under the endpoint. </summary>
+        [WirePath("customDomains")]
+        public IReadOnlyList<DeepCreatedCustomDomain> DeepCreatedCustomDomains { get; } = new ChangeTrackingList<DeepCreatedCustomDomain>();
 
         /// <summary> Resource status of the endpoint. </summary>
         [WirePath("resourceState")]

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Cdn
         {
             if (id.ResourceType != CdnEndpointResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, CdnEndpointResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, CdnEndpointResource.ResourceType), nameof(id));
             }
         }
 
@@ -299,7 +299,8 @@ namespace Azure.ResourceManager.Cdn
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new CdnOriginGroupResource(Client, data));
+                context,
+                "CdnOriginGroupCollection.GetAll"), data => new CdnOriginGroupResource(Client, data));
         }
 
         /// <summary>
@@ -333,7 +334,8 @@ namespace Azure.ResourceManager.Cdn
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new CdnOriginGroupResource(Client, data));
+                context,
+                "CdnOriginGroupCollection.GetAll"), data => new CdnOriginGroupResource(Client, data));
         }
 
         /// <summary>

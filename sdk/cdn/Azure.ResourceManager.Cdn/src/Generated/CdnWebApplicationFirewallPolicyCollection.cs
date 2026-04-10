@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Cdn
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CdnWebApplicationFirewallPolicyData, CdnWebApplicationFirewallPolicyResource>(new PoliciesGetAllAsyncCollectionResultOfT(_policiesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new CdnWebApplicationFirewallPolicyResource(Client, data));
+            return new AsyncPageableWrapper<CdnWebApplicationFirewallPolicyData, CdnWebApplicationFirewallPolicyResource>(new PoliciesGetAllAsyncCollectionResultOfT(_policiesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CdnWebApplicationFirewallPolicyCollection.GetAll"), data => new CdnWebApplicationFirewallPolicyResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CdnWebApplicationFirewallPolicyData, CdnWebApplicationFirewallPolicyResource>(new PoliciesGetAllCollectionResultOfT(_policiesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new CdnWebApplicationFirewallPolicyResource(Client, data));
+            return new PageableWrapper<CdnWebApplicationFirewallPolicyData, CdnWebApplicationFirewallPolicyResource>(new PoliciesGetAllCollectionResultOfT(_policiesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CdnWebApplicationFirewallPolicyCollection.GetAll"), data => new CdnWebApplicationFirewallPolicyResource(Client, data));
         }
 
         /// <summary>

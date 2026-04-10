@@ -89,6 +89,30 @@ namespace Azure.ResourceManager.Cdn
             return message;
         }
 
+        internal HttpMessage CreateUpdateRequest(Guid subscriptionId, string resourceGroupName, string profileName, string ruleSetName, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Cdn/profiles/", false);
+            uri.AppendPath(profileName, true);
+            uri.AppendPath("/ruleSets/", false);
+            uri.AppendPath(ruleSetName, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Put;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
         internal HttpMessage CreateDeleteRequest(Guid subscriptionId, string resourceGroupName, string profileName, string ruleSetName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();

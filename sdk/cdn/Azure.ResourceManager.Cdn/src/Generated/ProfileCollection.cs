@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Cdn
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ProfileData, ProfileResource>(new ProfilesGetByResourceGroupAsyncCollectionResultOfT(_profilesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new ProfileResource(Client, data));
+            return new AsyncPageableWrapper<ProfileData, ProfileResource>(new ProfilesGetByResourceGroupAsyncCollectionResultOfT(_profilesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ProfileCollection.GetAll"), data => new ProfileResource(Client, data));
         }
 
         /// <summary>
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ProfileData, ProfileResource>(new ProfilesGetByResourceGroupCollectionResultOfT(_profilesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new ProfileResource(Client, data));
+            return new PageableWrapper<ProfileData, ProfileResource>(new ProfilesGetByResourceGroupCollectionResultOfT(_profilesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ProfileCollection.GetAll"), data => new ProfileResource(Client, data));
         }
 
         /// <summary>

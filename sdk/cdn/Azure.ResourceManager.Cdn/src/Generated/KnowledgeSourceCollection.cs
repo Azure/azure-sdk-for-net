@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Cdn
         {
             if (id.ResourceType != WebAgentResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, WebAgentResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, WebAgentResource.ResourceType), nameof(id));
             }
         }
 
@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.Cdn
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<KnowledgeSourceData, KnowledgeSourceResource>(new KnowledgeSourcesGetByWebAgentAsyncCollectionResultOfT(_knowledgeSourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new KnowledgeSourceResource(Client, data));
+            return new AsyncPageableWrapper<KnowledgeSourceData, KnowledgeSourceResource>(new KnowledgeSourcesGetByWebAgentAsyncCollectionResultOfT(
+                _knowledgeSourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "KnowledgeSourceCollection.GetAll"), data => new KnowledgeSourceResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.Cdn
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<KnowledgeSourceData, KnowledgeSourceResource>(new KnowledgeSourcesGetByWebAgentCollectionResultOfT(_knowledgeSourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new KnowledgeSourceResource(Client, data));
+            return new PageableWrapper<KnowledgeSourceData, KnowledgeSourceResource>(new KnowledgeSourcesGetByWebAgentCollectionResultOfT(
+                _knowledgeSourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "KnowledgeSourceCollection.GetAll"), data => new KnowledgeSourceResource(Client, data));
         }
 
         /// <summary>

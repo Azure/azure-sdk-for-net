@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.Cdn
         private readonly string _profileName;
         private readonly string _ruleSetName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of RulesGetByRuleSetCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Rules client used to send requests. </param>
@@ -30,7 +31,8 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium or CDN profile which is unique within the resource group. </param>
         /// <param name="ruleSetName"> Name of the rule set under the profile which is unique globally. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public RulesGetByRuleSetCollectionResultOfT(Rules client, Guid subscriptionId, string resourceGroupName, string profileName, string ruleSetName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public RulesGetByRuleSetCollectionResultOfT(Rules client, Guid subscriptionId, string resourceGroupName, string profileName, string ruleSetName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -38,6 +40,7 @@ namespace Azure.ResourceManager.Cdn
             _profileName = profileName;
             _ruleSetName = ruleSetName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of RulesGetByRuleSetCollectionResultOfT as an enumerable collection. </summary>
@@ -70,7 +73,7 @@ namespace Azure.ResourceManager.Cdn
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByRuleSetRequest(nextLink, _subscriptionId, _resourceGroupName, _profileName, _ruleSetName, _context) : _client.CreateGetByRuleSetRequest(_subscriptionId, _resourceGroupName, _profileName, _ruleSetName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("FrontDoorRuleCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

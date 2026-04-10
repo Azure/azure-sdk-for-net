@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Cdn
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<WebAgentData, WebAgentResource>(new WebAgentsGetByResourceGroupAsyncCollectionResultOfT(_webAgentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new WebAgentResource(Client, data));
+            return new AsyncPageableWrapper<WebAgentData, WebAgentResource>(new WebAgentsGetByResourceGroupAsyncCollectionResultOfT(_webAgentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "WebAgentCollection.GetAll"), data => new WebAgentResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<WebAgentData, WebAgentResource>(new WebAgentsGetByResourceGroupCollectionResultOfT(_webAgentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new WebAgentResource(Client, data));
+            return new PageableWrapper<WebAgentData, WebAgentResource>(new WebAgentsGetByResourceGroupCollectionResultOfT(_webAgentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "WebAgentCollection.GetAll"), data => new WebAgentResource(Client, data));
         }
 
         /// <summary>

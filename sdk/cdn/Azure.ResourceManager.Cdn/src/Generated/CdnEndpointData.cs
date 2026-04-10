@@ -308,6 +308,20 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
+        /// <summary> The custom domains under the endpoint. </summary>
+        [WirePath("properties.customDomains")]
+        public IReadOnlyList<DeepCreatedCustomDomain> DeepCreatedCustomDomains
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new EndpointProperties();
+                }
+                return Properties.DeepCreatedCustomDomains;
+            }
+        }
+
         /// <summary> Resource status of the endpoint. </summary>
         [WirePath("properties.resourceState")]
         public EndpointResourceState? ResourceState
@@ -325,20 +339,6 @@ namespace Azure.ResourceManager.Cdn
             get
             {
                 return Properties is null ? default : Properties.ProvisioningState;
-            }
-        }
-
-        /// <summary> The custom domains under the endpoint. </summary>
-        [WirePath("properties.customDomains")]
-        public IReadOnlyList<DeepCreatedCustomDomain> DeepCreatedCustomDomains
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new EndpointProperties();
-                }
-                return Properties.DeepCreatedCustomDomains;
             }
         }
     }

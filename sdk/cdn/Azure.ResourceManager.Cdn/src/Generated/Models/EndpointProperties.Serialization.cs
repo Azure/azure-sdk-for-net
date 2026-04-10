@@ -13,6 +13,7 @@ using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
+    /// <summary> The JSON object that contains the properties required to create an endpoint. </summary>
     internal partial class EndpointProperties : EndpointPropertiesUpdateParameters, IJsonModel<EndpointProperties>
     {
         /// <summary> Initializes a new instance of <see cref="EndpointProperties"/> for deserialization. </summary>
@@ -101,7 +102,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DeepCreatedCustomDomains))
+            if (options.Format != "W" && Optional.IsCollectionDefined(DeepCreatedCustomDomains))
             {
                 writer.WritePropertyName("customDomains"u8);
                 writer.WriteStartArray();

@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.Cdn
         private readonly string _profileName;
         private readonly string _endpointName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of EndpointsGetResourceUsagesAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Endpoints client used to send requests. </param>
@@ -31,7 +32,8 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium or CDN profile which is unique within the resource group. </param>
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public EndpointsGetResourceUsagesAsyncCollectionResultOfT(Endpoints client, Guid subscriptionId, string resourceGroupName, string profileName, string endpointName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public EndpointsGetResourceUsagesAsyncCollectionResultOfT(Endpoints client, Guid subscriptionId, string resourceGroupName, string profileName, string endpointName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -39,6 +41,7 @@ namespace Azure.ResourceManager.Cdn
             _profileName = profileName;
             _endpointName = endpointName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of EndpointsGetResourceUsagesAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -71,7 +74,7 @@ namespace Azure.ResourceManager.Cdn
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetResourceUsagesRequest(nextLink, _subscriptionId, _resourceGroupName, _profileName, _endpointName, _context) : _client.CreateGetResourceUsagesRequest(_subscriptionId, _resourceGroupName, _profileName, _endpointName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("CdnEndpointResource.GetResourceUsages");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

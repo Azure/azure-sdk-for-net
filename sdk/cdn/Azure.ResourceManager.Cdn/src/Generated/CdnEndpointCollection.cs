@@ -27,8 +27,6 @@ namespace Azure.ResourceManager.Cdn
     {
         private readonly ClientDiagnostics _endpointsClientDiagnostics;
         private readonly Endpoints _endpointsRestClient;
-        private readonly ClientDiagnostics _customDomainsClientDiagnostics;
-        private readonly CustomDomains _customDomainsRestClient;
 
         /// <summary> Initializes a new instance of CdnEndpointCollection for mocking. </summary>
         protected CdnEndpointCollection()
@@ -43,8 +41,6 @@ namespace Azure.ResourceManager.Cdn
             TryGetApiVersion(CdnEndpointResource.ResourceType, out string cdnEndpointApiVersion);
             _endpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", CdnEndpointResource.ResourceType.Namespace, Diagnostics);
             _endpointsRestClient = new Endpoints(_endpointsClientDiagnostics, Pipeline, Endpoint, cdnEndpointApiVersion ?? "2025-09-01-preview");
-            _customDomainsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", CdnEndpointResource.ResourceType.Namespace, Diagnostics);
-            _customDomainsRestClient = new CustomDomains(_customDomainsClientDiagnostics, Pipeline, Endpoint, cdnEndpointApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -54,7 +50,7 @@ namespace Azure.ResourceManager.Cdn
         {
             if (id.ResourceType != ProfileResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ProfileResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ProfileResource.ResourceType), nameof(id));
             }
         }
 
@@ -297,7 +293,13 @@ namespace Azure.ResourceManager.Cdn
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CdnEndpointData, CdnEndpointResource>(new EndpointsGetByProfileAsyncCollectionResultOfT(_endpointsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new CdnEndpointResource(Client, data));
+            return new AsyncPageableWrapper<CdnEndpointData, CdnEndpointResource>(new EndpointsGetByProfileAsyncCollectionResultOfT(
+                _endpointsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "CdnEndpointCollection.GetAll"), data => new CdnEndpointResource(Client, data));
         }
 
         /// <summary>
@@ -325,7 +327,13 @@ namespace Azure.ResourceManager.Cdn
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CdnEndpointData, CdnEndpointResource>(new EndpointsGetByProfileCollectionResultOfT(_endpointsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new CdnEndpointResource(Client, data));
+            return new PageableWrapper<CdnEndpointData, CdnEndpointResource>(new EndpointsGetByProfileCollectionResultOfT(
+                _endpointsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "CdnEndpointCollection.GetAll"), data => new CdnEndpointResource(Client, data));
         }
 
         /// <summary>

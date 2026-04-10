@@ -19,16 +19,19 @@ namespace Azure.ResourceManager.Cdn
         private readonly ManagedRuleSets _client;
         private readonly Guid _subscriptionId;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of ManagedRuleSetsGetManagedRuleSetsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The ManagedRuleSets client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ManagedRuleSetsGetManagedRuleSetsCollectionResultOfT(ManagedRuleSets client, Guid subscriptionId, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public ManagedRuleSetsGetManagedRuleSetsCollectionResultOfT(ManagedRuleSets client, Guid subscriptionId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of ManagedRuleSetsGetManagedRuleSetsCollectionResultOfT as an enumerable collection. </summary>
@@ -61,7 +64,7 @@ namespace Azure.ResourceManager.Cdn
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetManagedRuleSetsRequest(nextLink, _subscriptionId, _context) : _client.CreateGetManagedRuleSetsRequest(_subscriptionId, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableCdnSubscriptionResource.GetManagedRuleSets");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

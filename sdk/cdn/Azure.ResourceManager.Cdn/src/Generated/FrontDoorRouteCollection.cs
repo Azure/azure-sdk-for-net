@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Cdn
         {
             if (id.ResourceType != FrontDoorEndpointResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, FrontDoorEndpointResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, FrontDoorEndpointResource.ResourceType), nameof(id));
             }
         }
 
@@ -299,7 +299,8 @@ namespace Azure.ResourceManager.Cdn
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new FrontDoorRouteResource(Client, data));
+                context,
+                "FrontDoorRouteCollection.GetAll"), data => new FrontDoorRouteResource(Client, data));
         }
 
         /// <summary>
@@ -333,7 +334,8 @@ namespace Azure.ResourceManager.Cdn
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new FrontDoorRouteResource(Client, data));
+                context,
+                "FrontDoorRouteCollection.GetAll"), data => new FrontDoorRouteResource(Client, data));
         }
 
         /// <summary>

@@ -1,5 +1,5 @@
 directory: specification/cdn/resource-manager/Microsoft.Cdn/Cdn
-commit: ff3e9dbd20eec8d90b3808464fb769b71bd3d34f
+commit: ffdcd32f4ecc50da2291b564eefae3fc05398099
 repo: Azure/azure-rest-api-specs
 cleanup: true
 emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
