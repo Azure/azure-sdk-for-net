@@ -113,10 +113,19 @@ public class OutputItemReasoningItemBuilder : OutputItemBuilder<OutputItemReason
     public virtual ResponseOutputItemDoneEvent EmitDone()
     {
         var completedSummaries = new List<SummaryTextContent>();
-        foreach (var builder in _summaryBuilders)
+        for (int i = 0; i < _summaryBuilders.Count; i++)
         {
+            var builder = _summaryBuilders[i];
+            if (builder.FinalText is null)
+            {
+                throw new ResponseValidationException(
+                [
+                    new ValidationError($"$.summary[{i}]", "Summary part must be finalized (EmitTextDone + EmitDone) before reasoning EmitDone().")
+                ]);
+            }
+
             completedSummaries.Add(new SummaryTextContent(
-                text: builder.FinalText ?? string.Empty));
+                text: builder.FinalText));
         }
 
         var item = new OutputItemReasoningItem(

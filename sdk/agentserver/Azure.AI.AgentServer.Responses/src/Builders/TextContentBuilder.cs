@@ -102,14 +102,11 @@ public class TextContentBuilder
             throw new InvalidOperationException("EmitTextDone has already been called.");
 
         _textDone = true;
-        var merged = string.Concat(_deltaFragments);
-        if (string.IsNullOrEmpty(merged) && finalText != null)
-            merged = finalText;
-        _finalText = merged;
+        _finalText = finalText ?? string.Concat(_deltaFragments);
 
         return new ResponseTextDoneEvent(
             _stream.NextSequenceNumber(), _itemId, _outputIndex, _contentIndex,
-            merged, Array.Empty<ResponseLogProb>());
+            _finalText, Array.Empty<ResponseLogProb>());
     }
 
     /// <summary>
