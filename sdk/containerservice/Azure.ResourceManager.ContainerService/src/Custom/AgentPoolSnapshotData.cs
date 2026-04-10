@@ -17,3 +17,5 @@ namespace Azure.ResourceManager.ContainerService
         public bool? EnableFips => IsFipsEnabled;
     }
 }
+
+// Test comment for batching validation - DO NOT MERGE
