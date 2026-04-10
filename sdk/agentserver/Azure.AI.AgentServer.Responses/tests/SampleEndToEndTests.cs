@@ -828,6 +828,38 @@ public class SampleEndToEndTests
         Assert.That(text, Does.Match(@"\d+ bytes")); // Confirms image bytes were decoded
     }
 
+    [Test]
+    public async Task Sample13_ImageFileIdHandler_EchoesFileId()
+    {
+        using var factory = new TestWebApplicationFactory(
+            configureTestServices: services =>
+            {
+                services.AddSingleton<ResponseHandler, Sample13Snippets.ImageFileIdHandler>();
+            });
+        using var client = factory.CreateClient();
+
+        var body = await PostJsonAsync(client, """
+            {
+              "model": "vision",
+              "input": [
+                {
+                  "type": "message",
+                  "role": "user",
+                  "content": [
+                    {"type": "input_text", "text": "Analyze this"},
+                    {"type": "input_image", "file_id": "/images/landscape.png", "detail": "auto"}
+                  ]
+                }
+              ]
+            }
+            """);
+
+        using var doc = JsonDocument.Parse(body);
+        var text = GetOutputText(doc.RootElement);
+        Assert.That(text, Does.Contain("1 image(s)"));
+        Assert.That(text, Does.Contain("/images/landscape.png"));
+    }
+
     // ═══════════════════════════════════════════════════════════════════
     //  Sample 14 — File Inputs
     // ═══════════════════════════════════════════════════════════════════

@@ -39,6 +39,13 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
             Assert.That(handler, Is.Not.Null);
         }
 
+        [Test]
+        public void Implement_ImageFileIdHandler()
+        {
+            var handler = new ImageFileIdHandler();
+            Assert.That(handler, Is.Not.Null);
+        }
+
         #region Snippet:Responses_Sample13_ImageUrlHandler
 
         public class ImageUrlHandler : ResponseHandler
@@ -111,6 +118,43 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
                 {
                     reply = "No base64 images found in the input.";
                 }
+
+                foreach (var evt in stream.OutputItemMessage(reply))
+                    yield return evt;
+
+                yield return stream.EmitCompleted();
+            }
+        }
+
+        #endregion
+
+        #region Snippet:Responses_Sample13_ImageFileIdHandler
+
+        public class ImageFileIdHandler : ResponseHandler
+        {
+            public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
+                CreateResponse request,
+                ResponseContext context,
+                [EnumeratorCancellation] CancellationToken cancellationToken)
+            {
+                var stream = new ResponseEventStream(context, request);
+
+                yield return stream.EmitCreated();
+                yield return stream.EmitInProgress();
+
+                var items = await context.GetInputItemsAsync(cancellationToken: cancellationToken);
+
+                // Find image content parts that use file_id (a path in your file store).
+                var images = items
+                    .OfType<ItemMessage>()
+                    .SelectMany(msg => msg.GetContentExpanded())
+                    .OfType<MessageContentInputImageContent>()
+                    .Where(img => img.FileId != null)
+                    .ToList();
+
+                string reply = images.Count > 0
+                    ? $"Received {images.Count} image(s) by file ID. First: {images[0].FileId}"
+                    : "No file_id images found in the input.";
 
                 foreach (var evt in stream.OutputItemMessage(reply))
                     yield return evt;
