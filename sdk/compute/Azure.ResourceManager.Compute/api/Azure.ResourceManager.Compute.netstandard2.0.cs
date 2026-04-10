@@ -9176,17 +9176,12 @@ namespace Azure.ResourceManager.Compute.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.SshPublicKeyPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.SshPublicKeyPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class StatusCodeCount : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.StatusCodeCount>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.StatusCodeCount>
+    [System.ObsoleteAttribute("CloudService operations are no longer supported.")]
+    public partial class StatusCodeCount
     {
         internal StatusCodeCount() { }
         public string Code { get { throw null; } }
         public int? Count { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Compute.Models.StatusCodeCount System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.StatusCodeCount>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.StatusCodeCount>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Compute.Models.StatusCodeCount System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.StatusCodeCount>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.StatusCodeCount>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.StatusCodeCount>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct StorageAccountStrategy : System.IEquatable<Azure.ResourceManager.Compute.Models.StorageAccountStrategy>
