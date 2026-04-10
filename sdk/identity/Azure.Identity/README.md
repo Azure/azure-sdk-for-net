@@ -14,6 +14,9 @@ Install the Azure Identity client library for .NET with NuGet:
 dotnet add package Azure.Identity
 ```
 
+> [!NOTE]
+> Starting with `Azure.Core` 1.53.0, all credential types (including `DefaultAzureCredential`) are bundled directly in `Azure.Core`. If your project already targets `Azure.Core` 1.53.0 or later and you do not use any `Azure.Identity`-specific APIs, you can omit the `Azure.Identity` package reference entirely. See the [Migration Guide](./MigrationGuide.md) for upgrade and compatibility details.
+
 ### Prerequisites
 
 * An [Azure subscription][azure_sub].
@@ -32,6 +35,8 @@ A credential is a class that contains or can obtain the data needed for a servic
 The Azure Identity library focuses on OAuth authentication with Microsoft Entra ID. It offers numerous credentials capable of acquiring a Microsoft Entra token to authenticate service requests. Each credential in this library is an implementation of the `TokenCredential` abstract class in [Azure.Core][azure_core_library], and any of them can be used to construct service clients capable of authenticating with a `TokenCredential`.
 
 See [Credential classes](#credential-classes) for a complete listing of available credential types.
+
+For details on the assembly consolidation introduced in version 1.53 and how to handle `CS0433` conflicts when mixing package versions, see the [Migration Guide](./MigrationGuide.md).
 
 ### DefaultAzureCredential
 
