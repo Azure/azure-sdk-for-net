@@ -14,9 +14,11 @@ These rules enforce internal implementation correctness and **cannot be suppress
 |------|-------------|-----|
 | [**AZC0013**](docs/AZC0013.md) | Use `TaskCreationOptions.RunContinuationsAsynchronously` | ✅ |
 | [**AZC0101**](docs/AZC0101.md) | Do not use `ConfigureAwait(true)` | ✅ |
-| [**AZC0108**](docs/AZC0108.md) | Incorrect `async` parameter value | — |
+| [**AZC0108**](docs/AZC0108.md) | Incorrect `async` parameter value | ✅* |
 | [**AZC0109**](docs/AZC0109.md) | Misuse of `async` parameter | — |
 | [**AZC0111**](docs/AZC0111.md) | Do not use `EnsureCompleted` in possibly async scope | — |
+
+\* Fix only offered when containing method has a `bool async` parameter to forward.
 
 ### Suppressible (Warning severity)
 
