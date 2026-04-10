@@ -50,9 +50,10 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
                 // url_citation — cites a web URL referenced in the text.
                 var annotations = new Annotation[]
                 {
-                    new FilePath(fileId: "file-abc123", index: 0),
-                    new FilePath(fileId: "file-def456", index: 1),
-                    new FileCitationBody(fileId: "file-src-001", index: 2, filename: "research-paper.pdf"),
+                    new FilePath(fileId: "/reports/monthly-summary.pdf", index: 0),
+                    new FilePath(fileId: "/exports/data.csv", index: 1),
+                    new FilePath(fileId: "/images/chart.png", index: 2),
+                    new FileCitationBody(fileId: "/sources/research-paper.pdf", index: 3, filename: "research-paper.pdf"),
                     new UrlCitationBody(url: new Uri("https://example.com/docs/guide"), startIndex: 0, endIndex: 29, title: "Developer Guide"),
                 };
 

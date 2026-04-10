@@ -897,6 +897,38 @@ public class SampleEndToEndTests
         Assert.That(text, Does.Contain("https://example.com/data.csv"));
     }
 
+    [Test]
+    public async Task Sample14_FileIdHandler_ExtractsFileId()
+    {
+        using var factory = new TestWebApplicationFactory(
+            configureTestServices: services =>
+            {
+                services.AddSingleton<ResponseHandler, Sample14Snippets.FileIdHandler>();
+            });
+        using var client = factory.CreateClient();
+
+        var body = await PostJsonAsync(client, """
+            {
+              "model": "test",
+              "input": [
+                {
+                  "type": "message",
+                  "role": "user",
+                  "content": [
+                    {"type": "input_text", "text": "Review this"},
+                    {"type": "input_file", "filename": "report.pdf", "file_id": "/uploads/report.pdf"}
+                  ]
+                }
+              ]
+            }
+            """);
+
+        using var doc = JsonDocument.Parse(body);
+        var text = GetOutputText(doc.RootElement);
+        Assert.That(text, Does.Contain("report.pdf"));
+        Assert.That(text, Does.Contain("/uploads/report.pdf"));
+    }
+
     // ═══════════════════════════════════════════════════════════════════
     //  Sample 15 — File Annotations
     // ═══════════════════════════════════════════════════════════════════
@@ -923,23 +955,25 @@ public class SampleEndToEndTests
         Assert.That(content.GetProperty("text").GetString(), Is.EqualTo("Here are your files and sources."));
 
         var annotations = content.GetProperty("annotations");
-        Assert.That(annotations.GetArrayLength(), Is.EqualTo(4));
+        Assert.That(annotations.GetArrayLength(), Is.EqualTo(5));
 
         // file_path annotations
         Assert.That(annotations[0].GetProperty("type").GetString(), Is.EqualTo("file_path"));
-        Assert.That(annotations[0].GetProperty("file_id").GetString(), Is.EqualTo("file-abc123"));
+        Assert.That(annotations[0].GetProperty("file_id").GetString(), Is.EqualTo("/reports/monthly-summary.pdf"));
         Assert.That(annotations[1].GetProperty("type").GetString(), Is.EqualTo("file_path"));
-        Assert.That(annotations[1].GetProperty("file_id").GetString(), Is.EqualTo("file-def456"));
+        Assert.That(annotations[1].GetProperty("file_id").GetString(), Is.EqualTo("/exports/data.csv"));
+        Assert.That(annotations[2].GetProperty("type").GetString(), Is.EqualTo("file_path"));
+        Assert.That(annotations[2].GetProperty("file_id").GetString(), Is.EqualTo("/images/chart.png"));
 
         // file_citation annotation
-        Assert.That(annotations[2].GetProperty("type").GetString(), Is.EqualTo("file_citation"));
-        Assert.That(annotations[2].GetProperty("file_id").GetString(), Is.EqualTo("file-src-001"));
-        Assert.That(annotations[2].GetProperty("filename").GetString(), Is.EqualTo("research-paper.pdf"));
+        Assert.That(annotations[3].GetProperty("type").GetString(), Is.EqualTo("file_citation"));
+        Assert.That(annotations[3].GetProperty("file_id").GetString(), Is.EqualTo("/sources/research-paper.pdf"));
+        Assert.That(annotations[3].GetProperty("filename").GetString(), Is.EqualTo("research-paper.pdf"));
 
         // url_citation annotation
-        Assert.That(annotations[3].GetProperty("type").GetString(), Is.EqualTo("url_citation"));
-        Assert.That(annotations[3].GetProperty("url").GetString(), Is.EqualTo("https://example.com/docs/guide"));
-        Assert.That(annotations[3].GetProperty("title").GetString(), Is.EqualTo("Developer Guide"));
+        Assert.That(annotations[4].GetProperty("type").GetString(), Is.EqualTo("url_citation"));
+        Assert.That(annotations[4].GetProperty("url").GetString(), Is.EqualTo("https://example.com/docs/guide"));
+        Assert.That(annotations[4].GetProperty("title").GetString(), Is.EqualTo("Developer Guide"));
     }
 
     // ═══════════════════════════════════════════════════════════════════

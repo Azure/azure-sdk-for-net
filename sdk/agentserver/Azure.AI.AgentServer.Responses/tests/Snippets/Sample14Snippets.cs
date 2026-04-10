@@ -39,6 +39,13 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
             Assert.That(handler, Is.Not.Null);
         }
 
+        [Test]
+        public void Implement_FileIdHandler()
+        {
+            var handler = new FileIdHandler();
+            Assert.That(handler, Is.Not.Null);
+        }
+
         #region Snippet:Responses_Sample14_FileBase64Handler
 
         public class FileBase64Handler : ResponseHandler
@@ -113,6 +120,48 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
                 else
                 {
                     reply = "No file URL found in the input.";
+                }
+
+                foreach (var evt in stream.OutputItemMessage(reply))
+                    yield return evt;
+
+                yield return stream.EmitCompleted();
+            }
+        }
+
+        #endregion
+
+        #region Snippet:Responses_Sample14_FileIdHandler
+
+        public class FileIdHandler : ResponseHandler
+        {
+            public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
+                CreateResponse request,
+                ResponseContext context,
+                [EnumeratorCancellation] CancellationToken cancellationToken)
+            {
+                var stream = new ResponseEventStream(context, request);
+
+                yield return stream.EmitCreated();
+                yield return stream.EmitInProgress();
+
+                var items = await context.GetInputItemsAsync(cancellationToken: cancellationToken);
+
+                var files = items
+                    .OfType<ItemMessage>()
+                    .SelectMany(msg => msg.GetContentExpanded())
+                    .OfType<MessageContentInputFileContent>()
+                    .ToList();
+
+                string reply;
+                if (files.Count > 0 && files[0].FileId != null)
+                {
+                    string filename = files[0].Filename ?? "unknown";
+                    reply = $"Received file '{filename}' with ID: {files[0].FileId}";
+                }
+                else
+                {
+                    reply = "No file ID found in the input.";
                 }
 
                 foreach (var evt in stream.OutputItemMessage(reply))

@@ -103,6 +103,50 @@ public class FileUrlHandler : ResponseHandler
 }
 ```
 
+## Handle file ID input
+
+Clients can reference a file already stored in a file store by passing a `file_id`. The ID is an opaque string — a file path, blob key, database record, or any identifier your store uses:
+
+```C# Snippet:Responses_Sample14_FileIdHandler
+public class FileIdHandler : ResponseHandler
+{
+    public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
+        CreateResponse request,
+        ResponseContext context,
+        [EnumeratorCancellation] CancellationToken cancellationToken)
+    {
+        var stream = new ResponseEventStream(context, request);
+
+        yield return stream.EmitCreated();
+        yield return stream.EmitInProgress();
+
+        var items = await context.GetInputItemsAsync(cancellationToken: cancellationToken);
+
+        var files = items
+            .OfType<ItemMessage>()
+            .SelectMany(msg => msg.GetContentExpanded())
+            .OfType<MessageContentInputFileContent>()
+            .ToList();
+
+        string reply;
+        if (files.Count > 0 && files[0].FileId != null)
+        {
+            string filename = files[0].Filename ?? "unknown";
+            reply = $"Received file '{filename}' with ID: {files[0].FileId}";
+        }
+        else
+        {
+            reply = "No file ID found in the input.";
+        }
+
+        foreach (var evt in stream.OutputItemMessage(reply))
+            yield return evt;
+
+        yield return stream.EmitCompleted();
+    }
+}
+```
+
 ## Start the server
 
 ```C# Snippet:Responses_Sample14_StartFileHandler
@@ -153,6 +197,31 @@ curl -X POST http://localhost:8088/responses \
             "type": "input_file",
             "filename": "data.csv",
             "file_url": "https://example.com/data.csv"
+          }
+        ]
+      }
+    ]
+  }' \
+  --no-buffer
+```
+
+### Send a file by ID
+
+```bash
+curl -X POST http://localhost:8088/responses \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "file-processor",
+    "input": [
+      {
+        "type": "message",
+        "role": "user",
+        "content": [
+          {"type": "input_text", "text": "Review this report"},
+          {
+            "type": "input_file",
+            "filename": "report.pdf",
+            "file_id": "/uploads/report.pdf"
           }
         ]
       }

@@ -4,7 +4,7 @@ This sample shows how to attach annotations to a message output item. Annotation
 
 The protocol supports several annotation types, and they can be mixed freely on the same message:
 
-- **`file_path`** — references a file by ID in a storage backend of your choice. The `file_id` is an opaque identifier that your client and server agree on (blob storage, a database record, etc.). Use this when the handler produces files (reports, images, data exports) and the client needs to retrieve them.
+- **`file_path`** — references a file by ID. The `file_id` is an opaque string that your client and server agree on — a file path, a blob storage key, a database record ID, or any format your file store uses. Use this when the handler produces files (reports, images, data exports) and the client needs to retrieve them.
 - **`file_citation`** — cites a file stored in a file store of your choice. Carries a `file_id`, `filename`, and positional `index`.
 - **`url_citation`** — cites a web URL referenced in the text. Carries `url`, `title`, and character range (`start_index` / `end_index`) so the client can highlight the cited span.
 - For use cases that involve creating or modifying files on a file system, consider using the **`apply_patch_call`** tool output item instead.
@@ -17,7 +17,7 @@ dotnet add package Azure.AI.AgentServer.Responses --prerelease
 
 ## Implement the handler
 
-Use the `OutputItemMessage(text, annotations)` convenience method to emit a message with `file_path` annotations in one call. Each `FilePath` annotation takes a `fileId` (your storage reference) and an `index` (the annotation's position):
+Use the `OutputItemMessage(text, annotations)` convenience method to emit a message with annotations in one call. Each `FilePath` annotation takes a `fileId` (a file path or any identifier your file store uses) and an `index`:
 
 ```C# Snippet:Responses_Sample15_FileAnnotationsHandler
 public class FileAnnotationsHandler : ResponseHandler
@@ -38,9 +38,10 @@ public class FileAnnotationsHandler : ResponseHandler
         // url_citation — cites a web URL referenced in the text.
         var annotations = new Annotation[]
         {
-            new FilePath(fileId: "file-abc123", index: 0),
-            new FilePath(fileId: "file-def456", index: 1),
-            new FileCitationBody(fileId: "file-src-001", index: 2, filename: "research-paper.pdf"),
+            new FilePath(fileId: "/reports/monthly-summary.pdf", index: 0),
+            new FilePath(fileId: "/exports/data.csv", index: 1),
+            new FilePath(fileId: "/images/chart.png", index: 2),
+            new FileCitationBody(fileId: "/sources/research-paper.pdf", index: 3, filename: "research-paper.pdf"),
             new UrlCitationBody(url: new Uri("https://example.com/docs/guide"), startIndex: 0, endIndex: 29, title: "Developer Guide"),
         };
 
@@ -83,9 +84,10 @@ The response body contains a message output item with annotations in the `conten
       "type": "output_text",
       "text": "Here are your files and sources.",
       "annotations": [
-        { "type": "file_path", "file_id": "file-abc123", "index": 0 },
-        { "type": "file_path", "file_id": "file-def456", "index": 1 },
-        { "type": "file_citation", "file_id": "file-src-001", "index": 2, "filename": "research-paper.pdf" },
+        { "type": "file_path", "file_id": "/reports/monthly-summary.pdf", "index": 0 },
+        { "type": "file_path", "file_id": "/exports/data.csv", "index": 1 },
+        { "type": "file_path", "file_id": "/images/chart.png", "index": 2 },
+        { "type": "file_citation", "file_id": "/sources/research-paper.pdf", "index": 3, "filename": "research-paper.pdf" },
         { "type": "url_citation", "url": "https://example.com/docs/guide", "start_index": 0, "end_index": 29, "title": "Developer Guide" }
       ]
     }
