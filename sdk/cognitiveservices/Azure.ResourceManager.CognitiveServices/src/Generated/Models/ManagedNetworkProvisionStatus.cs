@@ -22,15 +22,15 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedNetworkProvisionStatus"/>. </summary>
-        /// <param name="status"> Status for the managed network of a cognitive services account. </param>
+        /// <param name="managedNetworkStatus"> Status for the managed network of a cognitive services account. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedNetworkProvisionStatus(ManagedNetworkStatus? status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedNetworkProvisionStatus(ManagedNetworkStatus? managedNetworkStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Status = status;
+            ManagedNetworkStatus = managedNetworkStatus;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Status for the managed network of a cognitive services account. </summary>
-        public ManagedNetworkStatus? Status { get; set; }
+        public ManagedNetworkStatus? ManagedNetworkStatus { get; set; }
     }
 }

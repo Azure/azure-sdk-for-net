@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="properties"> Properties of Cognitive Services RaiBlocklist. </param>
         /// <param name="eTag"> Resource Etag. </param>
         /// <param name="tags"> Resource tags. </param>
-        internal RaiBlocklistData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, RaiBlocklistProperties properties, string eTag, IDictionary<string, string> tags) : base(id, name, resourceType, systemData)
+        internal RaiBlocklistData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, RaiBlocklistProperties properties, string eTag, IDictionary<string, string> tags) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;

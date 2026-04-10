@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> NSP Configuration properties. </param>
-        internal NetworkSecurityPerimeterConfigurationData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, NetworkSecurityPerimeterConfigurationProperties properties) : base(id, name, resourceType, systemData)
+        internal NetworkSecurityPerimeterConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, NetworkSecurityPerimeterConfigurationProperties properties) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;

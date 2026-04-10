@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.CognitiveServices
         private readonly string _category;
         private readonly bool? _includeAll;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of CognitiveServicesProjectConnectionGetAllCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The CognitiveServicesProjectConnection client used to send requests. </param>
@@ -36,7 +37,8 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="category"> Category of the connection. </param>
         /// <param name="includeAll"> query parameter that indicates if get connection call should return both connections and datastores. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public CognitiveServicesProjectConnectionGetAllCollectionResultOfT(CognitiveServicesProjectConnection client, string subscriptionId, string resourceGroupName, string accountName, string projectName, string target, string category, bool? includeAll, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public CognitiveServicesProjectConnectionGetAllCollectionResultOfT(CognitiveServicesProjectConnection client, string subscriptionId, string resourceGroupName, string accountName, string projectName, string target, string category, bool? includeAll, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -47,6 +49,7 @@ namespace Azure.ResourceManager.CognitiveServices
             _category = category;
             _includeAll = includeAll;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of CognitiveServicesProjectConnectionGetAllCollectionResultOfT as an enumerable collection. </summary>
@@ -80,7 +83,7 @@ namespace Azure.ResourceManager.CognitiveServices
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _accountName, _projectName, _target, _category, _includeAll, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _accountName, _projectName, _target, _category, _includeAll, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("CognitiveServicesProjectConnectionCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

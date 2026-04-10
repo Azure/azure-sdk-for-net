@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.CognitiveServices
         private readonly string _accountName;
         private readonly string _deploymentName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of DeploymentsGetSkusCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Deployments client used to send requests. </param>
@@ -30,7 +31,8 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="accountName"> The name of Cognitive Services account. </param>
         /// <param name="deploymentName"> The name of the deployment associated with the Cognitive Services Account. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public DeploymentsGetSkusCollectionResultOfT(Deployments client, string subscriptionId, string resourceGroupName, string accountName, string deploymentName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public DeploymentsGetSkusCollectionResultOfT(Deployments client, string subscriptionId, string resourceGroupName, string accountName, string deploymentName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -38,6 +40,7 @@ namespace Azure.ResourceManager.CognitiveServices
             _accountName = accountName;
             _deploymentName = deploymentName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of DeploymentsGetSkusCollectionResultOfT as an enumerable collection. </summary>
@@ -71,7 +74,7 @@ namespace Azure.ResourceManager.CognitiveServices
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetSkusRequest(nextLink, _subscriptionId, _resourceGroupName, _accountName, _deploymentName, _context) : _client.CreateGetSkusRequest(_subscriptionId, _resourceGroupName, _accountName, _deploymentName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("CognitiveServicesAccountDeploymentResource.GetSkus");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

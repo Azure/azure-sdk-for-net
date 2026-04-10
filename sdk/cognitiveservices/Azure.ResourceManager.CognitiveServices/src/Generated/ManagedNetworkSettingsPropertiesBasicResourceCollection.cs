@@ -25,10 +25,8 @@ namespace Azure.ResourceManager.CognitiveServices
     /// </summary>
     public partial class ManagedNetworkSettingsPropertiesBasicResourceCollection : ArmCollection, IEnumerable<ManagedNetworkSettingsPropertiesBasicResource>, IAsyncEnumerable<ManagedNetworkSettingsPropertiesBasicResource>
     {
-        private readonly ClientDiagnostics _managedNetworkSettingsClientDiagnostics;
-        private readonly ManagedNetworkSettings _managedNetworkSettingsRestClient;
-        private readonly ClientDiagnostics _outboundRulesClientDiagnostics;
-        private readonly OutboundRules _outboundRulesRestClient;
+        private readonly ClientDiagnostics _managedNetworkSettingsPropertiesBasicResourcesClientDiagnostics;
+        private readonly ManagedNetworkSettingsPropertiesBasicResources _managedNetworkSettingsPropertiesBasicResourcesRestClient;
 
         /// <summary> Initializes a new instance of ManagedNetworkSettingsPropertiesBasicResourceCollection for mocking. </summary>
         protected ManagedNetworkSettingsPropertiesBasicResourceCollection()
@@ -41,10 +39,8 @@ namespace Azure.ResourceManager.CognitiveServices
         internal ManagedNetworkSettingsPropertiesBasicResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ManagedNetworkSettingsPropertiesBasicResource.ResourceType, out string managedNetworkSettingsPropertiesBasicResourceApiVersion);
-            _managedNetworkSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", ManagedNetworkSettingsPropertiesBasicResource.ResourceType.Namespace, Diagnostics);
-            _managedNetworkSettingsRestClient = new ManagedNetworkSettings(_managedNetworkSettingsClientDiagnostics, Pipeline, Endpoint, managedNetworkSettingsPropertiesBasicResourceApiVersion ?? "2025-10-01-preview");
-            _outboundRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", ManagedNetworkSettingsPropertiesBasicResource.ResourceType.Namespace, Diagnostics);
-            _outboundRulesRestClient = new OutboundRules(_outboundRulesClientDiagnostics, Pipeline, Endpoint, managedNetworkSettingsPropertiesBasicResourceApiVersion ?? "2025-10-01-preview");
+            _managedNetworkSettingsPropertiesBasicResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", ManagedNetworkSettingsPropertiesBasicResource.ResourceType.Namespace, Diagnostics);
+            _managedNetworkSettingsPropertiesBasicResourcesRestClient = new ManagedNetworkSettingsPropertiesBasicResources(_managedNetworkSettingsPropertiesBasicResourcesClientDiagnostics, Pipeline, Endpoint, managedNetworkSettingsPropertiesBasicResourceApiVersion ?? "2026-03-01");
             ValidateResourceId(id);
         }
 
@@ -54,7 +50,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             if (id.ResourceType != AccountResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AccountResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AccountResource.ResourceType), nameof(id));
             }
         }
 
@@ -71,7 +67,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -86,7 +82,7 @@ namespace Azure.ResourceManager.CognitiveServices
             Argument.AssertNotNullOrEmpty(managedNetworkName, nameof(managedNetworkName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _managedNetworkSettingsClientDiagnostics.CreateScope("ManagedNetworkSettingsPropertiesBasicResourceCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _managedNetworkSettingsPropertiesBasicResourcesClientDiagnostics.CreateScope("ManagedNetworkSettingsPropertiesBasicResourceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -94,11 +90,11 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedNetworkSettingsRestClient.CreatePutRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedNetworkName, ManagedNetworkSettingsPropertiesBasicResourceData.ToRequestContent(data), context);
+                HttpMessage message = _managedNetworkSettingsPropertiesBasicResourcesRestClient.CreatePutRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedNetworkName, ManagedNetworkSettingsPropertiesBasicResourceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CognitiveServicesArmOperation<ManagedNetworkSettingsPropertiesBasicResource> operation = new CognitiveServicesArmOperation<ManagedNetworkSettingsPropertiesBasicResource>(
                     new ManagedNetworkSettingsPropertiesBasicResourceOperationSource(Client),
-                    _managedNetworkSettingsClientDiagnostics,
+                    _managedNetworkSettingsPropertiesBasicResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -129,7 +125,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -144,7 +140,7 @@ namespace Azure.ResourceManager.CognitiveServices
             Argument.AssertNotNullOrEmpty(managedNetworkName, nameof(managedNetworkName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _managedNetworkSettingsClientDiagnostics.CreateScope("ManagedNetworkSettingsPropertiesBasicResourceCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _managedNetworkSettingsPropertiesBasicResourcesClientDiagnostics.CreateScope("ManagedNetworkSettingsPropertiesBasicResourceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -152,11 +148,11 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedNetworkSettingsRestClient.CreatePutRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedNetworkName, ManagedNetworkSettingsPropertiesBasicResourceData.ToRequestContent(data), context);
+                HttpMessage message = _managedNetworkSettingsPropertiesBasicResourcesRestClient.CreatePutRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedNetworkName, ManagedNetworkSettingsPropertiesBasicResourceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CognitiveServicesArmOperation<ManagedNetworkSettingsPropertiesBasicResource> operation = new CognitiveServicesArmOperation<ManagedNetworkSettingsPropertiesBasicResource>(
                     new ManagedNetworkSettingsPropertiesBasicResourceOperationSource(Client),
-                    _managedNetworkSettingsClientDiagnostics,
+                    _managedNetworkSettingsPropertiesBasicResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -187,7 +183,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -199,7 +195,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             Argument.AssertNotNullOrEmpty(managedNetworkName, nameof(managedNetworkName));
 
-            using DiagnosticScope scope = _managedNetworkSettingsClientDiagnostics.CreateScope("ManagedNetworkSettingsPropertiesBasicResourceCollection.Get");
+            using DiagnosticScope scope = _managedNetworkSettingsPropertiesBasicResourcesClientDiagnostics.CreateScope("ManagedNetworkSettingsPropertiesBasicResourceCollection.Get");
             scope.Start();
             try
             {
@@ -207,7 +203,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedNetworkSettingsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedNetworkName, context);
+                HttpMessage message = _managedNetworkSettingsPropertiesBasicResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedNetworkName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ManagedNetworkSettingsPropertiesBasicResourceData> response = Response.FromValue(ManagedNetworkSettingsPropertiesBasicResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -236,7 +232,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -248,7 +244,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             Argument.AssertNotNullOrEmpty(managedNetworkName, nameof(managedNetworkName));
 
-            using DiagnosticScope scope = _managedNetworkSettingsClientDiagnostics.CreateScope("ManagedNetworkSettingsPropertiesBasicResourceCollection.Get");
+            using DiagnosticScope scope = _managedNetworkSettingsPropertiesBasicResourcesClientDiagnostics.CreateScope("ManagedNetworkSettingsPropertiesBasicResourceCollection.Get");
             scope.Start();
             try
             {
@@ -256,7 +252,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedNetworkSettingsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedNetworkName, context);
+                HttpMessage message = _managedNetworkSettingsPropertiesBasicResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedNetworkName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ManagedNetworkSettingsPropertiesBasicResourceData> response = Response.FromValue(ManagedNetworkSettingsPropertiesBasicResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -285,7 +281,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -297,7 +293,13 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ManagedNetworkSettingsPropertiesBasicResourceData, ManagedNetworkSettingsPropertiesBasicResource>(new ManagedNetworkSettingsGetAllAsyncCollectionResultOfT(_managedNetworkSettingsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new ManagedNetworkSettingsPropertiesBasicResource(Client, data));
+            return new AsyncPageableWrapper<ManagedNetworkSettingsPropertiesBasicResourceData, ManagedNetworkSettingsPropertiesBasicResource>(new ManagedNetworkSettingsPropertiesBasicResourcesGetAllAsyncCollectionResultOfT(
+                _managedNetworkSettingsPropertiesBasicResourcesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ManagedNetworkSettingsPropertiesBasicResourceCollection.GetAll"), data => new ManagedNetworkSettingsPropertiesBasicResource(Client, data));
         }
 
         /// <summary>
@@ -313,7 +315,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -325,7 +327,13 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ManagedNetworkSettingsPropertiesBasicResourceData, ManagedNetworkSettingsPropertiesBasicResource>(new ManagedNetworkSettingsGetAllCollectionResultOfT(_managedNetworkSettingsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new ManagedNetworkSettingsPropertiesBasicResource(Client, data));
+            return new PageableWrapper<ManagedNetworkSettingsPropertiesBasicResourceData, ManagedNetworkSettingsPropertiesBasicResource>(new ManagedNetworkSettingsPropertiesBasicResourcesGetAllCollectionResultOfT(
+                _managedNetworkSettingsPropertiesBasicResourcesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ManagedNetworkSettingsPropertiesBasicResourceCollection.GetAll"), data => new ManagedNetworkSettingsPropertiesBasicResource(Client, data));
         }
 
         /// <summary>
@@ -341,7 +349,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -353,7 +361,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             Argument.AssertNotNullOrEmpty(managedNetworkName, nameof(managedNetworkName));
 
-            using DiagnosticScope scope = _managedNetworkSettingsClientDiagnostics.CreateScope("ManagedNetworkSettingsPropertiesBasicResourceCollection.Exists");
+            using DiagnosticScope scope = _managedNetworkSettingsPropertiesBasicResourcesClientDiagnostics.CreateScope("ManagedNetworkSettingsPropertiesBasicResourceCollection.Exists");
             scope.Start();
             try
             {
@@ -361,7 +369,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedNetworkSettingsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedNetworkName, context);
+                HttpMessage message = _managedNetworkSettingsPropertiesBasicResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedNetworkName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ManagedNetworkSettingsPropertiesBasicResourceData> response = default;
@@ -398,7 +406,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -410,7 +418,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             Argument.AssertNotNullOrEmpty(managedNetworkName, nameof(managedNetworkName));
 
-            using DiagnosticScope scope = _managedNetworkSettingsClientDiagnostics.CreateScope("ManagedNetworkSettingsPropertiesBasicResourceCollection.Exists");
+            using DiagnosticScope scope = _managedNetworkSettingsPropertiesBasicResourcesClientDiagnostics.CreateScope("ManagedNetworkSettingsPropertiesBasicResourceCollection.Exists");
             scope.Start();
             try
             {
@@ -418,7 +426,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedNetworkSettingsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedNetworkName, context);
+                HttpMessage message = _managedNetworkSettingsPropertiesBasicResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedNetworkName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ManagedNetworkSettingsPropertiesBasicResourceData> response = default;
@@ -455,7 +463,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -467,7 +475,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             Argument.AssertNotNullOrEmpty(managedNetworkName, nameof(managedNetworkName));
 
-            using DiagnosticScope scope = _managedNetworkSettingsClientDiagnostics.CreateScope("ManagedNetworkSettingsPropertiesBasicResourceCollection.GetIfExists");
+            using DiagnosticScope scope = _managedNetworkSettingsPropertiesBasicResourcesClientDiagnostics.CreateScope("ManagedNetworkSettingsPropertiesBasicResourceCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -475,7 +483,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedNetworkSettingsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedNetworkName, context);
+                HttpMessage message = _managedNetworkSettingsPropertiesBasicResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedNetworkName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ManagedNetworkSettingsPropertiesBasicResourceData> response = default;
@@ -516,7 +524,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -528,7 +536,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             Argument.AssertNotNullOrEmpty(managedNetworkName, nameof(managedNetworkName));
 
-            using DiagnosticScope scope = _managedNetworkSettingsClientDiagnostics.CreateScope("ManagedNetworkSettingsPropertiesBasicResourceCollection.GetIfExists");
+            using DiagnosticScope scope = _managedNetworkSettingsPropertiesBasicResourcesClientDiagnostics.CreateScope("ManagedNetworkSettingsPropertiesBasicResourceCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -536,7 +544,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedNetworkSettingsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedNetworkName, context);
+                HttpMessage message = _managedNetworkSettingsPropertiesBasicResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedNetworkName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ManagedNetworkSettingsPropertiesBasicResourceData> response = default;

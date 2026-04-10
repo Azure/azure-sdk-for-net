@@ -28,12 +28,6 @@ namespace Azure.ResourceManager.CognitiveServices
     {
         private readonly ClientDiagnostics _accountsClientDiagnostics;
         private readonly Accounts _accountsRestClient;
-        private readonly ClientDiagnostics _testRaiExternalSafetyProviderClientDiagnostics;
-        private readonly TestRaiExternalSafetyProvider _testRaiExternalSafetyProviderRestClient;
-        private readonly ClientDiagnostics _privateLinkResourcesClientDiagnostics;
-        private readonly PrivateLinkResources _privateLinkResourcesRestClient;
-        private readonly ClientDiagnostics _managedNetworkProvisionsClientDiagnostics;
-        private readonly ManagedNetworkProvisions _managedNetworkProvisionsRestClient;
 
         /// <summary> Initializes a new instance of AccountCollection for mocking. </summary>
         protected AccountCollection()
@@ -47,13 +41,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             TryGetApiVersion(AccountResource.ResourceType, out string accountApiVersion);
             _accountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", AccountResource.ResourceType.Namespace, Diagnostics);
-            _accountsRestClient = new Accounts(_accountsClientDiagnostics, Pipeline, Endpoint, accountApiVersion ?? "2025-10-01-preview");
-            _testRaiExternalSafetyProviderClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", AccountResource.ResourceType.Namespace, Diagnostics);
-            _testRaiExternalSafetyProviderRestClient = new TestRaiExternalSafetyProvider(_testRaiExternalSafetyProviderClientDiagnostics, Pipeline, Endpoint, accountApiVersion ?? "2025-10-01-preview");
-            _privateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", AccountResource.ResourceType.Namespace, Diagnostics);
-            _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Endpoint, accountApiVersion ?? "2025-10-01-preview");
-            _managedNetworkProvisionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", AccountResource.ResourceType.Namespace, Diagnostics);
-            _managedNetworkProvisionsRestClient = new ManagedNetworkProvisions(_managedNetworkProvisionsClientDiagnostics, Pipeline, Endpoint, accountApiVersion ?? "2025-10-01-preview");
+            _accountsRestClient = new Accounts(_accountsClientDiagnostics, Pipeline, Endpoint, accountApiVersion ?? "2026-03-01");
             ValidateResourceId(id);
         }
 
@@ -63,7 +51,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -80,7 +68,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,7 +126,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -196,7 +184,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -245,7 +233,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,7 +282,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -306,7 +294,7 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CognitiveServicesAccountData, AccountResource>(new AccountsGetByResourceGroupAsyncCollectionResultOfT(_accountsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new AccountResource(Client, data));
+            return new AsyncPageableWrapper<CognitiveServicesAccountData, AccountResource>(new AccountsGetByResourceGroupAsyncCollectionResultOfT(_accountsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "AccountCollection.GetAll"), data => new AccountResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +310,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -334,7 +322,7 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CognitiveServicesAccountData, AccountResource>(new AccountsGetByResourceGroupCollectionResultOfT(_accountsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new AccountResource(Client, data));
+            return new PageableWrapper<CognitiveServicesAccountData, AccountResource>(new AccountsGetByResourceGroupCollectionResultOfT(_accountsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "AccountCollection.GetAll"), data => new AccountResource(Client, data));
         }
 
         /// <summary>
@@ -350,7 +338,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -407,7 +395,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -464,7 +452,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -525,7 +513,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>

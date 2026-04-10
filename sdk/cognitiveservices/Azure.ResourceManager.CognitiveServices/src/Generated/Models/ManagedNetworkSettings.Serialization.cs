@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue<ManagedNetworkProvisionStatus>(Status, options);
+                writer.WriteObjectValue(Status, options);
             }
             if (Optional.IsDefined(FirewallSku))
             {
@@ -110,10 +110,15 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("managedNetworkKind"u8);
                 writer.WriteStringValue(ManagedNetworkKind.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(EgressIpAddress))
+            if (options.Format != "W" && Optional.IsDefined(FirewallPublicIpAddress))
             {
-                writer.WritePropertyName("egressIpAddress"u8);
-                writer.WriteStringValue(EgressIpAddress);
+                writer.WritePropertyName("firewallPublicIpAddress"u8);
+                writer.WriteStringValue(FirewallPublicIpAddress);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -163,7 +168,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             ManagedNetworkProvisionStatus status = default;
             FirewallSku? firewallSku = default;
             ManagedNetworkKind? managedNetworkKind = default;
-            string egressIpAddress = default;
+            string firewallPublicIpAddress = default;
+            ManagedNetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -222,14 +228,23 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     managedNetworkKind = new ManagedNetworkKind(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("egressIpAddress"u8))
+                if (prop.NameEquals("firewallPublicIpAddress"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        egressIpAddress = null;
+                        firewallPublicIpAddress = null;
                         continue;
                     }
-                    egressIpAddress = prop.Value.GetString();
+                    firewallPublicIpAddress = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("provisioningState"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    provisioningState = new ManagedNetworkProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -244,7 +259,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 status,
                 firewallSku,
                 managedNetworkKind,
-                egressIpAddress,
+                firewallPublicIpAddress,
+                provisioningState,
                 additionalBinaryDataProperties);
         }
     }

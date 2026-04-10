@@ -24,6 +24,7 @@ namespace Azure.ResourceManager.CognitiveServices
         private readonly string _modelName;
         private readonly string _modelVersion;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of CognitiveServicesLocationBasedModelCapacitiesGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The CognitiveServicesLocationBasedModelCapacities client used to send requests. </param>
@@ -33,7 +34,8 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="modelName"> The name of the Model. </param>
         /// <param name="modelVersion"> The version of the Model. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public CognitiveServicesLocationBasedModelCapacitiesGetAllAsyncCollectionResultOfT(CognitiveServicesLocationBasedModelCapacities client, string subscriptionId, string location, string modelFormat, string modelName, string modelVersion, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public CognitiveServicesLocationBasedModelCapacitiesGetAllAsyncCollectionResultOfT(CognitiveServicesLocationBasedModelCapacities client, string subscriptionId, string location, string modelFormat, string modelName, string modelVersion, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -42,6 +44,7 @@ namespace Azure.ResourceManager.CognitiveServices
             _modelName = modelName;
             _modelVersion = modelVersion;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of CognitiveServicesLocationBasedModelCapacitiesGetAllAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -75,7 +78,7 @@ namespace Azure.ResourceManager.CognitiveServices
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _location, _modelFormat, _modelName, _modelVersion, _context) : _client.CreateGetAllRequest(_subscriptionId, _location, _modelFormat, _modelName, _modelVersion, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableCognitiveServicesSubscriptionResource.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.CognitiveServices
     /// </summary>
     public partial class CognitiveServicesCapabilityHostResource : ArmResource
     {
-        private readonly ClientDiagnostics _accountCapabilityHostsClientDiagnostics;
-        private readonly AccountCapabilityHosts _accountCapabilityHostsRestClient;
+        private readonly ClientDiagnostics _capabilityHostsClientDiagnostics;
+        private readonly CapabilityHosts _capabilityHostsRestClient;
         private readonly CognitiveServicesCapabilityHostData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.CognitiveServices/accounts/capabilityHosts";
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.CognitiveServices
         internal CognitiveServicesCapabilityHostResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string cognitiveServicesCapabilityHostApiVersion);
-            _accountCapabilityHostsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", ResourceType.Namespace, Diagnostics);
-            _accountCapabilityHostsRestClient = new AccountCapabilityHosts(_accountCapabilityHostsClientDiagnostics, Pipeline, Endpoint, cognitiveServicesCapabilityHostApiVersion ?? "2025-10-01-preview");
+            _capabilityHostsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", ResourceType.Namespace, Diagnostics);
+            _capabilityHostsRestClient = new CapabilityHosts(_capabilityHostsClientDiagnostics, Pipeline, Endpoint, cognitiveServicesCapabilityHostApiVersion ?? "2026-03-01");
             ValidateResourceId(id);
         }
 
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<CognitiveServicesCapabilityHostResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _accountCapabilityHostsClientDiagnostics.CreateScope("CognitiveServicesCapabilityHostResource.Get");
+            using DiagnosticScope scope = _capabilityHostsClientDiagnostics.CreateScope("CognitiveServicesCapabilityHostResource.Get");
             scope.Start();
             try
             {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accountCapabilityHostsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _capabilityHostsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CognitiveServicesCapabilityHostData> response = Response.FromValue(CognitiveServicesCapabilityHostData.FromResponse(result), result);
                 if (response.Value == null)
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<CognitiveServicesCapabilityHostResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _accountCapabilityHostsClientDiagnostics.CreateScope("CognitiveServicesCapabilityHostResource.Get");
+            using DiagnosticScope scope = _capabilityHostsClientDiagnostics.CreateScope("CognitiveServicesCapabilityHostResource.Get");
             scope.Start();
             try
             {
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accountCapabilityHostsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _capabilityHostsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CognitiveServicesCapabilityHostData> response = Response.FromValue(CognitiveServicesCapabilityHostData.FromResponse(result), result);
                 if (response.Value == null)
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _accountCapabilityHostsClientDiagnostics.CreateScope("CognitiveServicesCapabilityHostResource.Delete");
+            using DiagnosticScope scope = _capabilityHostsClientDiagnostics.CreateScope("CognitiveServicesCapabilityHostResource.Delete");
             scope.Start();
             try
             {
@@ -220,9 +220,9 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accountCapabilityHostsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _capabilityHostsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                CognitiveServicesArmOperation operation = new CognitiveServicesArmOperation(_accountCapabilityHostsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                CognitiveServicesArmOperation operation = new CognitiveServicesArmOperation(_capabilityHostsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _accountCapabilityHostsClientDiagnostics.CreateScope("CognitiveServicesCapabilityHostResource.Delete");
+            using DiagnosticScope scope = _capabilityHostsClientDiagnostics.CreateScope("CognitiveServicesCapabilityHostResource.Delete");
             scope.Start();
             try
             {
@@ -269,9 +269,9 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accountCapabilityHostsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _capabilityHostsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                CognitiveServicesArmOperation operation = new CognitiveServicesArmOperation(_accountCapabilityHostsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                CognitiveServicesArmOperation operation = new CognitiveServicesArmOperation(_capabilityHostsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _accountCapabilityHostsClientDiagnostics.CreateScope("CognitiveServicesCapabilityHostResource.Update");
+            using DiagnosticScope scope = _capabilityHostsClientDiagnostics.CreateScope("CognitiveServicesCapabilityHostResource.Update");
             scope.Start();
             try
             {
@@ -322,11 +322,11 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accountCapabilityHostsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, CognitiveServicesCapabilityHostData.ToRequestContent(data), context);
+                HttpMessage message = _capabilityHostsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, CognitiveServicesCapabilityHostData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CognitiveServicesArmOperation<CognitiveServicesCapabilityHostResource> operation = new CognitiveServicesArmOperation<CognitiveServicesCapabilityHostResource>(
                     new CognitiveServicesCapabilityHostOperationSource(Client),
-                    _accountCapabilityHostsClientDiagnostics,
+                    _capabilityHostsClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _accountCapabilityHostsClientDiagnostics.CreateScope("CognitiveServicesCapabilityHostResource.Update");
+            using DiagnosticScope scope = _capabilityHostsClientDiagnostics.CreateScope("CognitiveServicesCapabilityHostResource.Update");
             scope.Start();
             try
             {
@@ -381,11 +381,11 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accountCapabilityHostsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, CognitiveServicesCapabilityHostData.ToRequestContent(data), context);
+                HttpMessage message = _capabilityHostsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, CognitiveServicesCapabilityHostData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CognitiveServicesArmOperation<CognitiveServicesCapabilityHostResource> operation = new CognitiveServicesArmOperation<CognitiveServicesCapabilityHostResource>(
                     new CognitiveServicesCapabilityHostOperationSource(Client),
-                    _accountCapabilityHostsClientDiagnostics,
+                    _capabilityHostsClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,

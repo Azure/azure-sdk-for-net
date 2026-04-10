@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.CognitiveServices
         private readonly string _location;
         private readonly string _filter;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of CognitiveServicesUsagesGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The CognitiveServicesUsages client used to send requests. </param>
@@ -29,13 +30,15 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="location"> The location name. </param>
         /// <param name="filter"> An OData filter expression that describes a subset of usages to return. The supported parameter is name.value (name of the metric, can have an or of multiple names). </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public CognitiveServicesUsagesGetAllAsyncCollectionResultOfT(CognitiveServicesUsages client, string subscriptionId, string location, string filter, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public CognitiveServicesUsagesGetAllAsyncCollectionResultOfT(CognitiveServicesUsages client, string subscriptionId, string location, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _location = location;
             _filter = filter;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of CognitiveServicesUsagesGetAllAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -69,7 +72,7 @@ namespace Azure.ResourceManager.CognitiveServices
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _location, _filter, _context) : _client.CreateGetAllRequest(_subscriptionId, _location, _filter, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableCognitiveServicesSubscriptionResource.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="kind"> The kind (type) of cognitive service account. </param>
         /// <param name="sku"> The resource model definition representing SKU. </param>
         /// <param name="identity"> Identity for the resource. </param>
-        internal CognitiveServicesAccountData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, CognitiveServicesAccountProperties properties, IDictionary<string, string> tags, string location, string eTag, string kind, CognitiveServicesSku sku, Identity identity) : base(id, name, resourceType, systemData)
+        internal CognitiveServicesAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, CognitiveServicesAccountProperties properties, IDictionary<string, string> tags, string location, string eTag, string kind, CognitiveServicesSku sku, Identity identity) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;

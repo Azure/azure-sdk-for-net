@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             TryGetApiVersion(CognitiveServicesProjectConnectionResource.ResourceType, out string cognitiveServicesProjectConnectionApiVersion);
             _cognitiveServicesProjectConnectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", CognitiveServicesProjectConnectionResource.ResourceType.Namespace, Diagnostics);
-            _cognitiveServicesProjectConnectionRestClient = new CognitiveServicesProjectConnection(_cognitiveServicesProjectConnectionClientDiagnostics, Pipeline, Endpoint, cognitiveServicesProjectConnectionApiVersion ?? "2025-10-01-preview");
+            _cognitiveServicesProjectConnectionRestClient = new CognitiveServicesProjectConnection(_cognitiveServicesProjectConnectionClientDiagnostics, Pipeline, Endpoint, cognitiveServicesProjectConnectionApiVersion ?? "2026-03-01");
             ValidateResourceId(id);
         }
 
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             if (id.ResourceType != CognitiveServicesProjectResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, CognitiveServicesProjectResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, CognitiveServicesProjectResource.ResourceType), nameof(id));
             }
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -297,7 +297,8 @@ namespace Azure.ResourceManager.CognitiveServices
                 target,
                 category,
                 includeAll,
-                context), data => new CognitiveServicesProjectConnectionResource(Client, data));
+                context,
+                "CognitiveServicesProjectConnectionCollection.GetAll"), data => new CognitiveServicesProjectConnectionResource(Client, data));
         }
 
         /// <summary>
@@ -313,7 +314,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -337,7 +338,8 @@ namespace Azure.ResourceManager.CognitiveServices
                 target,
                 category,
                 includeAll,
-                context), data => new CognitiveServicesProjectConnectionResource(Client, data));
+                context,
+                "CognitiveServicesProjectConnectionCollection.GetAll"), data => new CognitiveServicesProjectConnectionResource(Client, data));
         }
 
         /// <summary>
@@ -353,7 +355,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -410,7 +412,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -467,7 +469,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -528,7 +530,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>

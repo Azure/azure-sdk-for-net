@@ -219,7 +219,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(WritableSubResource.DeserializeWritableSubResource(item, options));
                     }
                     subscriptions = array;
                     continue;

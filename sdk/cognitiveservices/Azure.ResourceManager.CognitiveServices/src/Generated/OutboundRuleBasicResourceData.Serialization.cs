@@ -130,17 +130,21 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 return null;
             }
-            string id = default;
+            ResourceIdentifier id = default;
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            Models.OutboundRule properties = default;
+            OutboundRule properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
                 {
-                    id = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
@@ -168,7 +172,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 }
                 if (prop.NameEquals("properties"u8))
                 {
-                    properties = Models.OutboundRule.DeserializeOutboundRule(prop.Value, options);
+                    properties = OutboundRule.DeserializeOutboundRule(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

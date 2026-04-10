@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.CognitiveServices
     /// </summary>
     public partial class AgentDeploymentCollection : ArmCollection, IEnumerable<AgentDeploymentResource>, IAsyncEnumerable<AgentDeploymentResource>
     {
-        private readonly ClientDiagnostics _agentDeploymentsClientDiagnostics;
-        private readonly AgentDeployments _agentDeploymentsRestClient;
+        private readonly ClientDiagnostics _agentDeploymentResourcesClientDiagnostics;
+        private readonly AgentDeploymentResources _agentDeploymentResourcesRestClient;
 
         /// <summary> Initializes a new instance of AgentDeploymentCollection for mocking. </summary>
         protected AgentDeploymentCollection()
@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.CognitiveServices
         internal AgentDeploymentCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(AgentDeploymentResource.ResourceType, out string agentDeploymentApiVersion);
-            _agentDeploymentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", AgentDeploymentResource.ResourceType.Namespace, Diagnostics);
-            _agentDeploymentsRestClient = new AgentDeployments(_agentDeploymentsClientDiagnostics, Pipeline, Endpoint, agentDeploymentApiVersion ?? "2025-10-01-preview");
+            _agentDeploymentResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", AgentDeploymentResource.ResourceType.Namespace, Diagnostics);
+            _agentDeploymentResourcesRestClient = new AgentDeploymentResources(_agentDeploymentResourcesClientDiagnostics, Pipeline, Endpoint, agentDeploymentApiVersion ?? "2026-03-01");
             ValidateResourceId(id);
         }
 
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             if (id.ResourceType != AgentApplicationResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AgentApplicationResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AgentApplicationResource.ResourceType), nameof(id));
             }
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.CognitiveServices
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _agentDeploymentsClientDiagnostics.CreateScope("AgentDeploymentCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _agentDeploymentResourcesClientDiagnostics.CreateScope("AgentDeploymentCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -90,11 +90,11 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _agentDeploymentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deploymentName, AgentDeploymentData.ToRequestContent(data), context);
+                HttpMessage message = _agentDeploymentResourcesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deploymentName, AgentDeploymentData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CognitiveServicesArmOperation<AgentDeploymentResource> operation = new CognitiveServicesArmOperation<AgentDeploymentResource>(
                     new AgentDeploymentOperationSource(Client),
-                    _agentDeploymentsClientDiagnostics,
+                    _agentDeploymentResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.CognitiveServices
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _agentDeploymentsClientDiagnostics.CreateScope("AgentDeploymentCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _agentDeploymentResourcesClientDiagnostics.CreateScope("AgentDeploymentCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -148,11 +148,11 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _agentDeploymentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deploymentName, AgentDeploymentData.ToRequestContent(data), context);
+                HttpMessage message = _agentDeploymentResourcesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deploymentName, AgentDeploymentData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CognitiveServicesArmOperation<AgentDeploymentResource> operation = new CognitiveServicesArmOperation<AgentDeploymentResource>(
                     new AgentDeploymentOperationSource(Client),
-                    _agentDeploymentsClientDiagnostics,
+                    _agentDeploymentResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
-            using DiagnosticScope scope = _agentDeploymentsClientDiagnostics.CreateScope("AgentDeploymentCollection.Get");
+            using DiagnosticScope scope = _agentDeploymentResourcesClientDiagnostics.CreateScope("AgentDeploymentCollection.Get");
             scope.Start();
             try
             {
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _agentDeploymentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deploymentName, context);
+                HttpMessage message = _agentDeploymentResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deploymentName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AgentDeploymentData> response = Response.FromValue(AgentDeploymentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
-            using DiagnosticScope scope = _agentDeploymentsClientDiagnostics.CreateScope("AgentDeploymentCollection.Get");
+            using DiagnosticScope scope = _agentDeploymentResourcesClientDiagnostics.CreateScope("AgentDeploymentCollection.Get");
             scope.Start();
             try
             {
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _agentDeploymentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deploymentName, context);
+                HttpMessage message = _agentDeploymentResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deploymentName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AgentDeploymentData> response = Response.FromValue(AgentDeploymentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -298,8 +298,8 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AgentDeploymentData, AgentDeploymentResource>(new AgentDeploymentsGetAllAsyncCollectionResultOfT(
-                _agentDeploymentsRestClient,
+            return new AsyncPageableWrapper<AgentDeploymentData, AgentDeploymentResource>(new AgentDeploymentResourcesGetAllAsyncCollectionResultOfT(
+                _agentDeploymentResourcesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
                 Id.Parent.Parent.Name,
@@ -310,7 +310,8 @@ namespace Azure.ResourceManager.CognitiveServices
                 names,
                 orderBy,
                 orderByAsc,
-                context), data => new AgentDeploymentResource(Client, data));
+                context,
+                "AgentDeploymentCollection.GetAll"), data => new AgentDeploymentResource(Client, data));
         }
 
         /// <summary>
@@ -326,7 +327,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -343,8 +344,8 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AgentDeploymentData, AgentDeploymentResource>(new AgentDeploymentsGetAllCollectionResultOfT(
-                _agentDeploymentsRestClient,
+            return new PageableWrapper<AgentDeploymentData, AgentDeploymentResource>(new AgentDeploymentResourcesGetAllCollectionResultOfT(
+                _agentDeploymentResourcesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
                 Id.Parent.Parent.Name,
@@ -355,7 +356,8 @@ namespace Azure.ResourceManager.CognitiveServices
                 names,
                 orderBy,
                 orderByAsc,
-                context), data => new AgentDeploymentResource(Client, data));
+                context,
+                "AgentDeploymentCollection.GetAll"), data => new AgentDeploymentResource(Client, data));
         }
 
         /// <summary>
@@ -371,7 +373,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -383,7 +385,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
-            using DiagnosticScope scope = _agentDeploymentsClientDiagnostics.CreateScope("AgentDeploymentCollection.Exists");
+            using DiagnosticScope scope = _agentDeploymentResourcesClientDiagnostics.CreateScope("AgentDeploymentCollection.Exists");
             scope.Start();
             try
             {
@@ -391,7 +393,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _agentDeploymentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deploymentName, context);
+                HttpMessage message = _agentDeploymentResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deploymentName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AgentDeploymentData> response = default;
@@ -428,7 +430,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -440,7 +442,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
-            using DiagnosticScope scope = _agentDeploymentsClientDiagnostics.CreateScope("AgentDeploymentCollection.Exists");
+            using DiagnosticScope scope = _agentDeploymentResourcesClientDiagnostics.CreateScope("AgentDeploymentCollection.Exists");
             scope.Start();
             try
             {
@@ -448,7 +450,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _agentDeploymentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deploymentName, context);
+                HttpMessage message = _agentDeploymentResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deploymentName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AgentDeploymentData> response = default;
@@ -485,7 +487,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -497,7 +499,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
-            using DiagnosticScope scope = _agentDeploymentsClientDiagnostics.CreateScope("AgentDeploymentCollection.GetIfExists");
+            using DiagnosticScope scope = _agentDeploymentResourcesClientDiagnostics.CreateScope("AgentDeploymentCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -505,7 +507,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _agentDeploymentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deploymentName, context);
+                HttpMessage message = _agentDeploymentResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deploymentName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AgentDeploymentData> response = default;
@@ -546,7 +548,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -558,7 +560,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
-            using DiagnosticScope scope = _agentDeploymentsClientDiagnostics.CreateScope("AgentDeploymentCollection.GetIfExists");
+            using DiagnosticScope scope = _agentDeploymentResourcesClientDiagnostics.CreateScope("AgentDeploymentCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -566,7 +568,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _agentDeploymentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deploymentName, context);
+                HttpMessage message = _agentDeploymentResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deploymentName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AgentDeploymentData> response = default;

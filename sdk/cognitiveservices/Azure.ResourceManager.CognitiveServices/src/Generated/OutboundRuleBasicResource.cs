@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.CognitiveServices
     /// </summary>
     public partial class OutboundRuleBasicResource : ArmResource
     {
-        private readonly ClientDiagnostics _outboundRuleClientDiagnostics;
-        private readonly OutboundRule _outboundRuleRestClient;
+        private readonly ClientDiagnostics _outboundRuleBasicResourcesClientDiagnostics;
+        private readonly OutboundRuleBasicResources _outboundRuleBasicResourcesRestClient;
         private readonly OutboundRuleBasicResourceData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.CognitiveServices/accounts/managedNetworks/outboundRules";
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.CognitiveServices
         internal OutboundRuleBasicResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string outboundRuleBasicResourceApiVersion);
-            _outboundRuleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", ResourceType.Namespace, Diagnostics);
-            _outboundRuleRestClient = new OutboundRule(_outboundRuleClientDiagnostics, Pipeline, Endpoint, outboundRuleBasicResourceApiVersion ?? "2025-10-01-preview");
+            _outboundRuleBasicResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", ResourceType.Namespace, Diagnostics);
+            _outboundRuleBasicResourcesRestClient = new OutboundRuleBasicResources(_outboundRuleBasicResourcesClientDiagnostics, Pipeline, Endpoint, outboundRuleBasicResourceApiVersion ?? "2026-03-01");
             ValidateResourceId(id);
         }
 
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<OutboundRuleBasicResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _outboundRuleClientDiagnostics.CreateScope("OutboundRuleBasicResource.Get");
+            using DiagnosticScope scope = _outboundRuleBasicResourcesClientDiagnostics.CreateScope("OutboundRuleBasicResource.Get");
             scope.Start();
             try
             {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _outboundRuleRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _outboundRuleBasicResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<OutboundRuleBasicResourceData> response = Response.FromValue(OutboundRuleBasicResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<OutboundRuleBasicResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _outboundRuleClientDiagnostics.CreateScope("OutboundRuleBasicResource.Get");
+            using DiagnosticScope scope = _outboundRuleBasicResourcesClientDiagnostics.CreateScope("OutboundRuleBasicResource.Get");
             scope.Start();
             try
             {
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _outboundRuleRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _outboundRuleBasicResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<OutboundRuleBasicResourceData> response = Response.FromValue(OutboundRuleBasicResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _outboundRuleClientDiagnostics.CreateScope("OutboundRuleBasicResource.Delete");
+            using DiagnosticScope scope = _outboundRuleBasicResourcesClientDiagnostics.CreateScope("OutboundRuleBasicResource.Delete");
             scope.Start();
             try
             {
@@ -221,9 +221,9 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _outboundRuleRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _outboundRuleBasicResourcesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                CognitiveServicesArmOperation operation = new CognitiveServicesArmOperation(_outboundRuleClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                CognitiveServicesArmOperation operation = new CognitiveServicesArmOperation(_outboundRuleBasicResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _outboundRuleClientDiagnostics.CreateScope("OutboundRuleBasicResource.Delete");
+            using DiagnosticScope scope = _outboundRuleBasicResourcesClientDiagnostics.CreateScope("OutboundRuleBasicResource.Delete");
             scope.Start();
             try
             {
@@ -270,9 +270,9 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _outboundRuleRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _outboundRuleBasicResourcesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                CognitiveServicesArmOperation operation = new CognitiveServicesArmOperation(_outboundRuleClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                CognitiveServicesArmOperation operation = new CognitiveServicesArmOperation(_outboundRuleBasicResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _outboundRuleClientDiagnostics.CreateScope("OutboundRuleBasicResource.Update");
+            using DiagnosticScope scope = _outboundRuleBasicResourcesClientDiagnostics.CreateScope("OutboundRuleBasicResource.Update");
             scope.Start();
             try
             {
@@ -323,11 +323,11 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _outboundRuleRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, OutboundRuleBasicResourceData.ToRequestContent(data), context);
+                HttpMessage message = _outboundRuleBasicResourcesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, OutboundRuleBasicResourceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CognitiveServicesArmOperation<OutboundRuleBasicResource> operation = new CognitiveServicesArmOperation<OutboundRuleBasicResource>(
                     new OutboundRuleBasicResourceOperationSource(Client),
-                    _outboundRuleClientDiagnostics,
+                    _outboundRuleBasicResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _outboundRuleClientDiagnostics.CreateScope("OutboundRuleBasicResource.Update");
+            using DiagnosticScope scope = _outboundRuleBasicResourcesClientDiagnostics.CreateScope("OutboundRuleBasicResource.Update");
             scope.Start();
             try
             {
@@ -382,11 +382,11 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _outboundRuleRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, OutboundRuleBasicResourceData.ToRequestContent(data), context);
+                HttpMessage message = _outboundRuleBasicResourcesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, OutboundRuleBasicResourceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CognitiveServicesArmOperation<OutboundRuleBasicResource> operation = new CognitiveServicesArmOperation<OutboundRuleBasicResource>(
                     new OutboundRuleBasicResourceOperationSource(Client),
-                    _outboundRuleClientDiagnostics,
+                    _outboundRuleBasicResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="location"> The location of the Model Sku Capacity. </param>
         /// <param name="properties"> Cognitive Services account ModelSkuCapacity. </param>
-        internal ModelCapacityListResultValueItem(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, string location, ModelSkuCapacityProperties properties) : base(id, name, resourceType, systemData)
+        internal ModelCapacityListResultValueItem(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, string location, ModelSkuCapacityProperties properties) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Location = location;

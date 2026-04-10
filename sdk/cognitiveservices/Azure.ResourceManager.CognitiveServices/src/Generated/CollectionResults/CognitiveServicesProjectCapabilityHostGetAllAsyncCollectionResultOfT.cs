@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.CognitiveServices
         private readonly string _accountName;
         private readonly string _projectName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of CognitiveServicesProjectCapabilityHostGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The CognitiveServicesProjectCapabilityHost client used to send requests. </param>
@@ -31,7 +32,8 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="accountName"> The name of Cognitive Services account. </param>
         /// <param name="projectName"> The name of Cognitive Services account's project. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public CognitiveServicesProjectCapabilityHostGetAllAsyncCollectionResultOfT(CognitiveServicesProjectCapabilityHost client, string subscriptionId, string resourceGroupName, string accountName, string projectName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public CognitiveServicesProjectCapabilityHostGetAllAsyncCollectionResultOfT(CognitiveServicesProjectCapabilityHost client, string subscriptionId, string resourceGroupName, string accountName, string projectName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -39,6 +41,7 @@ namespace Azure.ResourceManager.CognitiveServices
             _accountName = accountName;
             _projectName = projectName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of CognitiveServicesProjectCapabilityHostGetAllAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -72,7 +75,7 @@ namespace Azure.ResourceManager.CognitiveServices
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _accountName, _projectName, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _accountName, _projectName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ProjectCapabilityHostCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

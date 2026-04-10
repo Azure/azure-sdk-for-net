@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="sku"> The resource model definition representing SKU. </param>
         /// <param name="eTag"> Resource Etag. </param>
         /// <param name="tags"> Resource tags. </param>
-        internal CognitiveServicesAccountDeploymentData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, CognitiveServicesAccountDeploymentProperties properties, CognitiveServicesSku sku, string eTag, IDictionary<string, string> tags) : base(id, name, resourceType, systemData)
+        internal CognitiveServicesAccountDeploymentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, CognitiveServicesAccountDeploymentProperties properties, CognitiveServicesSku sku, string eTag, IDictionary<string, string> tags) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;

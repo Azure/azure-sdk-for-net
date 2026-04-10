@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary>
     /// Outbound Rule for the managed network of a cognitive services account.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FqdnOutboundRule"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FqdnOutboundRule"/>, <see cref="PrivateEndpointOutboundRule"/>, and <see cref="ServiceTagOutboundRule"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownOutboundRule))]
     public abstract partial class OutboundRule : IJsonModel<OutboundRule>
@@ -162,6 +162,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 {
                     case "FQDN":
                         return FqdnOutboundRule.DeserializeFqdnOutboundRule(element, options);
+                    case "PrivateEndpoint":
+                        return PrivateEndpointOutboundRule.DeserializePrivateEndpointOutboundRule(element, options);
+                    case "ServiceTag":
+                        return ServiceTagOutboundRule.DeserializeServiceTagOutboundRule(element, options);
                 }
             }
             return UnknownOutboundRule.DeserializeUnknownOutboundRule(element, options);

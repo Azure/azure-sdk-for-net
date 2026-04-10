@@ -118,7 +118,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             ManagedNetworkProvisionStatus status = default;
             FirewallSku? firewallSku = default;
             ManagedNetworkKind? managedNetworkKind = default;
-            string egressIpAddress = default;
+            string firewallPublicIpAddress = default;
+            ManagedNetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             IReadOnlyList<IsolationMode> changeableIsolationModes = default;
             foreach (var prop in element.EnumerateObject())
@@ -178,14 +179,23 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     managedNetworkKind = new ManagedNetworkKind(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("egressIpAddress"u8))
+                if (prop.NameEquals("firewallPublicIpAddress"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        egressIpAddress = null;
+                        firewallPublicIpAddress = null;
                         continue;
                     }
-                    egressIpAddress = prop.Value.GetString();
+                    firewallPublicIpAddress = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("provisioningState"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    provisioningState = new ManagedNetworkProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("changeableIsolationModes"u8))
@@ -214,7 +224,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 status,
                 firewallSku,
                 managedNetworkKind,
-                egressIpAddress,
+                firewallPublicIpAddress,
+                provisioningState,
                 additionalBinaryDataProperties,
                 changeableIsolationModes ?? new ChangeTrackingList<IsolationMode>());
         }

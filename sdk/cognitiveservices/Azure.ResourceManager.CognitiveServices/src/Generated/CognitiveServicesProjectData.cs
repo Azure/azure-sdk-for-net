@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="eTag"> Resource Etag. </param>
         /// <param name="identity"> Identity for the resource. </param>
-        internal CognitiveServicesProjectData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, CognitiveServicesProjectProperties properties, IDictionary<string, string> tags, string location, string eTag, Identity identity) : base(id, name, resourceType, systemData)
+        internal CognitiveServicesProjectData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, CognitiveServicesProjectProperties properties, IDictionary<string, string> tags, string location, string eTag, Identity identity) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;

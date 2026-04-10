@@ -28,12 +28,6 @@ namespace Azure.ResourceManager.CognitiveServices
     {
         private readonly ClientDiagnostics _accountsClientDiagnostics;
         private readonly Accounts _accountsRestClient;
-        private readonly ClientDiagnostics _testRaiExternalSafetyProviderClientDiagnostics;
-        private readonly TestRaiExternalSafetyProvider _testRaiExternalSafetyProviderRestClient;
-        private readonly ClientDiagnostics _privateLinkResourcesClientDiagnostics;
-        private readonly PrivateLinkResources _privateLinkResourcesRestClient;
-        private readonly ClientDiagnostics _managedNetworkProvisionsClientDiagnostics;
-        private readonly ManagedNetworkProvisions _managedNetworkProvisionsRestClient;
         private readonly CognitiveServicesAccountData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.CognitiveServices/accounts";
@@ -59,13 +53,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             TryGetApiVersion(ResourceType, out string accountApiVersion);
             _accountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", ResourceType.Namespace, Diagnostics);
-            _accountsRestClient = new Accounts(_accountsClientDiagnostics, Pipeline, Endpoint, accountApiVersion ?? "2025-10-01-preview");
-            _testRaiExternalSafetyProviderClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", ResourceType.Namespace, Diagnostics);
-            _testRaiExternalSafetyProviderRestClient = new TestRaiExternalSafetyProvider(_testRaiExternalSafetyProviderClientDiagnostics, Pipeline, Endpoint, accountApiVersion ?? "2025-10-01-preview");
-            _privateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", ResourceType.Namespace, Diagnostics);
-            _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Endpoint, accountApiVersion ?? "2025-10-01-preview");
-            _managedNetworkProvisionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", ResourceType.Namespace, Diagnostics);
-            _managedNetworkProvisionsRestClient = new ManagedNetworkProvisions(_managedNetworkProvisionsClientDiagnostics, Pipeline, Endpoint, accountApiVersion ?? "2025-10-01-preview");
+            _accountsRestClient = new Accounts(_accountsClientDiagnostics, Pipeline, Endpoint, accountApiVersion ?? "2026-03-01");
             ValidateResourceId(id);
         }
 
@@ -101,7 +89,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -118,7 +106,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -166,7 +154,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -214,7 +202,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -273,7 +261,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -332,7 +320,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -381,7 +369,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -430,7 +418,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -448,7 +436,7 @@ namespace Azure.ResourceManager.CognitiveServices
             Argument.AssertNotNullOrEmpty(safetyProviderName, nameof(safetyProviderName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _testRaiExternalSafetyProviderClientDiagnostics.CreateScope("AccountResource.CreateOrUpdate");
+            using DiagnosticScope scope = _accountsClientDiagnostics.CreateScope("AccountResource.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -456,7 +444,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _testRaiExternalSafetyProviderRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, safetyProviderName, RaiExternalSafetyProviderSchemaData.ToRequestContent(data), context);
+                HttpMessage message = _accountsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, safetyProviderName, RaiExternalSafetyProviderSchemaData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RaiExternalSafetyProviderSchemaData> response = Response.FromValue(RaiExternalSafetyProviderSchemaData.FromResponse(result), result);
                 if (response.Value == null)
@@ -485,7 +473,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -503,7 +491,7 @@ namespace Azure.ResourceManager.CognitiveServices
             Argument.AssertNotNullOrEmpty(safetyProviderName, nameof(safetyProviderName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _testRaiExternalSafetyProviderClientDiagnostics.CreateScope("AccountResource.CreateOrUpdate");
+            using DiagnosticScope scope = _accountsClientDiagnostics.CreateScope("AccountResource.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -511,7 +499,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _testRaiExternalSafetyProviderRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, safetyProviderName, RaiExternalSafetyProviderSchemaData.ToRequestContent(data), context);
+                HttpMessage message = _accountsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, safetyProviderName, RaiExternalSafetyProviderSchemaData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RaiExternalSafetyProviderSchemaData> response = Response.FromValue(RaiExternalSafetyProviderSchemaData.FromResponse(result), result);
                 if (response.Value == null)
@@ -540,7 +528,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -588,7 +576,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -636,7 +624,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -652,7 +640,13 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 CancellationToken = cancellationToken
             };
-            return new AccountsGetModelsAsyncCollectionResultOfT(_accountsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+            return new AccountsGetModelsAsyncCollectionResultOfT(
+                _accountsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "AccountResource.GetModels");
         }
 
         /// <summary>
@@ -668,7 +662,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -684,7 +678,13 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 CancellationToken = cancellationToken
             };
-            return new AccountsGetModelsCollectionResultOfT(_accountsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+            return new AccountsGetModelsCollectionResultOfT(
+                _accountsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "AccountResource.GetModels");
         }
 
         /// <summary>
@@ -700,7 +700,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -748,7 +748,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -796,7 +796,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -845,7 +845,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -894,7 +894,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -905,7 +905,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<CognitiveServicesPrivateLinkResourceListResult>> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _privateLinkResourcesClientDiagnostics.CreateScope("AccountResource.GetAll");
+            using DiagnosticScope scope = _accountsClientDiagnostics.CreateScope("AccountResource.GetAll");
             scope.Start();
             try
             {
@@ -913,7 +913,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateLinkResourcesRestClient.CreateGetAllRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _accountsRestClient.CreateGetAllRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CognitiveServicesPrivateLinkResourceListResult> response = Response.FromValue(CognitiveServicesPrivateLinkResourceListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -942,7 +942,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -953,7 +953,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<CognitiveServicesPrivateLinkResourceListResult> GetAll(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _privateLinkResourcesClientDiagnostics.CreateScope("AccountResource.GetAll");
+            using DiagnosticScope scope = _accountsClientDiagnostics.CreateScope("AccountResource.GetAll");
             scope.Start();
             try
             {
@@ -961,7 +961,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateLinkResourcesRestClient.CreateGetAllRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _accountsRestClient.CreateGetAllRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CognitiveServicesPrivateLinkResourceListResult> response = Response.FromValue(CognitiveServicesPrivateLinkResourceListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -969,118 +969,6 @@ namespace Azure.ResourceManager.CognitiveServices
                     throw new RequestFailedException(response.GetRawResponse());
                 }
                 return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Provisions the managed network of a cognitive services account.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/provisionManagedNetwork. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Accounts_ProvisionManagedNetwork. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="AccountResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> Managed Network Provisioning Options for a cognitive services account. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<ManagedNetworkProvisionStatus>> ProvisionManagedNetworkAsync(WaitUntil waitUntil, ManagedNetworkProvisionOptions content = default, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _managedNetworkProvisionsClientDiagnostics.CreateScope("AccountResource.ProvisionManagedNetwork");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _managedNetworkProvisionsRestClient.CreateProvisionManagedNetworkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ManagedNetworkProvisionOptions.ToRequestContent(content), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                CognitiveServicesArmOperation<ManagedNetworkProvisionStatus> operation = new CognitiveServicesArmOperation<ManagedNetworkProvisionStatus>(
-                    new ManagedNetworkProvisionStatusOperationSource(),
-                    _managedNetworkProvisionsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Provisions the managed network of a cognitive services account.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/provisionManagedNetwork. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Accounts_ProvisionManagedNetwork. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="AccountResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> Managed Network Provisioning Options for a cognitive services account. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<ManagedNetworkProvisionStatus> ProvisionManagedNetwork(WaitUntil waitUntil, ManagedNetworkProvisionOptions content = default, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _managedNetworkProvisionsClientDiagnostics.CreateScope("AccountResource.ProvisionManagedNetwork");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _managedNetworkProvisionsRestClient.CreateProvisionManagedNetworkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ManagedNetworkProvisionOptions.ToRequestContent(content), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                CognitiveServicesArmOperation<ManagedNetworkProvisionStatus> operation = new CognitiveServicesArmOperation<ManagedNetworkProvisionStatus>(
-                    new ManagedNetworkProvisionStatusOperationSource(),
-                    _managedNetworkProvisionsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    operation.WaitForCompletion(cancellationToken);
-                }
-                return operation;
             }
             catch (Exception e)
             {
@@ -1102,7 +990,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1154,7 +1042,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1863,44 +1751,11 @@ namespace Azure.ResourceManager.CognitiveServices
             return GetCognitiveServicesProjects().Get(projectName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of CognitiveServicesCommitmentPlanOperations in the <see cref="AccountResource"/>. </summary>
-        /// <returns> An object representing collection of CognitiveServicesCommitmentPlanOperations and their operations over a CognitiveServicesCommitmentPlanOperationResource. </returns>
-        public virtual CognitiveServicesCommitmentPlanOperationCollection GetCognitiveServicesCommitmentPlanOperations()
+        /// <summary> Gets a collection of CognitiveServicesConnections in the <see cref="AccountResource"/>. </summary>
+        /// <returns> An object representing collection of CognitiveServicesConnections and their operations over a CognitiveServicesConnectionResource. </returns>
+        public virtual CognitiveServicesConnectionCollection GetCognitiveServicesConnections()
         {
-            return GetCachedClient(client => new CognitiveServicesCommitmentPlanOperationCollection(client, Id));
-        }
-
-        /// <summary> Returns a Cognitive Services commitment plan specified by the parameters. </summary>
-        /// <param name="commitmentPlanName"> The name of the commitmentPlan associated with the Cognitive Services Account. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="commitmentPlanName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="commitmentPlanName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<CognitiveServicesCommitmentPlanOperationResource>> GetCognitiveServicesCommitmentPlanOperationAsync(string commitmentPlanName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(commitmentPlanName, nameof(commitmentPlanName));
-
-            return await GetCognitiveServicesCommitmentPlanOperations().GetAsync(commitmentPlanName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Returns a Cognitive Services commitment plan specified by the parameters. </summary>
-        /// <param name="commitmentPlanName"> The name of the commitmentPlan associated with the Cognitive Services Account. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="commitmentPlanName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="commitmentPlanName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<CognitiveServicesCommitmentPlanOperationResource> GetCognitiveServicesCommitmentPlanOperation(string commitmentPlanName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(commitmentPlanName, nameof(commitmentPlanName));
-
-            return GetCognitiveServicesCommitmentPlanOperations().Get(commitmentPlanName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of AccountConnections in the <see cref="AccountResource"/>. </summary>
-        /// <returns> An object representing collection of AccountConnections and their operations over a AccountConnectionResource. </returns>
-        public virtual AccountConnectionCollection GetAccountConnections()
-        {
-            return GetCachedClient(client => new AccountConnectionCollection(client, Id));
+            return GetCachedClient(client => new CognitiveServicesConnectionCollection(client, Id));
         }
 
         /// <summary> Lists Cognitive Services account connection by name. </summary>
@@ -1909,11 +1764,11 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<AccountConnectionResource>> GetAccountConnectionAsync(string connectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CognitiveServicesConnectionResource>> GetCognitiveServicesConnectionAsync(string connectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
 
-            return await GetAccountConnections().GetAsync(connectionName, cancellationToken).ConfigureAwait(false);
+            return await GetCognitiveServicesConnections().GetAsync(connectionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Lists Cognitive Services account connection by name. </summary>
@@ -1922,11 +1777,11 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<AccountConnectionResource> GetAccountConnection(string connectionName, CancellationToken cancellationToken = default)
+        public virtual Response<CognitiveServicesConnectionResource> GetCognitiveServicesConnection(string connectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
 
-            return GetAccountConnections().Get(connectionName, cancellationToken);
+            return GetCognitiveServicesConnections().Get(connectionName, cancellationToken);
         }
 
         /// <summary> Gets a collection of CognitiveServicesCapabilityHosts in the <see cref="AccountResource"/>. </summary>
@@ -1993,6 +1848,39 @@ namespace Azure.ResourceManager.CognitiveServices
             Argument.AssertNotNullOrEmpty(managedNetworkName, nameof(managedNetworkName));
 
             return GetManagedNetworkSettingsPropertiesBasicResources().Get(managedNetworkName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of CognitiveServicesCommitmentPlanOperations in the <see cref="AccountResource"/>. </summary>
+        /// <returns> An object representing collection of CognitiveServicesCommitmentPlanOperations and their operations over a CognitiveServicesCommitmentPlanOperationResource. </returns>
+        public virtual CognitiveServicesCommitmentPlanOperationCollection GetCognitiveServicesCommitmentPlanOperations()
+        {
+            return GetCachedClient(client => new CognitiveServicesCommitmentPlanOperationCollection(client, Id));
+        }
+
+        /// <summary> Returns a Cognitive Services commitment plan specified by the parameters. </summary>
+        /// <param name="commitmentPlanName"> The name of the commitmentPlan associated with the Cognitive Services Account. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="commitmentPlanName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="commitmentPlanName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<CognitiveServicesCommitmentPlanOperationResource>> GetCognitiveServicesCommitmentPlanOperationAsync(string commitmentPlanName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(commitmentPlanName, nameof(commitmentPlanName));
+
+            return await GetCognitiveServicesCommitmentPlanOperations().GetAsync(commitmentPlanName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Returns a Cognitive Services commitment plan specified by the parameters. </summary>
+        /// <param name="commitmentPlanName"> The name of the commitmentPlan associated with the Cognitive Services Account. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="commitmentPlanName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="commitmentPlanName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<CognitiveServicesCommitmentPlanOperationResource> GetCognitiveServicesCommitmentPlanOperation(string commitmentPlanName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(commitmentPlanName, nameof(commitmentPlanName));
+
+            return GetCognitiveServicesCommitmentPlanOperations().Get(commitmentPlanName, cancellationToken);
         }
     }
 }

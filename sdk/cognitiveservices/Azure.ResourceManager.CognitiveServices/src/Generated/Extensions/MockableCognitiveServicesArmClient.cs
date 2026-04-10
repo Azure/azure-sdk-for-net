@@ -134,6 +134,15 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
             return new RaiTopicResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="RaiExternalSafetyProviderSchemaResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="RaiExternalSafetyProviderSchemaResource"/> object. </returns>
+        public virtual RaiExternalSafetyProviderSchemaResource GetRaiExternalSafetyProviderSchemaResource(ResourceIdentifier id)
+        {
+            RaiExternalSafetyProviderSchemaResource.ValidateResourceId(id);
+            return new RaiExternalSafetyProviderSchemaResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="RaiToolLabelResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="RaiToolLabelResource"/> object. </returns>
@@ -179,6 +188,15 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
             return new CognitiveServicesProjectResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="CognitiveServicesConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="CognitiveServicesConnectionResource"/> object. </returns>
+        public virtual CognitiveServicesConnectionResource GetCognitiveServicesConnectionResource(ResourceIdentifier id)
+        {
+            CognitiveServicesConnectionResource.ValidateResourceId(id);
+            return new CognitiveServicesConnectionResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="CognitiveServicesProjectConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="CognitiveServicesProjectConnectionResource"/> object. </returns>
@@ -186,6 +204,15 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         {
             CognitiveServicesProjectConnectionResource.ValidateResourceId(id);
             return new CognitiveServicesProjectConnectionResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="CognitiveServicesCapabilityHostResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="CognitiveServicesCapabilityHostResource"/> object. </returns>
+        public virtual CognitiveServicesCapabilityHostResource GetCognitiveServicesCapabilityHostResource(ResourceIdentifier id)
+        {
+            CognitiveServicesCapabilityHostResource.ValidateResourceId(id);
+            return new CognitiveServicesCapabilityHostResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="ProjectCapabilityHostResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -206,51 +233,6 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
             return new QuotaTierResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="AgentApplicationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AgentApplicationResource"/> object. </returns>
-        public virtual AgentApplicationResource GetAgentApplicationResource(ResourceIdentifier id)
-        {
-            AgentApplicationResource.ValidateResourceId(id);
-            return new AgentApplicationResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="CognitiveServicesCommitmentPlanOperationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CognitiveServicesCommitmentPlanOperationResource"/> object. </returns>
-        public virtual CognitiveServicesCommitmentPlanOperationResource GetCognitiveServicesCommitmentPlanOperationResource(ResourceIdentifier id)
-        {
-            CognitiveServicesCommitmentPlanOperationResource.ValidateResourceId(id);
-            return new CognitiveServicesCommitmentPlanOperationResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="RaiExternalSafetyProviderSchemaResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RaiExternalSafetyProviderSchemaResource"/> object. </returns>
-        public virtual RaiExternalSafetyProviderSchemaResource GetRaiExternalSafetyProviderSchemaResource(ResourceIdentifier id)
-        {
-            RaiExternalSafetyProviderSchemaResource.ValidateResourceId(id);
-            return new RaiExternalSafetyProviderSchemaResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="AccountConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AccountConnectionResource"/> object. </returns>
-        public virtual AccountConnectionResource GetAccountConnectionResource(ResourceIdentifier id)
-        {
-            AccountConnectionResource.ValidateResourceId(id);
-            return new AccountConnectionResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="CognitiveServicesCapabilityHostResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CognitiveServicesCapabilityHostResource"/> object. </returns>
-        public virtual CognitiveServicesCapabilityHostResource GetCognitiveServicesCapabilityHostResource(ResourceIdentifier id)
-        {
-            CognitiveServicesCapabilityHostResource.ValidateResourceId(id);
-            return new CognitiveServicesCapabilityHostResource(Client, id);
-        }
-
         /// <summary> Gets an object representing a <see cref="OutboundRuleBasicResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="OutboundRuleBasicResource"/> object. </returns>
@@ -269,6 +251,15 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
             return new ManagedNetworkSettingsPropertiesBasicResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="AgentApplicationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="AgentApplicationResource"/> object. </returns>
+        public virtual AgentApplicationResource GetAgentApplicationResource(ResourceIdentifier id)
+        {
+            AgentApplicationResource.ValidateResourceId(id);
+            return new AgentApplicationResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="AgentDeploymentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="AgentDeploymentResource"/> object. </returns>
@@ -276,6 +267,15 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         {
             AgentDeploymentResource.ValidateResourceId(id);
             return new AgentDeploymentResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="CognitiveServicesCommitmentPlanOperationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="CognitiveServicesCommitmentPlanOperationResource"/> object. </returns>
+        public virtual CognitiveServicesCommitmentPlanOperationResource GetCognitiveServicesCommitmentPlanOperationResource(ResourceIdentifier id)
+        {
+            CognitiveServicesCommitmentPlanOperationResource.ValidateResourceId(id);
+            return new CognitiveServicesCommitmentPlanOperationResource(Client, id);
         }
     }
 }

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> [Required] Additional attributes of the entity. </param>
-        internal CognitiveServicesCapabilityHostData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, CognitiveServicesCapabilityHostProperties properties) : base(id, name, resourceType, systemData)
+        internal CognitiveServicesCapabilityHostData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, CognitiveServicesCapabilityHostProperties properties) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;

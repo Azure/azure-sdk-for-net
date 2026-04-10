@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             TryGetApiVersion(QuotaTierResource.ResourceType, out string quotaTierApiVersion);
             _quotaTiersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", QuotaTierResource.ResourceType.Namespace, Diagnostics);
-            _quotaTiersRestClient = new QuotaTiers(_quotaTiersClientDiagnostics, Pipeline, Endpoint, quotaTierApiVersion ?? "2025-10-01-preview");
+            _quotaTiersRestClient = new QuotaTiers(_quotaTiersClientDiagnostics, Pipeline, Endpoint, quotaTierApiVersion ?? "2026-03-01");
             ValidateResourceId(id);
         }
 
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             if (id.ResourceType != SubscriptionResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
             }
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<QuotaTierData, QuotaTierResource>(new QuotaTiersGetBySubscriptionAsyncCollectionResultOfT(_quotaTiersRestClient, Id.SubscriptionId, context), data => new QuotaTierResource(Client, data));
+            return new AsyncPageableWrapper<QuotaTierData, QuotaTierResource>(new QuotaTiersGetBySubscriptionAsyncCollectionResultOfT(_quotaTiersRestClient, Id.SubscriptionId, context, "QuotaTierCollection.GetAll"), data => new QuotaTierResource(Client, data));
         }
 
         /// <summary>
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<QuotaTierData, QuotaTierResource>(new QuotaTiersGetBySubscriptionCollectionResultOfT(_quotaTiersRestClient, Id.SubscriptionId, context), data => new QuotaTierResource(Client, data));
+            return new PageableWrapper<QuotaTierData, QuotaTierResource>(new QuotaTiersGetBySubscriptionCollectionResultOfT(_quotaTiersRestClient, Id.SubscriptionId, context, "QuotaTierCollection.GetAll"), data => new QuotaTierResource(Client, data));
         }
 
         /// <summary>
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -507,7 +507,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>

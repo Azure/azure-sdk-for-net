@@ -82,10 +82,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 throw new FormatException($"The model {nameof(ManagedNetworkProvisionStatus)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Status))
+            if (Optional.IsDefined(ManagedNetworkStatus))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status.Value.ToString());
+                writer.WriteStringValue(ManagedNetworkStatus.Value.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            ManagedNetworkStatus? status = default;
+            ManagedNetworkStatus? managedNetworkStatus = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    status = new ManagedNetworkStatus(prop.Value.GetString());
+                    managedNetworkStatus = new ManagedNetworkStatus(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ManagedNetworkProvisionStatus(status, additionalBinaryDataProperties);
+            return new ManagedNetworkProvisionStatus(managedNetworkStatus, additionalBinaryDataProperties);
         }
     }
 }

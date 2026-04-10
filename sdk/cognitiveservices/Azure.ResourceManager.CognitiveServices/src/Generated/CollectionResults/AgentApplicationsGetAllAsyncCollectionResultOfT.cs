@@ -30,6 +30,7 @@ namespace Azure.ResourceManager.CognitiveServices
         private readonly string _orderBy;
         private readonly bool? _orderByAsc;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of AgentApplicationsGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The AgentApplications client used to send requests. </param>
@@ -45,7 +46,8 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="orderBy"> Field to order by. </param>
         /// <param name="orderByAsc"> Whether to order in ascending order. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public AgentApplicationsGetAllAsyncCollectionResultOfT(AgentApplications client, string subscriptionId, string resourceGroupName, string accountName, string projectName, int? count, int? skip, string skipToken, IEnumerable<string> names, string searchText, string orderBy, bool? orderByAsc, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public AgentApplicationsGetAllAsyncCollectionResultOfT(AgentApplications client, string subscriptionId, string resourceGroupName, string accountName, string projectName, int? count, int? skip, string skipToken, IEnumerable<string> names, string searchText, string orderBy, bool? orderByAsc, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -60,6 +62,7 @@ namespace Azure.ResourceManager.CognitiveServices
             _orderBy = orderBy;
             _orderByAsc = orderByAsc;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of AgentApplicationsGetAllAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -93,7 +96,7 @@ namespace Azure.ResourceManager.CognitiveServices
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _accountName, _projectName, _count, _skip, _skipToken, _names, _searchText, _orderBy, _orderByAsc, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _accountName, _projectName, _count, _skip, _skipToken, _names, _searchText, _orderBy, _orderByAsc, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("AgentApplicationCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

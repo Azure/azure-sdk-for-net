@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.CognitiveServices
     /// </summary>
     public partial class CommitmentPlanAccountAssociationResource : ArmResource
     {
-        private readonly ClientDiagnostics _cognitiveServicesCommitmentPlanClientDiagnostics;
-        private readonly CognitiveServicesCommitmentPlan _cognitiveServicesCommitmentPlanRestClient;
+        private readonly ClientDiagnostics _commitmentPlanAccountAssociationsClientDiagnostics;
+        private readonly CommitmentPlanAccountAssociations _commitmentPlanAccountAssociationsRestClient;
         private readonly CommitmentPlanAccountAssociationData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.CognitiveServices/commitmentPlans/accountAssociations";
@@ -51,8 +51,8 @@ namespace Azure.ResourceManager.CognitiveServices
         internal CommitmentPlanAccountAssociationResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string commitmentPlanAccountAssociationApiVersion);
-            _cognitiveServicesCommitmentPlanClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", ResourceType.Namespace, Diagnostics);
-            _cognitiveServicesCommitmentPlanRestClient = new CognitiveServicesCommitmentPlan(_cognitiveServicesCommitmentPlanClientDiagnostics, Pipeline, Endpoint, commitmentPlanAccountAssociationApiVersion ?? "2025-10-01-preview");
+            _commitmentPlanAccountAssociationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", ResourceType.Namespace, Diagnostics);
+            _commitmentPlanAccountAssociationsRestClient = new CommitmentPlanAccountAssociations(_commitmentPlanAccountAssociationsClientDiagnostics, Pipeline, Endpoint, commitmentPlanAccountAssociationApiVersion ?? "2026-03-01");
             ValidateResourceId(id);
         }
 
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<CommitmentPlanAccountAssociationResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _cognitiveServicesCommitmentPlanClientDiagnostics.CreateScope("CommitmentPlanAccountAssociationResource.Get");
+            using DiagnosticScope scope = _commitmentPlanAccountAssociationsClientDiagnostics.CreateScope("CommitmentPlanAccountAssociationResource.Get");
             scope.Start();
             try
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cognitiveServicesCommitmentPlanRestClient.CreateGetAssociationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _commitmentPlanAccountAssociationsRestClient.CreateGetAssociationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CommitmentPlanAccountAssociationData> response = Response.FromValue(CommitmentPlanAccountAssociationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<CommitmentPlanAccountAssociationResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _cognitiveServicesCommitmentPlanClientDiagnostics.CreateScope("CommitmentPlanAccountAssociationResource.Get");
+            using DiagnosticScope scope = _commitmentPlanAccountAssociationsClientDiagnostics.CreateScope("CommitmentPlanAccountAssociationResource.Get");
             scope.Start();
             try
             {
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cognitiveServicesCommitmentPlanRestClient.CreateGetAssociationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _commitmentPlanAccountAssociationsRestClient.CreateGetAssociationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CommitmentPlanAccountAssociationData> response = Response.FromValue(CommitmentPlanAccountAssociationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _cognitiveServicesCommitmentPlanClientDiagnostics.CreateScope("CommitmentPlanAccountAssociationResource.Delete");
+            using DiagnosticScope scope = _commitmentPlanAccountAssociationsClientDiagnostics.CreateScope("CommitmentPlanAccountAssociationResource.Delete");
             scope.Start();
             try
             {
@@ -222,9 +222,9 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cognitiveServicesCommitmentPlanRestClient.CreateDeleteAssociationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _commitmentPlanAccountAssociationsRestClient.CreateDeleteAssociationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                CognitiveServicesArmOperation operation = new CognitiveServicesArmOperation(_cognitiveServicesCommitmentPlanClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                CognitiveServicesArmOperation operation = new CognitiveServicesArmOperation(_commitmentPlanAccountAssociationsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _cognitiveServicesCommitmentPlanClientDiagnostics.CreateScope("CommitmentPlanAccountAssociationResource.Delete");
+            using DiagnosticScope scope = _commitmentPlanAccountAssociationsClientDiagnostics.CreateScope("CommitmentPlanAccountAssociationResource.Delete");
             scope.Start();
             try
             {
@@ -271,9 +271,9 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cognitiveServicesCommitmentPlanRestClient.CreateDeleteAssociationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _commitmentPlanAccountAssociationsRestClient.CreateDeleteAssociationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                CognitiveServicesArmOperation operation = new CognitiveServicesArmOperation(_cognitiveServicesCommitmentPlanClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                CognitiveServicesArmOperation operation = new CognitiveServicesArmOperation(_commitmentPlanAccountAssociationsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _cognitiveServicesCommitmentPlanClientDiagnostics.CreateScope("CommitmentPlanAccountAssociationResource.Update");
+            using DiagnosticScope scope = _commitmentPlanAccountAssociationsClientDiagnostics.CreateScope("CommitmentPlanAccountAssociationResource.Update");
             scope.Start();
             try
             {
@@ -324,11 +324,11 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cognitiveServicesCommitmentPlanRestClient.CreateCreateOrUpdateAssociationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, CommitmentPlanAccountAssociationData.ToRequestContent(data), context);
+                HttpMessage message = _commitmentPlanAccountAssociationsRestClient.CreateCreateOrUpdateAssociationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, CommitmentPlanAccountAssociationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CognitiveServicesArmOperation<CommitmentPlanAccountAssociationResource> operation = new CognitiveServicesArmOperation<CommitmentPlanAccountAssociationResource>(
                     new CommitmentPlanAccountAssociationOperationSource(Client),
-                    _cognitiveServicesCommitmentPlanClientDiagnostics,
+                    _commitmentPlanAccountAssociationsClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _cognitiveServicesCommitmentPlanClientDiagnostics.CreateScope("CommitmentPlanAccountAssociationResource.Update");
+            using DiagnosticScope scope = _commitmentPlanAccountAssociationsClientDiagnostics.CreateScope("CommitmentPlanAccountAssociationResource.Update");
             scope.Start();
             try
             {
@@ -383,11 +383,11 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cognitiveServicesCommitmentPlanRestClient.CreateCreateOrUpdateAssociationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, CommitmentPlanAccountAssociationData.ToRequestContent(data), context);
+                HttpMessage message = _commitmentPlanAccountAssociationsRestClient.CreateCreateOrUpdateAssociationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, CommitmentPlanAccountAssociationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CognitiveServicesArmOperation<CommitmentPlanAccountAssociationResource> operation = new CognitiveServicesArmOperation<CommitmentPlanAccountAssociationResource>(
                     new CommitmentPlanAccountAssociationOperationSource(Client),
-                    _cognitiveServicesCommitmentPlanClientDiagnostics,
+                    _commitmentPlanAccountAssociationsClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.CognitiveServices
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _cognitiveServicesCommitmentPlanClientDiagnostics.CreateScope("CommitmentPlanAccountAssociationResource.AddTag");
+            using DiagnosticScope scope = _commitmentPlanAccountAssociationsClientDiagnostics.CreateScope("CommitmentPlanAccountAssociationResource.AddTag");
             scope.Start();
             try
             {
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.CognitiveServices
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _cognitiveServicesCommitmentPlanRestClient.CreateGetAssociationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    HttpMessage message = _commitmentPlanAccountAssociationsRestClient.CreateGetAssociationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<CommitmentPlanAccountAssociationData> response = Response.FromValue(CommitmentPlanAccountAssociationData.FromResponse(result), result);
                     return Response.FromValue(new CommitmentPlanAccountAssociationResource(Client, response.Value), response.GetRawResponse());
@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.CognitiveServices
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _cognitiveServicesCommitmentPlanClientDiagnostics.CreateScope("CommitmentPlanAccountAssociationResource.AddTag");
+            using DiagnosticScope scope = _commitmentPlanAccountAssociationsClientDiagnostics.CreateScope("CommitmentPlanAccountAssociationResource.AddTag");
             scope.Start();
             try
             {
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.CognitiveServices
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _cognitiveServicesCommitmentPlanRestClient.CreateGetAssociationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    HttpMessage message = _commitmentPlanAccountAssociationsRestClient.CreateGetAssociationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<CommitmentPlanAccountAssociationData> response = Response.FromValue(CommitmentPlanAccountAssociationData.FromResponse(result), result);
                     return Response.FromValue(new CommitmentPlanAccountAssociationResource(Client, response.Value), response.GetRawResponse());
@@ -499,7 +499,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _cognitiveServicesCommitmentPlanClientDiagnostics.CreateScope("CommitmentPlanAccountAssociationResource.SetTags");
+            using DiagnosticScope scope = _commitmentPlanAccountAssociationsClientDiagnostics.CreateScope("CommitmentPlanAccountAssociationResource.SetTags");
             scope.Start();
             try
             {
@@ -513,7 +513,7 @@ namespace Azure.ResourceManager.CognitiveServices
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _cognitiveServicesCommitmentPlanRestClient.CreateGetAssociationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    HttpMessage message = _commitmentPlanAccountAssociationsRestClient.CreateGetAssociationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<CommitmentPlanAccountAssociationData> response = Response.FromValue(CommitmentPlanAccountAssociationData.FromResponse(result), result);
                     return Response.FromValue(new CommitmentPlanAccountAssociationResource(Client, response.Value), response.GetRawResponse());
@@ -541,7 +541,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _cognitiveServicesCommitmentPlanClientDiagnostics.CreateScope("CommitmentPlanAccountAssociationResource.SetTags");
+            using DiagnosticScope scope = _commitmentPlanAccountAssociationsClientDiagnostics.CreateScope("CommitmentPlanAccountAssociationResource.SetTags");
             scope.Start();
             try
             {
@@ -555,7 +555,7 @@ namespace Azure.ResourceManager.CognitiveServices
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _cognitiveServicesCommitmentPlanRestClient.CreateGetAssociationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    HttpMessage message = _commitmentPlanAccountAssociationsRestClient.CreateGetAssociationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<CommitmentPlanAccountAssociationData> response = Response.FromValue(CommitmentPlanAccountAssociationData.FromResponse(result), result);
                     return Response.FromValue(new CommitmentPlanAccountAssociationResource(Client, response.Value), response.GetRawResponse());
@@ -583,7 +583,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _cognitiveServicesCommitmentPlanClientDiagnostics.CreateScope("CommitmentPlanAccountAssociationResource.RemoveTag");
+            using DiagnosticScope scope = _commitmentPlanAccountAssociationsClientDiagnostics.CreateScope("CommitmentPlanAccountAssociationResource.RemoveTag");
             scope.Start();
             try
             {
@@ -596,7 +596,7 @@ namespace Azure.ResourceManager.CognitiveServices
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _cognitiveServicesCommitmentPlanRestClient.CreateGetAssociationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    HttpMessage message = _commitmentPlanAccountAssociationsRestClient.CreateGetAssociationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<CommitmentPlanAccountAssociationData> response = Response.FromValue(CommitmentPlanAccountAssociationData.FromResponse(result), result);
                     return Response.FromValue(new CommitmentPlanAccountAssociationResource(Client, response.Value), response.GetRawResponse());
@@ -624,7 +624,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _cognitiveServicesCommitmentPlanClientDiagnostics.CreateScope("CommitmentPlanAccountAssociationResource.RemoveTag");
+            using DiagnosticScope scope = _commitmentPlanAccountAssociationsClientDiagnostics.CreateScope("CommitmentPlanAccountAssociationResource.RemoveTag");
             scope.Start();
             try
             {
@@ -637,7 +637,7 @@ namespace Azure.ResourceManager.CognitiveServices
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _cognitiveServicesCommitmentPlanRestClient.CreateGetAssociationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    HttpMessage message = _commitmentPlanAccountAssociationsRestClient.CreateGetAssociationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<CommitmentPlanAccountAssociationData> response = Response.FromValue(CommitmentPlanAccountAssociationData.FromResponse(result), result);
                     return Response.FromValue(new CommitmentPlanAccountAssociationResource(Client, response.Value), response.GetRawResponse());

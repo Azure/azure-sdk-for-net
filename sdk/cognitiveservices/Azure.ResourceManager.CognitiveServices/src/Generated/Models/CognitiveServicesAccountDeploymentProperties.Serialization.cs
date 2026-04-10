@@ -165,6 +165,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("deploymentState"u8);
                 writer.WriteStringValue(DeploymentState.Value.ToString());
             }
+            if (Optional.IsDefined(Routing))
+            {
+                writer.WritePropertyName("routing"u8);
+                writer.WriteObjectValue(Routing, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -222,6 +227,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             string spilloverDeploymentName = default;
             ServiceTier? serviceTier = default;
             DeploymentState? deploymentState = default;
+            DeploymentRouting routing = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -367,6 +373,15 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     deploymentState = new DeploymentState(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("routing"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    routing = DeploymentRouting.DeserializeDeploymentRouting(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -388,6 +403,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 spilloverDeploymentName,
                 serviceTier,
                 deploymentState,
+                routing,
                 additionalBinaryDataProperties);
         }
     }

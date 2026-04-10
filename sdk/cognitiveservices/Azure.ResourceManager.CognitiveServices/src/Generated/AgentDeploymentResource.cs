@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.CognitiveServices
     /// </summary>
     public partial class AgentDeploymentResource : ArmResource
     {
-        private readonly ClientDiagnostics _agentDeploymentsClientDiagnostics;
-        private readonly AgentDeployments _agentDeploymentsRestClient;
+        private readonly ClientDiagnostics _agentDeploymentResourcesClientDiagnostics;
+        private readonly AgentDeploymentResources _agentDeploymentResourcesRestClient;
         private readonly AgentDeploymentData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.CognitiveServices/accounts/projects/applications/agentDeployments";
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.CognitiveServices
         internal AgentDeploymentResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string agentDeploymentApiVersion);
-            _agentDeploymentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", ResourceType.Namespace, Diagnostics);
-            _agentDeploymentsRestClient = new AgentDeployments(_agentDeploymentsClientDiagnostics, Pipeline, Endpoint, agentDeploymentApiVersion ?? "2025-10-01-preview");
+            _agentDeploymentResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", ResourceType.Namespace, Diagnostics);
+            _agentDeploymentResourcesRestClient = new AgentDeploymentResources(_agentDeploymentResourcesClientDiagnostics, Pipeline, Endpoint, agentDeploymentApiVersion ?? "2026-03-01");
             ValidateResourceId(id);
         }
 
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<AgentDeploymentResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _agentDeploymentsClientDiagnostics.CreateScope("AgentDeploymentResource.Get");
+            using DiagnosticScope scope = _agentDeploymentResourcesClientDiagnostics.CreateScope("AgentDeploymentResource.Get");
             scope.Start();
             try
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _agentDeploymentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _agentDeploymentResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AgentDeploymentData> response = Response.FromValue(AgentDeploymentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<AgentDeploymentResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _agentDeploymentsClientDiagnostics.CreateScope("AgentDeploymentResource.Get");
+            using DiagnosticScope scope = _agentDeploymentResourcesClientDiagnostics.CreateScope("AgentDeploymentResource.Get");
             scope.Start();
             try
             {
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _agentDeploymentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _agentDeploymentResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AgentDeploymentData> response = Response.FromValue(AgentDeploymentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _agentDeploymentsClientDiagnostics.CreateScope("AgentDeploymentResource.Delete");
+            using DiagnosticScope scope = _agentDeploymentResourcesClientDiagnostics.CreateScope("AgentDeploymentResource.Delete");
             scope.Start();
             try
             {
@@ -222,9 +222,9 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _agentDeploymentsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _agentDeploymentResourcesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                CognitiveServicesArmOperation operation = new CognitiveServicesArmOperation(_agentDeploymentsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                CognitiveServicesArmOperation operation = new CognitiveServicesArmOperation(_agentDeploymentResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _agentDeploymentsClientDiagnostics.CreateScope("AgentDeploymentResource.Delete");
+            using DiagnosticScope scope = _agentDeploymentResourcesClientDiagnostics.CreateScope("AgentDeploymentResource.Delete");
             scope.Start();
             try
             {
@@ -271,9 +271,9 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _agentDeploymentsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _agentDeploymentResourcesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                CognitiveServicesArmOperation operation = new CognitiveServicesArmOperation(_agentDeploymentsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                CognitiveServicesArmOperation operation = new CognitiveServicesArmOperation(_agentDeploymentResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> StartAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _agentDeploymentsClientDiagnostics.CreateScope("AgentDeploymentResource.Start");
+            using DiagnosticScope scope = _agentDeploymentResourcesClientDiagnostics.CreateScope("AgentDeploymentResource.Start");
             scope.Start();
             try
             {
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _agentDeploymentsRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _agentDeploymentResourcesRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response Start(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _agentDeploymentsClientDiagnostics.CreateScope("AgentDeploymentResource.Start");
+            using DiagnosticScope scope = _agentDeploymentResourcesClientDiagnostics.CreateScope("AgentDeploymentResource.Start");
             scope.Start();
             try
             {
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _agentDeploymentsRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _agentDeploymentResourcesRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> StopAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _agentDeploymentsClientDiagnostics.CreateScope("AgentDeploymentResource.Stop");
+            using DiagnosticScope scope = _agentDeploymentResourcesClientDiagnostics.CreateScope("AgentDeploymentResource.Stop");
             scope.Start();
             try
             {
@@ -405,7 +405,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _agentDeploymentsRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _agentDeploymentResourcesRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -429,7 +429,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response Stop(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _agentDeploymentsClientDiagnostics.CreateScope("AgentDeploymentResource.Stop");
+            using DiagnosticScope scope = _agentDeploymentResourcesClientDiagnostics.CreateScope("AgentDeploymentResource.Stop");
             scope.Start();
             try
             {
@@ -448,7 +448,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _agentDeploymentsRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _agentDeploymentResourcesRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -472,7 +472,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _agentDeploymentsClientDiagnostics.CreateScope("AgentDeploymentResource.Update");
+            using DiagnosticScope scope = _agentDeploymentResourcesClientDiagnostics.CreateScope("AgentDeploymentResource.Update");
             scope.Start();
             try
             {
@@ -496,11 +496,11 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _agentDeploymentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, AgentDeploymentData.ToRequestContent(data), context);
+                HttpMessage message = _agentDeploymentResourcesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, AgentDeploymentData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CognitiveServicesArmOperation<AgentDeploymentResource> operation = new CognitiveServicesArmOperation<AgentDeploymentResource>(
                     new AgentDeploymentOperationSource(Client),
-                    _agentDeploymentsClientDiagnostics,
+                    _agentDeploymentResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -531,7 +531,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -547,7 +547,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _agentDeploymentsClientDiagnostics.CreateScope("AgentDeploymentResource.Update");
+            using DiagnosticScope scope = _agentDeploymentResourcesClientDiagnostics.CreateScope("AgentDeploymentResource.Update");
             scope.Start();
             try
             {
@@ -555,11 +555,11 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _agentDeploymentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, AgentDeploymentData.ToRequestContent(data), context);
+                HttpMessage message = _agentDeploymentResourcesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, AgentDeploymentData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CognitiveServicesArmOperation<AgentDeploymentResource> operation = new CognitiveServicesArmOperation<AgentDeploymentResource>(
                     new AgentDeploymentOperationSource(Client),
-                    _agentDeploymentsClientDiagnostics,
+                    _agentDeploymentResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,

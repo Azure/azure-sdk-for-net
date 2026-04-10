@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
 
         private ClientDiagnostics CognitiveServicesCommitmentPlanOperationsClientDiagnostics => _cognitiveServicesCommitmentPlanOperationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CognitiveServices.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CognitiveServicesCommitmentPlanOperations CognitiveServicesCommitmentPlanOperationsRestClient => _cognitiveServicesCommitmentPlanOperationsRestClient ??= new CognitiveServicesCommitmentPlanOperations(CognitiveServicesCommitmentPlanOperationsClientDiagnostics, Pipeline, Endpoint, "2025-10-01-preview");
+        private CognitiveServicesCommitmentPlanOperations CognitiveServicesCommitmentPlanOperationsRestClient => _cognitiveServicesCommitmentPlanOperationsRestClient ??= new CognitiveServicesCommitmentPlanOperations(CognitiveServicesCommitmentPlanOperationsClientDiagnostics, Pipeline, Endpoint, "2026-03-01");
 
         /// <summary> Gets a collection of Accounts in the <see cref="ResourceGroupResource"/>. </summary>
         /// <returns> An object representing collection of Accounts and their operations over a AccountResource. </returns>
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CommitmentPlanData, CognitiveServicesCommitmentPlanOperationResource>(new CognitiveServicesCommitmentPlanOperationsGetPlansByResourceGroupAsyncCollectionResultOfT(CognitiveServicesCommitmentPlanOperationsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new CognitiveServicesCommitmentPlanOperationResource(Client, data));
+            return new AsyncPageableWrapper<CommitmentPlanData, CognitiveServicesCommitmentPlanOperationResource>(new CognitiveServicesCommitmentPlanOperationsGetPlansByResourceGroupAsyncCollectionResultOfT(CognitiveServicesCommitmentPlanOperationsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "MockableCognitiveServicesResourceGroupResource.GetCognitiveServicesCommitmentPlanOperations"), data => new CognitiveServicesCommitmentPlanOperationResource(Client, data));
         }
 
         /// <summary>
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CommitmentPlanData, CognitiveServicesCommitmentPlanOperationResource>(new CognitiveServicesCommitmentPlanOperationsGetPlansByResourceGroupCollectionResultOfT(CognitiveServicesCommitmentPlanOperationsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new CognitiveServicesCommitmentPlanOperationResource(Client, data));
+            return new PageableWrapper<CommitmentPlanData, CognitiveServicesCommitmentPlanOperationResource>(new CognitiveServicesCommitmentPlanOperationsGetPlansByResourceGroupCollectionResultOfT(CognitiveServicesCommitmentPlanOperationsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "MockableCognitiveServicesResourceGroupResource.GetCognitiveServicesCommitmentPlanOperations"), data => new CognitiveServicesCommitmentPlanOperationResource(Client, data));
         }
     }
 }

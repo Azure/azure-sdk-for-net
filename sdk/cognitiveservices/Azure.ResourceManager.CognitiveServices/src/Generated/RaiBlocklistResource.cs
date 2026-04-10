@@ -28,8 +28,6 @@ namespace Azure.ResourceManager.CognitiveServices
     {
         private readonly ClientDiagnostics _raiBlocklistsClientDiagnostics;
         private readonly RaiBlocklists _raiBlocklistsRestClient;
-        private readonly ClientDiagnostics _raiBlocklistItemsClientDiagnostics;
-        private readonly RaiBlocklistItems _raiBlocklistItemsRestClient;
         private readonly RaiBlocklistData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.CognitiveServices/accounts/raiBlocklists";
@@ -55,9 +53,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             TryGetApiVersion(ResourceType, out string raiBlocklistApiVersion);
             _raiBlocklistsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", ResourceType.Namespace, Diagnostics);
-            _raiBlocklistsRestClient = new RaiBlocklists(_raiBlocklistsClientDiagnostics, Pipeline, Endpoint, raiBlocklistApiVersion ?? "2025-10-01-preview");
-            _raiBlocklistItemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", ResourceType.Namespace, Diagnostics);
-            _raiBlocklistItemsRestClient = new RaiBlocklistItems(_raiBlocklistItemsClientDiagnostics, Pipeline, Endpoint, raiBlocklistApiVersion ?? "2025-10-01-preview");
+            _raiBlocklistsRestClient = new RaiBlocklists(_raiBlocklistsClientDiagnostics, Pipeline, Endpoint, raiBlocklistApiVersion ?? "2026-03-01");
             ValidateResourceId(id);
         }
 
@@ -94,7 +90,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -111,7 +107,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -159,7 +155,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -207,7 +203,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -256,7 +252,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -305,7 +301,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -320,7 +316,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             Argument.AssertNotNull(raiBlocklistItems, nameof(raiBlocklistItems));
 
-            using DiagnosticScope scope = _raiBlocklistItemsClientDiagnostics.CreateScope("RaiBlocklistResource.BatchAdd");
+            using DiagnosticScope scope = _raiBlocklistsClientDiagnostics.CreateScope("RaiBlocklistResource.BatchAdd");
             scope.Start();
             try
             {
@@ -328,7 +324,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _raiBlocklistItemsRestClient.CreateBatchAddRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, IEnumerable<RaiBlocklistItemBulkContent>.ToRequestContent(raiBlocklistItems), context);
+                HttpMessage message = _raiBlocklistsRestClient.CreateBatchAddRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, null, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RaiBlocklistData> response = Response.FromValue(RaiBlocklistData.FromResponse(result), result);
                 if (response.Value == null)
@@ -357,7 +353,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -372,7 +368,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             Argument.AssertNotNull(raiBlocklistItems, nameof(raiBlocklistItems));
 
-            using DiagnosticScope scope = _raiBlocklistItemsClientDiagnostics.CreateScope("RaiBlocklistResource.BatchAdd");
+            using DiagnosticScope scope = _raiBlocklistsClientDiagnostics.CreateScope("RaiBlocklistResource.BatchAdd");
             scope.Start();
             try
             {
@@ -380,7 +376,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _raiBlocklistItemsRestClient.CreateBatchAddRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, IEnumerable<RaiBlocklistItemBulkContent>.ToRequestContent(raiBlocklistItems), context);
+                HttpMessage message = _raiBlocklistsRestClient.CreateBatchAddRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, null, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RaiBlocklistData> response = Response.FromValue(RaiBlocklistData.FromResponse(result), result);
                 if (response.Value == null)
@@ -409,7 +405,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -424,7 +420,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             Argument.AssertNotNull(raiBlocklistItemsNames, nameof(raiBlocklistItemsNames));
 
-            using DiagnosticScope scope = _raiBlocklistItemsClientDiagnostics.CreateScope("RaiBlocklistResource.BatchDelete");
+            using DiagnosticScope scope = _raiBlocklistsClientDiagnostics.CreateScope("RaiBlocklistResource.BatchDelete");
             scope.Start();
             try
             {
@@ -432,7 +428,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _raiBlocklistItemsRestClient.CreateBatchDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, IEnumerable<string>.ToRequestContent(raiBlocklistItemsNames), context);
+                HttpMessage message = _raiBlocklistsRestClient.CreateBatchDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, null, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -456,7 +452,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -471,7 +467,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             Argument.AssertNotNull(raiBlocklistItemsNames, nameof(raiBlocklistItemsNames));
 
-            using DiagnosticScope scope = _raiBlocklistItemsClientDiagnostics.CreateScope("RaiBlocklistResource.BatchDelete");
+            using DiagnosticScope scope = _raiBlocklistsClientDiagnostics.CreateScope("RaiBlocklistResource.BatchDelete");
             scope.Start();
             try
             {
@@ -479,7 +475,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _raiBlocklistItemsRestClient.CreateBatchDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, IEnumerable<string>.ToRequestContent(raiBlocklistItemsNames), context);
+                HttpMessage message = _raiBlocklistsRestClient.CreateBatchDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, null, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -503,7 +499,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -559,7 +555,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

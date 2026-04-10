@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <summary> Initializes a new instance of <see cref="OutboundRuleBasicResourceData"/>. </summary>
         /// <param name="properties"> Outbound Rule for the managed network of a cognitive services account. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public OutboundRuleBasicResourceData(Models.OutboundRule properties)
+        public OutboundRuleBasicResourceData(OutboundRule properties)
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
@@ -36,13 +36,13 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Outbound Rule for the managed network of a cognitive services account. </param>
-        internal OutboundRuleBasicResourceData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, Models.OutboundRule properties) : base(id, name, resourceType, systemData)
+        internal OutboundRuleBasicResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, OutboundRule properties) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
         }
 
         /// <summary> Outbound Rule for the managed network of a cognitive services account. </summary>
-        public Models.OutboundRule Properties { get; set; }
+        public OutboundRule Properties { get; set; }
     }
 }

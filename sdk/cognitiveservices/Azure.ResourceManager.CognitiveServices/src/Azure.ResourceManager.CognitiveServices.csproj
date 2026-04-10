@@ -6,43 +6,5 @@
     <PackageId>Azure.ResourceManager.CognitiveServices</PackageId>
     <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.CognitiveServices.</Description>
     <PackageTags>azure;management;arm;resource manager;cognitiveservices</PackageTags>
-    <!-- TODO: Re-enable ApiCompat after migration stabilizes -->
-    <RunApiCompat>false</RunApiCompat>
   </PropertyGroup>
-  <ItemGroup>
-    <!-- Generator bug workarounds for TypeSpec migration compile issues -->
-    <Compile Remove="Generated/AgentApplicationData.cs" />
-    <Compile Remove="Generated/AgentDeploymentData.cs" />
-    <Compile Remove="Generated/CognitiveServicesAccountData.cs" />
-    <Compile Remove="Generated/CognitiveServicesAccountDeploymentData.cs" />
-    <Compile Remove="Generated/CognitiveServicesCapabilityHostData.cs" />
-    <Compile Remove="Generated/CognitiveServicesConnectionData.cs" />
-    <Compile Remove="Generated/CognitiveServicesEncryptionScopeData.cs" />
-    <Compile Remove="Generated/CognitiveServicesPrivateEndpointConnectionCollection.cs" />
-    <Compile Remove="Generated/CognitiveServicesPrivateEndpointConnectionData.cs" />
-    <Compile Remove="Generated/CognitiveServicesProjectData.cs" />
-    <Compile Remove="Generated/CommitmentPlanAccountAssociationData.cs" />
-    <Compile Remove="Generated/CommitmentPlanData.cs" />
-    <Compile Remove="Generated/DefenderForAISettingData.cs" />
-    <Compile Remove="Generated/ManagedNetworkSettingsPropertiesBasicResourceData.cs" />
-    <Compile Remove="Generated/NetworkSecurityPerimeterConfigurationData.cs" />
-    <Compile Remove="Generated/OutboundRuleBasicResourceData.cs" />
-    <Compile Remove="Generated/ProjectCapabilityHostData.cs" />
-    <Compile Remove="Generated/QuotaTierData.cs" />
-    <Compile Remove="Generated/RaiBlocklistData.cs" />
-    <Compile Remove="Generated/RaiBlocklistItemData.cs" />
-    <Compile Remove="Generated/RaiBlocklistResource.cs" />
-    <Compile Remove="Generated/RaiContentFilterData.cs" />
-    <Compile Remove="Generated/RaiExternalSafetyProviderSchemaData.cs" />
-    <Compile Remove="Generated/RaiPolicyData.cs" />
-    <Compile Remove="Generated/RaiToolLabelData.cs" />
-    <Compile Remove="Generated/RaiTopicData.cs" />
-    <Compile Remove="Generated/Models/AgentReference.cs" />
-    <Compile Remove="Generated/Models/CognitiveServicesPrivateLinkResource.cs" />
-    <Compile Remove="Generated/Models/ManagedNetworkSettings.cs" />
-    <Compile Remove="Generated/Models/ManagedNetworkSettings.Serialization.cs" />
-    <Compile Remove="Generated/Models/ManagedNetworkSettingsBasicResource.cs" />
-    <Compile Remove="Generated/Models/ModelCapacityListResultValueItem.cs" />
-    <Compile Remove="Generated/Models/NetworkSecurityPerimeterAccessRuleProperties.Serialization.cs" />
-  </ItemGroup>
 </Project>

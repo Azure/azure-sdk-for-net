@@ -199,6 +199,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Cognitive Services Rai Monitor Config. </summary>
         public RaiMonitorConfig RaiMonitorConfig { get; set; }
 
+        /// <summary> Gets the NetworkInjections. </summary>
+        public AIFoundryNetworkInjection NetworkInjections { get; }
+
         /// <summary> Specifies whether this resource support project management as child resources, used as containers for access management, data isolation and cost in AI Foundry. </summary>
         public bool? AllowProjectManagement { get; set; }
 
