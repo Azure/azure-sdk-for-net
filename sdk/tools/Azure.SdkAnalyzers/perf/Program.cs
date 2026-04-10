@@ -5,6 +5,7 @@ using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Diagnosers;
 using BenchmarkDotNet.Jobs;
 using BenchmarkDotNet.Running;
+using BenchmarkDotNet.Toolchains.InProcess.NoEmit;
 using Perfolizer.Horology;
 
 namespace Azure.SdkAnalyzers.Perf
@@ -17,6 +18,7 @@ namespace Azure.SdkAnalyzers.Perf
             config.Options = ConfigOptions.JoinSummary | ConfigOptions.StopOnFirstError;
             config = config.AddDiagnoser(MemoryDiagnoser.Default);
             config.AddJob(Job.Default
+                .WithToolchain(InProcessNoEmitToolchain.Instance)
                 .WithWarmupCount(1)
                 .WithIterationTime(TimeInterval.FromMilliseconds(250))
                 .WithMinIterationCount(15)
