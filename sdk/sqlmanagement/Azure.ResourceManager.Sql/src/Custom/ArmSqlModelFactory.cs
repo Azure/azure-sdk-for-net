@@ -112,3 +112,5 @@ namespace Azure.ResourceManager.Sql.Models
             => ManagedInstanceVcoresCapability(name, value, null, supportedMemorySizesInGB, includedMaxSize, supportedStorageSizes, includedStorageIOps, supportedStorageIOps, iopsMinValueOverrideFactorPerSelectedStorageGB, iopsIncludedValueOverrideFactorPerSelectedStorageGB, includedStorageThroughputMBps, supportedStorageThroughputMBps, throughputMBpsMinValueOverrideFactorPerSelectedStorageGB, throughputMBpsIncludedValueOverrideFactorPerSelectedStorageGB, isInstancePoolSupported , isStandaloneSupported, supportedMaintenanceConfigurations, status, reason);
     }
 }
+
+// Test comment for batching validation - DO NOT MERGE
