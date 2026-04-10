@@ -6,12 +6,12 @@ using Azure.Security.KeyVault.Secrets;
 using NUnit.Framework;
 using System;
 
-namespace Azure.Core.Tests.Samples
+namespace Azure.Core.Samples
 {
     public class CredentialsSamples
     {
         [Test]
-        [Ignore("Sample only")]
+        [Ignore("Only verifying that the sample builds")]
         public void AuthenticateWithDefaultCredential()
         {
             #region Snippet:AzureCoreDefaultCredential

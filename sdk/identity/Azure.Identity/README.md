@@ -15,7 +15,7 @@ dotnet add package Azure.Identity
 ```
 
 > [!NOTE]
-> Starting with `Azure.Core` 1.53.0, all credential types (including `DefaultAzureCredential`) are bundled directly in `Azure.Core`. If your project already targets `Azure.Core` 1.53.0 or later and you do not use any `Azure.Identity`-specific APIs, you can omit the `Azure.Identity` package reference entirely. See the [Migration Guide](./MigrationGuide.md) for upgrade and compatibility details.
+> Starting with `Azure.Core` 1.53.0, all credential types (including `DefaultAzureCredential`) are bundled directly in `Azure.Core`. If your project already targets `Azure.Core` 1.53.0+ or does so through a transitive dependency, you should omit the `Azure.Identity` package reference entirely. See the [Migration Guide](./MigrationGuide.md) for upgrade and compatibility details.
 
 ### Prerequisites
 
@@ -36,7 +36,7 @@ The Azure Identity library focuses on OAuth authentication with Microsoft Entra 
 
 See [Credential classes](#credential-classes) for a complete listing of available credential types.
 
-For details on the assembly consolidation introduced in version 1.53 and how to handle `CS0433` conflicts when mixing package versions, see the [Migration Guide](./MigrationGuide.md).
+For details on the assembly consolidation introduced in version 1.53.0 and how to handle [`CS0433`](https://learn.microsoft.com/dotnet/csharp/language-reference/compiler-messages/cs0433) conflicts when mixing package versions, see the [Migration Guide](./MigrationGuide.md).
 
 ### DefaultAzureCredential
 
