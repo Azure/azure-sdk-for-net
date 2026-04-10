@@ -20,6 +20,11 @@ namespace Azure.ResourceManager.Hci
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HciClusterOfferData"/>. </summary>
+        public HciClusterOfferData()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HciClusterOfferData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -34,7 +39,7 @@ namespace Azure.ResourceManager.Hci
 
         /// <summary> Offer properties. </summary>
         [WirePath("properties")]
-        internal OfferProperties Properties { get; }
+        internal OfferProperties Properties { get; set; }
 
         /// <summary> Provisioning State. </summary>
         [WirePath("properties.provisioningState")]
@@ -42,7 +47,61 @@ namespace Azure.ResourceManager.Hci
         {
             get
             {
-                return Properties.ProvisioningState;
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> Identifier of the Publisher for the offer. </summary>
+        [WirePath("properties.publisherId")]
+        public string PublisherId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublisherId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new OfferProperties();
+                }
+                Properties.PublisherId = value;
+            }
+        }
+
+        /// <summary> JSON serialized catalog content of the offer. </summary>
+        [WirePath("properties.content")]
+        public string Content
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Content;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new OfferProperties();
+                }
+                Properties.Content = value;
+            }
+        }
+
+        /// <summary> The API version of the catalog service used to serve the catalog content. </summary>
+        [WirePath("properties.contentVersion")]
+        public string ContentVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ContentVersion;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new OfferProperties();
+                }
+                Properties.ContentVersion = value;
             }
         }
 
@@ -52,6 +111,10 @@ namespace Azure.ResourceManager.Hci
         {
             get
             {
+                if (Properties is null)
+                {
+                    Properties = new OfferProperties();
+                }
                 return Properties.SkuMappings;
             }
         }

@@ -34,19 +34,5 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Gets or sets the Properties. </summary>
         [WirePath("properties")]
         internal RawCertificateData Properties { get; set; }
-
-        /// <summary> Gets the Certificates. </summary>
-        [WirePath("properties.certificates")]
-        public IList<string> RawCertificateDataCertificates
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new RawCertificateData();
-                }
-                return Properties.Certificates;
-            }
-        }
     }
 }

@@ -97,8 +97,15 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("deploymentMode"u8);
-            writer.WriteStringValue(DeploymentMode.ToString());
+            if (Optional.IsDefined(DeploymentMode))
+            {
+                writer.WritePropertyName("deploymentMode"u8);
+                writer.WriteStringValue(DeploymentMode.Value.ToString());
+            }
+            else
+            {
+                writer.WriteNull("deploymentMode"u8);
+            }
             if (Optional.IsDefined(OperationType))
             {
                 writer.WritePropertyName("operationType"u8);
@@ -155,7 +162,7 @@ namespace Azure.ResourceManager.Hci.Models
             }
             HciProvisioningState? provisioningState = default;
             IList<ResourceIdentifier> arcNodeResourceIds = default;
-            EceDeploymentMode deploymentMode = default;
+            EceDeploymentMode? deploymentMode = default;
             HciClusterOperationType? operationType = default;
             HciClusterDeploymentConfiguration deploymentConfiguration = default;
             EceReportedProperties reportedProperties = default;
@@ -190,6 +197,11 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 if (prop.NameEquals("deploymentMode"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        deploymentMode = null;
+                        continue;
+                    }
                     deploymentMode = new EceDeploymentMode(prop.Value.GetString());
                     continue;
                 }

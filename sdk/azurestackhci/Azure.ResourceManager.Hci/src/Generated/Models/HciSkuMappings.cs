@@ -18,6 +18,12 @@ namespace Azure.ResourceManager.Hci.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HciSkuMappings"/>. </summary>
+        public HciSkuMappings()
+        {
+            MarketplaceSkuVersions = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HciSkuMappings"/>. </summary>
         /// <param name="catalogPlanId"> Identifier of the CatalogPlan for the sku. </param>
         /// <param name="marketplaceSkuId"> Identifier for the sku. </param>
         /// <param name="marketplaceSkuVersions"> Array of SKU versions available. </param>
@@ -29,6 +35,14 @@ namespace Azure.ResourceManager.Hci.Models
             MarketplaceSkuVersions = marketplaceSkuVersions;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Identifier of the CatalogPlan for the sku. </summary>
+        [WirePath("catalogPlanId")]
+        public string CatalogPlanId { get; set; }
+
+        /// <summary> Identifier for the sku. </summary>
+        [WirePath("marketplaceSkuId")]
+        public string MarketplaceSkuId { get; set; }
 
         /// <summary> Array of SKU versions available. </summary>
         [WirePath("marketplaceSkuVersions")]

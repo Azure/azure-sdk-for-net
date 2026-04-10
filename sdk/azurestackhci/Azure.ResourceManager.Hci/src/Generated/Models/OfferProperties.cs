@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Hci.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="OfferProperties"/>. </summary>
-        internal OfferProperties()
+        public OfferProperties()
         {
             SkuMappings = new ChangeTrackingList<HciSkuMappings>();
         }
@@ -46,15 +46,15 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Identifier of the Publisher for the offer. </summary>
         [WirePath("publisherId")]
-        public string PublisherId { get; }
+        public string PublisherId { get; set; }
 
         /// <summary> JSON serialized catalog content of the offer. </summary>
         [WirePath("content")]
-        public string Content { get; }
+        public string Content { get; set; }
 
         /// <summary> The API version of the catalog service used to serve the catalog content. </summary>
         [WirePath("contentVersion")]
-        public string ContentVersion { get; }
+        public string ContentVersion { get; set; }
 
         /// <summary> Array of SKU mappings. </summary>
         [WirePath("skuMappings")]
