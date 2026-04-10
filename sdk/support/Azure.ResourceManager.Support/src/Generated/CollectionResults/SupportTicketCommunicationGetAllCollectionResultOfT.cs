@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.Support
         private readonly int? _top;
         private readonly string _filter;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of SupportTicketCommunicationGetAllCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The SupportTicketCommunication client used to send requests. </param>
@@ -30,7 +31,8 @@ namespace Azure.ResourceManager.Support
         /// <param name="top"> The number of values to return in the collection. Default is 10 and max is 10. </param>
         /// <param name="filter"> The filter to apply on the operation. You can filter by communicationType and createdDate properties. CommunicationType supports Equals ('eq') operator and createdDate supports Greater Than ('gt') and Greater Than or Equals ('ge') operators. You may combine the CommunicationType and CreatedDate filters by Logical And ('and') operator. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public SupportTicketCommunicationGetAllCollectionResultOfT(SupportTicketCommunication client, Guid subscriptionId, string supportTicketName, int? top, string filter, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public SupportTicketCommunicationGetAllCollectionResultOfT(SupportTicketCommunication client, Guid subscriptionId, string supportTicketName, int? top, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -38,6 +40,7 @@ namespace Azure.ResourceManager.Support
             _top = top;
             _filter = filter;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of SupportTicketCommunicationGetAllCollectionResultOfT as an enumerable collection. </summary>
@@ -71,7 +74,7 @@ namespace Azure.ResourceManager.Support
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _supportTicketName, _top, _filter, _context) : _client.CreateGetAllRequest(_subscriptionId, _supportTicketName, _top, _filter, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("SupportTicketCommunicationCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

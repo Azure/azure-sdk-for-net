@@ -65,6 +65,9 @@ public static class ResponsesTracingConstants
         /// <summary><c>azure.ai.agentserver.responses.streaming</c></summary>
         public const string NamespacedStreaming = "azure.ai.agentserver.responses.streaming";
 
+        /// <summary><c>microsoft.foundry.project.id</c> — Foundry project ARM resource ID.</summary>
+        public const string FoundryProjectId = "microsoft.foundry.project.id";
+
         // --- Namespaced error tags ---
 
         /// <summary><c>azure.ai.agentserver.responses.error.code</c></summary>

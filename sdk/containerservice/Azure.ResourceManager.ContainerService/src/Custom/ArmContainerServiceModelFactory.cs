@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                new AgentPoolUpgradeProfileProperties(kubernetesVersion, osType, (upgrades ?? new List<AgentPoolUpgradeProfilePropertiesUpgradesItem>()).ToList(), latestNodeImageVersion, null));
+                new AgentPoolUpgradeProfileProperties(kubernetesVersion, osType, (upgrades ?? new List<AgentPoolUpgradeProfilePropertiesUpgradesItem>()).ToList(), new ChangeTrackingList<KubernetesVersionComponents>(), new ChangeTrackingList<AgentPoolRecentlyUsedVersion>(), latestNodeImageVersion, null));
         }
     }
 }

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ApiCenter
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -179,7 +179,13 @@ namespace Azure.ResourceManager.ApiCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApiCenterDeletedServiceData, ApiCenterDeletedServiceResource>(new DeletedServicesGetAllAsyncCollectionResultOfT(_deletedServicesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, filter, context), data => new ApiCenterDeletedServiceResource(Client, data));
+            return new AsyncPageableWrapper<ApiCenterDeletedServiceData, ApiCenterDeletedServiceResource>(new DeletedServicesGetAllAsyncCollectionResultOfT(
+                _deletedServicesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                filter,
+                context,
+                "ApiCenterDeletedServiceCollection.GetAll"), data => new ApiCenterDeletedServiceResource(Client, data));
         }
 
         /// <summary>
@@ -208,7 +214,13 @@ namespace Azure.ResourceManager.ApiCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApiCenterDeletedServiceData, ApiCenterDeletedServiceResource>(new DeletedServicesGetAllCollectionResultOfT(_deletedServicesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, filter, context), data => new ApiCenterDeletedServiceResource(Client, data));
+            return new PageableWrapper<ApiCenterDeletedServiceData, ApiCenterDeletedServiceResource>(new DeletedServicesGetAllCollectionResultOfT(
+                _deletedServicesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                filter,
+                context,
+                "ApiCenterDeletedServiceCollection.GetAll"), data => new ApiCenterDeletedServiceResource(Client, data));
         }
 
         /// <summary>

@@ -63,7 +63,7 @@ model ValidationResponse {
 
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
 
     // Build ARM provider schema and verify non-resource methods
     const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
@@ -152,7 +152,7 @@ model GlobalSettings {
 
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
     const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
 
     ok(armProviderSchemaResult, "Should have ARM provider schema");
@@ -238,7 +238,7 @@ interface Employees {
 
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
     const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
 
     // Should not have non-resource methods since all methods are standard ARM operations
@@ -346,7 +346,7 @@ model MigrationResponse {
 
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
     const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
 
     ok(armProviderSchemaResult, "Should have ARM provider schema");
@@ -430,7 +430,7 @@ model WorkspaceValidationResponse {
 
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
     const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
 
     ok(armProviderSchemaResult, "Should have ARM provider schema");
@@ -516,7 +516,7 @@ model SearchResult {
 
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
     const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
 
     ok(armProviderSchemaResult, "Should have ARM provider schema");
@@ -584,7 +584,7 @@ model FooPreviewAction {
 
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
     const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
 
     ok(armProviderSchemaResult, "Should have ARM provider schema");
@@ -667,7 +667,7 @@ interface SessionHostManagementOperations {
 
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
     const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
 
     ok(armProviderSchemaResult, "Should have ARM provider schema");
@@ -766,7 +766,7 @@ interface ChildResources {
 
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
     const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
 
     ok(armProviderSchemaResult, "Should have ARM provider schema");
@@ -835,6 +835,9 @@ interface ChildResources {
           singletonResourceName: undefined,
           parentResourceId: undefined,
           parentResourceModelId: undefined,
+          nameConstraints: {},
+          apiVersions: [],
+          rbacRoles: [],
           methods: [
             {
               methodId: "Microsoft.Maintenance.ConfigurationAssignment.get",
@@ -916,6 +919,9 @@ interface ChildResources {
           singletonResourceName: undefined,
           parentResourceId: undefined,
           parentResourceModelId: undefined,
+          nameConstraints: {},
+          apiVersions: [],
+          rbacRoles: [],
           methods: [
             {
               methodId: "Microsoft.Maintenance.ConfigurationAssignment.get",
@@ -1002,6 +1008,9 @@ interface ChildResources {
           singletonResourceName: undefined,
           parentResourceId: undefined,
           parentResourceModelId: undefined,
+          nameConstraints: {},
+          apiVersions: [],
+          rbacRoles: [],
           methods: [
             {
               methodId:
@@ -1083,6 +1092,9 @@ interface ChildResources {
           singletonResourceName: undefined,
           parentResourceId: undefined,
           parentResourceModelId: undefined,
+          nameConstraints: {},
+          apiVersions: [],
+          rbacRoles: [],
           methods: [
             {
               methodId: "Microsoft.KeyVault.DeletedVault.get",

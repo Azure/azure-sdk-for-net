@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Responses.Models;
 
 namespace Azure.AI.AgentServer.Responses.Internal;
@@ -44,26 +45,51 @@ internal sealed class FoundryStorageProvider : ResponsesProvider
         return extraQuery is not null ? $"{url}&{extraQuery}" : url;
     }
 
+    /// <summary>
+    /// Applies isolation key headers to an outbound HTTP request when present.
+    /// </summary>
+    private static void ApplyIsolationHeaders(HttpRequestMessage request, IsolationContext isolation)
+    {
+        if (ReferenceEquals(isolation, IsolationContext.Empty))
+        {
+            return;
+        }
+
+        if (isolation.UserIsolationKey is not null)
+        {
+            request.Headers.TryAddWithoutValidation(IsolationContext.UserIsolationKeyHeaderName, isolation.UserIsolationKey);
+        }
+
+        if (isolation.ChatIsolationKey is not null)
+        {
+            request.Headers.TryAddWithoutValidation(IsolationContext.ChatIsolationKeyHeaderName, isolation.ChatIsolationKey);
+        }
+    }
+
     /// <inheritdoc/>
     public override async Task CreateResponseAsync(
         CreateResponseRequest request,
+        IsolationContext isolation,
         CancellationToken cancellationToken = default)
     {
         using var content = StorageEnvelopeSerializer.SerializeCreateRequest(request);
         var http = _httpClientFactory.CreateClient(HttpClientName);
-        using var httpResponse = await http.PostAsync(Url("responses"), content, cancellationToken);
+        using var msg = new HttpRequestMessage(HttpMethod.Post, Url("responses")) { Content = content };
+        ApplyIsolationHeaders(msg, isolation);
+        using var httpResponse = await http.SendAsync(msg, cancellationToken);
         await StorageErrorMapper.ThrowIfErrorAsync(httpResponse, cancellationToken);
     }
 
     /// <inheritdoc/>
     public override async Task<Models.ResponseObject> GetResponseAsync(
         string responseId,
+        IsolationContext isolation,
         CancellationToken cancellationToken = default)
     {
         var http = _httpClientFactory.CreateClient(HttpClientName);
-        using var httpResponse = await http.GetAsync(
-            Url($"responses/{Uri.EscapeDataString(responseId)}"),
-            cancellationToken);
+        using var msg = new HttpRequestMessage(HttpMethod.Get, Url($"responses/{Uri.EscapeDataString(responseId)}"));
+        ApplyIsolationHeaders(msg, isolation);
+        using var httpResponse = await http.SendAsync(msg, cancellationToken);
         await StorageErrorMapper.ThrowIfErrorAsync(httpResponse, cancellationToken);
         var body = await httpResponse.Content.ReadAsStringAsync(cancellationToken);
         return StorageEnvelopeSerializer.DeserializeResponse(body);
@@ -72,31 +98,34 @@ internal sealed class FoundryStorageProvider : ResponsesProvider
     /// <inheritdoc/>
     public override async Task UpdateResponseAsync(
         Models.ResponseObject response,
+        IsolationContext isolation,
         CancellationToken cancellationToken = default)
     {
         using var content = StorageEnvelopeSerializer.SerializeResponse(response);
         var http = _httpClientFactory.CreateClient(HttpClientName);
-        using var httpResponse = await http.PostAsync(
-            Url($"responses/{Uri.EscapeDataString(response.Id)}"),
-            content, cancellationToken);
+        using var msg = new HttpRequestMessage(HttpMethod.Post, Url($"responses/{Uri.EscapeDataString(response.Id)}")) { Content = content };
+        ApplyIsolationHeaders(msg, isolation);
+        using var httpResponse = await http.SendAsync(msg, cancellationToken);
         await StorageErrorMapper.ThrowIfErrorAsync(httpResponse, cancellationToken);
     }
 
     /// <inheritdoc/>
     public override async Task DeleteResponseAsync(
         string responseId,
+        IsolationContext isolation,
         CancellationToken cancellationToken = default)
     {
         var http = _httpClientFactory.CreateClient(HttpClientName);
-        using var httpResponse = await http.DeleteAsync(
-            Url($"responses/{Uri.EscapeDataString(responseId)}"),
-            cancellationToken);
+        using var msg = new HttpRequestMessage(HttpMethod.Delete, Url($"responses/{Uri.EscapeDataString(responseId)}"));
+        ApplyIsolationHeaders(msg, isolation);
+        using var httpResponse = await http.SendAsync(msg, cancellationToken);
         await StorageErrorMapper.ThrowIfErrorAsync(httpResponse, cancellationToken);
     }
 
     /// <inheritdoc/>
     public override async Task<AgentsPagedResultOutputItem> GetInputItemsAsync(
         string responseId,
+        IsolationContext isolation,
         int limit = 20,
         bool ascending = false,
         string? after = null,
@@ -111,9 +140,9 @@ internal sealed class FoundryStorageProvider : ResponsesProvider
             query += $"&before={Uri.EscapeDataString(before)}";
 
         var http = _httpClientFactory.CreateClient(HttpClientName);
-        using var httpResponse = await http.GetAsync(
-            Url($"responses/{Uri.EscapeDataString(responseId)}/input_items", query),
-            cancellationToken);
+        using var msg = new HttpRequestMessage(HttpMethod.Get, Url($"responses/{Uri.EscapeDataString(responseId)}/input_items", query));
+        ApplyIsolationHeaders(msg, isolation);
+        using var httpResponse = await http.SendAsync(msg, cancellationToken);
         await StorageErrorMapper.ThrowIfErrorAsync(httpResponse, cancellationToken);
         var body = await httpResponse.Content.ReadAsStringAsync(cancellationToken);
         return StorageEnvelopeSerializer.DeserializePagedItems(body);
@@ -122,12 +151,15 @@ internal sealed class FoundryStorageProvider : ResponsesProvider
     /// <inheritdoc/>
     public override async Task<IEnumerable<OutputItem?>> GetItemsAsync(
         IEnumerable<string> itemIds,
+        IsolationContext isolation,
         CancellationToken cancellationToken = default)
     {
         var ids = itemIds.ToList();
         using var content = StorageEnvelopeSerializer.SerializeBatchRequest(ids);
         var http = _httpClientFactory.CreateClient(HttpClientName);
-        using var httpResponse = await http.PostAsync(Url("items/batch/retrieve"), content, cancellationToken);
+        using var msg = new HttpRequestMessage(HttpMethod.Post, Url("items/batch/retrieve")) { Content = content };
+        ApplyIsolationHeaders(msg, isolation);
+        using var httpResponse = await http.SendAsync(msg, cancellationToken);
         await StorageErrorMapper.ThrowIfErrorAsync(httpResponse, cancellationToken);
         var body = await httpResponse.Content.ReadAsStringAsync(cancellationToken);
         return StorageEnvelopeSerializer.DeserializeItemsArray(body);
@@ -138,6 +170,7 @@ internal sealed class FoundryStorageProvider : ResponsesProvider
         string? previousResponseId,
         string? conversationId,
         int limit,
+        IsolationContext isolation,
         CancellationToken cancellationToken = default)
     {
         var query = $"limit={limit}";
@@ -147,8 +180,9 @@ internal sealed class FoundryStorageProvider : ResponsesProvider
             query += $"&conversation_id={Uri.EscapeDataString(conversationId)}";
 
         var http = _httpClientFactory.CreateClient(HttpClientName);
-        using var httpResponse = await http.GetAsync(
-            Url("history/item_ids", query), cancellationToken);
+        using var msg = new HttpRequestMessage(HttpMethod.Get, Url("history/item_ids", query));
+        ApplyIsolationHeaders(msg, isolation);
+        using var httpResponse = await http.SendAsync(msg, cancellationToken);
         await StorageErrorMapper.ThrowIfErrorAsync(httpResponse, cancellationToken);
         var body = await httpResponse.Content.ReadAsStringAsync(cancellationToken);
         return StorageEnvelopeSerializer.DeserializeHistoryIds(body);

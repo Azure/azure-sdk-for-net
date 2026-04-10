@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Hci.Vm
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Hci.Vm
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HciVmVirtualNetworkData, HciVmVirtualNetworkResource>(new VirtualNetworksGetByResourceGroupAsyncCollectionResultOfT(_virtualNetworksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new HciVmVirtualNetworkResource(Client, data));
+            return new AsyncPageableWrapper<HciVmVirtualNetworkData, HciVmVirtualNetworkResource>(new VirtualNetworksGetByResourceGroupAsyncCollectionResultOfT(_virtualNetworksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HciVmVirtualNetworkCollection.GetAll"), data => new HciVmVirtualNetworkResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Hci.Vm
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HciVmVirtualNetworkData, HciVmVirtualNetworkResource>(new VirtualNetworksGetByResourceGroupCollectionResultOfT(_virtualNetworksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new HciVmVirtualNetworkResource(Client, data));
+            return new PageableWrapper<HciVmVirtualNetworkData, HciVmVirtualNetworkResource>(new VirtualNetworksGetByResourceGroupCollectionResultOfT(_virtualNetworksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HciVmVirtualNetworkCollection.GetAll"), data => new HciVmVirtualNetworkResource(Client, data));
         }
 
         /// <summary>

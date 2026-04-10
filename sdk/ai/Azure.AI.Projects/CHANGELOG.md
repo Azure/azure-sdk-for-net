@@ -1,5 +1,18 @@
 # Release History
 
+## 2.1.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+### Sample Updates
+- Added Toolboxes sample.
+
 ## 2.0.0 (2026-04-01)
 
 ### Breaking Changes

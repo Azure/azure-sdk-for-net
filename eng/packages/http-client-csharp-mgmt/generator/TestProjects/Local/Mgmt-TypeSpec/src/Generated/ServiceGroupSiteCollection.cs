@@ -86,7 +86,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     Pipeline,
                     message.Request,
                     response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                    OperationFinalStateVia.AzureAsyncOperation,
+                    true);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -144,7 +145,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     Pipeline,
                     message.Request,
                     response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                    OperationFinalStateVia.AzureAsyncOperation,
+                    true);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);
@@ -281,7 +283,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ServiceGroupSiteData, ServiceGroupSiteResource>(new ServiceGroupSitesGetByServiceGroupAsyncCollectionResultOfT(_serviceGroupSitesRestClient, Id.Name, context), data => new ServiceGroupSiteResource(Client, data));
+            return new AsyncPageableWrapper<ServiceGroupSiteData, ServiceGroupSiteResource>(new ServiceGroupSitesGetByServiceGroupAsyncCollectionResultOfT(_serviceGroupSitesRestClient, Id.Name, context, "ServiceGroupSiteCollection.GetAll"), data => new ServiceGroupSiteResource(Client, data));
         }
 
         /// <summary>
@@ -309,7 +311,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ServiceGroupSiteData, ServiceGroupSiteResource>(new ServiceGroupSitesGetByServiceGroupCollectionResultOfT(_serviceGroupSitesRestClient, Id.Name, context), data => new ServiceGroupSiteResource(Client, data));
+            return new PageableWrapper<ServiceGroupSiteData, ServiceGroupSiteResource>(new ServiceGroupSitesGetByServiceGroupCollectionResultOfT(_serviceGroupSitesRestClient, Id.Name, context, "ServiceGroupSiteCollection.GetAll"), data => new ServiceGroupSiteResource(Client, data));
         }
 
         /// <summary>

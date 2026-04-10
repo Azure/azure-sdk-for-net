@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ApiCenter
         {
             if (id.ResourceType != ApiCenterApiVersionResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ApiCenterApiVersionResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ApiCenterApiVersionResource.ResourceType), nameof(id));
             }
         }
 
@@ -297,7 +297,8 @@ namespace Azure.ResourceManager.ApiCenter
                 Id.Parent.Name,
                 Id.Name,
                 filter,
-                context), data => new ApiCenterApiDefinitionResource(Client, data));
+                context,
+                "ApiCenterApiDefinitionCollection.GetAll"), data => new ApiCenterApiDefinitionResource(Client, data));
         }
 
         /// <summary>
@@ -335,7 +336,8 @@ namespace Azure.ResourceManager.ApiCenter
                 Id.Parent.Name,
                 Id.Name,
                 filter,
-                context), data => new ApiCenterApiDefinitionResource(Client, data));
+                context,
+                "ApiCenterApiDefinitionCollection.GetAll"), data => new ApiCenterApiDefinitionResource(Client, data));
         }
 
         /// <summary>

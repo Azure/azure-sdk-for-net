@@ -99,7 +99,13 @@ namespace Azure.Compute.Batch
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetApplications(TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, RequestContext context)
         {
-            return new BatchClientGetApplicationsCollectionResult(this, timeOutInSeconds, ocpDate, maxresults, context);
+            return new BatchClientGetApplicationsCollectionResult(
+                this,
+                timeOutInSeconds,
+                ocpDate,
+                maxresults,
+                context,
+                "BatchClient.GetApplications");
         }
 
         /// <summary>
@@ -129,7 +135,13 @@ namespace Azure.Compute.Batch
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetApplicationsAsync(TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, RequestContext context)
         {
-            return new BatchClientGetApplicationsAsyncCollectionResult(this, timeOutInSeconds, ocpDate, maxresults, context);
+            return new BatchClientGetApplicationsAsyncCollectionResult(
+                this,
+                timeOutInSeconds,
+                ocpDate,
+                maxresults,
+                context,
+                "BatchClient.GetApplications");
         }
 
         /// <summary>
@@ -153,7 +165,13 @@ namespace Azure.Compute.Batch
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<BatchApplication> GetApplications(TimeSpan? timeOutInSeconds = default, DateTimeOffset? ocpDate = default, int? maxresults = default, CancellationToken cancellationToken = default)
         {
-            return new BatchClientGetApplicationsCollectionResultOfT(this, timeOutInSeconds, ocpDate, maxresults, cancellationToken.ToRequestContext());
+            return new BatchClientGetApplicationsCollectionResultOfT(
+                this,
+                timeOutInSeconds,
+                ocpDate,
+                maxresults,
+                cancellationToken.ToRequestContext(),
+                "BatchClient.GetApplications");
         }
 
         /// <summary>
@@ -177,7 +195,13 @@ namespace Azure.Compute.Batch
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<BatchApplication> GetApplicationsAsync(TimeSpan? timeOutInSeconds = default, DateTimeOffset? ocpDate = default, int? maxresults = default, CancellationToken cancellationToken = default)
         {
-            return new BatchClientGetApplicationsAsyncCollectionResultOfT(this, timeOutInSeconds, ocpDate, maxresults, cancellationToken.ToRequestContext());
+            return new BatchClientGetApplicationsAsyncCollectionResultOfT(
+                this,
+                timeOutInSeconds,
+                ocpDate,
+                maxresults,
+                cancellationToken.ToRequestContext(),
+                "BatchClient.GetApplications");
         }
 
         /// <summary>
@@ -366,7 +390,8 @@ namespace Azure.Compute.Batch
                 starttime,
                 endtime,
                 filter,
-                context);
+                context,
+                "BatchClient.GetPoolUsageMetrics");
         }
 
         /// <summary>
@@ -419,7 +444,8 @@ namespace Azure.Compute.Batch
                 starttime,
                 endtime,
                 filter,
-                context);
+                context,
+                "BatchClient.GetPoolUsageMetrics");
         }
 
         /// <summary>
@@ -466,7 +492,8 @@ namespace Azure.Compute.Batch
                 starttime,
                 endtime,
                 filter,
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "BatchClient.GetPoolUsageMetrics");
         }
 
         /// <summary>
@@ -513,7 +540,8 @@ namespace Azure.Compute.Batch
                 starttime,
                 endtime,
                 filter,
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "BatchClient.GetPoolUsageMetrics");
         }
 
         /// <summary>
@@ -675,7 +703,8 @@ namespace Azure.Compute.Batch
                 filter,
                 @select,
                 expand,
-                context);
+                context,
+                "BatchClient.GetPools");
         }
 
         /// <summary>
@@ -715,7 +744,8 @@ namespace Azure.Compute.Batch
                 filter,
                 @select,
                 expand,
-                context);
+                context,
+                "BatchClient.GetPools");
         }
 
         /// <summary> Lists all of the Pools in the specified Account. </summary>
@@ -747,7 +777,8 @@ namespace Azure.Compute.Batch
                 filter,
                 @select,
                 expand,
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "BatchClient.GetPools");
         }
 
         /// <summary> Lists all of the Pools in the specified Account. </summary>
@@ -779,7 +810,8 @@ namespace Azure.Compute.Batch
                 filter,
                 @select,
                 expand,
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "BatchClient.GetPools");
         }
 
         /// <summary>
@@ -2165,7 +2197,8 @@ namespace Azure.Compute.Batch
                 ocpDate,
                 maxresults,
                 filter,
-                context);
+                context,
+                "BatchClient.GetSupportedImages");
         }
 
         /// <summary>
@@ -2201,7 +2234,8 @@ namespace Azure.Compute.Batch
                 ocpDate,
                 maxresults,
                 filter,
-                context);
+                context,
+                "BatchClient.GetSupportedImages");
         }
 
         /// <summary> Lists all Virtual Machine Images supported by the Azure Batch service. </summary>
@@ -2229,7 +2263,8 @@ namespace Azure.Compute.Batch
                 ocpDate,
                 maxresults,
                 filter,
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "BatchClient.GetSupportedImages");
         }
 
         /// <summary> Lists all Virtual Machine Images supported by the Azure Batch service. </summary>
@@ -2257,7 +2292,8 @@ namespace Azure.Compute.Batch
                 ocpDate,
                 maxresults,
                 filter,
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "BatchClient.GetSupportedImages");
         }
 
         /// <summary>
@@ -2295,7 +2331,8 @@ namespace Azure.Compute.Batch
                 ocpDate,
                 maxresults,
                 filter,
-                context);
+                context,
+                "BatchClient.GetPoolNodeCounts");
         }
 
         /// <summary>
@@ -2333,7 +2370,8 @@ namespace Azure.Compute.Batch
                 ocpDate,
                 maxresults,
                 filter,
-                context);
+                context,
+                "BatchClient.GetPoolNodeCounts");
         }
 
         /// <summary>
@@ -2365,7 +2403,8 @@ namespace Azure.Compute.Batch
                 ocpDate,
                 maxresults,
                 filter,
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "BatchClient.GetPoolNodeCounts");
         }
 
         /// <summary>
@@ -2397,7 +2436,8 @@ namespace Azure.Compute.Batch
                 ocpDate,
                 maxresults,
                 filter,
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "BatchClient.GetPoolNodeCounts");
         }
 
         /// <summary>
@@ -3471,7 +3511,8 @@ namespace Azure.Compute.Batch
                 filter,
                 @select,
                 expand,
-                context);
+                context,
+                "BatchClient.GetJobs");
         }
 
         /// <summary>
@@ -3511,7 +3552,8 @@ namespace Azure.Compute.Batch
                 filter,
                 @select,
                 expand,
-                context);
+                context,
+                "BatchClient.GetJobs");
         }
 
         /// <summary> Lists all of the Jobs in the specified Account. </summary>
@@ -3543,7 +3585,8 @@ namespace Azure.Compute.Batch
                 filter,
                 @select,
                 expand,
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "BatchClient.GetJobs");
         }
 
         /// <summary> Lists all of the Jobs in the specified Account. </summary>
@@ -3575,7 +3618,8 @@ namespace Azure.Compute.Batch
                 filter,
                 @select,
                 expand,
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "BatchClient.GetJobs");
         }
 
         /// <summary>
@@ -3621,7 +3665,8 @@ namespace Azure.Compute.Batch
                 filter,
                 @select,
                 expand,
-                context);
+                context,
+                "BatchClient.GetJobsFromSchedules");
         }
 
         /// <summary>
@@ -3667,7 +3712,8 @@ namespace Azure.Compute.Batch
                 filter,
                 @select,
                 expand,
-                context);
+                context,
+                "BatchClient.GetJobsFromSchedules");
         }
 
         /// <summary> Lists the Jobs that have been created under the specified Job Schedule. </summary>
@@ -3705,7 +3751,8 @@ namespace Azure.Compute.Batch
                 filter,
                 @select,
                 expand,
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "BatchClient.GetJobsFromSchedules");
         }
 
         /// <summary> Lists the Jobs that have been created under the specified Job Schedule. </summary>
@@ -3743,7 +3790,8 @@ namespace Azure.Compute.Batch
                 filter,
                 @select,
                 expand,
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "BatchClient.GetJobsFromSchedules");
         }
 
         /// <summary>
@@ -3792,7 +3840,8 @@ namespace Azure.Compute.Batch
                 maxresults,
                 filter,
                 @select,
-                context);
+                context,
+                "BatchClient.GetJobPreparationAndReleaseTaskStatuses");
         }
 
         /// <summary>
@@ -3841,7 +3890,8 @@ namespace Azure.Compute.Batch
                 maxresults,
                 filter,
                 @select,
-                context);
+                context,
+                "BatchClient.GetJobPreparationAndReleaseTaskStatuses");
         }
 
         /// <summary>
@@ -3884,7 +3934,8 @@ namespace Azure.Compute.Batch
                 maxresults,
                 filter,
                 @select,
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "BatchClient.GetJobPreparationAndReleaseTaskStatuses");
         }
 
         /// <summary>
@@ -3927,7 +3978,8 @@ namespace Azure.Compute.Batch
                 maxresults,
                 filter,
                 @select,
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "BatchClient.GetJobPreparationAndReleaseTaskStatuses");
         }
 
         /// <summary>
@@ -5111,7 +5163,8 @@ namespace Azure.Compute.Batch
                 filter,
                 @select,
                 expand,
-                context);
+                context,
+                "BatchClient.GetJobSchedules");
         }
 
         /// <summary>
@@ -5151,7 +5204,8 @@ namespace Azure.Compute.Batch
                 filter,
                 @select,
                 expand,
-                context);
+                context,
+                "BatchClient.GetJobSchedules");
         }
 
         /// <summary> Lists all of the Job Schedules in the specified Account. </summary>
@@ -5183,7 +5237,8 @@ namespace Azure.Compute.Batch
                 filter,
                 @select,
                 expand,
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "BatchClient.GetJobSchedules");
         }
 
         /// <summary> Lists all of the Job Schedules in the specified Account. </summary>
@@ -5215,7 +5270,8 @@ namespace Azure.Compute.Batch
                 filter,
                 @select,
                 expand,
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "BatchClient.GetJobSchedules");
         }
 
         /// <summary>
@@ -5397,7 +5453,8 @@ namespace Azure.Compute.Batch
                 filter,
                 @select,
                 expand,
-                context);
+                context,
+                "BatchClient.GetTasks");
         }
 
         /// <summary>
@@ -5445,7 +5502,8 @@ namespace Azure.Compute.Batch
                 filter,
                 @select,
                 expand,
-                context);
+                context,
+                "BatchClient.GetTasks");
         }
 
         /// <summary>
@@ -5487,7 +5545,8 @@ namespace Azure.Compute.Batch
                 filter,
                 @select,
                 expand,
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "BatchClient.GetTasks");
         }
 
         /// <summary>
@@ -5529,7 +5588,8 @@ namespace Azure.Compute.Batch
                 filter,
                 @select,
                 expand,
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "BatchClient.GetTasks");
         }
 
         /// <summary>
@@ -6174,7 +6234,8 @@ namespace Azure.Compute.Batch
                 timeOutInSeconds,
                 ocpDate,
                 @select,
-                context);
+                context,
+                "BatchClient.GetSubTasks");
         }
 
         /// <summary>
@@ -6211,7 +6272,8 @@ namespace Azure.Compute.Batch
                 timeOutInSeconds,
                 ocpDate,
                 @select,
-                context);
+                context,
+                "BatchClient.GetSubTasks");
         }
 
         /// <summary> If the Task is not a multi-instance Task then this returns an empty collection. </summary>
@@ -6240,7 +6302,8 @@ namespace Azure.Compute.Batch
                 timeOutInSeconds,
                 ocpDate,
                 @select,
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "BatchClient.GetSubTasks");
         }
 
         /// <summary> If the Task is not a multi-instance Task then this returns an empty collection. </summary>
@@ -6269,7 +6332,8 @@ namespace Azure.Compute.Batch
                 timeOutInSeconds,
                 ocpDate,
                 @select,
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "BatchClient.GetSubTasks");
         }
 
         /// <summary>
@@ -7063,7 +7127,8 @@ namespace Azure.Compute.Batch
                 maxresults,
                 filter,
                 recursive,
-                context);
+                context,
+                "BatchClient.GetTaskFiles");
         }
 
         /// <summary>
@@ -7113,7 +7178,8 @@ namespace Azure.Compute.Batch
                 maxresults,
                 filter,
                 recursive,
-                context);
+                context,
+                "BatchClient.GetTaskFiles");
         }
 
         /// <summary> Lists the files in a Task's directory on its Compute Node. </summary>
@@ -7155,7 +7221,8 @@ namespace Azure.Compute.Batch
                 maxresults,
                 filter,
                 recursive,
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "BatchClient.GetTaskFiles");
         }
 
         /// <summary> Lists the files in a Task's directory on its Compute Node. </summary>
@@ -7197,7 +7264,8 @@ namespace Azure.Compute.Batch
                 maxresults,
                 filter,
                 recursive,
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "BatchClient.GetTaskFiles");
         }
 
         /// <summary>
@@ -8783,7 +8851,8 @@ namespace Azure.Compute.Batch
                 maxresults,
                 filter,
                 @select,
-                context);
+                context,
+                "BatchClient.GetNodes");
         }
 
         /// <summary>
@@ -8827,7 +8896,8 @@ namespace Azure.Compute.Batch
                 maxresults,
                 filter,
                 @select,
-                context);
+                context,
+                "BatchClient.GetNodes");
         }
 
         /// <summary> Lists the Compute Nodes in the specified Pool. </summary>
@@ -8863,7 +8933,8 @@ namespace Azure.Compute.Batch
                 maxresults,
                 filter,
                 @select,
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "BatchClient.GetNodes");
         }
 
         /// <summary> Lists the Compute Nodes in the specified Pool. </summary>
@@ -8899,7 +8970,8 @@ namespace Azure.Compute.Batch
                 maxresults,
                 filter,
                 @select,
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "BatchClient.GetNodes");
         }
 
         /// <summary>
@@ -9077,7 +9149,8 @@ namespace Azure.Compute.Batch
                 ocpDate,
                 maxresults,
                 @select,
-                context);
+                context,
+                "BatchClient.GetNodeExtensions");
         }
 
         /// <summary>
@@ -9119,7 +9192,8 @@ namespace Azure.Compute.Batch
                 ocpDate,
                 maxresults,
                 @select,
-                context);
+                context,
+                "BatchClient.GetNodeExtensions");
         }
 
         /// <summary> Lists the Compute Nodes Extensions in the specified Pool. </summary>
@@ -9153,7 +9227,8 @@ namespace Azure.Compute.Batch
                 ocpDate,
                 maxresults,
                 @select,
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "BatchClient.GetNodeExtensions");
         }
 
         /// <summary> Lists the Compute Nodes Extensions in the specified Pool. </summary>
@@ -9187,7 +9262,8 @@ namespace Azure.Compute.Batch
                 ocpDate,
                 maxresults,
                 @select,
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "BatchClient.GetNodeExtensions");
         }
 
         /// <summary>
@@ -9686,7 +9762,8 @@ namespace Azure.Compute.Batch
                 maxresults,
                 filter,
                 recursive,
-                context);
+                context,
+                "BatchClient.GetNodeFiles");
         }
 
         /// <summary>
@@ -9733,7 +9810,8 @@ namespace Azure.Compute.Batch
                 maxresults,
                 filter,
                 recursive,
-                context);
+                context,
+                "BatchClient.GetNodeFiles");
         }
 
         /// <summary> Lists all of the files in Task directories on the specified Compute Node. </summary>
@@ -9772,7 +9850,8 @@ namespace Azure.Compute.Batch
                 maxresults,
                 filter,
                 recursive,
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "BatchClient.GetNodeFiles");
         }
 
         /// <summary> Lists all of the files in Task directories on the specified Compute Node. </summary>
@@ -9811,7 +9890,8 @@ namespace Azure.Compute.Batch
                 maxresults,
                 filter,
                 recursive,
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "BatchClient.GetNodeFiles");
         }
     }
 }

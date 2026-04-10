@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.HybridConnectivity
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PublicCloudInventoryData, PublicCloudInventoryResource>(new InventoryGetBySolutionConfigurationAsyncCollectionResultOfT(_inventoryRestClient, Id.Parent, Id.Name, context), data => new PublicCloudInventoryResource(Client, data));
+            return new AsyncPageableWrapper<PublicCloudInventoryData, PublicCloudInventoryResource>(new InventoryGetBySolutionConfigurationAsyncCollectionResultOfT(_inventoryRestClient, Id.Parent, Id.Name, context, "PublicCloudInventoryCollection.GetAll"), data => new PublicCloudInventoryResource(Client, data));
         }
 
         /// <summary>
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.HybridConnectivity
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PublicCloudInventoryData, PublicCloudInventoryResource>(new InventoryGetBySolutionConfigurationCollectionResultOfT(_inventoryRestClient, Id.Parent, Id.Name, context), data => new PublicCloudInventoryResource(Client, data));
+            return new PageableWrapper<PublicCloudInventoryData, PublicCloudInventoryResource>(new InventoryGetBySolutionConfigurationCollectionResultOfT(_inventoryRestClient, Id.Parent, Id.Name, context, "PublicCloudInventoryCollection.GetAll"), data => new PublicCloudInventoryResource(Client, data));
         }
 
         /// <summary>

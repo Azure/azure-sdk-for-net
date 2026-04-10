@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             if (id.ResourceType != DevTestLabUserResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DevTestLabUserResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DevTestLabUserResource.ResourceType), nameof(id));
             }
         }
 
@@ -309,7 +309,8 @@ namespace Azure.ResourceManager.DevTestLabs
                 filter,
                 top,
                 @orderby,
-                context), data => new DevTestLabDiskResource(Client, data));
+                context,
+                "DevTestLabDiskCollection.GetAll"), data => new DevTestLabDiskResource(Client, data));
         }
 
         /// <summary>
@@ -351,7 +352,8 @@ namespace Azure.ResourceManager.DevTestLabs
                 filter,
                 top,
                 @orderby,
-                context), data => new DevTestLabDiskResource(Client, data));
+                context,
+                "DevTestLabDiskCollection.GetAll"), data => new DevTestLabDiskResource(Client, data));
         }
 
         /// <summary>

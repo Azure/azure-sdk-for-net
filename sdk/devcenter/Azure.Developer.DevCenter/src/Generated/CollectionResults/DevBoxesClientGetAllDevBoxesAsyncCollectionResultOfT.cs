@@ -19,14 +19,17 @@ namespace Azure.Developer.DevCenter
     {
         private readonly DevBoxesClient _client;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of DevBoxesClientGetAllDevBoxesAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The DevBoxesClient client used to send requests. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public DevBoxesClientGetAllDevBoxesAsyncCollectionResultOfT(DevBoxesClient client, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public DevBoxesClientGetAllDevBoxesAsyncCollectionResultOfT(DevBoxesClient client, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of DevBoxesClientGetAllDevBoxesAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -59,7 +62,7 @@ namespace Azure.Developer.DevCenter
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllDevBoxesRequest(nextLink, _context) : _client.CreateGetAllDevBoxesRequest(_context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("DevBoxesClient.GetAllDevBoxes");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

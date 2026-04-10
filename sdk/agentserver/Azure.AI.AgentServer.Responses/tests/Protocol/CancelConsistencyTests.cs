@@ -6,6 +6,7 @@ using System.Net;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
+using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Responses.Internal;
 using Azure.AI.AgentServer.Responses.Models;
 using Azure.AI.AgentServer.Responses.Tests.Helpers;
@@ -205,7 +206,7 @@ public class CancelConsistencyTests : IDisposable
         public ConcurrentBag<Models.ResponseObject> CreateCalls { get; } = new();
         public ConcurrentBag<Models.ResponseObject> UpdateCalls { get; } = new();
 
-        public override Task CreateResponseAsync(CreateResponseRequest request, CancellationToken ct = default)
+        public override Task CreateResponseAsync(CreateResponseRequest request, IsolationContext isolation, CancellationToken ct = default)
         {
             // Snapshot the response at call time
             var snapshot = request.Response.Snapshot();
@@ -214,7 +215,7 @@ public class CancelConsistencyTests : IDisposable
             return Task.CompletedTask;
         }
 
-        public override Task<Models.ResponseObject> GetResponseAsync(string responseId, CancellationToken ct = default)
+        public override Task<Models.ResponseObject> GetResponseAsync(string responseId, IsolationContext isolation, CancellationToken ct = default)
         {
             if (!_responses.TryGetValue(responseId, out var response))
             {
@@ -223,7 +224,7 @@ public class CancelConsistencyTests : IDisposable
             return Task.FromResult(response);
         }
 
-        public override Task UpdateResponseAsync(Models.ResponseObject response, CancellationToken ct = default)
+        public override Task UpdateResponseAsync(Models.ResponseObject response, IsolationContext isolation, CancellationToken ct = default)
         {
             // Snapshot the response at call time
             var snapshot = response.Snapshot();
@@ -232,20 +233,20 @@ public class CancelConsistencyTests : IDisposable
             return Task.CompletedTask;
         }
 
-        public override Task DeleteResponseAsync(string responseId, CancellationToken ct = default)
+        public override Task DeleteResponseAsync(string responseId, IsolationContext isolation, CancellationToken ct = default)
         {
             if (!_responses.TryRemove(responseId, out _))
                 throw new ResourceNotFoundException($"Response '{responseId}' not found.");
             return Task.CompletedTask;
         }
 
-        public override Task<AgentsPagedResultOutputItem> GetInputItemsAsync(string responseId, int limit = 20, bool ascending = false, string? after = null, string? before = null, CancellationToken ct = default)
+        public override Task<AgentsPagedResultOutputItem> GetInputItemsAsync(string responseId, IsolationContext isolation, int limit = 20, bool ascending = false, string? after = null, string? before = null, CancellationToken ct = default)
             => Task.FromResult(ResponsesModelFactory.AgentsPagedResultOutputItem(data: Array.Empty<OutputItem>(), hasMore: false));
 
-        public override Task<IEnumerable<OutputItem?>> GetItemsAsync(IEnumerable<string> itemIds, CancellationToken ct = default)
+        public override Task<IEnumerable<OutputItem?>> GetItemsAsync(IEnumerable<string> itemIds, IsolationContext isolation, CancellationToken ct = default)
             => Task.FromResult(Enumerable.Empty<OutputItem?>());
 
-        public override Task<IEnumerable<string>> GetHistoryItemIdsAsync(string? previousResponseId, string? conversationId, int limit, CancellationToken ct = default)
+        public override Task<IEnumerable<string>> GetHistoryItemIdsAsync(string? previousResponseId, string? conversationId, int limit, IsolationContext isolation, CancellationToken ct = default)
             => Task.FromResult(Enumerable.Empty<string>());
 
         // --- Adapter factories for DI registration ---

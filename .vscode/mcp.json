@@ -4,6 +4,11 @@
         "type": "stdio",
         "command": "pwsh",
         "args": ["./eng/common/mcp/azure-sdk-mcp.ps1", "-Run"]
+      },
+      "generator-agent": {
+        "type": "stdio",
+        "command": "dotnet",
+        "args": ["run", "--project", "sdk/tools/Azure.GeneratorAgent/src/Azure.GeneratorAgent.csproj", "--framework", "net10.0", "--", "--mcp-server"]
+      }
     }
-  }
 } 

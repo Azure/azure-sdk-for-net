@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     public readonly partial struct NetworkCloudAgentPoolMode : IEquatable<NetworkCloudAgentPoolMode>
     {
         private readonly string _value;
+        /// <summary> System agent pool. </summary>
+        private const string SystemValue = "System";
+        /// <summary> User agent pool. </summary>
+        private const string UserValue = "User";
+        /// <summary> Not applicable. </summary>
+        private const string NotApplicableValue = "NotApplicable";
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudAgentPoolMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NetworkCloudAgentPoolMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string SystemValue = "System";
-        private const string UserValue = "User";
-        private const string NotApplicableValue = "NotApplicable";
-
-        /// <summary> System. </summary>
+        /// <summary> System agent pool. </summary>
         public static NetworkCloudAgentPoolMode System { get; } = new NetworkCloudAgentPoolMode(SystemValue);
-        /// <summary> User. </summary>
+
+        /// <summary> User agent pool. </summary>
         public static NetworkCloudAgentPoolMode User { get; } = new NetworkCloudAgentPoolMode(UserValue);
-        /// <summary> NotApplicable. </summary>
+
+        /// <summary> Not applicable. </summary>
         public static NetworkCloudAgentPoolMode NotApplicable { get; } = new NetworkCloudAgentPoolMode(NotApplicableValue);
+
         /// <summary> Determines if two <see cref="NetworkCloudAgentPoolMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NetworkCloudAgentPoolMode left, NetworkCloudAgentPoolMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NetworkCloudAgentPoolMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NetworkCloudAgentPoolMode left, NetworkCloudAgentPoolMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NetworkCloudAgentPoolMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NetworkCloudAgentPoolMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NetworkCloudAgentPoolMode(string value) => new NetworkCloudAgentPoolMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NetworkCloudAgentPoolMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NetworkCloudAgentPoolMode?(string value) => value == null ? null : new NetworkCloudAgentPoolMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NetworkCloudAgentPoolMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NetworkCloudAgentPoolMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

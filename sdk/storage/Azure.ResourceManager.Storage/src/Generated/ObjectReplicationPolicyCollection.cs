@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Storage
         {
             TryGetApiVersion(ObjectReplicationPolicyResource.ResourceType, out string objectReplicationPolicyApiVersion);
             _objectReplicationPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", ObjectReplicationPolicyResource.ResourceType.Namespace, Diagnostics);
-            _objectReplicationPoliciesRestClient = new ObjectReplicationPolicies(_objectReplicationPoliciesClientDiagnostics, Pipeline, Endpoint, objectReplicationPolicyApiVersion ?? "2025-08-01");
+            _objectReplicationPoliciesRestClient = new ObjectReplicationPolicies(_objectReplicationPoliciesClientDiagnostics, Pipeline, Endpoint, objectReplicationPolicyApiVersion ?? "2025-06-01");
             ValidateResourceId(id);
         }
 
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Storage
         {
             if (id.ResourceType != StorageAccountResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, StorageAccountResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, StorageAccountResource.ResourceType), nameof(id));
             }
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -287,7 +287,13 @@ namespace Azure.ResourceManager.Storage
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ObjectReplicationPolicyData, ObjectReplicationPolicyResource>(new ObjectReplicationPoliciesGetAllAsyncCollectionResultOfT(_objectReplicationPoliciesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ObjectReplicationPolicyResource(Client, data));
+            return new AsyncPageableWrapper<ObjectReplicationPolicyData, ObjectReplicationPolicyResource>(new ObjectReplicationPoliciesGetAllAsyncCollectionResultOfT(
+                _objectReplicationPoliciesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ObjectReplicationPolicyCollection.GetAll"), data => new ObjectReplicationPolicyResource(Client, data));
         }
 
         /// <summary>
@@ -303,7 +309,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -315,7 +321,13 @@ namespace Azure.ResourceManager.Storage
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ObjectReplicationPolicyData, ObjectReplicationPolicyResource>(new ObjectReplicationPoliciesGetAllCollectionResultOfT(_objectReplicationPoliciesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ObjectReplicationPolicyResource(Client, data));
+            return new PageableWrapper<ObjectReplicationPolicyData, ObjectReplicationPolicyResource>(new ObjectReplicationPoliciesGetAllCollectionResultOfT(
+                _objectReplicationPoliciesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ObjectReplicationPolicyCollection.GetAll"), data => new ObjectReplicationPolicyResource(Client, data));
         }
 
         /// <summary>
@@ -331,7 +343,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -388,7 +400,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -445,7 +457,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -506,7 +518,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>

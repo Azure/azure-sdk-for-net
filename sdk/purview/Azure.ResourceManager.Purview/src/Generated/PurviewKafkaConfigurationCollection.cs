@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Purview
         {
             if (id.ResourceType != PurviewAccountResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, PurviewAccountResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, PurviewAccountResource.ResourceType), nameof(id));
             }
         }
 
@@ -294,7 +294,8 @@ namespace Azure.ResourceManager.Purview
                 Id.ResourceGroupName,
                 Id.Name,
                 skipToken,
-                context), data => new PurviewKafkaConfigurationResource(Client, data));
+                context,
+                "PurviewKafkaConfigurationCollection.GetAll"), data => new PurviewKafkaConfigurationResource(Client, data));
         }
 
         /// <summary>
@@ -329,7 +330,8 @@ namespace Azure.ResourceManager.Purview
                 Id.ResourceGroupName,
                 Id.Name,
                 skipToken,
-                context), data => new PurviewKafkaConfigurationResource(Client, data));
+                context,
+                "PurviewKafkaConfigurationCollection.GetAll"), data => new PurviewKafkaConfigurationResource(Client, data));
         }
 
         /// <summary>
