@@ -108,7 +108,7 @@ public class InvocationsActivitySource
 
         if (!string.IsNullOrEmpty(context.SessionId))
         {
-            activity.SetTag("gen_ai.conversation.id", context.SessionId);
+            activity.SetTag("microsoft.session.id", context.SessionId);
         }
 
         if (!string.IsNullOrEmpty(agentName))

@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
         private readonly string _resourceGroupName;
         private readonly string _scopeName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of PrivateEndpointConnectionsGetByPrivateLinkScopeAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The PrivateEndpointConnections client used to send requests. </param>
@@ -29,13 +30,15 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="scopeName"> The name of the Azure Arc PrivateLinkScope resource. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public PrivateEndpointConnectionsGetByPrivateLinkScopeAsyncCollectionResultOfT(PrivateEndpointConnections client, string subscriptionId, string resourceGroupName, string scopeName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public PrivateEndpointConnectionsGetByPrivateLinkScopeAsyncCollectionResultOfT(PrivateEndpointConnections client, string subscriptionId, string resourceGroupName, string scopeName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
             _scopeName = scopeName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of PrivateEndpointConnectionsGetByPrivateLinkScopeAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -55,7 +58,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, string continuationToken)
         {
             HttpMessage message = _client.CreateGetByPrivateLinkScopeRequest(_subscriptionId, _resourceGroupName, _scopeName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("KubernetesConfigurationPrivateEndpointConnectionCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

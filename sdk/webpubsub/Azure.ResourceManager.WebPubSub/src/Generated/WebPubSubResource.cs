@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.WebPubSub
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -434,7 +434,13 @@ namespace Azure.ResourceManager.WebPubSub
             {
                 CancellationToken = cancellationToken
             };
-            return new WebPubSubResourcesGetWebPubSubPrivateLinkResourcesAsyncCollectionResultOfT(_webPubSubResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new WebPubSubResourcesGetWebPubSubPrivateLinkResourcesAsyncCollectionResultOfT(
+                _webPubSubResourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "WebPubSubResource.GetWebPubSubPrivateLinkResources");
         }
 
         /// <summary>
@@ -466,7 +472,13 @@ namespace Azure.ResourceManager.WebPubSub
             {
                 CancellationToken = cancellationToken
             };
-            return new WebPubSubResourcesGetWebPubSubPrivateLinkResourcesCollectionResultOfT(_webPubSubResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new WebPubSubResourcesGetWebPubSubPrivateLinkResourcesCollectionResultOfT(
+                _webPubSubResourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "WebPubSubResource.GetWebPubSubPrivateLinkResources");
         }
 
         /// <summary>
@@ -594,7 +606,13 @@ namespace Azure.ResourceManager.WebPubSub
             {
                 CancellationToken = cancellationToken
             };
-            return new WebPubSubResourcesGetSkusAsyncCollectionResultOfT(_webPubSubResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new WebPubSubResourcesGetSkusAsyncCollectionResultOfT(
+                _webPubSubResourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "WebPubSubResource.GetSkus");
         }
 
         /// <summary>
@@ -626,7 +644,13 @@ namespace Azure.ResourceManager.WebPubSub
             {
                 CancellationToken = cancellationToken
             };
-            return new WebPubSubResourcesGetSkusCollectionResultOfT(_webPubSubResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new WebPubSubResourcesGetSkusCollectionResultOfT(
+                _webPubSubResourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "WebPubSubResource.GetSkus");
         }
 
         /// <summary>

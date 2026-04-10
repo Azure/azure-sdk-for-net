@@ -348,3 +348,333 @@ Describe "Get-DiffCheckResult" -Tag "UnitTest" {
         }
     }
 }
+
+
+# ─────────────────────────────────────────────
+# Test-OnlyCiConfigChanged
+# ─────────────────────────────────────────────
+Describe "Test-OnlyCiConfigChanged" -Tag "UnitTest" {
+
+    BeforeAll {
+        $script:gitRoot = Join-Path ([System.IO.Path]::GetTempPath()) "codechecks-git-$([System.Guid]::NewGuid().ToString('N').Substring(0,8))"
+        $script:savedTargetBranch = $env:SYSTEM_PULLREQUEST_TARGETBRANCH
+    }
+
+    AfterAll {
+        $env:SYSTEM_PULLREQUEST_TARGETBRANCH = $script:savedTargetBranch
+        if (Test-Path $script:gitRoot) {
+            Remove-Item $script:gitRoot -Recurse -Force
+        }
+    }
+
+    AfterEach {
+        $env:SYSTEM_PULLREQUEST_TARGETBRANCH = $script:savedTargetBranch
+    }
+
+    BeforeEach {
+        $env:SYSTEM_PULLREQUEST_TARGETBRANCH = $null
+        if (Test-Path $script:gitRoot) {
+            Remove-Item $script:gitRoot -Recurse -Force
+        }
+        New-Item $script:gitRoot -ItemType Directory -Force | Out-Null
+
+        Push-Location $script:gitRoot
+        git init --quiet --initial-branch=main
+        git config user.email "test@test.com"
+        git config user.name "test"
+
+        # Create initial structure on "main" with multiple service directories
+        foreach ($svc in @("mysvc", "othersvc")) {
+            New-Item "sdk/$svc" -ItemType Directory -Force | Out-Null
+            Set-Content "sdk/$svc/ci.yml" "trigger: none"
+            Set-Content "sdk/$svc/ci.mgmt.yml" "trigger: none"
+            New-Item "sdk/$svc/Azure.$svc/src" -ItemType Directory -Force | Out-Null
+            Set-Content "sdk/$svc/Azure.$svc/src/Client.cs" "class Client {}"
+            New-Item "sdk/$svc/Azure.$svc/tests" -ItemType Directory -Force | Out-Null
+            Set-Content "sdk/$svc/Azure.$svc/tests/ClientTests.cs" "class ClientTests {}"
+        }
+        # Also add some non-ci yml files to test the pattern is specific
+        Set-Content "sdk/mysvc/config.yml" "some: config"
+        Set-Content "sdk/mysvc/Azure.mysvc/src/autorest.md" "autorest config"
+        git add -A
+        git commit -m "initial" --quiet
+
+        # Create a feature branch for changes
+        git checkout -b feature-branch --quiet
+        Pop-Location
+    }
+
+    Context "only ci*.yml files changed" {
+        It "returns true when only ci.yml changed" {
+            Push-Location $script:gitRoot
+            Set-Content "sdk/mysvc/ci.yml" "trigger: none`nmodified: true"
+            git add -A; git commit -m "change ci.yml" --quiet
+            Pop-Location
+
+            $result = Test-OnlyCiConfigChanged -ServiceDirectory "mysvc" -RepoRoot $script:gitRoot
+            $result | Should -Be $true
+        }
+
+        It "returns true when only ci.mgmt.yml changed" {
+            Push-Location $script:gitRoot
+            Set-Content "sdk/mysvc/ci.mgmt.yml" "trigger: none`nmodified: true"
+            git add -A; git commit -m "change ci.mgmt.yml" --quiet
+            Pop-Location
+
+            $result = Test-OnlyCiConfigChanged -ServiceDirectory "mysvc" -RepoRoot $script:gitRoot
+            $result | Should -Be $true
+        }
+
+        It "returns true when both ci.yml and ci.mgmt.yml changed" {
+            Push-Location $script:gitRoot
+            Set-Content "sdk/mysvc/ci.yml" "modified"
+            Set-Content "sdk/mysvc/ci.mgmt.yml" "modified"
+            git add -A; git commit -m "change both" --quiet
+            Pop-Location
+
+            $result = Test-OnlyCiConfigChanged -ServiceDirectory "mysvc" -RepoRoot $script:gitRoot
+            $result | Should -Be $true
+        }
+
+        It "returns true for non-standard ci file names like ci.compute.yml" {
+            Push-Location $script:gitRoot
+            Set-Content "sdk/mysvc/ci.compute.yml" "new file"
+            git add -A; git commit -m "add ci.compute.yml" --quiet
+            Pop-Location
+
+            $result = Test-OnlyCiConfigChanged -ServiceDirectory "mysvc" -RepoRoot $script:gitRoot
+            $result | Should -Be $true
+        }
+
+        It "returns true when ci*.yml changed across multiple commits" {
+            Push-Location $script:gitRoot
+            Set-Content "sdk/mysvc/ci.yml" "modified in commit 1"
+            git add -A; git commit -m "commit 1" --quiet
+            Set-Content "sdk/mysvc/ci.mgmt.yml" "modified in commit 2"
+            git add -A; git commit -m "commit 2" --quiet
+            Pop-Location
+
+            $result = Test-OnlyCiConfigChanged -ServiceDirectory "mysvc" -RepoRoot $script:gitRoot
+            $result | Should -Be $true
+        }
+    }
+
+    Context "source code also changed — must NOT skip codegen" {
+        It "returns false when a .cs source file also changed" {
+            Push-Location $script:gitRoot
+            Set-Content "sdk/mysvc/ci.yml" "modified"
+            Set-Content "sdk/mysvc/Azure.mysvc/src/Client.cs" "class Client { int x; }"
+            git add -A; git commit -m "change both" --quiet
+            Pop-Location
+
+            $result = Test-OnlyCiConfigChanged -ServiceDirectory "mysvc" -RepoRoot $script:gitRoot
+            $result | Should -Be $false
+        }
+
+        It "returns false when only a .cs file changed (no ci file)" {
+            Push-Location $script:gitRoot
+            Set-Content "sdk/mysvc/Azure.mysvc/src/Client.cs" "class Client { int x; }"
+            git add -A; git commit -m "change cs" --quiet
+            Pop-Location
+
+            $result = Test-OnlyCiConfigChanged -ServiceDirectory "mysvc" -RepoRoot $script:gitRoot
+            $result | Should -Be $false
+        }
+
+        It "returns false when a csproj file also changed" {
+            Push-Location $script:gitRoot
+            Set-Content "sdk/mysvc/ci.yml" "modified"
+            Set-Content "sdk/mysvc/Azure.mysvc/src/Azure.mysvc.csproj" "<Project />"
+            git add -A; git commit -m "change both" --quiet
+            Pop-Location
+
+            $result = Test-OnlyCiConfigChanged -ServiceDirectory "mysvc" -RepoRoot $script:gitRoot
+            $result | Should -Be $false
+        }
+
+        It "returns false when autorest.md changed" {
+            Push-Location $script:gitRoot
+            Set-Content "sdk/mysvc/ci.yml" "modified"
+            Set-Content "sdk/mysvc/Azure.mysvc/src/autorest.md" "modified autorest config"
+            git add -A; git commit -m "change both" --quiet
+            Pop-Location
+
+            $result = Test-OnlyCiConfigChanged -ServiceDirectory "mysvc" -RepoRoot $script:gitRoot
+            $result | Should -Be $false
+        }
+
+        It "returns false when a test file also changed" {
+            Push-Location $script:gitRoot
+            Set-Content "sdk/mysvc/ci.yml" "modified"
+            Set-Content "sdk/mysvc/Azure.mysvc/tests/ClientTests.cs" "class ClientTests { void Test() {} }"
+            git add -A; git commit -m "change both" --quiet
+            Pop-Location
+
+            $result = Test-OnlyCiConfigChanged -ServiceDirectory "mysvc" -RepoRoot $script:gitRoot
+            $result | Should -Be $false
+        }
+
+        It "returns false when a non-ci yml file changed (config.yml)" {
+            Push-Location $script:gitRoot
+            Set-Content "sdk/mysvc/ci.yml" "modified"
+            Set-Content "sdk/mysvc/config.yml" "modified: config"
+            git add -A; git commit -m "change both" --quiet
+            Pop-Location
+
+            $result = Test-OnlyCiConfigChanged -ServiceDirectory "mysvc" -RepoRoot $script:gitRoot
+            $result | Should -Be $false
+        }
+
+        It "returns false when ci.yml changed in one commit and .cs in another" {
+            Push-Location $script:gitRoot
+            Set-Content "sdk/mysvc/ci.yml" "modified"
+            git add -A; git commit -m "ci change" --quiet
+            Set-Content "sdk/mysvc/Azure.mysvc/src/Client.cs" "class Client { int x; }"
+            git add -A; git commit -m "code change" --quiet
+            Pop-Location
+
+            $result = Test-OnlyCiConfigChanged -ServiceDirectory "mysvc" -RepoRoot $script:gitRoot
+            $result | Should -Be $false
+        }
+
+        It "returns false when README.md changed (affects snippets)" {
+            Push-Location $script:gitRoot
+            Set-Content "sdk/mysvc/ci.yml" "modified"
+            Set-Content "sdk/mysvc/Azure.mysvc/README.md" "# Updated readme"
+            git add -A; git commit -m "change both" --quiet
+            Pop-Location
+
+            $result = Test-OnlyCiConfigChanged -ServiceDirectory "mysvc" -RepoRoot $script:gitRoot
+            $result | Should -Be $false
+        }
+    }
+
+    Context "cross-service isolation" {
+        It "returns true for mysvc even when othersvc has code changes" {
+            Push-Location $script:gitRoot
+            Set-Content "sdk/mysvc/ci.yml" "modified"
+            Set-Content "sdk/othersvc/Azure.othersvc/src/Client.cs" "class Client { int x; }"
+            git add -A; git commit -m "mixed changes" --quiet
+            Pop-Location
+
+            $result = Test-OnlyCiConfigChanged -ServiceDirectory "mysvc" -RepoRoot $script:gitRoot
+            $result | Should -Be $true
+        }
+
+        It "returns false for othersvc when it has code changes even if mysvc is ci-only" {
+            Push-Location $script:gitRoot
+            Set-Content "sdk/mysvc/ci.yml" "modified"
+            Set-Content "sdk/othersvc/Azure.othersvc/src/Client.cs" "class Client { int x; }"
+            git add -A; git commit -m "mixed changes" --quiet
+            Pop-Location
+
+            $result = Test-OnlyCiConfigChanged -ServiceDirectory "othersvc" -RepoRoot $script:gitRoot
+            $result | Should -Be $false
+        }
+    }
+
+    Context "no changes" {
+        It "returns false when nothing changed in the service directory" {
+            $result = Test-OnlyCiConfigChanged -ServiceDirectory "mysvc" -RepoRoot $script:gitRoot
+            $result | Should -Be $false
+        }
+
+        It "returns false for a nonexistent service directory" {
+            $result = Test-OnlyCiConfigChanged -ServiceDirectory "doesnotexist" -RepoRoot $script:gitRoot
+            $result | Should -Be $false
+        }
+    }
+
+    Context "branch targeting via SYSTEM_PULLREQUEST_TARGETBRANCH" {
+        It "uses the target branch from env var when set" {
+            # Rename main to 'release' and set the env var
+            Push-Location $script:gitRoot
+            git checkout main --quiet
+            git branch -m main release --quiet
+            git checkout feature-branch --quiet 2>$null
+            Set-Content "sdk/mysvc/ci.yml" "modified"
+            git add -A; git commit -m "change ci.yml" --quiet
+            Pop-Location
+
+            $env:SYSTEM_PULLREQUEST_TARGETBRANCH = "refs/heads/release"
+            $result = Test-OnlyCiConfigChanged -ServiceDirectory "mysvc" -RepoRoot $script:gitRoot
+            $result | Should -Be $true
+        }
+
+        It "handles target branch without refs/heads/ prefix" {
+            Push-Location $script:gitRoot
+            git checkout main --quiet
+            git branch -m main develop --quiet
+            git checkout feature-branch --quiet 2>$null
+            Set-Content "sdk/mysvc/ci.yml" "modified"
+            git add -A; git commit -m "change ci.yml" --quiet
+            Pop-Location
+
+            $env:SYSTEM_PULLREQUEST_TARGETBRANCH = "develop"
+            $result = Test-OnlyCiConfigChanged -ServiceDirectory "mysvc" -RepoRoot $script:gitRoot
+            $result | Should -Be $true
+        }
+    }
+
+    Context "merge base with diverged branches" {
+        It "returns true when main advanced but only ci files changed on feature branch" {
+            Push-Location $script:gitRoot
+            # Make a change on feature branch
+            Set-Content "sdk/mysvc/ci.yml" "modified on feature"
+            git add -A; git commit -m "feature change" --quiet
+
+            # Switch back to main and add a new commit
+            git checkout main --quiet
+            Set-Content "sdk/mysvc/Azure.mysvc/src/Client.cs" "class Client { string name; }"
+            git add -A; git commit -m "main advanced" --quiet
+
+            # Go back to feature branch
+            git checkout feature-branch --quiet
+            Pop-Location
+
+            # The merge base is the original commit. Feature branch only has ci.yml changes.
+            $result = Test-OnlyCiConfigChanged -ServiceDirectory "mysvc" -RepoRoot $script:gitRoot
+            $result | Should -Be $true
+        }
+
+        It "returns false when feature branch has both ci and code changes even if main also changed" {
+            Push-Location $script:gitRoot
+            Set-Content "sdk/mysvc/ci.yml" "modified on feature"
+            Set-Content "sdk/mysvc/Azure.mysvc/src/Client.cs" "class Client { int x; }"
+            git add -A; git commit -m "feature change" --quiet
+
+            git checkout main --quiet
+            Set-Content "sdk/mysvc/Azure.mysvc/src/Client.cs" "class Client { string name; }"
+            git add -A; git commit -m "main advanced" --quiet
+
+            git checkout feature-branch --quiet
+            Pop-Location
+
+            $result = Test-OnlyCiConfigChanged -ServiceDirectory "mysvc" -RepoRoot $script:gitRoot
+            $result | Should -Be $false
+        }
+    }
+
+    Context "error handling — always falls back to running codegen" {
+        It "returns false when RepoRoot is not a git repo" {
+            $nonGitDir = Join-Path ([System.IO.Path]::GetTempPath()) "not-a-repo-$([System.Guid]::NewGuid().ToString('N').Substring(0,8))"
+            New-Item $nonGitDir -ItemType Directory -Force | Out-Null
+            try {
+                $result = Test-OnlyCiConfigChanged -ServiceDirectory "mysvc" -RepoRoot $nonGitDir
+                $result | Should -Be $false
+            } finally {
+                Remove-Item $nonGitDir -Recurse -Force
+            }
+        }
+
+        It "returns false when RepoRoot does not exist" {
+            $result = Test-OnlyCiConfigChanged -ServiceDirectory "mysvc" -RepoRoot "/nonexistent/path/to/repo"
+            $result | Should -Be $false
+        }
+
+        It "returns false when ServiceDirectory is empty" {
+            $result = Test-OnlyCiConfigChanged -ServiceDirectory "" -RepoRoot $script:gitRoot
+            $result | Should -Be $false
+        }
+    }
+}

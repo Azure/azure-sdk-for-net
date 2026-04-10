@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.Advisor
 {
     /// <summary>
     /// A class representing a collection of <see cref="AdvisorSuppressionContractResource"/> and their operations.
-    /// Each <see cref="AdvisorSuppressionContractResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
-    /// To get a <see cref="AdvisorSuppressionContractCollection"/> instance call the GetAdvisorSuppressionContracts method from an instance of <see cref="ArmResource"/>.
+    /// Each <see cref="AdvisorSuppressionContractResource"/> in the collection will belong to the same instance of <see cref="AdvisorRecommendationResource"/>.
+    /// To get a <see cref="AdvisorSuppressionContractCollection"/> instance call the GetAdvisorSuppressionContracts method from an instance of <see cref="AdvisorRecommendationResource"/>.
     /// </summary>
     public partial class AdvisorSuppressionContractCollection : ArmCollection
     {

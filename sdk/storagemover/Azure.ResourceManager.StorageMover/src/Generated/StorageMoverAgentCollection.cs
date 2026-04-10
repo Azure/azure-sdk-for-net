@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.StorageMover
         {
             if (id.ResourceType != StorageMoverResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, StorageMoverResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, StorageMoverResource.ResourceType), nameof(id));
             }
         }
 
@@ -287,7 +287,13 @@ namespace Azure.ResourceManager.StorageMover
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<StorageMoverAgentData, StorageMoverAgentResource>(new AgentsGetAllAsyncCollectionResultOfT(_agentsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new StorageMoverAgentResource(Client, data));
+            return new AsyncPageableWrapper<StorageMoverAgentData, StorageMoverAgentResource>(new AgentsGetAllAsyncCollectionResultOfT(
+                _agentsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "StorageMoverAgentCollection.GetAll"), data => new StorageMoverAgentResource(Client, data));
         }
 
         /// <summary>
@@ -315,7 +321,13 @@ namespace Azure.ResourceManager.StorageMover
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<StorageMoverAgentData, StorageMoverAgentResource>(new AgentsGetAllCollectionResultOfT(_agentsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new StorageMoverAgentResource(Client, data));
+            return new PageableWrapper<StorageMoverAgentData, StorageMoverAgentResource>(new AgentsGetAllCollectionResultOfT(
+                _agentsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "StorageMoverAgentCollection.GetAll"), data => new StorageMoverAgentResource(Client, data));
         }
 
         /// <summary>

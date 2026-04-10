@@ -24,6 +24,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         private readonly string _filter;
         private readonly string _skipToken;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of AzureBackupRecoveryPointResourcesGetAllCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The AzureBackupRecoveryPointResources client used to send requests. </param>
@@ -34,7 +35,8 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="filter"> OData filter options. </param>
         /// <param name="skipToken"> skipToken Filter. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public AzureBackupRecoveryPointResourcesGetAllCollectionResultOfT(AzureBackupRecoveryPointResources client, Guid subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, string filter, string skipToken, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public AzureBackupRecoveryPointResourcesGetAllCollectionResultOfT(AzureBackupRecoveryPointResources client, Guid subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName, string filter, string skipToken, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -44,6 +46,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             _filter = filter;
             _skipToken = skipToken;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of AzureBackupRecoveryPointResourcesGetAllCollectionResultOfT as an enumerable collection. </summary>
@@ -77,7 +80,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _vaultName, _backupInstanceName, _filter, _skipToken, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _vaultName, _backupInstanceName, _filter, _skipToken, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("DataProtectionBackupRecoveryPointCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

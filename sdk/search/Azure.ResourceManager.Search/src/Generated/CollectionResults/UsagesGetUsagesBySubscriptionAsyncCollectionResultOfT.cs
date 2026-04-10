@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.Search
         private readonly AzureLocation _location;
         private readonly string _clientRequestId;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of UsagesGetUsagesBySubscriptionAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Usages client used to send requests. </param>
@@ -29,13 +30,15 @@ namespace Azure.ResourceManager.Search
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="clientRequestId"> A client-generated GUID value that identifies this request. If specified, this will be included in response information as a way to track the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public UsagesGetUsagesBySubscriptionAsyncCollectionResultOfT(Usages client, Guid subscriptionId, AzureLocation location, string clientRequestId, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public UsagesGetUsagesBySubscriptionAsyncCollectionResultOfT(Usages client, Guid subscriptionId, AzureLocation location, string clientRequestId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _location = location;
             _clientRequestId = clientRequestId;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of UsagesGetUsagesBySubscriptionAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -69,7 +72,7 @@ namespace Azure.ResourceManager.Search
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetUsagesBySubscriptionRequest(nextLink, _subscriptionId, _location, _clientRequestId, _context) : _client.CreateGetUsagesBySubscriptionRequest(_subscriptionId, _location, _clientRequestId, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableSearchSubscriptionResource.GetUsagesBySubscription");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

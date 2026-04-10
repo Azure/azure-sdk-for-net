@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.DevCenter
         private readonly string _devCenterName;
         private readonly int? _top;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of DevBoxDefinitionsGetByDevCenterAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The DevBoxDefinitions client used to send requests. </param>
@@ -31,7 +32,8 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="devCenterName"> The name of the devcenter. </param>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public DevBoxDefinitionsGetByDevCenterAsyncCollectionResultOfT(DevBoxDefinitions client, Guid subscriptionId, string resourceGroupName, string devCenterName, int? top, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public DevBoxDefinitionsGetByDevCenterAsyncCollectionResultOfT(DevBoxDefinitions client, Guid subscriptionId, string resourceGroupName, string devCenterName, int? top, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -39,6 +41,7 @@ namespace Azure.ResourceManager.DevCenter
             _devCenterName = devCenterName;
             _top = top;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of DevBoxDefinitionsGetByDevCenterAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -71,7 +74,7 @@ namespace Azure.ResourceManager.DevCenter
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByDevCenterRequest(nextLink, _subscriptionId, _resourceGroupName, _devCenterName, _top, _context) : _client.CreateGetByDevCenterRequest(_subscriptionId, _resourceGroupName, _devCenterName, _top, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("DevBoxDefinitionCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

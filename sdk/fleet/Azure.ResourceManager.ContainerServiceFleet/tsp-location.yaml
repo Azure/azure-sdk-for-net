@@ -1,4 +1,6 @@
-directory: specification/containerservice/resource-manager/Microsoft.ContainerService/fleet/
-commit: ae2ede61bec4f32d85afd9665bef05ce40bdb0fa
+directory: specification/containerservice/resource-manager/Microsoft.ContainerService/fleet
+commit: 5b8c01eed693ebeb0e8677310b649901fac47314
 repo: Azure/azure-rest-api-specs
+additionalDirectories: 
+
 emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json

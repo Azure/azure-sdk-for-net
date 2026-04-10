@@ -48,10 +48,7 @@ import {
   builtInResourceOperationName,
   parentResourceName,
   readsResourceName,
-  resourceGroupResource,
   singleton,
-  subscriptionResource,
-  tenantResource
 } from "./sdk-context-options.js";
 import {
   DecoratorApplication,
@@ -422,12 +419,8 @@ export function buildArmProviderSchema(
 
   // Update the model's resourceScope based on resource scope decorator if it exists or based on the Read method's scope.
   // This is specific to legacy resource detection
-  for (const [metadataKey, metadata] of resourcePathToMetadataMap) {
-    const modelId = metadataKey.split("|")[0];
-    const model = resourceModelMap.get(modelId);
-    if (model) {
-      metadata.resourceScope = getResourceScope(model, metadata.methods);
-    }
+  for (const metadata of resourcePathToMetadataMap.values()) {
+      metadata.resourceScope = getResourceScope(metadata.methods);
   }
 
   // Create parent lookup context for legacy resource detection
@@ -1039,31 +1032,25 @@ function getSingletonResource(
   return singletonResource ?? "default";
 }
 function getResourceScope(
-  model: InputModelType,
   methods?: ResourceMethod[]
 ): ResourceScope {
-  // First, check for explicit scope decorators
-  const decorators = model.decorators;
-  if (decorators?.some((d) => d.name == tenantResource)) {
-    return ResourceScope.Tenant;
-  } else if (decorators?.some((d) => d.name == subscriptionResource)) {
-    return ResourceScope.Subscription;
-  } else if (decorators?.some((d) => d.name == resourceGroupResource)) {
-    return ResourceScope.ResourceGroup;
-  }
-
-  // Fall back to Read method's scope only if no scope decorators are found
+  // Determine scope from the Read method's operation path, which is the source of truth.
+  // Scope decorators (@resourceGroupResource, etc.) can be inherited implicitly from base
+  // model types like ProxyResource and may not reflect the actual scope for extension
+  // resources that use Legacy.ExtensionOperations with specific parent types.
   if (methods) {
     const getMethod = methods.find(
       (m) => m.kind === ResourceOperationKind.Read
     );
+    // We have logic to filter out resources without get/read operations later in post-processing,
+    // so it's possible to have a resource with no Read method. In that case, we skip scope detection since the resource will be filtered out anyway.
     if (getMethod) {
       return getMethod.operationScope;
     }
   }
 
   // Final fallback to ResourceGroup
-  return ResourceScope.ResourceGroup; // all the templates work as if there is a resource group decorator when there is no such decorator
+  return ResourceScope.ResourceGroup;
 }
 
 /**
