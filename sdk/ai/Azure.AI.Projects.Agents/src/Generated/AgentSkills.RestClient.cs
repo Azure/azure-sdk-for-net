@@ -46,7 +46,7 @@ namespace Azure.AI.Projects.Agents
             }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "POST", PipelineMessageClassifier201);
             PipelineRequest request = message.Request;
-            request.Headers.Set("Content-Type", "application/gzip");
+            request.Headers.Set("Content-Type", "application/zip");
             request.Headers.Set("Accept", "application/json");
             request.Content = content;
             message.Apply(options);
@@ -83,7 +83,7 @@ namespace Azure.AI.Projects.Agents
             }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
-            request.Headers.Set("Accept", "application/gzip");
+            request.Headers.Set("Accept", "application/zip");
             message.Apply(options);
             return message;
         }

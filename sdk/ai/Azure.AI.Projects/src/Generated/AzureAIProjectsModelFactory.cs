@@ -719,15 +719,17 @@ namespace Azure.AI.Projects
         /// <param name="desirableDirection"> It indicates whether a higher value is better or a lower value is better for this metric. </param>
         /// <param name="minValue"> Minimum value for the metric. </param>
         /// <param name="maxValue"> Maximum value for the metric. If not specified, it is assumed to be unbounded. </param>
+        /// <param name="threshold"> Default pass/fail threshold for this metric. </param>
         /// <param name="isPrimary"> Indicates if this metric is primary when there are multiple metrics. </param>
         /// <returns> A new <see cref="Evaluation.EvaluatorMetric"/> instance for mocking. </returns>
-        public static EvaluatorMetric EvaluatorMetric(EvaluatorMetricType? @type = default, EvaluatorMetricDirection? desirableDirection = default, float? minValue = default, float? maxValue = default, bool? isPrimary = default)
+        public static EvaluatorMetric EvaluatorMetric(EvaluatorMetricType? @type = default, EvaluatorMetricDirection? desirableDirection = default, float? minValue = default, float? maxValue = default, float? threshold = default, bool? isPrimary = default)
         {
             return new EvaluatorMetric(
                 @type,
                 desirableDirection,
                 minValue,
                 maxValue,
+                threshold,
                 isPrimary,
                 additionalBinaryDataProperties: null);
         }
@@ -1308,6 +1310,19 @@ namespace Azure.AI.Projects
         public static MemoryStoreDeleteScopeResponse MemoryStoreDeleteScopeResponse(string name = default, string scope = default, bool isDeleted = default)
         {
             return new MemoryStoreDeleteScopeResponse("memory_store.scope.deleted", name, scope, isDeleted, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Evaluator Metric. </summary>
+        /// <param name="type"> Type of the metric. </param>
+        /// <param name="desirableDirection"> It indicates whether a higher value is better or a lower value is better for this metric. </param>
+        /// <param name="minValue"> Minimum value for the metric. </param>
+        /// <param name="maxValue"> Maximum value for the metric. If not specified, it is assumed to be unbounded. </param>
+        /// <param name="isPrimary"> Indicates if this metric is primary when there are multiple metrics. </param>
+        /// <returns> A new <see cref="Evaluation.EvaluatorMetric"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static EvaluatorMetric EvaluatorMetric(EvaluatorMetricType? @type, EvaluatorMetricDirection? desirableDirection, float? minValue, float? maxValue, bool? isPrimary)
+        {
+            return EvaluatorMetric(@type, desirableDirection, minValue, maxValue, threshold: default, isPrimary);
         }
 
         /// <summary> Code-based evaluator definition using python code. </summary>

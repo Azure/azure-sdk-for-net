@@ -127,7 +127,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Creates a skill from a gzip package.
+        /// [Protocol Method] Creates a skill from a zip package.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -148,7 +148,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Creates a skill from a gzip package.
+        /// [Protocol Method] Creates a skill from a zip package.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -168,8 +168,8 @@ namespace Azure.AI.Projects.Agents
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
-        /// <summary> Creates a skill from a gzip package. </summary>
-        /// <param name="body"> The gzip package used to create the skill. </param>
+        /// <summary> Creates a skill from a zip package. </summary>
+        /// <param name="body"> The zip package used to create the skill. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
@@ -181,8 +181,8 @@ namespace Azure.AI.Projects.Agents
             return ClientResult.FromValue((SkillObject)result, result.GetRawResponse());
         }
 
-        /// <summary> Creates a skill from a gzip package. </summary>
-        /// <param name="body"> The gzip package used to create the skill. </param>
+        /// <summary> Creates a skill from a zip package. </summary>
+        /// <param name="body"> The zip package used to create the skill. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>

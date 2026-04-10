@@ -926,7 +926,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> A skill object. </summary>
         /// <param name="skillId"> The unique identifier of the skill. </param>
-        /// <param name="hasBlob"> Whether the skill was created from a gzip blob package. </param>
+        /// <param name="hasBlob"> Whether the skill was created from a zip blob package. </param>
         /// <param name="name"> The unique name of the skill. </param>
         /// <param name="description"> A human-readable description of the skill. </param>
         /// <param name="metadata">

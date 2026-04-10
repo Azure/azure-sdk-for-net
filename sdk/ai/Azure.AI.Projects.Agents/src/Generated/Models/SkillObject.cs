@@ -15,7 +15,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Initializes a new instance of <see cref="SkillObject"/>. </summary>
         /// <param name="skillId"> The unique identifier of the skill. </param>
-        /// <param name="hasBlob"> Whether the skill was created from a gzip blob package. </param>
+        /// <param name="hasBlob"> Whether the skill was created from a zip blob package. </param>
         /// <param name="name"> The unique name of the skill. </param>
         internal SkillObject(string skillId, bool hasBlob, string name)
         {
@@ -27,7 +27,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Initializes a new instance of <see cref="SkillObject"/>. </summary>
         /// <param name="skillId"> The unique identifier of the skill. </param>
-        /// <param name="hasBlob"> Whether the skill was created from a gzip blob package. </param>
+        /// <param name="hasBlob"> Whether the skill was created from a zip blob package. </param>
         /// <param name="name"> The unique name of the skill. </param>
         /// <param name="description"> A human-readable description of the skill. </param>
         /// <param name="metadata">
@@ -51,7 +51,7 @@ namespace Azure.AI.Projects.Agents
         /// <summary> The unique identifier of the skill. </summary>
         public string SkillId { get; }
 
-        /// <summary> Whether the skill was created from a gzip blob package. </summary>
+        /// <summary> Whether the skill was created from a zip blob package. </summary>
         public bool HasBlob { get; }
 
         /// <summary> The unique name of the skill. </summary>

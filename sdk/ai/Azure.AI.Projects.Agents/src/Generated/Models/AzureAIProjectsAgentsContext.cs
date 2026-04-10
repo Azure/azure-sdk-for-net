@@ -22,7 +22,6 @@ namespace Azure.AI.Projects.Agents
     [ModelReaderWriterBuildable(typeof(AgentManifestOptions))]
     [ModelReaderWriterBuildable(typeof(AgentObjectVersions))]
     [ModelReaderWriterBuildable(typeof(AgentSession))]
-    [ModelReaderWriterBuildable(typeof(AgentsPagedResultAgentSessionResource))]
     [ModelReaderWriterBuildable(typeof(AgentsPagedResultSkillObject))]
     [ModelReaderWriterBuildable(typeof(AgentsPagedResultToolboxObject))]
     [ModelReaderWriterBuildable(typeof(AgentsPagedResultToolboxVersionObject))]
