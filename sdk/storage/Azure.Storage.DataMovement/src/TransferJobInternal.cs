@@ -560,6 +560,12 @@ namespace Azure.Storage.DataMovement
 
                 await OnJobPartStatusChangedAsync().ConfigureAwait(false);
                 await SetCheckpointerStatusAsync().ConfigureAwait(false);
+
+                // Signal completion AFTER all checkpointer cleanup is done.
+                // This prevents a race condition where the pause waiter returns
+                // and immediately resumes the transfer before the checkpointer
+                // has finished disposing the old JobPlanFile.
+                _transferOperation._state.CompleteIfFinalState();
             }
         }
 
