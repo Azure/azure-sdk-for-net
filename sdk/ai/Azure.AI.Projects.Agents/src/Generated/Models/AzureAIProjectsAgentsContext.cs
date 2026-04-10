@@ -3,7 +3,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure.Core.Foundations;
 using OpenAI;
 
 namespace Azure.AI.Projects.Agents
@@ -56,7 +55,6 @@ namespace Azure.AI.Projects.Agents
     [ModelReaderWriterBuildable(typeof(ContentFilterConfiguration))]
     [ModelReaderWriterBuildable(typeof(CreateAgentVersionFromManifestRequest))]
     [ModelReaderWriterBuildable(typeof(CreateAgentVersionRequest1))]
-    [ModelReaderWriterBuildable(typeof(CreateOrUpdateManagedAgentIdentityBlueprintRequest))]
     [ModelReaderWriterBuildable(typeof(CreateSessionRequest))]
     [ModelReaderWriterBuildable(typeof(CreateSkillRequest))]
     [ModelReaderWriterBuildable(typeof(CreateToolboxVersionRequest))]
@@ -105,7 +103,6 @@ namespace Azure.AI.Projects.Agents
     [ModelReaderWriterBuildable(typeof(InternalWebSearchTool))]
     [ModelReaderWriterBuildable(typeof(IsolationKeySource))]
     [ModelReaderWriterBuildable(typeof(LocalSkillParam))]
-    [ModelReaderWriterBuildable(typeof(ManagedAgentIdentityBlueprint))]
     [ModelReaderWriterBuildable(typeof(ManagedAgentIdentityBlueprintReference))]
     [ModelReaderWriterBuildable(typeof(MemorySearchPreviewTool))]
     [ModelReaderWriterBuildable(typeof(MemorySearchToolOptions))]
@@ -119,7 +116,6 @@ namespace Azure.AI.Projects.Agents
     [ModelReaderWriterBuildable(typeof(OpenApiProjectConnectionAuthenticationDetails))]
     [ModelReaderWriterBuildable(typeof(OpenApiProjectConnectionSecurityScheme))]
     [ModelReaderWriterBuildable(typeof(OpenAPITool))]
-    [ModelReaderWriterBuildable(typeof(PagedManagedAgentIdentityBlueprint))]
     [ModelReaderWriterBuildable(typeof(ProjectsAgentDefinition))]
     [ModelReaderWriterBuildable(typeof(ProjectsAgentRecord))]
     [ModelReaderWriterBuildable(typeof(ProjectsAgentTool))]

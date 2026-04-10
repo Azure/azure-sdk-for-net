@@ -166,4 +166,46 @@ public partial class AgentSessionFiles
         ClientResult result = DownloadSessionFile(agentName, sessionId, sessionStoragePath, default, cancellationToken.ToRequestOptions());
         File.WriteAllBytes(localPath, result.GetRawResponse().Content.ToArray());
     }
+
+    /// <summary>
+    /// Delete a file or directory from the session sandbox.
+    /// If `recursive` is false (default) and the target is a non-empty directory, the API returns 409 Conflict.
+    /// </summary>
+    /// <param name="agentName"> The name of the agent. </param>
+    /// <param name="sessionId"> The session ID. </param>
+    /// <param name="path"> The file or directory path to delete, relative to the session home directory. </param>
+    /// <param name="recursive"> Whether to recursively delete directory contents. Defaults to false. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="sessionId"/> or <paramref name="path"/> is null. </exception>
+    /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="sessionId"/> or <paramref name="path"/> is an empty string, and was expected to be non-empty. </exception>
+    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    public virtual ClientResult DeleteSessionFile(string agentName, string sessionId, string path, bool? recursive = default, CancellationToken cancellationToken = default)
+    {
+        Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+        Argument.AssertNotNullOrEmpty(sessionId, nameof(sessionId));
+        Argument.AssertNotNullOrEmpty(path, nameof(path));
+
+        return DeleteSessionFile(agentName, sessionId, path, default, recursive, cancellationToken.ToRequestOptions());
+    }
+
+    /// <summary>
+    /// Delete a file or directory from the session sandbox.
+    /// If `recursive` is false (default) and the target is a non-empty directory, the API returns 409 Conflict.
+    /// </summary>
+    /// <param name="agentName"> The name of the agent. </param>
+    /// <param name="sessionId"> The session ID. </param>
+    /// <param name="path"> The file or directory path to delete, relative to the session home directory. </param>
+    /// <param name="recursive"> Whether to recursively delete directory contents. Defaults to false. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="sessionId"/> or <paramref name="path"/> is null. </exception>
+    /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="sessionId"/> or <paramref name="path"/> is an empty string, and was expected to be non-empty. </exception>
+    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    public virtual async Task<ClientResult> DeleteSessionFileAsync(string agentName, string sessionId, string path, bool? recursive = default, CancellationToken cancellationToken = default)
+    {
+        Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+        Argument.AssertNotNullOrEmpty(sessionId, nameof(sessionId));
+        Argument.AssertNotNullOrEmpty(path, nameof(path));
+
+        return await DeleteSessionFileAsync(agentName, sessionId, path, default, recursive, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+    }
 }

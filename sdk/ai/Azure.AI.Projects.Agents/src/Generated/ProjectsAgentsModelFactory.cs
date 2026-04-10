@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using Azure.Core.Foundations;
 using OpenAI;
 using OpenAI.Responses;
 
@@ -988,25 +987,6 @@ namespace Azure.AI.Projects.Agents
         public static SessionDirectoryEntry SessionDirectoryEntry(string name = default, long size = default, bool isDirectory = default, DateTimeOffset modifiedTime = default)
         {
             return new SessionDirectoryEntry(name, size, isDirectory, modifiedTime, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The ManagedAgentIdentityBlueprint. </summary>
-        /// <param name="name"></param>
-        /// <returns> A new <see cref="Agents.ManagedAgentIdentityBlueprint"/> instance for mocking. </returns>
-        public static ManagedAgentIdentityBlueprint ManagedAgentIdentityBlueprint(string name = default)
-        {
-            return new ManagedAgentIdentityBlueprint(name, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Paged collection of ManagedAgentIdentityBlueprint items. </summary>
-        /// <param name="value"> The ManagedAgentIdentityBlueprint items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
-        /// <returns> A new <see cref="Core.Foundations.PagedManagedAgentIdentityBlueprint"/> instance for mocking. </returns>
-        public static PagedManagedAgentIdentityBlueprint PagedManagedAgentIdentityBlueprint(IEnumerable<ManagedAgentIdentityBlueprint> value = default, Uri nextLink = default)
-        {
-            value ??= new ChangeTrackingList<ManagedAgentIdentityBlueprint>();
-
-            return new PagedManagedAgentIdentityBlueprint(value.ToList(), nextLink, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The ProjectsAgentVersionCreationOptions. </summary>

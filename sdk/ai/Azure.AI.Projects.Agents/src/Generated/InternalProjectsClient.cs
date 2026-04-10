@@ -27,7 +27,6 @@ namespace Azure.AI.Projects.Agents
         private AgentToolboxes _cachedAgentToolboxes;
         private AgentSkills _cachedAgentSkills;
         private AgentSessionFiles _cachedAgentSessionFiles;
-        private ManagedAgentIdentityBlueprints _cachedManagedAgentIdentityBlueprints;
 
         /// <summary> Initializes a new instance of InternalProjectsClient for mocking. </summary>
         protected InternalProjectsClient()
@@ -96,12 +95,6 @@ namespace Azure.AI.Projects.Agents
         public virtual AgentSessionFiles GetAgentSessionFilesClient()
         {
             return Volatile.Read(ref _cachedAgentSessionFiles) ?? Interlocked.CompareExchange(ref _cachedAgentSessionFiles, new AgentSessionFiles(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentSessionFiles;
-        }
-
-        /// <summary> Initializes a new instance of ManagedAgentIdentityBlueprints. </summary>
-        public virtual ManagedAgentIdentityBlueprints GetManagedAgentIdentityBlueprintsClient()
-        {
-            return Volatile.Read(ref _cachedManagedAgentIdentityBlueprints) ?? Interlocked.CompareExchange(ref _cachedManagedAgentIdentityBlueprints, new ManagedAgentIdentityBlueprints(Pipeline, _endpoint, _apiVersion), null) ?? _cachedManagedAgentIdentityBlueprints;
         }
     }
 }

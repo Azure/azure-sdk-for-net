@@ -44,7 +44,7 @@ cd foundry-samples/samples/python/hosted-agents/agent-framework/agents-in-workfl
 
 5. Build the docker image and push it to the Azure Container registry you have created.
 
-```ps
+```bash
 docker build -t <DOCKER_USERNAME>/workflow-agent .
 docker image tag <DOCKER_USERNAME>/workflow-agent:latest <DOCKER_USERNAME>.azurecr.io/<DOCKER_USERNAME>/workflow-agent:latest
 docker login <DOCKER_USERNAME>.azurecr.io
