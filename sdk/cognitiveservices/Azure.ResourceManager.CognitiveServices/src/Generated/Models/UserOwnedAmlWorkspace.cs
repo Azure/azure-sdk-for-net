@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -34,9 +35,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Full resource id of a AML account resource. </summary>
+        [WirePath("resourceId")]
         public ResourceIdentifier ResourceId { get; set; }
 
         /// <summary> Identity Client id of a AML account resource. </summary>
+        [WirePath("identityClientId")]
         public Guid? IdentityClientId { get; set; }
     }
 }

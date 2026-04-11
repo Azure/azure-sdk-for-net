@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -45,27 +46,35 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> The unique identifier of the custom topic. </summary>
+        [WirePath("topicId")]
         public string TopicId { get; set; }
 
         /// <summary> The name of the custom topic. </summary>
+        [WirePath("topicName")]
         public string TopicName { get; set; }
 
         /// <summary> Description of the custom topic. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
 
         /// <summary> Sample blob url for the custom topic. </summary>
+        [WirePath("sampleBlobUrl")]
         public string SampleBlobUri { get; set; }
 
         /// <summary> Status of the custom topic. </summary>
+        [WirePath("status")]
         public string Status { get; set; }
 
         /// <summary> Failed reason if the status is Failed. </summary>
+        [WirePath("failedReason")]
         public string FailedReason { get; set; }
 
         /// <summary> Creation time of the custom topic. </summary>
+        [WirePath("createdAt")]
         public DateTimeOffset? CreatedOn { get; set; }
 
         /// <summary> Last modified time of the custom topic. </summary>
+        [WirePath("lastModifiedAt")]
         public DateTimeOffset? LastModifiedOn { get; set; }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Commitment quota quantity. </summary>
+        [WirePath("quantity")]
         public long? Quantity { get; }
 
         /// <summary> Commitment quota unit. </summary>
+        [WirePath("unit")]
         public string Unit { get; }
     }
 }

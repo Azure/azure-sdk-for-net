@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -32,6 +33,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Service Tag destination. </summary>
+        [WirePath("destination")]
         public ServiceTagOutboundRuleDestination Destination { get; set; }
     }
 }

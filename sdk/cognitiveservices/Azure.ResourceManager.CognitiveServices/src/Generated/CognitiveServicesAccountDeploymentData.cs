@@ -46,15 +46,19 @@ namespace Azure.ResourceManager.CognitiveServices
         }
 
         /// <summary> Properties of Cognitive Services account deployment. </summary>
+        [WirePath("properties")]
         public CognitiveServicesAccountDeploymentProperties Properties { get; set; }
 
         /// <summary> The resource model definition representing SKU. </summary>
+        [WirePath("sku")]
         public CognitiveServicesSku Sku { get; set; }
 
         /// <summary> Resource Etag. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
 
         /// <summary> Resource tags. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
     }
 }

@@ -43,18 +43,23 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Type of Issue. </summary>
+        [WirePath("issueType")]
         public string IssueType { get; set; }
 
         /// <summary> Severity of the issue. </summary>
+        [WirePath("severity")]
         public string Severity { get; set; }
 
         /// <summary> Description of the issue. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
 
         /// <summary> IDs of resources that can be associated to the same perimeter to remediate the issue. </summary>
+        [WirePath("suggestedResourceIds")]
         public IList<ResourceIdentifier> SuggestedResourceIds { get; }
 
         /// <summary> Optional array, suggested access rules. </summary>
+        [WirePath("suggestedAccessRules")]
         public IList<NetworkSecurityPerimeterAccessRule> SuggestedAccessRules { get; }
     }
 }

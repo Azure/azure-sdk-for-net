@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -38,9 +39,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Gets or sets the minimum number of replicas for this hosted deployment. </summary>
+        [WirePath("minReplicas")]
         public int? MinReplicas { get; set; }
 
         /// <summary> Gets or sets the maximum number of replicas for this hosted deployment. </summary>
+        [WirePath("maxReplicas")]
         public int? MaxReplicas { get; set; }
     }
 }

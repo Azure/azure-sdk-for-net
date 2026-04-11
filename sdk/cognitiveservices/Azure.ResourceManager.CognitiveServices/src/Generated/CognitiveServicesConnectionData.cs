@@ -43,6 +43,7 @@ namespace Azure.ResourceManager.CognitiveServices
         }
 
         /// <summary> Connection property base schema. </summary>
+        [WirePath("properties")]
         public CognitiveServicesConnectionProperties Properties { get; set; }
     }
 }

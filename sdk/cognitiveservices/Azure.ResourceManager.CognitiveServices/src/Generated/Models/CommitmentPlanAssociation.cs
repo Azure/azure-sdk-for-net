@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> The Azure resource id of the commitment plan. </summary>
+        [WirePath("commitmentPlanId")]
         public string CommitmentPlanId { get; }
 
         /// <summary> The location of of the commitment plan. </summary>
+        [WirePath("commitmentPlanLocation")]
         public string CommitmentPlanLocation { get; }
     }
 }

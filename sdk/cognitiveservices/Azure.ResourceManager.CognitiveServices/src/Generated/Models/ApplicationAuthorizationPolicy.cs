@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -36,6 +37,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Authorization scheme type. </summary>
+        [WirePath("type")]
         internal BuiltInAuthorizationScheme Type { get; set; }
     }
 }

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -36,12 +37,15 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Fully qualified identifier of the resource. </summary>
+        [WirePath("id")]
         public ResourceIdentifier Id { get; set; }
 
         /// <summary> Guid of the resource. </summary>
+        [WirePath("perimeterGuid")]
         public Guid? PerimeterGuid { get; set; }
 
         /// <summary> Location of the resource. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; set; }
     }
 }

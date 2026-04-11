@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> The datetime of deprecation of the fineTune Model. </summary>
+        [WirePath("fineTune")]
         public DateTimeOffset? FineTuneOn { get; set; }
 
         /// <summary> The datetime of deprecation of the inference Model. </summary>
+        [WirePath("inference")]
         public DateTimeOffset? InferenceOn { get; set; }
 
         /// <summary> Indicates whether the deprecation date is a confirmed planned end-of-life date or an estimated deprecation date. When 'Planned', the deprecation date represents a confirmed and communicated model end-of-life date. When 'Tentative', the deprecation date is an estimated timeline that may be subject to change. </summary>
+        [WirePath("deprecationStatus")]
         public CognitiveServicesDeprecationStatus? DeprecationStatus { get; set; }
     }
 }

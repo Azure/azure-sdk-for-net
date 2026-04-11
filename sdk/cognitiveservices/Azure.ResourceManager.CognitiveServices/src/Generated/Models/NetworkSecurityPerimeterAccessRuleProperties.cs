@@ -45,18 +45,23 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Direction of Access Rule. </summary>
+        [WirePath("direction")]
         public NspAccessRuleDirection? Direction { get; set; }
 
         /// <summary> Address prefixes for inbound rules. </summary>
+        [WirePath("addressPrefixes")]
         public IList<string> AddressPrefixes { get; }
 
         /// <summary> Subscriptions for inbound rules. </summary>
+        [WirePath("subscriptions")]
         public IList<WritableSubResource> Subscriptions { get; }
 
         /// <summary> NetworkSecurityPerimeters for inbound rules. </summary>
+        [WirePath("networkSecurityPerimeters")]
         public IList<CognitiveServicesNetworkSecurityPerimeter> NetworkSecurityPerimeters { get; }
 
         /// <summary> Fully qualified domain name for outbound rules. </summary>
+        [WirePath("fullyQualifiedDomainNames")]
         public IList<string> FullyQualifiedDomainNames { get; }
     }
 }

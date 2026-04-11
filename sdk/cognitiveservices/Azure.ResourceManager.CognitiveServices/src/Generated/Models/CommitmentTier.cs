@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -45,27 +46,35 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> The kind (type) of cognitive service account. </summary>
+        [WirePath("kind")]
         public string Kind { get; }
 
         /// <summary> The name of the SKU. Ex - P3. It is typically a letter+number code. </summary>
+        [WirePath("skuName")]
         public string SkuName { get; }
 
         /// <summary> Account hosting model. </summary>
+        [WirePath("hostingModel")]
         public ServiceAccountHostingModel? HostingModel { get; }
 
         /// <summary> Commitment plan type. </summary>
+        [WirePath("planType")]
         public string PlanType { get; }
 
         /// <summary> Commitment period commitment tier. </summary>
+        [WirePath("tier")]
         public string Tier { get; }
 
         /// <summary> Commitment period commitment max count. </summary>
+        [WirePath("maxCount")]
         public int? MaxCount { get; }
 
         /// <summary> Cognitive Services account commitment quota. </summary>
+        [WirePath("quota")]
         public CommitmentQuota Quota { get; }
 
         /// <summary> Cognitive Services account commitment cost. </summary>
+        [WirePath("cost")]
         public CommitmentCost Cost { get; }
     }
 }

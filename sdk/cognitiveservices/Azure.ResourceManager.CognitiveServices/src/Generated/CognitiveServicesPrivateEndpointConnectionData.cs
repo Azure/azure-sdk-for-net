@@ -43,15 +43,19 @@ namespace Azure.ResourceManager.CognitiveServices
         }
 
         /// <summary> Resource properties. </summary>
+        [WirePath("properties")]
         internal CognitiveServicesPrivateEndpointConnectionProperties Properties { get; set; }
 
         /// <summary> Resource Etag. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
 
         /// <summary> The location of the private endpoint connection. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; set; }
 
         /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
+        [WirePath("properties.privateLinkServiceConnectionState")]
         public CognitiveServicesPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState
         {
             get
@@ -69,6 +73,7 @@ namespace Azure.ResourceManager.CognitiveServices
         }
 
         /// <summary> The provisioning state of the private endpoint connection resource. </summary>
+        [WirePath("properties.provisioningState")]
         public CognitiveServicesPrivateEndpointConnectionProvisioningState? ProvisioningState
         {
             get
@@ -78,6 +83,7 @@ namespace Azure.ResourceManager.CognitiveServices
         }
 
         /// <summary> The private link resource group ids. </summary>
+        [WirePath("properties.groupIds")]
         public IList<string> GroupIds
         {
             get
@@ -91,6 +97,7 @@ namespace Azure.ResourceManager.CognitiveServices
         }
 
         /// <summary> The resource identifier of the private endpoint. </summary>
+        [WirePath("properties.privateEndpoint.id")]
         public string PrivateEndpointId
         {
             get

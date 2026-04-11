@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -34,9 +35,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> The storage resource Id. </summary>
+        [WirePath("adxStorageResourceId")]
         public ResourceIdentifier AdxStorageResourceId { get; set; }
 
         /// <summary> The identity client Id to access the storage. </summary>
+        [WirePath("identityClientId")]
         public Guid? IdentityClientId { get; set; }
     }
 }

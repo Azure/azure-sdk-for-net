@@ -35,9 +35,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> The link used to get the next page of RaiTopics. </summary>
+        [WirePath("nextLink")]
         public string NextLink { get; }
 
         /// <summary> The list of RaiTopic. </summary>
+        [WirePath("value")]
         public IList<RaiTopicData> Value { get; }
     }
 }

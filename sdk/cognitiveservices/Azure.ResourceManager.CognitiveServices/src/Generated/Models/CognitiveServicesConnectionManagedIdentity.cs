@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Gets or sets the ClientId. </summary>
+        [WirePath("clientId")]
         public string ClientId { get; set; }
 
         /// <summary> Gets or sets the ResourceId. </summary>
+        [WirePath("resourceId")]
         public string ResourceId { get; set; }
     }
 }

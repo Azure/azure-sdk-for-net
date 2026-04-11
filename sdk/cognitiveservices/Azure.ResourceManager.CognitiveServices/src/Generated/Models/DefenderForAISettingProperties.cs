@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -31,6 +32,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Defender for AI state on the AI resource. </summary>
+        [WirePath("state")]
         public DefenderForAISettingState? State { get; set; }
     }
 }

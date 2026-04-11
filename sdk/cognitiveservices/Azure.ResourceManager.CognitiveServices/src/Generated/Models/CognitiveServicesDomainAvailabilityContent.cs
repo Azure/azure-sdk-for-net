@@ -44,12 +44,15 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> The subdomain name to use. </summary>
+        [WirePath("subdomainName")]
         public string SubdomainName { get; }
 
         /// <summary> The Type of the resource. </summary>
+        [WirePath("type")]
         public ResourceType ResourceType { get; }
 
         /// <summary> The kind (type) of cognitive service account. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

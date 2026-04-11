@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -31,6 +32,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Gets or sets the Sas. </summary>
+        [WirePath("sas")]
         public string Sas { get; set; }
     }
 }

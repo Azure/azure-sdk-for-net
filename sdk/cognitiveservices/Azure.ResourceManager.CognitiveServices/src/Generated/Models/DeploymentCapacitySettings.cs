@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> The designated capacity. </summary>
+        [WirePath("designatedCapacity")]
         public int? DesignatedCapacity { get; set; }
 
         /// <summary> The priority of this capacity setting. </summary>
+        [WirePath("priority")]
         public int? Priority { get; set; }
     }
 }

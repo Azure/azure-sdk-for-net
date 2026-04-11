@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -59,9 +60,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Api key object for connection credential. </summary>
+        [WirePath("credentials")]
         internal ConnectionApiKey Credentials { get; set; }
 
         /// <summary> Gets or sets the Key. </summary>
+        [WirePath("credentials.key")]
         public string CredentialsKey
         {
             get

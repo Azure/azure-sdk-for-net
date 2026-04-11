@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -29,6 +30,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Gets the agent's version (unique for each agent lineage). </summary>
+        [WirePath("agentVersion")]
         public string AgentVersion { get; set; }
     }
 }

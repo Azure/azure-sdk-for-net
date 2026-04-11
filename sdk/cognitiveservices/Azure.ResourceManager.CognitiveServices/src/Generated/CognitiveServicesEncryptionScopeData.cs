@@ -44,12 +44,15 @@ namespace Azure.ResourceManager.CognitiveServices
         }
 
         /// <summary> Properties of Cognitive Services EncryptionScope. </summary>
+        [WirePath("properties")]
         public CognitiveServicesEncryptionScopeProperties Properties { get; set; }
 
         /// <summary> Resource Etag. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
 
         /// <summary> Resource tags. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
     }
 }

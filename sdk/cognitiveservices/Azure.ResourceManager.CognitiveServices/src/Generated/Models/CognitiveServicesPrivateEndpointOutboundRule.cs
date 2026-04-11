@@ -36,9 +36,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Private Endpoint destination. </summary>
+        [WirePath("destination")]
         public CognitiveServicesPrivateEndpointOutboundRuleDestination Destination { get; set; }
 
         /// <summary> List of FQDNs associated with the private endpoint outbound rule. </summary>
+        [WirePath("fqdns")]
         public IList<string> Fqdns { get; }
     }
 }

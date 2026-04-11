@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.CognitiveServices;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
@@ -37,6 +38,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Managed Network settings for a cognitive services account. </summary>
+        [WirePath("properties")]
         public ManagedNetworkSettings Properties { get; set; }
     }
 }

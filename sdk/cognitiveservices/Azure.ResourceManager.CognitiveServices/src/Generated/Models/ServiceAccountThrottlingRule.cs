@@ -43,21 +43,27 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Gets or sets the Key. </summary>
+        [WirePath("key")]
         public string Key { get; set; }
 
         /// <summary> Gets or sets the RenewalPeriod. </summary>
+        [WirePath("renewalPeriod")]
         public float? RenewalPeriod { get; set; }
 
         /// <summary> Gets or sets the Count. </summary>
+        [WirePath("count")]
         public float? Count { get; set; }
 
         /// <summary> Gets or sets the MinCount. </summary>
+        [WirePath("minCount")]
         public float? MinCount { get; set; }
 
         /// <summary> Gets or sets the IsDynamicThrottlingEnabled. </summary>
+        [WirePath("dynamicThrottlingEnabled")]
         public bool? IsDynamicThrottlingEnabled { get; set; }
 
         /// <summary> Gets the MatchPatterns. </summary>
+        [WirePath("matchPatterns")]
         public IReadOnlyList<ServiceAccountThrottlingMatchPattern> MatchPatterns { get; }
     }
 }

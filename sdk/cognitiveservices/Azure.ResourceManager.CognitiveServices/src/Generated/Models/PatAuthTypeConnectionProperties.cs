@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -41,9 +42,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Gets or sets the Credentials. </summary>
+        [WirePath("credentials")]
         internal ConnectionPersonalAccessToken Credentials { get; set; }
 
         /// <summary> Gets or sets the Pat. </summary>
+        [WirePath("credentials.pat")]
         public string CredentialsPat
         {
             get

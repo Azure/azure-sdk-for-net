@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -31,6 +32,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> The properties that the Cognitive services connection will be updated with. </summary>
+        [WirePath("properties")]
         public CognitiveServicesConnectionProperties Properties { get; set; }
     }
 }

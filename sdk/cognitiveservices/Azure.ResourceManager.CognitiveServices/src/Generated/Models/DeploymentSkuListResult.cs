@@ -35,9 +35,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> The link used to get the next page of deployment skus. </summary>
+        [WirePath("nextLink")]
         public string NextLink { get; }
 
         /// <summary> Gets the list of Cognitive Services accounts deployment skus. </summary>
+        [WirePath("value")]
         public IReadOnlyList<CognitiveServicesResourceSku> Value { get; }
     }
 }

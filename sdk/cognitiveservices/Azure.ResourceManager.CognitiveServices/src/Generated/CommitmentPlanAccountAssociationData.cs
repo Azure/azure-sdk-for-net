@@ -44,15 +44,19 @@ namespace Azure.ResourceManager.CognitiveServices
         }
 
         /// <summary> Properties of Cognitive Services account commitment plan association. </summary>
+        [WirePath("properties")]
         internal CommitmentPlanAccountAssociationProperties Properties { get; set; }
 
         /// <summary> Resource Etag. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
 
         /// <summary> Resource tags. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> The Azure resource id of the account. </summary>
+        [WirePath("properties.accountId")]
         public string AccountId
         {
             get

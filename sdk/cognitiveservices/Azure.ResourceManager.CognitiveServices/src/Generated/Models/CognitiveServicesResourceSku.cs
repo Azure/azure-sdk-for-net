@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> The resource type name. </summary>
+        [WirePath("resourceType")]
         public string ResourceType { get; }
 
         /// <summary> The resource model definition representing SKU. </summary>
+        [WirePath("sku")]
         public CognitiveServicesSku Sku { get; }
 
         /// <summary> The capacity configuration. </summary>
+        [WirePath("capacity")]
         public CognitiveServicesCapacityConfig Capacity { get; }
     }
 }

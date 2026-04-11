@@ -41,18 +41,23 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Gets the status of the cognitive services project at the time the operation was called. </summary>
+        [WirePath("provisioningState")]
         public ServiceAccountProvisioningState? ProvisioningState { get; }
 
         /// <summary> The display name of the Cognitive Services Project. </summary>
+        [WirePath("displayName")]
         public string DisplayName { get; set; }
 
         /// <summary> The description of the Cognitive Services Project. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
 
         /// <summary> The list of endpoint for this Cognitive Services Project. </summary>
+        [WirePath("endpoints")]
         public IReadOnlyDictionary<string, string> Endpoints { get; }
 
         /// <summary> Indicates whether the project is the default project for the account. </summary>
+        [WirePath("isDefault")]
         public bool? IsDefault { get; }
     }
 }

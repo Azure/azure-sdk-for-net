@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -37,15 +38,19 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> The name of the replacement model. </summary>
+        [WirePath("targetModelName")]
         public string TargetModelName { get; set; }
 
         /// <summary> The version of the replacement model. </summary>
+        [WirePath("targetModelVersion")]
         public string TargetModelVersion { get; set; }
 
         /// <summary> The date when automatic upgrade should start. This applies to deployments with the OnceNewDefaultVersionAvailable upgrade option. </summary>
+        [WirePath("autoUpgradeStartDate")]
         public DateTimeOffset? AutoUpgradeStartOn { get; set; }
 
         /// <summary> The number of days before deprecation date to trigger upgrade. This applies to deployments with the OnceCurrentVersionExpired upgrade option. </summary>
+        [WirePath("upgradeOnExpiryLeadTimeDays")]
         public int? UpgradeOnExpiryLeadTimeDays { get; set; }
     }
 }

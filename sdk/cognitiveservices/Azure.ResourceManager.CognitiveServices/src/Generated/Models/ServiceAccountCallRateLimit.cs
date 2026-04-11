@@ -37,12 +37,15 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> The count value of Call Rate Limit. </summary>
+        [WirePath("count")]
         public float? Count { get; set; }
 
         /// <summary> The renewal period in seconds of Call Rate Limit. </summary>
+        [WirePath("renewalPeriod")]
         public float? RenewalPeriod { get; set; }
 
         /// <summary> Gets the Rules. </summary>
+        [WirePath("rules")]
         public IReadOnlyList<ServiceAccountThrottlingRule> Rules { get; }
     }
 }

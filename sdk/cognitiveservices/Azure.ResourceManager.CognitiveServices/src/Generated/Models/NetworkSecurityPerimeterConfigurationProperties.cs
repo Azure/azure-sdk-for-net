@@ -41,18 +41,23 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Provisioning state of NetworkSecurityPerimeter configuration. </summary>
+        [WirePath("provisioningState")]
         public string ProvisioningState { get; }
 
         /// <summary> List of Provisioning Issues. </summary>
+        [WirePath("provisioningIssues")]
         public IList<NetworkSecurityPerimeterProvisioningIssue> ProvisioningIssues { get; }
 
         /// <summary> Information about a linked Network Security Perimeter. </summary>
+        [WirePath("networkSecurityPerimeter")]
         public CognitiveServicesNetworkSecurityPerimeter NetworkSecurityPerimeter { get; set; }
 
         /// <summary> Network Security Perimeter Configuration Association Information. </summary>
+        [WirePath("resourceAssociation")]
         public NetworkSecurityPerimeterConfigurationAssociationInfo ResourceAssociation { get; set; }
 
         /// <summary> Network Security Perimeter Profile Information. </summary>
+        [WirePath("profile")]
         public NetworkSecurityPerimeterProfileInfo Profile { get; set; }
     }
 }

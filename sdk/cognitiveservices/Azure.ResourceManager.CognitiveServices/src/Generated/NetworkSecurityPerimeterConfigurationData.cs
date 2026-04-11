@@ -38,6 +38,7 @@ namespace Azure.ResourceManager.CognitiveServices
         }
 
         /// <summary> NSP Configuration properties. </summary>
+        [WirePath("properties")]
         public NetworkSecurityPerimeterConfigurationProperties Properties { get; set; }
     }
 }

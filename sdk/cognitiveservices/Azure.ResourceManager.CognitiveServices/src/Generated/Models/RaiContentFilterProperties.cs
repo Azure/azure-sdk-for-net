@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Name of Content Filter. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
 
         /// <summary> If the Content Filter has multi severity levels(Low, Medium, or High). </summary>
+        [WirePath("isMultiLevelFilter")]
         public bool? IsMultiLevelFilter { get; set; }
 
         /// <summary> Content source to apply the Content Filters. </summary>
+        [WirePath("source")]
         public RaiPolicyContentSource? Source { get; set; }
     }
 }

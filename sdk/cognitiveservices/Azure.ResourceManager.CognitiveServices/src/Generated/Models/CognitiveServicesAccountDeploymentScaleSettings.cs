@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Deployment scale type. </summary>
+        [WirePath("scaleType")]
         public CognitiveServicesAccountDeploymentScaleType? ScaleType { get; set; }
 
         /// <summary> Deployment capacity. </summary>
+        [WirePath("capacity")]
         public int? Capacity { get; set; }
 
         /// <summary> Deployment active capacity. This value might be different from `capacity` if customer recently updated `capacity`. </summary>
+        [WirePath("activeCapacity")]
         public int? ActiveCapacity { get; }
     }
 }

@@ -35,9 +35,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> The link used to get the next page of RaiToolLabels. </summary>
+        [WirePath("nextLink")]
         public string NextLink { get; }
 
         /// <summary> The list of RAI Tool Labels. </summary>
+        [WirePath("value")]
         public IList<RaiToolLabelData> Value { get; }
     }
 }

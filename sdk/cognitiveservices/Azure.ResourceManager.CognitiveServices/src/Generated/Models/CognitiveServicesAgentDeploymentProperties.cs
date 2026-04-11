@@ -49,24 +49,31 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Gets or sets the display name of the deployment. </summary>
+        [WirePath("displayName")]
         public string DisplayName { get; set; }
 
         /// <summary> Gets or sets the unique identifier of the deployment. </summary>
+        [WirePath("deploymentId")]
         public string DeploymentId { get; set; }
 
         /// <summary> Gets or sets the current operational state of the deployment (and, intrinsically, of the comprising agents). </summary>
+        [WirePath("state")]
         public CognitiveServicesAgentDeploymentState? State { get; set; }
 
         /// <summary> Gets or sets the supported protocol types and versions exposed by this deployment. </summary>
+        [WirePath("protocols")]
         public IList<CognitiveServicesAgentProtocolVersion> Protocols { get; set; }
 
         /// <summary> Returns a flat list of agent:version deployed in this deployment. </summary>
+        [WirePath("agents")]
         public IList<CognitiveServicesVersionedAgentReference> Agents { get; set; }
 
         /// <summary> Gets or sets the type of deployment for the agent. </summary>
+        [WirePath("deploymentType")]
         internal AgentDeploymentType DeploymentType { get; set; }
 
         /// <summary> Gets or sets the provisioning state of the agent deployment. </summary>
+        [WirePath("provisioningState")]
         public CognitiveServicesAgentDeploymentProvisioningState? ProvisioningState { get; }
     }
 }

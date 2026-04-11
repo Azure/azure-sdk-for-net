@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Gets or sets the Password. </summary>
+        [WirePath("password")]
         public string Password { get; set; }
 
         /// <summary> Optional, required by connections like SalesForce for extra security in addition to UsernamePassword. </summary>
+        [WirePath("securityToken")]
         public string SecurityToken { get; set; }
 
         /// <summary> Gets or sets the Username. </summary>
+        [WirePath("username")]
         public string Username { get; set; }
     }
 }

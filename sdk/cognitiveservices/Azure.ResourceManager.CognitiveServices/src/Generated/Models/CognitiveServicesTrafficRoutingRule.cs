@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -37,15 +38,19 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> The identifier of this traffic routing rule. </summary>
+        [WirePath("ruleId")]
         public string RuleId { get; set; }
 
         /// <summary> A user-provided description for this traffic routing rule. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
 
         /// <summary> The unique identifier of the deployment to which traffic is routed by this rule. </summary>
+        [WirePath("deploymentId")]
         public string DeploymentId { get; set; }
 
         /// <summary> Gets or sets the percentage of traffic allocated to this instance. </summary>
+        [WirePath("trafficPercentage")]
         public int? TrafficPercentage { get; set; }
     }
 }

@@ -37,12 +37,15 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Gets the Count. </summary>
+        [WirePath("count")]
         public float? Count { get; }
 
         /// <summary> Gets the RenewalPeriod. </summary>
+        [WirePath("renewalPeriod")]
         public float? RenewalPeriod { get; }
 
         /// <summary> Gets the Rules. </summary>
+        [WirePath("rules")]
         public IReadOnlyList<ServiceAccountThrottlingRule> Rules { get; }
     }
 }

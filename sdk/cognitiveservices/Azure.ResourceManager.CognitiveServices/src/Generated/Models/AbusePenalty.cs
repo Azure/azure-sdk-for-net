@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> The action of AbusePenalty. </summary>
+        [WirePath("action")]
         public AbusePenaltyAction? Action { get; }
 
         /// <summary> The percentage of rate limit. </summary>
+        [WirePath("rateLimitPercentage")]
         public float? RateLimitPercentage { get; }
 
         /// <summary> The datetime of expiration of the AbusePenalty. </summary>
+        [WirePath("expiration")]
         public DateTimeOffset? Expiration { get; }
     }
 }

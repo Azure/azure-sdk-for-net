@@ -42,18 +42,23 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Name of the resource profile. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
 
         /// <summary> Access rules version of the resource profile. </summary>
+        [WirePath("accessRulesVersion")]
         public long? AccessRulesVersion { get; set; }
 
         /// <summary> Gets the AccessRules. </summary>
+        [WirePath("accessRules")]
         public IList<NetworkSecurityPerimeterAccessRule> AccessRules { get; }
 
         /// <summary> Current diagnostic settings version. </summary>
+        [WirePath("diagnosticSettingsVersion")]
         public long? DiagnosticSettingsVersion { get; set; }
 
         /// <summary> List of enabled log categories. </summary>
+        [WirePath("enabledLogCategories")]
         public IList<string> EnabledLogCategories { get; }
     }
 }

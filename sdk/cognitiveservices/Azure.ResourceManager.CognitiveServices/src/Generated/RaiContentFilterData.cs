@@ -38,6 +38,7 @@ namespace Azure.ResourceManager.CognitiveServices
         }
 
         /// <summary> Azure OpenAI Content Filter Properties. </summary>
+        [WirePath("properties")]
         public RaiContentFilterProperties Properties { get; set; }
     }
 }

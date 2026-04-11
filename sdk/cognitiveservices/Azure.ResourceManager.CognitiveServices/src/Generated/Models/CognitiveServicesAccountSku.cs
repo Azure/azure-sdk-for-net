@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -34,9 +35,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Resource Namespace and Type. </summary>
+        [WirePath("resourceType")]
         public ResourceType? ResourceType { get; }
 
         /// <summary> The SKU of Cognitive Services account. </summary>
+        [WirePath("sku")]
         public CognitiveServicesSku Sku { get; }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Gets the count of downgrades. </summary>
+        [WirePath("countOfDowngrades")]
         public float? CountOfDowngrades { get; }
 
         /// <summary> Gets the count of upgrades after downgrades. </summary>
+        [WirePath("countOfUpgradesAfterDowngrades")]
         public float? CountOfUpgradesAfterDowngrades { get; }
 
         /// <summary> Gets the last change date. </summary>
+        [WirePath("lastChangeDate")]
         public DateTimeOffset? LastChangedOn { get; }
     }
 }

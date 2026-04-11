@@ -37,6 +37,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Gets the ChangeableIsolationModes. </summary>
+        [WirePath("changeableIsolationModes")]
         public IReadOnlyList<CognitiveServicesIsolationMode> ChangeableIsolationModes { get; }
     }
 }

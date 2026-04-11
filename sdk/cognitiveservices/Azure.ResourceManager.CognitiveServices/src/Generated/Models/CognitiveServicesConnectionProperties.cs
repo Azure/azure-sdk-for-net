@@ -64,42 +64,55 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Authentication type of the connection target. </summary>
+        [WirePath("authType")]
         internal ConnectionAuthType AuthType { get; set; }
 
         /// <summary> Category of the connection. </summary>
+        [WirePath("category")]
         public CognitiveServicesConnectionCategory? Category { get; set; }
 
         /// <summary> Gets the CreatedByWorkspaceArmId. </summary>
+        [WirePath("createdByWorkspaceArmId")]
         public ResourceIdentifier CreatedByWorkspaceArmId { get; }
 
         /// <summary> Provides the error message if the connection fails. </summary>
+        [WirePath("error")]
         public string Error { get; set; }
 
         /// <summary> Gets or sets the ExpiryOn. </summary>
+        [WirePath("expiryTime")]
         public DateTimeOffset? ExpiryOn { get; set; }
 
         /// <summary> Group based on connection category. </summary>
+        [WirePath("group")]
         public CognitiveServicesConnectionGroup? Group { get; }
 
         /// <summary> Gets or sets the IsSharedToAll. </summary>
+        [WirePath("isSharedToAll")]
         public bool? IsSharedToAll { get; set; }
 
         /// <summary> Store user metadata for this connection. </summary>
+        [WirePath("metadata")]
         public IDictionary<string, string> Metadata { get; }
 
         /// <summary> Specifies how private endpoints are used with this connection: 'Required', 'NotRequired', or 'NotApplicable'. </summary>
+        [WirePath("peRequirement")]
         public ManagedPERequirement? PeRequirement { get; set; }
 
         /// <summary> Specifies the status of private endpoints for this connection: 'Inactive', 'Active', or 'NotApplicable'. </summary>
+        [WirePath("peStatus")]
         public ManagedPEStatus? PeStatus { get; set; }
 
         /// <summary> Gets the SharedUserList. </summary>
+        [WirePath("sharedUserList")]
         public IList<string> SharedUserList { get; }
 
         /// <summary> The connection URL to be used. </summary>
+        [WirePath("target")]
         public string Target { get; set; }
 
         /// <summary> Gets or sets the UseWorkspaceManagedIdentity. </summary>
+        [WirePath("useWorkspaceManagedIdentity")]
         public bool? UseWorkspaceManagedIdentity { get; set; }
     }
 }

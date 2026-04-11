@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Request per minute. </summary>
+        [WirePath("requestPerMinute")]
         public long? RequestPerMinute { get; set; }
 
         /// <summary> Dictionary, Model Capacity Calculator Workload Parameters. </summary>
+        [WirePath("requestParameters")]
         public ModelCapacityCalculatorWorkloadRequestParam RequestParameters { get; set; }
     }
 }

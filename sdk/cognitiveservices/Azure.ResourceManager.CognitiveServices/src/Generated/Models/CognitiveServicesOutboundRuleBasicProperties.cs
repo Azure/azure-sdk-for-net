@@ -46,18 +46,23 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Category of a managed network Outbound Rule of a cognitive services account. </summary>
+        [WirePath("category")]
         public RuleCategory? Category { get; set; }
 
         /// <summary> Type of a managed network Outbound Rule of a cognitive services account. </summary>
+        [WirePath("status")]
         public RuleStatus? Status { get; set; }
 
         /// <summary> Type of a managed network Outbound Rule of a cognitive services account. </summary>
+        [WirePath("type")]
         internal RuleType Type { get; set; }
 
         /// <summary> Error information about an outbound rule of a cognitive services account if RuleStatus is failed. </summary>
+        [WirePath("errorInformation")]
         public string ErrorInformation { get; }
 
         /// <summary> Gets the ParentRuleNames. </summary>
+        [WirePath("parentRuleNames")]
         public IReadOnlyList<string> ParentRuleNames { get; }
     }
 }

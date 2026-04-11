@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Gets or sets the AccessKeyId. </summary>
+        [WirePath("accessKeyId")]
         public string AccessKeyId { get; set; }
 
         /// <summary> Gets or sets the SecretAccessKey. </summary>
+        [WirePath("secretAccessKey")]
         public string SecretAccessKey { get; set; }
     }
 }

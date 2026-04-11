@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -47,6 +48,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// ClientId and ClientSecret are required. Other properties are optional
         /// depending on each OAuth2 provider's implementation.
         /// </summary>
+        [WirePath("credentials")]
         public CognitiveServicesConnectionOAuth2 Credentials { get; set; }
     }
 }

@@ -43,6 +43,7 @@ namespace Azure.ResourceManager.CognitiveServices
         }
 
         /// <summary> Outbound Rule for the managed network of a cognitive services account. </summary>
+        [WirePath("properties")]
         public CognitiveServicesOutboundRuleBasicProperties Properties { get; set; }
     }
 }

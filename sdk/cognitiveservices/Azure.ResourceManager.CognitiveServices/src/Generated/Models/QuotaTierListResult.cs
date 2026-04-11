@@ -35,9 +35,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> The link used to get the next page of quota tiers. </summary>
+        [WirePath("nextLink")]
         public string NextLink { get; }
 
         /// <summary> Gets the list of Quota Tiers and their properties. </summary>
+        [WirePath("value")]
         public IReadOnlyList<CognitiveServicesQuotaTierData> Value { get; }
     }
 }

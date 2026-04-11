@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> The protocol used by the agent/exposed by a deployment. </summary>
+        [WirePath("protocol")]
         public CognitiveServicesAgentProtocol? Protocol { get; set; }
 
         /// <summary> The version of the protocol. </summary>
+        [WirePath("version")]
         public string Version { get; set; }
     }
 }

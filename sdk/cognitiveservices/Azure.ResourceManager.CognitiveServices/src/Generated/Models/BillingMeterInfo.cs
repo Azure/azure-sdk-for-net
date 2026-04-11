@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Gets or sets the Name. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
 
         /// <summary> Gets or sets the MeterId. </summary>
+        [WirePath("meterId")]
         public string MeterId { get; set; }
 
         /// <summary> Gets or sets the Unit. </summary>
+        [WirePath("unit")]
         public string Unit { get; set; }
     }
 }

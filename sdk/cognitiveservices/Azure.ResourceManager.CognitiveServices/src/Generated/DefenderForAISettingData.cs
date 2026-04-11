@@ -44,15 +44,19 @@ namespace Azure.ResourceManager.CognitiveServices
         }
 
         /// <summary> The Defender for AI resource properties. </summary>
+        [WirePath("properties")]
         internal DefenderForAISettingProperties Properties { get; set; }
 
         /// <summary> Resource Etag. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
 
         /// <summary> Resource tags. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> Defender for AI state on the AI resource. </summary>
+        [WirePath("properties.state")]
         public DefenderForAISettingState? State
         {
             get

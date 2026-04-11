@@ -35,9 +35,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Multiregion routing methods. </summary>
+        [WirePath("routingMethod")]
         public CognitiveServicesRoutingMethod? RoutingMethod { get; set; }
 
         /// <summary> Gets the Regions. </summary>
+        [WirePath("regions")]
         public IList<CognitiveServicesRegionSetting> Regions { get; }
     }
 }

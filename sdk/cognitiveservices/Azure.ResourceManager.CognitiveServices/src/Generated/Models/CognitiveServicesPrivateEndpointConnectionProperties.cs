@@ -44,18 +44,23 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> The resource of private end point. </summary>
+        [WirePath("privateEndpoint")]
         internal PrivateEndpoint PrivateEndpoint { get; set; }
 
         /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
+        [WirePath("privateLinkServiceConnectionState")]
         public CognitiveServicesPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; set; }
 
         /// <summary> The provisioning state of the private endpoint connection resource. </summary>
+        [WirePath("provisioningState")]
         public CognitiveServicesPrivateEndpointConnectionProvisioningState? ProvisioningState { get; }
 
         /// <summary> The private link resource group ids. </summary>
+        [WirePath("groupIds")]
         public IList<string> GroupIds { get; } = new ChangeTrackingList<string>();
 
         /// <summary> The resource identifier of the private endpoint. </summary>
+        [WirePath("privateEndpoint.id")]
         public string PrivateEndpointId
         {
             get

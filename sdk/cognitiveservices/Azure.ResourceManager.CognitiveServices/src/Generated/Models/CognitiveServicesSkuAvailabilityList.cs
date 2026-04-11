@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -41,21 +42,27 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> The kind (type) of cognitive service account. </summary>
+        [WirePath("kind")]
         public string Kind { get; }
 
         /// <summary> The Type of the resource. </summary>
+        [WirePath("type")]
         public string SkuAvailabilityType { get; }
 
         /// <summary> The name of SKU. </summary>
+        [WirePath("skuName")]
         public string SkuName { get; }
 
         /// <summary> Indicates the given SKU is available or not. </summary>
+        [WirePath("skuAvailable")]
         public bool? IsSkuAvailable { get; }
 
         /// <summary> Reason why the SKU is not available. </summary>
+        [WirePath("reason")]
         public string Reason { get; }
 
         /// <summary> Additional error message. </summary>
+        [WirePath("message")]
         public string Message { get; }
     }
 }

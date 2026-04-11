@@ -47,30 +47,39 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> The display name of the application. </summary>
+        [WirePath("displayName")]
         public string DisplayName { get; set; }
 
         /// <summary> The application's dedicated invocation endpoint. </summary>
+        [WirePath("baseUrl")]
         public string BaseUri { get; set; }
 
         /// <summary> The list of agent definitions comprising this application, returned as references to the objects under the parent project; use this to obtain a flat list of all agent-version pairs represented by this application. </summary>
+        [WirePath("agents")]
         public IList<CognitiveServicesAgentReferenceProperties> Agents { get; set; }
 
         /// <summary> The EntraId Agentic Blueprint of the application. </summary>
+        [WirePath("agentIdentityBlueprint")]
         public CognitiveServicesAssignedIdentity AgentIdentityBlueprint { get; set; }
 
         /// <summary> The (default) agent instance identity of the application. </summary>
+        [WirePath("defaultInstanceIdentity")]
         public CognitiveServicesAssignedIdentity DefaultInstanceIdentity { get; set; }
 
         /// <summary> Gets or sets the authorization policy associated with this agentic application instance. </summary>
+        [WirePath("authorizationPolicy")]
         public ApplicationAuthorizationPolicy AuthorizationPolicy { get; set; }
 
         /// <summary> Gets or sets the traffic routing policy for the application's deployments. </summary>
+        [WirePath("trafficRoutingPolicy")]
         public ApplicationTrafficRoutingPolicy TrafficRoutingPolicy { get; set; }
 
         /// <summary> Provisioning state of the application. </summary>
+        [WirePath("provisioningState")]
         public CognitiveServicesAgenticApplicationProvisioningState? ProvisioningState { get; }
 
         /// <summary> Enabledstate of the application. </summary>
+        [WirePath("isEnabled")]
         public bool? IsEnabled { get; }
     }
 }

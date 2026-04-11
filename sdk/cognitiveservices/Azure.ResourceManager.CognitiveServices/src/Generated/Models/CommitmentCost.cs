@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Commitment meter Id. </summary>
+        [WirePath("commitmentMeterId")]
         public string CommitmentMeterId { get; }
 
         /// <summary> Overage meter Id. </summary>
+        [WirePath("overageMeterId")]
         public string OverageMeterId { get; }
     }
 }

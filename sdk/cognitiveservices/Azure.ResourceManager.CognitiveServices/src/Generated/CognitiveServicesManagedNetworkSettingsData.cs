@@ -38,6 +38,7 @@ namespace Azure.ResourceManager.CognitiveServices
         }
 
         /// <summary> The properties of the managed network settings of a cognitive services account. </summary>
+        [WirePath("properties")]
         public CognitiveServicesManagedNetworkSettingsProperties Properties { get; set; }
     }
 }

@@ -64,51 +64,67 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Gets the status of the resource at the time the operation was called. </summary>
+        [WirePath("provisioningState")]
         public CognitiveServicesAccountDeploymentProvisioningState? ProvisioningState { get; }
 
         /// <summary> Properties of Cognitive Services account deployment model. </summary>
+        [WirePath("model")]
         public CognitiveServicesAccountDeploymentModel Model { get; set; }
 
         /// <summary> Properties of Cognitive Services account deployment model. (Deprecated, please use Deployment.sku instead.). </summary>
+        [WirePath("scaleSettings")]
         public CognitiveServicesAccountDeploymentScaleSettings ScaleSettings { get; set; }
 
         /// <summary> The capabilities. </summary>
+        [WirePath("capabilities")]
         public IReadOnlyDictionary<string, string> Capabilities { get; }
 
         /// <summary> The name of RAI policy. </summary>
+        [WirePath("raiPolicyName")]
         public string RaiPolicyName { get; set; }
 
         /// <summary> The call rate limit Cognitive Services account. </summary>
+        [WirePath("callRateLimit")]
         public ServiceAccountCallRateLimit CallRateLimit { get; }
 
         /// <summary> Gets the RateLimits. </summary>
+        [WirePath("rateLimits")]
         public IReadOnlyList<ServiceAccountThrottlingRule> RateLimits { get; }
 
         /// <summary> Deployment model version upgrade option. </summary>
+        [WirePath("versionUpgradeOption")]
         public DeploymentModelVersionUpgradeOption? VersionUpgradeOption { get; set; }
 
         /// <summary> If the dynamic throttling is enabled. </summary>
+        [WirePath("dynamicThrottlingEnabled")]
         public bool? IsDynamicThrottlingEnabled { get; }
 
         /// <summary> The current capacity. </summary>
+        [WirePath("currentCapacity")]
         public int? CurrentCapacity { get; set; }
 
         /// <summary> Internal use only. </summary>
+        [WirePath("capacitySettings")]
         public DeploymentCapacitySettings CapacitySettings { get; set; }
 
         /// <summary> The name of parent deployment. </summary>
+        [WirePath("parentDeploymentName")]
         public string ParentDeploymentName { get; set; }
 
         /// <summary> Specifies the deployment name that should serve requests when the request would have otherwise been throttled due to reaching current deployment throughput limit. </summary>
+        [WirePath("spilloverDeploymentName")]
         public string SpilloverDeploymentName { get; set; }
 
         /// <summary> The service tier for the deployment. Determines the pricing and performance level for request processing. Use 'Default' for standard pricing or 'Priority' for higher-priority processing with premium pricing. Note: Pause operations are only supported on Standard, DataZoneStandard, and GlobalStandard SKUs. </summary>
+        [WirePath("serviceTier")]
         public CognitiveServicesDeploymentServiceTier? ServiceTier { get; set; }
 
         /// <summary> The state of the deployment. Controls whether the deployment is accepting inference requests. Use 'Running' for active deployments that process requests, or 'Paused' to temporarily stop inference while preserving the deployment configuration. </summary>
+        [WirePath("deploymentState")]
         public CognitiveServicesDeploymentState? DeploymentState { get; set; }
 
         /// <summary> Routing configuration for the deployment. This property is only applicable when the deployed model is 'model-router' version 2025-11-18 or later. Allows you to select the models subset for routing and the routing mode (balanced, accuracy, cost) for routing across all supported models or the model subset. </summary>
+        [WirePath("routing")]
         public CognitiveServicesDeploymentRouting Routing { get; set; }
     }
 }

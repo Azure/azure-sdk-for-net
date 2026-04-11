@@ -42,9 +42,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Project name to which this scope applies. </summary>
+        [WirePath("project")]
         public string Project { get; set; }
 
         /// <summary> Dictionary of label key-value pairs for the project scope. </summary>
+        [WirePath("labelValues")]
         public IDictionary<string, string> LabelValues { get; }
     }
 }

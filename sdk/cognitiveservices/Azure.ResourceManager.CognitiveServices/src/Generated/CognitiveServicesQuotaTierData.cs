@@ -38,6 +38,7 @@ namespace Azure.ResourceManager.CognitiveServices
         }
 
         /// <summary> Properties of quota tier resource. </summary>
+        [WirePath("properties")]
         public CognitiveServicesQuotaTierProperties Properties { get; set; }
     }
 }

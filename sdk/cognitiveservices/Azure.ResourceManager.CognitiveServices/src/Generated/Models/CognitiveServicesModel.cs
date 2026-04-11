@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -37,15 +38,19 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Cognitive Services account Model. </summary>
+        [WirePath("model")]
         public CognitiveServicesAccountModel Model { get; }
 
         /// <summary> The kind (type) of cognitive service account. </summary>
+        [WirePath("kind")]
         public string Kind { get; }
 
         /// <summary> The name of SKU. </summary>
+        [WirePath("skuName")]
         public string SkuName { get; }
 
         /// <summary> The description of the model. </summary>
+        [WirePath("description")]
         public string Description { get; }
     }
 }

@@ -35,9 +35,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Methodology used to route traffic to the application's deployments. </summary>
+        [WirePath("protocol")]
         public CognitiveServicesTrafficRoutingProtocol? Protocol { get; set; }
 
         /// <summary> Gets or sets the collection of traffic routing rules. </summary>
+        [WirePath("rules")]
         public IList<CognitiveServicesTrafficRoutingRule> Rules { get; set; }
     }
 }

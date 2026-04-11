@@ -33,6 +33,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Resource tags. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
     }
 }

@@ -35,9 +35,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> The routing mode that determines how requests are distributed across models. </summary>
+        [WirePath("mode")]
         public RoutingMode? Mode { get; set; }
 
         /// <summary> Optional. The list of models that the model router can use to route requests across. If not specified, the model router will route to all available models specified in the model-router version. </summary>
+        [WirePath("models")]
         public IList<CognitiveServicesAccountDeploymentModel> Models { get; }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -33,6 +34,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> key name to generate (Key1|Key2). </summary>
+        [WirePath("keyName")]
         public ServiceAccountKeyName KeyName { get; }
     }
 }

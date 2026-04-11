@@ -33,6 +33,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Dictionary of label key-value pairs for the account scope. </summary>
+        [WirePath("labelValues")]
         public IDictionary<string, string> LabelValues { get; }
     }
 }

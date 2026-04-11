@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Name of ContentFilter. </summary>
+        [WirePath("blocklistName")]
         public string BlocklistName { get; set; }
 
         /// <summary> If blocking would occur. </summary>
+        [WirePath("blocking")]
         public bool? Blocking { get; set; }
     }
 }

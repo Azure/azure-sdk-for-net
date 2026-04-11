@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -37,15 +38,19 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Name of the current quota tier for the subscription. </summary>
+        [WirePath("currentTierName")]
         public string CurrentTierName { get; }
 
         /// <summary> Gets the tier upgrade policy for the subscription. </summary>
+        [WirePath("tierUpgradePolicy")]
         public CognitiveServicesTierUpgradePolicy? TierUpgradePolicy { get; set; }
 
         /// <summary> The date on which the current tier was assigned to the subscription (UTC). </summary>
+        [WirePath("assignmentDate")]
         public DateTimeOffset? AssignmentOn { get; }
 
         /// <summary> Information about the quota tier upgrade eligibility for the subscription. </summary>
+        [WirePath("tierUpgradeEligibilityInfo")]
         public QuotaTierUpgradeEligibilityInfo TierUpgradeEligibilityInfo { get; }
     }
 }

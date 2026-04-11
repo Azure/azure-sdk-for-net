@@ -48,27 +48,35 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> List of AI services connections. </summary>
+        [WirePath("aiServicesConnections")]
         public IList<string> AiServicesConnections { get; set; }
 
         /// <summary> Kind of this capability host. </summary>
+        [WirePath("capabilityHostKind")]
         public CapabilityHostKind? CapabilityHostKind { get; set; }
 
         /// <summary> Customer subnet info to help set up this capability host. </summary>
+        [WirePath("customerSubnet")]
         public string CustomerSubnet { get; set; }
 
         /// <summary> Provisioning state for the CapabilityHost. </summary>
+        [WirePath("provisioningState")]
         public CapabilityHostProvisioningState? ProvisioningState { get; }
 
         /// <summary> List of connection names from those available in the account or project to be used as a storage resource. </summary>
+        [WirePath("storageConnections")]
         public IList<string> StorageConnections { get; set; }
 
         /// <summary> List of connection names from those available in the account or project to be used for Thread storage. </summary>
+        [WirePath("threadStorageConnections")]
         public IList<string> ThreadStorageConnections { get; set; }
 
         /// <summary> List of connection names from those available in the account or project to be used for vector database (e.g. CosmosDB). </summary>
+        [WirePath("vectorStoreConnections")]
         public IList<string> VectorStoreConnections { get; set; }
 
         /// <summary> Whether public hosting environment is enabled for the capability host. </summary>
+        [WirePath("enablePublicHostingEnvironment")]
         public bool? EnablePublicHostingEnvironment { get; set; }
     }
 }

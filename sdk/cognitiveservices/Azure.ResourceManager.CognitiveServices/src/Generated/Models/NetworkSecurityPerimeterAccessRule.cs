@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Network Security Perimeter Access Rule Name. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
 
         /// <summary> Properties of Network Security Perimeter Access Rule. </summary>
+        [WirePath("properties")]
         public NetworkSecurityPerimeterAccessRuleProperties Properties { get; set; }
     }
 }

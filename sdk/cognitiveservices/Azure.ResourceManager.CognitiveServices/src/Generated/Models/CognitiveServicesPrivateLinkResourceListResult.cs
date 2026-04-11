@@ -33,6 +33,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Array of private link resources. </summary>
+        [WirePath("value")]
         public IList<CognitiveServicesPrivateLinkResource> Value { get; }
     }
 }

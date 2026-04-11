@@ -35,9 +35,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> The link used to get the next page of RaiPolicy. </summary>
+        [WirePath("nextLink")]
         public string NextLink { get; }
 
         /// <summary> The list of RaiPolicy. </summary>
+        [WirePath("value")]
         public IList<RaiPolicyData> Value { get; }
     }
 }

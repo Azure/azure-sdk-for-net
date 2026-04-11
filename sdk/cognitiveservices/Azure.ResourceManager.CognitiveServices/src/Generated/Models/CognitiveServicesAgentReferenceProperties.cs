@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Gets the agent's unique identifier within the organization (subscription). </summary>
+        [WirePath("agentId")]
         public string AgentId { get; set; }
 
         /// <summary> Gets the agent's name (unique within the project/app). </summary>
+        [WirePath("agentName")]
         public string AgentName { get; set; }
     }
 }

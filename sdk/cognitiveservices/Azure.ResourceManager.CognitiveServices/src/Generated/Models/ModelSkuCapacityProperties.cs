@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -37,15 +38,19 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Properties of Cognitive Services account deployment model. </summary>
+        [WirePath("model")]
         public CognitiveServicesAccountDeploymentModel Model { get; set; }
 
         /// <summary> Gets or sets the SkuName. </summary>
+        [WirePath("skuName")]
         public string SkuName { get; set; }
 
         /// <summary> The available capacity for deployment with this model and sku. </summary>
+        [WirePath("availableCapacity")]
         public float? AvailableCapacity { get; set; }
 
         /// <summary> The available capacity for deployment with a fine-tune version of this model and sku. </summary>
+        [WirePath("availableFinetuneCapacity")]
         public float? AvailableFinetuneCapacity { get; set; }
     }
 }

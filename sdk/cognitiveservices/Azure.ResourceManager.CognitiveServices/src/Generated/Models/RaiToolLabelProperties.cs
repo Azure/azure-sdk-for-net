@@ -42,15 +42,19 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> The unique tool connection name, e.g., 'Web_Search'. </summary>
+        [WirePath("toolConnectionName")]
         public string ToolConnectionName { get; set; }
 
         /// <summary> Account-level tool label definition. </summary>
+        [WirePath("accountScope")]
         internal RaiToolLabelPropertiesAccountScope AccountScope { get; set; }
 
         /// <summary> List of project-level tool label definitions. </summary>
+        [WirePath("projectScopes")]
         public IList<RaiToolLabelPropertiesProjectScopesItem> ProjectScopes { get; }
 
         /// <summary> Dictionary of label key-value pairs for the account scope. </summary>
+        [WirePath("accountScope.labelValues")]
         public IDictionary<string, string> AccountScopeLabelValues
         {
             get

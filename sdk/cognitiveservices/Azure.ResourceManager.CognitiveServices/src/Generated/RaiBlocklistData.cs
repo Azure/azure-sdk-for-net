@@ -44,15 +44,19 @@ namespace Azure.ResourceManager.CognitiveServices
         }
 
         /// <summary> Properties of Cognitive Services RaiBlocklist. </summary>
+        [WirePath("properties")]
         internal RaiBlocklistProperties Properties { get; set; }
 
         /// <summary> Resource Etag. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
 
         /// <summary> Resource tags. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> Description of the block list. </summary>
+        [WirePath("properties.description")]
         public string RaiBlocklistDescription
         {
             get

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.CognitiveServices;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
@@ -39,9 +40,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> The location of the Model Sku Capacity. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; set; }
 
         /// <summary> Cognitive Services account ModelSkuCapacity. </summary>
+        [WirePath("properties")]
         public ModelSkuCapacityProperties Properties { get; set; }
     }
 }

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.CognitiveServices;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
@@ -37,6 +38,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Resource properties. </summary>
+        [WirePath("properties")]
         public CognitiveServicesPrivateLinkResourceProperties Properties { get; set; }
     }
 }

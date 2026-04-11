@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -47,30 +48,39 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> The unique identifier of the safety provider. </summary>
+        [WirePath("providerId")]
         public string ProviderId { get; set; }
 
         /// <summary> Name of the safety provider. </summary>
+        [WirePath("providerName")]
         public string ProviderName { get; set; }
 
         /// <summary> Safety provider mode sync/async. </summary>
+        [WirePath("mode")]
         public string Mode { get; set; }
 
         /// <summary> Webhook URL for the safety provider. </summary>
+        [WirePath("url")]
         public Uri Uri { get; set; }
 
         /// <summary> The name of the secret in Key Vault that contains the api key to access the webhook. </summary>
+        [WirePath("secretName")]
         public string SecretName { get; set; }
 
         /// <summary> The managed identity to access the Key Vault. </summary>
+        [WirePath("managedIdentity")]
         public string ManagedIdentity { get; set; }
 
         /// <summary> The Key Vault URI that contains the api key for safety provider urls. </summary>
+        [WirePath("keyVaultUri")]
         public Uri KeyVaultUri { get; set; }
 
         /// <summary> Creation time of the safety provider. </summary>
+        [WirePath("createdAt")]
         public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> Last modified time of the safety provider. </summary>
+        [WirePath("lastModifiedAt")]
         public DateTimeOffset? LastModifiedOn { get; }
     }
 }

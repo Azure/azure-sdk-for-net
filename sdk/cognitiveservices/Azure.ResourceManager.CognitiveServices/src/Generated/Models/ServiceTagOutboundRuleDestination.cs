@@ -41,18 +41,23 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Name of the Azure service tag to target. </summary>
+        [WirePath("serviceTag")]
         public string ServiceTag { get; set; }
 
         /// <summary> Network protocol used by the service tag rule. </summary>
+        [WirePath("protocol")]
         public string Protocol { get; set; }
 
         /// <summary> Destination port ranges. </summary>
+        [WirePath("portRanges")]
         public string PortRanges { get; set; }
 
         /// <summary> The action for the service tag outbound rule. </summary>
+        [WirePath("action")]
         public RuleAction? Action { get; set; }
 
         /// <summary> Optional address prefixes. If provided, the serviceTag property will be ignored. </summary>
+        [WirePath("addressPrefixes")]
         public IList<string> AddressPrefixes { get; }
     }
 }

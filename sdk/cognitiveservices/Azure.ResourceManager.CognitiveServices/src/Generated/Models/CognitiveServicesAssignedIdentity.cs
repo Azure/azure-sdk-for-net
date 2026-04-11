@@ -59,24 +59,31 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Specifies the kind of Entra identity described by this object. </summary>
+        [WirePath("kind")]
         public CognitiveServicesIdentityKind Kind { get; set; }
 
         /// <summary> Enumeration of identity types, from the perspective of management. </summary>
+        [WirePath("type")]
         public CognitiveServicesIdentityManagementType Type { get; set; }
 
         /// <summary> The client ID of the identity. </summary>
+        [WirePath("clientId")]
         public string ClientId { get; set; }
 
         /// <summary> The principal ID of the identity. </summary>
+        [WirePath("principalId")]
         public string PrincipalId { get; set; }
 
         /// <summary> The tenant ID of the identity. </summary>
+        [WirePath("tenantId")]
         public string TenantId { get; set; }
 
         /// <summary> The subject of this identity assignment. </summary>
+        [WirePath("subject")]
         public string Subject { get; set; }
 
         /// <summary> Represents the provisioning state of an identity resource. </summary>
+        [WirePath("provisioningState")]
         public CognitiveServicesIdentityProvisioningState? ProvisioningState { get; }
     }
 }

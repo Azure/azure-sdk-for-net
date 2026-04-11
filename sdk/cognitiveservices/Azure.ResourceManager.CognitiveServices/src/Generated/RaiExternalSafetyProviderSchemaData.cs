@@ -44,9 +44,11 @@ namespace Azure.ResourceManager.CognitiveServices
         }
 
         /// <summary> Properties of Cognitive Services Rai External Safety provider. </summary>
+        [WirePath("properties")]
         public RaiExternalSafetyProviderSchemaProperties Properties { get; set; }
 
         /// <summary> Resource Etag. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
     }
 }

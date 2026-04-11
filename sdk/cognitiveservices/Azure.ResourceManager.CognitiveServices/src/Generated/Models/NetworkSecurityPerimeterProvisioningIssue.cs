@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Name of the NSP provisioning issue. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
 
         /// <summary> Properties of Provisioning Issue. </summary>
+        [WirePath("properties")]
         public NetworkSecurityPerimeterProvisioningIssueProperties Properties { get; set; }
     }
 }

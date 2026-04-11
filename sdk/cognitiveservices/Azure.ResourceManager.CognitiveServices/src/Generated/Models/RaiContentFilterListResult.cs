@@ -35,9 +35,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> The link used to get the next page of Content Filters. </summary>
+        [WirePath("nextLink")]
         public string NextLink { get; }
 
         /// <summary> The list of RaiContentFilter. </summary>
+        [WirePath("value")]
         public IList<RaiContentFilterData> Value { get; }
     }
 }

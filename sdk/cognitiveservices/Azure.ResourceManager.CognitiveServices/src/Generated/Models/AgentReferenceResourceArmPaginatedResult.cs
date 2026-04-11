@@ -35,9 +35,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> The link to the next page of Agent Reference objects. If null, there are no additional pages. </summary>
+        [WirePath("nextLink")]
         public string NextLink { get; }
 
         /// <summary> An array of objects of type Agent Reference. </summary>
+        [WirePath("value")]
         public IList<CognitiveServicesAgentReference> Value { get; }
     }
 }

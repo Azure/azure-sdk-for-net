@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Name of the resource association. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
 
         /// <summary> Access Mode of the resource association. </summary>
+        [WirePath("accessMode")]
         public string AccessMode { get; set; }
     }
 }

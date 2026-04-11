@@ -44,21 +44,27 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> The name of the model SKU. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
 
         /// <summary> The usage name of the model SKU. </summary>
+        [WirePath("usageName")]
         public string UsageName { get; set; }
 
         /// <summary> The datetime of deprecation of the model SKU. </summary>
+        [WirePath("deprecationDate")]
         public DateTimeOffset? DeprecationOn { get; set; }
 
         /// <summary> The capacity configuration. </summary>
+        [WirePath("capacity")]
         public CognitiveServicesCapacityConfig Capacity { get; set; }
 
         /// <summary> The list of rateLimit. </summary>
+        [WirePath("rateLimits")]
         public IReadOnlyList<ServiceAccountCallRateLimit> RateLimits { get; }
 
         /// <summary> The list of billing meter info. </summary>
+        [WirePath("cost")]
         public IList<BillingMeterInfo> Cost { get; }
     }
 }

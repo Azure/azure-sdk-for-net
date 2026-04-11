@@ -35,9 +35,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> The link used to get the next page of EncryptionScope. </summary>
+        [WirePath("nextLink")]
         public string NextLink { get; }
 
         /// <summary> The list of EncryptionScope. </summary>
+        [WirePath("value")]
         public IList<CognitiveServicesEncryptionScopeData> Value { get; }
     }
 }

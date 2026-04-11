@@ -33,6 +33,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Gets the list of Cognitive Services accounts and their properties. </summary>
+        [WirePath("value")]
         public IList<CognitiveServicesAccountSku> Value { get; }
     }
 }

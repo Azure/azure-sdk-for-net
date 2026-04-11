@@ -52,33 +52,43 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> (QnAMaker Only) The runtime endpoint of QnAMaker. </summary>
+        [WirePath("qnaRuntimeEndpoint")]
         public string QnaRuntimeEndpoint { get; set; }
 
         /// <summary> (QnAMaker Only) The Azure Search endpoint key of QnAMaker. </summary>
+        [WirePath("qnaAzureSearchEndpointKey")]
         public string QnaAzureSearchEndpointKey { get; set; }
 
         /// <summary> (QnAMaker Only) The Azure Search endpoint id of QnAMaker. </summary>
+        [WirePath("qnaAzureSearchEndpointId")]
         public ResourceIdentifier QnaAzureSearchEndpointId { get; set; }
 
         /// <summary> (Bing Search Only) The flag to enable statistics of Bing Search. </summary>
+        [WirePath("statisticsEnabled")]
         public bool? EnableStatistics { get; set; }
 
         /// <summary> (Personalization Only) The flag to enable statistics of Bing Search. </summary>
+        [WirePath("eventHubConnectionString")]
         public string EventHubConnectionString { get; set; }
 
         /// <summary> (Personalization Only) The storage account connection string. </summary>
+        [WirePath("storageAccountConnectionString")]
         public string StorageAccountConnectionString { get; set; }
 
         /// <summary> (Metrics Advisor Only) The Azure AD Client Id (Application Id). </summary>
+        [WirePath("aadClientId")]
         public Guid? AadClientId { get; set; }
 
         /// <summary> (Metrics Advisor Only) The Azure AD Tenant Id. </summary>
+        [WirePath("aadTenantId")]
         public Guid? AadTenantId { get; set; }
 
         /// <summary> (Metrics Advisor Only) The super user of Metrics Advisor. </summary>
+        [WirePath("superUser")]
         public string SuperUser { get; set; }
 
         /// <summary> (Metrics Advisor Only) The website name of Metrics Advisor. </summary>
+        [WirePath("websiteName")]
         public string WebsiteName { get; set; }
 
         /// <summary> Gets the AdditionalProperties. </summary>

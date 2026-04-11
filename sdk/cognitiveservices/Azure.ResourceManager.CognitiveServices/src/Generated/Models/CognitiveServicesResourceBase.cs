@@ -35,9 +35,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> The asset description text. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
 
         /// <summary> Tag dictionary. Tags can be added, removed, and updated. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; set; }
     }
 }

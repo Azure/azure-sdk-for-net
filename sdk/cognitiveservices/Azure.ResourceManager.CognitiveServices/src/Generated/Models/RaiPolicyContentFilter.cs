@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -41,21 +42,27 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Name of ContentFilter. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
 
         /// <summary> If the ContentFilter is enabled. </summary>
+        [WirePath("enabled")]
         public bool? Enabled { get; set; }
 
         /// <summary> Level at which content is filtered. </summary>
+        [WirePath("severityThreshold")]
         public RaiPolicyContentLevel? SeverityThreshold { get; set; }
 
         /// <summary> If blocking would occur. </summary>
+        [WirePath("blocking")]
         public bool? Blocking { get; set; }
 
         /// <summary> Content source to apply the Content Filters. </summary>
+        [WirePath("source")]
         public RaiPolicyContentSource? Source { get; set; }
 
         /// <summary> The action types to apply to the content filters. </summary>
+        [WirePath("action")]
         public RaiActionType? Action { get; set; }
     }
 }

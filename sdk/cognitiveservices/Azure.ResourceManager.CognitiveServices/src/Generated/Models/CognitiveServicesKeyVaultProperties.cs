@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -37,15 +38,19 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Name of the Key from KeyVault. </summary>
+        [WirePath("keyName")]
         public string KeyName { get; set; }
 
         /// <summary> Version of the Key from KeyVault. </summary>
+        [WirePath("keyVersion")]
         public string KeyVersion { get; set; }
 
         /// <summary> Uri of KeyVault. </summary>
+        [WirePath("keyVaultUri")]
         public Uri KeyVaultUri { get; set; }
 
         /// <summary> Gets or sets the IdentityClientId. </summary>
+        [WirePath("identityClientId")]
         public Guid? IdentityClientId { get; set; }
     }
 }

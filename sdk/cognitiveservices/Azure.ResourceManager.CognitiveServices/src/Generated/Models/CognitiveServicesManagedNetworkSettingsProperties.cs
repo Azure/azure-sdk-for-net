@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Managed Network settings for a cognitive services account. </summary>
+        [WirePath("managedNetwork")]
         public ManagedNetworkSettingsEx ManagedNetwork { get; set; }
 
         /// <summary> The current deployment state of the managed network resource. The provisioningState is to indicate states for resource provisioning. </summary>
+        [WirePath("provisioningState")]
         public CognitiveServicesManagedNetworkProvisioningState? ProvisioningState { get; }
     }
 }

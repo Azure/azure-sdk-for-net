@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -34,9 +35,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> The Azure resource ID of the target private endpoint service. </summary>
+        [WirePath("serviceResourceId")]
         public ResourceIdentifier ServiceResourceId { get; set; }
 
         /// <summary> The subresource of the target service to connect to. </summary>
+        [WirePath("subresourceTarget")]
         public string SubresourceTarget { get; set; }
     }
 }

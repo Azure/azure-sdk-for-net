@@ -35,9 +35,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Array of NSP configurations List Result for an Cognitive Services account. </summary>
+        [WirePath("value")]
         public IList<NetworkSecurityPerimeterConfigurationData> Value { get; }
 
         /// <summary> Link to retrieve next page of results. </summary>
+        [WirePath("nextLink")]
         public string NextLink { get; }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> The name of the metric. </summary>
+        [WirePath("value")]
         public string Value { get; }
 
         /// <summary> The friendly name of the metric. </summary>
+        [WirePath("localizedValue")]
         public string LocalizedValue { get; }
     }
 }

@@ -35,9 +35,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> The link used to get the next page of Rai External Safety Provider. </summary>
+        [WirePath("nextLink")]
         public string NextLink { get; }
 
         /// <summary> The list of RaiExternalSafetyProvider. </summary>
+        [WirePath("value")]
         public IList<RaiExternalSafetyProviderSchemaData> Value { get; }
     }
 }

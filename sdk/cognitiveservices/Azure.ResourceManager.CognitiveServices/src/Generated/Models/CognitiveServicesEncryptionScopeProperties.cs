@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -31,9 +32,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Gets the status of the resource at the time the operation was called. </summary>
+        [WirePath("provisioningState")]
         public EncryptionScopeProvisioningState? ProvisioningState { get; }
 
         /// <summary> The encryptionScope state. </summary>
+        [WirePath("state")]
         public EncryptionScopeState? State { get; set; }
     }
 }

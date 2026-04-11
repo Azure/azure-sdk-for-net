@@ -35,9 +35,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> The link to the next page of Project Capability Host objects. If null, there are no additional pages. </summary>
+        [WirePath("nextLink")]
         public string NextLink { get; }
 
         /// <summary> An array of objects of type Project Capability Host. </summary>
+        [WirePath("value")]
         public IList<CognitiveServicesProjectCapabilityHostData> Value { get; }
     }
 }

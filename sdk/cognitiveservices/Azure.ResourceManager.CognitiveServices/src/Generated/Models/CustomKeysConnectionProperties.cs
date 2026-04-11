@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -47,9 +48,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Custom Keys credential object. </summary>
+        [WirePath("credentials")]
         internal CustomKeys Credentials { get; set; }
 
         /// <summary> Dictionary of &lt;string&gt;. </summary>
+        [WirePath("credentials.keys")]
         public IDictionary<string, string> CredentialsKeys
         {
             get

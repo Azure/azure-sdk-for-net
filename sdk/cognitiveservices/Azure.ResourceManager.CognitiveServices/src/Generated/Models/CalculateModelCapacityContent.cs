@@ -37,12 +37,15 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Properties of Cognitive Services account deployment model. </summary>
+        [WirePath("model")]
         public CognitiveServicesAccountDeploymentModel Model { get; set; }
 
         /// <summary> The name of SKU. </summary>
+        [WirePath("skuName")]
         public string SkuName { get; set; }
 
         /// <summary> List of Model Capacity Calculator Workload. </summary>
+        [WirePath("workloads")]
         public IList<ModelCapacityCalculatorWorkload> Workloads { get; }
     }
 }

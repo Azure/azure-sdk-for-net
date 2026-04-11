@@ -35,9 +35,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Gets the NextLink. </summary>
+        [WirePath("nextLink")]
         public string NextLink { get; }
 
         /// <summary> Gets the Value. </summary>
+        [WirePath("value")]
         public IList<CognitiveServicesConnectionData> Value { get; }
     }
 }

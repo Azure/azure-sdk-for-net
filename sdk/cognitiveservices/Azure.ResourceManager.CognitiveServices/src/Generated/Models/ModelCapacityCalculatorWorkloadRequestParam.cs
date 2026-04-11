@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Average prompt tokens. </summary>
+        [WirePath("avgPromptTokens")]
         public long? AvgPromptTokens { get; set; }
 
         /// <summary> Average generated tokens. </summary>
+        [WirePath("avgGeneratedTokens")]
         public long? AvgGeneratedTokens { get; set; }
     }
 }

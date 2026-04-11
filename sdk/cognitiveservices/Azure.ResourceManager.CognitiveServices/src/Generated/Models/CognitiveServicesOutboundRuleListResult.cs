@@ -35,9 +35,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> The link to the next page constructed using the continuationToken.  If null, there are no additional pages. </summary>
+        [WirePath("nextLink")]
         public string NextLink { get; }
 
         /// <summary> The list of cognitive services accounts. Since this list may be incomplete, the nextLink field should be used to request the next list of cognitive services accounts. </summary>
+        [WirePath("value")]
         public IList<CognitiveServicesOutboundRuleBasicData> Value { get; }
     }
 }

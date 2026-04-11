@@ -43,6 +43,7 @@ namespace Azure.ResourceManager.CognitiveServices
         }
 
         /// <summary> [Required] Additional attributes of the entity. </summary>
+        [WirePath("properties")]
         public CognitiveServicesAgentDeploymentProperties Properties { get; set; }
     }
 }

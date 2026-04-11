@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -36,12 +37,15 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Specifies what features in AI Foundry network injection applies to. Currently only supports 'agent' for agent scenarios. 'none' means no network injection. </summary>
+        [WirePath("scenario")]
         public AIFoundryNetworkInjectionScenarioType? Scenario { get; set; }
 
         /// <summary> Specify the subnet for which your Agent Client is injected into. </summary>
+        [WirePath("subnetArmId")]
         public ResourceIdentifier SubnetArmId { get; set; }
 
         /// <summary> Boolean to enable Microsoft Managed Network for subnet delegation. </summary>
+        [WirePath("useMicrosoftManagedNetwork")]
         public bool? UseMicrosoftManagedNetwork { get; set; }
     }
 }

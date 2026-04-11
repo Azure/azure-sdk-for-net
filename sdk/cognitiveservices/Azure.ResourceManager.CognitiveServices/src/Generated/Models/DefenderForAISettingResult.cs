@@ -35,9 +35,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> The link used to get the next page of Defender for AI Settings. </summary>
+        [WirePath("nextLink")]
         public string NextLink { get; }
 
         /// <summary> The list of Defender for AI Settings. </summary>
+        [WirePath("value")]
         public IList<DefenderForAISettingData> Value { get; }
     }
 }

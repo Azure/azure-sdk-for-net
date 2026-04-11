@@ -35,9 +35,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> The link used to get the next page of CommitmentPlan. </summary>
+        [WirePath("nextLink")]
         public string NextLink { get; }
 
         /// <summary> Gets the list of Cognitive Services accounts CommitmentPlan and their properties. </summary>
+        [WirePath("value")]
         public IReadOnlyList<CommitmentPlanData> Value { get; }
     }
 }

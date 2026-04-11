@@ -48,24 +48,31 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Content Filters policy type. </summary>
+        [WirePath("type")]
         public RaiPolicyType? PolicyType { get; }
 
         /// <summary> Rai policy mode. The enum value mapping is as below: Default = 0, Deferred=1, Blocking=2, Asynchronous_filter =3. Please use 'Asynchronous_filter' after 2025-06-01. It is the same as 'Deferred' in previous version. </summary>
+        [WirePath("mode")]
         public RaiPolicyMode? Mode { get; set; }
 
         /// <summary> Name of Rai policy. </summary>
+        [WirePath("basePolicyName")]
         public string BasePolicyName { get; set; }
 
         /// <summary> The list of Content Filters. </summary>
+        [WirePath("contentFilters")]
         public IList<RaiPolicyContentFilter> ContentFilters { get; }
 
         /// <summary> The list of custom Blocklist. </summary>
+        [WirePath("customBlocklists")]
         public IList<CustomBlocklistConfig> CustomBlocklists { get; }
 
         /// <summary> The list of custom rai topics. </summary>
+        [WirePath("customTopics")]
         public IList<CustomTopicConfig> CustomTopics { get; }
 
         /// <summary> The list of Safety Providers. </summary>
+        [WirePath("safetyProviders")]
         public IList<SafetyProviderConfig> SafetyProviders { get; }
     }
 }

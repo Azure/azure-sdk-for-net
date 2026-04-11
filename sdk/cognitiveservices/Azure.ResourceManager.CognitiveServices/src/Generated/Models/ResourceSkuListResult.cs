@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -36,9 +37,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> The ResourceSku items on this page. </summary>
+        [WirePath("value")]
         public IList<AvailableCognitiveServicesSku> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
+        [WirePath("nextLink")]
         public Uri NextLink { get; }
     }
 }
