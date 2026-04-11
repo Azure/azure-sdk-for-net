@@ -1,4 +1,7 @@
 {
+  "engines": {
+    "node": ">=20.19.0"
+  },
   "dependencies": {
     "@azure-tools/typespec-client-generator-cli": "0.32.0"
   }
