@@ -4,7 +4,8 @@
 import {
   createTypeSpecLibrary,
   DiagnosticDefinition,
-  DiagnosticMessages
+  DiagnosticMessages,
+  paramMessage
 } from "@typespec/compiler";
 import { $lib as httpClientCSharpLib } from "@typespec/http-client-csharp";
 import { AzureEmitterOptionsSchema } from "../options.js";
@@ -17,6 +18,12 @@ const diags: { [code: string]: DiagnosticDefinition<DiagnosticMessages> } = {
       default:
         "The 'model-namespace' option is set to true, but the 'namespace' option is not set. " +
         "'model-namespace' can only be true, if the 'namespace' option is."
+    }
+  },
+  "metadata-file-write-error": {
+    severity: "error",
+    messages: {
+      default: paramMessage`Failed to write metadata.json to the output directory '${"outputDir"}': ${"error"}`
     }
   }
 };

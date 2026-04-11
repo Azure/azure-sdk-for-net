@@ -125,8 +125,20 @@ async function generateMetadataFile(
   };
 
   const outputPath = resolvePath(context.emitterOutputDir, "metadata.json");
-  await context.program.host.writeFile(
-    outputPath,
-    JSON.stringify(metadata, null, 2)
-  );
+  try {
+    await context.program.host.mkdirp(context.emitterOutputDir);
+    await context.program.host.writeFile(
+      outputPath,
+      JSON.stringify(metadata, null, 2)
+    );
+  } catch (error: any) {
+    $lib.reportDiagnostic(context.program, {
+      code: "metadata-file-write-error",
+      target: NoTarget,
+      format: {
+        outputDir: context.emitterOutputDir,
+        error: error?.message ?? String(error)
+      }
+    });
+  }
 }
