@@ -15,6 +15,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Azure.Identity;
+using Azure.Identity.Broker;
 using NUnit.Framework;
 
 namespace Azure.Core.TestFramework
@@ -253,49 +254,42 @@ namespace Azure.Core.TestFramework
 
         /// <summary>
         /// Returns the credential used for local developer authentication when no service principal
-        /// or pipeline credentials are available. The default implementation attempts silent
-        /// authentication via the system authentication broker (using the TME tenant) and falls
-        /// back to <see cref="DefaultAzureCredential"/> if the broker is unavailable or silent auth fails.
+        /// or pipeline credentials are available. The default implementation prompts the user via
+        /// the system authentication broker (scoped to the Azure test tenant) and falls back to a
+        /// local-dev-optimized <see cref="DefaultAzureCredential"/> if the broker is unavailable.
         /// Subclasses can override this method to customize the credential chain.
         /// </summary>
         /// <returns>A <see cref="TokenCredential"/> for local developer authentication.</returns>
         protected virtual TokenCredential CreateDeveloperCredential()
         {
-            const string TmeTenantId = "70a036f6-8e4d-4615-bad6-149c02e7720d";
+            const string AzureTestTenantId = "70a036f6-8e4d-4615-bad6-149c02e7720d";
 
             try
             {
-                // Try to create DevelopmentBrokerOptions via reflection (requires Azure.Identity.Broker package)
-                var optionsType = Type.GetType(
-                    "Azure.Identity.Broker.DevelopmentBrokerOptions, Azure.Identity.Broker",
-                    throwOnError: false);
-
-                if (optionsType != null)
+                var brokerOptions = new InteractiveBrowserCredentialBrokerOptions(IntPtr.Zero)
                 {
-                    var ctor = optionsType.GetConstructor(Type.EmptyTypes);
-                    if (ctor?.Invoke(null) is InteractiveBrowserCredentialOptions brokerOptions)
-                    {
-                        brokerOptions.TenantId = TmeTenantId;
-                        brokerOptions.TokenCachePersistenceOptions = new TokenCachePersistenceOptions();
+                    TenantId = AzureTestTenantId,
+                    TokenCachePersistenceOptions = new TokenCachePersistenceOptions()
+                };
 
-                        // Set IsChainedCredential = true via reflection so failures are wrapped as
-                        // CredentialUnavailableException, allowing ChainedTokenCredential to fall through.
-                        typeof(TokenCredentialOptions)
-                            .GetProperty("IsChainedCredential", BindingFlags.Instance | BindingFlags.NonPublic)
-                            ?.SetValue(brokerOptions, true);
-
-                        return new ChainedTokenCredential(
-                            new InteractiveBrowserCredential(brokerOptions),
-                            new DefaultAzureCredential());
-                    }
-                }
+                return new ChainedTokenCredential(
+                    new InteractiveBrowserCredential(brokerOptions),
+                    new VisualStudioCodeCredential());
             }
             catch
             {
-                // Azure.Identity.Broker package not available, fall through to DefaultAzureCredential
+                // Broker not available on this platform, fall through to DefaultAzureCredential
             }
 
-            return new DefaultAzureCredential();
+            return new DefaultAzureCredential(
+                new DefaultAzureCredentialOptions
+                {
+                    ExcludeEnvironmentCredential = true,
+                    ExcludeManagedIdentityCredential = true,
+                    ExcludeWorkloadIdentityCredential = true,
+                    ExcludeBrokerCredential = true,
+                    ExcludeVisualStudioCodeCredential = true,
+                });
         }
 
         /// <summary>
