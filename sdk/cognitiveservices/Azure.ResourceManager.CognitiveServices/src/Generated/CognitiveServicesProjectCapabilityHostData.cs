@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <summary> Initializes a new instance of <see cref="CognitiveServicesProjectCapabilityHostData"/>. </summary>
         /// <param name="properties"> [Required] Additional attributes of the entity. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public CognitiveServicesProjectCapabilityHostData(ProjectCapabilityHostProperties properties)
+        public CognitiveServicesProjectCapabilityHostData(CognitiveServicesProjectCapabilityHostProperties properties)
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
@@ -36,13 +36,13 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> [Required] Additional attributes of the entity. </param>
-        internal CognitiveServicesProjectCapabilityHostData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ProjectCapabilityHostProperties properties) : base(id, name, resourceType, systemData)
+        internal CognitiveServicesProjectCapabilityHostData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, CognitiveServicesProjectCapabilityHostProperties properties) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
         }
 
         /// <summary> [Required] Additional attributes of the entity. </summary>
-        public ProjectCapabilityHostProperties Properties { get; set; }
+        public CognitiveServicesProjectCapabilityHostProperties Properties { get; set; }
     }
 }

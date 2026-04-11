@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.CognitiveServices
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            ProjectCapabilityHostProperties properties = default;
+            CognitiveServicesProjectCapabilityHostProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 }
                 if (prop.NameEquals("properties"u8))
                 {
-                    properties = ProjectCapabilityHostProperties.DeserializeProjectCapabilityHostProperties(prop.Value, options);
+                    properties = CognitiveServicesProjectCapabilityHostProperties.DeserializeCognitiveServicesProjectCapabilityHostProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

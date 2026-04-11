@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RaiPolicyProperties"/>. </summary>
-        /// <param name="type"> Content Filters policy type. </param>
+        /// <param name="policyType"> Content Filters policy type. </param>
         /// <param name="mode"> Rai policy mode. The enum value mapping is as below: Default = 0, Deferred=1, Blocking=2, Asynchronous_filter =3. Please use 'Asynchronous_filter' after 2025-06-01. It is the same as 'Deferred' in previous version. </param>
         /// <param name="basePolicyName"> Name of Rai policy. </param>
         /// <param name="contentFilters"> The list of Content Filters. </param>
@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="customTopics"> The list of custom rai topics. </param>
         /// <param name="safetyProviders"> The list of Safety Providers. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RaiPolicyProperties(RaiPolicyType? @type, RaiPolicyMode? mode, string basePolicyName, IList<RaiPolicyContentFilter> contentFilters, IList<CustomBlocklistConfig> customBlocklists, IList<CustomTopicConfig> customTopics, IList<SafetyProviderConfig> safetyProviders, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RaiPolicyProperties(RaiPolicyType? policyType, RaiPolicyMode? mode, string basePolicyName, IList<RaiPolicyContentFilter> contentFilters, IList<CustomBlocklistConfig> customBlocklists, IList<CustomTopicConfig> customTopics, IList<SafetyProviderConfig> safetyProviders, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = @type;
+            PolicyType = policyType;
             Mode = mode;
             BasePolicyName = basePolicyName;
             ContentFilters = contentFilters;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Content Filters policy type. </summary>
-        public RaiPolicyType? Type { get; }
+        public RaiPolicyType? PolicyType { get; }
 
         /// <summary> Rai policy mode. The enum value mapping is as below: Default = 0, Deferred=1, Blocking=2, Asynchronous_filter =3. Please use 'Asynchronous_filter' after 2025-06-01. It is the same as 'Deferred' in previous version. </summary>
         public RaiPolicyMode? Mode { get; set; }

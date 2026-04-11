@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ReplacementConfig"/>. </summary>
-        internal ReplacementConfig()
+        public ReplacementConfig()
         {
         }
 
@@ -37,15 +37,15 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> The name of the replacement model. </summary>
-        public string TargetModelName { get; }
+        public string TargetModelName { get; set; }
 
         /// <summary> The version of the replacement model. </summary>
-        public string TargetModelVersion { get; }
+        public string TargetModelVersion { get; set; }
 
         /// <summary> The date when automatic upgrade should start. This applies to deployments with the OnceNewDefaultVersionAvailable upgrade option. </summary>
-        public DateTimeOffset? AutoUpgradeStartOn { get; }
+        public DateTimeOffset? AutoUpgradeStartOn { get; set; }
 
         /// <summary> The number of days before deprecation date to trigger upgrade. This applies to deployments with the OnceCurrentVersionExpired upgrade option. </summary>
-        public int? UpgradeOnExpiryLeadTimeDays { get; }
+        public int? UpgradeOnExpiryLeadTimeDays { get; set; }
     }
 }

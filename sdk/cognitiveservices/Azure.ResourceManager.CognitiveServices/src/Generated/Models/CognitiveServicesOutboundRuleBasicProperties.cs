@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary>
     /// Outbound Rule for the managed network of a cognitive services account.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FqdnOutboundRule"/>, <see cref="PrivateEndpointOutboundRule"/>, and <see cref="ServiceTagOutboundRule"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CognitiveServicesFqdnOutboundRule"/>, <see cref="CognitiveServicesPrivateEndpointOutboundRule"/>, and <see cref="ServiceTagOutboundRule"/>.
     /// </summary>
     public abstract partial class CognitiveServicesOutboundRuleBasicProperties
     {

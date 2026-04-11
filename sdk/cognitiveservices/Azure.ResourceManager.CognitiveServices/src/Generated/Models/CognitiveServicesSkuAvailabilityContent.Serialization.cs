@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type);
+            writer.WriteStringValue(ResourceType);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
             IList<string> skus = default;
             string kind = default;
-            string @type = default;
+            ResourceType resourceType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    resourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CognitiveServicesSkuAvailabilityContent(skus, kind, @type, additionalBinaryDataProperties);
+            return new CognitiveServicesSkuAvailabilityContent(skus, kind, resourceType, additionalBinaryDataProperties);
         }
     }
 }

@@ -16,10 +16,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     {
         private readonly string _value;
         private const string NoneValue = "None";
-        private const string BLOCKINGValue = "BLOCKING";
-        private const string ANNOTATINGValue = "ANNOTATING";
-        private const string HITLValue = "HITL";
-        private const string RETRYValue = "RETRY";
+        private const string BlockingValue = "BLOCKING";
+        private const string AnnotatingValue = "ANNOTATING";
+        private const string HitlValue = "HITL";
+        private const string RetryValue = "RETRY";
 
         /// <summary> Initializes a new instance of <see cref="RaiActionType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -34,17 +34,17 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Gets the None. </summary>
         public static RaiActionType None { get; } = new RaiActionType(NoneValue);
 
-        /// <summary> Gets the BLOCKING. </summary>
-        public static RaiActionType BLOCKING { get; } = new RaiActionType(BLOCKINGValue);
+        /// <summary> Gets the Blocking. </summary>
+        public static RaiActionType Blocking { get; } = new RaiActionType(BlockingValue);
 
-        /// <summary> Gets the ANNOTATING. </summary>
-        public static RaiActionType ANNOTATING { get; } = new RaiActionType(ANNOTATINGValue);
+        /// <summary> Gets the Annotating. </summary>
+        public static RaiActionType Annotating { get; } = new RaiActionType(AnnotatingValue);
 
-        /// <summary> Gets the HITL. </summary>
-        public static RaiActionType HITL { get; } = new RaiActionType(HITLValue);
+        /// <summary> Gets the Hitl. </summary>
+        public static RaiActionType Hitl { get; } = new RaiActionType(HitlValue);
 
-        /// <summary> Gets the RETRY. </summary>
-        public static RaiActionType RETRY { get; } = new RaiActionType(RETRYValue);
+        /// <summary> Gets the Retry. </summary>
+        public static RaiActionType Retry { get; } = new RaiActionType(RetryValue);
 
         /// <summary> Determines if two <see cref="RaiActionType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

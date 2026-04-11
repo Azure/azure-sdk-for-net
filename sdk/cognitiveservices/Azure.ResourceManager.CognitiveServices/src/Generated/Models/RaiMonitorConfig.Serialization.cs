@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
@@ -82,7 +83,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (Optional.IsDefined(IdentityClientId))
             {
                 writer.WritePropertyName("identityClientId"u8);
-                writer.WriteStringValue(IdentityClientId);
+                writer.WriteStringValue(IdentityClientId.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -126,19 +127,27 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            string adxStorageResourceId = default;
-            string identityClientId = default;
+            ResourceIdentifier adxStorageResourceId = default;
+            Guid? identityClientId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("adxStorageResourceId"u8))
                 {
-                    adxStorageResourceId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    adxStorageResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("identityClientId"u8))
                 {
-                    identityClientId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identityClientId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

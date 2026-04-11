@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterConfigurationProperties"/>. </summary>
-        internal NetworkSecurityPerimeterConfigurationProperties()
+        public NetworkSecurityPerimeterConfigurationProperties()
         {
             ProvisioningIssues = new ChangeTrackingList<NetworkSecurityPerimeterProvisioningIssue>();
         }
@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public IList<NetworkSecurityPerimeterProvisioningIssue> ProvisioningIssues { get; }
 
         /// <summary> Information about a linked Network Security Perimeter. </summary>
-        public CognitiveServicesNetworkSecurityPerimeter NetworkSecurityPerimeter { get; }
+        public CognitiveServicesNetworkSecurityPerimeter NetworkSecurityPerimeter { get; set; }
 
         /// <summary> Network Security Perimeter Configuration Association Information. </summary>
-        public NetworkSecurityPerimeterConfigurationAssociationInfo ResourceAssociation { get; }
+        public NetworkSecurityPerimeterConfigurationAssociationInfo ResourceAssociation { get; set; }
 
         /// <summary> Network Security Perimeter Profile Information. </summary>
-        public NetworkSecurityPerimeterProfileInfo Profile { get; }
+        public NetworkSecurityPerimeterProfileInfo Profile { get; set; }
     }
 }

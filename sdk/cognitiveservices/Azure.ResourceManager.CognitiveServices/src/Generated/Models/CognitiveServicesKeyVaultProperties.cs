@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="keyVaultUri"> Uri of KeyVault. </param>
         /// <param name="identityClientId"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CognitiveServicesKeyVaultProperties(string keyName, string keyVersion, string keyVaultUri, string identityClientId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CognitiveServicesKeyVaultProperties(string keyName, string keyVersion, Uri keyVaultUri, Guid? identityClientId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             KeyName = keyName;
             KeyVersion = keyVersion;
@@ -43,9 +43,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public string KeyVersion { get; set; }
 
         /// <summary> Uri of KeyVault. </summary>
-        public string KeyVaultUri { get; set; }
+        public Uri KeyVaultUri { get; set; }
 
         /// <summary> Gets or sets the IdentityClientId. </summary>
-        public string IdentityClientId { get; set; }
+        public Guid? IdentityClientId { get; set; }
     }
 }

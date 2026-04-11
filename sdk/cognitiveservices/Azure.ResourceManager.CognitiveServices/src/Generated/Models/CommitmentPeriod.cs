@@ -25,16 +25,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="tier"> Commitment period commitment tier. </param>
         /// <param name="count"> Commitment period commitment count. </param>
         /// <param name="quota"> Cognitive Services account commitment quota. </param>
-        /// <param name="startDate"> Commitment period start date. </param>
-        /// <param name="endDate"> Commitment period end date. </param>
+        /// <param name="startOn"> Commitment period start date. </param>
+        /// <param name="endOn"> Commitment period end date. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CommitmentPeriod(string tier, int? count, CommitmentQuota quota, string startDate, string endDate, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CommitmentPeriod(string tier, int? count, CommitmentQuota quota, DateTimeOffset? startOn, DateTimeOffset? endOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tier = tier;
             Count = count;
             Quota = quota;
-            StartDate = startDate;
-            EndDate = endDate;
+            StartOn = startOn;
+            EndOn = endOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public CommitmentQuota Quota { get; }
 
         /// <summary> Commitment period start date. </summary>
-        public string StartDate { get; }
+        public DateTimeOffset? StartOn { get; }
 
         /// <summary> Commitment period end date. </summary>
-        public string EndDate { get; }
+        public DateTimeOffset? EndOn { get; }
     }
 }

@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 throw new FormatException($"The model {nameof(RaiPolicyProperties)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(Type))
+            if (options.Format != "W" && Optional.IsDefined(PolicyType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(PolicyType.Value.ToString());
             }
             if (Optional.IsDefined(Mode))
             {
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            RaiPolicyType? @type = default;
+            RaiPolicyType? policyType = default;
             RaiPolicyMode? mode = default;
             string basePolicyName = default;
             IList<RaiPolicyContentFilter> contentFilters = default;
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    @type = new RaiPolicyType(prop.Value.GetString());
+                    policyType = new RaiPolicyType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("mode"u8))
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             return new RaiPolicyProperties(
-                @type,
+                policyType,
                 mode,
                 basePolicyName,
                 contentFilters ?? new ChangeTrackingList<RaiPolicyContentFilter>(),

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     public partial class CognitiveServicesAccountModel : CognitiveServicesAccountDeploymentModel
     {
         /// <summary> Initializes a new instance of <see cref="CognitiveServicesAccountModel"/>. </summary>
-        internal CognitiveServicesAccountModel()
+        public CognitiveServicesAccountModel()
         {
             Skus = new ChangeTrackingList<CognitiveServicesModelSku>();
             Capabilities = new ChangeTrackingDictionary<string, string>();
@@ -60,16 +60,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Properties of Cognitive Services account deployment model. </summary>
-        public CognitiveServicesAccountDeploymentModel BaseModel { get; }
+        public CognitiveServicesAccountDeploymentModel BaseModel { get; set; }
 
         /// <summary> If the model is default version. </summary>
-        public bool? IsDefaultVersion { get; }
+        public bool? IsDefaultVersion { get; set; }
 
         /// <summary> The list of Model Sku. </summary>
         public IList<CognitiveServicesModelSku> Skus { get; }
 
         /// <summary> The max capacity. </summary>
-        public int? MaxCapacity { get; }
+        public int? MaxCapacity { get; set; }
 
         /// <summary> The capabilities. </summary>
         public IDictionary<string, string> Capabilities { get; }
@@ -78,16 +78,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public IDictionary<string, string> FinetuneCapabilities { get; }
 
         /// <summary> Cognitive Services account ModelDeprecationInfo. </summary>
-        public ServiceAccountModelDeprecationInfo Deprecation { get; }
+        public ServiceAccountModelDeprecationInfo Deprecation { get; set; }
 
         /// <summary> Configuration for model replacement. </summary>
-        public ReplacementConfig ReplacementConfig { get; }
+        public ReplacementConfig ReplacementConfig { get; set; }
 
         /// <summary> Asset identifier for the model in the model catalog. </summary>
-        public string ModelCatalogAssetId { get; }
+        public string ModelCatalogAssetId { get; set; }
 
         /// <summary> Model lifecycle status. </summary>
-        public ModelLifecycleStatus? LifecycleStatus { get; }
+        public ModelLifecycleStatus? LifecycleStatus { get; set; }
 
         /// <summary> Metadata pertaining to creation and last modification of the resource. </summary>
         public SystemData SystemData { get; }

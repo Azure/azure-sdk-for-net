@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterAccessRuleProperties"/>. </summary>
-        internal NetworkSecurityPerimeterAccessRuleProperties()
+        public NetworkSecurityPerimeterAccessRuleProperties()
         {
             AddressPrefixes = new ChangeTrackingList<string>();
             Subscriptions = new ChangeTrackingList<WritableSubResource>();
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Direction of Access Rule. </summary>
-        public NspAccessRuleDirection? Direction { get; }
+        public NspAccessRuleDirection? Direction { get; set; }
 
         /// <summary> Address prefixes for inbound rules. </summary>
         public IList<string> AddressPrefixes { get; }

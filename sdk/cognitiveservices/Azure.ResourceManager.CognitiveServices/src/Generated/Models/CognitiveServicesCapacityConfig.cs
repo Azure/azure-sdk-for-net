@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CognitiveServicesCapacityConfig"/>. </summary>
-        internal CognitiveServicesCapacityConfig()
+        public CognitiveServicesCapacityConfig()
         {
             AllowedValues = new ChangeTrackingList<int>();
         }
@@ -41,16 +41,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> The minimum capacity. </summary>
-        public int? Minimum { get; }
+        public int? Minimum { get; set; }
 
         /// <summary> The maximum capacity. </summary>
-        public int? Maximum { get; }
+        public int? Maximum { get; set; }
 
         /// <summary> The minimal incremental between allowed values for capacity. </summary>
-        public int? Step { get; }
+        public int? Step { get; set; }
 
         /// <summary> The default capacity. </summary>
-        public int? Default { get; }
+        public int? Default { get; set; }
 
         /// <summary> The array of allowed values for capacity. </summary>
         public IList<int> AllowedValues { get; }

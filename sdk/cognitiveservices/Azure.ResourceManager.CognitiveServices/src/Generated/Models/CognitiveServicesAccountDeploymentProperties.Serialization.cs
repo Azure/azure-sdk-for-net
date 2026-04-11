@@ -130,10 +130,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("versionUpgradeOption"u8);
                 writer.WriteStringValue(VersionUpgradeOption.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(DynamicThrottlingEnabled))
+            if (options.Format != "W" && Optional.IsDefined(IsDynamicThrottlingEnabled))
             {
                 writer.WritePropertyName("dynamicThrottlingEnabled"u8);
-                writer.WriteBooleanValue(DynamicThrottlingEnabled.Value);
+                writer.WriteBooleanValue(IsDynamicThrottlingEnabled.Value);
             }
             if (Optional.IsDefined(CurrentCapacity))
             {
@@ -220,14 +220,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             ServiceAccountCallRateLimit callRateLimit = default;
             IReadOnlyList<ServiceAccountThrottlingRule> rateLimits = default;
             DeploymentModelVersionUpgradeOption? versionUpgradeOption = default;
-            bool? dynamicThrottlingEnabled = default;
+            bool? isDynamicThrottlingEnabled = default;
             int? currentCapacity = default;
             DeploymentCapacitySettings capacitySettings = default;
             string parentDeploymentName = default;
             string spilloverDeploymentName = default;
-            ServiceTier? serviceTier = default;
+            CognitiveServicesDeploymentServiceTier? serviceTier = default;
             CognitiveServicesDeploymentState? deploymentState = default;
-            DeploymentRouting routing = default;
+            CognitiveServicesDeploymentRouting routing = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    dynamicThrottlingEnabled = prop.Value.GetBoolean();
+                    isDynamicThrottlingEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("currentCapacity"u8))
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                         serviceTier = null;
                         continue;
                     }
-                    serviceTier = new ServiceTier(prop.Value.GetString());
+                    serviceTier = new CognitiveServicesDeploymentServiceTier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("deploymentState"u8))
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    routing = DeploymentRouting.DeserializeDeploymentRouting(prop.Value, options);
+                    routing = CognitiveServicesDeploymentRouting.DeserializeCognitiveServicesDeploymentRouting(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 callRateLimit,
                 rateLimits ?? new ChangeTrackingList<ServiceAccountThrottlingRule>(),
                 versionUpgradeOption,
-                dynamicThrottlingEnabled,
+                isDynamicThrottlingEnabled,
                 currentCapacity,
                 capacitySettings,
                 parentDeploymentName,

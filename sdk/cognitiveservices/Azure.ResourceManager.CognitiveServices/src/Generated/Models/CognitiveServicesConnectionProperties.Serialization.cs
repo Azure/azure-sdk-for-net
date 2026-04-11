@@ -19,11 +19,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     [PersistableModelProxy(typeof(UnknownCognitiveServicesConnectionProperties))]
     public abstract partial class CognitiveServicesConnectionProperties : IJsonModel<CognitiveServicesConnectionProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="CognitiveServicesConnectionProperties"/> for deserialization. </summary>
-        internal CognitiveServicesConnectionProperties()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual CognitiveServicesConnectionProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

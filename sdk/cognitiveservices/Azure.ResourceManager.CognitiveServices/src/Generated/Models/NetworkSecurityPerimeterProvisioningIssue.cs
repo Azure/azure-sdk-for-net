@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterProvisioningIssue"/>. </summary>
-        internal NetworkSecurityPerimeterProvisioningIssue()
+        public NetworkSecurityPerimeterProvisioningIssue()
         {
         }
 
@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Name of the NSP provisioning issue. </summary>
-        public string Name { get; }
+        public string Name { get; set; }
 
         /// <summary> Properties of Provisioning Issue. </summary>
-        public NetworkSecurityPerimeterProvisioningIssueProperties Properties { get; }
+        public NetworkSecurityPerimeterProvisioningIssueProperties Properties { get; set; }
     }
 }

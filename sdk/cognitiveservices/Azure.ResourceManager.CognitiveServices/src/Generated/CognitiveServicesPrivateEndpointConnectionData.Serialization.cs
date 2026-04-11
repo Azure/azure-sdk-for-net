@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.CognitiveServices
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            PrivateEndpointConnectionProperties properties = default;
+            CognitiveServicesPrivateEndpointConnectionProperties properties = default;
             ETag? eTag = default;
             AzureLocation? location = default;
             foreach (var prop in element.EnumerateObject())
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.CognitiveServices
                     {
                         continue;
                     }
-                    properties = PrivateEndpointConnectionProperties.DeserializePrivateEndpointConnectionProperties(prop.Value, options);
+                    properties = CognitiveServicesPrivateEndpointConnectionProperties.DeserializeCognitiveServicesPrivateEndpointConnectionProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("etag"u8))

@@ -1396,39 +1396,6 @@ namespace Azure.ResourceManager.CognitiveServices
             return GetCommitmentPlans().Get(commitmentPlanName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of CognitiveServicesCommitmentPlans in the <see cref="CognitiveServicesAccountResource"/>. </summary>
-        /// <returns> An object representing collection of CognitiveServicesCommitmentPlans and their operations over a CognitiveServicesCommitmentPlanResource. </returns>
-        public virtual CognitiveServicesCommitmentPlanCollection GetCognitiveServicesCommitmentPlans()
-        {
-            return GetCachedClient(client => new CognitiveServicesCommitmentPlanCollection(client, Id));
-        }
-
-        /// <summary> Returns a Cognitive Services commitment plan specified by the parameters. </summary>
-        /// <param name="commitmentPlanName"> The name of the commitmentPlan associated with the Cognitive Services Account. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="commitmentPlanName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="commitmentPlanName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<CognitiveServicesCommitmentPlanResource>> GetCognitiveServicesCommitmentPlanAsync(string commitmentPlanName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(commitmentPlanName, nameof(commitmentPlanName));
-
-            return await GetCognitiveServicesCommitmentPlans().GetAsync(commitmentPlanName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Returns a Cognitive Services commitment plan specified by the parameters. </summary>
-        /// <param name="commitmentPlanName"> The name of the commitmentPlan associated with the Cognitive Services Account. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="commitmentPlanName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="commitmentPlanName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<CognitiveServicesCommitmentPlanResource> GetCognitiveServicesCommitmentPlan(string commitmentPlanName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(commitmentPlanName, nameof(commitmentPlanName));
-
-            return GetCognitiveServicesCommitmentPlans().Get(commitmentPlanName, cancellationToken);
-        }
-
         /// <summary> Gets a collection of CognitiveServicesEncryptionScopes in the <see cref="CognitiveServicesAccountResource"/>. </summary>
         /// <returns> An object representing collection of CognitiveServicesEncryptionScopes and their operations over a CognitiveServicesEncryptionScopeResource. </returns>
         public virtual CognitiveServicesEncryptionScopeCollection GetCognitiveServicesEncryptionScopes()

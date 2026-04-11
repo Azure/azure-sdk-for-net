@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BillingMeterInfo"/>. </summary>
-        internal BillingMeterInfo()
+        public BillingMeterInfo()
         {
         }
 
@@ -34,13 +34,13 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the Name. </summary>
-        public string Name { get; }
+        /// <summary> Gets or sets the Name. </summary>
+        public string Name { get; set; }
 
-        /// <summary> Gets the MeterId. </summary>
-        public string MeterId { get; }
+        /// <summary> Gets or sets the MeterId. </summary>
+        public string MeterId { get; set; }
 
-        /// <summary> Gets the Unit. </summary>
-        public string Unit { get; }
+        /// <summary> Gets or sets the Unit. </summary>
+        public string Unit { get; set; }
     }
 }

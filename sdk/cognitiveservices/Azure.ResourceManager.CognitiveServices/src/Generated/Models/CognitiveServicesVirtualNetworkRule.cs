@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
@@ -20,7 +21,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Initializes a new instance of <see cref="CognitiveServicesVirtualNetworkRule"/>. </summary>
         /// <param name="id"> Full resource id of a vnet subnet, such as '/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/subnet1'. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public CognitiveServicesVirtualNetworkRule(string id)
+        public CognitiveServicesVirtualNetworkRule(ResourceIdentifier id)
         {
             Argument.AssertNotNull(id, nameof(id));
 
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="state"> Gets the state of virtual network rule. </param>
         /// <param name="ignoreMissingVnetServiceEndpoint"> Ignore missing vnet service endpoint or not. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CognitiveServicesVirtualNetworkRule(string id, string state, bool? ignoreMissingVnetServiceEndpoint, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CognitiveServicesVirtualNetworkRule(ResourceIdentifier id, string state, bool? ignoreMissingVnetServiceEndpoint, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             State = state;
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Full resource id of a vnet subnet, such as '/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/subnet1'. </summary>
-        public string Id { get; set; }
+        public ResourceIdentifier Id { get; set; }
 
         /// <summary> Gets the state of virtual network rule. </summary>
         public string State { get; set; }

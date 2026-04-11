@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary>
     /// Type representing an agent deployment as a management construct.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ManagedAgentDeployment"/> and <see cref="HostedAgentDeployment"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CognitiveServicesManagedAgentDeployment"/> and <see cref="CognitiveServicesHostedAgentDeployment"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownCognitiveServicesAgentDeploymentProperties))]
     public abstract partial class CognitiveServicesAgentDeploymentProperties : CognitiveServicesResourceBase, IJsonModel<CognitiveServicesAgentDeploymentProperties>
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 writer.WritePropertyName("agents"u8);
                 writer.WriteStartArray();
-                foreach (VersionedAgentReference item in Agents)
+                foreach (CognitiveServicesVersionedAgentReference item in Agents)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -157,9 +157,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 switch (discriminator.GetString())
                 {
                     case "Managed":
-                        return ManagedAgentDeployment.DeserializeManagedAgentDeployment(element, options);
+                        return CognitiveServicesManagedAgentDeployment.DeserializeCognitiveServicesManagedAgentDeployment(element, options);
                     case "Hosted":
-                        return HostedAgentDeployment.DeserializeHostedAgentDeployment(element, options);
+                        return CognitiveServicesHostedAgentDeployment.DeserializeCognitiveServicesHostedAgentDeployment(element, options);
                 }
             }
             return UnknownCognitiveServicesAgentDeploymentProperties.DeserializeUnknownCognitiveServicesAgentDeploymentProperties(element, options);

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="assignmentOn"> The date on which the current tier was assigned to the subscription (UTC). </param>
         /// <param name="tierUpgradeEligibilityInfo"> Information about the quota tier upgrade eligibility for the subscription. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CognitiveServicesQuotaTierProperties(string currentTierName, TierUpgradePolicy? tierUpgradePolicy, DateTimeOffset? assignmentOn, QuotaTierUpgradeEligibilityInfo tierUpgradeEligibilityInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CognitiveServicesQuotaTierProperties(string currentTierName, CognitiveServicesTierUpgradePolicy? tierUpgradePolicy, DateTimeOffset? assignmentOn, QuotaTierUpgradeEligibilityInfo tierUpgradeEligibilityInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CurrentTierName = currentTierName;
             TierUpgradePolicy = tierUpgradePolicy;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public string CurrentTierName { get; }
 
         /// <summary> Gets the tier upgrade policy for the subscription. </summary>
-        public TierUpgradePolicy? TierUpgradePolicy { get; set; }
+        public CognitiveServicesTierUpgradePolicy? TierUpgradePolicy { get; set; }
 
         /// <summary> The date on which the current tier was assigned to the subscription (UTC). </summary>
         public DateTimeOffset? AssignmentOn { get; }

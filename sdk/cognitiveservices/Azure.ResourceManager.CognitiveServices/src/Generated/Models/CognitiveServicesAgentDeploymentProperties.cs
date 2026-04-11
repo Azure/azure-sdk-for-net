@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary>
     /// Type representing an agent deployment as a management construct.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ManagedAgentDeployment"/> and <see cref="HostedAgentDeployment"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CognitiveServicesManagedAgentDeployment"/> and <see cref="CognitiveServicesHostedAgentDeployment"/>.
     /// </summary>
     public abstract partial class CognitiveServicesAgentDeploymentProperties : CognitiveServicesResourceBase
     {
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         private protected CognitiveServicesAgentDeploymentProperties(AgentDeploymentType deploymentType)
         {
             Protocols = new ChangeTrackingList<CognitiveServicesAgentProtocolVersion>();
-            Agents = new ChangeTrackingList<VersionedAgentReference>();
+            Agents = new ChangeTrackingList<CognitiveServicesVersionedAgentReference>();
             DeploymentType = deploymentType;
         }
 
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="agents"> Returns a flat list of agent:version deployed in this deployment. </param>
         /// <param name="deploymentType"> Gets or sets the type of deployment for the agent. </param>
         /// <param name="provisioningState"> Gets or sets the provisioning state of the agent deployment. </param>
-        internal CognitiveServicesAgentDeploymentProperties(string description, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, string displayName, string deploymentId, CognitiveServicesAgentDeploymentState? state, IList<CognitiveServicesAgentProtocolVersion> protocols, IList<VersionedAgentReference> agents, AgentDeploymentType deploymentType, CognitiveServicesAgentDeploymentProvisioningState? provisioningState) : base(description, tags, additionalBinaryDataProperties)
+        internal CognitiveServicesAgentDeploymentProperties(string description, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, string displayName, string deploymentId, CognitiveServicesAgentDeploymentState? state, IList<CognitiveServicesAgentProtocolVersion> protocols, IList<CognitiveServicesVersionedAgentReference> agents, AgentDeploymentType deploymentType, CognitiveServicesAgentDeploymentProvisioningState? provisioningState) : base(description, tags, additionalBinaryDataProperties)
         {
             DisplayName = displayName;
             DeploymentId = deploymentId;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public IList<CognitiveServicesAgentProtocolVersion> Protocols { get; set; }
 
         /// <summary> Returns a flat list of agent:version deployed in this deployment. </summary>
-        public IList<VersionedAgentReference> Agents { get; set; }
+        public IList<CognitiveServicesVersionedAgentReference> Agents { get; set; }
 
         /// <summary> Gets or sets the type of deployment for the agent. </summary>
         internal AgentDeploymentType DeploymentType { get; set; }

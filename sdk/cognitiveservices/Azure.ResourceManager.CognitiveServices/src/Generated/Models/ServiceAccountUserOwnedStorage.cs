@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -25,7 +26,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="resourceId"> Full resource id of a Microsoft.Storage resource. </param>
         /// <param name="identityClientId"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceAccountUserOwnedStorage(string resourceId, string identityClientId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ServiceAccountUserOwnedStorage(ResourceIdentifier resourceId, Guid? identityClientId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceId = resourceId;
             IdentityClientId = identityClientId;
@@ -33,9 +34,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Full resource id of a Microsoft.Storage resource. </summary>
-        public string ResourceId { get; set; }
+        public ResourceIdentifier ResourceId { get; set; }
 
         /// <summary> Gets or sets the IdentityClientId. </summary>
-        public string IdentityClientId { get; set; }
+        public Guid? IdentityClientId { get; set; }
     }
 }

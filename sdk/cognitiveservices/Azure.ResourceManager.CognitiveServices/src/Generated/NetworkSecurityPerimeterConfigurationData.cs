@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.CognitiveServices
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterConfigurationData"/>. </summary>
-        internal NetworkSecurityPerimeterConfigurationData()
+        public NetworkSecurityPerimeterConfigurationData()
         {
         }
 
@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.CognitiveServices
         }
 
         /// <summary> NSP Configuration properties. </summary>
-        public NetworkSecurityPerimeterConfigurationProperties Properties { get; }
+        public NetworkSecurityPerimeterConfigurationProperties Properties { get; set; }
     }
 }

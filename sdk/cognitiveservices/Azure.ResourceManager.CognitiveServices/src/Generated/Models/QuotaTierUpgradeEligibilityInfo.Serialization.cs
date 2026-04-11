@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 return null;
             }
             string nextTierName = default;
-            UpgradeAvailabilityStatus? upgradeAvailabilityStatus = default;
+            QuotaTierUpgradeAvailabilityStatus? upgradeAvailabilityStatus = default;
             DateTimeOffset? upgradeApplicableOn = default;
             string upgradeUnavailabilityReason = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    upgradeAvailabilityStatus = new UpgradeAvailabilityStatus(prop.Value.GetString());
+                    upgradeAvailabilityStatus = new QuotaTierUpgradeAvailabilityStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("upgradeApplicableDate"u8))

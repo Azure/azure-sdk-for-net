@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.CognitiveServices
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RaiContentFilterData"/>. </summary>
-        internal RaiContentFilterData()
+        public RaiContentFilterData()
         {
         }
 
@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.CognitiveServices
         }
 
         /// <summary> Azure OpenAI Content Filter Properties. </summary>
-        public RaiContentFilterProperties Properties { get; }
+        public RaiContentFilterProperties Properties { get; set; }
     }
 }

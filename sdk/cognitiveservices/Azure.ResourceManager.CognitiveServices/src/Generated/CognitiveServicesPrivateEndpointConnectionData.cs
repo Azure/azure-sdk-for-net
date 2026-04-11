@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="properties"> Resource properties. </param>
         /// <param name="eTag"> Resource Etag. </param>
         /// <param name="location"> The location of the private endpoint connection. </param>
-        internal CognitiveServicesPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, PrivateEndpointConnectionProperties properties, ETag? eTag, AzureLocation? location) : base(id, name, resourceType, systemData)
+        internal CognitiveServicesPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, CognitiveServicesPrivateEndpointConnectionProperties properties, ETag? eTag, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -43,12 +43,60 @@ namespace Azure.ResourceManager.CognitiveServices
         }
 
         /// <summary> Resource properties. </summary>
-        public PrivateEndpointConnectionProperties Properties { get; set; }
+        internal CognitiveServicesPrivateEndpointConnectionProperties Properties { get; set; }
 
         /// <summary> Resource Etag. </summary>
         public ETag? ETag { get; }
 
         /// <summary> The location of the private endpoint connection. </summary>
         public AzureLocation? Location { get; set; }
+
+        /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
+        public CognitiveServicesPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateLinkServiceConnectionState;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CognitiveServicesPrivateEndpointConnectionProperties();
+                }
+                Properties.PrivateLinkServiceConnectionState = value;
+            }
+        }
+
+        /// <summary> The provisioning state of the private endpoint connection resource. </summary>
+        public CognitiveServicesPrivateEndpointConnectionProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> The private link resource group ids. </summary>
+        public IList<string> GroupIds
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new CognitiveServicesPrivateEndpointConnectionProperties();
+                }
+                return Properties.GroupIds;
+            }
+        }
+
+        /// <summary> The resource identifier of the private endpoint. </summary>
+        public string PrivateEndpointId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateEndpointId;
+            }
+        }
     }
 }

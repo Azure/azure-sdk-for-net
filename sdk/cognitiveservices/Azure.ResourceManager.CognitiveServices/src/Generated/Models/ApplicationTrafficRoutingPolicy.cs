@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Initializes a new instance of <see cref="ApplicationTrafficRoutingPolicy"/>. </summary>
         public ApplicationTrafficRoutingPolicy()
         {
-            Rules = new ChangeTrackingList<TrafficRoutingRule>();
+            Rules = new ChangeTrackingList<CognitiveServicesTrafficRoutingRule>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ApplicationTrafficRoutingPolicy"/>. </summary>
         /// <param name="protocol"> Methodology used to route traffic to the application's deployments. </param>
         /// <param name="rules"> Gets or sets the collection of traffic routing rules. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationTrafficRoutingPolicy(TrafficRoutingProtocol? protocol, IList<TrafficRoutingRule> rules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApplicationTrafficRoutingPolicy(CognitiveServicesTrafficRoutingProtocol? protocol, IList<CognitiveServicesTrafficRoutingRule> rules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Protocol = protocol;
             Rules = rules;
@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Methodology used to route traffic to the application's deployments. </summary>
-        public TrafficRoutingProtocol? Protocol { get; set; }
+        public CognitiveServicesTrafficRoutingProtocol? Protocol { get; set; }
 
         /// <summary> Gets or sets the collection of traffic routing rules. </summary>
-        public IList<TrafficRoutingRule> Rules { get; set; }
+        public IList<CognitiveServicesTrafficRoutingRule> Rules { get; set; }
     }
 }

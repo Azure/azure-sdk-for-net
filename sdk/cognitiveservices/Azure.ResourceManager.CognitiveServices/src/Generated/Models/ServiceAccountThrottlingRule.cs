@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ServiceAccountThrottlingRule"/>. </summary>
-        internal ServiceAccountThrottlingRule()
+        public ServiceAccountThrottlingRule()
         {
             MatchPatterns = new ChangeTrackingList<ServiceAccountThrottlingMatchPattern>();
         }
@@ -28,34 +28,34 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="renewalPeriod"></param>
         /// <param name="count"></param>
         /// <param name="minCount"></param>
-        /// <param name="dynamicThrottlingEnabled"></param>
+        /// <param name="isDynamicThrottlingEnabled"></param>
         /// <param name="matchPatterns"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceAccountThrottlingRule(string key, float? renewalPeriod, float? count, float? minCount, bool? dynamicThrottlingEnabled, IReadOnlyList<ServiceAccountThrottlingMatchPattern> matchPatterns, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ServiceAccountThrottlingRule(string key, float? renewalPeriod, float? count, float? minCount, bool? isDynamicThrottlingEnabled, IReadOnlyList<ServiceAccountThrottlingMatchPattern> matchPatterns, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Key = key;
             RenewalPeriod = renewalPeriod;
             Count = count;
             MinCount = minCount;
-            DynamicThrottlingEnabled = dynamicThrottlingEnabled;
+            IsDynamicThrottlingEnabled = isDynamicThrottlingEnabled;
             MatchPatterns = matchPatterns;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the Key. </summary>
-        public string Key { get; }
+        /// <summary> Gets or sets the Key. </summary>
+        public string Key { get; set; }
 
-        /// <summary> Gets the RenewalPeriod. </summary>
-        public float? RenewalPeriod { get; }
+        /// <summary> Gets or sets the RenewalPeriod. </summary>
+        public float? RenewalPeriod { get; set; }
 
-        /// <summary> Gets the Count. </summary>
-        public float? Count { get; }
+        /// <summary> Gets or sets the Count. </summary>
+        public float? Count { get; set; }
 
-        /// <summary> Gets the MinCount. </summary>
-        public float? MinCount { get; }
+        /// <summary> Gets or sets the MinCount. </summary>
+        public float? MinCount { get; set; }
 
-        /// <summary> Gets the DynamicThrottlingEnabled. </summary>
-        public bool? DynamicThrottlingEnabled { get; }
+        /// <summary> Gets or sets the IsDynamicThrottlingEnabled. </summary>
+        public bool? IsDynamicThrottlingEnabled { get; set; }
 
         /// <summary> Gets the MatchPatterns. </summary>
         public IReadOnlyList<ServiceAccountThrottlingMatchPattern> MatchPatterns { get; }

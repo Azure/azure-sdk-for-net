@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -25,7 +26,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="adxStorageResourceId"> The storage resource Id. </param>
         /// <param name="identityClientId"> The identity client Id to access the storage. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RaiMonitorConfig(string adxStorageResourceId, string identityClientId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RaiMonitorConfig(ResourceIdentifier adxStorageResourceId, Guid? identityClientId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AdxStorageResourceId = adxStorageResourceId;
             IdentityClientId = identityClientId;
@@ -33,9 +34,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> The storage resource Id. </summary>
-        public string AdxStorageResourceId { get; set; }
+        public ResourceIdentifier AdxStorageResourceId { get; set; }
 
         /// <summary> The identity client Id to access the storage. </summary>
-        public string IdentityClientId { get; set; }
+        public Guid? IdentityClientId { get; set; }
     }
 }

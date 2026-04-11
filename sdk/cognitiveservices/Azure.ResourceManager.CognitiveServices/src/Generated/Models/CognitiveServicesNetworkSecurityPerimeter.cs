@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CognitiveServicesNetworkSecurityPerimeter"/>. </summary>
-        internal CognitiveServicesNetworkSecurityPerimeter()
+        public CognitiveServicesNetworkSecurityPerimeter()
         {
         }
 
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="perimeterGuid"> Guid of the resource. </param>
         /// <param name="location"> Location of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CognitiveServicesNetworkSecurityPerimeter(ResourceIdentifier id, string perimeterGuid, string location, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CognitiveServicesNetworkSecurityPerimeter(ResourceIdentifier id, Guid? perimeterGuid, AzureLocation? location, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             PerimeterGuid = perimeterGuid;
@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Fully qualified identifier of the resource. </summary>
-        public ResourceIdentifier Id { get; }
+        public ResourceIdentifier Id { get; set; }
 
         /// <summary> Guid of the resource. </summary>
-        public string PerimeterGuid { get; }
+        public Guid? PerimeterGuid { get; set; }
 
         /// <summary> Location of the resource. </summary>
-        public string Location { get; }
+        public AzureLocation? Location { get; set; }
     }
 }

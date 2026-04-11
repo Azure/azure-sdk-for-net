@@ -89,15 +89,15 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("quota"u8);
                 writer.WriteObjectValue(Quota, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(StartDate))
+            if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startDate"u8);
-                writer.WriteStringValue(StartDate);
+                writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(EndDate))
+            if (options.Format != "W" && Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endDate"u8);
-                writer.WriteStringValue(EndDate);
+                writer.WriteStringValue(EndOn.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -144,8 +144,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             string tier = default;
             int? count = default;
             CommitmentQuota quota = default;
-            string startDate = default;
-            string endDate = default;
+            DateTimeOffset? startOn = default;
+            DateTimeOffset? endOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -174,12 +174,20 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 if (prop.NameEquals("startDate"u8))
                 {
-                    startDate = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    startOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endDate"u8))
                 {
-                    endDate = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    endOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -191,8 +199,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 tier,
                 count,
                 quota,
-                startDate,
-                endDate,
+                startOn,
+                endOn,
                 additionalBinaryDataProperties);
         }
     }

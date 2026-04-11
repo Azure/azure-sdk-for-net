@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -25,7 +26,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="resourceType"> Resource Namespace and Type. </param>
         /// <param name="sku"> The SKU of Cognitive Services account. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CognitiveServicesAccountSku(string resourceType, CognitiveServicesSku sku, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CognitiveServicesAccountSku(ResourceType? resourceType, CognitiveServicesSku sku, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceType = resourceType;
             Sku = sku;
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Resource Namespace and Type. </summary>
-        public string ResourceType { get; }
+        public ResourceType? ResourceType { get; }
 
         /// <summary> The SKU of Cognitive Services account. </summary>
         public CognitiveServicesSku Sku { get; }

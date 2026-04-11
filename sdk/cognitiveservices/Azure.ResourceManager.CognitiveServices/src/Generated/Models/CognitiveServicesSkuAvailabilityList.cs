@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Initializes a new instance of <see cref="CognitiveServicesSkuAvailabilityList"/>. </summary>
         /// <param name="kind"> The kind (type) of cognitive service account. </param>
-        /// <param name="type"> The Type of the resource. </param>
+        /// <param name="skuAvailabilityType"> The Type of the resource. </param>
         /// <param name="skuName"> The name of SKU. </param>
-        /// <param name="skuAvailable"> Indicates the given SKU is available or not. </param>
+        /// <param name="isSkuAvailable"> Indicates the given SKU is available or not. </param>
         /// <param name="reason"> Reason why the SKU is not available. </param>
         /// <param name="message"> Additional error message. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CognitiveServicesSkuAvailabilityList(string kind, string @type, string skuName, bool? skuAvailable, string reason, string message, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CognitiveServicesSkuAvailabilityList(string kind, string skuAvailabilityType, string skuName, bool? isSkuAvailable, string reason, string message, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
-            Type = @type;
+            SkuAvailabilityType = skuAvailabilityType;
             SkuName = skuName;
-            SkuAvailable = skuAvailable;
+            IsSkuAvailable = isSkuAvailable;
             Reason = reason;
             Message = message;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -44,13 +44,13 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public string Kind { get; }
 
         /// <summary> The Type of the resource. </summary>
-        public string Type { get; }
+        public string SkuAvailabilityType { get; }
 
         /// <summary> The name of SKU. </summary>
         public string SkuName { get; }
 
         /// <summary> Indicates the given SKU is available or not. </summary>
-        public bool? SkuAvailable { get; }
+        public bool? IsSkuAvailable { get; }
 
         /// <summary> Reason why the SKU is not available. </summary>
         public string Reason { get; }

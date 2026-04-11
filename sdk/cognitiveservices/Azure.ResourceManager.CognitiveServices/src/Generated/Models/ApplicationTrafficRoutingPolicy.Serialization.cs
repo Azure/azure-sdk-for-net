@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 writer.WritePropertyName("rules"u8);
                 writer.WriteStartArray();
-                foreach (TrafficRoutingRule item in Rules)
+                foreach (CognitiveServicesTrafficRoutingRule item in Rules)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -131,8 +131,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            TrafficRoutingProtocol? protocol = default;
-            IList<TrafficRoutingRule> rules = default;
+            CognitiveServicesTrafficRoutingProtocol? protocol = default;
+            IList<CognitiveServicesTrafficRoutingRule> rules = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    protocol = new TrafficRoutingProtocol(prop.Value.GetString());
+                    protocol = new CognitiveServicesTrafficRoutingProtocol(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("rules"u8))
@@ -151,10 +151,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    List<TrafficRoutingRule> array = new List<TrafficRoutingRule>();
+                    List<CognitiveServicesTrafficRoutingRule> array = new List<CognitiveServicesTrafficRoutingRule>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(TrafficRoutingRule.DeserializeTrafficRoutingRule(item, options));
+                        array.Add(CognitiveServicesTrafficRoutingRule.DeserializeCognitiveServicesTrafficRoutingRule(item, options));
                     }
                     rules = array;
                     continue;
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ApplicationTrafficRoutingPolicy(protocol, rules ?? new ChangeTrackingList<TrafficRoutingRule>(), additionalBinaryDataProperties);
+            return new ApplicationTrafficRoutingPolicy(protocol, rules ?? new ChangeTrackingList<CognitiveServicesTrafficRoutingRule>(), additionalBinaryDataProperties);
         }
     }
 }

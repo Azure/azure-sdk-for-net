@@ -162,14 +162,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            IsolationMode? isolationMode = default;
+            CognitiveServicesIsolationMode? isolationMode = default;
             string networkId = default;
             IDictionary<string, CognitiveServicesOutboundRuleBasicProperties> outboundRules = default;
-            ManagedNetworkProvisionStatus status = default;
-            FirewallSku? firewallSku = default;
-            ManagedNetworkKind? managedNetworkKind = default;
+            CognitiveServicesManagedNetworkProvisionStatus status = default;
+            CognitiveServicesFirewallSku? firewallSku = default;
+            CognitiveServicesManagedNetworkKind? managedNetworkKind = default;
             string firewallPublicIpAddress = default;
-            ManagedNetworkProvisioningState? provisioningState = default;
+            CognitiveServicesManagedNetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    isolationMode = new IsolationMode(prop.Value.GetString());
+                    isolationMode = new CognitiveServicesIsolationMode(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("networkId"u8))
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    status = ManagedNetworkProvisionStatus.DeserializeManagedNetworkProvisionStatus(prop.Value, options);
+                    status = CognitiveServicesManagedNetworkProvisionStatus.DeserializeCognitiveServicesManagedNetworkProvisionStatus(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("firewallSku"u8))
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    firewallSku = new FirewallSku(prop.Value.GetString());
+                    firewallSku = new CognitiveServicesFirewallSku(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("managedNetworkKind"u8))
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    managedNetworkKind = new ManagedNetworkKind(prop.Value.GetString());
+                    managedNetworkKind = new CognitiveServicesManagedNetworkKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("firewallPublicIpAddress"u8))
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    provisioningState = new ManagedNetworkProvisioningState(prop.Value.GetString());
+                    provisioningState = new CognitiveServicesManagedNetworkProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

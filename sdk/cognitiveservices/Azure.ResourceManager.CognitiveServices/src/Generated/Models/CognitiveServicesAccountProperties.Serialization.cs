@@ -84,11 +84,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("endpoint"u8);
                 writer.WriteStringValue(Endpoint);
             }
-            if (options.Format != "W" && Optional.IsDefined(InternalId))
-            {
-                writer.WritePropertyName("internalId"u8);
-                writer.WriteStringValue(InternalId);
-            }
             if (options.Format != "W" && Optional.IsCollectionDefined(Capabilities))
             {
                 writer.WritePropertyName("capabilities"u8);
@@ -344,7 +339,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
             ServiceAccountProvisioningState? provisioningState = default;
             string endpoint = default;
-            string internalId = default;
             IReadOnlyList<CognitiveServicesSkuCapability> capabilities = default;
             bool? isMigrated = default;
             string migrationToken = default;
@@ -392,11 +386,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 if (prop.NameEquals("endpoint"u8))
                 {
                     endpoint = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("internalId"u8))
-                {
-                    internalId = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("capabilities"u8))
@@ -735,7 +724,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             return new CognitiveServicesAccountProperties(
                 provisioningState,
                 endpoint,
-                internalId,
                 capabilities ?? new ChangeTrackingList<CognitiveServicesSkuCapability>(),
                 isMigrated,
                 migrationToken,

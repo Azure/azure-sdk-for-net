@@ -764,13 +764,13 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CognitiveServicesAccountData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CognitiveServicesAccountData> GetAllAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<CognitiveServicesAccountData> GetDeletedAccountsAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new DeletedAccountsOperationGroupGetAllAsyncCollectionResultOfT(DeletedAccountsOperationGroupRestClient, Id.SubscriptionId, context, "MockableCognitiveServicesSubscriptionResource.GetAll");
+            return new DeletedAccountsOperationGroupGetDeletedAccountsAsyncCollectionResultOfT(DeletedAccountsOperationGroupRestClient, Id.SubscriptionId, context, "MockableCognitiveServicesSubscriptionResource.GetDeletedAccounts");
         }
 
         /// <summary>
@@ -792,13 +792,13 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CognitiveServicesAccountData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CognitiveServicesAccountData> GetAll(CancellationToken cancellationToken = default)
+        public virtual Pageable<CognitiveServicesAccountData> GetDeletedAccounts(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new DeletedAccountsOperationGroupGetAllCollectionResultOfT(DeletedAccountsOperationGroupRestClient, Id.SubscriptionId, context, "MockableCognitiveServicesSubscriptionResource.GetAll");
+            return new DeletedAccountsOperationGroupGetDeletedAccountsCollectionResultOfT(DeletedAccountsOperationGroupRestClient, Id.SubscriptionId, context, "MockableCognitiveServicesSubscriptionResource.GetDeletedAccounts");
         }
 
         /// <summary>
@@ -878,19 +878,19 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <param name="filter"> An OData filter expression that describes a subset of usages to return. The supported parameter is name.value (name of the metric, can have an or of multiple names). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ServiceAccountUsage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ServiceAccountUsage> GetAllAsync(AzureLocation location, string filter = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ServiceAccountUsage> GetUsagesAsync(AzureLocation location, string filter = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new UsagesOperationGroupGetAllAsyncCollectionResultOfT(
+            return new UsagesOperationGroupGetUsagesAsyncCollectionResultOfT(
                 UsagesOperationGroupRestClient,
                 Id.SubscriptionId,
                 location,
                 filter,
                 context,
-                "MockableCognitiveServicesSubscriptionResource.GetAll");
+                "MockableCognitiveServicesSubscriptionResource.GetUsages");
         }
 
         /// <summary>
@@ -914,19 +914,19 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <param name="filter"> An OData filter expression that describes a subset of usages to return. The supported parameter is name.value (name of the metric, can have an or of multiple names). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ServiceAccountUsage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ServiceAccountUsage> GetAll(AzureLocation location, string filter = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<ServiceAccountUsage> GetUsages(AzureLocation location, string filter = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new UsagesOperationGroupGetAllCollectionResultOfT(
+            return new UsagesOperationGroupGetUsagesCollectionResultOfT(
                 UsagesOperationGroupRestClient,
                 Id.SubscriptionId,
                 location,
                 filter,
                 context,
-                "MockableCognitiveServicesSubscriptionResource.GetAll");
+                "MockableCognitiveServicesSubscriptionResource.GetUsages");
         }
 
         /// <summary>
@@ -1012,7 +1012,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="modelFormat"/>, <paramref name="modelName"/> or <paramref name="modelVersion"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="modelFormat"/>, <paramref name="modelName"/> or <paramref name="modelVersion"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="ModelCapacityListResultValueItem"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ModelCapacityListResultValueItem> GetAllAsync(AzureLocation location, string modelFormat, string modelName, string modelVersion, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ModelCapacityListResultValueItem> GetLocationBasedModelCapacitiesAsync(AzureLocation location, string modelFormat, string modelName, string modelVersion, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(modelFormat, nameof(modelFormat));
             Argument.AssertNotNullOrEmpty(modelName, nameof(modelName));
@@ -1022,7 +1022,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new LocationBasedModelCapacitiesOperationGroupGetAllAsyncCollectionResultOfT(
+            return new LocationBasedModelCapacitiesOperationGroupGetLocationBasedModelCapacitiesAsyncCollectionResultOfT(
                 LocationBasedModelCapacitiesOperationGroupRestClient,
                 Id.SubscriptionId,
                 location,
@@ -1030,7 +1030,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
                 modelName,
                 modelVersion,
                 context,
-                "MockableCognitiveServicesSubscriptionResource.GetAll");
+                "MockableCognitiveServicesSubscriptionResource.GetLocationBasedModelCapacities");
         }
 
         /// <summary>
@@ -1058,7 +1058,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="modelFormat"/>, <paramref name="modelName"/> or <paramref name="modelVersion"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="modelFormat"/>, <paramref name="modelName"/> or <paramref name="modelVersion"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="ModelCapacityListResultValueItem"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ModelCapacityListResultValueItem> GetAll(AzureLocation location, string modelFormat, string modelName, string modelVersion, CancellationToken cancellationToken = default)
+        public virtual Pageable<ModelCapacityListResultValueItem> GetLocationBasedModelCapacities(AzureLocation location, string modelFormat, string modelName, string modelVersion, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(modelFormat, nameof(modelFormat));
             Argument.AssertNotNullOrEmpty(modelName, nameof(modelName));
@@ -1068,7 +1068,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new LocationBasedModelCapacitiesOperationGroupGetAllCollectionResultOfT(
+            return new LocationBasedModelCapacitiesOperationGroupGetLocationBasedModelCapacitiesCollectionResultOfT(
                 LocationBasedModelCapacitiesOperationGroupRestClient,
                 Id.SubscriptionId,
                 location,
@@ -1076,7 +1076,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
                 modelName,
                 modelVersion,
                 context,
-                "MockableCognitiveServicesSubscriptionResource.GetAll");
+                "MockableCognitiveServicesSubscriptionResource.GetLocationBasedModelCapacities");
         }
 
         /// <summary>
@@ -1103,7 +1103,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="modelFormat"/>, <paramref name="modelName"/> or <paramref name="modelVersion"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="modelFormat"/>, <paramref name="modelName"/> or <paramref name="modelVersion"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="ModelCapacityListResultValueItem"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ModelCapacityListResultValueItem> GetAllAsync(string modelFormat, string modelName, string modelVersion, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ModelCapacityListResultValueItem> GetModelCapacitiesAsync(string modelFormat, string modelName, string modelVersion, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(modelFormat, nameof(modelFormat));
             Argument.AssertNotNullOrEmpty(modelName, nameof(modelName));
@@ -1113,14 +1113,14 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ModelCapacitiesOperationGroupGetAllAsyncCollectionResultOfT(
+            return new ModelCapacitiesOperationGroupGetModelCapacitiesAsyncCollectionResultOfT(
                 ModelCapacitiesOperationGroupRestClient,
                 Id.SubscriptionId,
                 modelFormat,
                 modelName,
                 modelVersion,
                 context,
-                "MockableCognitiveServicesSubscriptionResource.GetAll");
+                "MockableCognitiveServicesSubscriptionResource.GetModelCapacities");
         }
 
         /// <summary>
@@ -1147,7 +1147,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="modelFormat"/>, <paramref name="modelName"/> or <paramref name="modelVersion"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="modelFormat"/>, <paramref name="modelName"/> or <paramref name="modelVersion"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="ModelCapacityListResultValueItem"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ModelCapacityListResultValueItem> GetAll(string modelFormat, string modelName, string modelVersion, CancellationToken cancellationToken = default)
+        public virtual Pageable<ModelCapacityListResultValueItem> GetModelCapacities(string modelFormat, string modelName, string modelVersion, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(modelFormat, nameof(modelFormat));
             Argument.AssertNotNullOrEmpty(modelName, nameof(modelName));
@@ -1157,14 +1157,14 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ModelCapacitiesOperationGroupGetAllCollectionResultOfT(
+            return new ModelCapacitiesOperationGroupGetModelCapacitiesCollectionResultOfT(
                 ModelCapacitiesOperationGroupRestClient,
                 Id.SubscriptionId,
                 modelFormat,
                 modelName,
                 modelVersion,
                 context,
-                "MockableCognitiveServicesSubscriptionResource.GetAll");
+                "MockableCognitiveServicesSubscriptionResource.GetModelCapacities");
         }
 
         /// <summary>

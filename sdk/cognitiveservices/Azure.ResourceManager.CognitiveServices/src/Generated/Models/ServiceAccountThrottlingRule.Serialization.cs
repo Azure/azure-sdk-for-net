@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("minCount"u8);
                 writer.WriteNumberValue(MinCount.Value);
             }
-            if (Optional.IsDefined(DynamicThrottlingEnabled))
+            if (Optional.IsDefined(IsDynamicThrottlingEnabled))
             {
                 writer.WritePropertyName("dynamicThrottlingEnabled"u8);
-                writer.WriteBooleanValue(DynamicThrottlingEnabled.Value);
+                writer.WriteBooleanValue(IsDynamicThrottlingEnabled.Value);
             }
             if (Optional.IsCollectionDefined(MatchPatterns))
             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             float? renewalPeriod = default;
             float? count = default;
             float? minCount = default;
-            bool? dynamicThrottlingEnabled = default;
+            bool? isDynamicThrottlingEnabled = default;
             IReadOnlyList<ServiceAccountThrottlingMatchPattern> matchPatterns = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    dynamicThrottlingEnabled = prop.Value.GetBoolean();
+                    isDynamicThrottlingEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("matchPatterns"u8))
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 renewalPeriod,
                 count,
                 minCount,
-                dynamicThrottlingEnabled,
+                isDynamicThrottlingEnabled,
                 matchPatterns ?? new ChangeTrackingList<ServiceAccountThrottlingMatchPattern>(),
                 additionalBinaryDataProperties);
         }

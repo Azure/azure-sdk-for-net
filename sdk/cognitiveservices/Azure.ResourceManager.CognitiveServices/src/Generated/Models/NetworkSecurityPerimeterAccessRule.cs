@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterAccessRule"/>. </summary>
-        internal NetworkSecurityPerimeterAccessRule()
+        public NetworkSecurityPerimeterAccessRule()
         {
         }
 
@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Network Security Perimeter Access Rule Name. </summary>
-        public string Name { get; }
+        public string Name { get; set; }
 
         /// <summary> Properties of Network Security Perimeter Access Rule. </summary>
-        public NetworkSecurityPerimeterAccessRuleProperties Properties { get; }
+        public NetworkSecurityPerimeterAccessRuleProperties Properties { get; set; }
     }
 }

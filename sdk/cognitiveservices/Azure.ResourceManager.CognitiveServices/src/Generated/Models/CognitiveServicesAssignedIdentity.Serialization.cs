@@ -141,24 +141,24 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            IdentityKind kind = default;
-            IdentityManagementType @type = default;
+            CognitiveServicesIdentityKind kind = default;
+            CognitiveServicesIdentityManagementType @type = default;
             string clientId = default;
             string principalId = default;
             string tenantId = default;
             string subject = default;
-            IdentityProvisioningState? provisioningState = default;
+            CognitiveServicesIdentityProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("kind"u8))
                 {
-                    kind = new IdentityKind(prop.Value.GetString());
+                    kind = new CognitiveServicesIdentityKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new IdentityManagementType(prop.Value.GetString());
+                    @type = new CognitiveServicesIdentityManagementType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("clientId"u8))
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    provisioningState = new IdentityProvisioningState(prop.Value.GetString());
+                    provisioningState = new CognitiveServicesIdentityProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

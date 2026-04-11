@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Initializes a new instance of <see cref="CognitiveServicesNetworkRuleSet"/>. </summary>
         public CognitiveServicesNetworkRuleSet()
         {
-            IpRules = new ChangeTrackingList<CognitiveServicesIPRule>();
+            IPRules = new ChangeTrackingList<CognitiveServicesIPRule>();
             VirtualNetworkRules = new ChangeTrackingList<CognitiveServicesVirtualNetworkRule>();
         }
 
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         {
             DefaultAction = defaultAction;
             Bypass = bypass;
-            IpRules = ipRules;
+            IPRules = ipRules;
             VirtualNetworkRules = virtualNetworkRules;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public TrustedServicesByPassSelection? Bypass { get; set; }
 
         /// <summary> The list of IP address rules. </summary>
-        public IList<CognitiveServicesIPRule> IpRules { get; }
+        public IList<CognitiveServicesIPRule> IPRules { get; }
 
         /// <summary> The list of virtual network rules. </summary>
         public IList<CognitiveServicesVirtualNetworkRule> VirtualNetworkRules { get; }

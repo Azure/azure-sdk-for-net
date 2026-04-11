@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="upgradeApplicableOn"> The date after which the current tier will be upgraded to the next tier if the TierUpgradePolicy is "OnceUpgradeIsAvailable" (UTC). </param>
         /// <param name="upgradeUnavailabilityReason"> Reason in case the subscription is not eligible for upgrade to the next tier. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal QuotaTierUpgradeEligibilityInfo(string nextTierName, UpgradeAvailabilityStatus? upgradeAvailabilityStatus, DateTimeOffset? upgradeApplicableOn, string upgradeUnavailabilityReason, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal QuotaTierUpgradeEligibilityInfo(string nextTierName, QuotaTierUpgradeAvailabilityStatus? upgradeAvailabilityStatus, DateTimeOffset? upgradeApplicableOn, string upgradeUnavailabilityReason, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NextTierName = nextTierName;
             UpgradeAvailabilityStatus = upgradeAvailabilityStatus;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public string NextTierName { get; }
 
         /// <summary> Specifies whether an upgrade to the next quota tier is available. </summary>
-        public UpgradeAvailabilityStatus? UpgradeAvailabilityStatus { get; }
+        public QuotaTierUpgradeAvailabilityStatus? UpgradeAvailabilityStatus { get; }
 
         /// <summary> The date after which the current tier will be upgraded to the next tier if the TierUpgradePolicy is "OnceUpgradeIsAvailable" (UTC). </summary>
         public DateTimeOffset? UpgradeApplicableOn { get; }

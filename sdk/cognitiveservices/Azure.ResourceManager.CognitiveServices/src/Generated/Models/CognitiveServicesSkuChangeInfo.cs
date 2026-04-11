@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Initializes a new instance of <see cref="CognitiveServicesSkuChangeInfo"/>. </summary>
         /// <param name="countOfDowngrades"> Gets the count of downgrades. </param>
         /// <param name="countOfUpgradesAfterDowngrades"> Gets the count of upgrades after downgrades. </param>
-        /// <param name="lastChangeDate"> Gets the last change date. </param>
+        /// <param name="lastChangedOn"> Gets the last change date. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CognitiveServicesSkuChangeInfo(float? countOfDowngrades, float? countOfUpgradesAfterDowngrades, string lastChangeDate, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CognitiveServicesSkuChangeInfo(float? countOfDowngrades, float? countOfUpgradesAfterDowngrades, DateTimeOffset? lastChangedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CountOfDowngrades = countOfDowngrades;
             CountOfUpgradesAfterDowngrades = countOfUpgradesAfterDowngrades;
-            LastChangeDate = lastChangeDate;
+            LastChangedOn = lastChangedOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -41,6 +41,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public float? CountOfUpgradesAfterDowngrades { get; }
 
         /// <summary> Gets the last change date. </summary>
-        public string LastChangeDate { get; }
+        public DateTimeOffset? LastChangedOn { get; }
     }
 }

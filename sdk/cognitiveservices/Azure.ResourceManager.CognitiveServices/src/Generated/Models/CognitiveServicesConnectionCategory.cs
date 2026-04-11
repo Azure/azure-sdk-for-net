@@ -21,11 +21,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         private const string S3Value = "S3";
         private const string SnowflakeValue = "Snowflake";
         private const string AzureKeyVaultValue = "AzureKeyVault";
-        private const string AzureSqlDbValue = "AzureSqlDb";
+        private const string AzureSqlDBValue = "AzureSqlDb";
         private const string AzureSynapseAnalyticsValue = "AzureSynapseAnalytics";
-        private const string AzureMySqlDbValue = "AzureMySqlDb";
-        private const string AzurePostgresDbValue = "AzurePostgresDb";
-        private const string ADLSGen2Value = "ADLSGen2";
+        private const string AzureMySqlDBValue = "AzureMySqlDb";
+        private const string AzurePostgresDBValue = "AzurePostgresDb";
+        private const string AdlsGen2Value = "ADLSGen2";
         private const string AzureContainerAppEnvironmentValue = "AzureContainerAppEnvironment";
         private const string RedisValue = "Redis";
         private const string ApiKeyValue = "ApiKey";
@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         private const string AzureBlobValue = "AzureBlob";
         private const string AzureStorageAccountValue = "AzureStorageAccount";
         private const string AzureOneLakeValue = "AzureOneLake";
-        private const string CosmosDbValue = "CosmosDb";
-        private const string CosmosDbMongoDbApiValue = "CosmosDbMongoDbApi";
+        private const string CosmosDBValue = "CosmosDb";
+        private const string CosmosDBMongoDBApiValue = "CosmosDbMongoDbApi";
         private const string AzureDataExplorerValue = "AzureDataExplorer";
-        private const string AzureMariaDbValue = "AzureMariaDb";
+        private const string AzureMariaDBValue = "AzureMariaDb";
         private const string AzureDatabricksDeltaLakeValue = "AzureDatabricksDeltaLake";
-        private const string AzureSqlMiValue = "AzureSqlMi";
+        private const string AzureSqlMIValue = "AzureSqlMi";
         private const string AzureTableStorageValue = "AzureTableStorage";
         private const string AmazonRdsForOracleValue = "AmazonRdsForOracle";
         private const string AmazonRdsForSqlServerValue = "AmazonRdsForSqlServer";
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         private const string HiveValue = "Hive";
         private const string ImpalaValue = "Impala";
         private const string InformixValue = "Informix";
-        private const string MariaDbValue = "MariaDb";
+        private const string MariaDBValue = "MariaDb";
         private const string MicrosoftAccessValue = "MicrosoftAccess";
         private const string MySqlValue = "MySql";
         private const string NetezzaValue = "Netezza";
@@ -76,8 +76,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         private const string DatabricksValue = "Databricks";
         private const string CassandraValue = "Cassandra";
         private const string CouchbaseValue = "Couchbase";
-        private const string MongoDbV2Value = "MongoDbV2";
-        private const string MongoDbAtlasValue = "MongoDbAtlas";
+        private const string MongoDBV2Value = "MongoDbV2";
+        private const string MongoDBAtlasValue = "MongoDbAtlas";
         private const string AmazonS3CompatibleValue = "AmazonS3Compatible";
         private const string FileServerValue = "FileServer";
         private const string FtpServerValue = "FtpServer";
@@ -164,20 +164,20 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Gets the AzureKeyVault. </summary>
         public static CognitiveServicesConnectionCategory AzureKeyVault { get; } = new CognitiveServicesConnectionCategory(AzureKeyVaultValue);
 
-        /// <summary> Gets the AzureSqlDb. </summary>
-        public static CognitiveServicesConnectionCategory AzureSqlDb { get; } = new CognitiveServicesConnectionCategory(AzureSqlDbValue);
+        /// <summary> Gets the AzureSqlDB. </summary>
+        public static CognitiveServicesConnectionCategory AzureSqlDB { get; } = new CognitiveServicesConnectionCategory(AzureSqlDBValue);
 
         /// <summary> Gets the AzureSynapseAnalytics. </summary>
         public static CognitiveServicesConnectionCategory AzureSynapseAnalytics { get; } = new CognitiveServicesConnectionCategory(AzureSynapseAnalyticsValue);
 
-        /// <summary> Gets the AzureMySqlDb. </summary>
-        public static CognitiveServicesConnectionCategory AzureMySqlDb { get; } = new CognitiveServicesConnectionCategory(AzureMySqlDbValue);
+        /// <summary> Gets the AzureMySqlDB. </summary>
+        public static CognitiveServicesConnectionCategory AzureMySqlDB { get; } = new CognitiveServicesConnectionCategory(AzureMySqlDBValue);
 
-        /// <summary> Gets the AzurePostgresDb. </summary>
-        public static CognitiveServicesConnectionCategory AzurePostgresDb { get; } = new CognitiveServicesConnectionCategory(AzurePostgresDbValue);
+        /// <summary> Gets the AzurePostgresDB. </summary>
+        public static CognitiveServicesConnectionCategory AzurePostgresDB { get; } = new CognitiveServicesConnectionCategory(AzurePostgresDBValue);
 
-        /// <summary> Gets the ADLSGen2. </summary>
-        public static CognitiveServicesConnectionCategory ADLSGen2 { get; } = new CognitiveServicesConnectionCategory(ADLSGen2Value);
+        /// <summary> Gets the AdlsGen2. </summary>
+        public static CognitiveServicesConnectionCategory AdlsGen2 { get; } = new CognitiveServicesConnectionCategory(AdlsGen2Value);
 
         /// <summary> Gets the AzureContainerAppEnvironment. </summary>
         public static CognitiveServicesConnectionCategory AzureContainerAppEnvironment { get; } = new CognitiveServicesConnectionCategory(AzureContainerAppEnvironmentValue);
@@ -212,23 +212,23 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Gets the AzureOneLake. </summary>
         public static CognitiveServicesConnectionCategory AzureOneLake { get; } = new CognitiveServicesConnectionCategory(AzureOneLakeValue);
 
-        /// <summary> Gets the CosmosDb. </summary>
-        public static CognitiveServicesConnectionCategory CosmosDb { get; } = new CognitiveServicesConnectionCategory(CosmosDbValue);
+        /// <summary> Gets the CosmosDB. </summary>
+        public static CognitiveServicesConnectionCategory CosmosDB { get; } = new CognitiveServicesConnectionCategory(CosmosDBValue);
 
-        /// <summary> Gets the CosmosDbMongoDbApi. </summary>
-        public static CognitiveServicesConnectionCategory CosmosDbMongoDbApi { get; } = new CognitiveServicesConnectionCategory(CosmosDbMongoDbApiValue);
+        /// <summary> Gets the CosmosDBMongoDBApi. </summary>
+        public static CognitiveServicesConnectionCategory CosmosDBMongoDBApi { get; } = new CognitiveServicesConnectionCategory(CosmosDBMongoDBApiValue);
 
         /// <summary> Gets the AzureDataExplorer. </summary>
         public static CognitiveServicesConnectionCategory AzureDataExplorer { get; } = new CognitiveServicesConnectionCategory(AzureDataExplorerValue);
 
-        /// <summary> Gets the AzureMariaDb. </summary>
-        public static CognitiveServicesConnectionCategory AzureMariaDb { get; } = new CognitiveServicesConnectionCategory(AzureMariaDbValue);
+        /// <summary> Gets the AzureMariaDB. </summary>
+        public static CognitiveServicesConnectionCategory AzureMariaDB { get; } = new CognitiveServicesConnectionCategory(AzureMariaDBValue);
 
         /// <summary> Gets the AzureDatabricksDeltaLake. </summary>
         public static CognitiveServicesConnectionCategory AzureDatabricksDeltaLake { get; } = new CognitiveServicesConnectionCategory(AzureDatabricksDeltaLakeValue);
 
-        /// <summary> Gets the AzureSqlMi. </summary>
-        public static CognitiveServicesConnectionCategory AzureSqlMi { get; } = new CognitiveServicesConnectionCategory(AzureSqlMiValue);
+        /// <summary> Gets the AzureSqlMI. </summary>
+        public static CognitiveServicesConnectionCategory AzureSqlMI { get; } = new CognitiveServicesConnectionCategory(AzureSqlMIValue);
 
         /// <summary> Gets the AzureTableStorage. </summary>
         public static CognitiveServicesConnectionCategory AzureTableStorage { get; } = new CognitiveServicesConnectionCategory(AzureTableStorageValue);
@@ -266,8 +266,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Gets the Informix. </summary>
         public static CognitiveServicesConnectionCategory Informix { get; } = new CognitiveServicesConnectionCategory(InformixValue);
 
-        /// <summary> Gets the MariaDb. </summary>
-        public static CognitiveServicesConnectionCategory MariaDb { get; } = new CognitiveServicesConnectionCategory(MariaDbValue);
+        /// <summary> Gets the MariaDB. </summary>
+        public static CognitiveServicesConnectionCategory MariaDB { get; } = new CognitiveServicesConnectionCategory(MariaDBValue);
 
         /// <summary> Gets the MicrosoftAccess. </summary>
         public static CognitiveServicesConnectionCategory MicrosoftAccess { get; } = new CognitiveServicesConnectionCategory(MicrosoftAccessValue);
@@ -329,11 +329,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Gets the Couchbase. </summary>
         public static CognitiveServicesConnectionCategory Couchbase { get; } = new CognitiveServicesConnectionCategory(CouchbaseValue);
 
-        /// <summary> Gets the MongoDbV2. </summary>
-        public static CognitiveServicesConnectionCategory MongoDbV2 { get; } = new CognitiveServicesConnectionCategory(MongoDbV2Value);
+        /// <summary> Gets the MongoDBV2. </summary>
+        public static CognitiveServicesConnectionCategory MongoDBV2 { get; } = new CognitiveServicesConnectionCategory(MongoDBV2Value);
 
-        /// <summary> Gets the MongoDbAtlas. </summary>
-        public static CognitiveServicesConnectionCategory MongoDbAtlas { get; } = new CognitiveServicesConnectionCategory(MongoDbAtlasValue);
+        /// <summary> Gets the MongoDBAtlas. </summary>
+        public static CognitiveServicesConnectionCategory MongoDBAtlas { get; } = new CognitiveServicesConnectionCategory(MongoDBAtlasValue);
 
         /// <summary> Gets the AmazonS3Compatible. </summary>
         public static CognitiveServicesConnectionCategory AmazonS3Compatible { get; } = new CognitiveServicesConnectionCategory(AmazonS3CompatibleValue);

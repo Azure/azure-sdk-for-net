@@ -25,15 +25,15 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="isSubdomainAvailable"> Indicates the given SKU is available or not. </param>
         /// <param name="reason"> Reason why the SKU is not available. </param>
         /// <param name="subdomainName"> The subdomain name to use. </param>
-        /// <param name="type"> The Type of the resource. </param>
+        /// <param name="domainAvailabilityType"> The Type of the resource. </param>
         /// <param name="kind"> The kind (type) of cognitive service account. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CognitiveServicesDomainAvailabilityList(bool? isSubdomainAvailable, string reason, string subdomainName, string @type, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CognitiveServicesDomainAvailabilityList(bool? isSubdomainAvailable, string reason, string subdomainName, string domainAvailabilityType, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsSubdomainAvailable = isSubdomainAvailable;
             Reason = reason;
             SubdomainName = subdomainName;
-            Type = @type;
+            DomainAvailabilityType = domainAvailabilityType;
             Kind = kind;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public string SubdomainName { get; }
 
         /// <summary> The Type of the resource. </summary>
-        public string Type { get; }
+        public string DomainAvailabilityType { get; }
 
         /// <summary> The kind (type) of cognitive service account. </summary>
         public string Kind { get; }

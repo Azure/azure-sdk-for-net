@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
@@ -89,10 +90,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("qnaAzureSearchEndpointId"u8);
                 writer.WriteStringValue(QnaAzureSearchEndpointId);
             }
-            if (Optional.IsDefined(StatisticsEnabled))
+            if (Optional.IsDefined(EnableStatistics))
             {
                 writer.WritePropertyName("statisticsEnabled"u8);
-                writer.WriteBooleanValue(StatisticsEnabled.Value);
+                writer.WriteBooleanValue(EnableStatistics.Value);
             }
             if (Optional.IsDefined(EventHubConnectionString))
             {
@@ -107,12 +108,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (Optional.IsDefined(AadClientId))
             {
                 writer.WritePropertyName("aadClientId"u8);
-                writer.WriteStringValue(AadClientId);
+                writer.WriteStringValue(AadClientId.Value);
             }
             if (Optional.IsDefined(AadTenantId))
             {
                 writer.WritePropertyName("aadTenantId"u8);
-                writer.WriteStringValue(AadTenantId);
+                writer.WriteStringValue(AadTenantId.Value);
             }
             if (Optional.IsDefined(SuperUser))
             {
@@ -165,12 +166,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
             string qnaRuntimeEndpoint = default;
             string qnaAzureSearchEndpointKey = default;
-            string qnaAzureSearchEndpointId = default;
-            bool? statisticsEnabled = default;
+            ResourceIdentifier qnaAzureSearchEndpointId = default;
+            bool? enableStatistics = default;
             string eventHubConnectionString = default;
             string storageAccountConnectionString = default;
-            string aadClientId = default;
-            string aadTenantId = default;
+            Guid? aadClientId = default;
+            Guid? aadTenantId = default;
             string superUser = default;
             string websiteName = default;
             IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -188,7 +189,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 if (prop.NameEquals("qnaAzureSearchEndpointId"u8))
                 {
-                    qnaAzureSearchEndpointId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    qnaAzureSearchEndpointId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("statisticsEnabled"u8))
@@ -197,7 +202,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    statisticsEnabled = prop.Value.GetBoolean();
+                    enableStatistics = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("eventHubConnectionString"u8))
@@ -212,12 +217,20 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 if (prop.NameEquals("aadClientId"u8))
                 {
-                    aadClientId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    aadClientId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("aadTenantId"u8))
                 {
-                    aadTenantId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    aadTenantId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("superUser"u8))
@@ -236,7 +249,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 qnaRuntimeEndpoint,
                 qnaAzureSearchEndpointKey,
                 qnaAzureSearchEndpointId,
-                statisticsEnabled,
+                enableStatistics,
                 eventHubConnectionString,
                 storageAccountConnectionString,
                 aadClientId,

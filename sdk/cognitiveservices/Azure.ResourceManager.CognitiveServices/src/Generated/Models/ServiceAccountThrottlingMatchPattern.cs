@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ServiceAccountThrottlingMatchPattern"/>. </summary>
-        internal ServiceAccountThrottlingMatchPattern()
+        public ServiceAccountThrottlingMatchPattern()
         {
         }
 
@@ -32,10 +32,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the Path. </summary>
-        public string Path { get; }
+        /// <summary> Gets or sets the Path. </summary>
+        public string Path { get; set; }
 
-        /// <summary> Gets the Method. </summary>
-        public string Method { get; }
+        /// <summary> Gets or sets the Method. </summary>
+        public string Method { get; set; }
     }
 }

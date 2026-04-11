@@ -17,30 +17,30 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ServiceAccountModelDeprecationInfo"/>. </summary>
-        internal ServiceAccountModelDeprecationInfo()
+        public ServiceAccountModelDeprecationInfo()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceAccountModelDeprecationInfo"/>. </summary>
-        /// <param name="fineTune"> The datetime of deprecation of the fineTune Model. </param>
-        /// <param name="inference"> The datetime of deprecation of the inference Model. </param>
+        /// <param name="fineTuneOn"> The datetime of deprecation of the fineTune Model. </param>
+        /// <param name="inferenceOn"> The datetime of deprecation of the inference Model. </param>
         /// <param name="deprecationStatus"> Indicates whether the deprecation date is a confirmed planned end-of-life date or an estimated deprecation date. When 'Planned', the deprecation date represents a confirmed and communicated model end-of-life date. When 'Tentative', the deprecation date is an estimated timeline that may be subject to change. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceAccountModelDeprecationInfo(string fineTune, string inference, DeprecationStatus? deprecationStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ServiceAccountModelDeprecationInfo(DateTimeOffset? fineTuneOn, DateTimeOffset? inferenceOn, CognitiveServicesDeprecationStatus? deprecationStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            FineTune = fineTune;
-            Inference = inference;
+            FineTuneOn = fineTuneOn;
+            InferenceOn = inferenceOn;
             DeprecationStatus = deprecationStatus;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The datetime of deprecation of the fineTune Model. </summary>
-        public string FineTune { get; }
+        public DateTimeOffset? FineTuneOn { get; set; }
 
         /// <summary> The datetime of deprecation of the inference Model. </summary>
-        public string Inference { get; }
+        public DateTimeOffset? InferenceOn { get; set; }
 
         /// <summary> Indicates whether the deprecation date is a confirmed planned end-of-life date or an estimated deprecation date. When 'Planned', the deprecation date represents a confirmed and communicated model end-of-life date. When 'Tentative', the deprecation date is an estimated timeline that may be subject to change. </summary>
-        public DeprecationStatus? DeprecationStatus { get; }
+        public CognitiveServicesDeprecationStatus? DeprecationStatus { get; set; }
     }
 }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ModelSkuCapacityProperties"/>. </summary>
-        internal ModelSkuCapacityProperties()
+        public ModelSkuCapacityProperties()
         {
         }
 
@@ -37,15 +37,15 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Properties of Cognitive Services account deployment model. </summary>
-        public CognitiveServicesAccountDeploymentModel Model { get; }
+        public CognitiveServicesAccountDeploymentModel Model { get; set; }
 
-        /// <summary> Gets the SkuName. </summary>
-        public string SkuName { get; }
+        /// <summary> Gets or sets the SkuName. </summary>
+        public string SkuName { get; set; }
 
         /// <summary> The available capacity for deployment with this model and sku. </summary>
-        public float? AvailableCapacity { get; }
+        public float? AvailableCapacity { get; set; }
 
         /// <summary> The available capacity for deployment with a fine-tune version of this model and sku. </summary>
-        public float? AvailableFinetuneCapacity { get; }
+        public float? AvailableFinetuneCapacity { get; set; }
     }
 }

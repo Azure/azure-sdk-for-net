@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CognitiveServicesPrivateLinkResource"/>. </summary>
-        internal CognitiveServicesPrivateLinkResource()
+        public CognitiveServicesPrivateLinkResource()
         {
         }
 
@@ -37,6 +37,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Resource properties. </summary>
-        public CognitiveServicesPrivateLinkResourceProperties Properties { get; }
+        public CognitiveServicesPrivateLinkResourceProperties Properties { get; set; }
     }
 }

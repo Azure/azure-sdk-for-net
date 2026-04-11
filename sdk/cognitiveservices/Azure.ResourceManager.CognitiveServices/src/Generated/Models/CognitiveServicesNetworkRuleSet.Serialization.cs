@@ -84,11 +84,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("bypass"u8);
                 writer.WriteStringValue(Bypass.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(IpRules))
+            if (Optional.IsCollectionDefined(IPRules))
             {
                 writer.WritePropertyName("ipRules"u8);
                 writer.WriteStartArray();
-                foreach (CognitiveServicesIPRule item in IpRules)
+                foreach (CognitiveServicesIPRule item in IPRules)
                 {
                     writer.WriteObjectValue(item, options);
                 }

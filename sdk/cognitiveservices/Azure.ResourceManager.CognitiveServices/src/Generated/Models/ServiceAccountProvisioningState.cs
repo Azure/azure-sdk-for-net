@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         private const string FailedValue = "Failed";
         private const string SucceededValue = "Succeeded";
         private const string CanceledValue = "Canceled";
-        private const string ResolvingDNSValue = "ResolvingDNS";
+        private const string ResolvingDnsValue = "ResolvingDNS";
 
         /// <summary> Initializes a new instance of <see cref="ServiceAccountProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Gets the Canceled. </summary>
         public static ServiceAccountProvisioningState Canceled { get; } = new ServiceAccountProvisioningState(CanceledValue);
 
-        /// <summary> Gets the ResolvingDNS. </summary>
-        public static ServiceAccountProvisioningState ResolvingDNS { get; } = new ServiceAccountProvisioningState(ResolvingDNSValue);
+        /// <summary> Gets the ResolvingDns. </summary>
+        public static ServiceAccountProvisioningState ResolvingDns { get; } = new ServiceAccountProvisioningState(ResolvingDnsValue);
 
         /// <summary> Determines if two <see cref="ServiceAccountProvisioningState"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

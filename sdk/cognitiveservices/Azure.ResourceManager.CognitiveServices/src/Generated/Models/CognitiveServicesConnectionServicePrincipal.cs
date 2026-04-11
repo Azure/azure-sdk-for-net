@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="clientSecret"></param>
         /// <param name="tenantId"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CognitiveServicesConnectionServicePrincipal(string clientId, string clientSecret, string tenantId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CognitiveServicesConnectionServicePrincipal(string clientId, string clientSecret, Guid? tenantId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ClientId = clientId;
             ClientSecret = clientSecret;
@@ -41,6 +41,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public string ClientSecret { get; set; }
 
         /// <summary> Gets or sets the TenantId. </summary>
-        public string TenantId { get; set; }
+        public Guid? TenantId { get; set; }
     }
 }

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="callRateLimit"> The call rate limit Cognitive Services account. </param>
         /// <param name="rateLimits"></param>
         /// <param name="versionUpgradeOption"> Deployment model version upgrade option. </param>
-        /// <param name="dynamicThrottlingEnabled"> If the dynamic throttling is enabled. </param>
+        /// <param name="isDynamicThrottlingEnabled"> If the dynamic throttling is enabled. </param>
         /// <param name="currentCapacity"> The current capacity. </param>
         /// <param name="capacitySettings"> Internal use only. </param>
         /// <param name="parentDeploymentName"> The name of parent deployment. </param>
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="deploymentState"> The state of the deployment. Controls whether the deployment is accepting inference requests. Use 'Running' for active deployments that process requests, or 'Paused' to temporarily stop inference while preserving the deployment configuration. </param>
         /// <param name="routing"> Routing configuration for the deployment. This property is only applicable when the deployed model is 'model-router' version 2025-11-18 or later. Allows you to select the models subset for routing and the routing mode (balanced, accuracy, cost) for routing across all supported models or the model subset. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CognitiveServicesAccountDeploymentProperties(CognitiveServicesAccountDeploymentProvisioningState? provisioningState, CognitiveServicesAccountDeploymentModel model, CognitiveServicesAccountDeploymentScaleSettings scaleSettings, IReadOnlyDictionary<string, string> capabilities, string raiPolicyName, ServiceAccountCallRateLimit callRateLimit, IReadOnlyList<ServiceAccountThrottlingRule> rateLimits, DeploymentModelVersionUpgradeOption? versionUpgradeOption, bool? dynamicThrottlingEnabled, int? currentCapacity, DeploymentCapacitySettings capacitySettings, string parentDeploymentName, string spilloverDeploymentName, ServiceTier? serviceTier, CognitiveServicesDeploymentState? deploymentState, DeploymentRouting routing, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CognitiveServicesAccountDeploymentProperties(CognitiveServicesAccountDeploymentProvisioningState? provisioningState, CognitiveServicesAccountDeploymentModel model, CognitiveServicesAccountDeploymentScaleSettings scaleSettings, IReadOnlyDictionary<string, string> capabilities, string raiPolicyName, ServiceAccountCallRateLimit callRateLimit, IReadOnlyList<ServiceAccountThrottlingRule> rateLimits, DeploymentModelVersionUpgradeOption? versionUpgradeOption, bool? isDynamicThrottlingEnabled, int? currentCapacity, DeploymentCapacitySettings capacitySettings, string parentDeploymentName, string spilloverDeploymentName, CognitiveServicesDeploymentServiceTier? serviceTier, CognitiveServicesDeploymentState? deploymentState, CognitiveServicesDeploymentRouting routing, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             Model = model;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             CallRateLimit = callRateLimit;
             RateLimits = rateLimits;
             VersionUpgradeOption = versionUpgradeOption;
-            DynamicThrottlingEnabled = dynamicThrottlingEnabled;
+            IsDynamicThrottlingEnabled = isDynamicThrottlingEnabled;
             CurrentCapacity = currentCapacity;
             CapacitySettings = capacitySettings;
             ParentDeploymentName = parentDeploymentName;
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public DeploymentModelVersionUpgradeOption? VersionUpgradeOption { get; set; }
 
         /// <summary> If the dynamic throttling is enabled. </summary>
-        public bool? DynamicThrottlingEnabled { get; }
+        public bool? IsDynamicThrottlingEnabled { get; }
 
         /// <summary> The current capacity. </summary>
         public int? CurrentCapacity { get; set; }
@@ -103,12 +103,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public string SpilloverDeploymentName { get; set; }
 
         /// <summary> The service tier for the deployment. Determines the pricing and performance level for request processing. Use 'Default' for standard pricing or 'Priority' for higher-priority processing with premium pricing. Note: Pause operations are only supported on Standard, DataZoneStandard, and GlobalStandard SKUs. </summary>
-        public ServiceTier? ServiceTier { get; set; }
+        public CognitiveServicesDeploymentServiceTier? ServiceTier { get; set; }
 
         /// <summary> The state of the deployment. Controls whether the deployment is accepting inference requests. Use 'Running' for active deployments that process requests, or 'Paused' to temporarily stop inference while preserving the deployment configuration. </summary>
         public CognitiveServicesDeploymentState? DeploymentState { get; set; }
 
         /// <summary> Routing configuration for the deployment. This property is only applicable when the deployed model is 'model-router' version 2025-11-18 or later. Allows you to select the models subset for routing and the routing mode (balanced, accuracy, cost) for routing across all supported models or the model subset. </summary>
-        public DeploymentRouting Routing { get; set; }
+        public CognitiveServicesDeploymentRouting Routing { get; set; }
     }
 }

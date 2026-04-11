@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             writer.WritePropertyName("subdomainName"u8);
             writer.WriteStringValue(SubdomainName);
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type);
+            writer.WriteStringValue(ResourceType);
             if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 return null;
             }
             string subdomainName = default;
-            string @type = default;
+            ResourceType resourceType = default;
             string kind = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    resourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("kind"u8))
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CognitiveServicesDomainAvailabilityContent(subdomainName, @type, kind, additionalBinaryDataProperties);
+            return new CognitiveServicesDomainAvailabilityContent(subdomainName, resourceType, kind, additionalBinaryDataProperties);
         }
     }
 }

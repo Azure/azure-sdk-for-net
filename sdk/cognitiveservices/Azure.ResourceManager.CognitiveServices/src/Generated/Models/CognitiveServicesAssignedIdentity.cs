@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="principalId"> The principal ID of the identity. </param>
         /// <param name="tenantId"> The tenant ID of the identity. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientId"/>, <paramref name="principalId"/> or <paramref name="tenantId"/> is null. </exception>
-        public CognitiveServicesAssignedIdentity(IdentityKind kind, IdentityManagementType @type, string clientId, string principalId, string tenantId)
+        public CognitiveServicesAssignedIdentity(CognitiveServicesIdentityKind kind, CognitiveServicesIdentityManagementType @type, string clientId, string principalId, string tenantId)
         {
             Argument.AssertNotNull(clientId, nameof(clientId));
             Argument.AssertNotNull(principalId, nameof(principalId));
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="subject"> The subject of this identity assignment. </param>
         /// <param name="provisioningState"> Represents the provisioning state of an identity resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CognitiveServicesAssignedIdentity(IdentityKind kind, IdentityManagementType @type, string clientId, string principalId, string tenantId, string subject, IdentityProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CognitiveServicesAssignedIdentity(CognitiveServicesIdentityKind kind, CognitiveServicesIdentityManagementType @type, string clientId, string principalId, string tenantId, string subject, CognitiveServicesIdentityProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             Type = @type;
@@ -59,10 +59,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Specifies the kind of Entra identity described by this object. </summary>
-        public IdentityKind Kind { get; set; }
+        public CognitiveServicesIdentityKind Kind { get; set; }
 
         /// <summary> Enumeration of identity types, from the perspective of management. </summary>
-        public IdentityManagementType Type { get; set; }
+        public CognitiveServicesIdentityManagementType Type { get; set; }
 
         /// <summary> The client ID of the identity. </summary>
         public string ClientId { get; set; }
@@ -77,6 +77,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public string Subject { get; set; }
 
         /// <summary> Represents the provisioning state of an identity resource. </summary>
-        public IdentityProvisioningState? ProvisioningState { get; }
+        public CognitiveServicesIdentityProvisioningState? ProvisioningState { get; }
     }
 }

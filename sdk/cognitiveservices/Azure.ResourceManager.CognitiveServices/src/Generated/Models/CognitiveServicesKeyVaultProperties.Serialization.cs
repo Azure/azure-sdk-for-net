@@ -87,12 +87,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (Optional.IsDefined(KeyVaultUri))
             {
                 writer.WritePropertyName("keyVaultUri"u8);
-                writer.WriteStringValue(KeyVaultUri);
+                writer.WriteStringValue(KeyVaultUri.AbsoluteUri);
             }
             if (Optional.IsDefined(IdentityClientId))
             {
                 writer.WritePropertyName("identityClientId"u8);
-                writer.WriteStringValue(IdentityClientId);
+                writer.WriteStringValue(IdentityClientId.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -138,8 +138,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
             string keyName = default;
             string keyVersion = default;
-            string keyVaultUri = default;
-            string identityClientId = default;
+            Uri keyVaultUri = default;
+            Guid? identityClientId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -155,12 +155,20 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 if (prop.NameEquals("keyVaultUri"u8))
                 {
-                    keyVaultUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    keyVaultUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("identityClientId"u8))
                 {
-                    identityClientId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identityClientId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// which requires UsernamePassword
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CognitiveServicesConnectionOAuth2(Uri authUri, Guid? clientId, string clientSecret, string developerToken, string password, string refreshToken, string tenantId, string username, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CognitiveServicesConnectionOAuth2(Uri authUri, Guid? clientId, string clientSecret, string developerToken, string password, string refreshToken, Guid? tenantId, string username, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AuthUri = authUri;
             ClientId = clientId;
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public string RefreshToken { get; set; }
 
         /// <summary> Required by QuickBooks and Xero connection categories. </summary>
-        public string TenantId { get; set; }
+        public Guid? TenantId { get; set; }
 
         /// <summary>
         /// Concur, ServiceNow auth server AccessToken grant type is 'Password'

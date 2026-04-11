@@ -74,15 +74,15 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 throw new FormatException($"The model {nameof(ServiceAccountModelDeprecationInfo)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(FineTune))
+            if (Optional.IsDefined(FineTuneOn))
             {
                 writer.WritePropertyName("fineTune"u8);
-                writer.WriteStringValue(FineTune);
+                writer.WriteStringValue(FineTuneOn.Value, "O");
             }
-            if (Optional.IsDefined(Inference))
+            if (Optional.IsDefined(InferenceOn))
             {
                 writer.WritePropertyName("inference"u8);
-                writer.WriteStringValue(Inference);
+                writer.WriteStringValue(InferenceOn.Value, "O");
             }
             if (Optional.IsDefined(DeprecationStatus))
             {
@@ -131,20 +131,28 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            string fineTune = default;
-            string inference = default;
-            DeprecationStatus? deprecationStatus = default;
+            DateTimeOffset? fineTuneOn = default;
+            DateTimeOffset? inferenceOn = default;
+            CognitiveServicesDeprecationStatus? deprecationStatus = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("fineTune"u8))
                 {
-                    fineTune = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    fineTuneOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("inference"u8))
                 {
-                    inference = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    inferenceOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("deprecationStatus"u8))
@@ -153,7 +161,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    deprecationStatus = new DeprecationStatus(prop.Value.GetString());
+                    deprecationStatus = new CognitiveServicesDeprecationStatus(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -161,7 +169,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ServiceAccountModelDeprecationInfo(fineTune, inference, deprecationStatus, additionalBinaryDataProperties);
+            return new ServiceAccountModelDeprecationInfo(fineTuneOn, inferenceOn, deprecationStatus, additionalBinaryDataProperties);
         }
     }
 }

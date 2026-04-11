@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ModelCapacityListResultValueItem"/>. </summary>
-        internal ModelCapacityListResultValueItem()
+        public ModelCapacityListResultValueItem()
         {
         }
 
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="location"> The location of the Model Sku Capacity. </param>
         /// <param name="properties"> Cognitive Services account ModelSkuCapacity. </param>
-        internal ModelCapacityListResultValueItem(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, string location, ModelSkuCapacityProperties properties) : base(id, name, resourceType, systemData)
+        internal ModelCapacityListResultValueItem(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation? location, ModelSkuCapacityProperties properties) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Location = location;
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> The location of the Model Sku Capacity. </summary>
-        public string Location { get; }
+        public AzureLocation? Location { get; set; }
 
         /// <summary> Cognitive Services account ModelSkuCapacity. </summary>
-        public ModelSkuCapacityProperties Properties { get; }
+        public ModelSkuCapacityProperties Properties { get; set; }
     }
 }

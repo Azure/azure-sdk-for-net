@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,15 +15,16 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.CognitiveServices
 {
     /// <summary>
     /// A class representing a collection of <see cref="CognitiveServicesCommitmentPlanResource"/> and their operations.
-    /// Each <see cref="CognitiveServicesCommitmentPlanResource"/> in the collection will belong to the same instance of <see cref="CognitiveServicesAccountResource"/>.
-    /// To get a <see cref="CognitiveServicesCommitmentPlanCollection"/> instance call the GetCognitiveServicesCommitmentPlans method from an instance of <see cref="CognitiveServicesAccountResource"/>.
+    /// Each <see cref="CognitiveServicesCommitmentPlanResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="CognitiveServicesCommitmentPlanCollection"/> instance call the GetCognitiveServicesCommitmentPlans method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
-    public partial class CognitiveServicesCommitmentPlanCollection : ArmCollection
+    public partial class CognitiveServicesCommitmentPlanCollection : ArmCollection, IEnumerable<CognitiveServicesCommitmentPlanResource>, IAsyncEnumerable<CognitiveServicesCommitmentPlanResource>
     {
         private readonly ClientDiagnostics _commitmentPlanOperationGroupClientDiagnostics;
         private readonly CommitmentPlanOperationGroup _commitmentPlanOperationGroupRestClient;
@@ -46,9 +49,9 @@ namespace Azure.ResourceManager.CognitiveServices
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != CognitiveServicesAccountResource.ResourceType)
+            if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, CognitiveServicesAccountResource.ResourceType), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -264,6 +267,62 @@ namespace Azure.ResourceManager.CognitiveServices
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Returns all the resources of a particular type belonging to a resource group
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/commitmentPlans. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CommitmentPlanOperationGroup_ListPlansByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="CognitiveServicesCommitmentPlanResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CognitiveServicesCommitmentPlanResource> GetAllAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<CommitmentPlanData, CognitiveServicesCommitmentPlanResource>(new CommitmentPlanOperationGroupGetPlansByResourceGroupAsyncCollectionResultOfT(_commitmentPlanOperationGroupRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "CognitiveServicesCommitmentPlanCollection.GetAll"), data => new CognitiveServicesCommitmentPlanResource(Client, data));
+        }
+
+        /// <summary>
+        /// Returns all the resources of a particular type belonging to a resource group
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/commitmentPlans. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CommitmentPlanOperationGroup_ListPlansByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="CognitiveServicesCommitmentPlanResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CognitiveServicesCommitmentPlanResource> GetAll(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<CommitmentPlanData, CognitiveServicesCommitmentPlanResource>(new CommitmentPlanOperationGroupGetPlansByResourceGroupCollectionResultOfT(_commitmentPlanOperationGroupRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "CognitiveServicesCommitmentPlanCollection.GetAll"), data => new CognitiveServicesCommitmentPlanResource(Client, data));
         }
 
         /// <summary>
@@ -500,6 +559,22 @@ namespace Azure.ResourceManager.CognitiveServices
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        IEnumerator<CognitiveServicesCommitmentPlanResource> IEnumerable<CognitiveServicesCommitmentPlanResource>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        IAsyncEnumerator<CognitiveServicesCommitmentPlanResource> IAsyncEnumerable<CognitiveServicesCommitmentPlanResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

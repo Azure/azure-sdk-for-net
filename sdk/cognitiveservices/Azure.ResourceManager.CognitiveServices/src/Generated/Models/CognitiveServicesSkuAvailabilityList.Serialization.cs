@@ -79,20 +79,20 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(SkuAvailabilityType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type);
+                writer.WriteStringValue(SkuAvailabilityType);
             }
             if (Optional.IsDefined(SkuName))
             {
                 writer.WritePropertyName("skuName"u8);
                 writer.WriteStringValue(SkuName);
             }
-            if (Optional.IsDefined(SkuAvailable))
+            if (Optional.IsDefined(IsSkuAvailable))
             {
                 writer.WritePropertyName("skuAvailable"u8);
-                writer.WriteBooleanValue(SkuAvailable.Value);
+                writer.WriteBooleanValue(IsSkuAvailable.Value);
             }
             if (Optional.IsDefined(Reason))
             {
@@ -147,9 +147,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 return null;
             }
             string kind = default;
-            string @type = default;
+            string skuAvailabilityType = default;
             string skuName = default;
-            bool? skuAvailable = default;
+            bool? isSkuAvailable = default;
             string reason = default;
             string message = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    skuAvailabilityType = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("skuName"u8))
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    skuAvailable = prop.Value.GetBoolean();
+                    isSkuAvailable = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("reason"u8))
@@ -196,9 +196,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
             return new CognitiveServicesSkuAvailabilityList(
                 kind,
-                @type,
+                skuAvailabilityType,
                 skuName,
-                skuAvailable,
+                isSkuAvailable,
                 reason,
                 message,
                 additionalBinaryDataProperties);

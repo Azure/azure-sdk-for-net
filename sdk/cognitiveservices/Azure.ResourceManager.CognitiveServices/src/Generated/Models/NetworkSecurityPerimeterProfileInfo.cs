@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterProfileInfo"/>. </summary>
-        internal NetworkSecurityPerimeterProfileInfo()
+        public NetworkSecurityPerimeterProfileInfo()
         {
             AccessRules = new ChangeTrackingList<NetworkSecurityPerimeterAccessRule>();
             EnabledLogCategories = new ChangeTrackingList<string>();
@@ -42,16 +42,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Name of the resource profile. </summary>
-        public string Name { get; }
+        public string Name { get; set; }
 
         /// <summary> Access rules version of the resource profile. </summary>
-        public long? AccessRulesVersion { get; }
+        public long? AccessRulesVersion { get; set; }
 
         /// <summary> Gets the AccessRules. </summary>
         public IList<NetworkSecurityPerimeterAccessRule> AccessRules { get; }
 
         /// <summary> Current diagnostic settings version. </summary>
-        public long? DiagnosticSettingsVersion { get; }
+        public long? DiagnosticSettingsVersion { get; set; }
 
         /// <summary> List of enabled log categories. </summary>
         public IList<string> EnabledLogCategories { get; }

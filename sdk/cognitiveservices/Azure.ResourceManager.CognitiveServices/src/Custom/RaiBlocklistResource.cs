@@ -45,12 +45,12 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="raiBlocklistItems"> Properties describing the custom blocklist items. </param>
+        /// <param name="content"> Properties describing the custom blocklist items. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="raiBlocklistItems"/> is null. </exception>
-        public virtual async Task<Response<RaiBlocklistResource>> BatchAddRaiBlocklistItemAsync(IEnumerable<RaiBlocklistItemBulkContent> raiBlocklistItems, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<RaiBlocklistResource>> BatchAddRaiBlocklistItemAsync(IEnumerable<RaiBlocklistItemBulkContent> content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(raiBlocklistItems, nameof(raiBlocklistItems));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _raiBlocklistsClientDiagnostics.CreateScope("RaiBlocklistResource.BatchAddRaiBlocklistItem");
             scope.Start();
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _raiBlocklistsRestClient.CreateBatchAddRaiBlocklistItemRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ToRequestContent(raiBlocklistItems), context);
+                HttpMessage message = _raiBlocklistsRestClient.CreateBatchAddRaiBlocklistItemRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RaiBlocklistData> response = Response.FromValue(RaiBlocklistData.FromResponse(result), result);
                 if (response.Value == null)
@@ -98,12 +98,12 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="raiBlocklistItems"> Properties describing the custom blocklist items. </param>
+        /// <param name="content"> Properties describing the custom blocklist items. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="raiBlocklistItems"/> is null. </exception>
-        public virtual Response<RaiBlocklistResource> BatchAddRaiBlocklistItem(IEnumerable<RaiBlocklistItemBulkContent> raiBlocklistItems, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<RaiBlocklistResource> BatchAddRaiBlocklistItem(IEnumerable<RaiBlocklistItemBulkContent> content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(raiBlocklistItems, nameof(raiBlocklistItems));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _raiBlocklistsClientDiagnostics.CreateScope("RaiBlocklistResource.BatchAddRaiBlocklistItem");
             scope.Start();
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _raiBlocklistsRestClient.CreateBatchAddRaiBlocklistItemRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ToRequestContent(raiBlocklistItems), context);
+                HttpMessage message = _raiBlocklistsRestClient.CreateBatchAddRaiBlocklistItemRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RaiBlocklistData> response = Response.FromValue(RaiBlocklistData.FromResponse(result), result);
                 if (response.Value == null)

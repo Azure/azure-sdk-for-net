@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ServiceAccountCallRateLimit"/>. </summary>
-        internal ServiceAccountCallRateLimit()
+        public ServiceAccountCallRateLimit()
         {
             Rules = new ChangeTrackingList<ServiceAccountThrottlingRule>();
         }
@@ -37,10 +37,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> The count value of Call Rate Limit. </summary>
-        public float? Count { get; }
+        public float? Count { get; set; }
 
         /// <summary> The renewal period in seconds of Call Rate Limit. </summary>
-        public float? RenewalPeriod { get; }
+        public float? RenewalPeriod { get; set; }
 
         /// <summary> Gets the Rules. </summary>
         public IReadOnlyList<ServiceAccountThrottlingRule> Rules { get; }

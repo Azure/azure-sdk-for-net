@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (Optional.IsDefined(CommitmentPlanGuid))
             {
                 writer.WritePropertyName("commitmentPlanGuid"u8);
-                writer.WriteStringValue(CommitmentPlanGuid);
+                writer.WriteStringValue(CommitmentPlanGuid.Value);
             }
             if (Optional.IsDefined(HostingModel))
             {
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 return null;
             }
             CommitmentPlanProvisioningState? provisioningState = default;
-            string commitmentPlanGuid = default;
+            Guid? commitmentPlanGuid = default;
             ServiceAccountHostingModel? hostingModel = default;
             string planType = default;
             CommitmentPeriod current = default;
@@ -194,7 +194,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 if (prop.NameEquals("commitmentPlanGuid"u8))
                 {
-                    commitmentPlanGuid = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    commitmentPlanGuid = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("hostingModel"u8))

@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("countOfUpgradesAfterDowngrades"u8);
                 writer.WriteNumberValue(CountOfUpgradesAfterDowngrades.Value);
             }
-            if (Optional.IsDefined(LastChangeDate))
+            if (Optional.IsDefined(LastChangedOn))
             {
                 writer.WritePropertyName("lastChangeDate"u8);
-                writer.WriteStringValue(LastChangeDate);
+                writer.WriteStringValue(LastChangedOn.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
             float? countOfDowngrades = default;
             float? countOfUpgradesAfterDowngrades = default;
-            string lastChangeDate = default;
+            DateTimeOffset? lastChangedOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -157,7 +157,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 if (prop.NameEquals("lastChangeDate"u8))
                 {
-                    lastChangeDate = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    lastChangedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -165,7 +169,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CognitiveServicesSkuChangeInfo(countOfDowngrades, countOfUpgradesAfterDowngrades, lastChangeDate, additionalBinaryDataProperties);
+            return new CognitiveServicesSkuChangeInfo(countOfDowngrades, countOfUpgradesAfterDowngrades, lastChangedOn, additionalBinaryDataProperties);
         }
     }
 }

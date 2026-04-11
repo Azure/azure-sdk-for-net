@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetAllRequest(string subscriptionId, AzureLocation location, string filter, RequestContext context)
+        internal HttpMessage CreateGetUsagesRequest(string subscriptionId, AzureLocation location, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.CognitiveServices
             return message;
         }
 
-        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, string subscriptionId, AzureLocation location, string filter, RequestContext context)
+        internal HttpMessage CreateNextGetUsagesRequest(Uri nextPage, string subscriptionId, AzureLocation location, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

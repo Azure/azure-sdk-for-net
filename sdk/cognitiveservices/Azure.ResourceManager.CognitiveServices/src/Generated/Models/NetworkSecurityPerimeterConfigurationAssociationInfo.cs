@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterConfigurationAssociationInfo"/>. </summary>
-        internal NetworkSecurityPerimeterConfigurationAssociationInfo()
+        public NetworkSecurityPerimeterConfigurationAssociationInfo()
         {
         }
 
@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Name of the resource association. </summary>
-        public string Name { get; }
+        public string Name { get; set; }
 
         /// <summary> Access Mode of the resource association. </summary>
-        public string AccessMode { get; }
+        public string AccessMode { get; set; }
     }
 }

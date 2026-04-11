@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="qnaRuntimeEndpoint"> (QnAMaker Only) The runtime endpoint of QnAMaker. </param>
         /// <param name="qnaAzureSearchEndpointKey"> (QnAMaker Only) The Azure Search endpoint key of QnAMaker. </param>
         /// <param name="qnaAzureSearchEndpointId"> (QnAMaker Only) The Azure Search endpoint id of QnAMaker. </param>
-        /// <param name="statisticsEnabled"> (Bing Search Only) The flag to enable statistics of Bing Search. </param>
+        /// <param name="enableStatistics"> (Bing Search Only) The flag to enable statistics of Bing Search. </param>
         /// <param name="eventHubConnectionString"> (Personalization Only) The flag to enable statistics of Bing Search. </param>
         /// <param name="storageAccountConnectionString"> (Personalization Only) The storage account connection string. </param>
         /// <param name="aadClientId"> (Metrics Advisor Only) The Azure AD Client Id (Application Id). </param>
@@ -35,12 +36,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="superUser"> (Metrics Advisor Only) The super user of Metrics Advisor. </param>
         /// <param name="websiteName"> (Metrics Advisor Only) The website name of Metrics Advisor. </param>
         /// <param name="additionalProperties"></param>
-        internal ServiceAccountApiProperties(string qnaRuntimeEndpoint, string qnaAzureSearchEndpointKey, string qnaAzureSearchEndpointId, bool? statisticsEnabled, string eventHubConnectionString, string storageAccountConnectionString, string aadClientId, string aadTenantId, string superUser, string websiteName, IDictionary<string, BinaryData> additionalProperties)
+        internal ServiceAccountApiProperties(string qnaRuntimeEndpoint, string qnaAzureSearchEndpointKey, ResourceIdentifier qnaAzureSearchEndpointId, bool? enableStatistics, string eventHubConnectionString, string storageAccountConnectionString, Guid? aadClientId, Guid? aadTenantId, string superUser, string websiteName, IDictionary<string, BinaryData> additionalProperties)
         {
             QnaRuntimeEndpoint = qnaRuntimeEndpoint;
             QnaAzureSearchEndpointKey = qnaAzureSearchEndpointKey;
             QnaAzureSearchEndpointId = qnaAzureSearchEndpointId;
-            StatisticsEnabled = statisticsEnabled;
+            EnableStatistics = enableStatistics;
             EventHubConnectionString = eventHubConnectionString;
             StorageAccountConnectionString = storageAccountConnectionString;
             AadClientId = aadClientId;
@@ -57,10 +58,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public string QnaAzureSearchEndpointKey { get; set; }
 
         /// <summary> (QnAMaker Only) The Azure Search endpoint id of QnAMaker. </summary>
-        public string QnaAzureSearchEndpointId { get; set; }
+        public ResourceIdentifier QnaAzureSearchEndpointId { get; set; }
 
         /// <summary> (Bing Search Only) The flag to enable statistics of Bing Search. </summary>
-        public bool? StatisticsEnabled { get; set; }
+        public bool? EnableStatistics { get; set; }
 
         /// <summary> (Personalization Only) The flag to enable statistics of Bing Search. </summary>
         public string EventHubConnectionString { get; set; }
@@ -69,10 +70,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public string StorageAccountConnectionString { get; set; }
 
         /// <summary> (Metrics Advisor Only) The Azure AD Client Id (Application Id). </summary>
-        public string AadClientId { get; set; }
+        public Guid? AadClientId { get; set; }
 
         /// <summary> (Metrics Advisor Only) The Azure AD Tenant Id. </summary>
-        public string AadTenantId { get; set; }
+        public Guid? AadTenantId { get; set; }
 
         /// <summary> (Metrics Advisor Only) The super user of Metrics Advisor. </summary>
         public string SuperUser { get; set; }

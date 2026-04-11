@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="last"> Cognitive Services account commitment period. </param>
         /// <param name="provisioningIssues"> The list of ProvisioningIssue. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CommitmentPlanProperties(CommitmentPlanProvisioningState? provisioningState, string commitmentPlanGuid, ServiceAccountHostingModel? hostingModel, string planType, CommitmentPeriod current, bool? autoRenew, CommitmentPeriod next, CommitmentPeriod last, IReadOnlyList<string> provisioningIssues, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CommitmentPlanProperties(CommitmentPlanProvisioningState? provisioningState, Guid? commitmentPlanGuid, ServiceAccountHostingModel? hostingModel, string planType, CommitmentPeriod current, bool? autoRenew, CommitmentPeriod next, CommitmentPeriod last, IReadOnlyList<string> provisioningIssues, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             CommitmentPlanGuid = commitmentPlanGuid;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public CommitmentPlanProvisioningState? ProvisioningState { get; }
 
         /// <summary> Commitment plan guid. </summary>
-        public string CommitmentPlanGuid { get; set; }
+        public Guid? CommitmentPlanGuid { get; set; }
 
         /// <summary> Account hosting model. </summary>
         public ServiceAccountHostingModel? HostingModel { get; set; }

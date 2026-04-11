@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RaiContentFilterProperties"/>. </summary>
-        internal RaiContentFilterProperties()
+        public RaiContentFilterProperties()
         {
         }
 
@@ -35,12 +35,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Name of Content Filter. </summary>
-        public string Name { get; }
+        public string Name { get; set; }
 
         /// <summary> If the Content Filter has multi severity levels(Low, Medium, or High). </summary>
-        public bool? IsMultiLevelFilter { get; }
+        public bool? IsMultiLevelFilter { get; set; }
 
         /// <summary> Content source to apply the Content Filters. </summary>
-        public RaiPolicyContentSource? Source { get; }
+        public RaiPolicyContentSource? Source { get; set; }
     }
 }

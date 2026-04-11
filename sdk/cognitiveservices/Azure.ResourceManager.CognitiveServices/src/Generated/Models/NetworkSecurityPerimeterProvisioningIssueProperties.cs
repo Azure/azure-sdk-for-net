@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterProvisioningIssueProperties"/>. </summary>
-        internal NetworkSecurityPerimeterProvisioningIssueProperties()
+        public NetworkSecurityPerimeterProvisioningIssueProperties()
         {
             SuggestedResourceIds = new ChangeTrackingList<ResourceIdentifier>();
             SuggestedAccessRules = new ChangeTrackingList<NetworkSecurityPerimeterAccessRule>();
@@ -43,13 +43,13 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Type of Issue. </summary>
-        public string IssueType { get; }
+        public string IssueType { get; set; }
 
         /// <summary> Severity of the issue. </summary>
-        public string Severity { get; }
+        public string Severity { get; set; }
 
         /// <summary> Description of the issue. </summary>
-        public string Description { get; }
+        public string Description { get; set; }
 
         /// <summary> IDs of resources that can be associated to the same perimeter to remediate the issue. </summary>
         public IList<ResourceIdentifier> SuggestedResourceIds { get; }

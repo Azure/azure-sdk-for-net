@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.CognitiveServices
             return message;
         }
 
-        internal HttpMessage CreatePostRequest(string subscriptionId, string resourceGroupName, string accountName, string managedNetworkName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateUpdateOutboundRulesRequest(string subscriptionId, string resourceGroupName, string accountName, string managedNetworkName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

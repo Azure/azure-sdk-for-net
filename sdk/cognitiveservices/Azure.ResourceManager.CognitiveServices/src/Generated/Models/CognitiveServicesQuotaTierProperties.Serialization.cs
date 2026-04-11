@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 return null;
             }
             string currentTierName = default;
-            TierUpgradePolicy? tierUpgradePolicy = default;
+            CognitiveServicesTierUpgradePolicy? tierUpgradePolicy = default;
             DateTimeOffset? assignmentOn = default;
             QuotaTierUpgradeEligibilityInfo tierUpgradeEligibilityInfo = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    tierUpgradePolicy = new TierUpgradePolicy(prop.Value.GetString());
+                    tierUpgradePolicy = new CognitiveServicesTierUpgradePolicy(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("assignmentDate"u8))

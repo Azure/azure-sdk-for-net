@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Initializes a new instance of <see cref="ManagedNetworkSettingsEx"/>. </summary>
         public ManagedNetworkSettingsEx()
         {
-            ChangeableIsolationModes = new ChangeTrackingList<IsolationMode>();
+            ChangeableIsolationModes = new ChangeTrackingList<CognitiveServicesIsolationMode>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedNetworkSettingsEx"/>. </summary>
@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="provisioningState"> The provisioning state of the managed network settings. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="changeableIsolationModes"></param>
-        internal ManagedNetworkSettingsEx(IsolationMode? isolationMode, string networkId, IDictionary<string, CognitiveServicesOutboundRuleBasicProperties> outboundRules, ManagedNetworkProvisionStatus status, FirewallSku? firewallSku, ManagedNetworkKind? managedNetworkKind, string firewallPublicIpAddress, ManagedNetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties, IReadOnlyList<IsolationMode> changeableIsolationModes) : base(isolationMode, networkId, outboundRules, status, firewallSku, managedNetworkKind, firewallPublicIpAddress, provisioningState, additionalBinaryDataProperties)
+        internal ManagedNetworkSettingsEx(CognitiveServicesIsolationMode? isolationMode, string networkId, IDictionary<string, CognitiveServicesOutboundRuleBasicProperties> outboundRules, CognitiveServicesManagedNetworkProvisionStatus status, CognitiveServicesFirewallSku? firewallSku, CognitiveServicesManagedNetworkKind? managedNetworkKind, string firewallPublicIpAddress, CognitiveServicesManagedNetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties, IReadOnlyList<CognitiveServicesIsolationMode> changeableIsolationModes) : base(isolationMode, networkId, outboundRules, status, firewallSku, managedNetworkKind, firewallPublicIpAddress, provisioningState, additionalBinaryDataProperties)
         {
             ChangeableIsolationModes = changeableIsolationModes;
         }
 
         /// <summary> Gets the ChangeableIsolationModes. </summary>
-        public IReadOnlyList<IsolationMode> ChangeableIsolationModes { get; }
+        public IReadOnlyList<CognitiveServicesIsolationMode> ChangeableIsolationModes { get; }
     }
 }

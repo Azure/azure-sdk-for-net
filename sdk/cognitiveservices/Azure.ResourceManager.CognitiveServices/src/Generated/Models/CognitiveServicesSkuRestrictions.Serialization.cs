@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 throw new FormatException($"The model {nameof(CognitiveServicesSkuRestrictions)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(RestrictionsType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToSerialString());
+                writer.WriteStringValue(RestrictionsType.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(Values))
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            CognitiveServicesSkuRestrictionsType? @type = default;
+            CognitiveServicesSkuRestrictionsType? restrictionsType = default;
             IReadOnlyList<string> values = default;
             CognitiveServicesSkuRestrictionInfo restrictionInfo = default;
             CognitiveServicesSkuRestrictionReasonCode? reasonCode = default;
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    @type = prop.Value.GetString().ToCognitiveServicesSkuRestrictionsType();
+                    restrictionsType = prop.Value.GetString().ToCognitiveServicesSkuRestrictionsType();
                     continue;
                 }
                 if (prop.NameEquals("values"u8))
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CognitiveServicesSkuRestrictions(@type, values ?? new ChangeTrackingList<string>(), restrictionInfo, reasonCode, additionalBinaryDataProperties);
+            return new CognitiveServicesSkuRestrictions(restrictionsType, values ?? new ChangeTrackingList<string>(), restrictionInfo, reasonCode, additionalBinaryDataProperties);
         }
     }
 }

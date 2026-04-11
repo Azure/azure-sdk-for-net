@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
@@ -21,29 +22,28 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Initializes a new instance of <see cref="CognitiveServicesSkuAvailabilityContent"/>. </summary>
         /// <param name="skus"> The SKU of the resource. </param>
         /// <param name="kind"> The kind (type) of cognitive service account. </param>
-        /// <param name="type"> The Type of the resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="skus"/>, <paramref name="kind"/> or <paramref name="type"/> is null. </exception>
-        public CognitiveServicesSkuAvailabilityContent(IEnumerable<string> skus, string kind, string @type)
+        /// <param name="resourceType"> The Type of the resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="skus"/> or <paramref name="kind"/> is null. </exception>
+        public CognitiveServicesSkuAvailabilityContent(IEnumerable<string> skus, string kind, ResourceType resourceType)
         {
             Argument.AssertNotNull(skus, nameof(skus));
             Argument.AssertNotNull(kind, nameof(kind));
-            Argument.AssertNotNull(@type, nameof(@type));
 
             Skus = skus.ToList();
             Kind = kind;
-            Type = @type;
+            ResourceType = resourceType;
         }
 
         /// <summary> Initializes a new instance of <see cref="CognitiveServicesSkuAvailabilityContent"/>. </summary>
         /// <param name="skus"> The SKU of the resource. </param>
         /// <param name="kind"> The kind (type) of cognitive service account. </param>
-        /// <param name="type"> The Type of the resource. </param>
+        /// <param name="resourceType"> The Type of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CognitiveServicesSkuAvailabilityContent(IList<string> skus, string kind, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CognitiveServicesSkuAvailabilityContent(IList<string> skus, string kind, ResourceType resourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Skus = skus;
             Kind = kind;
-            Type = @type;
+            ResourceType = resourceType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -54,6 +54,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public string Kind { get; }
 
         /// <summary> The Type of the resource. </summary>
-        public string Type { get; }
+        public ResourceType ResourceType { get; }
     }
 }

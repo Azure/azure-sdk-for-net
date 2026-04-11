@@ -97,10 +97,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("subdomainName"u8);
                 writer.WriteStringValue(SubdomainName);
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(DomainAvailabilityType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type);
+                writer.WriteStringValue(DomainAvailabilityType);
             }
             if (Optional.IsDefined(Kind))
             {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             bool? isSubdomainAvailable = default;
             string reason = default;
             string subdomainName = default;
-            string @type = default;
+            string domainAvailabilityType = default;
             string kind = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    domainAvailabilityType = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("kind"u8))
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 isSubdomainAvailable,
                 reason,
                 subdomainName,
-                @type,
+                domainAvailabilityType,
                 kind,
                 additionalBinaryDataProperties);
         }

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CognitiveServicesModelSku"/>. </summary>
-        internal CognitiveServicesModelSku()
+        public CognitiveServicesModelSku()
         {
             RateLimits = new ChangeTrackingList<ServiceAccountCallRateLimit>();
             Cost = new ChangeTrackingList<BillingMeterInfo>();
@@ -44,16 +44,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> The name of the model SKU. </summary>
-        public string Name { get; }
+        public string Name { get; set; }
 
         /// <summary> The usage name of the model SKU. </summary>
-        public string UsageName { get; }
+        public string UsageName { get; set; }
 
         /// <summary> The datetime of deprecation of the model SKU. </summary>
-        public DateTimeOffset? DeprecationOn { get; }
+        public DateTimeOffset? DeprecationOn { get; set; }
 
         /// <summary> The capacity configuration. </summary>
-        public CognitiveServicesCapacityConfig Capacity { get; }
+        public CognitiveServicesCapacityConfig Capacity { get; set; }
 
         /// <summary> The list of rateLimit. </summary>
         public IReadOnlyList<ServiceAccountCallRateLimit> RateLimits { get; }

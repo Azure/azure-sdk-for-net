@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             string deploymentId = default;
             CognitiveServicesAgentDeploymentState? state = default;
             IList<CognitiveServicesAgentProtocolVersion> protocols = default;
-            IList<VersionedAgentReference> agents = default;
+            IList<CognitiveServicesVersionedAgentReference> agents = default;
             AgentDeploymentType deploymentType = default;
             CognitiveServicesAgentDeploymentProvisioningState? provisioningState = default;
             foreach (var prop in element.EnumerateObject())
@@ -199,10 +199,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    List<VersionedAgentReference> array = new List<VersionedAgentReference>();
+                    List<CognitiveServicesVersionedAgentReference> array = new List<CognitiveServicesVersionedAgentReference>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(VersionedAgentReference.DeserializeVersionedAgentReference(item, options));
+                        array.Add(CognitiveServicesVersionedAgentReference.DeserializeCognitiveServicesVersionedAgentReference(item, options));
                     }
                     agents = array;
                     continue;
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 deploymentId,
                 state,
                 protocols ?? new ChangeTrackingList<CognitiveServicesAgentProtocolVersion>(),
-                agents ?? new ChangeTrackingList<VersionedAgentReference>(),
+                agents ?? new ChangeTrackingList<CognitiveServicesVersionedAgentReference>(),
                 deploymentType,
                 provisioningState);
         }
