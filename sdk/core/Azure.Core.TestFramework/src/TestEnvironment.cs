@@ -254,8 +254,8 @@ namespace Azure.Core.TestFramework
 
         /// <summary>
         /// Returns the credential used for local developer authentication when no service principal
-        /// or pipeline credentials are available. The default implementation prompts the user via
-        /// the system authentication broker (scoped to the Azure test tenant) and falls back to a
+        /// or pipeline credentials are available. The default implementation uses silent broker
+        /// authentication (scoped to the Azure test tenant) and falls back to a
         /// local-dev-optimized <see cref="DefaultAzureCredential"/> if the broker is unavailable.
         /// Subclasses can override this method to customize the credential chain.
         /// </summary>
@@ -269,6 +269,7 @@ namespace Azure.Core.TestFramework
                 var brokerOptions = new InteractiveBrowserCredentialBrokerOptions(IntPtr.Zero)
                 {
                     TenantId = AzureTestTenantId,
+                    UseDefaultBrokerAccount = true,
                     TokenCachePersistenceOptions = new TokenCachePersistenceOptions()
                 };
 
