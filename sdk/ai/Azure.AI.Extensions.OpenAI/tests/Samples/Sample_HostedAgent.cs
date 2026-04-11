@@ -25,11 +25,11 @@ public class Sample_HostedAgent : ProjectsOpenAITestBase
         )
         {
             EnvironmentVariables = {
-                { "AZURE_OPENAI_ENDPOINT", $"https://{accountId}.cognitiveservices.azure.com/" },
-                { "AZURE_OPENAI_CHAT_DEPLOYMENT_NAME", modelDeploymentName },
+                //{ "AZURE_OPENAI_ENDPOINT", $"https://{accountId}.cognitiveservices.azure.com/" },
+                //{ "AZURE_OPENAI_CHAT_DEPLOYMENT_NAME", modelDeploymentName },
                 // Optional variables, used for logging
-                { "APPLICATIONINSIGHTS_CONNECTION_STRING", applicationInsightConnectionString },
-                { "AGENT_PROJECT_RESOURCE_ID", projectEndpoint },
+                //{ "APPLICATIONINSIGHTS_CONNECTION_STRING", applicationInsightConnectionString },
+                //{ "AGENT_PROJECT_RESOURCE_ID", projectEndpoint },
             },
             Image = dockerImage,
         };

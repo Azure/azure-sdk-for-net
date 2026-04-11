@@ -173,17 +173,14 @@ To create the hosted agent, please use the `HostedAgentDefinition` while creatin
 private static HostedAgentDefinition GetAgentDefinition(string dockerImage, string modelDeploymentName, string accountId, string applicationInsightConnectionString, string projectEndpoint)
 {
     HostedAgentDefinition agentDefinition = new(
-        versions: [new ProtocolVersionRecord(ProjectsAgentProtocol.ActivityProtocol, "v1")],
-        cpu: "1",
-        memory: "2Gi"
+        versions: [new ProtocolVersionRecord(ProjectsAgentProtocol.Responses, "1.0.0")],
+        cpu: "0.5",
+        memory: "1Gi"
     )
     {
         EnvironmentVariables = {
             { "AZURE_OPENAI_ENDPOINT", $"https://{accountId}.cognitiveservices.azure.com/" },
-            { "AZURE_OPENAI_CHAT_DEPLOYMENT_NAME", modelDeploymentName },
-            // Optional variables, used for logging
-            { "APPLICATIONINSIGHTS_CONNECTION_STRING", applicationInsightConnectionString },
-            { "AGENT_PROJECT_RESOURCE_ID", projectEndpoint },
+            { "AZURE_OPENAI_CHAT_DEPLOYMENT_NAME", modelDeploymentName }
         },
         Image = dockerImage,
     };
@@ -263,18 +260,53 @@ sessions for the same agent version.
 ```C# Snippet:Sample_CreateSessions_SessionsCRUD_Async
 string sessionKey1 = Guid.NewGuid().ToString();
 string sessionKey2 = Guid.NewGuid().ToString();
-AgentSession session1 = await agentsClient.CreateSessionAsync(
-    agentName: agentVersion.Name,
-    isolationKey: sessionKey1,
-    versionIndicator: new VersionRefIndicator(agentVersion.Version)
-);
-Console.WriteLine($"Created session with ID {session1.AgentSessionId}");
-AgentSession session2 = await agentsClient.CreateSessionAsync(
-    agentName: agentVersion.Name,
-    isolationKey: sessionKey1,
-    versionIndicator: new VersionRefIndicator(agentVersion.Version)
-);
-Console.WriteLine($"Created session with ID {session2.AgentSessionId}");
+string sessionId1 = Guid.NewGuid().ToString();
+string sessionId2 = Guid.NewGuid().ToString();
+AgentSession session1, session2;
+try
+{
+    session1 = await agentsClient.CreateSessionAsync(
+        agentName: agentVersion.Name,
+        agentSessionId: sessionId1,
+        isolationKey: sessionKey1,
+        versionIndicator: new VersionRefIndicator(agentVersion.Version)
+    );
+    Console.WriteLine($"Created session with ID {session1.AgentSessionId}");
+}
+catch (ClientResultException ex)
+{
+    if (ex.Status == 424)
+    {
+        // Known issue.
+        session1 = await agentsClient.GetSessionAsync(agentName: agentVersion.Name, sessionId: sessionId1);
+    }
+    else
+    {
+        throw;
+    }
+}
+try
+{
+    session2 = await agentsClient.CreateSessionAsync(
+        agentName: agentVersion.Name,
+        agentSessionId: sessionId2,
+        isolationKey: sessionKey1,
+        versionIndicator: new VersionRefIndicator(agentVersion.Version)
+    );
+    Console.WriteLine($"Created session with ID {session2.AgentSessionId}");
+}
+catch (ClientResultException ex)
+{
+    if (ex.Status == 424)
+    {
+        // Known issue.
+        session2 = await agentsClient.GetSessionAsync(agentName: agentVersion.Name, sessionId: sessionId2);
+    }
+    else
+    {
+        throw;
+    }
+}
 while (session1.Status != AgentSessionStatus.Failed && session1.Status != AgentSessionStatus.Active)
 {
     await Task.Delay(TimeSpan.FromMilliseconds(500));
@@ -307,7 +339,6 @@ string filePath = "sample_file_for_upload1.txt";
 File.WriteAllText(
     path: filePath,
     contents: "The word 'apple' uses the code 442345, while the word 'banana' uses the code 673457.");
-
 SessionFileWriteResponse writeResponse = await sessionClient.UploadSessionFileAsync(
     agentName: agentVersion.Name,
     sessionId: session.AgentSessionId,

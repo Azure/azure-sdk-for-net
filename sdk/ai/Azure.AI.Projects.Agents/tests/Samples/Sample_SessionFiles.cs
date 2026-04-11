@@ -2,13 +2,16 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
+using Microsoft.VisualStudio.TestPlatform.ObjectModel.DataCollection;
 using NUnit.Framework;
+using static Microsoft.ApplicationInsights.MetricDimensionNames.TelemetryContext;
 
 namespace Azure.AI.Projects.Agents.Tests.Samples;
 #pragma warning disable AAIP001
@@ -39,11 +42,29 @@ public class Sample_SessionFiles : SamplesBase
             agentName: hostedAgentName,
             agentVersion: hostedAgentVersion);
         string sessionKey = Guid.NewGuid().ToString();
-        AgentSession session = await agentsClient.CreateSessionAsync(
-            agentName: agentVersion.Name,
-            isolationKey: sessionKey,
-            versionIndicator: new VersionRefIndicator(agentVersion.Version)
-        );
+        string sessionId = Guid.NewGuid().ToString();
+        AgentSession session;
+        try
+        {
+            session = await agentsClient.CreateSessionAsync(
+                agentName: agentVersion.Name,
+                agentSessionId: sessionId,
+                isolationKey: sessionKey,
+                versionIndicator: new VersionRefIndicator(agentVersion.Version)
+            );
+        }
+        catch (ClientResultException ex)
+        {
+            if (ex.Status == 424)
+            {
+                // Known issue.
+                session = await agentsClient.GetSessionAsync(agentName: agentVersion.Name, sessionId: sessionId);
+            }
+            else
+            {
+                throw;
+            }
+        }
         while (session.Status != AgentSessionStatus.Failed && session.Status != AgentSessionStatus.Active)
         {
             await Task.Delay(TimeSpan.FromMilliseconds(500));
@@ -55,7 +76,6 @@ public class Sample_SessionFiles : SamplesBase
         File.WriteAllText(
             path: filePath,
             contents: "The word 'apple' uses the code 442345, while the word 'banana' uses the code 673457.");
-
         SessionFileWriteResponse writeResponse = await sessionClient.UploadSessionFileAsync(
             agentName: agentVersion.Name,
             sessionId: session.AgentSessionId,
@@ -101,7 +121,21 @@ public class Sample_SessionFiles : SamplesBase
         #region Snippet:Sample_DeleteFiles_SessionFiles_Async
         await sessionClient.DeleteSessionFileAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId, path: "/store/sample_file_for_upload1.txt");
         await sessionClient.DeleteSessionFileAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId, path: "/store/sample_file_for_upload1.txt");
-        await agentsClient.DeleteSessionAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId, isolationKey: sessionKey);
+        try
+        {
+            await agentsClient.DeleteSessionAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId, isolationKey: sessionKey);
+        }
+        catch (ClientResultException ex)
+        {
+            if (ex.Status == 200)
+            {
+                Console.WriteLine($"The session {session.AgentSessionId} was deleted, but incorrect code was returned.");
+            }
+            else
+            {
+                throw;
+            }
+        }
         #endregion
     }
 
@@ -127,11 +161,29 @@ public class Sample_SessionFiles : SamplesBase
             agentName: hostedAgentName,
             agentVersion: hostedAgentVersion);
         string sessionKey = Guid.NewGuid().ToString();
-        AgentSession session = agentsClient.CreateSession(
-            agentName: agentVersion.Name,
-            isolationKey: sessionKey,
-            versionIndicator: new VersionRefIndicator(agentVersion.Version)
-        );
+        string sessionId = Guid.NewGuid().ToString();
+        AgentSession session;
+        try
+        {
+            session = agentsClient.CreateSession(
+                agentName: agentVersion.Name,
+                agentSessionId: sessionId,
+                isolationKey: sessionKey,
+                versionIndicator: new VersionRefIndicator(agentVersion.Version)
+            );
+        }
+        catch (ClientResultException ex)
+        {
+            if (ex.Status == 424)
+            {
+                // Known issue.
+                session = agentsClient.GetSession(agentName: agentVersion.Name, sessionId: sessionId);
+            }
+            else
+            {
+                throw;
+            }
+        }
         while (session.Status != AgentSessionStatus.Failed && session.Status != AgentSessionStatus.Active)
         {
             Thread.Sleep(TimeSpan.FromMilliseconds(500));
@@ -189,7 +241,21 @@ public class Sample_SessionFiles : SamplesBase
         #region Snippet:Sample_DeleteFiles_SessionFiles_Sync
         sessionClient.DeleteSessionFile(agentName: agentVersion.Name, sessionId: session.AgentSessionId, path: "/store/sample_file_for_upload1.txt");
         sessionClient.DeleteSessionFile(agentName: agentVersion.Name, sessionId: session.AgentSessionId, path: "/store/sample_file_for_upload1.txt");
-        agentsClient.DeleteSession(agentName: agentVersion.Name, sessionId: session.AgentSessionId, isolationKey: sessionKey);
+        try
+        {
+            agentsClient.DeleteSession(agentName: agentVersion.Name, sessionId: session.AgentSessionId, isolationKey: sessionKey);
+        }
+        catch (ClientResultException ex)
+        {
+            if (ex.Status == 200)
+            {
+                Console.WriteLine($"The session {session.AgentSessionId} was deleted, but incorrect code was returned.");
+            }
+            else
+            {
+                throw;
+            }
+        }
         #endregion
     }
 

@@ -10,6 +10,7 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using System.ClientModel;
 
 namespace Azure.AI.Projects.Agents.Tests.Samples;
 #pragma warning disable AAIP001
@@ -42,18 +43,53 @@ public class Sample_SessionsCRUD : SamplesBase
         #region Snippet:Sample_CreateSessions_SessionsCRUD_Async
         string sessionKey1 = Guid.NewGuid().ToString();
         string sessionKey2 = Guid.NewGuid().ToString();
-        AgentSession session1 = await agentsClient.CreateSessionAsync(
-            agentName: agentVersion.Name,
-            isolationKey: sessionKey1,
-            versionIndicator: new VersionRefIndicator(agentVersion.Version)
-        );
-        Console.WriteLine($"Created session with ID {session1.AgentSessionId}");
-        AgentSession session2 = await agentsClient.CreateSessionAsync(
-            agentName: agentVersion.Name,
-            isolationKey: sessionKey1,
-            versionIndicator: new VersionRefIndicator(agentVersion.Version)
-        );
-        Console.WriteLine($"Created session with ID {session2.AgentSessionId}");
+        string sessionId1 = Guid.NewGuid().ToString();
+        string sessionId2 = Guid.NewGuid().ToString();
+        AgentSession session1, session2;
+        try
+        {
+            session1 = await agentsClient.CreateSessionAsync(
+                agentName: agentVersion.Name,
+                agentSessionId: sessionId1,
+                isolationKey: sessionKey1,
+                versionIndicator: new VersionRefIndicator(agentVersion.Version)
+            );
+            Console.WriteLine($"Created session with ID {session1.AgentSessionId}");
+        }
+        catch (ClientResultException ex)
+        {
+            if (ex.Status == 424)
+            {
+                // Known issue.
+                session1 = await agentsClient.GetSessionAsync(agentName: agentVersion.Name, sessionId: sessionId1);
+            }
+            else
+            {
+                throw;
+            }
+        }
+        try
+        {
+            session2 = await agentsClient.CreateSessionAsync(
+                agentName: agentVersion.Name,
+                agentSessionId: sessionId2,
+                isolationKey: sessionKey1,
+                versionIndicator: new VersionRefIndicator(agentVersion.Version)
+            );
+            Console.WriteLine($"Created session with ID {session2.AgentSessionId}");
+        }
+        catch (ClientResultException ex)
+        {
+            if (ex.Status == 424)
+            {
+                // Known issue.
+                session2 = await agentsClient.GetSessionAsync(agentName: agentVersion.Name, sessionId: sessionId2);
+            }
+            else
+            {
+                throw;
+            }
+        }
         while (session1.Status != AgentSessionStatus.Failed && session1.Status != AgentSessionStatus.Active)
         {
             await Task.Delay(TimeSpan.FromMilliseconds(500));
@@ -78,8 +114,36 @@ public class Sample_SessionsCRUD : SamplesBase
         }
         #endregion
         #region Snippet:Sample_Delete_SessionsCRUD_Async
-        await agentsClient.DeleteSessionAsync(agentName: agentVersion.Name, sessionId: session1.AgentSessionId, isolationKey: sessionKey1);
-        await agentsClient.DeleteSessionAsync(agentName: agentVersion.Name, sessionId: session2.AgentSessionId, isolationKey: sessionKey2);
+        try
+        {
+            await agentsClient.DeleteSessionAsync(agentName: agentVersion.Name, sessionId: session1.AgentSessionId, isolationKey: sessionKey1);
+        }
+        catch (ClientResultException ex)
+        {
+            if (ex.Status == 200)
+            {
+                Console.WriteLine($"The session {session1.AgentSessionId} was deleted, but incorrect code was returned.");
+            }
+            else
+            {
+                throw;
+            }
+        }
+        try
+        {
+            await agentsClient.DeleteSessionAsync(agentName: agentVersion.Name, sessionId: session2.AgentSessionId, isolationKey: sessionKey2);
+        }
+        catch (ClientResultException ex)
+        {
+            if (ex.Status == 200)
+            {
+                Console.WriteLine($"The session {session1.AgentSessionId} was deleted, but incorrect code was returned.");
+            }
+            else
+            {
+                throw;
+            }
+        }
         #endregion
     }
 
@@ -97,7 +161,8 @@ public class Sample_SessionsCRUD : SamplesBase
         var hostedAgentVersion = TestEnvironment.HOSTED_AGENT_VERSION;
 #endif
         AgentAdministrationClientOptions options = new();
-        options.AddPolicy(new FeaturePolicy("HostedAgents=V1Preview"), PipelinePosition.PerCall);
+        options.AddPolicy(new FeaturePolicy("HostedAgents=V1Preview,AgentEndpoints=V1Preview"), PipelinePosition.PerCall);
+        options.AddPolicy(GetDumpPolicy(), PipelinePosition.PerCall);
         AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
         #region Snippet:Sample_CreateAgent_SessionsCRUD_Sync
         ProjectsAgentVersion agentVersion = agentsClient.GetAgentVersion(
@@ -105,20 +170,56 @@ public class Sample_SessionsCRUD : SamplesBase
             agentVersion: hostedAgentVersion);
         #endregion
         #region Snippet:Sample_CreateSessions_SessionsCRUD_Sync
-        string sessionKey1 = Guid.NewGuid().ToString();
-        string sessionKey2 = Guid.NewGuid().ToString();
-        AgentSession session1 = agentsClient.CreateSession(
-            agentName: agentVersion.Name,
-            isolationKey: sessionKey1,
-            versionIndicator: new VersionRefIndicator(agentVersion.Version)
-        );
-        Console.WriteLine($"Created session with ID {session1.AgentSessionId}");
-        AgentSession session2 = agentsClient.CreateSession(
-            agentName: agentVersion.Name,
-            isolationKey: sessionKey1,
-            versionIndicator: new VersionRefIndicator(agentVersion.Version)
-        );
-        Console.WriteLine($"Created session with ID {session2.AgentSessionId}");
+        string sessionKey1 = "sample-isolation-key";
+        string sessionKey2 = "sample-isolation-key2";
+        string sessionId1 = Guid.NewGuid().ToString();
+        string sessionId2 = Guid.NewGuid().ToString();
+        AgentSession session1, session2;
+        try
+        {
+            session1 = agentsClient.CreateSession(
+                agentName: agentVersion.Name,
+                agentSessionId: sessionId1,
+                isolationKey: sessionKey1,
+                versionIndicator: new VersionRefIndicator(agentVersion.Version)
+            );
+            Console.WriteLine($"Created session with ID {session1.AgentSessionId}");
+        }
+        catch (ClientResultException ex)
+        {
+            if (ex.Status == 424)
+            {
+                // Known issue.
+                session1 = agentsClient.GetSession(agentName: agentVersion.Name, sessionId: sessionId1);
+            }
+            else
+            {
+                throw;
+            }
+        }
+        try
+        {
+            session2 = agentsClient.CreateSession(
+                agentName: agentVersion.Name,
+                agentSessionId: sessionId2,
+                isolationKey: sessionKey1,
+                versionIndicator: new VersionRefIndicator(agentVersion.Version)
+            );
+            Console.WriteLine($"Created session with ID {session2.AgentSessionId}");
+        }
+        catch (ClientResultException ex)
+        {
+            if (ex.Status == 424)
+            {
+                // Known issue.
+                session2 = agentsClient.GetSession(agentName: agentVersion.Name, sessionId: sessionId2);
+            }
+            else
+            {
+                throw;
+            }
+        }
+
         while (session1.Status != AgentSessionStatus.Failed && session1.Status != AgentSessionStatus.Active)
         {
             Thread.Sleep(TimeSpan.FromMilliseconds(500));
@@ -143,8 +244,36 @@ public class Sample_SessionsCRUD : SamplesBase
         }
         #endregion
         #region Snippet:Sample_Delete_SessionsCRUD_Sync
-        agentsClient.DeleteSession(agentName: agentVersion.Name, sessionId: session1.AgentSessionId, isolationKey: sessionKey1);
-        agentsClient.DeleteSession(agentName: agentVersion.Name, sessionId: session2.AgentSessionId, isolationKey: sessionKey2);
+        try
+        {
+            agentsClient.DeleteSession(agentName: agentVersion.Name, sessionId: session1.AgentSessionId, isolationKey: sessionKey1);
+        }
+        catch (ClientResultException ex)
+        {
+            if (ex.Status == 200)
+            {
+                Console.WriteLine($"The session {session1.AgentSessionId} was deleted, but incorrect code was returned.");
+            }
+            else
+            {
+                throw;
+            }
+        }
+        try
+        {
+            agentsClient.DeleteSession(agentName: agentVersion.Name, sessionId: session2.AgentSessionId, isolationKey: sessionKey2);
+        }
+        catch (ClientResultException ex)
+        {
+            if (ex.Status == 200)
+            {
+                Console.WriteLine($"The session {session1.AgentSessionId} was deleted, but incorrect code was returned.");
+            }
+            else
+            {
+                throw;
+            }
+        }
         #endregion
     }
 

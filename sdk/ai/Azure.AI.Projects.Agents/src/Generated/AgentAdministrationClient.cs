@@ -316,6 +316,30 @@ namespace Azure.AI.Projects.Agents
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
+        /// <summary> Retrieves a session by ID. </summary>
+        /// <param name="agentName"> The name of the agent. </param>
+        /// <param name="sessionId"> The session identifier. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        internal virtual ClientResult<AgentSession> GetSession(string agentName, string sessionId, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        {
+            ClientResult result = GetSession(agentName, sessionId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
+            return ClientResult.FromValue((AgentSession)result, result.GetRawResponse());
+        }
+
+        /// <summary> Retrieves a session by ID. </summary>
+        /// <param name="agentName"> The name of the agent. </param>
+        /// <param name="sessionId"> The session identifier. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<ClientResult<AgentSession>> GetSessionAsync(string agentName, string sessionId, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        {
+            ClientResult result = await GetSessionAsync(agentName, sessionId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return ClientResult.FromValue((AgentSession)result, result.GetRawResponse());
+        }
+
         /// <summary>
         /// [Protocol Method] Deletes a session synchronously.
         /// Returns 204 No Content when the session is deleted or does not exist.

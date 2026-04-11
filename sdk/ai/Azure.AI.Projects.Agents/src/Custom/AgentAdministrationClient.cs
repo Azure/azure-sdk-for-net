@@ -577,12 +577,11 @@ public partial class AgentAdministrationClient
     /// <summary> Retrieves a session by ID. </summary>
     /// <param name="agentName"> The name of the agent. </param>
     /// <param name="sessionId"> The session identifier. </param>
-    /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="sessionId"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="sessionId"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual ClientResult<AgentSession> GetSession(string agentName, string sessionId, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+    public virtual ClientResult<AgentSession> GetSession(string agentName, string sessionId, CancellationToken cancellationToken = default)
     {
         return GetSession(
             agentName: agentName,
@@ -595,12 +594,11 @@ public partial class AgentAdministrationClient
     /// <summary> Retrieves a session by ID. </summary>
     /// <param name="agentName"> The name of the agent. </param>
     /// <param name="sessionId"> The session identifier. </param>
-    /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="sessionId"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="sessionId"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual async Task<ClientResult<AgentSession>> GetSessionAsync(string agentName, string sessionId, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+    public virtual async Task<ClientResult<AgentSession>> GetSessionAsync(string agentName, string sessionId, CancellationToken cancellationToken = default)
     {
         return await GetSessionAsync(
             agentName: agentName,
