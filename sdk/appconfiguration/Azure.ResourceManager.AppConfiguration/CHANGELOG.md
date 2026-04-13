@@ -4,6 +4,10 @@
 
 ### Features Added
 
+- Upgraded api-version tag from `package-2024-05-01` to `package-preview-2025-06`. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/main/specification/appconfiguration/resource-manager/readme.md.
+- Added `AzureFrontDoor` property to `AppConfigurationStoreData` and `AppConfigurationStorePatch` to support Azure Front Door configuration for a configuration store.
+- Added new model `AppConfigurationAzureFrontDoorProperties` with a `ResourceId` property representing an Azure Front Door profile resource ID.
+
 ### Breaking Changes
 
 ### Bugs Fixed
