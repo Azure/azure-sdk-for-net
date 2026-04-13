@@ -99,11 +99,11 @@ namespace Azure.ResourceManager.Automation.Samples
             HybridRunbookWorkerResource hybridRunbookWorker = client.GetHybridRunbookWorkerResource(hybridRunbookWorkerResourceId);
 
             // invoke the operation
-            HybridRunbookWorkerCreateParameters hybridRunbookWorkerCreationParameters = new HybridRunbookWorkerCreateParameters
+            HybridRunbookWorkerCreateOrUpdateContent content = new HybridRunbookWorkerCreateOrUpdateContent
             {
                 VmResourceId = new ResourceIdentifier("/subscriptions/vmsubid/resourceGroups/vmrg/providers/Microsoft.Compute/virtualMachines/vmname"),
             };
-            HybridRunbookWorkerResource result = await hybridRunbookWorker.UpdateAsync(hybridRunbookWorkerCreationParameters);
+            HybridRunbookWorkerResource result = await hybridRunbookWorker.UpdateAsync(content);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance

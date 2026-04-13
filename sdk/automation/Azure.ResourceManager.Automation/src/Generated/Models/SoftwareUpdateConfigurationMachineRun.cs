@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="lastModifiedBy"> lastModifiedBy property, which only appears in the response. </param>
         /// <param name="error"> Details of provisioning error. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SoftwareUpdateConfigurationMachineRun(string name, ResourceIdentifier id, ResourceIdentifier targetComputerId, string targetComputerType, SoftwareUpdateConfigurationNavigation softwareUpdateConfiguration, string status, string osType, Guid? correlationId, Guid? sourceComputerId, DateTimeOffset? startOn, DateTimeOffset? endOn, TimeSpan? configuredDuration, JobNavigation job, DateTimeOffset? createdOn, string createdBy, DateTimeOffset? lastModifiedOn, string lastModifiedBy, AutomationErrorResponse error, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SoftwareUpdateConfigurationMachineRun(string name, ResourceIdentifier id, ResourceIdentifier targetComputerId, string targetComputerType, SoftwareUpdateConfigurationNavigation softwareUpdateConfiguration, string status, string osType, Guid? correlationId, Guid? sourceComputerId, DateTimeOffset? startOn, DateTimeOffset? endOn, TimeSpan? configuredDuration, JobNavigation job, DateTimeOffset? createdOn, string createdBy, DateTimeOffset? lastModifiedOn, string lastModifiedBy, AutomationResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Id = id;
@@ -141,6 +141,6 @@ namespace Azure.ResourceManager.Automation.Models
         /// <summary> lastModifiedBy property, which only appears in the response. </summary>
         public string LastModifiedBy { get; }
         /// <summary> Details of provisioning error. </summary>
-        public AutomationErrorResponse Error { get; }
+        public AutomationResponseError Error { get; }
     }
 }

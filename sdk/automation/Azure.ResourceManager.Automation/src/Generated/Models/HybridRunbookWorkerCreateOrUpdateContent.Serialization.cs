@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class HybridRunbookWorkerCreateParameters : IUtf8JsonSerializable, IJsonModel<HybridRunbookWorkerCreateParameters>
+    public partial class HybridRunbookWorkerCreateOrUpdateContent : IUtf8JsonSerializable, IJsonModel<HybridRunbookWorkerCreateOrUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HybridRunbookWorkerCreateParameters>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HybridRunbookWorkerCreateOrUpdateContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<HybridRunbookWorkerCreateParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<HybridRunbookWorkerCreateOrUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,13 +28,13 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HybridRunbookWorkerCreateParameters>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HybridRunbookWorkerCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HybridRunbookWorkerCreateParameters)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridRunbookWorkerCreateOrUpdateContent)} does not support writing '{format}' format.");
             }
 
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
@@ -64,19 +64,19 @@ namespace Azure.ResourceManager.Automation.Models
             }
         }
 
-        HybridRunbookWorkerCreateParameters IJsonModel<HybridRunbookWorkerCreateParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        HybridRunbookWorkerCreateOrUpdateContent IJsonModel<HybridRunbookWorkerCreateOrUpdateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HybridRunbookWorkerCreateParameters>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HybridRunbookWorkerCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HybridRunbookWorkerCreateParameters)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridRunbookWorkerCreateOrUpdateContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeHybridRunbookWorkerCreateParameters(document.RootElement, options);
+            return DeserializeHybridRunbookWorkerCreateOrUpdateContent(document.RootElement, options);
         }
 
-        internal static HybridRunbookWorkerCreateParameters DeserializeHybridRunbookWorkerCreateParameters(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static HybridRunbookWorkerCreateOrUpdateContent DeserializeHybridRunbookWorkerCreateOrUpdateContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -122,38 +122,38 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new HybridRunbookWorkerCreateParameters(name, vmResourceId, serializedAdditionalRawData);
+            return new HybridRunbookWorkerCreateOrUpdateContent(name, vmResourceId, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<HybridRunbookWorkerCreateParameters>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<HybridRunbookWorkerCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HybridRunbookWorkerCreateParameters>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HybridRunbookWorkerCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerAutomationContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(HybridRunbookWorkerCreateParameters)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridRunbookWorkerCreateOrUpdateContent)} does not support writing '{options.Format}' format.");
             }
         }
 
-        HybridRunbookWorkerCreateParameters IPersistableModel<HybridRunbookWorkerCreateParameters>.Create(BinaryData data, ModelReaderWriterOptions options)
+        HybridRunbookWorkerCreateOrUpdateContent IPersistableModel<HybridRunbookWorkerCreateOrUpdateContent>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HybridRunbookWorkerCreateParameters>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HybridRunbookWorkerCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeHybridRunbookWorkerCreateParameters(document.RootElement, options);
+                        return DeserializeHybridRunbookWorkerCreateOrUpdateContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HybridRunbookWorkerCreateParameters)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridRunbookWorkerCreateOrUpdateContent)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<HybridRunbookWorkerCreateParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<HybridRunbookWorkerCreateOrUpdateContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

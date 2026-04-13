@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="nodeConfigurationCount"> Gets the number of compiled node configurations. </param>
         /// <param name="description"> Gets or sets the description. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DscConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, DscConfigurationPropertiesProvisioningState? provisioningState, int? jobCount, IDictionary<string, DscConfigurationParameterDefinition> parameters, AutomationContentSource source, DscConfigurationState? state, bool? isLogVerboseEnabled, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, int? nodeConfigurationCount, string description, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal DscConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, DscConfigurationProvisioningState? provisioningState, int? jobCount, IDictionary<string, DscConfigurationParameterDefinition> parameters, AutomationContentSource source, DscConfigurationState? state, bool? isLogVerboseEnabled, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, int? nodeConfigurationCount, string description, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
             ProvisioningState = provisioningState;
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Automation
         /// <summary> Gets or sets the etag of the resource. </summary>
         public ETag? ETag { get; set; }
         /// <summary> Gets or sets the provisioning state of the configuration. </summary>
-        public DscConfigurationPropertiesProvisioningState? ProvisioningState { get; set; }
+        public DscConfigurationProvisioningState? ProvisioningState { get; set; }
         /// <summary> Gets or sets the job count of the configuration. </summary>
         public int? JobCount { get; set; }
         /// <summary> Gets or sets the configuration parameters. </summary>

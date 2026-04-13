@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Automation
             SoftwareUpdateConfigurationSpecificProperties updateConfiguration = default;
             SoftwareUpdateConfigurationScheduleProperties scheduleInfo = default;
             string provisioningState = default;
-            AutomationErrorResponse error = default;
+            AutomationResponseError error = default;
             DateTimeOffset? creationTime = default;
             string createdBy = default;
             DateTimeOffset? lastModifiedTime = default;
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Automation
                             {
                                 continue;
                             }
-                            error = AutomationErrorResponse.DeserializeAutomationErrorResponse(property0.Value, options);
+                            error = AutomationResponseError.DeserializeAutomationResponseError(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("creationTime"u8))

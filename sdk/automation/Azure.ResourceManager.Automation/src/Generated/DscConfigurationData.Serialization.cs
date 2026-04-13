@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Automation
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            DscConfigurationPropertiesProvisioningState? provisioningState = default;
+            DscConfigurationProvisioningState? provisioningState = default;
             int? jobCount = default;
             IDictionary<string, DscConfigurationParameterDefinition> parameters = default;
             AutomationContentSource source = default;
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Automation
                             {
                                 continue;
                             }
-                            provisioningState = new DscConfigurationPropertiesProvisioningState(property0.Value.GetString());
+                            provisioningState = new DscConfigurationProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("jobCount"u8))

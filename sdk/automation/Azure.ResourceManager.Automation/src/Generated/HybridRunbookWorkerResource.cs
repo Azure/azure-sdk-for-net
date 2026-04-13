@@ -279,18 +279,18 @@ namespace Azure.ResourceManager.Automation
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="hybridRunbookWorkerCreationParameters"> The create or update parameters for hybrid runbook worker. </param>
+        /// <param name="content"> The create or update parameters for hybrid runbook worker. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="hybridRunbookWorkerCreationParameters"/> is null. </exception>
-        public virtual async Task<Response<HybridRunbookWorkerResource>> UpdateAsync(HybridRunbookWorkerCreateParameters hybridRunbookWorkerCreationParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<HybridRunbookWorkerResource>> UpdateAsync(HybridRunbookWorkerCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(hybridRunbookWorkerCreationParameters, nameof(hybridRunbookWorkerCreationParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _hybridRunbookWorkerClientDiagnostics.CreateScope("HybridRunbookWorkerResource.Update");
             scope.Start();
             try
             {
-                var response = await _hybridRunbookWorkerRestClient.PatchAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, hybridRunbookWorkerCreationParameters, cancellationToken).ConfigureAwait(false);
+                var response = await _hybridRunbookWorkerRestClient.PatchAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new HybridRunbookWorkerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -321,18 +321,18 @@ namespace Azure.ResourceManager.Automation
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="hybridRunbookWorkerCreationParameters"> The create or update parameters for hybrid runbook worker. </param>
+        /// <param name="content"> The create or update parameters for hybrid runbook worker. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="hybridRunbookWorkerCreationParameters"/> is null. </exception>
-        public virtual Response<HybridRunbookWorkerResource> Update(HybridRunbookWorkerCreateParameters hybridRunbookWorkerCreationParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<HybridRunbookWorkerResource> Update(HybridRunbookWorkerCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(hybridRunbookWorkerCreationParameters, nameof(hybridRunbookWorkerCreationParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _hybridRunbookWorkerClientDiagnostics.CreateScope("HybridRunbookWorkerResource.Update");
             scope.Start();
             try
             {
-                var response = _hybridRunbookWorkerRestClient.Patch(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, hybridRunbookWorkerCreationParameters, cancellationToken);
+                var response = _hybridRunbookWorkerRestClient.Patch(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken);
                 return Response.FromValue(new HybridRunbookWorkerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

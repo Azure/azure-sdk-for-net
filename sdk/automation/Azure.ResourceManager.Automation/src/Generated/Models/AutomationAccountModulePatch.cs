@@ -68,9 +68,9 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Gets or sets name of the resource. </summary>
-        public string Name { get; }
+        public string Name { get; set; }
         /// <summary> Gets or sets the location of the resource. </summary>
-        public AzureLocation? Location { get; }
+        public AzureLocation? Location { get; set; }
         /// <summary> Gets or sets the tags attached to the resource. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> Gets or sets the module content link. </summary>

@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="lastModifiedBy"> LastModifiedBy property, which only appears in the response. </param>
         /// <param name="tasks"> Tasks information for the Software update configuration. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SoftwareUpdateConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SoftwareUpdateConfigurationSpecificProperties updateConfiguration, SoftwareUpdateConfigurationScheduleProperties scheduleInfo, string provisioningState, AutomationErrorResponse error, DateTimeOffset? createdOn, string createdBy, DateTimeOffset? lastModifiedOn, string lastModifiedBy, SoftwareUpdateConfigurationTasks tasks, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SoftwareUpdateConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SoftwareUpdateConfigurationSpecificProperties updateConfiguration, SoftwareUpdateConfigurationScheduleProperties scheduleInfo, string provisioningState, AutomationResponseError error, DateTimeOffset? createdOn, string createdBy, DateTimeOffset? lastModifiedOn, string lastModifiedBy, SoftwareUpdateConfigurationTasks tasks, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             UpdateConfiguration = updateConfiguration;
             ScheduleInfo = scheduleInfo;
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Automation
         /// <summary> Provisioning state for the software update configuration, which only appears in the response. </summary>
         public string ProvisioningState { get; }
         /// <summary> Details of provisioning error. </summary>
-        public AutomationErrorResponse Error { get; set; }
+        public AutomationResponseError Error { get; set; }
         /// <summary> Creation time of the resource, which only appears in the response. </summary>
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> CreatedBy property, which only appears in the response. </summary>

@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Automation.Samples
 
             // invoke the operation
             string reportId = "reportId";
-            string result = await dscNode.GetContentNodeReportAsync(reportId);
+            BinaryData result = await dscNode.GetContentNodeReportAsync(reportId);
 
             Console.WriteLine($"Succeeded: {result}");
         }

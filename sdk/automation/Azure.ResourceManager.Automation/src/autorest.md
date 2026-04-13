@@ -37,6 +37,7 @@ input-file:
   - https://github.com/Azure/azure-rest-api-specs/blob/e191949499d1d3b60a1b2a979d9e35f122a94978/specification/automation/resource-manager/Microsoft.Automation/preview/2020-01-13-preview/dscCompilationJob.json
 
 rename-mapping:
+  HybridRunbookWorkerCreateParameters: HybridRunbookWorkerCreateOrUpdateContent
   AutomationAccount.properties.publicNetworkAccess: IsPublicNetworkAccessAllowed
   AutomationAccount.properties.disableLocalAuth: IsLocalAuthDisabled
   DscConfiguration.properties.logVerbose: IsLogVerboseEnabled
@@ -144,7 +145,7 @@ rename-mapping:
   DscConfigurationParameter: DscConfigurationParameterDefinition
   ActivityParameter: AutomationActivityParameterDefinition
   CountType.nodeconfiguration: NodeConfiguration
-  ErrorResponse: AutomationResponseError
+  AutomationErrorResponse: AutomationResponseError
   TypeField.type: FieldType
   LinuxUpdateClasses: LinuxUpdateClassification
   WindowsUpdateClasses: WindowsUpdateClassification
@@ -374,9 +375,22 @@ directive:
   - from: openapi.json
     where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/nodes/{nodeId}/reports/{reportId}/content'].get
     transform: >
-      $.produces = ["application/json"]
+      $.produces = ["application/json"];
+      $.responses['200'].schema['type'] = 'object';
   - from: openapi.json
     where: $.definitions.JobProperties.properties.provisioningState
+    transform: >
+      delete $['readOnly'];
+  - from: openapi.json
+    where: $.definitions.HybridRunbookWorkerCreateParameters.properties.name
+    transform: >
+      delete $['readOnly'];
+  - from: openapi.json
+    where: $.definitions.ModuleUpdateParameters.properties.location
+    transform: >
+      delete $['readOnly'];
+  - from: openapi.json
+    where: $.definitions.ModuleUpdateParameters.properties.name
     transform: >
       delete $['readOnly'];
   - from: openapi.json
@@ -387,5 +401,8 @@ directive:
     where: $.definitions.RunbookProperties.properties.provisioningState
     transform: >
       $['x-ms-enum']['name'] = 'RunbookProvisioningState';
-
+  - from: openapi.json
+    where: $.definitions.DscConfigurationProperties.properties.provisioningState
+    transform: >
+      $['x-ms-enum']['name'] = 'DscConfigurationProvisioningState';
 ```

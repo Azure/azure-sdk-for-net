@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="nodeConfigurationCount"> Gets the number of compiled node configurations. </param>
         /// <param name="description"> Gets or sets the description. </param>
         /// <returns> A new <see cref="Automation.DscConfigurationData"/> instance for mocking. </returns>
-        public static DscConfigurationData DscConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, DscConfigurationPropertiesProvisioningState? provisioningState = null, int? jobCount = null, IDictionary<string, DscConfigurationParameterDefinition> parameters = null, AutomationContentSource source = null, DscConfigurationState? state = null, bool? isLogVerboseEnabled = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastModifiedOn = null, int? nodeConfigurationCount = null, string description = null)
+        public static DscConfigurationData DscConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, DscConfigurationProvisioningState? provisioningState = null, int? jobCount = null, IDictionary<string, DscConfigurationParameterDefinition> parameters = null, AutomationContentSource source = null, DscConfigurationState? state = null, bool? isLogVerboseEnabled = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastModifiedOn = null, int? nodeConfigurationCount = null, string description = null)
         {
             tags ??= new Dictionary<string, string>();
             parameters ??= new Dictionary<string, DscConfigurationParameterDefinition>();
@@ -460,15 +460,6 @@ namespace Azure.ResourceManager.Automation.Models
                 workerType,
                 workerName,
                 serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.HybridRunbookWorkerCreateParameters"/>. </summary>
-        /// <param name="name"> Gets or sets the name of the resource. </param>
-        /// <param name="vmResourceId"> Azure Resource Manager Id for a virtual machine. </param>
-        /// <returns> A new <see cref="Models.HybridRunbookWorkerCreateParameters"/> instance for mocking. </returns>
-        public static HybridRunbookWorkerCreateParameters HybridRunbookWorkerCreateParameters(string name = null, ResourceIdentifier vmResourceId = null)
-        {
-            return new HybridRunbookWorkerCreateParameters(name, vmResourceId, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Automation.AutomationJobScheduleData"/>. </summary>
@@ -723,19 +714,6 @@ namespace Azure.ResourceManager.Automation.Models
             tags ??= new Dictionary<string, string>();
 
             return new AutomationAccountModuleCreateOrUpdateContent(name, location, tags, contentLink, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.AutomationAccountModulePatch"/>. </summary>
-        /// <param name="name"> Gets or sets name of the resource. </param>
-        /// <param name="location"> Gets or sets the location of the resource. </param>
-        /// <param name="tags"> Gets or sets the tags attached to the resource. </param>
-        /// <param name="contentLink"> Gets or sets the module content link. </param>
-        /// <returns> A new <see cref="Models.AutomationAccountModulePatch"/> instance for mocking. </returns>
-        public static AutomationAccountModulePatch AutomationAccountModulePatch(string name = null, AzureLocation? location = null, IDictionary<string, string> tags = null, AutomationContentLink contentLink = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new AutomationAccountModulePatch(name, location, tags, contentLink, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AutomationActivity"/>. </summary>
@@ -1388,7 +1366,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="lastModifiedBy"> lastModifiedBy property, which only appears in the response. </param>
         /// <param name="error"> Details of provisioning error. </param>
         /// <returns> A new <see cref="Models.SoftwareUpdateConfigurationMachineRun"/> instance for mocking. </returns>
-        public static SoftwareUpdateConfigurationMachineRun SoftwareUpdateConfigurationMachineRun(string name = null, ResourceIdentifier id = null, ResourceIdentifier targetComputerId = null, string targetComputerType = null, string softwareUpdateName = null, string status = null, string osType = null, Guid? correlationId = null, Guid? sourceComputerId = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, TimeSpan? configuredDuration = null, Guid? jobId = null, DateTimeOffset? createdOn = null, string createdBy = null, DateTimeOffset? lastModifiedOn = null, string lastModifiedBy = null, AutomationErrorResponse error = null)
+        public static SoftwareUpdateConfigurationMachineRun SoftwareUpdateConfigurationMachineRun(string name = null, ResourceIdentifier id = null, ResourceIdentifier targetComputerId = null, string targetComputerType = null, string softwareUpdateName = null, string status = null, string osType = null, Guid? correlationId = null, Guid? sourceComputerId = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, TimeSpan? configuredDuration = null, Guid? jobId = null, DateTimeOffset? createdOn = null, string createdBy = null, DateTimeOffset? lastModifiedOn = null, string lastModifiedBy = null, AutomationResponseError error = null)
         {
             return new SoftwareUpdateConfigurationMachineRun(
                 name,
@@ -1512,7 +1490,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="lastModifiedBy"> LastModifiedBy property, which only appears in the response. </param>
         /// <param name="tasks"> Tasks information for the Software update configuration. </param>
         /// <returns> A new <see cref="Automation.SoftwareUpdateConfigurationData"/> instance for mocking. </returns>
-        public static SoftwareUpdateConfigurationData SoftwareUpdateConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SoftwareUpdateConfigurationSpecificProperties updateConfiguration = null, SoftwareUpdateConfigurationScheduleProperties scheduleInfo = null, string provisioningState = null, AutomationErrorResponse error = null, DateTimeOffset? createdOn = null, string createdBy = null, DateTimeOffset? lastModifiedOn = null, string lastModifiedBy = null, SoftwareUpdateConfigurationTasks tasks = null)
+        public static SoftwareUpdateConfigurationData SoftwareUpdateConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SoftwareUpdateConfigurationSpecificProperties updateConfiguration = null, SoftwareUpdateConfigurationScheduleProperties scheduleInfo = null, string provisioningState = null, AutomationResponseError error = null, DateTimeOffset? createdOn = null, string createdBy = null, DateTimeOffset? lastModifiedOn = null, string lastModifiedBy = null, SoftwareUpdateConfigurationTasks tasks = null)
         {
             return new SoftwareUpdateConfigurationData(
                 id,

@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary> The parameters supplied to the create hybrid runbook worker operation. </summary>
-    public partial class HybridRunbookWorkerCreateParameters
+    /// <summary> Error response of an operation failure. </summary>
+    public partial class AutomationResponseError
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,25 +45,25 @@ namespace Azure.ResourceManager.Automation.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="HybridRunbookWorkerCreateParameters"/>. </summary>
-        public HybridRunbookWorkerCreateParameters()
+        /// <summary> Initializes a new instance of <see cref="AutomationResponseError"/>. </summary>
+        public AutomationResponseError()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="HybridRunbookWorkerCreateParameters"/>. </summary>
-        /// <param name="name"> Gets or sets the name of the resource. </param>
-        /// <param name="vmResourceId"> Azure Resource Manager Id for a virtual machine. </param>
+        /// <summary> Initializes a new instance of <see cref="AutomationResponseError"/>. </summary>
+        /// <param name="code"> Error code. </param>
+        /// <param name="message"> Error message indicating why the operation failed. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HybridRunbookWorkerCreateParameters(string name, ResourceIdentifier vmResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AutomationResponseError(string code, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Name = name;
-            VmResourceId = vmResourceId;
+            Code = code;
+            Message = message;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets the name of the resource. </summary>
-        public string Name { get; }
-        /// <summary> Azure Resource Manager Id for a virtual machine. </summary>
-        public ResourceIdentifier VmResourceId { get; set; }
+        /// <summary> Error code. </summary>
+        public string Code { get; set; }
+        /// <summary> Error message indicating why the operation failed. </summary>
+        public string Message { get; set; }
     }
 }

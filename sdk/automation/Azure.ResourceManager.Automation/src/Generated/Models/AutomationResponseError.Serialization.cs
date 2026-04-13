@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class AutomationErrorResponse : IUtf8JsonSerializable, IJsonModel<AutomationErrorResponse>
+    public partial class AutomationResponseError : IUtf8JsonSerializable, IJsonModel<AutomationResponseError>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutomationErrorResponse>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutomationResponseError>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<AutomationErrorResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AutomationResponseError>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AutomationErrorResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AutomationResponseError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomationErrorResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationResponseError)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(Code))
@@ -61,19 +61,19 @@ namespace Azure.ResourceManager.Automation.Models
             }
         }
 
-        AutomationErrorResponse IJsonModel<AutomationErrorResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        AutomationResponseError IJsonModel<AutomationResponseError>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AutomationErrorResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AutomationResponseError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomationErrorResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationResponseError)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAutomationErrorResponse(document.RootElement, options);
+            return DeserializeAutomationResponseError(document.RootElement, options);
         }
 
-        internal static AutomationErrorResponse DeserializeAutomationErrorResponse(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static AutomationResponseError DeserializeAutomationResponseError(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -103,38 +103,38 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AutomationErrorResponse(code, message, serializedAdditionalRawData);
+            return new AutomationResponseError(code, message, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<AutomationErrorResponse>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<AutomationResponseError>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AutomationErrorResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AutomationResponseError>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerAutomationContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AutomationErrorResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationResponseError)} does not support writing '{options.Format}' format.");
             }
         }
 
-        AutomationErrorResponse IPersistableModel<AutomationErrorResponse>.Create(BinaryData data, ModelReaderWriterOptions options)
+        AutomationResponseError IPersistableModel<AutomationResponseError>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AutomationErrorResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AutomationResponseError>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeAutomationErrorResponse(document.RootElement, options);
+                        return DeserializeAutomationResponseError(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutomationErrorResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationResponseError)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<AutomationErrorResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AutomationResponseError>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

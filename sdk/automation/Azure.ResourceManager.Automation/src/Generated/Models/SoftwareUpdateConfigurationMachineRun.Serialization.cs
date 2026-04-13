@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Automation.Models
             string createdBy = default;
             DateTimeOffset? lastModifiedTime = default;
             string lastModifiedBy = default;
-            AutomationErrorResponse error = default;
+            AutomationResponseError error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.Automation.Models
                             {
                                 continue;
                             }
-                            error = AutomationErrorResponse.DeserializeAutomationErrorResponse(property0.Value, options);
+                            error = AutomationResponseError.DeserializeAutomationResponseError(property0.Value, options);
                             continue;
                         }
                     }
