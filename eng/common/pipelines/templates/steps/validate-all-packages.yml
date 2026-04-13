@@ -11,6 +11,17 @@ parameters:
   - name: PackageInfoFiles
     type: object
     default: []
+  - name: ValidateCodeowners
+    type: boolean
+    default: false
+  - name: CodeownersSdkTypes
+    type: object
+    default:
+      - client
+      - compat
+      - data
+      - functions
+      - datamovement
 
 steps:
  - ${{ if and(ne(variables['Skip.PackageValidation'], 'true'), and(ne(variables['Build.Reason'], 'PullRequest'), eq(variables['System.TeamProject'], 'internal'))) }}:
@@ -18,6 +29,11 @@ steps:
         echo "##vso[task.setvariable variable=SetAsReleaseBuild]false"
       displayName: "Set as release build"
       condition: and(succeededOrFailed(), eq(variables['SetAsReleaseBuild'], ''))
+
+    - ${{ if eq(parameters.ValidateCodeowners, true) }}:
+      - template: /eng/common/pipelines/templates/steps/install-azsdk-cli.yml
+        parameters:
+          Condition: and(succeeded(), ne('true', variables['Skip.ValidateCodeowners']))
 
     - task: AzureCLI@2
       inputs:
@@ -35,7 +51,8 @@ steps:
             -BuildDefinition $(System.CollectionUri)$(System.TeamProject)/_build?definitionId=$(System.DefinitionId) `
             -PipelineUrl $(System.CollectionUri)$(System.TeamProject)/_build/results?buildId=$(Build.BuildId) `
             -IsReleaseBuild $$(SetAsReleaseBuild) `
-            -PackageInfoFiles @('${{ join(''',''', parameters.PackageInfoFiles) }}')
+            -PackageInfoFiles @('${{ join(''',''', parameters.PackageInfoFiles) }}') `
+            -CodeownersSdkTypes ('${{ convertToJson(parameters.CodeownersSdkTypes) }}' | ConvertFrom-Json)
         workingDirectory: $(Pipeline.Workspace)
       displayName: Validate packages and update work items
       continueOnError: true
