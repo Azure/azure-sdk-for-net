@@ -95,8 +95,8 @@ The agent uses a three-layer architecture:
 | `nullable_annotation_fix` | Fix CS8625/CS8600 by adding `?` nullable annotation on a specific line |
 | `add_codegen_suppress` | Add a `[CodeGenSuppress]` attribute to a custom partial class to suppress a duplicate member from the generator. Scans `Generated/` to find the member signature. |
 | `batch_fix` | Apply multiple deterministic fixes in a single call |
-| `build_and_classify` | Run `dotnet build`, parse output, and classify each error as deterministic or requires-reasoning. Returns a structured JSON with `success`, `exitCode`, `totalErrors`, `returnedErrors`, `deterministicCount`, `requiresReasoningCount`, `classifiedErrors` (list of classified errors, max 20 per call), `rawOutput`, `buildFailureHint` (present when build fails with no structured errors), and `generatedGuard`. When a `Generated/` snapshot exists (taken via `snapshot_generated`), `build_and_classify` automatically verifies snapshot integrity and reverts any violations; the `generatedGuard` field contains `violated`, `Message`, and `violations` (list of `RelativePath` and `type`) when violations are detected, or is `null` when the snapshot is clean or absent. |
-| `classify_errors` | Classify a batch of build errors against the deterministic fix registry without running a build. Accepts `errorsJson` (JSON array of `BuildError` objects with `filePath`, `line`, `column`, `code`, `message`, `severity`, `isGenerated`) and an optional `projectPath` for dynamic type resolution from `Generated/` code. Returns a structured JSON with `success`, `total`, `deterministicCount`, `requiresReasoningCount`, and `results` (list of classified errors each with `error`, `isDeterministic`, `toolName`, `toolArgs`, `reason`). |
+| `build_and_classify` | Run `dotnet build`, parse output, and classify each error as deterministic or requires-reasoning. Returns a structured JSON with `success`, `exitCode`, `totalErrors`, `returnedErrors`, `deterministicCount`, `requiresReasoningCount`, `classifiedErrors`, `rawOutput`, `buildFailureHint`, and `generatedGuard`. See [build_and_classify response](#build_and_classify-response) for details. |
+| `classify_errors` | Classify a batch of build errors against the deterministic fix registry without running a build. Accepts `errorsJson` (JSON array of `BuildError` objects) and an optional `projectPath`. Returns a structured JSON with `success`, `total`, `deterministicCount`, `requiresReasoningCount`, and `results`. See [classify_errors response](#classify_errors-response) for details. |
 | `run_code_generation` | Run `dotnet build /t:generateCode` for a project. Accepts optional `localSpecsPath` for local spec iteration. |
 | `validate_tsp_config` | Validate that `tspconfig.yaml` has the correct emitter configuration |
 | `commit_iteration` | Iterate through spec repo commits to find one with valid tspconfig. Accepts optional `commitOverride` to skip iteration. |
@@ -108,6 +108,41 @@ The agent uses a three-layer architecture:
 | `run_tests` | Run `dotnet test` with configurable filter (defaults to excluding live tests). Returns a structured `TestResult` with `Success`, `ExitCode`, `Passed`, `Failed`, `Skipped`, `Total`, `Failures` (list of failure details), `Error`, and `RawOutput`. |
 | `rename_codegen_type` | Fix mismatched `[CodeGenType]` attributes by matching generated counterparts |
 | `fetch_to_fromlro` | Replace legacy `Fetch(response)` calls with `ResponseModel.FromLroResponse(response)` |
+
+#### `build_and_classify` response
+
+The `build_and_classify` tool returns a JSON object with these fields:
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `success` | `bool` | Whether the build succeeded |
+| `exitCode` | `int` | Build process exit code |
+| `totalErrors` | `int` | Total number of parsed errors |
+| `returnedErrors` | `int` | Number of errors included in this response (max 20 per call) |
+| `deterministicCount` | `int` | Count of errors that can be fixed deterministically |
+| `requiresReasoningCount` | `int` | Count of errors requiring LLM reasoning |
+| `classifiedErrors` | `ClassifiedError[]` | Array of classified errors (each with `error`, `isDeterministic`, `toolName`, `toolArgs`, `reason`) |
+| `rawOutput` | `string` | Truncated raw build output (max 5000 chars) |
+| `buildFailureHint` | `string?` | Present when build fails but no structured errors were parsed; contains relevant output lines |
+| `generatedGuard` | `object?` | Result of automatic `Generated/` integrity verification (see below) |
+
+**`generatedGuard` behaviour:** When a `Generated/` snapshot exists (taken via `snapshot_generated`), `build_and_classify` automatically verifies snapshot integrity and reverts any violations. If violations are detected, `generatedGuard` contains `violated` (`true`), `Message` (summary), and `violations` (array of `RelativePath` and `type`). When the snapshot is clean or absent, `generatedGuard` is `null`.
+
+#### `classify_errors` response
+
+The `classify_errors` tool accepts:
+- `errorsJson` — JSON array of `BuildError` objects (`filePath`, `line`, `column`, `code`, `message`, `severity`, `isGenerated`)
+- `projectPath` (optional) — absolute path to the project directory for dynamic type resolution from `Generated/` code
+
+It returns a JSON object with these fields:
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `success` | `bool` | Whether classification succeeded |
+| `total` | `int` | Total number of errors classified |
+| `deterministicCount` | `int` | Count of errors that can be fixed deterministically |
+| `requiresReasoningCount` | `int` | Count of errors requiring LLM reasoning |
+| `results` | `ClassifiedError[]` | Array of classified errors (each with `error`, `isDeterministic`, `toolName`, `toolArgs`, `reason`) |
 
 ### Deterministic Fix Registry
 
