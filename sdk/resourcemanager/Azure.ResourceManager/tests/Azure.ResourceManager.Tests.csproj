@@ -6,9 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Identity" />
-
     <PackageReference Include="Microsoft.Extensions.Azure" />
+    <PackageReference Include="Azure.Identity" ExcludeAssets="all" PrivateAssets="all" />
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />
     <PackageReference Include="Microsoft.Extensions.Configuration" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
