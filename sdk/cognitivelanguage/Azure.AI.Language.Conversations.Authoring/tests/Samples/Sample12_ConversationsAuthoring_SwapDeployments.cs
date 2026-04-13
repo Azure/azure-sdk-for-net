@@ -19,18 +19,14 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
+            ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential);
 
             #region Snippet:Sample14_ConversationsAuthoring_SwapDeployments
             string projectName = "{projectName}";
             string deploymentName1 = "{deploymentName1}";
             string deploymentName2 = "{deploymentName2}";
             ConversationAuthoringSwapDeploymentsDetails swapDetails = new ConversationAuthoringSwapDeploymentsDetails(deploymentName1, deploymentName2);
-            ConversationAuthoringProject projectClient = client.GetProject(projectName);
-            Operation operation = projectClient.SwapDeployments(
-                waitUntil: WaitUntil.Completed,
-                details: swapDetails
-            );
+            Operation operation = client.SwapDeployments(WaitUntil.Completed, projectName, swapDetails);
 
             // Extract operation-location from response headers
             string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out string location) ? location : "Not found";
@@ -45,20 +41,15 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
+            ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential);
 
             #region Snippet:Sample14_ConversationsAuthoring_SwapDeploymentsAsync
             string projectName = "{projectName}";
             string deploymentName1 = "{deploymentName1}";
             string deploymentName2 = "{deploymentName2}";
-            ConversationAuthoringProject projectClient = client.GetProject(projectName);
-
             ConversationAuthoringSwapDeploymentsDetails swapDetails = new ConversationAuthoringSwapDeploymentsDetails(deploymentName1, deploymentName2);
 
-            Operation operation = await projectClient.SwapDeploymentsAsync(
-                waitUntil: WaitUntil.Completed,
-                details: swapDetails
-            );
+            Operation operation = await client.SwapDeploymentsAsync(WaitUntil.Completed, projectName, swapDetails);
 
             // Extract operation-location from response headers
             string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out string location) ? location : "Not found";

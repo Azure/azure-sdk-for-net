@@ -6,50 +6,27 @@
 #nullable disable
 
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.NewRelicObservability;
 
 namespace Azure.ResourceManager.NewRelicObservability.Mocking
 {
-    /// <summary> A class to add extension methods to ArmClient. </summary>
+    /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableNewRelicObservabilityArmClient : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableNewRelicObservabilityArmClient"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableNewRelicObservabilityArmClient for mocking. </summary>
         protected MockableNewRelicObservabilityArmClient()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableNewRelicObservabilityArmClient"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableNewRelicObservabilityArmClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableNewRelicObservabilityArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        internal MockableNewRelicObservabilityArmClient(ArmClient client) : this(client, ResourceIdentifier.Root)
-        {
-        }
-
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="NewRelicMonitorResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NewRelicMonitorResource.CreateResourceIdentifier" /> to create a <see cref="NewRelicMonitorResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NewRelicMonitorResource"/> object. </returns>
-        public virtual NewRelicMonitorResource GetNewRelicMonitorResource(ResourceIdentifier id)
-        {
-            NewRelicMonitorResource.ValidateResourceId(id);
-            return new NewRelicMonitorResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="NewRelicObservabilityTagRuleResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NewRelicObservabilityTagRuleResource.CreateResourceIdentifier" /> to create a <see cref="NewRelicObservabilityTagRuleResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="NewRelicObservabilityTagRuleResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="NewRelicObservabilityTagRuleResource"/> object. </returns>
         public virtual NewRelicObservabilityTagRuleResource GetNewRelicObservabilityTagRuleResource(ResourceIdentifier id)
@@ -58,16 +35,22 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
             return new NewRelicObservabilityTagRuleResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="NewRelicMonitoredSubscriptionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NewRelicMonitoredSubscriptionResource.CreateResourceIdentifier" /> to create a <see cref="NewRelicMonitoredSubscriptionResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="NewRelicMonitoredSubscriptionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="NewRelicMonitoredSubscriptionResource"/> object. </returns>
         public virtual NewRelicMonitoredSubscriptionResource GetNewRelicMonitoredSubscriptionResource(ResourceIdentifier id)
         {
             NewRelicMonitoredSubscriptionResource.ValidateResourceId(id);
             return new NewRelicMonitoredSubscriptionResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="NewRelicMonitorResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="NewRelicMonitorResource"/> object. </returns>
+        public virtual NewRelicMonitorResource GetNewRelicMonitorResource(ResourceIdentifier id)
+        {
+            NewRelicMonitorResource.ValidateResourceId(id);
+            return new NewRelicMonitorResource(Client, id);
         }
     }
 }

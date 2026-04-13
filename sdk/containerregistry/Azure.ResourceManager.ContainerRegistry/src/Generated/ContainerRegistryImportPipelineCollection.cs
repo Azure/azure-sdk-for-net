@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ContainerRegistry
 {
@@ -24,51 +25,49 @@ namespace Azure.ResourceManager.ContainerRegistry
     /// </summary>
     public partial class ContainerRegistryImportPipelineCollection : ArmCollection, IEnumerable<ContainerRegistryImportPipelineResource>, IAsyncEnumerable<ContainerRegistryImportPipelineResource>
     {
-        private readonly ClientDiagnostics _containerRegistryImportPipelineImportPipelinesClientDiagnostics;
-        private readonly ImportPipelinesRestOperations _containerRegistryImportPipelineImportPipelinesRestClient;
+        private readonly ClientDiagnostics _importPipelinesClientDiagnostics;
+        private readonly ImportPipelines _importPipelinesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ContainerRegistryImportPipelineCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ContainerRegistryImportPipelineCollection for mocking. </summary>
         protected ContainerRegistryImportPipelineCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ContainerRegistryImportPipelineCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryImportPipelineCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ContainerRegistryImportPipelineCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _containerRegistryImportPipelineImportPipelinesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerRegistry", ContainerRegistryImportPipelineResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ContainerRegistryImportPipelineResource.ResourceType, out string containerRegistryImportPipelineImportPipelinesApiVersion);
-            _containerRegistryImportPipelineImportPipelinesRestClient = new ImportPipelinesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, containerRegistryImportPipelineImportPipelinesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ContainerRegistryImportPipelineResource.ResourceType, out string containerRegistryImportPipelineApiVersion);
+            _importPipelinesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerRegistry", ContainerRegistryImportPipelineResource.ResourceType.Namespace, Diagnostics);
+            _importPipelinesRestClient = new ImportPipelines(_importPipelinesClientDiagnostics, Pipeline, Endpoint, containerRegistryImportPipelineApiVersion ?? "2026-01-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ContainerRegistryResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ContainerRegistryResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ContainerRegistryResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Creates an import pipeline for a container registry with the specified parameters.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/importPipelines/{importPipelineName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/importPipelines/{importPipelineName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ImportPipelines_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> ImportPipelines_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2026-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerRegistryImportPipelineResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,21 +75,34 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="importPipelineName"> The name of the import pipeline. </param>
         /// <param name="data"> The parameters for creating an import pipeline. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="importPipelineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="importPipelineName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="importPipelineName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<ContainerRegistryImportPipelineResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string importPipelineName, ContainerRegistryImportPipelineData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(importPipelineName, nameof(importPipelineName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _containerRegistryImportPipelineImportPipelinesClientDiagnostics.CreateScope("ContainerRegistryImportPipelineCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _importPipelinesClientDiagnostics.CreateScope("ContainerRegistryImportPipelineCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _containerRegistryImportPipelineImportPipelinesRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, importPipelineName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ContainerRegistryArmOperation<ContainerRegistryImportPipelineResource>(new ContainerRegistryImportPipelineOperationSource(Client), _containerRegistryImportPipelineImportPipelinesClientDiagnostics, Pipeline, _containerRegistryImportPipelineImportPipelinesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, importPipelineName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _importPipelinesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, importPipelineName, ContainerRegistryImportPipelineData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ContainerRegistryArmOperation<ContainerRegistryImportPipelineResource> operation = new ContainerRegistryArmOperation<ContainerRegistryImportPipelineResource>(
+                    new ContainerRegistryImportPipelineOperationSource(Client),
+                    _importPipelinesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -104,20 +116,16 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// Creates an import pipeline for a container registry with the specified parameters.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/importPipelines/{importPipelineName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/importPipelines/{importPipelineName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ImportPipelines_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> ImportPipelines_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2026-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerRegistryImportPipelineResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,21 +133,34 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="importPipelineName"> The name of the import pipeline. </param>
         /// <param name="data"> The parameters for creating an import pipeline. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="importPipelineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="importPipelineName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="importPipelineName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<ContainerRegistryImportPipelineResource> CreateOrUpdate(WaitUntil waitUntil, string importPipelineName, ContainerRegistryImportPipelineData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(importPipelineName, nameof(importPipelineName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _containerRegistryImportPipelineImportPipelinesClientDiagnostics.CreateScope("ContainerRegistryImportPipelineCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _importPipelinesClientDiagnostics.CreateScope("ContainerRegistryImportPipelineCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _containerRegistryImportPipelineImportPipelinesRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, importPipelineName, data, cancellationToken);
-                var operation = new ContainerRegistryArmOperation<ContainerRegistryImportPipelineResource>(new ContainerRegistryImportPipelineOperationSource(Client), _containerRegistryImportPipelineImportPipelinesClientDiagnostics, Pipeline, _containerRegistryImportPipelineImportPipelinesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, importPipelineName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _importPipelinesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, importPipelineName, ContainerRegistryImportPipelineData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ContainerRegistryArmOperation<ContainerRegistryImportPipelineResource> operation = new ContainerRegistryArmOperation<ContainerRegistryImportPipelineResource>(
+                    new ContainerRegistryImportPipelineOperationSource(Client),
+                    _importPipelinesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -153,38 +174,42 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// Gets the properties of the import pipeline.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/importPipelines/{importPipelineName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/importPipelines/{importPipelineName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ImportPipelines_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ImportPipelines_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2026-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerRegistryImportPipelineResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="importPipelineName"> The name of the import pipeline. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="importPipelineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="importPipelineName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="importPipelineName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<ContainerRegistryImportPipelineResource>> GetAsync(string importPipelineName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(importPipelineName, nameof(importPipelineName));
 
-            using var scope = _containerRegistryImportPipelineImportPipelinesClientDiagnostics.CreateScope("ContainerRegistryImportPipelineCollection.Get");
+            using DiagnosticScope scope = _importPipelinesClientDiagnostics.CreateScope("ContainerRegistryImportPipelineCollection.Get");
             scope.Start();
             try
             {
-                var response = await _containerRegistryImportPipelineImportPipelinesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, importPipelineName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _importPipelinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, importPipelineName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ContainerRegistryImportPipelineData> response = Response.FromValue(ContainerRegistryImportPipelineData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ContainerRegistryImportPipelineResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -198,38 +223,42 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// Gets the properties of the import pipeline.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/importPipelines/{importPipelineName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/importPipelines/{importPipelineName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ImportPipelines_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ImportPipelines_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2026-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerRegistryImportPipelineResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="importPipelineName"> The name of the import pipeline. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="importPipelineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="importPipelineName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="importPipelineName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<ContainerRegistryImportPipelineResource> Get(string importPipelineName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(importPipelineName, nameof(importPipelineName));
 
-            using var scope = _containerRegistryImportPipelineImportPipelinesClientDiagnostics.CreateScope("ContainerRegistryImportPipelineCollection.Get");
+            using DiagnosticScope scope = _importPipelinesClientDiagnostics.CreateScope("ContainerRegistryImportPipelineCollection.Get");
             scope.Start();
             try
             {
-                var response = _containerRegistryImportPipelineImportPipelinesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, importPipelineName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _importPipelinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, importPipelineName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ContainerRegistryImportPipelineData> response = Response.FromValue(ContainerRegistryImportPipelineData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ContainerRegistryImportPipelineResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -243,50 +272,50 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// Lists all import pipelines for the specified container registry.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/importPipelines</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/importPipelines. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ImportPipelines_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> ImportPipelines_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2026-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerRegistryImportPipelineResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ContainerRegistryImportPipelineResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ContainerRegistryImportPipelineResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ContainerRegistryImportPipelineResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _containerRegistryImportPipelineImportPipelinesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerRegistryImportPipelineImportPipelinesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerRegistryImportPipelineResource(Client, ContainerRegistryImportPipelineData.DeserializeContainerRegistryImportPipelineData(e)), _containerRegistryImportPipelineImportPipelinesClientDiagnostics, Pipeline, "ContainerRegistryImportPipelineCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ContainerRegistryImportPipelineData, ContainerRegistryImportPipelineResource>(new ImportPipelinesGetAllAsyncCollectionResultOfT(
+                _importPipelinesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ContainerRegistryImportPipelineCollection.GetAll"), data => new ContainerRegistryImportPipelineResource(Client, data));
         }
 
         /// <summary>
         /// Lists all import pipelines for the specified container registry.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/importPipelines</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/importPipelines. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ImportPipelines_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> ImportPipelines_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2026-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerRegistryImportPipelineResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,45 +323,67 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <returns> A collection of <see cref="ContainerRegistryImportPipelineResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ContainerRegistryImportPipelineResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _containerRegistryImportPipelineImportPipelinesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerRegistryImportPipelineImportPipelinesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerRegistryImportPipelineResource(Client, ContainerRegistryImportPipelineData.DeserializeContainerRegistryImportPipelineData(e)), _containerRegistryImportPipelineImportPipelinesClientDiagnostics, Pipeline, "ContainerRegistryImportPipelineCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ContainerRegistryImportPipelineData, ContainerRegistryImportPipelineResource>(new ImportPipelinesGetAllCollectionResultOfT(
+                _importPipelinesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ContainerRegistryImportPipelineCollection.GetAll"), data => new ContainerRegistryImportPipelineResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/importPipelines/{importPipelineName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/importPipelines/{importPipelineName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ImportPipelines_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ImportPipelines_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2026-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerRegistryImportPipelineResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="importPipelineName"> The name of the import pipeline. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="importPipelineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="importPipelineName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="importPipelineName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string importPipelineName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(importPipelineName, nameof(importPipelineName));
 
-            using var scope = _containerRegistryImportPipelineImportPipelinesClientDiagnostics.CreateScope("ContainerRegistryImportPipelineCollection.Exists");
+            using DiagnosticScope scope = _importPipelinesClientDiagnostics.CreateScope("ContainerRegistryImportPipelineCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _containerRegistryImportPipelineImportPipelinesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, importPipelineName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _importPipelinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, importPipelineName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ContainerRegistryImportPipelineData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ContainerRegistryImportPipelineData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ContainerRegistryImportPipelineData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -346,36 +397,50 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/importPipelines/{importPipelineName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/importPipelines/{importPipelineName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ImportPipelines_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ImportPipelines_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2026-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerRegistryImportPipelineResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="importPipelineName"> The name of the import pipeline. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="importPipelineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="importPipelineName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="importPipelineName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string importPipelineName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(importPipelineName, nameof(importPipelineName));
 
-            using var scope = _containerRegistryImportPipelineImportPipelinesClientDiagnostics.CreateScope("ContainerRegistryImportPipelineCollection.Exists");
+            using DiagnosticScope scope = _importPipelinesClientDiagnostics.CreateScope("ContainerRegistryImportPipelineCollection.Exists");
             scope.Start();
             try
             {
-                var response = _containerRegistryImportPipelineImportPipelinesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, importPipelineName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _importPipelinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, importPipelineName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ContainerRegistryImportPipelineData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ContainerRegistryImportPipelineData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ContainerRegistryImportPipelineData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -389,38 +454,54 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/importPipelines/{importPipelineName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/importPipelines/{importPipelineName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ImportPipelines_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ImportPipelines_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2026-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerRegistryImportPipelineResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="importPipelineName"> The name of the import pipeline. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="importPipelineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="importPipelineName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="importPipelineName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<ContainerRegistryImportPipelineResource>> GetIfExistsAsync(string importPipelineName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(importPipelineName, nameof(importPipelineName));
 
-            using var scope = _containerRegistryImportPipelineImportPipelinesClientDiagnostics.CreateScope("ContainerRegistryImportPipelineCollection.GetIfExists");
+            using DiagnosticScope scope = _importPipelinesClientDiagnostics.CreateScope("ContainerRegistryImportPipelineCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _containerRegistryImportPipelineImportPipelinesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, importPipelineName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _importPipelinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, importPipelineName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ContainerRegistryImportPipelineData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ContainerRegistryImportPipelineData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ContainerRegistryImportPipelineData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ContainerRegistryImportPipelineResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ContainerRegistryImportPipelineResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -434,38 +515,54 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/importPipelines/{importPipelineName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/importPipelines/{importPipelineName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ImportPipelines_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ImportPipelines_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2026-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerRegistryImportPipelineResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="importPipelineName"> The name of the import pipeline. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="importPipelineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="importPipelineName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="importPipelineName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<ContainerRegistryImportPipelineResource> GetIfExists(string importPipelineName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(importPipelineName, nameof(importPipelineName));
 
-            using var scope = _containerRegistryImportPipelineImportPipelinesClientDiagnostics.CreateScope("ContainerRegistryImportPipelineCollection.GetIfExists");
+            using DiagnosticScope scope = _importPipelinesClientDiagnostics.CreateScope("ContainerRegistryImportPipelineCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _containerRegistryImportPipelineImportPipelinesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, importPipelineName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _importPipelinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, importPipelineName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ContainerRegistryImportPipelineData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ContainerRegistryImportPipelineData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ContainerRegistryImportPipelineData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ContainerRegistryImportPipelineResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ContainerRegistryImportPipelineResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -485,6 +582,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<ContainerRegistryImportPipelineResource> IAsyncEnumerable<ContainerRegistryImportPipelineResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Search.Models
 {
     internal static partial class SearchServiceAdminKeyKindExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this SearchServiceAdminKeyKind value) => value switch
         {
             SearchServiceAdminKeyKind.Primary => "primary",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.Search.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SearchServiceAdminKeyKind value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static SearchServiceAdminKeyKind ToSearchServiceAdminKeyKind(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "primary")) return SearchServiceAdminKeyKind.Primary;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "secondary")) return SearchServiceAdminKeyKind.Secondary;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "primary"))
+            {
+                return SearchServiceAdminKeyKind.Primary;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "secondary"))
+            {
+                return SearchServiceAdminKeyKind.Secondary;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SearchServiceAdminKeyKind value.");
         }
     }

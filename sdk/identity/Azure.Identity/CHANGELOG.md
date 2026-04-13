@@ -1,6 +1,6 @@
 # Release History
 
-## 1.20.0-beta.1 (Unreleased)
+## 1.22.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,22 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.21.0 (2026-04-10)
+
+### Other Changes
+
+- All `Azure.Identity` types have been moved to `Azure.Core` and are now available through `TypeForwardedTo` attributes. This is a non-breaking change — existing code continues to work transparently. The library's version number now aligns with that of `Azure.Core`. See the [Migration Guide](https://github.com/Azure/azure-sdk-for-net/blob/b1dfb1ec786d4013cff05fd10436c069ecb37304/sdk/identity/Azure.Identity/MigrationGuide.md) for details.
+
+## 1.20.0 (2026-03-30)
+
+### Features Added
+
+- Added a JSON schema segment to the NuGet package that provides IntelliSense and validation for Azure.Identity credential configuration in `appsettings.json`.
+
+### Breaking Changes
+
+- `AddAzureClient`, `AddKeyedAzureClient`, and `WithAzureCredential` return type changed from `IHostApplicationBuilder` to `IClientBuilder` to align with the `IClientBuilder` composition change in System.ClientModel.
 
 ## 1.19.0 (2026-03-11)
 

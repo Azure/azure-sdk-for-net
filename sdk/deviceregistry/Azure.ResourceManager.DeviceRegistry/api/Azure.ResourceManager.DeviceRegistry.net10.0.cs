@@ -402,6 +402,8 @@ namespace Azure.ResourceManager.DeviceRegistry
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DeviceRegistry.DeviceRegistryNamespaceDeviceResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DeviceRegistry.DeviceRegistryNamespaceDeviceResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DeviceRegistry.DeviceRegistryNamespaceDeviceResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Revoke(Azure.WaitUntil waitUntil, Azure.ResourceManager.DeviceRegistry.Models.DeviceCredentialsRevokeRequest content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> RevokeAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DeviceRegistry.Models.DeviceCredentialsRevokeRequest content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DeviceRegistry.DeviceRegistryNamespaceDeviceResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DeviceRegistry.DeviceRegistryNamespaceDeviceResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.DeviceRegistry.DeviceRegistryNamespaceDeviceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceRegistry.DeviceRegistryNamespaceDeviceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -748,9 +750,9 @@ namespace Azure.ResourceManager.DeviceRegistry
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.DeviceRegistry.PolicyResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DeviceRegistry.PolicyResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class PolicyData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceRegistry.PolicyData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceRegistry.PolicyData>
+    public partial class PolicyData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceRegistry.PolicyData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceRegistry.PolicyData>
     {
-        public PolicyData(Azure.Core.AzureLocation location) { }
+        public PolicyData() { }
         public Azure.ResourceManager.DeviceRegistry.Models.PolicyProperties Properties { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -768,17 +770,15 @@ namespace Azure.ResourceManager.DeviceRegistry
         protected PolicyResource() { }
         public virtual Azure.ResourceManager.DeviceRegistry.PolicyData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public virtual Azure.Response<Azure.ResourceManager.DeviceRegistry.PolicyResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DeviceRegistry.PolicyResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation ActivateBringYourOwnRoot(Azure.WaitUntil waitUntil, Azure.ResourceManager.DeviceRegistry.Models.ActivateBringYourOwnRootRequest content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> ActivateBringYourOwnRootAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DeviceRegistry.Models.ActivateBringYourOwnRootRequest content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string namespaceName, string policyName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DeviceRegistry.PolicyResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DeviceRegistry.PolicyResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DeviceRegistry.PolicyResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DeviceRegistry.PolicyResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DeviceRegistry.PolicyResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DeviceRegistry.PolicyResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation RevokeIssuer(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> RevokeIssuerAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.DeviceRegistry.PolicyData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceRegistry.PolicyData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceRegistry.PolicyData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DeviceRegistry.PolicyData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceRegistry.PolicyData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -841,12 +841,28 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
 }
 namespace Azure.ResourceManager.DeviceRegistry.Models
 {
+    public partial class ActivateBringYourOwnRootRequest : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceRegistry.Models.ActivateBringYourOwnRootRequest>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceRegistry.Models.ActivateBringYourOwnRootRequest>
+    {
+        public ActivateBringYourOwnRootRequest(string certificateChain) { }
+        public string CertificateChain { get { throw null; } }
+        protected virtual Azure.ResourceManager.DeviceRegistry.Models.ActivateBringYourOwnRootRequest JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DeviceRegistry.Models.ActivateBringYourOwnRootRequest PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.DeviceRegistry.Models.ActivateBringYourOwnRootRequest System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceRegistry.Models.ActivateBringYourOwnRootRequest>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceRegistry.Models.ActivateBringYourOwnRootRequest>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DeviceRegistry.Models.ActivateBringYourOwnRootRequest System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceRegistry.Models.ActivateBringYourOwnRootRequest>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceRegistry.Models.ActivateBringYourOwnRootRequest>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceRegistry.Models.ActivateBringYourOwnRootRequest>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public static partial class ArmDeviceRegistryModelFactory
     {
+        public static Azure.ResourceManager.DeviceRegistry.Models.ActivateBringYourOwnRootRequest ActivateBringYourOwnRootRequest(string certificateChain = null) { throw null; }
         public static Azure.ResourceManager.DeviceRegistry.Models.AssetEndpointProfileStatusError AssetEndpointProfileStatusError(int? code = default(int?), string message = null) { throw null; }
         public static Azure.ResourceManager.DeviceRegistry.Models.AssetProperties AssetProperties(string uuid = null, bool? isEnabled = default(bool?), string externalAssetId = null, string displayName = null, string description = null, string assetEndpointProfileRef = null, long? version = default(long?), string manufacturer = null, System.Uri manufacturerUri = null, string model = null, string productCode = null, string hardwareRevision = null, string softwareRevision = null, System.Uri documentationUri = null, string serialNumber = null, System.Collections.Generic.IDictionary<string, System.BinaryData> attributes = null, System.Collections.Generic.IEnumerable<string> discoveredAssetRefs = null, string defaultDatasetsConfiguration = null, string defaultEventsConfiguration = null, Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryTopic defaultTopic = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryDataset> datasets = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryEvent> events = null, Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryAssetStatus status = null, Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryProvisioningState? provisioningState = default(Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.DeviceRegistry.Models.AssetUpdateProperties AssetUpdateProperties(bool? isEnabled = default(bool?), string displayName = null, string description = null, string manufacturer = null, System.Uri manufacturerUri = null, string model = null, string productCode = null, string hardwareRevision = null, string softwareRevision = null, System.Uri documentationUri = null, string serialNumber = null, System.Collections.Generic.IDictionary<string, System.BinaryData> attributes = null, string defaultDatasetsConfiguration = null, string defaultEventsConfiguration = null, Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryTopic defaultTopic = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryDataset> datasets = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryEvent> events = null) { throw null; }
-        public static Azure.ResourceManager.DeviceRegistry.Models.CertificateAuthorityConfiguration CertificateAuthorityConfiguration(Azure.ResourceManager.DeviceRegistry.Models.SupportedKeyType keyType = default(Azure.ResourceManager.DeviceRegistry.Models.SupportedKeyType), string subject = null, System.DateTimeOffset? validityNotBefore = default(System.DateTimeOffset?), System.DateTimeOffset? validityNotAfter = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.ResourceManager.DeviceRegistry.Models.BringYourOwnRoot BringYourOwnRoot(bool enabled = false, string certificateSigningRequest = null, string issuingCertificateThumbprint = null, Azure.ResourceManager.DeviceRegistry.Models.BringYourOwnRootStatus? status = default(Azure.ResourceManager.DeviceRegistry.Models.BringYourOwnRootStatus?)) { throw null; }
+        public static Azure.ResourceManager.DeviceRegistry.Models.CertificateAuthorityConfiguration CertificateAuthorityConfiguration(Azure.ResourceManager.DeviceRegistry.Models.SupportedKeyType keyType = default(Azure.ResourceManager.DeviceRegistry.Models.SupportedKeyType), string subject = null, System.DateTimeOffset? validityNotBefore = default(System.DateTimeOffset?), System.DateTimeOffset? validityNotAfter = default(System.DateTimeOffset?), Azure.ResourceManager.DeviceRegistry.Models.BringYourOwnRoot bringYourOwnRoot = null) { throw null; }
         public static Azure.ResourceManager.DeviceRegistry.CredentialData CredentialData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryProvisioningState? credentialProvisioningState = default(Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.DeviceRegistry.Models.CredentialPatch CredentialPatch(System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.DeviceRegistry.DeviceRegistryAssetData DeviceRegistryAssetData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.DeviceRegistry.Models.AssetProperties properties = null, Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryExtendedLocation extendedLocation = null) { throw null; }
@@ -915,8 +931,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         public static Azure.ResourceManager.DeviceRegistry.Models.NamespaceMigrateContent NamespaceMigrateContent(Azure.ResourceManager.DeviceRegistry.Models.Scope? scope = default(Azure.ResourceManager.DeviceRegistry.Models.Scope?), System.Collections.Generic.IEnumerable<string> resourceIds = null) { throw null; }
         public static Azure.ResourceManager.DeviceRegistry.Models.NamespaceStream NamespaceStream(string name = null, string streamConfiguration = null, string typeRef = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DeviceRegistry.Models.StreamDestination> destinations = null) { throw null; }
         public static Azure.ResourceManager.DeviceRegistry.Models.OutboundEndpoints OutboundEndpoints(System.Collections.Generic.IDictionary<string, Azure.ResourceManager.DeviceRegistry.Models.DeviceMessagingEndpoint> assigned = null, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.DeviceRegistry.Models.DeviceMessagingEndpoint> unassigned = null) { throw null; }
-        public static Azure.ResourceManager.DeviceRegistry.PolicyData PolicyData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.DeviceRegistry.Models.PolicyProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.DeviceRegistry.Models.PolicyPatch PolicyPatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.DeviceRegistry.Models.CertificateConfiguration policyUpdateCertificate = null) { throw null; }
+        public static Azure.ResourceManager.DeviceRegistry.PolicyData PolicyData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.DeviceRegistry.Models.PolicyProperties properties = null) { throw null; }
         public static Azure.ResourceManager.DeviceRegistry.Models.PolicyProperties PolicyProperties(Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryProvisioningState? provisioningState = default(Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryProvisioningState?), Azure.ResourceManager.DeviceRegistry.Models.CertificateConfiguration certificate = null) { throw null; }
         public static Azure.ResourceManager.DeviceRegistry.Models.SystemAssignedServiceIdentity SystemAssignedServiceIdentity(System.Guid? principalId = default(System.Guid?), System.Guid? tenantId = default(System.Guid?), Azure.ResourceManager.DeviceRegistry.Models.SystemAssignedServiceIdentityType type = default(Azure.ResourceManager.DeviceRegistry.Models.SystemAssignedServiceIdentityType)) { throw null; }
     }
@@ -1037,9 +1052,45 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         public static bool operator !=(Azure.ResourceManager.DeviceRegistry.Models.AuthenticationMethod left, Azure.ResourceManager.DeviceRegistry.Models.AuthenticationMethod right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class BringYourOwnRoot : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceRegistry.Models.BringYourOwnRoot>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceRegistry.Models.BringYourOwnRoot>
+    {
+        public BringYourOwnRoot(bool enabled) { }
+        public string CertificateSigningRequest { get { throw null; } }
+        public bool Enabled { get { throw null; } set { } }
+        public string IssuingCertificateThumbprint { get { throw null; } }
+        public Azure.ResourceManager.DeviceRegistry.Models.BringYourOwnRootStatus? Status { get { throw null; } }
+        protected virtual Azure.ResourceManager.DeviceRegistry.Models.BringYourOwnRoot JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DeviceRegistry.Models.BringYourOwnRoot PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.DeviceRegistry.Models.BringYourOwnRoot System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceRegistry.Models.BringYourOwnRoot>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceRegistry.Models.BringYourOwnRoot>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DeviceRegistry.Models.BringYourOwnRoot System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceRegistry.Models.BringYourOwnRoot>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceRegistry.Models.BringYourOwnRoot>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceRegistry.Models.BringYourOwnRoot>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct BringYourOwnRootStatus : System.IEquatable<Azure.ResourceManager.DeviceRegistry.Models.BringYourOwnRootStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public BringYourOwnRootStatus(string value) { throw null; }
+        public static Azure.ResourceManager.DeviceRegistry.Models.BringYourOwnRootStatus Active { get { throw null; } }
+        public static Azure.ResourceManager.DeviceRegistry.Models.BringYourOwnRootStatus ActiveButPendingRenewal { get { throw null; } }
+        public static Azure.ResourceManager.DeviceRegistry.Models.BringYourOwnRootStatus PendingActivation { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DeviceRegistry.Models.BringYourOwnRootStatus other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DeviceRegistry.Models.BringYourOwnRootStatus left, Azure.ResourceManager.DeviceRegistry.Models.BringYourOwnRootStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DeviceRegistry.Models.BringYourOwnRootStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DeviceRegistry.Models.BringYourOwnRootStatus? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DeviceRegistry.Models.BringYourOwnRootStatus left, Azure.ResourceManager.DeviceRegistry.Models.BringYourOwnRootStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class CertificateAuthorityConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceRegistry.Models.CertificateAuthorityConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceRegistry.Models.CertificateAuthorityConfiguration>
     {
         public CertificateAuthorityConfiguration(Azure.ResourceManager.DeviceRegistry.Models.SupportedKeyType keyType) { }
+        public Azure.ResourceManager.DeviceRegistry.Models.BringYourOwnRoot BringYourOwnRoot { get { throw null; } set { } }
         public Azure.ResourceManager.DeviceRegistry.Models.SupportedKeyType KeyType { get { throw null; } set { } }
         public string Subject { get { throw null; } }
         public System.DateTimeOffset? ValidityNotAfter { get { throw null; } }
@@ -1057,6 +1108,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
     public partial class CertificateConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceRegistry.Models.CertificateConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceRegistry.Models.CertificateConfiguration>
     {
         public CertificateConfiguration(Azure.ResourceManager.DeviceRegistry.Models.CertificateAuthorityConfiguration certificateAuthorityConfiguration, int? leafCertificateValidityPeriodInDays) { }
+        public CertificateConfiguration(int leafCertificateValidityPeriodInDays) { }
         public Azure.ResourceManager.DeviceRegistry.Models.CertificateAuthorityConfiguration CertificateAuthorityConfiguration { get { throw null; } set { } }
         public int? LeafCertificateValidityPeriodInDays { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.DeviceRegistry.Models.CertificateConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1157,6 +1209,20 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         Azure.ResourceManager.DeviceRegistry.Models.DatasetStorageDestination System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceRegistry.Models.DatasetStorageDestination>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceRegistry.Models.DatasetStorageDestination>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceRegistry.Models.DatasetStorageDestination>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class DeviceCredentialsRevokeRequest : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceRegistry.Models.DeviceCredentialsRevokeRequest>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceRegistry.Models.DeviceCredentialsRevokeRequest>
+    {
+        public DeviceCredentialsRevokeRequest() { }
+        public bool? Disable { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DeviceRegistry.Models.DeviceCredentialsRevokeRequest JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DeviceRegistry.Models.DeviceCredentialsRevokeRequest PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.DeviceRegistry.Models.DeviceCredentialsRevokeRequest System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceRegistry.Models.DeviceCredentialsRevokeRequest>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceRegistry.Models.DeviceCredentialsRevokeRequest>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DeviceRegistry.Models.DeviceCredentialsRevokeRequest System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceRegistry.Models.DeviceCredentialsRevokeRequest>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceRegistry.Models.DeviceCredentialsRevokeRequest>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceRegistry.Models.DeviceCredentialsRevokeRequest>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class DeviceMessagingEndpoint : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceRegistry.Models.DeviceMessagingEndpoint>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceRegistry.Models.DeviceMessagingEndpoint>
     {
@@ -2676,7 +2742,6 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
     {
         public PolicyPatch() { }
         public Azure.ResourceManager.DeviceRegistry.Models.CertificateConfiguration PolicyUpdateCertificate { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         protected virtual Azure.ResourceManager.DeviceRegistry.Models.PolicyPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.DeviceRegistry.Models.PolicyPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

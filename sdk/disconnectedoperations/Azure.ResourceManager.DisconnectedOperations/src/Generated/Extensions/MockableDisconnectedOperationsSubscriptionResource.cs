@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DisconnectedOperations.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DisconnectedOperationData, DisconnectedOperationResource>(new DisconnectedGetBySubscriptionAsyncCollectionResultOfT(DisconnectedRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DisconnectedOperationResource(Client, data));
+            return new AsyncPageableWrapper<DisconnectedOperationData, DisconnectedOperationResource>(new DisconnectedGetBySubscriptionAsyncCollectionResultOfT(DisconnectedRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDisconnectedOperationsSubscriptionResource.GetDisconnectedOperations"), data => new DisconnectedOperationResource(Client, data));
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.DisconnectedOperations.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DisconnectedOperationData, DisconnectedOperationResource>(new DisconnectedGetBySubscriptionCollectionResultOfT(DisconnectedRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DisconnectedOperationResource(Client, data));
+            return new PageableWrapper<DisconnectedOperationData, DisconnectedOperationResource>(new DisconnectedGetBySubscriptionCollectionResultOfT(DisconnectedRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDisconnectedOperationsSubscriptionResource.GetDisconnectedOperations"), data => new DisconnectedOperationResource(Client, data));
         }
     }
 }

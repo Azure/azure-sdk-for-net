@@ -87,7 +87,11 @@ namespace Azure.ResourceManager.IotOperations.Models
             }
             set
             {
-                Diagnostics = new AkriConnectorTemplateDiagnostics(value);
+                if (Diagnostics is null)
+                {
+                    Diagnostics = new AkriConnectorTemplateDiagnostics();
+                }
+                Diagnostics.LogsLevel = value;
             }
         }
     }

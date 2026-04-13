@@ -13,77 +13,126 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql
 {
-    /// <summary>
-    /// A class representing the CosmosDBForPostgreSqlRole data model.
-    /// Represents a cluster role.
-    /// </summary>
+    /// <summary> Represents a cluster role. </summary>
     public partial class CosmosDBForPostgreSqlRoleData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlRoleData"/>. </summary>
-        /// <param name="password"> The password of the cluster role. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="password"/> is null. </exception>
-        public CosmosDBForPostgreSqlRoleData(string password)
+        public CosmosDBForPostgreSqlRoleData()
         {
-            Argument.AssertNotNull(password, nameof(password));
 
-            Password = password;
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlRoleData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="password"> The password of the cluster role. </param>
-        /// <param name="provisioningState"> Provisioning state of the role. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CosmosDBForPostgreSqlRoleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string password, CosmosDBForPostgreSqlProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The properties of a role. </param>
+        internal CosmosDBForPostgreSqlRoleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, RoleProperties properties) : base(id, name, resourceType, systemData)
         {
-            Password = password;
-            ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlRoleData"/> for deserialization. </summary>
-        internal CosmosDBForPostgreSqlRoleData()
+        /// <summary> The properties of a role. </summary>
+        internal RoleProperties Properties { get; set; }
+
+        /// <summary> Gets or sets the RoleType. </summary>
+        public RoleType? RoleType
         {
+            get
+            {
+                return Properties is null ? default : Properties.RoleType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RoleProperties();
+                }
+                Properties.RoleType = value.Value;
+            }
         }
 
-        /// <summary> The password of the cluster role. </summary>
-        public string Password { get; set; }
+        /// <summary> The password of the cluster role. If an identity is used, password will not be required. </summary>
+        public string Password
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Password;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RoleProperties();
+                }
+                Properties.Password = value;
+            }
+        }
+
         /// <summary> Provisioning state of the role. </summary>
-        public CosmosDBForPostgreSqlProvisioningState? ProvisioningState { get; }
+        public CosmosDBForPostgreSqlProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> A type definition that refers the id to an Azure Resource Manager resource. </summary>
+        public ResourceIdentifier ObjectId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ObjectId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RoleProperties();
+                }
+                Properties.ObjectId = value;
+            }
+        }
+
+        /// <summary> Gets or sets the PrincipalType. </summary>
+        public PrincipalType PrincipalType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrincipalType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RoleProperties();
+                }
+                Properties.PrincipalType = value;
+            }
+        }
+
+        /// <summary> A type definition that refers the id to an Azure Resource Manager resource. </summary>
+        public ResourceIdentifier TenantId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TenantId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RoleProperties();
+                }
+                Properties.TenantId = value;
+            }
+        }
     }
 }
