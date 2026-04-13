@@ -191,6 +191,9 @@ jobs:
           EnablePRGeneration: true
           PRMatrixSetting: ProjectNames
           PRJobBatchSize: 1
+          PRJobBatchSizeOverrides:
+            Linux: 3
+            Windows: 3
           PRMatrixIndirectFilters:
             - 'AdditionalTestArguments=.*true'
             - 'Pool=.*LinuxPool$'
