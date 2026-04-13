@@ -5,6 +5,7 @@
 ### Features Added
 
 - Added `AddSecretClient` and `AddKeyedSecretClient` extension methods on `IHostApplicationBuilder` for registering `SecretClient` via dependency injection using configuration-based setup.
+- Added a JSON schema segment to the NuGet package that provides IntelliSense and validation for `SecretClientSettings` configuration in `appsettings.json`.
 
 ## 4.9.0 (2026-02-25)
 
