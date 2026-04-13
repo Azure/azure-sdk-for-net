@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure.ResourceManager.ProviderHub.Models;
 
@@ -14,6 +15,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
     public static partial class ArmProviderHubModelFactory
     {
         /// <summary> Backward-compat factory method for ProviderRegistrationProperties (34 params). </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static ProviderRegistrationProperties ProviderRegistrationProperties(
             IEnumerable<string> providerAuthenticationAllowedAudiences = null,
             IEnumerable<ResourceProviderAuthorization> providerAuthorizations = null,
@@ -52,102 +54,44 @@ namespace Azure.ResourceManager.ProviderHub.Models
             IEnumerable<string> privateResourceProviderAllowedSubscriptions = null,
             TokenAuthConfiguration tokenAuthConfiguration = null)
         {
-            var result = new ProviderRegistrationProperties();
-            if (providerAuthenticationAllowedAudiences != null)
-            {
-                foreach (var item in providerAuthenticationAllowedAudiences)
-                    result.ProviderAuthenticationAllowedAudiences.Add(item);
-            }
-            if (providerAuthorizations != null)
-            {
-                foreach (var item in providerAuthorizations)
-                    result.ProviderAuthorizations.Add(item);
-            }
-            result.Namespace = @namespace;
-            if (services != null)
-            {
-                foreach (var item in services)
-                    result.Services.Add(item);
-            }
-            result.ServiceName = serviceName;
-            result.ProviderVersion = providerVersion;
-            result.ProviderType = providerType;
-            if (requiredFeatures != null)
-            {
-                foreach (var item in requiredFeatures)
-                    result.RequiredFeatures.Add(item);
-            }
-            result.RequiredFeaturesPolicy = requiredFeaturesPolicy;
-            result.RequestHeaderOptions = requestHeaderOptions;
-            result.Management = management;
-            if (capabilities != null)
-            {
-                foreach (var item in capabilities)
-                    result.Capabilities.Add(item);
-            }
-            result.CrossTenantTokenValidation = crossTenantTokenValidation;
-            result.Metadata = metadata;
-            result.TemplateDeploymentOptions = templateDeploymentOptions;
-            if (globalNotificationEndpoints != null)
-            {
-                foreach (var item in globalNotificationEndpoints)
-                    result.GlobalNotificationEndpoints.Add(item);
-            }
-            result.EnableTenantLinkedNotification = enableTenantLinkedNotification;
-            if (notifications != null)
-            {
-                foreach (var item in notifications)
-                    result.Notifications.Add(item);
-            }
-            if (linkedNotificationRules != null)
-            {
-                foreach (var item in linkedNotificationRules)
-                    result.LinkedNotificationRules.Add(item);
-            }
-            result.AsyncOperationPollingRules = asyncOperationPollingRules;
-            result.DstsConfiguration = dstsConfiguration;
-            result.NotificationOptions = notificationOptions;
-            if (resourceHydrationAccounts != null)
-            {
-                foreach (var item in resourceHydrationAccounts)
-                    result.ResourceHydrationAccounts.Add(item);
-            }
-            if (notificationSubscriberSettings != null)
-            {
-                foreach (var item in notificationSubscriberSettings)
-                    result.NotificationSubscriberSettings.Add(item);
-            }
-            if (managementGroupGlobalNotificationEndpoints != null)
-            {
-                foreach (var item in managementGroupGlobalNotificationEndpoints)
-                    result.ManagementGroupGlobalNotificationEndpoints.Add(item);
-            }
-            if (optionalFeatures != null)
-            {
-                foreach (var item in optionalFeatures)
-                    result.OptionalFeatures.Add(item);
-            }
-            if (resourceGroupLockOptionDuringMoveBlockActionVerb.HasValue)
-                result.ResourceGroupLockOptionDuringMoveBlockActionVerb = resourceGroupLockOptionDuringMoveBlockActionVerb.Value;
-            if (serviceClientOptionsType.HasValue)
-                result.ServiceClientOptionsType = serviceClientOptionsType.Value;
-            result.LegacyNamespace = legacyNamespace;
-            if (legacyRegistrations != null)
-            {
-                foreach (var item in legacyRegistrations)
-                    result.LegacyRegistrations.Add(item);
-            }
-            result.CustomManifestVersion = customManifestVersion;
-            result.ProviderHubMetadata = providerHubMetadata;
-            result.ProvisioningState = provisioningState;
-            result.SubscriptionLifecycleNotificationSpecifications = subscriptionLifecycleNotificationSpecifications;
-            if (privateResourceProviderAllowedSubscriptions != null)
-            {
-                foreach (var item in privateResourceProviderAllowedSubscriptions)
-                    result.PrivateResourceProviderAllowedSubscriptions.Add(item);
-            }
-            result.TokenAuthConfiguration = tokenAuthConfiguration;
-            return result;
+            return new ProviderRegistrationProperties(
+                providerAuthenticationAllowedAudiences is null ? null : new ResourceProviderAuthentication(providerAuthenticationAllowedAudiences.ToList(), null),
+                providerAuthorizations?.ToList(),
+                @namespace,
+                services?.ToList(),
+                serviceName,
+                providerVersion,
+                providerType,
+                requiredFeatures?.ToList(),
+                requiredFeaturesPolicy is null ? default : new ProviderFeaturesRule(requiredFeaturesPolicy.Value, null),
+                requestHeaderOptions,
+                management,
+                capabilities?.ToList(),
+                crossTenantTokenValidation,
+                metadata,
+                templateDeploymentOptions,
+                globalNotificationEndpoints?.ToList(),
+                enableTenantLinkedNotification,
+                notifications?.ToList(),
+                linkedNotificationRules?.ToList(),
+                asyncOperationPollingRules is null ? default : new ResourceProviderAuthorizationRules(asyncOperationPollingRules, null),
+                dstsConfiguration,
+                notificationOptions,
+                resourceHydrationAccounts?.ToList(),
+                notificationSubscriberSettings is null ? default : new ResourceProviderManifestNotificationSettings(notificationSubscriberSettings.ToList(), null),
+                managementGroupGlobalNotificationEndpoints?.ToList(),
+                optionalFeatures?.ToList(),
+                resourceGroupLockOptionDuringMoveBlockActionVerb is null ? default : new ResourceProviderManifestResourceGroupLockOptionDuringMove(resourceGroupLockOptionDuringMoveBlockActionVerb, null),
+                serviceClientOptionsType is null ? default : new ResourceProviderManifestResponseOptions(serviceClientOptionsType, null),
+                legacyNamespace,
+                legacyRegistrations?.ToList(),
+                customManifestVersion,
+                additionalBinaryDataProperties: null,
+                providerHubMetadata,
+                provisioningState,
+                subscriptionLifecycleNotificationSpecifications,
+                privateResourceProviderAllowedSubscriptions is null ? default : new PrivateResourceProviderConfiguration(privateResourceProviderAllowedSubscriptions.ToList(), null),
+                tokenAuthConfiguration);
         }
 
         /// <summary> Backward-compat factory method for ResourceProviderManifest (20 params). </summary>
@@ -203,6 +147,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Backward-compat factory method for ResourceProviderManifest (14 params with OptInHeaderType). </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static ResourceProviderManifest ResourceProviderManifest(
             IEnumerable<string> providerAuthenticationAllowedAudiences = null,
             IEnumerable<ResourceProviderAuthorization> providerAuthorizations = null,
@@ -219,32 +164,24 @@ namespace Azure.ResourceManager.ProviderHub.Models
             IEnumerable<ResourceProviderEndpoint> globalNotificationEndpoints = null,
             ReRegisterSubscriptionMetadata reRegisterSubscriptionMetadata = null)
         {
-            var providerRequestHeaderOptions = optInHeaders is null
+            var requestHeaderOptions = optInHeaders is null
                 ? default
                 : new ProviderRequestHeaderOptions(optInHeaders, default, null);
-            return new ResourceProviderManifest(
-                providerAuthenticationAllowedAudiences is null ? null : new ResourceProviderAuthentication(providerAuthenticationAllowedAudiences.ToList(), null),
-                providerAuthorizations?.ToList(),
-                @namespace,
-                default,
-                default,
-                providerVersion,
-                providerType,
-                requiredFeatures?.ToList(),
-                requiredFeaturesPolicy is null ? default : new ProviderFeaturesRule(requiredFeaturesPolicy.Value, null),
-                providerRequestHeaderOptions,
-                resourceTypes?.ToList(),
-                management,
-                capabilities?.ToList(),
-                default,
-                metadata,
-                globalNotificationEndpoints?.ToList(),
-                reRegisterSubscriptionMetadata,
-                default,
-                default,
-                default,
-                default,
-                additionalBinaryDataProperties: null);
+            return ResourceProviderManifest(
+                providerAuthenticationAllowedAudiences: providerAuthenticationAllowedAudiences,
+                providerAuthorizations: providerAuthorizations,
+                @namespace: @namespace,
+                providerVersion: providerVersion,
+                providerType: providerType,
+                requiredFeatures: requiredFeatures,
+                requiredFeaturesPolicy: requiredFeaturesPolicy,
+                requestHeaderOptions: requestHeaderOptions,
+                resourceTypes: resourceTypes,
+                management: management,
+                capabilities: capabilities,
+                metadata: metadata,
+                globalNotificationEndpoints: globalNotificationEndpoints,
+                reRegisterSubscriptionMetadata: reRegisterSubscriptionMetadata);
         }
     }
 }
