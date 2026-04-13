@@ -1,6 +1,18 @@
 # Release History
 
-## 1.5.0 (2026-04-01)
+## 1.6.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+- Updated dependency from `Azure.Identity` to `Azure.Core` directly, as the `Azure.Identity` types moved to `Azure.Core`.
+
+## 1.5.0 (2026-04-02)
 
 ### Features Added
 

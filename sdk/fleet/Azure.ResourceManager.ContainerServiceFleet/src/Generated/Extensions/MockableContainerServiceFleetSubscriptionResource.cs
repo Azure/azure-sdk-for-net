@@ -65,7 +65,13 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ContainerServiceFleetData, ContainerServiceFleetResource>(new FleetsGetBySubscriptionAsyncCollectionResultOfT(FleetsRestClient, Guid.Parse(Id.SubscriptionId), maxCount, skipToken, context), data => new ContainerServiceFleetResource(Client, data));
+            return new AsyncPageableWrapper<ContainerServiceFleetData, ContainerServiceFleetResource>(new FleetsGetBySubscriptionAsyncCollectionResultOfT(
+                FleetsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                maxCount,
+                skipToken,
+                context,
+                "MockableContainerServiceFleetSubscriptionResource.GetContainerServiceFleets"), data => new ContainerServiceFleetResource(Client, data));
         }
 
         /// <summary>
@@ -95,7 +101,13 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ContainerServiceFleetData, ContainerServiceFleetResource>(new FleetsGetBySubscriptionCollectionResultOfT(FleetsRestClient, Guid.Parse(Id.SubscriptionId), maxCount, skipToken, context), data => new ContainerServiceFleetResource(Client, data));
+            return new PageableWrapper<ContainerServiceFleetData, ContainerServiceFleetResource>(new FleetsGetBySubscriptionCollectionResultOfT(
+                FleetsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                maxCount,
+                skipToken,
+                context,
+                "MockableContainerServiceFleetSubscriptionResource.GetContainerServiceFleets"), data => new ContainerServiceFleetResource(Client, data));
         }
     }
 }

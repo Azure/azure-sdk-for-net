@@ -5,9 +5,9 @@ using System;
 using System.ClientModel;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Azure.AI.Projects.Evaluation;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
-using Azure.AI.Projects.Evaluation;
 using NUnit.Framework;
 
 namespace Azure.AI.Projects.Tests.Samples.Evaluation;

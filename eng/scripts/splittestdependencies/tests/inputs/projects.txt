@@ -84,7 +84,6 @@ $(RepoRoot)sdk\keyvault\Azure.Security.KeyVault.Administration\tests\Azure.Secur
 $(RepoRoot)sdk\keyvault\Azure.Security.KeyVault.Certificates\tests\Azure.Security.KeyVault.Certificates.Tests.csproj
 $(RepoRoot)sdk\keyvault\Azure.Security.KeyVault.Keys\tests\Azure.Security.KeyVault.Keys.Tests.csproj
 $(RepoRoot)sdk\keyvault\Azure.Security.KeyVault.Secrets\tests\Azure.Security.KeyVault.Secrets.Tests.csproj
-$(RepoRoot)sdk\keyvault\samples\keyvaultproxy\tests\AzureSamples.Security.KeyVault.Proxy.Tests.csproj
 $(RepoRoot)sdk\logic\Azure.ResourceManager.Logic\tests\Azure.ResourceManager.Logic.Tests.csproj
 $(RepoRoot)sdk\machinelearningservices\Azure.ResourceManager.MachineLearning\tests\Azure.ResourceManager.MachineLearning.Tests.csproj
 $(RepoRoot)sdk\managedserviceidentity\Azure.ResourceManager.ManagedServiceIdentities\tests\Azure.ResourceManager.ManagedServiceIdentities.Tests.csproj

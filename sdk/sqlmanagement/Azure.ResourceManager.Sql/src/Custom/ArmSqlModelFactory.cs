@@ -6,6 +6,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -85,5 +86,29 @@ namespace Azure.ResourceManager.Sql.Models
                 additionalDetails,
                 serializedAdditionalRawData: null);
         }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ManagedInstanceVcoresCapability"/>. </summary>
+        /// <param name="name"> The virtual cores identifier. </param>
+        /// <param name="value"> The virtual cores value. </param>
+        /// <param name="supportedMemorySizesInGB"> Supported memory sizes in GB. </param>
+        /// <param name="includedMaxSize"> Included size. </param>
+        /// <param name="supportedStorageSizes"> Storage size ranges. </param>
+        /// <param name="includedStorageIOps"> Included storage IOps. </param>
+        /// <param name="supportedStorageIOps"> Storage IOps ranges. </param>
+        /// <param name="iopsMinValueOverrideFactorPerSelectedStorageGB"> Min IOps override factor per selected storage GB. </param>
+        /// <param name="iopsIncludedValueOverrideFactorPerSelectedStorageGB"> Included IOps override factor per selected storage GB. </param>
+        /// <param name="includedStorageThroughputMBps"> Included storage throughput MBps. </param>
+        /// <param name="supportedStorageThroughputMBps"> Storage throughput MBps ranges. </param>
+        /// <param name="throughputMBpsMinValueOverrideFactorPerSelectedStorageGB"> Min throughput MBps override factor per selected storage GB. </param>
+        /// <param name="throughputMBpsIncludedValueOverrideFactorPerSelectedStorageGB"> Included throughput MBps override factor per selected storage GB. </param>
+        /// <param name="isInstancePoolSupported"> True if this service objective is supported for managed instances in an instance pool. </param>
+        /// <param name="isStandaloneSupported"> True if this service objective is supported for standalone managed instances. </param>
+        /// <param name="supportedMaintenanceConfigurations"> List of supported maintenance configurations. </param>
+        /// <param name="status"> The status of the capability. </param>
+        /// <param name="reason"> The reason for the capability not being available. </param>
+        /// <returns> A new <see cref="Models.ManagedInstanceVcoresCapability"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ManagedInstanceVcoresCapability ManagedInstanceVcoresCapability(string name, int? value, MaxLimitRangeCapability supportedMemorySizesInGB , MaxSizeCapability includedMaxSize, IEnumerable<MaxSizeRangeCapability> supportedStorageSizes = null, long? includedStorageIOps = null, MaxLimitRangeCapability supportedStorageIOps = null, double? iopsMinValueOverrideFactorPerSelectedStorageGB = null, double? iopsIncludedValueOverrideFactorPerSelectedStorageGB = null, long? includedStorageThroughputMBps = null, MaxLimitRangeCapability supportedStorageThroughputMBps = null, double? throughputMBpsMinValueOverrideFactorPerSelectedStorageGB = null, double? throughputMBpsIncludedValueOverrideFactorPerSelectedStorageGB = null, bool? isInstancePoolSupported = null, bool? isStandaloneSupported = null, IEnumerable<ManagedInstanceMaintenanceConfigurationCapability> supportedMaintenanceConfigurations = null, SqlCapabilityStatus? status = null, string reason = null)
+            => ManagedInstanceVcoresCapability(name, value, null, supportedMemorySizesInGB, includedMaxSize, supportedStorageSizes, includedStorageIOps, supportedStorageIOps, iopsMinValueOverrideFactorPerSelectedStorageGB, iopsIncludedValueOverrideFactorPerSelectedStorageGB, includedStorageThroughputMBps, supportedStorageThroughputMBps, throughputMBpsMinValueOverrideFactorPerSelectedStorageGB, throughputMBpsIncludedValueOverrideFactorPerSelectedStorageGB, isInstancePoolSupported , isStandaloneSupported, supportedMaintenanceConfigurations, status, reason);
     }
 }

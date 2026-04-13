@@ -140,9 +140,9 @@ public class DefaultModeProtocolTests : ProtocolTestBase
             : "Hello!";
         var echoText = $"Echo: {inputText}";
         yield return text.EmitDelta(echoText);
-        yield return text.EmitDone(echoText);
+        yield return text.EmitTextDone(echoText);
 
-        yield return message.EmitContentDone(text);
+        yield return text.EmitDone();
         yield return message.EmitDone();
 
         yield return stream.EmitCompleted();

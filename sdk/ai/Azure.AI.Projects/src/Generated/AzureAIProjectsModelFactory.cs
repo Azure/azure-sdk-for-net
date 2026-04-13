@@ -737,8 +737,11 @@ namespace Azure.AI.Projects
         /// <param name="dataSchema"> The JSON schema (Draft 2020-12) for the evaluator's input data. This includes parameters like type, properties, required. </param>
         /// <param name="metrics"> List of output metrics produced by this evaluator. </param>
         /// <param name="codeText"> Inline code text for the evaluator. </param>
+        /// <param name="entryPoint"> The entry point Python file name for the uploaded evaluator code (e.g. 'answer_length_evaluator.py'). </param>
+        /// <param name="imageTag"> The container image tag to use for evaluator code execution. </param>
+        /// <param name="blobUri"> The blob URI for the evaluator storage. </param>
         /// <returns> A new <see cref="Evaluation.CodeBasedEvaluatorDefinition"/> instance for mocking. </returns>
-        public static CodeBasedEvaluatorDefinition CodeBasedEvaluatorDefinition(BinaryData initParameters = default, BinaryData dataSchema = default, IDictionary<string, EvaluatorMetric> metrics = default, string codeText = default)
+        public static CodeBasedEvaluatorDefinition CodeBasedEvaluatorDefinition(BinaryData initParameters = default, BinaryData dataSchema = default, IDictionary<string, EvaluatorMetric> metrics = default, string codeText = default, string entryPoint = default, string imageTag = default, Uri blobUri = default)
         {
             metrics ??= new ChangeTrackingDictionary<string, EvaluatorMetric>();
 
@@ -748,7 +751,10 @@ namespace Azure.AI.Projects
                 dataSchema,
                 metrics,
                 additionalBinaryDataProperties: null,
-                codeText);
+                codeText,
+                entryPoint,
+                imageTag,
+                blobUri);
         }
 
         /// <summary> Prompt-based evaluator. </summary>
@@ -768,6 +774,14 @@ namespace Azure.AI.Projects
                 metrics,
                 additionalBinaryDataProperties: null,
                 promptText);
+        }
+
+        /// <summary> Request body for getting evaluator credentials. </summary>
+        /// <param name="blobUri"> The blob URI for the evaluator storage. Example: `https://account.blob.core.windows.net:443/container`. </param>
+        /// <returns> A new <see cref="Projects.EvaluatorCredentialRequest"/> instance for mocking. </returns>
+        public static EvaluatorCredentialRequest EvaluatorCredentialRequest(Uri blobUri = default)
+        {
+            return new EvaluatorCredentialRequest(blobUri, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The response body for cluster insights. </summary>
@@ -1294,6 +1308,18 @@ namespace Azure.AI.Projects
         public static MemoryStoreDeleteScopeResponse MemoryStoreDeleteScopeResponse(string name = default, string scope = default, bool isDeleted = default)
         {
             return new MemoryStoreDeleteScopeResponse("memory_store.scope.deleted", name, scope, isDeleted, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Code-based evaluator definition using python code. </summary>
+        /// <param name="initParameters"> The JSON schema (Draft 2020-12) for the evaluator's input parameters. This includes parameters like type, properties, required. </param>
+        /// <param name="dataSchema"> The JSON schema (Draft 2020-12) for the evaluator's input data. This includes parameters like type, properties, required. </param>
+        /// <param name="metrics"> List of output metrics produced by this evaluator. </param>
+        /// <param name="codeText"> Inline code text for the evaluator. </param>
+        /// <returns> A new <see cref="Evaluation.CodeBasedEvaluatorDefinition"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static CodeBasedEvaluatorDefinition CodeBasedEvaluatorDefinition(BinaryData initParameters, BinaryData dataSchema, IDictionary<string, EvaluatorMetric> metrics, string codeText)
+        {
+            return CodeBasedEvaluatorDefinition(initParameters, dataSchema, metrics, codeText, entryPoint: default, imageTag: default, blobUri: default);
         }
 
         /// <summary> Represents a request for a pending upload. </summary>

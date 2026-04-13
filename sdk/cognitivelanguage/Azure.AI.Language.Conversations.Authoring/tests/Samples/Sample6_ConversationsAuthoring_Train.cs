@@ -20,11 +20,10 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
+            ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential);
 
             #region Snippet:Sample6_ConversationsAuthoring_Train
             string projectName = "{projectName}";
-            ConversationAuthoringProject projectClient = client.GetProject(projectName);
             ConversationAuthoringTrainingJobDetails trainingJobDetails = new ConversationAuthoringTrainingJobDetails(
                 modelLabel: "{modelLabel}",
                 trainingMode: ConversationAuthoringTrainingMode.Standard
@@ -39,8 +38,9 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
                 }
             };
 
-            Operation<ConversationAuthoringTrainingJobResult> operation = projectClient.Train(
+            Operation<ConversationAuthoringTrainingJobResult> operation = client.Train(
                 waitUntil: WaitUntil.Completed,
+                projectName: projectName,
                 details: trainingJobDetails
             );
 
@@ -58,7 +58,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new AzureKeyCredential(TestEnvironment.ApiKey);
-            ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
+            ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential);
 
             #region Snippet:Sample6_ConversationsAuthoring_Train_WithDataGeneration
             string projectName = "{projectName}";
@@ -89,9 +89,9 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             };
 
             // Start the training operation
-            ConversationAuthoringProject projectClient = client.GetProject(projectName);
-            Operation<ConversationAuthoringTrainingJobResult> operation = projectClient.Train(
+            Operation<ConversationAuthoringTrainingJobResult> operation = client.Train(
                 waitUntil: WaitUntil.Completed,
+                projectName: projectName,
                 details: trainingJobDetails);
 
             // Extract operation location header and print status
@@ -107,12 +107,10 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
+            ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential);
 
             #region Snippet:Sample6_ConversationsAuthoring_TrainAsync
             string projectName = "{projectName}";
-            ConversationAuthoringProject projectClient = client.GetProject(projectName);
-
             ConversationAuthoringTrainingJobDetails trainingJobDetails = new ConversationAuthoringTrainingJobDetails(
                 modelLabel: "{modelLabel}",
                 trainingMode: ConversationAuthoringTrainingMode.Standard
@@ -127,8 +125,9 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
                 }
             };
 
-            Operation<ConversationAuthoringTrainingJobResult> operation = await projectClient.TrainAsync(
+            Operation<ConversationAuthoringTrainingJobResult> operation = await client.TrainAsync(
                 waitUntil: WaitUntil.Completed,
+                projectName: projectName,
                 details: trainingJobDetails
             );
 
@@ -146,7 +145,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new AzureKeyCredential(TestEnvironment.ApiKey);
-            ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
+            ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential);
 
             #region Snippet:Sample6_ConversationsAuthoring_TrainAsync_WithDataGeneration
             string projectName = "{projectName}";
@@ -177,9 +176,9 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             };
 
             // Start training
-            ConversationAuthoringProject projectClient = client.GetProject(projectName);
-            Operation<ConversationAuthoringTrainingJobResult> operation = await projectClient.TrainAsync(
+            Operation<ConversationAuthoringTrainingJobResult> operation = await client.TrainAsync(
                 waitUntil: WaitUntil.Completed,
+                projectName: projectName,
                 details: trainingJobDetails);
 
             // Extract and print operation location and status

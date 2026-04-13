@@ -20,18 +20,21 @@ namespace Azure.Developer.DevCenter
         private readonly string _projectName;
         private readonly string _poolName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of DevBoxesClientGetSchedulesCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The DevBoxesClient client used to send requests. </param>
         /// <param name="projectName"> The DevCenter Project upon which to execute operations. </param>
         /// <param name="poolName"> The name of a pool of Dev Boxes. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public DevBoxesClientGetSchedulesCollectionResultOfT(DevBoxesClient client, string projectName, string poolName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public DevBoxesClientGetSchedulesCollectionResultOfT(DevBoxesClient client, string projectName, string poolName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _projectName = projectName;
             _poolName = poolName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of DevBoxesClientGetSchedulesCollectionResultOfT as an enumerable collection. </summary>
@@ -64,7 +67,7 @@ namespace Azure.Developer.DevCenter
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetSchedulesRequest(nextLink, _projectName, _poolName, _context) : _client.CreateGetSchedulesRequest(_projectName, _poolName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("DevBoxesClient.GetSchedules");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

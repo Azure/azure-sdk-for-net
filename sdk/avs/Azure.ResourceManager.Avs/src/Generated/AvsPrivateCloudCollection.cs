@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Avs
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AvsPrivateCloudData, AvsPrivateCloudResource>(new PrivateCloudsGetAllAsyncCollectionResultOfT(_privateCloudsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new AvsPrivateCloudResource(Client, data));
+            return new AsyncPageableWrapper<AvsPrivateCloudData, AvsPrivateCloudResource>(new PrivateCloudsGetAllAsyncCollectionResultOfT(_privateCloudsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AvsPrivateCloudCollection.GetAll"), data => new AvsPrivateCloudResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AvsPrivateCloudData, AvsPrivateCloudResource>(new PrivateCloudsGetAllCollectionResultOfT(_privateCloudsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new AvsPrivateCloudResource(Client, data));
+            return new PageableWrapper<AvsPrivateCloudData, AvsPrivateCloudResource>(new PrivateCloudsGetAllCollectionResultOfT(_privateCloudsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AvsPrivateCloudCollection.GetAll"), data => new AvsPrivateCloudResource(Client, data));
         }
 
         /// <summary>

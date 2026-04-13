@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ManagedOps
         {
             if (id.ResourceType != SubscriptionResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
             }
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.ManagedOps
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ManagedOpData, ManagedOpResource>(new ManagedOperationsGetAllAsyncCollectionResultOfT(_managedOperationsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new ManagedOpResource(Client, data));
+            return new AsyncPageableWrapper<ManagedOpData, ManagedOpResource>(new ManagedOperationsGetAllAsyncCollectionResultOfT(_managedOperationsRestClient, Guid.Parse(Id.SubscriptionId), context, "ManagedOpCollection.GetAll"), data => new ManagedOpResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.ManagedOps
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ManagedOpData, ManagedOpResource>(new ManagedOperationsGetAllCollectionResultOfT(_managedOperationsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new ManagedOpResource(Client, data));
+            return new PageableWrapper<ManagedOpData, ManagedOpResource>(new ManagedOperationsGetAllCollectionResultOfT(_managedOperationsRestClient, Guid.Parse(Id.SubscriptionId), context, "ManagedOpCollection.GetAll"), data => new ManagedOpResource(Client, data));
         }
 
         /// <summary>

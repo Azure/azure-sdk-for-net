@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         private readonly string _filter;
         private readonly int? _top;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of RunsGetAllCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Runs client used to send requests. </param>
@@ -32,7 +33,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         /// <param name="filter"> The runs filter to apply on the operation. Arithmetic operators are not supported. The allowed string function is 'contains'. All logical operators except 'Not', 'Has', 'All' are allowed. </param>
         /// <param name="top"> $top is supported for get list of runs, which limits the maximum number of runs to return. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public RunsGetAllCollectionResultOfT(Runs client, Guid subscriptionId, string resourceGroupName, string registryName, string filter, int? top, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public RunsGetAllCollectionResultOfT(Runs client, Guid subscriptionId, string resourceGroupName, string registryName, string filter, int? top, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -41,6 +43,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
             _filter = filter;
             _top = top;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of RunsGetAllCollectionResultOfT as an enumerable collection. </summary>
@@ -74,7 +77,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _registryName, _filter, _top, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _registryName, _filter, _top, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("RunCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

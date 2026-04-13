@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Purview
         {
             if (id.ResourceType != PurviewAccountResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, PurviewAccountResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, PurviewAccountResource.ResourceType), nameof(id));
             }
         }
 
@@ -177,7 +177,13 @@ namespace Azure.ResourceManager.Purview
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PurviewPrivateLinkResourceData, PurviewPrivateLinkResource>(new PrivateLinkResourcesGetByAccountAsyncCollectionResultOfT(_privateLinkResourcesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new PurviewPrivateLinkResource(Client, data));
+            return new AsyncPageableWrapper<PurviewPrivateLinkResourceData, PurviewPrivateLinkResource>(new PrivateLinkResourcesGetByAccountAsyncCollectionResultOfT(
+                _privateLinkResourcesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "PurviewPrivateLinkResourceCollection.GetAll"), data => new PurviewPrivateLinkResource(Client, data));
         }
 
         /// <summary>
@@ -205,7 +211,13 @@ namespace Azure.ResourceManager.Purview
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PurviewPrivateLinkResourceData, PurviewPrivateLinkResource>(new PrivateLinkResourcesGetByAccountCollectionResultOfT(_privateLinkResourcesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new PurviewPrivateLinkResource(Client, data));
+            return new PageableWrapper<PurviewPrivateLinkResourceData, PurviewPrivateLinkResource>(new PrivateLinkResourcesGetByAccountCollectionResultOfT(
+                _privateLinkResourcesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "PurviewPrivateLinkResourceCollection.GetAll"), data => new PurviewPrivateLinkResource(Client, data));
         }
 
         /// <summary>
