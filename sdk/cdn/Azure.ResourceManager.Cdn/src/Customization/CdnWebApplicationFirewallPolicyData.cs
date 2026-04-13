@@ -9,6 +9,11 @@ using Azure.ResourceManager.Cdn.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
+    // Customization: This file customizes the CdnWebApplicationFirewallPolicyData constructor to maintain backward API compatibility with the previous SDK.
+    // Reason: The old SDK (AutoRest-generated) provided a constructor with the signature (AzureLocation, CdnSku), allowing users to pass a CdnSku object directly.
+    // The TypeSpec generator no longer generates this signature (it uses CdnSkuName? and other spread parameters instead).
+    // This constructor is manually preserved to avoid breaking user code that depends on the old constructor.
+
     /// <summary> Defines web application firewall policy for Azure CDN. </summary>
     public partial class CdnWebApplicationFirewallPolicyData
     {

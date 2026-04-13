@@ -10,6 +10,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
+    // Customization: This file uses CodeGenMember to rename struct static members to maintain the naming convention from the previous SDK.
+    // Reason: The TypeSpec generator concatenates resource type path segments after removing slashes to produce member names
+    // (e.g., MicrosoftCdnProfilesEndpoints, MicrosoftCdnProfilesAfdEndpoints),
+    // but the old SDK used shorter names (e.g., Endpoints, FrontDoorEndpoints).
+    // CodeGenMember attributes map the generated names to the old names to preserve public API naming compatibility.
     public readonly partial struct CdnResourceType : IEquatable<CdnResourceType>
     {
         /// <summary>

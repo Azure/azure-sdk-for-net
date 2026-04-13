@@ -9,6 +9,10 @@ using Azure.ResourceManager.Cdn.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
+    // Customization: This file customizes the ProfileData constructor to maintain backward API compatibility with the previous SDK.
+    // Reason: The old SDK (AutoRest-generated) provided a constructor with the signature (AzureLocation, CdnSku),
+    // allowing users to pass a CdnSku object directly to specify the pricing tier. The TypeSpec generator no longer generates
+    // this signature (it uses spread parameters instead). This constructor is manually preserved to avoid breaking user code.
     public partial class ProfileData
     {
         /// <summary> Initializes a new instance of <see cref="ProfileData"/>. </summary>

@@ -9,6 +9,11 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
+    // Customization: This file adds the old constructor to CanMigrateContent for backward API compatibility with the previous SDK.
+    // Reason: The old SDK constructor accepted a WritableSubResource-typed classicResourceReference parameter,
+    // but after the TypeSpec migration, the parameter type was changed to ResourceReference.
+    // The old constructor accepting WritableSubResource is preserved here, internally converting it to ResourceReference,
+    // and marked as EditorBrowsable.Never to avoid a breaking change.
     public partial class CanMigrateContent
     {
         // Backward compatibility: old API used ctor(WritableSubResource)

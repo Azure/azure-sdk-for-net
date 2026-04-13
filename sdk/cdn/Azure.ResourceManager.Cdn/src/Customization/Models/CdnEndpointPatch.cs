@@ -8,9 +8,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    // Customization: The generator's FlattenPropertyVisitor does not generate a setter for collection-type
-    // flattened properties (see BuildSetterForPropertyFlatten in PropertyHelpers.cs). A hidden setter for
-    // UriSigningKeys is added here for deserialization backward compatibility with the previous SDK.
+    // Customization: This file customizes the UriSigningKeys property of CdnEndpointPatch for backward API compatibility with the previous SDK.
+    // Reason: The generator's FlattenPropertyVisitor does not generate a setter for flattened collection properties,
+    // but the old SDK's deserialization requires the setter to be present. A getter/setter implementation is manually added here,
+    // bridging through Properties.UriSigningKeys. The setter is marked as EditorBrowsable.Never to remain hidden but maintain deserialization compatibility.
     public partial class CdnEndpointPatch
     {
         /// <summary> List of keys used to validate the signed URL hashes. </summary>

@@ -10,6 +10,12 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
+    // Customization: This file adds old constructors and the SecretSourceId property to UriSigningKeyProperties
+    // for backward API compatibility with the previous SDK.
+    // Reason 1: The old SDK provided constructors accepting a WritableSubResource-typed secretSource parameter;
+    // after the TypeSpec migration, the parameter type changed. Two old constructor signatures are preserved here.
+    // Reason 2: The old SDK exposed a flattened SecretSourceId property (of type ResourceIdentifier).
+    // The TypeSpec generator did not preserve this flattened property, so it is manually added here with a WirePath attribute for the JSON path.
     public partial class UriSigningKeyProperties
     {
         // Backward compatibility: old API used WritableSubResource secretSource parameter

@@ -14,6 +14,12 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Cdn
 {
+    // Customization: This file contains custom implementations of tag operation helper methods for WebAgentResource (currently commented out).
+    // Reason: The generator's Update operation returns a non-generic ArmOperation (no FinalResult in the LRO response header),
+    // but the generated tag helpers (AddTag/SetTags/RemoveTag) try to access result.Value, causing a runtime error.
+    // These tag helpers are re-implemented to re-fetch the resource after the Update completes to obtain the latest data.
+    // Note: These methods are currently commented out, possibly because the generator has fixed this issue or the customization is temporarily unneeded.
+
     // Generator bug: Update returns non-generic ArmOperation (no FinalResult in LRO header),
     // but the generated tag helpers try to access result.Value which doesn't exist.
     // Re-implement tag helpers to re-fetch the resource after update completes.

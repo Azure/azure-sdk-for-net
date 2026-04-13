@@ -9,6 +9,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
+    // Customization: This file uses CodeGenMember to rename enum members to maintain the naming convention from the previous SDK.
+    // Reason: The TypeSpec generator removes separators from cipher suite names to produce member names (e.g., TLSAES128GCMSHA256),
+    // but the old SDK used underscore-separated readable names (e.g., Tls_Aes_128_Gcm_Sha256).
+    // CodeGenMember attributes map the generated names to the old names to preserve public API naming compatibility.
     public readonly partial struct AfdCustomizedCipherSuiteForTls13
     {
         /// <summary> TLS_AES_128_GCM_SHA256. </summary>

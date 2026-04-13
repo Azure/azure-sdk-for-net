@@ -13,6 +13,11 @@ using Azure.ResourceManager.Cdn.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
+    // Customization: This file customizes the ProfileResource log analytics methods to maintain backward API compatibility with the previous SDK.
+    // Reason: The TypeSpec generator wraps the parameters of GetLogAnalyticsMetrics, GetLogAnalyticsRankings,
+    // GetWafLogAnalyticsMetrics, and GetWafLogAnalyticsRankings into Options objects (parameter wrapping pattern),
+    // but the old SDK uses individual spread parameters. To maintain backward compatibility, these methods are
+    // re-implemented here to accept spread parameters and internally call the REST client directly, bypassing the generated Options wrappers.
     public partial class ProfileResource
     {
         /// <summary>
