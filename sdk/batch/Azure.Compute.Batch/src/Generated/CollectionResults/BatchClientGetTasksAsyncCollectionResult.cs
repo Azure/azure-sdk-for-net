@@ -49,7 +49,7 @@ namespace Azure.Compute.Batch
         /// <param name="expand"> An OData $expand clause. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public BatchClientGetTasksAsyncCollectionResult(BatchClient client, string jobId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public BatchClientGetTasksAsyncCollectionResult(BatchClient client, string jobId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxresults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _jobId = jobId;
@@ -97,7 +97,7 @@ namespace Azure.Compute.Batch
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetTasksRequest(nextLink, _jobId, _timeOutInSeconds, _ocpDate, _maxresults, _filter, _select, _expand, _context) : _client.CreateGetTasksRequest(_jobId, _timeOutInSeconds, _ocpDate, _maxresults, _filter, _select, _expand, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetTasksRequest(nextLink, _jobId, _timeout, _requestDate, _maxresults, _filter, _select, _expand, _context) : _client.CreateGetTasksRequest(_jobId, _timeout, _requestDate, _maxresults, _filter, _select, _expand, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

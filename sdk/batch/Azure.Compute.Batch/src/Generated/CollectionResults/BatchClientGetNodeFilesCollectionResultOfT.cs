@@ -47,7 +47,7 @@ namespace Azure.Compute.Batch
         /// <param name="recursive"> Whether to list children of a directory. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public BatchClientGetNodeFilesCollectionResultOfT(BatchClient client, string poolId, string nodeId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, string filter, bool? recursive, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public BatchClientGetNodeFilesCollectionResultOfT(BatchClient client, string poolId, string nodeId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxresults, string filter, bool? recursive, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _poolId = poolId;
@@ -90,7 +90,7 @@ namespace Azure.Compute.Batch
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetNodeFilesRequest(nextLink, _poolId, _nodeId, _timeOutInSeconds, _ocpDate, _maxresults, _filter, _recursive, _context) : _client.CreateGetNodeFilesRequest(_poolId, _nodeId, _timeOutInSeconds, _ocpDate, _maxresults, _filter, _recursive, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetNodeFilesRequest(nextLink, _poolId, _nodeId, _timeout, _requestDate, _maxresults, _filter, _recursive, _context) : _client.CreateGetNodeFilesRequest(_poolId, _nodeId, _timeout, _requestDate, _maxresults, _filter, _recursive, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

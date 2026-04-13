@@ -55,7 +55,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public BatchClientGetPoolUsageMetricsAsyncCollectionResult(BatchClient client, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, DateTimeOffset? starttime, DateTimeOffset? endtime, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public BatchClientGetPoolUsageMetricsAsyncCollectionResult(BatchClient client, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxresults, DateTimeOffset? starttime, DateTimeOffset? endtime, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _timeout = timeout;
@@ -102,7 +102,7 @@ namespace Azure.Compute.Batch
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetPoolUsageMetricsRequest(nextLink, _timeOutInSeconds, _ocpDate, _maxresults, _starttime, _endtime, _filter, _context) : _client.CreateGetPoolUsageMetricsRequest(_timeOutInSeconds, _ocpDate, _maxresults, _starttime, _endtime, _filter, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetPoolUsageMetricsRequest(nextLink, _timeout, _requestDate, _maxresults, _starttime, _endtime, _filter, _context) : _client.CreateGetPoolUsageMetricsRequest(_timeout, _requestDate, _maxresults, _starttime, _endtime, _filter, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

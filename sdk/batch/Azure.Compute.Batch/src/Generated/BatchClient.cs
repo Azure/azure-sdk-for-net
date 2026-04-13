@@ -101,8 +101,8 @@ namespace Azure.Compute.Batch
         {
             return new BatchClientGetApplicationsCollectionResult(
                 this,
-                timeOutInSeconds,
-                ocpDate,
+                timeout,
+                requestDate,
                 maxresults,
                 context,
                 "BatchClient.GetApplications");
@@ -137,8 +137,8 @@ namespace Azure.Compute.Batch
         {
             return new BatchClientGetApplicationsAsyncCollectionResult(
                 this,
-                timeOutInSeconds,
-                ocpDate,
+                timeout,
+                requestDate,
                 maxresults,
                 context,
                 "BatchClient.GetApplications");
@@ -167,8 +167,8 @@ namespace Azure.Compute.Batch
         {
             return new BatchClientGetApplicationsCollectionResultOfT(
                 this,
-                timeOutInSeconds,
-                ocpDate,
+                timeout,
+                requestDate,
                 maxresults,
                 cancellationToken.ToRequestContext(),
                 "BatchClient.GetApplications");
@@ -197,8 +197,8 @@ namespace Azure.Compute.Batch
         {
             return new BatchClientGetApplicationsAsyncCollectionResultOfT(
                 this,
-                timeOutInSeconds,
-                ocpDate,
+                timeout,
+                requestDate,
                 maxresults,
                 cancellationToken.ToRequestContext(),
                 "BatchClient.GetApplications");
@@ -7269,7 +7269,7 @@ namespace Azure.Compute.Batch
         }
 
         /// <summary>
-        /// [Protocol Method] You can add a user Account to a Compute Node only when it is in the idle or
+        /// [Protocol Method] You can add a user Account to a Compute Node only when it is in the idle or 
         /// running state. Before you can remotely login to a Compute Node you must configure access ports for SSH and RDP. For more information, see https://learn.microsoft.com/azure/batch/pool-endpoint-configuration
         /// <list type="bullet">
         /// <item>
@@ -7312,7 +7312,7 @@ namespace Azure.Compute.Batch
         }
 
         /// <summary>
-        /// [Protocol Method] You can add a user Account to a Compute Node only when it is in the idle or
+        /// [Protocol Method] You can add a user Account to a Compute Node only when it is in the idle or 
         /// running state. Before you can remotely login to a Compute Node you must configure access ports for SSH and RDP. For more information, see https://learn.microsoft.com/azure/batch/pool-endpoint-configuration
         /// <list type="bullet">
         /// <item>
@@ -7355,7 +7355,7 @@ namespace Azure.Compute.Batch
         }
 
         /// <summary>
-        /// You can add a user Account to a Compute Node only when it is in the idle or
+        /// You can add a user Account to a Compute Node only when it is in the idle or 
         /// running state. Before you can remotely login to a Compute Node you must configure access ports for SSH and RDP. For more information, see https://learn.microsoft.com/azure/batch/pool-endpoint-configuration
         /// </summary>
         /// <param name="poolId"> The ID of the Pool that contains the Compute Node. </param>
@@ -7381,7 +7381,7 @@ namespace Azure.Compute.Batch
         }
 
         /// <summary>
-        /// You can add a user Account to a Compute Node only when it is in the idle or
+        /// You can add a user Account to a Compute Node only when it is in the idle or 
         /// running state. Before you can remotely login to a Compute Node you must configure access ports for SSH and RDP. For more information, see https://learn.microsoft.com/azure/batch/pool-endpoint-configuration
         /// </summary>
         /// <param name="poolId"> The ID of the Pool that contains the Compute Node. </param>
@@ -7408,7 +7408,7 @@ namespace Azure.Compute.Batch
 
         /// <summary>
         /// [Protocol Method] You can delete a user Account to a Compute Node only when it is in the idle or
-        /// running state. Before you can remotely login to a Compute Node you must configure
+        /// running state. Before you can remotely login to a Compute Node you must configure 
         /// access ports for SSH and RDP. For more information, see https://learn.microsoft.com/azure/batch/pool-endpoint-configuration
         /// <list type="bullet">
         /// <item>
@@ -7452,7 +7452,7 @@ namespace Azure.Compute.Batch
 
         /// <summary>
         /// [Protocol Method] You can delete a user Account to a Compute Node only when it is in the idle or
-        /// running state. Before you can remotely login to a Compute Node you must configure
+        /// running state. Before you can remotely login to a Compute Node you must configure 
         /// access ports for SSH and RDP. For more information, see https://learn.microsoft.com/azure/batch/pool-endpoint-configuration
         /// <list type="bullet">
         /// <item>
@@ -7496,7 +7496,7 @@ namespace Azure.Compute.Batch
 
         /// <summary>
         /// You can delete a user Account to a Compute Node only when it is in the idle or
-        /// running state. Before you can remotely login to a Compute Node you must configure
+        /// running state. Before you can remotely login to a Compute Node you must configure 
         /// access ports for SSH and RDP. For more information, see https://learn.microsoft.com/azure/batch/pool-endpoint-configuration
         /// </summary>
         /// <param name="poolId"> The ID of the Pool that contains the Compute Node. </param>
@@ -7523,7 +7523,7 @@ namespace Azure.Compute.Batch
 
         /// <summary>
         /// You can delete a user Account to a Compute Node only when it is in the idle or
-        /// running state. Before you can remotely login to a Compute Node you must configure
+        /// running state. Before you can remotely login to a Compute Node you must configure 
         /// access ports for SSH and RDP. For more information, see https://learn.microsoft.com/azure/batch/pool-endpoint-configuration
         /// </summary>
         /// <param name="poolId"> The ID of the Pool that contains the Compute Node. </param>
