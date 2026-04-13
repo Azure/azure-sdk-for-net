@@ -449,7 +449,7 @@ namespace Azure.Storage.Blobs.Test
 
         [RecordedTest]
         public async Task DownloadAsync()
-        {
+         {
             await using DisposingContainer test = await GetTestContainerAsync();
 
             // Arrange
@@ -1639,6 +1639,162 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.IsNotNull(response.Value.Details.CreatedOn);
+        }
+
+        [RecordedTest]
+        public async Task DownloadAsync_Sessions()
+        {
+            var containerName = GetNewContainerName();
+            var capturePolicy = new CaptureMessageContentsPolicy();
+            BlobClientOptions options = new BlobClientOptions(BlobClientOptions.ServiceVersion.V2026_02_06)
+            {
+                SessionOptions = new SessionOptions()
+                {
+                    SessionMode = SessionMode.SingleContainer,
+                    ContainerName = containerName
+                }
+            };
+            options.AddPolicy(capturePolicy, HttpPipelinePosition.PerRetry);
+            BlobServiceClient oauthServiceClient = GetServiceClient_OAuth(options);
+            await using DisposingContainer test = await GetTestContainerAsync(containerName: containerName, service: oauthServiceClient);
+
+            // Arrange
+            var data = GetRandomBuffer(Constants.KB);
+            List<BlockBlobClient> blobs = new List<BlockBlobClient>(3)
+            {
+                InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName())),
+                InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName())),
+                InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()))
+            };
+            foreach (BlockBlobClient blob in blobs)
+            {
+                using (var stream = new MemoryStream(data))
+                {
+                    await blob.UploadAsync(stream);
+                }
+            }
+
+            // Act
+            List<Response<BlobDownloadInfo>> responses = new List<Response<BlobDownloadInfo>>();
+            using (capturePolicy.CaptureScope())
+            {
+                for (int i=0; i < 3; i++)
+                {
+                    responses.Add(await blobs[i].DownloadAsync());
+                }
+            }
+
+            // Assert — verify data was downloaded correctly
+            foreach (Response<BlobDownloadInfo> response in responses)
+            {
+                Assert.AreEqual(data.Length, response.Value.ContentLength);
+                var actual = new MemoryStream();
+                await response.Value.Content.CopyToAsync(actual);
+                TestHelper.AssertSequenceEqual(data, actual.ToArray());
+            }
+
+            // Assert — verify that Create Sessions was called and Get Blob request used Session authorization
+            bool createSessionCalled = false;
+            int numSessionAuthUsed = 0;
+            foreach (HttpMessage message in capturePolicy.Messages)
+            {
+                BlobUriBuilder uriBuilder = new BlobUriBuilder(message.Request.Uri.ToUri());
+                if (message.Request.Method == RequestMethod.Get
+                    && uriBuilder.BlobContainerName == containerName
+                    && !string.IsNullOrEmpty(uriBuilder.BlobName)
+                    && message.Request.Headers.TryGetValue("Authorization", out string authHeader)
+                    && authHeader.StartsWith("Session ", StringComparison.Ordinal))
+                {
+                    ++numSessionAuthUsed;
+                }
+                else if (message.Request.Method == RequestMethod.Post
+                    && uriBuilder.BlobContainerName == containerName
+                    && string.IsNullOrEmpty(uriBuilder.BlobName)
+                    && uriBuilder.Query == "restype=container&comp=session")
+                {
+                    createSessionCalled = true;
+                }
+            }
+            Assert.IsTrue(createSessionCalled, "Expected create session request to be called");
+            Assert.AreEqual(3, numSessionAuthUsed, "Expected the download request to use Session authorization");
+        }
+
+        [RecordedTest]
+        public async Task DownloadAsync_Sessions_None()
+        {
+            var containerName = GetNewContainerName();
+            var capturePolicy = new CaptureMessageContentsPolicy();
+            BlobClientOptions options = new BlobClientOptions(BlobClientOptions.ServiceVersion.V2026_02_06)
+            {
+                SessionOptions = new SessionOptions()
+                {
+                    SessionMode = SessionMode.None,
+                    ContainerName = containerName
+                }
+            };
+            options.AddPolicy(capturePolicy, HttpPipelinePosition.PerRetry);
+            BlobServiceClient oauthServiceClient = GetServiceClient_OAuth(options);
+            await using DisposingContainer test = await GetTestContainerAsync(containerName: containerName, service: oauthServiceClient);
+
+            // Arrange
+            var data = GetRandomBuffer(Constants.KB);
+            List<BlockBlobClient> blobs = new List<BlockBlobClient>(3)
+            {
+                InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName())),
+                InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName())),
+                InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()))
+            };
+            foreach (BlockBlobClient blob in blobs)
+            {
+                using (var stream = new MemoryStream(data))
+                {
+                    await blob.UploadAsync(stream);
+                }
+            }
+
+            // Act
+            List<Response<BlobDownloadInfo>> responses = new List<Response<BlobDownloadInfo>>();
+            using (capturePolicy.CaptureScope())
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    responses.Add(await blobs[i].DownloadAsync());
+                }
+            }
+
+            // Assert — verify data was downloaded correctly
+            foreach (Response<BlobDownloadInfo> response in responses)
+            {
+                Assert.AreEqual(data.Length, response.Value.ContentLength);
+                var actual = new MemoryStream();
+                await response.Value.Content.CopyToAsync(actual);
+                TestHelper.AssertSequenceEqual(data, actual.ToArray());
+            }
+
+            // Assert — verify that Create Sessions was called and Get Blob request used Session authorization
+            bool createSessionCalled = false;
+            int numSessionAuthUsed = 0;
+            foreach (HttpMessage message in capturePolicy.Messages)
+            {
+                BlobUriBuilder uriBuilder = new BlobUriBuilder(message.Request.Uri.ToUri());
+                if (message.Request.Method == RequestMethod.Get
+                    && uriBuilder.BlobContainerName == containerName
+                    && !string.IsNullOrEmpty(uriBuilder.BlobName)
+                    && message.Request.Headers.TryGetValue("Authorization", out string authHeader)
+                    && authHeader.StartsWith("Session ", StringComparison.Ordinal))
+                {
+                    ++numSessionAuthUsed;
+                }
+                else if (message.Request.Method == RequestMethod.Post
+                    && uriBuilder.BlobContainerName == containerName
+                    && string.IsNullOrEmpty(uriBuilder.BlobName)
+                    && uriBuilder.Query == "restype=container&comp=session")
+                {
+                    createSessionCalled = true;
+                }
+            }
+            Assert.IsFalse(createSessionCalled, "Expected create session request to be called");
+            Assert.AreEqual(0, numSessionAuthUsed, "Expected the download request to use Session authorization");
         }
         #endregion Sequential Download
 

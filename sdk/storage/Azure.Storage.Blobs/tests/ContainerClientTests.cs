@@ -1007,8 +1007,48 @@ namespace Azure.Storage.Blobs.Test
             await using DisposingContainer test = await GetTestContainerAsync(service);
 
             // Act
-            CreateSessionConfiguration options = new CreateSessionConfiguration(AuthenticationType.Hmac);
+            AuthenticationType authType = AuthenticationType.Hmac;
+            CreateSessionConfiguration options = new CreateSessionConfiguration(authType);
             Response<CreateSessionResponse> response = await test.Container.CreateSessionAsync(options: options);
+
+            // Assert
+            Assert.IsNotNull(response.Value.Id);
+            Assert.IsTrue(response.Value.Expiration > Recording.UtcNow);
+            Assert.AreEqual(authType, response.Value.AuthenticationType);
+            Assert.IsNotNull(response.Value.Credentials.SessionToken);
+            Assert.IsNotNull(response.Value.Credentials.SessionKey);
+        }
+
+        [RecordedTest]
+        public async Task CreateSessionAsync_Error()
+        {
+            // Arrange
+            BlobServiceClient service = GetServiceClient_OAuth();
+            BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
+
+            AuthenticationType authType = AuthenticationType.Hmac;
+            CreateSessionConfiguration options = new CreateSessionConfiguration(authType);
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                container.CreateSessionAsync(options: options),
+                e => Assert.AreEqual("ContainerNotFound", e.ErrorCode));
+        }
+
+        [RecordedTest]
+        public async Task CreateSessionAsync_SharedKey_Error()
+        {
+            // Arrange
+            BlobServiceClient service = GetServiceClient_SharedKey();
+            await using DisposingContainer test = await GetTestContainerAsync(service);
+
+            AuthenticationType authType = AuthenticationType.Hmac;
+            CreateSessionConfiguration options = new CreateSessionConfiguration(authType);
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                test.Container.CreateSessionAsync(options: options),
+                e => StringAssert.Contains("Identity-based authorization is required for the Create Session API.", e.Message));
         }
 
         [RecordedTest]
