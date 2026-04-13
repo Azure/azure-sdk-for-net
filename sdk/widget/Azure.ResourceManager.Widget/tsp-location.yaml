@@ -1,0 +1,6 @@
+directory: specification/widget/resource-manager/Microsoft.Widget/Widget
+commit: a08977adddb4586095e2bed9ca60612d9e1bed84
+repo: Azure/azure-rest-api-specs
+additionalDirectories: 
+
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
