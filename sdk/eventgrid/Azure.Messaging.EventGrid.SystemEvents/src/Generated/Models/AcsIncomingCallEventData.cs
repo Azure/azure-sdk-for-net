@@ -34,10 +34,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="callerDisplayName"> Display name of caller. </param>
         /// <param name="customContext"> Custom Context of Incoming Call. </param>
         /// <param name="incomingCallContext"> Signed incoming call context. </param>
-        /// <param name="onBehalfOfCallee"> The communication identifier of the user on behalf of whom the call is made. </param>
+        /// <param name="onBehalfOfCallee"> The communication identifier of the callee for the "on behalf of" call. </param>
+        /// <param name="onBehalfOf"> The communication identifier on behalf of whom the call is made. </param>
         /// <param name="correlationId"> CorrelationId (CallId). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AcsIncomingCallEventData(CommunicationIdentifierModel toCommunicationIdentifier, CommunicationIdentifierModel fromCommunicationIdentifier, string serverCallId, string callerDisplayName, AcsIncomingCallCustomContext customContext, string incomingCallContext, CommunicationIdentifierModel onBehalfOfCallee, string correlationId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AcsIncomingCallEventData(CommunicationIdentifierModel toCommunicationIdentifier, CommunicationIdentifierModel fromCommunicationIdentifier, string serverCallId, string callerDisplayName, AcsIncomingCallCustomContext customContext, string incomingCallContext, CommunicationIdentifierModel onBehalfOfCallee, CommunicationIdentifierModel onBehalfOf, string correlationId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ToCommunicationIdentifier = toCommunicationIdentifier;
             FromCommunicationIdentifier = fromCommunicationIdentifier;
@@ -46,6 +47,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             CustomContext = customContext;
             IncomingCallContext = incomingCallContext;
             OnBehalfOfCallee = onBehalfOfCallee;
+            OnBehalfOf = onBehalfOf;
             CorrelationId = correlationId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -68,8 +70,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> Signed incoming call context. </summary>
         public string IncomingCallContext { get; }
 
-        /// <summary> The communication identifier of the user on behalf of whom the call is made. </summary>
+        /// <summary> The communication identifier of the callee for the "on behalf of" call. </summary>
         public CommunicationIdentifierModel OnBehalfOfCallee { get; }
+
+        /// <summary> The communication identifier on behalf of whom the call is made. </summary>
+        public CommunicationIdentifierModel OnBehalfOf { get; }
 
         /// <summary> CorrelationId (CallId). </summary>
         public string CorrelationId { get; }

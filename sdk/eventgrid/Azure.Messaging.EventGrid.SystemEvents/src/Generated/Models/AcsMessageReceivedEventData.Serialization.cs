@@ -91,6 +91,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WritePropertyName("messageId"u8);
                 writer.WriteStringValue(MessageId);
             }
+            if (Optional.IsDefined(FromBSUId))
+            {
+                writer.WritePropertyName("fromBSUID"u8);
+                writer.WriteStringValue(FromBSUId);
+            }
             if (Optional.IsDefined(ChannelKind))
             {
                 writer.WritePropertyName("channelType"u8);
@@ -157,6 +162,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string content = default;
             string messageId = default;
+            string fromBSUId = default;
             AcsMessageChannelKind? channelKind = default;
             string messageType = default;
             AcsMessageMediaContent mediaContent = default;
@@ -202,6 +208,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 if (prop.NameEquals("messageId"u8))
                 {
                     messageId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("fromBSUID"u8))
+                {
+                    fromBSUId = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("channelType"u8))
@@ -276,6 +287,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 additionalBinaryDataProperties,
                 content,
                 messageId,
+                fromBSUId,
                 channelKind,
                 messageType,
                 mediaContent,

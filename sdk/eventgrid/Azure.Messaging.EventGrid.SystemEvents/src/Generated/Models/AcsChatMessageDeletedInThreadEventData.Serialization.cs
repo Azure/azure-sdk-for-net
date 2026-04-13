@@ -119,6 +119,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             string messageId = default;
             CommunicationIdentifierModel senderCommunicationIdentifier = default;
             string senderDisplayName = default;
+            long? sequenceId = default;
             DateTimeOffset? composeTime = default;
             string @type = default;
             long? version = default;
@@ -148,6 +149,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 if (prop.NameEquals("senderDisplayName"u8))
                 {
                     senderDisplayName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("sequenceId"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sequenceId = prop.Value.GetInt64();
                     continue;
                 }
                 if (prop.NameEquals("composeTime"u8))
@@ -194,6 +204,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 messageId,
                 senderCommunicationIdentifier,
                 senderDisplayName,
+                sequenceId,
                 composeTime,
                 @type,
                 version,
