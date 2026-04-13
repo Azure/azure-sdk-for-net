@@ -28,6 +28,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
             Queue<ShareDirectoryClient> toScan = new();
             toScan.Enqueue(sourceDirectory);
+            Console.WriteLine($"[ScanAsync] Starting enumeration from: {sourceDirectory.Uri}");
 
             // Keep track of created Permission Keys to avoid creating duplicates.
             ShareClient sourceShare = sourceDirectory.GetParentShareClient();
@@ -37,6 +38,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             while (toScan.Count > 0)
             {
                 ShareDirectoryClient current = toScan.Dequeue();
+                Console.WriteLine($"[ScanAsync] Scanning directory: {current.Path}");
                 await foreach (ShareFileItem item in current.GetFilesAndDirectoriesAsync(
                     options: new() { Traits = traits },
                     cancellationToken: cancellationToken).ConfigureAwait(false))
@@ -63,6 +65,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
                     {
                         ShareDirectoryClient subdir = current.GetSubdirectoryClient(item.Name);
                         toScan.Enqueue(subdir);
+                        Console.WriteLine($"[ScanAsync] Found directory: {current.Path}/{item.Name}");
                         yield return new ShareDirectoryStorageResourceContainer(
                             subdir,
                             item.ToResourceContainerProperties(destinationPermissionKey),
@@ -70,6 +73,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
                     }
                     else
                     {
+                        Console.WriteLine($"[ScanAsync] Found file: {current.Path}/{item.Name}");
                         ShareFileClient fileClient = current.GetFileClient(item.Name);
                         yield return new ShareFileStorageResource(
                             fileClient,
@@ -78,6 +82,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
                     }
                 }
             }
+            Console.WriteLine($"[ScanAsync] Enumeration complete.");
         }
     }
 }

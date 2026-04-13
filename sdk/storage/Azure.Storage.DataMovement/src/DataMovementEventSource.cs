@@ -38,7 +38,7 @@ namespace Azure.Storage.DataMovement
             }
         }
 
-        [Event(TransferCompletedEvent, Level = EventLevel.Informational, Message = "Transfer [{0}] Transfer completed: HasFailed={1}, HasKsipped={2}")]
+        [Event(TransferCompletedEvent, Level = EventLevel.Informational, Message = "Transfer [{0}] Transfer completed: HasFailed={1}, HasSkipped={2}")]
         public void TransferCompleted(string transferId, bool hasFailed, bool hasSkipped)
         {
             WriteEvent(TransferCompletedEvent, transferId, hasFailed, hasSkipped);
