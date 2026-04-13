@@ -1,14 +1,10 @@
 # Release History
 
-## 4.10.0-beta.1 (Unreleased)
+## 4.10.0 (2026-04-13)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added `AddSecretClient` and `AddKeyedSecretClient` extension methods on `IHostApplicationBuilder` for registering `SecretClient` via dependency injection using configuration-based setup.
 
 ## 4.9.0 (2026-02-25)
 
