@@ -309,7 +309,7 @@ namespace Azure.Compute.Batch
         /// <param name="keyUrl"> Fully versioned Key Url pointing to a key in KeyVault. Version segment of the Url is required regardless of rotationToLatestKeyVersionEnabled value. </param>
         /// <param name="rotationToLatestKeyVersionEnabled"> Set this flag to true to enable auto-updating of the Disk Encryption to the latest key version. Default is false. </param>
         /// <returns> A new <see cref="Batch.DiskCustomerManagedKey"/> instance for mocking. </returns>
-        public static DiskCustomerManagedKey DiskCustomerManagedKey(BatchPoolIdentityReference identityReference = default, string keyUrl = default, bool? rotationToLatestKeyVersionEnabled = default)
+        public static DiskCustomerManagedKey DiskCustomerManagedKey(BatchPoolIdentityReference identityReference = default, Uri keyUrl = default, bool? rotationToLatestKeyVersionEnabled = default)
         {
             return new DiskCustomerManagedKey(identityReference, keyUrl, rotationToLatestKeyVersionEnabled, additionalBinaryDataProperties: null);
         }
@@ -339,13 +339,13 @@ namespace Azure.Compute.Batch
         /// <param name="publisher"> The name of the extension handler publisher. </param>
         /// <param name="type"> The type of the extension. </param>
         /// <param name="typeHandlerVersion"> The version of script handler. </param>
-        /// <param name="autoUpgradeMinorVersion"> Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not upgrade minor versions unless redeployed, even with this property set to true. </param>
-        /// <param name="enableAutomaticUpgrade"> Indicates whether the extension should be automatically upgraded by the platform if there is a newer version of the extension available. </param>
+        /// <param name="shouldAutoUpgradeMinorVersion"> Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not upgrade minor versions unless redeployed, even with this property set to true. </param>
+        /// <param name="isAutomaticUpgradeEnabled"> Indicates whether the extension should be automatically upgraded by the platform if there is a newer version of the extension available. </param>
         /// <param name="settings"> JSON formatted public settings for the extension. </param>
         /// <param name="protectedSettings"> The extension can contain either protectedSettings or protectedSettingsFromKeyVault or no protected settings at all. </param>
         /// <param name="provisionAfterExtensions"> The collection of extension names. Collection of extension names after which this extension needs to be provisioned. </param>
         /// <returns> A new <see cref="Batch.VMExtension"/> instance for mocking. </returns>
-        public static VMExtension VMExtension(string name = default, string publisher = default, string @type = default, string typeHandlerVersion = default, bool? autoUpgradeMinorVersion = default, bool? enableAutomaticUpgrade = default, IDictionary<string, string> settings = default, IDictionary<string, string> protectedSettings = default, IEnumerable<string> provisionAfterExtensions = default)
+        public static VMExtension VMExtension(string name = default, string publisher = default, string @type = default, string typeHandlerVersion = default, bool? shouldAutoUpgradeMinorVersion = default, bool? isAutomaticUpgradeEnabled = default, IDictionary<string, string> settings = default, IDictionary<string, string> protectedSettings = default, IEnumerable<string> provisionAfterExtensions = default)
         {
             settings ??= new ChangeTrackingDictionary<string, string>();
             protectedSettings ??= new ChangeTrackingDictionary<string, string>();
@@ -356,8 +356,8 @@ namespace Azure.Compute.Batch
                 publisher,
                 @type,
                 typeHandlerVersion,
-                autoUpgradeMinorVersion,
-                enableAutomaticUpgrade,
+                shouldAutoUpgradeMinorVersion,
+                isAutomaticUpgradeEnabled,
                 settings,
                 protectedSettings,
                 provisionAfterExtensions.ToList(),
@@ -369,16 +369,16 @@ namespace Azure.Compute.Batch
         /// <param name="caching"> Specifies the caching requirements. Possible values are: None, ReadOnly, ReadWrite. The default values are: None for Standard storage. ReadOnly for Premium storage. </param>
         /// <param name="diskSizeGB"> The initial disk size in GB when creating new OS disk. </param>
         /// <param name="managedDisk"> The managed disk parameters. </param>
-        /// <param name="writeAcceleratorEnabled"> Specifies whether writeAccelerator should be enabled or disabled on the disk. </param>
+        /// <param name="isWriteAcceleratorEnabled"> Specifies whether writeAccelerator should be enabled or disabled on the disk. </param>
         /// <returns> A new <see cref="Batch.BatchOsDisk"/> instance for mocking. </returns>
-        public static BatchOsDisk BatchOsDisk(BatchDiffDiskSettings ephemeralOSDiskSettings = default, CachingType? caching = default, int? diskSizeGB = default, ManagedDisk managedDisk = default, bool? writeAcceleratorEnabled = default)
+        public static BatchOsDisk BatchOsDisk(BatchDiffDiskSettings ephemeralOSDiskSettings = default, CachingType? caching = default, int? diskSizeGB = default, ManagedDisk managedDisk = default, bool? isWriteAcceleratorEnabled = default)
         {
             return new BatchOsDisk(
                 ephemeralOSDiskSettings,
                 caching,
                 diskSizeGB,
                 managedDisk,
-                writeAcceleratorEnabled,
+                isWriteAcceleratorEnabled,
                 additionalBinaryDataProperties: null);
         }
 
@@ -394,14 +394,14 @@ namespace Azure.Compute.Batch
         }
 
         /// <summary> Specifies the security profile settings for the virtual machine or virtual machine scale set. </summary>
-        /// <param name="encryptionAtHost"> This property can be used by user in the request to enable or disable the Host Encryption for the virtual machine or virtual machine scale set. This will enable the encryption for all the disks including Resource/Temp disk at host itself. For more information on encryption at host requirements, please refer to https://learn.microsoft.com/azure/virtual-machines/disk-encryption#supported-vm-sizes. </param>
+        /// <param name="isEncryptedAtHost"> This property can be used by user in the request to enable or disable the Host Encryption for the virtual machine or virtual machine scale set. This will enable the encryption for all the disks including Resource/Temp disk at host itself. For more information on encryption at host requirements, please refer to https://learn.microsoft.com/azure/virtual-machines/disk-encryption#supported-vm-sizes. </param>
         /// <param name="proxyAgentSettings"> Specifies ProxyAgent settings while creating the virtual machine. </param>
         /// <param name="securityType"> Specifies the SecurityType of the virtual machine. It has to be set to any specified value to enable UefiSettings. </param>
         /// <param name="uefiSettings"> Specifies the security settings like secure boot and vTPM used while creating the virtual machine. Specifies the security settings like secure boot and vTPM used while creating the virtual machine. </param>
         /// <returns> A new <see cref="Batch.SecurityProfile"/> instance for mocking. </returns>
-        public static SecurityProfile SecurityProfile(bool? encryptionAtHost = default, ProxyAgentSettings proxyAgentSettings = default, SecurityTypes? securityType = default, BatchUefiSettings uefiSettings = default)
+        public static SecurityProfile SecurityProfile(bool? isEncryptedAtHost = default, ProxyAgentSettings proxyAgentSettings = default, SecurityTypes? securityType = default, BatchUefiSettings uefiSettings = default)
         {
-            return new SecurityProfile(encryptionAtHost, proxyAgentSettings, securityType, uefiSettings, additionalBinaryDataProperties: null);
+            return new SecurityProfile(isEncryptedAtHost, proxyAgentSettings, securityType, uefiSettings, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Specifies ProxyAgent settings while creating the virtual machine. </summary>
@@ -810,7 +810,7 @@ namespace Azure.Compute.Batch
 
         /// <summary> The configuration parameters used for performing automatic OS upgrade. </summary>
         /// <param name="disableAutomaticRollback"> Whether OS image rollback feature should be disabled. </param>
-        /// <param name="enableAutomaticOsUpgrade"> Indicates whether OS upgrades should automatically be applied to scale set instances in a rolling fashion when a newer version of the OS image becomes available. &lt;br /&gt;&lt;br /&gt; If this is set to true for Windows based pools, [WindowsConfiguration.enableAutomaticUpdates](https://learn.microsoft.com/rest/api/batchservice/pool/add?tabs=HTTP#windowsconfiguration) cannot be set to true. </param>
+        /// <param name="enableAutomaticOsUpgrade"> Indicates whether OS upgrades should automatically be applied to scale set instances in a rolling fashion when a newer version of the OS image becomes available. &lt;br /&gt;&lt;br /&gt; If this is set to true for Windows based pools, [WindowsConfiguration.enableAutomaticUpdates](https://learn.microsoft.com/rest/api/batchservice/pools/create-pool#windowsconfiguration) cannot be set to true. </param>
         /// <param name="useRollingUpgradePolicy"> Indicates whether rolling upgrade policy should be used during Auto OS Upgrade. Auto OS Upgrade will fallback to the default policy if no policy is defined on the VMSS. </param>
         /// <param name="osRollingUpgradeDeferral"> Defer OS upgrades on the TVMs if they are running tasks. </param>
         /// <returns> A new <see cref="Batch.AutomaticOsUpgradePolicy"/> instance for mocking. </returns>
@@ -820,7 +820,7 @@ namespace Azure.Compute.Batch
         }
 
         /// <summary> The configuration parameters used while performing a rolling upgrade. </summary>
-        /// <param name="enableCrossZoneUpgrade"> Allow VMSS to ignore AZ boundaries when constructing upgrade batches. Take into consideration the Update Domain and maxBatchInstancePercent to determine the batch size. This field is able to be set to true or false only when using NodePlacementConfiguration as Zonal. </param>
+        /// <param name="isCrossZoneUpgradeEnabled"> Allow VMSS to ignore AZ boundaries when constructing upgrade batches. Take into consideration the Update Domain and maxBatchInstancePercent to determine the batch size. This field is able to be set to true or false only when using NodePlacementConfiguration as Zonal. </param>
         /// <param name="maxBatchInstancePercent"> The maximum percent of total virtual machine instances that will be upgraded simultaneously by the rolling upgrade in one batch. As this is a maximum, unhealthy instances in previous or future batches can cause the percentage of instances in a batch to decrease to ensure higher reliability. The value of this field should be between 5 and 100, inclusive. If both maxBatchInstancePercent and maxUnhealthyInstancePercent are assigned with value, the value of maxBatchInstancePercent should not be more than maxUnhealthyInstancePercent. </param>
         /// <param name="maxUnhealthyInstancePercent"> The maximum percentage of the total virtual machine instances in the scale set that can be simultaneously unhealthy, either as a result of being upgraded, or by being found in an unhealthy state by the virtual machine health checks before the rolling upgrade aborts. This constraint will be checked prior to starting any batch. The value of this field should be between 5 and 100, inclusive. If both maxBatchInstancePercent and maxUnhealthyInstancePercent are assigned with value, the value of maxBatchInstancePercent should not be more than maxUnhealthyInstancePercent. </param>
         /// <param name="maxUnhealthyUpgradedInstancePercent"> The maximum percentage of upgraded virtual machine instances that can be found to be in an unhealthy state. This check will happen after each batch is upgraded. If this percentage is ever exceeded, the rolling update aborts. The value of this field should be between 0 and 100, inclusive. </param>
@@ -828,10 +828,10 @@ namespace Azure.Compute.Batch
         /// <param name="prioritizeUnhealthyInstances"> Upgrade all unhealthy instances in a scale set before any healthy instances. </param>
         /// <param name="rollbackFailedInstancesOnPolicyBreach"> Rollback failed instances to previous model if the Rolling Upgrade policy is violated. </param>
         /// <returns> A new <see cref="Batch.RollingUpgradePolicy"/> instance for mocking. </returns>
-        public static RollingUpgradePolicy RollingUpgradePolicy(bool? enableCrossZoneUpgrade = default, int? maxBatchInstancePercent = default, int? maxUnhealthyInstancePercent = default, int? maxUnhealthyUpgradedInstancePercent = default, TimeSpan? pauseTimeBetweenBatches = default, bool? prioritizeUnhealthyInstances = default, bool? rollbackFailedInstancesOnPolicyBreach = default)
+        public static RollingUpgradePolicy RollingUpgradePolicy(bool? isCrossZoneUpgradeEnabled = default, int? maxBatchInstancePercent = default, int? maxUnhealthyInstancePercent = default, int? maxUnhealthyUpgradedInstancePercent = default, TimeSpan? pauseTimeBetweenBatches = default, bool? prioritizeUnhealthyInstances = default, bool? rollbackFailedInstancesOnPolicyBreach = default)
         {
             return new RollingUpgradePolicy(
-                enableCrossZoneUpgrade,
+                isCrossZoneUpgradeEnabled,
                 maxBatchInstancePercent,
                 maxUnhealthyInstancePercent,
                 maxUnhealthyUpgradedInstancePercent,
@@ -1717,11 +1717,11 @@ namespace Azure.Compute.Batch
         }
 
         /// <summary> Parameters for disabling an Azure Batch Job. </summary>
-        /// <param name="disableTasks"> What to do with active Tasks associated with the Job. </param>
+        /// <param name="jobOption"> What to do with active Tasks associated with the Job. </param>
         /// <returns> A new <see cref="Batch.BatchJobDisableOptions"/> instance for mocking. </returns>
-        public static BatchJobDisableOptions BatchJobDisableOptions(DisableBatchJobOption disableTasks = default)
+        public static BatchJobDisableOptions BatchJobDisableOptions(DisableBatchJobOption jobOption = default)
         {
-            return new BatchJobDisableOptions(disableTasks, additionalBinaryDataProperties: null);
+            return new BatchJobDisableOptions(jobOption, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Parameters for terminating an Azure Batch Job. </summary>
@@ -1970,14 +1970,14 @@ namespace Azure.Compute.Batch
         /// The schedule according to which Jobs will be created. All times are fixed
         /// respective to UTC and are not impacted by daylight saving time.
         /// </summary>
-        /// <param name="doNotRunUntil"> The earliest time at which any Job may be created under this Job Schedule. If you do not specify a doNotRunUntil time, the schedule becomes ready to create Jobs immediately. </param>
+        /// <param name="doNotRunBefore"> The earliest time at which any Job may be created under this Job Schedule. If you do not specify a doNotRunUntil time, the schedule becomes ready to create Jobs immediately. </param>
         /// <param name="doNotRunAfter"> A time after which no Job will be created under this Job Schedule. The schedule will move to the completed state as soon as this deadline is past and there is no active Job under this Job Schedule. If you do not specify a doNotRunAfter time, and you are creating a recurring Job Schedule, the Job Schedule will remain active until you explicitly terminate it. </param>
         /// <param name="startWindow"> The time interval, starting from the time at which the schedule indicates a Job should be created, within which a Job must be created. If a Job is not created within the startWindow interval, then the 'opportunity' is lost; no Job will be created until the next recurrence of the schedule. If the schedule is recurring, and the startWindow is longer than the recurrence interval, then this is equivalent to an infinite startWindow, because the Job that is 'due' in one recurrenceInterval is not carried forward into the next recurrence interval. The default is infinite. The minimum value is 1 minute. If you specify a lower value, the Batch service rejects the schedule with an error; if you are calling the REST API directly, the HTTP status code is 400 (Bad Request). </param>
         /// <param name="recurrenceInterval"> The time interval between the start times of two successive Jobs under the Job Schedule. A Job Schedule can have at most one active Job under it at any given time. Because a Job Schedule can have at most one active Job under it at any given time, if it is time to create a new Job under a Job Schedule, but the previous Job is still running, the Batch service will not create the new Job until the previous Job finishes. If the previous Job does not finish within the startWindow period of the new recurrenceInterval, then no new Job will be scheduled for that interval. For recurring Jobs, you should normally specify a jobManagerTask in the jobSpecification. If you do not use jobManagerTask, you will need an external process to monitor when Jobs are created, add Tasks to the Jobs and terminate the Jobs ready for the next recurrence. The default is that the schedule does not recur: one Job is created, within the startWindow after the doNotRunUntil time, and the schedule is complete as soon as that Job finishes. The minimum value is 1 minute. If you specify a lower value, the Batch service rejects the schedule with an error; if you are calling the REST API directly, the HTTP status code is 400 (Bad Request). </param>
         /// <returns> A new <see cref="Batch.BatchJobScheduleConfiguration"/> instance for mocking. </returns>
-        public static BatchJobScheduleConfiguration BatchJobScheduleConfiguration(DateTimeOffset? doNotRunUntil = default, DateTimeOffset? doNotRunAfter = default, TimeSpan? startWindow = default, TimeSpan? recurrenceInterval = default)
+        public static BatchJobScheduleConfiguration BatchJobScheduleConfiguration(DateTimeOffset? doNotRunBefore = default, DateTimeOffset? doNotRunAfter = default, TimeSpan? startWindow = default, TimeSpan? recurrenceInterval = default)
         {
-            return new BatchJobScheduleConfiguration(doNotRunUntil, doNotRunAfter, startWindow, recurrenceInterval, additionalBinaryDataProperties: null);
+            return new BatchJobScheduleConfiguration(doNotRunBefore, doNotRunAfter, startWindow, recurrenceInterval, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Specifies details of the Jobs to be created on a schedule. </summary>
@@ -2049,7 +2049,7 @@ namespace Azure.Compute.Batch
         /// <param name="lastUpdateTime"> The time at which the statistics were last updated. All statistics are limited to the range between startTime and lastUpdateTime. </param>
         /// <param name="userCpuTime"> The total user mode CPU time (summed across all cores and all Compute Nodes) consumed by all Tasks in all Jobs created under the schedule. </param>
         /// <param name="kernelCpuTime"> The total kernel mode CPU time (summed across all cores and all Compute Nodes) consumed by all Tasks in all Jobs created under the schedule. </param>
-        /// <param name="wallClockTime"> The total wall clock time of all the Tasks in all the Jobs created under the schedule. The wall clock time is the elapsed time from when the Task started running on a Compute Node to when it finished (or to the last time the statistics were updated, if the Task had not finished by then). If a Task was retried, this includes the wall clock time of all the Task retries. </param>
+        /// <param name="duration"> The total wall clock time of all the Tasks in all the Jobs created under the schedule. The wall clock time is the elapsed time from when the Task started running on a Compute Node to when it finished (or to the last time the statistics were updated, if the Task had not finished by then). If a Task was retried, this includes the wall clock time of all the Task retries. </param>
         /// <param name="readIops"> The total number of disk read operations made by all Tasks in all Jobs created under the schedule. </param>
         /// <param name="writeIops"> The total number of disk write operations made by all Tasks in all Jobs created under the schedule. </param>
         /// <param name="readIoGiB"> The total gibibytes read from disk by all Tasks in all Jobs created under the schedule. </param>
@@ -2059,7 +2059,7 @@ namespace Azure.Compute.Batch
         /// <param name="taskRetriesCount"> The total number of retries during the given time range on all Tasks in all Jobs created under the schedule. </param>
         /// <param name="waitTime"> The total wait time of all Tasks in all Jobs created under the schedule. The wait time for a Task is defined as the elapsed time between the creation of the Task and the start of Task execution. (If the Task is retried due to failures, the wait time is the time to the most recent Task execution.). This value is only reported in the Account lifetime statistics; it is not included in the Job statistics. </param>
         /// <returns> A new <see cref="Batch.BatchJobScheduleStatistics"/> instance for mocking. </returns>
-        public static BatchJobScheduleStatistics BatchJobScheduleStatistics(Uri uri = default, DateTimeOffset startTime = default, DateTimeOffset lastUpdateTime = default, TimeSpan userCpuTime = default, TimeSpan kernelCpuTime = default, TimeSpan wallClockTime = default, long readIops = default, long writeIops = default, float readIoGiB = default, float writeIoGiB = default, long succeededTasksCount = default, long failedTasksCount = default, long taskRetriesCount = default, TimeSpan waitTime = default)
+        public static BatchJobScheduleStatistics BatchJobScheduleStatistics(Uri uri = default, DateTimeOffset startTime = default, DateTimeOffset lastUpdateTime = default, TimeSpan userCpuTime = default, TimeSpan kernelCpuTime = default, TimeSpan duration = default, long readIops = default, long writeIops = default, float readIoGiB = default, float writeIoGiB = default, long succeededTasksCount = default, long failedTasksCount = default, long taskRetriesCount = default, TimeSpan waitTime = default)
         {
             return new BatchJobScheduleStatistics(
                 uri,
@@ -2067,7 +2067,7 @@ namespace Azure.Compute.Batch
                 lastUpdateTime,
                 userCpuTime,
                 kernelCpuTime,
-                wallClockTime,
+                duration,
                 readIops,
                 writeIops,
                 readIoGiB,

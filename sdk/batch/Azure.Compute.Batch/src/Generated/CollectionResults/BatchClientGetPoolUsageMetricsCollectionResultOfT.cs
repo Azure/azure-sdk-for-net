@@ -16,8 +16,8 @@ namespace Azure.Compute.Batch
     internal partial class BatchClientGetPoolUsageMetricsCollectionResultOfT : Pageable<BatchPoolUsageMetrics>
     {
         private readonly BatchClient _client;
-        private readonly TimeSpan? _timeOutInSeconds;
-        private readonly DateTimeOffset? _ocpDate;
+        private readonly TimeSpan? _timeout;
+        private readonly DateTimeOffset? _requestDate;
         private readonly int? _maxresults;
         private readonly DateTimeOffset? _starttime;
         private readonly DateTimeOffset? _endtime;
@@ -27,8 +27,8 @@ namespace Azure.Compute.Batch
 
         /// <summary> Initializes a new instance of BatchClientGetPoolUsageMetricsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The BatchClient client used to send requests. </param>
-        /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpDate">
+        /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
+        /// <param name="requestDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -56,8 +56,8 @@ namespace Azure.Compute.Batch
         public BatchClientGetPoolUsageMetricsCollectionResultOfT(BatchClient client, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, DateTimeOffset? starttime, DateTimeOffset? endtime, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
-            _timeOutInSeconds = timeOutInSeconds;
-            _ocpDate = ocpDate;
+            _timeout = timeout;
+            _requestDate = requestDate;
             _maxresults = maxresults;
             _starttime = starttime;
             _endtime = endtime;
