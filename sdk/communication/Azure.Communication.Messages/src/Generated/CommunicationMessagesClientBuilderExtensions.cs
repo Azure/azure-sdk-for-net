@@ -8,7 +8,6 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using Azure;
-using Azure.Communication;
 using Azure.Communication.Messages;
 using Azure.Core.Extensions;
 
@@ -84,16 +83,6 @@ namespace Microsoft.Extensions.Azure
             Argument.AssertNotNull(endpoint, nameof(endpoint));
 
             return builder.RegisterClientFactory<ConversationThreadClient, CommunicationMessagesClientOptions>((options, credential) => new ConversationThreadClient(endpoint, credential, options));
-        }
-
-        /// <summary> Registers a <see cref="ConversationThreadClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
-        /// <param name="builder"> The builder to register with. </param>
-        /// <param name="endpoint"></param>
-        /// <param name="communicationTokenCredential"></param>
-        public static IAzureClientBuilder<ConversationThreadClient, CommunicationMessagesClientOptions> AddConversationThreadClient<TBuilder>(this TBuilder builder, Uri endpoint, CommunicationTokenCredential communicationTokenCredential)
-            where TBuilder : IAzureClientFactoryBuilder
-        {
-            return builder.RegisterClientFactory<ConversationThreadClient, CommunicationMessagesClientOptions>(options => new ConversationThreadClient(endpoint, communicationTokenCredential, options));
         }
 
         /// <summary> Registers a <see cref="ConversationThreadClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>

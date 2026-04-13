@@ -5,6 +5,7 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using Azure;
+using Azure.Communication;
 using Azure.Communication.Messages;
 using Azure.Core.Extensions;
 using Microsoft.TypeSpec.Generator.Customizations;
@@ -16,6 +17,7 @@ namespace Microsoft.Extensions.Azure
     /// This type is provided for backward compatibility.
     /// </summary>
     [CodeGenType("MessagesClientBuilderExtensions")]
+    [CodeGenSuppress("AddConversationThreadClient", typeof(IAzureClientFactoryBuilder), typeof(Uri), typeof(CommunicationTokenCredential))]
     [EditorBrowsable(EditorBrowsableState.Never)]
     public static partial class CommunicationMessagesClientBuilderExtensions
     {
