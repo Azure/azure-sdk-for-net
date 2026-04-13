@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         {
             var requestHeaderOptions = optInHeaders is null
                 ? default
-                : new ProviderRequestHeaderOptions(optInHeaders, default, null);
+                : new ProviderRequestHeaderOptions { OptInHeaders = optInHeaders };
             return ResourceProviderManifest(
                 providerAuthenticationAllowedAudiences: providerAuthenticationAllowedAudiences,
                 providerAuthorizations: providerAuthorizations,
