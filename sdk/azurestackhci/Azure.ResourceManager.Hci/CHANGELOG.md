@@ -15,8 +15,6 @@
 - Some resource collection and extension method signatures changed.
 - Some model factory overloads changed signatures.
 
-### Bugs Fixed
-
 ### Other Changes
 
 - Backward-compatible type aliases (e.g., `OfferResource`, `PublisherResource`, `UpdateData`) are preserved but may be removed in a future release.
