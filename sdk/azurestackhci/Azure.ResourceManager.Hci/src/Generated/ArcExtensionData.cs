@@ -13,178 +13,220 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Hci
 {
-    /// <summary>
-    /// A class representing the ArcExtension data model.
-    /// Details of a particular extension in HCI Cluster.
-    /// </summary>
+    /// <summary> Details of a particular extension in HCI Cluster. </summary>
     public partial class ArcExtensionData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ArcExtensionData"/>. </summary>
         public ArcExtensionData()
         {
-            PerNodeExtensionDetails = new ChangeTrackingList<PerNodeExtensionState>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ArcExtensionData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="provisioningState"> Provisioning state of the Extension proxy resource. </param>
-        /// <param name="aggregateState"> Aggregate state of Arc Extensions across the nodes in this HCI cluster. </param>
-        /// <param name="perNodeExtensionDetails"> State of Arc Extension in each of the nodes. </param>
-        /// <param name="managedBy"> Indicates if the extension is managed by azure or the user. </param>
-        /// <param name="forceUpdateTag"> How the extension handler should be forced to update even if the extension configuration has not changed. </param>
-        /// <param name="publisher"> The name of the extension handler publisher. </param>
-        /// <param name="arcExtensionType"> Specifies the type of the extension; an example is "CustomScriptExtension". </param>
-        /// <param name="typeHandlerVersion"> Specifies the version of the script handler. Latest version would be used if not specified. </param>
-        /// <param name="shouldAutoUpgradeMinorVersion"> Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not upgrade minor versions unless redeployed, even with this property set to true. </param>
-        /// <param name="settings"> Json formatted public settings for the extension. </param>
-        /// <param name="protectedSettings"> Protected settings (may contain secrets). </param>
-        /// <param name="enableAutomaticUpgrade"> Indicates whether the extension should be automatically upgraded by the platform if there is a newer version available. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ArcExtensionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, HciProvisioningState? provisioningState, ArcExtensionAggregateState? aggregateState, IReadOnlyList<PerNodeExtensionState> perNodeExtensionDetails, ArcExtensionManagedBy? managedBy, string forceUpdateTag, string publisher, string arcExtensionType, string typeHandlerVersion, bool? shouldAutoUpgradeMinorVersion, BinaryData settings, BinaryData protectedSettings, bool? enableAutomaticUpgrade, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Describes Machine Extension Properties. </param>
+        internal ArcExtensionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ExtensionProperties properties) : base(id, name, resourceType, systemData)
         {
-            ProvisioningState = provisioningState;
-            AggregateState = aggregateState;
-            PerNodeExtensionDetails = perNodeExtensionDetails;
-            ManagedBy = managedBy;
-            ForceUpdateTag = forceUpdateTag;
-            Publisher = publisher;
-            ArcExtensionType = arcExtensionType;
-            TypeHandlerVersion = typeHandlerVersion;
-            ShouldAutoUpgradeMinorVersion = shouldAutoUpgradeMinorVersion;
-            Settings = settings;
-            ProtectedSettings = protectedSettings;
-            EnableAutomaticUpgrade = enableAutomaticUpgrade;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
-        /// <summary> Provisioning state of the Extension proxy resource. </summary>
+        /// <summary> Describes Machine Extension Properties. </summary>
+        [WirePath("properties")]
+        internal ExtensionProperties Properties { get; set; }
+
+        /// <summary> Provisioning state of the Extension proxy resource. Indicates the current lifecycle status of the resource, such as whether it's being created, updated, deleted, or has encountered an error. </summary>
         [WirePath("properties.provisioningState")]
-        public HciProvisioningState? ProvisioningState { get; }
-        /// <summary> Aggregate state of Arc Extensions across the nodes in this HCI cluster. </summary>
+        public HciProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> Aggregate state of Arc Extensions across the nodes in this HCI cluster. This reflects the overall status of the extension deployment and operation across all nodes. </summary>
         [WirePath("properties.aggregateState")]
-        public ArcExtensionAggregateState? AggregateState { get; }
+        public ArcExtensionAggregateState? AggregateState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AggregateState;
+            }
+        }
+
         /// <summary> State of Arc Extension in each of the nodes. </summary>
         [WirePath("properties.perNodeExtensionDetails")]
-        public IReadOnlyList<PerNodeExtensionState> PerNodeExtensionDetails { get; }
-        /// <summary> Indicates if the extension is managed by azure or the user. </summary>
+        public IReadOnlyList<PerNodeExtensionState> PerNodeExtensionDetails
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExtensionProperties();
+                }
+                return Properties.PerNodeExtensionDetails;
+            }
+        }
+
+        /// <summary> Indicates if the extension is managed by Azure or the user. This determines who controls the deployment and lifecycle of the extension. </summary>
         [WirePath("properties.managedBy")]
-        public ArcExtensionManagedBy? ManagedBy { get; }
+        public ArcExtensionManagedBy? ManagedBy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ManagedBy;
+            }
+        }
+
         /// <summary> How the extension handler should be forced to update even if the extension configuration has not changed. </summary>
-        [WirePath("properties.forceUpdateTag")]
-        public string ForceUpdateTag { get; set; }
+        [WirePath("properties.extensionParameters.forceUpdateTag")]
+        public string ForceUpdateTag
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ForceUpdateTag;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExtensionProperties();
+                }
+                Properties.ForceUpdateTag = value;
+            }
+        }
+
         /// <summary> The name of the extension handler publisher. </summary>
-        [WirePath("properties.publisher")]
-        public string Publisher { get; set; }
+        [WirePath("properties.extensionParameters.publisher")]
+        public string Publisher
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Publisher;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExtensionProperties();
+                }
+                Properties.Publisher = value;
+            }
+        }
+
         /// <summary> Specifies the type of the extension; an example is "CustomScriptExtension". </summary>
-        [WirePath("properties.type")]
-        public string ArcExtensionType { get; set; }
+        [WirePath("properties.extensionParameters.type")]
+        public string ArcExtensionType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ArcExtensionType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExtensionProperties();
+                }
+                Properties.ArcExtensionType = value;
+            }
+        }
+
         /// <summary> Specifies the version of the script handler. Latest version would be used if not specified. </summary>
-        [WirePath("properties.typeHandlerVersion")]
-        public string TypeHandlerVersion { get; set; }
+        [WirePath("properties.extensionParameters.typeHandlerVersion")]
+        public string TypeHandlerVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TypeHandlerVersion;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExtensionProperties();
+                }
+                Properties.TypeHandlerVersion = value;
+            }
+        }
+
         /// <summary> Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not upgrade minor versions unless redeployed, even with this property set to true. </summary>
-        [WirePath("properties.autoUpgradeMinorVersion")]
-        public bool? ShouldAutoUpgradeMinorVersion { get; set; }
-        /// <summary>
-        /// Json formatted public settings for the extension.
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        [WirePath("properties.settings")]
-        public BinaryData Settings { get; set; }
-        /// <summary>
-        /// Protected settings (may contain secrets).
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        [WirePath("properties.protectedSettings")]
-        public BinaryData ProtectedSettings { get; set; }
+        [WirePath("properties.extensionParameters.autoUpgradeMinorVersion")]
+        public bool? ShouldAutoUpgradeMinorVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ShouldAutoUpgradeMinorVersion;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExtensionProperties();
+                }
+                Properties.ShouldAutoUpgradeMinorVersion = value.Value;
+            }
+        }
+
+        /// <summary> Json formatted public settings for the extension. </summary>
+        [WirePath("properties.extensionParameters.settings")]
+        public BinaryData Settings
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Settings;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExtensionProperties();
+                }
+                Properties.Settings = value;
+            }
+        }
+
+        /// <summary> Protected settings (may contain secrets). </summary>
+        [WirePath("properties.extensionParameters.protectedSettings")]
+        public BinaryData ProtectedSettings
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProtectedSettings;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExtensionProperties();
+                }
+                Properties.ProtectedSettings = value;
+            }
+        }
+
         /// <summary> Indicates whether the extension should be automatically upgraded by the platform if there is a newer version available. </summary>
-        [WirePath("properties.enableAutomaticUpgrade")]
-        public bool? EnableAutomaticUpgrade { get; set; }
+        [WirePath("properties.extensionParameters.enableAutomaticUpgrade")]
+        public bool? EnableAutomaticUpgrade
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnableAutomaticUpgrade;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExtensionProperties();
+                }
+                Properties.EnableAutomaticUpgrade = value.Value;
+            }
+        }
     }
 }

@@ -139,7 +139,7 @@ namespace Azure.AI.VoiceLive.Tests
 
         [LiveOnly]
         [TestCase]
-       // [Ignore("Approval not requested")]
+        // [Ignore("Approval not requested")]
         public async Task ShouldExecuteToolAfterApprovalGranted()
         {
             var client = GetLiveClient(new VoiceLiveClientOptions(VoiceLiveClientOptions.ServiceVersion.V2025_10_01));

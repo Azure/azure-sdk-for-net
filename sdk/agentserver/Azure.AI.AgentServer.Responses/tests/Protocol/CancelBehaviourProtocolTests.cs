@@ -246,6 +246,7 @@ public class CancelBehaviourProtocolTests : ProtocolTestBase
         // Emit some content before waiting
         var item = stream.AddOutputItemMessage();
         var content = item.AddTextContent();
+        yield return content.EmitAdded();
         yield return content.EmitDelta("Hello ");
         yield return content.EmitDelta("World");
         deltasEmitted.TrySetResult();

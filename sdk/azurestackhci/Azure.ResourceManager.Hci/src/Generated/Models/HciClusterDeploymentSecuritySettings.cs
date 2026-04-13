@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> The SecuritySettings of AzureStackHCI Cluster. </summary>
     public partial class HciClusterDeploymentSecuritySettings
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HciClusterDeploymentSecuritySettings"/>. </summary>
         public HciClusterDeploymentSecuritySettings()
@@ -61,8 +33,8 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="isBitlockerBootVolumeEnabled"> When set to true, BitLocker XTS_AES 256-bit encryption is enabled for all data-at-rest on the OS volume of your Azure Stack HCI cluster. This setting is TPM-hardware dependent. </param>
         /// <param name="areBitlockerDataVolumesEnabled"> When set to true, BitLocker XTS-AES 256-bit encryption is enabled for all data-at-rest on your Azure Stack HCI cluster shared volumes. </param>
         /// <param name="isWdacEnforced"> WDAC is enabled by default and limits the applications and the code that you can run on your Azure Stack HCI cluster. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HciClusterDeploymentSecuritySettings(bool? isHvciProtectionEnabled, bool? isDrtmProtectionEnabled, bool? isDriftControlEnforced, bool? isCredentialGuardEnforced, bool? isSmbSigningEnforced, bool? isSmbClusterEncryptionEnabled, bool? isSideChannelMitigationEnforced, bool? isBitlockerBootVolumeEnabled, bool? areBitlockerDataVolumesEnabled, bool? isWdacEnforced, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal HciClusterDeploymentSecuritySettings(bool? isHvciProtectionEnabled, bool? isDrtmProtectionEnabled, bool? isDriftControlEnforced, bool? isCredentialGuardEnforced, bool? isSmbSigningEnforced, bool? isSmbClusterEncryptionEnabled, bool? isSideChannelMitigationEnforced, bool? isBitlockerBootVolumeEnabled, bool? areBitlockerDataVolumesEnabled, bool? isWdacEnforced, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsHvciProtectionEnabled = isHvciProtectionEnabled;
             IsDrtmProtectionEnabled = isDrtmProtectionEnabled;
@@ -74,36 +46,45 @@ namespace Azure.ResourceManager.Hci.Models
             IsBitlockerBootVolumeEnabled = isBitlockerBootVolumeEnabled;
             AreBitlockerDataVolumesEnabled = areBitlockerDataVolumesEnabled;
             IsWdacEnforced = isWdacEnforced;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> By default, Hypervisor-protected Code Integrity is enabled on your Azure HCI cluster. </summary>
         [WirePath("hvciProtection")]
         public bool? IsHvciProtectionEnabled { get; set; }
+
         /// <summary> By default, Secure Boot is enabled on your Azure HCI cluster. This setting is hardware dependent. </summary>
         [WirePath("drtmProtection")]
         public bool? IsDrtmProtectionEnabled { get; set; }
+
         /// <summary> When set to true, the security baseline is re-applied regularly. </summary>
         [WirePath("driftControlEnforced")]
         public bool? IsDriftControlEnforced { get; set; }
+
         /// <summary> When set to true, Credential Guard is enabled. </summary>
         [WirePath("credentialGuardEnforced")]
         public bool? IsCredentialGuardEnforced { get; set; }
+
         /// <summary> When set to true, the SMB default instance requires sign in for the client and server services. </summary>
         [WirePath("smbSigningEnforced")]
         public bool? IsSmbSigningEnforced { get; set; }
+
         /// <summary> When set to true, cluster east-west traffic is encrypted. </summary>
         [WirePath("smbClusterEncryption")]
         public bool? IsSmbClusterEncryptionEnabled { get; set; }
+
         /// <summary> When set to true, all the side channel mitigations are enabled. </summary>
         [WirePath("sideChannelMitigationEnforced")]
         public bool? IsSideChannelMitigationEnforced { get; set; }
+
         /// <summary> When set to true, BitLocker XTS_AES 256-bit encryption is enabled for all data-at-rest on the OS volume of your Azure Stack HCI cluster. This setting is TPM-hardware dependent. </summary>
         [WirePath("bitlockerBootVolume")]
         public bool? IsBitlockerBootVolumeEnabled { get; set; }
+
         /// <summary> When set to true, BitLocker XTS-AES 256-bit encryption is enabled for all data-at-rest on your Azure Stack HCI cluster shared volumes. </summary>
         [WirePath("bitlockerDataVolumes")]
         public bool? AreBitlockerDataVolumesEnabled { get; set; }
+
         /// <summary> WDAC is enabled by default and limits the applications and the code that you can run on your Azure Stack HCI cluster. </summary>
         [WirePath("wdacEnforced")]
         public bool? IsWdacEnforced { get; set; }

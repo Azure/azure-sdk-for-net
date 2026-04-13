@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #nullable enable
@@ -126,13 +126,13 @@ namespace Azure.AI.Agents.Persistent
                 {
                     // No thread ID was provided, so create a new thread.
                     CreateThreadRequest createThreadRequest = new(
-                        messages: runOptions.ThreadOptions.Messages?.ToList() as IReadOnlyList<ThreadMessageOptions> ?? new ChangeTrackingList<ThreadMessageOptions>(),
+                        messages: runOptions.ThreadOptions.Messages?.ToList() ?? (IList<ThreadMessageOptions>)new ChangeTrackingList<ThreadMessageOptions>(),
                         toolResources: runOptions.ToolResources,
-                        metadata: runOptions.Metadata ?? new ChangeTrackingDictionary<string, string>(),
-                        serializedAdditionalRawData: null);
+                        metadata: runOptions.Metadata?.ToDictionary(kvp => kvp.Key, kvp => kvp.Value) ?? (IDictionary<string, string>)new ChangeTrackingDictionary<string, string>(),
+                        additionalBinaryDataProperties: null);
 
-                    Response threadResponse = await _client!.Threads.CreateThreadAsync(createThreadRequest.ToRequestContent(), requestContext).ConfigureAwait(false);
-                    PersistentAgentThread thread = PersistentAgentThread.FromResponse(threadResponse);
+                    Response threadResponse = await _client!.Threads.CreateThreadAsync(createThreadRequest, requestContext).ConfigureAwait(false);
+                    PersistentAgentThread thread = (PersistentAgentThread)threadResponse;
                     runOptions.ThreadOptions.Messages?.Clear();
                     threadId = thread.Id;
                 }
@@ -369,9 +369,9 @@ namespace Azure.AI.Agents.Persistent
 
                 RequestContext context = CreateMeaiRequestContext(cancellationToken);
                 Response response = await _client!.Administration.GetAgentAsync(_agentId, context).ConfigureAwait(false);
-                var agent = Response.FromValue(PersistentAgent.FromResponse(response), response);
+                PersistentAgent agentValue = (PersistentAgent)response;
 
-                Interlocked.CompareExchange(ref _agent, agent, null);
+                Interlocked.CompareExchange(ref _agent, agentValue, null);
             }
 
             // Populate the run options from the ChatOptions, if provided.
@@ -441,7 +441,7 @@ namespace Azure.AI.Agents.Persistent
                             case HostedFileSearchTool fileSearchTool:
                                 toolDefinitions.Add(new FileSearchToolDefinition(
                                     type: "file_search",
-                                    serializedAdditionalRawData: null,
+                                    additionalBinaryDataProperties: null,
                                     fileSearch: new() { MaxNumResults = fileSearchTool.MaximumResultCount }));
 
                                 if (fileSearchTool.Inputs is { Count: > 0 })
