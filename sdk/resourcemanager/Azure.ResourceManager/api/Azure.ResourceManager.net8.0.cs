@@ -45,10 +45,10 @@ namespace Azure.ResourceManager
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
     public static partial class ArmClientHostExtensions
     {
-        public static System.ClientModel.Primitives.IClientBuilder GetArmClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) { throw null; }
-        public static System.ClientModel.Primitives.IClientBuilder GetArmClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<Azure.ResourceManager.ArmClientSettings> configureSettings) { throw null; }
-        public static System.ClientModel.Primitives.IClientBuilder GetKeyedArmClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) { throw null; }
-        public static System.ClientModel.Primitives.IClientBuilder GetKeyedArmClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<Azure.ResourceManager.ArmClientSettings> configureSettings) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddArmClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddArmClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<Azure.ResourceManager.ArmClientSettings> configureSettings) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedArmClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedArmClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<Azure.ResourceManager.ArmClientSettings> configureSettings) { throw null; }
     }
     public sealed partial class ArmClientOptions : Azure.Core.ClientOptions
     {

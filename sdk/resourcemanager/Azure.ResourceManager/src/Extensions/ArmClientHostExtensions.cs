@@ -21,7 +21,7 @@ namespace Azure.ResourceManager
         /// <param name="host">The <see cref="IHostApplicationBuilder"/> to add to.</param>
         /// <param name="sectionName">The section of <see cref="Microsoft.Extensions.Configuration.IConfiguration"/> to use.</param>
         /// <returns>An <see cref="IClientBuilder"/> that can be used to further configure the client.</returns>
-        public static IClientBuilder GetArmClient(
+        public static IClientBuilder AddArmClient(
             this IHostApplicationBuilder host,
             string sectionName)
             => host.AddAzureClient<ArmClient, ArmClientSettings>(sectionName);
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager
         /// <param name="sectionName">The section of <see cref="Microsoft.Extensions.Configuration.IConfiguration"/> to use.</param>
         /// <param name="configureSettings">Factory method to modify the <see cref="ArmClientSettings"/> after they are created.</param>
         /// <returns>An <see cref="IClientBuilder"/> that can be used to further configure the client.</returns>
-        public static IClientBuilder GetArmClient(
+        public static IClientBuilder AddArmClient(
             this IHostApplicationBuilder host,
             string sectionName,
             Action<ArmClientSettings> configureSettings)
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager
         /// <param name="key">The unique key to register as.</param>
         /// <param name="sectionName">The section of <see cref="Microsoft.Extensions.Configuration.IConfiguration"/> to use.</param>
         /// <returns>An <see cref="IClientBuilder"/> that can be used to further configure the client.</returns>
-        public static IClientBuilder GetKeyedArmClient(
+        public static IClientBuilder AddKeyedArmClient(
             this IHostApplicationBuilder host,
             string key,
             string sectionName)
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager
         /// <param name="sectionName">The section of <see cref="Microsoft.Extensions.Configuration.IConfiguration"/> to use.</param>
         /// <param name="configureSettings">Factory method to modify the <see cref="ArmClientSettings"/> after they are created.</param>
         /// <returns>An <see cref="IClientBuilder"/> that can be used to further configure the client.</returns>
-        public static IClientBuilder GetKeyedArmClient(
+        public static IClientBuilder AddKeyedArmClient(
             this IHostApplicationBuilder host,
             string key,
             string sectionName,
