@@ -5,9 +5,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
 using Azure.Identity;
-using Azure.ResourceManager;
+using Microsoft.Extensions.Hosting;
 
-namespace Microsoft.Extensions.Hosting
+namespace Azure.ResourceManager
 {
     /// <summary>
     /// Extension methods to add <see cref="ArmClient"/> to an <see cref="IHostApplicationBuilder"/>.
