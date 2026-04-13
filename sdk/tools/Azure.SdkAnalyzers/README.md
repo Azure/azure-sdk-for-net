@@ -6,8 +6,20 @@ This package is automatically included in all Azure SDK libraries in this reposi
 
 ## Implemented Rules
 
-- [**AZC0012**](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/tools/Azure.SdkAnalyzers/docs/list-of-diagnostics.md#azc0012): Avoid single word type names
-- [**AZC0020**](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/tools/Azure.SdkAnalyzers/docs/AZC0020.md): Propagate CancellationToken to RequestContext
+### Unsuppressible (Error severity)
+
+These rules enforce internal implementation correctness and **cannot be suppressed** via `#pragma`, `<NoWarn>`, or `.editorconfig`.
+
+| Rule | Description | Fix |
+|------|-------------|-----|
+| [**AZC0101**](docs/AZC0101.md) | Do not use `ConfigureAwait(true)` | ✅ |
+
+### Suppressible (Warning severity)
+
+| Rule | Description |
+|------|-------------|
+| [**AZC0012**](docs/list-of-diagnostics.md#azc0012) | Avoid single word type names |
+| [**AZC0020**](docs/AZC0020.md) | Propagate CancellationToken to RequestContext |
 
 ## For Library Authors
 

@@ -1,5 +1,38 @@
 # List of diagnostics produced by Azure.SdkAnalyzers
 
+## Unsuppressible Rules (Error severity)
+
+These rules enforce internal implementation correctness and cannot be disabled via `#pragma`, `<NoWarn>`, or `.editorconfig`. They exist to prevent deadlocks, threading issues, and other runtime problems in Azure SDK libraries.
+
+### AZC0101
+
+**Do not use ConfigureAwait(true)**
+
+| Property | Value |
+|----------|-------|
+| **Severity** | Error |
+| **Suppressible** | No |
+| **Code fix** | Yes |
+
+#### Cause
+
+An awaitable expression uses `ConfigureAwait(true)` instead of `ConfigureAwait(false)`.
+
+#### How to fix violation
+
+Replace `true` with `false`. A code fix is available:
+
+```diff
+- await task.ConfigureAwait(true);
++ await task.ConfigureAwait(false);
+```
+
+See [AZC0101 documentation](AZC0101.md) for details.
+
+---
+
+## Suppressible Rules (Warning severity)
+
 ## AZC0012
 
 ### Cause
