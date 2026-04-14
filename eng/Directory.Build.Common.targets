@@ -144,14 +144,19 @@
 
   <!--
     ConfigurationSchema.json auto-pack
-    Any shippable client library with a schema/ConfigurationSchema.json (sibling of src/)
-    gets the schema packed at the NuGet package root and a static .targets file packed into
+    Any shippable client library with a schema/ConfigurationSchema.json gets the schema
+    packed at the NuGet package root and a static .targets file packed into
     buildTransitive/{tfm}/ that registers the JsonSchemaSegment for appsettings.*.json.
     Individual packages only need to add the JSON file — no extra MSBuild configuration.
+    The schema can live at either:
+      1. $(PackageRootDirectory)/schema/ConfigurationSchema.json  (custom/hand-authored)
+      2. $(PackageRootDirectory)/src/Generated/schema/ConfigurationSchema.json  (code-generated)
+    Only one location should exist per library; the custom location takes precedence.
   -->
   <PropertyGroup>
-    <ConfigurationSchemaPath>$(PackageRootDirectory)/schema/ConfigurationSchema.json</ConfigurationSchemaPath>
-    <HasConfigurationSchema Condition="'$(IsShippingClientLibrary)' == 'true' and Exists('$(ConfigurationSchemaPath)')">true</HasConfigurationSchema>
+    <ConfigurationSchemaPath Condition="Exists('$(PackageRootDirectory)/schema/ConfigurationSchema.json')">$(PackageRootDirectory)/schema/ConfigurationSchema.json</ConfigurationSchemaPath>
+    <ConfigurationSchemaPath Condition="'$(ConfigurationSchemaPath)' == '' and Exists('$(PackageRootDirectory)/src/Generated/schema/ConfigurationSchema.json')">$(PackageRootDirectory)/src/Generated/schema/ConfigurationSchema.json</ConfigurationSchemaPath>
+    <HasConfigurationSchema Condition="'$(IsShippingClientLibrary)' == 'true' and '$(ConfigurationSchemaPath)' != ''">true</HasConfigurationSchema>
   </PropertyGroup>
 
   <ItemGroup Condition="'$(HasConfigurationSchema)' == 'true'">

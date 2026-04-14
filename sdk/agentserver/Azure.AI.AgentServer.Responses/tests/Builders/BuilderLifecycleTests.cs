@@ -38,9 +38,9 @@ public class BuilderLifecycleTests
         events.Add(refusal.EmitAdded());
         events.Add(refusal.EmitDelta("I cannot"));
         events.Add(refusal.EmitDelta(" do that."));
-        events.Add(refusal.EmitDone("I cannot do that."));
+        events.Add(refusal.EmitRefusalDone("I cannot do that."));
 
-        events.Add(message.EmitContentDone(refusal));
+        events.Add(refusal.EmitDone());
         events.Add(message.EmitDone());
         events.Add(stream.EmitCompleted());
 
@@ -87,7 +87,6 @@ public class BuilderLifecycleTests
         events.Add(part1.EmitTextDelta("thinking"));
         events.Add(part1.EmitTextDone("thinking deeply"));
         events.Add(part1.EmitDone());
-        reasoning.EmitSummaryPartDone(part1);
 
         // Second summary part
         var part2 = reasoning.AddSummaryPart();
@@ -95,7 +94,6 @@ public class BuilderLifecycleTests
         events.Add(part2.EmitTextDelta("more"));
         events.Add(part2.EmitTextDone("more analysis"));
         events.Add(part2.EmitDone());
-        reasoning.EmitSummaryPartDone(part2);
 
         events.Add(reasoning.EmitDone());
         events.Add(stream.EmitCompleted());

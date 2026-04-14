@@ -1283,8 +1283,8 @@ public class CrossApiE2eTests : ProtocolTestBase
         var text1 = msg1.AddTextContent();
         yield return text1.EmitAdded();
         yield return text1.EmitDelta("Hello");
-        yield return text1.EmitDone("Hello");
-        yield return msg1.EmitContentDone(text1);
+        yield return text1.EmitTextDone("Hello");
+        yield return text1.EmitDone();
         yield return msg1.EmitDone();
 
         item1Emitted.TrySetResult();
@@ -1296,8 +1296,8 @@ public class CrossApiE2eTests : ProtocolTestBase
         var text2 = msg2.AddTextContent();
         yield return text2.EmitAdded();
         yield return text2.EmitDelta("World");
-        yield return text2.EmitDone("World");
-        yield return msg2.EmitContentDone(text2);
+        yield return text2.EmitTextDone("World");
+        yield return text2.EmitDone();
         yield return msg2.EmitDone();
 
         item2Emitted.TrySetResult();
@@ -1336,8 +1336,8 @@ public class CrossApiE2eTests : ProtocolTestBase
         var text1 = msg1.AddTextContent();
         yield return text1.EmitAdded();
         yield return text1.EmitDelta("Hello");
-        yield return text1.EmitDone("Hello");
-        yield return msg1.EmitContentDone(text1);
+        yield return text1.EmitTextDone("Hello");
+        yield return text1.EmitDone();
         yield return msg1.EmitDone();
 
         itemDone.TrySetResult();
@@ -1349,8 +1349,8 @@ public class CrossApiE2eTests : ProtocolTestBase
         var text2 = msg2.AddTextContent();
         yield return text2.EmitAdded();
         yield return text2.EmitDelta("World");
-        yield return text2.EmitDone("World");
-        yield return msg2.EmitContentDone(text2);
+        yield return text2.EmitTextDone("World");
+        yield return text2.EmitDone();
         yield return msg2.EmitDone();
 
         item2Done.TrySetResult();

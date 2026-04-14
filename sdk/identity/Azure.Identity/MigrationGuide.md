@@ -1,6 +1,6 @@
 # Migration guide for `Azure.Identity` type consolidation into `Azure.Core`
 
-Starting with `Azure.Core` 1.53.0, all public types that previously lived in the `Azure.Identity` package have been moved into `Azure.Core`. The `Azure.Identity` package (version 1.53.0 and later) is now a lightweight facade that forwards all types to `Azure.Core` using [`TypeForwardedTo`](https://learn.microsoft.com/dotnet/api/system.runtime.compilerservices.typeforwardedtoattribute) attributes. This is a non-breaking change for most projects — existing code continues to compile and run transparently.
+Starting with `Azure.Core` 1.53.0, all public types that previously lived in the `Azure.Identity` package have been moved into `Azure.Core`. The `Azure.Identity` package (version 1.21.0 and later) is now a lightweight facade that forwards all types to `Azure.Core` using [`TypeForwardedTo`](https://learn.microsoft.com/dotnet/api/system.runtime.compilerservices.typeforwardedtoattribute) attributes. This is a non-breaking change for most projects — existing code continues to compile and run transparently.
 
 This guide covers the scenarios where you may need to take action.
 
@@ -9,9 +9,9 @@ This guide covers the scenarios where you may need to take action.
 | Scenario | Build result | Remedy |
 |---|---|---|
 | `Azure.Core` only (no `Azure.Identity` reference) | ✅ Builds | No action needed. Identity types are available directly through `Azure.Core`. |
-| `Azure.Core` 1.53+ with `Azure.Identity` 1.53+ | ✅ Builds | No action needed. The facade forwards all types correctly. |
+| `Azure.Core` 1.53+ with `Azure.Identity` 1.21+ | ✅ Builds | No action needed. The facade forwards all types correctly. |
 | `Azure.Core` 1.53+ with a **direct** `Azure.Identity` 1.19 or later reference | ❌ CS0433 | [Remove the `Azure.Identity` PackageReference](#direct-reference-to-an-older-azureidentity) |
-| `Azure.Core` 1.53+ with a **transitive** `Azure.Identity` 1.19 or later reference (via a third-party library) | ❌ CS0433 | [Add a direct `Azure.Identity` 1.53+ PackageReference](#transitive-reference-to-an-older-azureidentity) |
+| `Azure.Core` 1.53+ with a **transitive** `Azure.Identity` 1.19 or later reference (via a third-party library) | ❌ CS0433 | [Add a direct `Azure.Identity` 1.21+ PackageReference](#transitive-reference-to-an-older-azureidentity) |
 
 ## Understanding CS0433
 
@@ -19,7 +19,7 @@ This guide covers the scenarios where you may need to take action.
 
 ## Direct reference to an older `Azure.Identity`
 
-If your project has a direct `PackageReference` to an `Azure.Identity` version older than 1.53.0 alongside `Azure.Core` 1.53.0 or later, you will see CS0433 errors.
+If your project has a direct `PackageReference` to an `Azure.Identity` version older than 1.21.0 alongside `Azure.Core` 1.53.0 or later, you will see CS0433 errors.
 
 **Fix:** Remove the `Azure.Identity` `PackageReference` from your project file. The types are now available through `Azure.Core`.
 
@@ -30,26 +30,16 @@ If your project has a direct `PackageReference` to an `Azure.Identity` version o
  </ItemGroup>
 ```
 
-If you still need `Azure.Identity` as a dependency (for example, to match a dependency required by another library), update it to version 1.53.0 or later:
-
-```diff
- <ItemGroup>
-   <PackageReference Include="Azure.Core" Version="1.53.0" />
--  <PackageReference Include="Azure.Identity" Version="1.20.0" />
-+  <PackageReference Include="Azure.Identity" Version="1.53.0" />
- </ItemGroup>
-```
-
 ## Transitive reference to an older `Azure.Identity`
 
 If a third-party library that your project depends on brings in an older version of `Azure.Identity` transitively, you will see the same CS0433 errors even though your project does not directly reference `Azure.Identity`.
 
-**Fix:** Add a direct `PackageReference` to `Azure.Identity` 1.53.0 or later. NuGet's [nearest-wins](https://learn.microsoft.com/nuget/concepts/dependency-resolution#nearest-wins) rule ensures your direct reference takes precedence over the transitive one.
+**Fix:** Add a direct `PackageReference` to `Azure.Identity` 1.21.0 or later. NuGet's [nearest-wins](https://learn.microsoft.com/nuget/concepts/dependency-resolution#nearest-wins) rule ensures your direct reference takes precedence over the transitive one.
 
 ```diff
  <ItemGroup>
    <PackageReference Include="Azure.Core" Version="1.53.0" />
-+  <PackageReference Include="Azure.Identity" Version="1.53.0" />
++  <PackageReference Include="Azure.Identity" Version="1.21.0" />
  </ItemGroup>
 ```
 
@@ -65,8 +55,12 @@ No. The public API surface is identical. All classes, methods, properties, and c
 
 ### Will my existing NuGet packages still work at runtime?
 
-Yes. The `TypeForwardedTo` attributes in the `Azure.Identity` 1.53.0 facade ensure that types serialized or referenced by the old assembly name resolve correctly at runtime.
+Yes. The `TypeForwardedTo` attributes in the `Azure.Identity` 1.21.0 facade ensure that types serialized or referenced by the old assembly name resolve correctly at runtime.
 
 ### I only depend on `Azure.Core`. Can I use `DefaultAzureCredential` without adding `Azure.Identity`?
 
 Yes. Starting with `Azure.Core` 1.53.0, all credential types including `DefaultAzureCredential` are available without an `Azure.Identity` reference.
+
+### Is `Azure.Identity` obsolete?
+
+No. The `Azure.Identity` package is not obsolete and will continue to exist indefinitely as a type-forwarding library. Projects that depend on `Azure.Identity` will continue to work without any changes.

@@ -78,7 +78,6 @@ public class MathSolverHandlerFullControl : ResponseHandler
         yield return summary.EmitTextDelta(thought);
         yield return summary.EmitTextDone(thought);
         yield return summary.EmitDone();
-        reasoning.EmitSummaryPartDone(summary);
 
         yield return reasoning.EmitDone();
 
@@ -92,9 +91,9 @@ public class MathSolverHandlerFullControl : ResponseHandler
         var answer = "The answer is 42. Here's how: " +
                      "6 × 7 = 42. The multiplication of 6 and 7 gives 42.";
         yield return text.EmitDelta(answer);
-        yield return text.EmitDone(answer);
+        yield return text.EmitTextDone(answer);
 
-        yield return message.EmitContentDone(text);
+        yield return text.EmitDone();
         yield return message.EmitDone();
 
         yield return stream.EmitCompleted();
