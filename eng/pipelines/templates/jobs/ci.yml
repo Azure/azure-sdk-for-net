@@ -63,7 +63,7 @@ jobs:
           - "!SessionRecords"
         EnablePRGeneration: true
         PRMatrixSetting: ProjectNames
-        PRJobBatchSize: 5
+        PRJobBatchSize: 1
         AdditionalParameters:
           Artifacts: ${{ parameters.Artifacts }}
           TestPipeline: ${{ parameters.TestPipeline }}
@@ -77,6 +77,7 @@ jobs:
               PublishingArtifactName: BuildPackagesArtifact
               ForceDirect: true
               ExcludePaths: ${{ parameters.ExcludePaths }}
+              EnableBuildWeighting: true
 
   - ${{ else }}:
     - job: Build
