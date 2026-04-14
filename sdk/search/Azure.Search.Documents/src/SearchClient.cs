@@ -24,6 +24,8 @@ namespace Azure.Search.Documents
     /// Azure AI Search client that can be used to query an index and
     /// upload, merge, or delete documents.
     /// </summary>
+    [Typespec.CodeGenSuppress(nameof(GetDocument), typeof(string), typeof(IEnumerable<string>), typeof(RequestContext))] // TODO: Remove this when c# emitter properly allows disabling protocol and conenience APIs
+    [Typespec.CodeGenSuppress(nameof(GetDocumentAsync), typeof(string), typeof(IEnumerable<string>), typeof(RequestContext))] // TODO: Remove this when c# emitter properly allows disabling protocol and conenience APIs
     public partial class SearchClient
     {
         private string _serviceName;
@@ -318,6 +320,67 @@ namespace Azure.Search.Documents
                 ClientDiagnostics,
                 _apiVersion.ToServiceVersion());
         #endregion ctors
+
+        #region Convenience and Protocol Overloads
+        //TODO: All methods under this section need to be removed on c# emitter properly allows disabling protocol and conenience APIs
+        //@@protocolAPI(Search.Documents.count, false, "csharp");
+        //@@convenientAPI(Search.Documents.get, false, "csharp");
+        //@@protocolAPI(Search.Documents.get, false, "csharp");
+
+        /// <summary>
+        /// [Protocol Method] Queries the number of documents in the index.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual Response GetDocumentCount(RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchClient.GetDocumentCount");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetDocumentCountRequest(context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Queries the number of documents in the index.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<Response> GetDocumentCountAsync(RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchClient.GetDocumentCount");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetDocumentCountRequest(context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+        #endregion
 
         #region GetDocument
         /// <summary>
