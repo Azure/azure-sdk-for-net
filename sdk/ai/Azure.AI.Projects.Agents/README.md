@@ -25,6 +25,7 @@ Develop Agents using the Azure AI Foundry platform, leveraging an extensive ecos
   - [Hosted Agents](#hosted-agents)
   - [Toolboxes](#toolboxes)
   - [Sessions](#sessions)
+  - [Skills](#skills)
 - [Tracing](#tracing)
   - [Enabling GenAI Tracing](#enabling-genai-tracing)
   - [Tracing to Azure Monitor](#tracing-to-azure-monitor)
@@ -360,6 +361,124 @@ writeResponse = await sessionClient.UploadSessionFileAsync(
 Console.WriteLine($"The file was written to path {writeResponse.Path}, file length is {writeResponse.BytesWritten}.");
 File.Delete(filePath);
 ```
+
+### Skills
+
+The skills can be used to provide the portable packages of instructions for Agents. `Azure.AI.Projects.Agents` allows
+to manage skills in Microsoft foundry. Skills may be created from the folder with instructions or on-the-fly.
+
+```C# Snippet:Sample_CreateSkill_SkillsCRUD_Async
+AgentsSkill skillFromFile, simpleSkill;
+try
+{
+    skillFromFile = await skillsClient.CreateSkillFromPackageAsync(GetDirectory("roll-dice"));
+}
+catch (ClientResultException e)
+{
+    if (e.Status != 201)
+    {
+        throw;
+    }
+    skillFromFile = await skillsClient.GetSkillAsync("roll-dice");
+}
+Console.WriteLine($"Created skillfrom directory {skillFromFile.Name}, Id: {skillFromFile.SkillId}");
+try
+{
+    simpleSkill = await skillsClient.CreateSkillAsync(name: "simpleSkill", description: "Calculates the sum of two numbers.", instructions: """
+    To calculate the sum  run
+    ```bash
+    echo $((<first> + <second>))
+    ```
+    ```powershell
+    (<first> + <second>)
+    ```
+    Replace <first> and <second> by the actual summation arguments.
+    """);
+}
+catch (ClientResultException e)
+{
+    if (e.Status != 201)
+    {
+        throw;
+    }
+    simpleSkill = await skillsClient.GetSkillAsync("simpleSkill");
+}
+Console.WriteLine($"Created skill {simpleSkill.Name}: {simpleSkill.Description}");
+```bash
+    echo $((<first> + <second>))
+    ```
+    ```powershell
+    (<first> + <second>)
+    ```
+    Replace <first> and <second> by the actual summation arguments.
+    """);
+}
+catch (ClientResultException e)
+{
+    if (e.Status != 201)
+    {
+        throw;
+    }
+    simpleSkill = await skillsClient.GetSkillAsync("simpleSkill");
+}
+Console.WriteLine($"Created skill {simpleSkill.Name}: {simpleSkill.Description}");
+```bash
+    echo $((<first> + <second>))
+    ```
+    ```powershell
+    (<first> + <second>)
+    ```
+    Replace <first> and <second> by the actual summation arguments.
+    """);
+}
+catch (ClientResultException e)
+{
+    if (e.Status != 201)
+    {
+        throw;
+    }
+    simpleSkill = await skillsClient.GetSkillAsync("simpleSkill");
+}
+Console.WriteLine($"Created skill {simpleSkill.Name}: {simpleSkill.Description}");
+```bash
+    echo $((<first> + <second>))
+    ```
+    ```powershell
+    (<first> + <second>)
+    ```
+    Replace <first> and <second> by the actual summation arguments.
+    """);
+}
+catch (ClientResultException e)
+{
+    if (e.Status != 201)
+    {
+        throw;
+    }
+    simpleSkill = await skillsClient.GetSkillAsync("simpleSkill");
+}
+Console.WriteLine($"Created skill {simpleSkill.Name}: {simpleSkill.Description}");
+```bash
+    echo $((<first> + <second>))
+    ```
+    ```powershell
+    (<first> + <second>)
+    ```
+    Replace <first> and <second> by the actual summation arguments.
+    """);
+}
+catch (ClientResultException e)
+{
+    if (e.Status != 201)
+    {
+        throw;
+    }
+    simpleSkill = await skillsClient.GetSkillAsync("simpleSkill");
+}
+Console.WriteLine($"Created skill {simpleSkill.Name}: {simpleSkill.Description}");
+```
+
+For more information on skills plese see the [Microsoft learning](https://learn.microsoft.com/agent-framework/agents/skills) page.
 
 ## Tracing
 

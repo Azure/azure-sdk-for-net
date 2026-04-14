@@ -8,16 +8,16 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> A skill object. </summary>
-    public partial class SkillObject
+    public partial class AgentsSkill
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SkillObject"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentsSkill"/>. </summary>
         /// <param name="skillId"> The unique identifier of the skill. </param>
         /// <param name="hasBlob"> Whether the skill was created from a zip blob package. </param>
         /// <param name="name"> The unique name of the skill. </param>
-        internal SkillObject(string skillId, bool hasBlob, string name)
+        internal AgentsSkill(string skillId, bool hasBlob, string name)
         {
             SkillId = skillId;
             HasBlob = hasBlob;
@@ -25,7 +25,7 @@ namespace Azure.AI.Projects.Agents
             Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SkillObject"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentsSkill"/>. </summary>
         /// <param name="skillId"> The unique identifier of the skill. </param>
         /// <param name="hasBlob"> Whether the skill was created from a zip blob package. </param>
         /// <param name="name"> The unique name of the skill. </param>
@@ -38,7 +38,7 @@ namespace Azure.AI.Projects.Agents
         /// with a maximum length of 512 characters.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SkillObject(string skillId, bool hasBlob, string name, string description, IDictionary<string, string> metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentsSkill(string skillId, bool hasBlob, string name, string description, IDictionary<string, string> metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SkillId = skillId;
             HasBlob = hasBlob;

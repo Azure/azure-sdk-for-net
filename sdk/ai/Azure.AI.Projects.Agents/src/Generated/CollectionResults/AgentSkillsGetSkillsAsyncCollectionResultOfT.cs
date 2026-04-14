@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Azure.AI.Projects.Agents
 {
-    internal partial class AgentSkillsGetSkillsAsyncCollectionResultOfT : AsyncCollectionResult<SkillObject>
+    internal partial class AgentSkillsGetSkillsAsyncCollectionResultOfT : AsyncCollectionResult<AgentsSkill>
     {
         private readonly AgentSkills _client;
         private readonly int? _limit;
@@ -89,9 +89,9 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Gets the values from the specified page. </summary>
         /// <param name="page"></param>
         /// <returns> The values from the specified page. </returns>
-        protected override async IAsyncEnumerable<SkillObject> GetValuesFromPageAsync(ClientResult page)
+        protected override async IAsyncEnumerable<AgentsSkill> GetValuesFromPageAsync(ClientResult page)
         {
-            foreach (SkillObject item in ((AgentsPagedResultSkillObject)page).Data)
+            foreach (AgentsSkill item in ((AgentsPagedResultSkillObject)page).Data)
             {
                 yield return item;
                 await Task.Yield();

@@ -86,7 +86,7 @@ namespace Azure.AI.Projects.Agents
             }
             writer.WritePropertyName("data"u8);
             writer.WriteStartArray();
-            foreach (SkillObject item in Data)
+            foreach (AgentsSkill item in Data)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -145,7 +145,7 @@ namespace Azure.AI.Projects.Agents
             {
                 return null;
             }
-            IList<SkillObject> data = default;
+            IList<AgentsSkill> data = default;
             string firstId = default;
             string lastId = default;
             bool hasMore = default;
@@ -154,10 +154,10 @@ namespace Azure.AI.Projects.Agents
             {
                 if (prop.NameEquals("data"u8))
                 {
-                    List<SkillObject> array = new List<SkillObject>();
+                    List<AgentsSkill> array = new List<AgentsSkill>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SkillObject.DeserializeSkillObject(item, options));
+                        array.Add(AgentsSkill.DeserializeAgentsSkill(item, options));
                     }
                     data = array;
                     continue;

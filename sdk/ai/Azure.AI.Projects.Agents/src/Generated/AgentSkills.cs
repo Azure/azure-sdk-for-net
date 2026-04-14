@@ -93,13 +93,13 @@ namespace Azure.AI.Projects.Agents
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<SkillObject> CreateSkill(string name, string description = default, string instructions = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
+        public virtual ClientResult<AgentsSkill> CreateSkill(string name, string description = default, string instructions = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             CreateSkillRequest spreadModel = new CreateSkillRequest(name, description, instructions, metadata ?? new ChangeTrackingDictionary<string, string>(), default);
             ClientResult result = CreateSkill(spreadModel, cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((SkillObject)result, result.GetRawResponse());
+            return ClientResult.FromValue((AgentsSkill)result, result.GetRawResponse());
         }
 
         /// <summary> Creates a skill. </summary>
@@ -117,13 +117,13 @@ namespace Azure.AI.Projects.Agents
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<SkillObject>> CreateSkillAsync(string name, string description = default, string instructions = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult<AgentsSkill>> CreateSkillAsync(string name, string description = default, string instructions = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             CreateSkillRequest spreadModel = new CreateSkillRequest(name, description, instructions, metadata ?? new ChangeTrackingDictionary<string, string>(), default);
             ClientResult result = await CreateSkillAsync(spreadModel, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((SkillObject)result, result.GetRawResponse());
+            return ClientResult.FromValue((AgentsSkill)result, result.GetRawResponse());
         }
 
         /// <summary>
@@ -173,12 +173,12 @@ namespace Azure.AI.Projects.Agents
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<SkillObject> CreateSkillFromPackage(BinaryData body, CancellationToken cancellationToken = default)
+        public virtual ClientResult<AgentsSkill> CreateSkillFromPackage(BinaryData body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
             ClientResult result = CreateSkillFromPackage(BinaryContent.Create(body), cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((SkillObject)result, result.GetRawResponse());
+            return ClientResult.FromValue((AgentsSkill)result, result.GetRawResponse());
         }
 
         /// <summary> Creates a skill from a zip package. </summary>
@@ -186,12 +186,12 @@ namespace Azure.AI.Projects.Agents
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<SkillObject>> CreateSkillFromPackageAsync(BinaryData body, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult<AgentsSkill>> CreateSkillFromPackageAsync(BinaryData body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
             ClientResult result = await CreateSkillFromPackageAsync(BinaryContent.Create(body), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((SkillObject)result, result.GetRawResponse());
+            return ClientResult.FromValue((AgentsSkill)result, result.GetRawResponse());
         }
 
         /// <summary>
@@ -244,12 +244,12 @@ namespace Azure.AI.Projects.Agents
         /// <exception cref="ArgumentNullException"> <paramref name="skillName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="skillName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<SkillObject> GetSkill(string skillName, CancellationToken cancellationToken = default)
+        public virtual ClientResult<AgentsSkill> GetSkill(string skillName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(skillName, nameof(skillName));
 
             ClientResult result = GetSkill(skillName, cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((SkillObject)result, result.GetRawResponse());
+            return ClientResult.FromValue((AgentsSkill)result, result.GetRawResponse());
         }
 
         /// <summary> Retrieves a skill. </summary>
@@ -258,12 +258,12 @@ namespace Azure.AI.Projects.Agents
         /// <exception cref="ArgumentNullException"> <paramref name="skillName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="skillName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<SkillObject>> GetSkillAsync(string skillName, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult<AgentsSkill>> GetSkillAsync(string skillName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(skillName, nameof(skillName));
 
             ClientResult result = await GetSkillAsync(skillName, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((SkillObject)result, result.GetRawResponse());
+            return ClientResult.FromValue((AgentsSkill)result, result.GetRawResponse());
         }
 
         /// <summary>
@@ -439,39 +439,7 @@ namespace Azure.AI.Projects.Agents
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual CollectionResult<SkillObject> GetSkills(int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
-        {
-            return new AgentSkillsGetSkillsCollectionResultOfT(
-                this,
-                limit,
-                order?.ToString(),
-                after,
-                before,
-                cancellationToken.ToRequestOptions());
-        }
-
-        /// <summary> Returns the list of all skills. </summary>
-        /// <param name="limit">
-        /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
-        /// default is 20.
-        /// </param>
-        /// <param name="order">
-        /// Sort order by the `created_at` timestamp of the objects. `asc` for ascending order and`desc`
-        /// for descending order.
-        /// </param>
-        /// <param name="after">
-        /// A cursor for use in pagination. `after` is an object ID that defines your place in the list.
-        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
-        /// subsequent call can include after=obj_foo in order to fetch the next page of the list.
-        /// </param>
-        /// <param name="before">
-        /// A cursor for use in pagination. `before` is an object ID that defines your place in the list.
-        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
-        /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual AsyncCollectionResult<SkillObject> GetSkillsAsync(int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
+        public virtual AsyncCollectionResult<AgentsSkill> GetSkillsAsync(int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
         {
             return new AgentSkillsGetSkillsAsyncCollectionResultOfT(
                 this,
@@ -545,13 +513,13 @@ namespace Azure.AI.Projects.Agents
         /// <exception cref="ArgumentNullException"> <paramref name="skillName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="skillName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<SkillObject> UpdateSkill(string skillName, string description = default, string instructions = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
+        public virtual ClientResult<AgentsSkill> UpdateSkill(string skillName, string description = default, string instructions = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(skillName, nameof(skillName));
 
             UpdateSkillRequest spreadModel = new UpdateSkillRequest(description, instructions, metadata ?? new ChangeTrackingDictionary<string, string>(), default);
             ClientResult result = UpdateSkill(skillName, spreadModel, cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((SkillObject)result, result.GetRawResponse());
+            return ClientResult.FromValue((AgentsSkill)result, result.GetRawResponse());
         }
 
         /// <summary> Updates an existing skill. </summary>
@@ -569,13 +537,13 @@ namespace Azure.AI.Projects.Agents
         /// <exception cref="ArgumentNullException"> <paramref name="skillName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="skillName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<SkillObject>> UpdateSkillAsync(string skillName, string description = default, string instructions = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult<AgentsSkill>> UpdateSkillAsync(string skillName, string description = default, string instructions = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(skillName, nameof(skillName));
 
             UpdateSkillRequest spreadModel = new UpdateSkillRequest(description, instructions, metadata ?? new ChangeTrackingDictionary<string, string>(), default);
             ClientResult result = await UpdateSkillAsync(skillName, spreadModel, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((SkillObject)result, result.GetRawResponse());
+            return ClientResult.FromValue((AgentsSkill)result, result.GetRawResponse());
         }
 
         /// <summary>

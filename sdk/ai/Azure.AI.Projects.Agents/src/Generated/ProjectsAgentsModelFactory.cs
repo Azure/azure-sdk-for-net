@@ -935,12 +935,12 @@ namespace Azure.AI.Projects.Agents
         /// Keys are strings with a maximum length of 64 characters. Values are strings
         /// with a maximum length of 512 characters.
         /// </param>
-        /// <returns> A new <see cref="Agents.SkillObject"/> instance for mocking. </returns>
-        public static SkillObject SkillObject(string skillId = default, bool hasBlob = default, string name = default, string description = default, IDictionary<string, string> metadata = default)
+        /// <returns> A new <see cref="Agents.AgentsSkill"/> instance for mocking. </returns>
+        public static AgentsSkill AgentsSkill(string skillId = default, bool hasBlob = default, string name = default, string description = default, IDictionary<string, string> metadata = default)
         {
             metadata ??= new ChangeTrackingDictionary<string, string>();
 
-            return new SkillObject(
+            return new AgentsSkill(
                 skillId,
                 hasBlob,
                 name,

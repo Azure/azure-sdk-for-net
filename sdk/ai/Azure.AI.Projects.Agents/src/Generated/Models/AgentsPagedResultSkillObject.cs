@@ -17,7 +17,7 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Initializes a new instance of <see cref="AgentsPagedResultSkillObject"/>. </summary>
         /// <param name="data"> The requested list of items. </param>
         /// <param name="hasMore"> A value indicating whether there are additional values available not captured in this list. </param>
-        internal AgentsPagedResultSkillObject(IEnumerable<SkillObject> data, bool hasMore)
+        internal AgentsPagedResultSkillObject(IEnumerable<AgentsSkill> data, bool hasMore)
         {
             Data = data.ToList();
             HasMore = hasMore;
@@ -29,7 +29,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="lastId"> The last ID represented in this list. </param>
         /// <param name="hasMore"> A value indicating whether there are additional values available not captured in this list. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentsPagedResultSkillObject(IList<SkillObject> data, string firstId, string lastId, bool hasMore, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentsPagedResultSkillObject(IList<AgentsSkill> data, string firstId, string lastId, bool hasMore, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Data = data;
             FirstId = firstId;
@@ -39,7 +39,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> The requested list of items. </summary>
-        public IList<SkillObject> Data { get; }
+        public IList<AgentsSkill> Data { get; }
 
         /// <summary> The first ID represented in this list. </summary>
         public string FirstId { get; }

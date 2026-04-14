@@ -216,7 +216,7 @@ public class Sample_SessionFiles : SamplesBase
         File.Delete(filePath);
         #endregion
         #region Snippet:Sample_List_SessionFiles_Sync
-        SessionDirectoryListResponse response = sessionClient.GetSessionFiles(agentName: agentVersion.Name, sessionId: session.AgentSessionId, sessionStoragePath: "/store");
+        SessionDirectoryListResponse response = sessionClient.GetSessionFiles(agentName: agentVersion.Name, sessionId: session.AgentSessionId, sessionStoragePath: "");
         Console.WriteLine($"The path {response.Path} contains the next files:");
         foreach (SessionDirectoryEntry entry in response.Entries)
         {
