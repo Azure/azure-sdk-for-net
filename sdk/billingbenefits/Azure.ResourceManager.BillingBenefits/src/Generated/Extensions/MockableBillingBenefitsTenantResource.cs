@@ -8,46 +8,52 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.BillingBenefits;
 using Azure.ResourceManager.BillingBenefits.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.BillingBenefits.Mocking
 {
-    /// <summary> A class to add extension methods to TenantResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="TenantResource"/>. </summary>
     public partial class MockableBillingBenefitsTenantResource : ArmResource
     {
-        private ClientDiagnostics _billingBenefitsSavingsPlanSavingsPlanClientDiagnostics;
-        private SavingsPlanRestOperations _billingBenefitsSavingsPlanSavingsPlanRestClient;
-        private ClientDiagnostics _defaultClientDiagnostics;
-        private BillingBenefitsRPRestOperations _defaultRestClient;
+        private ClientDiagnostics _savingsPlanOperationGroupClientDiagnostics;
+        private SavingsPlanOperationGroup _savingsPlanOperationGroupRestClient;
+        private ClientDiagnostics _benefitClientDiagnostics;
+        private Benefit _benefitRestClient;
+        private ClientDiagnostics _sellerResourceClientDiagnostics;
+        private SellerResource _sellerResourceRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableBillingBenefitsTenantResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableBillingBenefitsTenantResource for mocking. </summary>
         protected MockableBillingBenefitsTenantResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableBillingBenefitsTenantResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableBillingBenefitsTenantResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableBillingBenefitsTenantResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics BillingBenefitsSavingsPlanSavingsPlanClientDiagnostics => _billingBenefitsSavingsPlanSavingsPlanClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.BillingBenefits", BillingBenefitsSavingsPlanResource.ResourceType.Namespace, Diagnostics);
-        private SavingsPlanRestOperations BillingBenefitsSavingsPlanSavingsPlanRestClient => _billingBenefitsSavingsPlanSavingsPlanRestClient ??= new SavingsPlanRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(BillingBenefitsSavingsPlanResource.ResourceType));
-        private ClientDiagnostics DefaultClientDiagnostics => _defaultClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.BillingBenefits", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private BillingBenefitsRPRestOperations DefaultRestClient => _defaultRestClient ??= new BillingBenefitsRPRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics SavingsPlanOperationGroupClientDiagnostics => _savingsPlanOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.BillingBenefits.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private SavingsPlanOperationGroup SavingsPlanOperationGroupRestClient => _savingsPlanOperationGroupRestClient ??= new SavingsPlanOperationGroup(SavingsPlanOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-12-01-preview");
 
-        /// <summary> Gets a collection of BillingBenefitsSavingsPlanOrderAliasResources in the TenantResource. </summary>
-        /// <returns> An object representing collection of BillingBenefitsSavingsPlanOrderAliasResources and their operations over a BillingBenefitsSavingsPlanOrderAliasResource. </returns>
+        private ClientDiagnostics BenefitClientDiagnostics => _benefitClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.BillingBenefits.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private Benefit BenefitRestClient => _benefitRestClient ??= new Benefit(BenefitClientDiagnostics, Pipeline, Endpoint, "2025-12-01-preview");
+
+        private ClientDiagnostics SellerResourceClientDiagnostics => _sellerResourceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.BillingBenefits.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private SellerResource SellerResourceRestClient => _sellerResourceRestClient ??= new SellerResource(SellerResourceClientDiagnostics, Pipeline, Endpoint, "2025-12-01-preview");
+
+        /// <summary> Gets a collection of BillingBenefitsSavingsPlanOrderAliases in the <see cref="TenantResource"/>. </summary>
+        /// <returns> An object representing collection of BillingBenefitsSavingsPlanOrderAliases and their operations over a BillingBenefitsSavingsPlanOrderAliasResource. </returns>
         public virtual BillingBenefitsSavingsPlanOrderAliasCollection GetBillingBenefitsSavingsPlanOrderAliases()
         {
             return GetCachedClient(client => new BillingBenefitsSavingsPlanOrderAliasCollection(client, Id));
@@ -57,20 +63,16 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
         /// Get a savings plan.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.BillingBenefits/savingsPlanOrderAliases/{savingsPlanOrderAliasName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.BillingBenefits/savingsPlanOrderAliases/{savingsPlanOrderAliasName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SavingsPlanOrderAlias_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SavingsPlanOrderAliasModels_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingBenefitsSavingsPlanOrderAliasResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -81,6 +83,8 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<BillingBenefitsSavingsPlanOrderAliasResource>> GetBillingBenefitsSavingsPlanOrderAliasAsync(string savingsPlanOrderAliasName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(savingsPlanOrderAliasName, nameof(savingsPlanOrderAliasName));
+
             return await GetBillingBenefitsSavingsPlanOrderAliases().GetAsync(savingsPlanOrderAliasName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -88,20 +92,16 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
         /// Get a savings plan.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.BillingBenefits/savingsPlanOrderAliases/{savingsPlanOrderAliasName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.BillingBenefits/savingsPlanOrderAliases/{savingsPlanOrderAliasName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SavingsPlanOrderAlias_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SavingsPlanOrderAliasModels_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingBenefitsSavingsPlanOrderAliasResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -112,11 +112,13 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
         [ForwardsClientCalls]
         public virtual Response<BillingBenefitsSavingsPlanOrderAliasResource> GetBillingBenefitsSavingsPlanOrderAlias(string savingsPlanOrderAliasName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(savingsPlanOrderAliasName, nameof(savingsPlanOrderAliasName));
+
             return GetBillingBenefitsSavingsPlanOrderAliases().Get(savingsPlanOrderAliasName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of BillingBenefitsSavingsPlanOrderResources in the TenantResource. </summary>
-        /// <returns> An object representing collection of BillingBenefitsSavingsPlanOrderResources and their operations over a BillingBenefitsSavingsPlanOrderResource. </returns>
+        /// <summary> Gets a collection of BillingBenefitsSavingsPlanOrders in the <see cref="TenantResource"/>. </summary>
+        /// <returns> An object representing collection of BillingBenefitsSavingsPlanOrders and their operations over a BillingBenefitsSavingsPlanOrderResource. </returns>
         public virtual BillingBenefitsSavingsPlanOrderCollection GetBillingBenefitsSavingsPlanOrders()
         {
             return GetCachedClient(client => new BillingBenefitsSavingsPlanOrderCollection(client, Id));
@@ -126,20 +128,16 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
         /// Get a savings plan order.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.BillingBenefits/savingsPlanOrders/{savingsPlanOrderId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.BillingBenefits/savingsPlanOrders/{savingsPlanOrderId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SavingsPlanOrder_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SavingsPlanOrderModels_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingBenefitsSavingsPlanOrderResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -149,8 +147,10 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<BillingBenefitsSavingsPlanOrderResource>> GetBillingBenefitsSavingsPlanOrderAsync(string savingsPlanOrderId, string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BillingBenefitsSavingsPlanOrderResource>> GetBillingBenefitsSavingsPlanOrderAsync(string savingsPlanOrderId, string expand = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
+
             return await GetBillingBenefitsSavingsPlanOrders().GetAsync(savingsPlanOrderId, expand, cancellationToken).ConfigureAwait(false);
         }
 
@@ -158,20 +158,16 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
         /// Get a savings plan order.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.BillingBenefits/savingsPlanOrders/{savingsPlanOrderId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.BillingBenefits/savingsPlanOrders/{savingsPlanOrderId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SavingsPlanOrder_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SavingsPlanOrderModels_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingBenefitsSavingsPlanOrderResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -181,13 +177,15 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<BillingBenefitsSavingsPlanOrderResource> GetBillingBenefitsSavingsPlanOrder(string savingsPlanOrderId, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<BillingBenefitsSavingsPlanOrderResource> GetBillingBenefitsSavingsPlanOrder(string savingsPlanOrderId, string expand = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
+
             return GetBillingBenefitsSavingsPlanOrders().Get(savingsPlanOrderId, expand, cancellationToken);
         }
 
-        /// <summary> Gets a collection of BillingBenefitsReservationOrderAliasResources in the TenantResource. </summary>
-        /// <returns> An object representing collection of BillingBenefitsReservationOrderAliasResources and their operations over a BillingBenefitsReservationOrderAliasResource. </returns>
+        /// <summary> Gets a collection of BillingBenefitsReservationOrderAliases in the <see cref="TenantResource"/>. </summary>
+        /// <returns> An object representing collection of BillingBenefitsReservationOrderAliases and their operations over a BillingBenefitsReservationOrderAliasResource. </returns>
         public virtual BillingBenefitsReservationOrderAliasCollection GetBillingBenefitsReservationOrderAliases()
         {
             return GetCachedClient(client => new BillingBenefitsReservationOrderAliasCollection(client, Id));
@@ -197,20 +195,16 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
         /// Get a reservation order alias.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.BillingBenefits/reservationOrderAliases/{reservationOrderAliasName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.BillingBenefits/reservationOrderAliases/{reservationOrderAliasName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReservationOrderAlias_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ReservationOrderAliasResponses_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingBenefitsReservationOrderAliasResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -221,6 +215,8 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<BillingBenefitsReservationOrderAliasResource>> GetBillingBenefitsReservationOrderAliasAsync(string reservationOrderAliasName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(reservationOrderAliasName, nameof(reservationOrderAliasName));
+
             return await GetBillingBenefitsReservationOrderAliases().GetAsync(reservationOrderAliasName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -228,20 +224,16 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
         /// Get a reservation order alias.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.BillingBenefits/reservationOrderAliases/{reservationOrderAliasName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.BillingBenefits/reservationOrderAliases/{reservationOrderAliasName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReservationOrderAlias_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ReservationOrderAliasResponses_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingBenefitsReservationOrderAliasResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -252,6 +244,8 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
         [ForwardsClientCalls]
         public virtual Response<BillingBenefitsReservationOrderAliasResource> GetBillingBenefitsReservationOrderAlias(string reservationOrderAliasName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(reservationOrderAliasName, nameof(reservationOrderAliasName));
+
             return GetBillingBenefitsReservationOrderAliases().Get(reservationOrderAliasName, cancellationToken);
         }
 
@@ -259,126 +253,246 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
         /// List savings plans.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.BillingBenefits/savingsPlans</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.BillingBenefits/savingsPlans. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SavingsPlan_ListAll</description>
+        /// <term> Operation Id. </term>
+        /// <description> SavingsPlanOperationGroup_ListAll. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingBenefitsSavingsPlanResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="filter"> May be used to filter by reservation properties. The filter supports 'eq', 'or', and 'and'. It does not currently support 'ne', 'gt', 'le', 'ge', or 'not'. Reservation properties include sku/name, properties/{appliedScopeType, archived, displayName, displayProvisioningState, effectiveDateTime, expiryDate, provisioningState, quantity, renew, reservedResourceType, term, userFriendlyAppliedScopeType, userFriendlyRenewState}. </param>
+        /// <param name="orderby"> May be used to sort order by reservation properties. </param>
+        /// <param name="refreshSummary"> To indicate whether to refresh the roll up counts of the savings plans group by provisioning states. </param>
+        /// <param name="skiptoken"> The number of savings plans to skip from the list before returning results. </param>
+        /// <param name="selectedState"> The selected provisioning state. </param>
+        /// <param name="take"> To number of savings plans to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BillingBenefitsSavingsPlanResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BillingBenefitsSavingsPlanResource> GetBillingBenefitsSavingsPlansAsync(TenantResourceGetBillingBenefitsSavingsPlansOptions options, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="BillingBenefitsSavingsPlanResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BillingBenefitsSavingsPlanResource> GetBillingBenefitsSavingsPlansAsync(string filter = default, string @orderby = default, string refreshSummary = default, float? skiptoken = default, string selectedState = default, float? take = default, CancellationToken cancellationToken = default)
         {
-            options ??= new TenantResourceGetBillingBenefitsSavingsPlansOptions();
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => BillingBenefitsSavingsPlanSavingsPlanRestClient.CreateListAllRequest(options.Filter, options.OrderBy, options.RefreshSummary, options.SkipToken, options.SelectedState, options.Take);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BillingBenefitsSavingsPlanSavingsPlanRestClient.CreateListAllNextPageRequest(nextLink, options.Filter, options.OrderBy, options.RefreshSummary, options.SkipToken, options.SelectedState, options.Take);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BillingBenefitsSavingsPlanResource(Client, BillingBenefitsSavingsPlanData.DeserializeBillingBenefitsSavingsPlanData(e)), BillingBenefitsSavingsPlanSavingsPlanClientDiagnostics, Pipeline, "MockableBillingBenefitsTenantResource.GetBillingBenefitsSavingsPlans", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<BillingBenefitsSavingsPlanData, BillingBenefitsSavingsPlanResource>(new SavingsPlanOperationGroupGetBillingBenefitsSavingsPlansAsyncCollectionResultOfT(
+                SavingsPlanOperationGroupRestClient,
+                filter,
+                @orderby,
+                refreshSummary,
+                skiptoken,
+                selectedState,
+                take,
+                context,
+                "MockableBillingBenefitsTenantResource.GetBillingBenefitsSavingsPlans"), data => new BillingBenefitsSavingsPlanResource(Client, data));
         }
 
         /// <summary>
         /// List savings plans.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.BillingBenefits/savingsPlans</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.BillingBenefits/savingsPlans. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SavingsPlan_ListAll</description>
+        /// <term> Operation Id. </term>
+        /// <description> SavingsPlanOperationGroup_ListAll. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingBenefitsSavingsPlanResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="filter"> May be used to filter by reservation properties. The filter supports 'eq', 'or', and 'and'. It does not currently support 'ne', 'gt', 'le', 'ge', or 'not'. Reservation properties include sku/name, properties/{appliedScopeType, archived, displayName, displayProvisioningState, effectiveDateTime, expiryDate, provisioningState, quantity, renew, reservedResourceType, term, userFriendlyAppliedScopeType, userFriendlyRenewState}. </param>
+        /// <param name="orderby"> May be used to sort order by reservation properties. </param>
+        /// <param name="refreshSummary"> To indicate whether to refresh the roll up counts of the savings plans group by provisioning states. </param>
+        /// <param name="skiptoken"> The number of savings plans to skip from the list before returning results. </param>
+        /// <param name="selectedState"> The selected provisioning state. </param>
+        /// <param name="take"> To number of savings plans to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BillingBenefitsSavingsPlanResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BillingBenefitsSavingsPlanResource> GetBillingBenefitsSavingsPlans(TenantResourceGetBillingBenefitsSavingsPlansOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<BillingBenefitsSavingsPlanResource> GetBillingBenefitsSavingsPlans(string filter = default, string @orderby = default, string refreshSummary = default, float? skiptoken = default, string selectedState = default, float? take = default, CancellationToken cancellationToken = default)
         {
-            options ??= new TenantResourceGetBillingBenefitsSavingsPlansOptions();
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => BillingBenefitsSavingsPlanSavingsPlanRestClient.CreateListAllRequest(options.Filter, options.OrderBy, options.RefreshSummary, options.SkipToken, options.SelectedState, options.Take);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BillingBenefitsSavingsPlanSavingsPlanRestClient.CreateListAllNextPageRequest(nextLink, options.Filter, options.OrderBy, options.RefreshSummary, options.SkipToken, options.SelectedState, options.Take);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BillingBenefitsSavingsPlanResource(Client, BillingBenefitsSavingsPlanData.DeserializeBillingBenefitsSavingsPlanData(e)), BillingBenefitsSavingsPlanSavingsPlanClientDiagnostics, Pipeline, "MockableBillingBenefitsTenantResource.GetBillingBenefitsSavingsPlans", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<BillingBenefitsSavingsPlanData, BillingBenefitsSavingsPlanResource>(new SavingsPlanOperationGroupGetBillingBenefitsSavingsPlansCollectionResultOfT(
+                SavingsPlanOperationGroupRestClient,
+                filter,
+                @orderby,
+                refreshSummary,
+                skiptoken,
+                selectedState,
+                take,
+                context,
+                "MockableBillingBenefitsTenantResource.GetBillingBenefitsSavingsPlans"), data => new BillingBenefitsSavingsPlanResource(Client, data));
         }
 
         /// <summary>
         /// Validate savings plan purchase.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.BillingBenefits/validate</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.BillingBenefits/validate. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ValidatePurchase</description>
+        /// <term> Operation Id. </term>
+        /// <description> BenefitOperationGroup_Validate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-11-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> Request body for validating the purchase of a savings plan. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> An async collection of <see cref="SavingsPlanValidateResult"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SavingsPlanValidateResult> ValidatePurchaseAsync(SavingsPlanPurchaseValidateContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BenefitValidateResponse>> ValidateAsync(BenefitValidateRequest content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DefaultRestClient.CreateValidatePurchaseRequest(content);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DefaultRestClient.CreateValidatePurchaseNextPageRequest(nextLink, content);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => SavingsPlanValidateResult.DeserializeSavingsPlanValidateResult(e), DefaultClientDiagnostics, Pipeline, "MockableBillingBenefitsTenantResource.ValidatePurchase", "benefits", "nextLink", cancellationToken);
+            using DiagnosticScope scope = BenefitClientDiagnostics.CreateScope("MockableBillingBenefitsTenantResource.Validate");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = BenefitRestClient.CreateValidateRequest(BenefitValidateRequest.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<BenefitValidateResponse> response = Response.FromValue(BenefitValidateResponse.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
         /// Validate savings plan purchase.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.BillingBenefits/validate</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.BillingBenefits/validate. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ValidatePurchase</description>
+        /// <term> Operation Id. </term>
+        /// <description> BenefitOperationGroup_Validate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-11-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> Request body for validating the purchase of a savings plan. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> A collection of <see cref="SavingsPlanValidateResult"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SavingsPlanValidateResult> ValidatePurchase(SavingsPlanPurchaseValidateContent content, CancellationToken cancellationToken = default)
+        public virtual Response<BenefitValidateResponse> Validate(BenefitValidateRequest content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DefaultRestClient.CreateValidatePurchaseRequest(content);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DefaultRestClient.CreateValidatePurchaseNextPageRequest(nextLink, content);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => SavingsPlanValidateResult.DeserializeSavingsPlanValidateResult(e), DefaultClientDiagnostics, Pipeline, "MockableBillingBenefitsTenantResource.ValidatePurchase", "benefits", "nextLink", cancellationToken);
+            using DiagnosticScope scope = BenefitClientDiagnostics.CreateScope("MockableBillingBenefitsTenantResource.Validate");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = BenefitRestClient.CreateValidateRequest(BenefitValidateRequest.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<BenefitValidateResponse> response = Response.FromValue(BenefitValidateResponse.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// List maccs by billing account
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.BillingBenefits/listSellerResources. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SellerResourceOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <returns> A collection of <see cref="MaccResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MaccResource> GetAllAsync(SellerResourceListRequest content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<MaccData, MaccResource>(new MockableBillingBenefitsTenantResourceGetAllAsyncCollectionResultOfT(SellerResourceRestClient, SellerResourceListRequest.ToRequestContent(content), context, "MockableBillingBenefitsTenantResource.GetAll"), data => new MaccResource(Client, data));
+        }
+
+        /// <summary>
+        /// List maccs by billing account
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.BillingBenefits/listSellerResources. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SellerResourceOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <returns> A collection of <see cref="MaccResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MaccResource> GetAll(SellerResourceListRequest content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<MaccData, MaccResource>(new MockableBillingBenefitsTenantResourceGetAllCollectionResultOfT(SellerResourceRestClient, SellerResourceListRequest.ToRequestContent(content), context, "MockableBillingBenefitsTenantResource.GetAll"), data => new MaccResource(Client, data));
         }
     }
 }

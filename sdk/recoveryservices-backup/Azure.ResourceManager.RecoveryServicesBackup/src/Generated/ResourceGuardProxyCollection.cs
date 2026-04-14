@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -298,7 +298,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ResourceGuardProxyData, ResourceGuardProxyResource>(new ResourceGuardProxiesGetAsyncCollectionResultOfT(_resourceGuardProxiesRestClient, Id.SubscriptionId, Id.ResourceGroupName, _vaultName, context), data => new ResourceGuardProxyResource(Client, data));
+            return new AsyncPageableWrapper<ResourceGuardProxyData, ResourceGuardProxyResource>(new ResourceGuardProxiesGetAsyncCollectionResultOfT(
+                _resourceGuardProxiesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                _vaultName,
+                context,
+                "ResourceGuardProxyCollection.GetAll"), data => new ResourceGuardProxyResource(Client, data));
         }
 
         /// <summary>
@@ -326,7 +332,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ResourceGuardProxyData, ResourceGuardProxyResource>(new ResourceGuardProxiesGetCollectionResultOfT(_resourceGuardProxiesRestClient, Id.SubscriptionId, Id.ResourceGroupName, _vaultName, context), data => new ResourceGuardProxyResource(Client, data));
+            return new PageableWrapper<ResourceGuardProxyData, ResourceGuardProxyResource>(new ResourceGuardProxiesGetCollectionResultOfT(
+                _resourceGuardProxiesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                _vaultName,
+                context,
+                "ResourceGuardProxyCollection.GetAll"), data => new ResourceGuardProxyResource(Client, data));
         }
 
         /// <summary>

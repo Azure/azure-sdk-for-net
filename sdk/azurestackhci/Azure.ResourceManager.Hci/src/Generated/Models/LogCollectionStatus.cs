@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.Hci.Models
     public readonly partial struct LogCollectionStatus : IEquatable<LogCollectionStatus>
     {
         private readonly string _value;
+        /// <summary> No log collection has been initiated. </summary>
+        private const string NoneValue = "None";
+        /// <summary> Log collection is currently in progress. </summary>
+        private const string InProgressValue = "InProgress";
+        /// <summary> Log collection has failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Log collection completed successfully. </summary>
+        private const string SucceededValue = "Succeeded";
 
         /// <summary> Initializes a new instance of <see cref="LogCollectionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public LogCollectionStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string NoneValue = "None";
-        private const string InProgressValue = "InProgress";
-        private const string FailedValue = "Failed";
-        private const string SucceededValue = "Succeeded";
-
-        /// <summary> None. </summary>
+        /// <summary> No log collection has been initiated. </summary>
         public static LogCollectionStatus None { get; } = new LogCollectionStatus(NoneValue);
-        /// <summary> InProgress. </summary>
+
+        /// <summary> Log collection is currently in progress. </summary>
         public static LogCollectionStatus InProgress { get; } = new LogCollectionStatus(InProgressValue);
-        /// <summary> Failed. </summary>
+
+        /// <summary> Log collection has failed. </summary>
         public static LogCollectionStatus Failed { get; } = new LogCollectionStatus(FailedValue);
-        /// <summary> Succeeded. </summary>
+
+        /// <summary> Log collection completed successfully. </summary>
         public static LogCollectionStatus Succeeded { get; } = new LogCollectionStatus(SucceededValue);
+
         /// <summary> Determines if two <see cref="LogCollectionStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(LogCollectionStatus left, LogCollectionStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="LogCollectionStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(LogCollectionStatus left, LogCollectionStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="LogCollectionStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="LogCollectionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator LogCollectionStatus(string value) => new LogCollectionStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="LogCollectionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator LogCollectionStatus?(string value) => value == null ? null : new LogCollectionStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is LogCollectionStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(LogCollectionStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

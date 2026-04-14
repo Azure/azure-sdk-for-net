@@ -15,4 +15,3 @@ extends:
       safeName: AzureResourceManagerKubernetesConfigurationPrivateLinkScopes
     - name: Azure.ResourceManager.KubernetesConfiguration.Extensions
       safeName: AzureResourceManagerKubernetesConfigurationExtensions
-    TestDependsOnDependency: Azure.ResourceManager.KubernetesConfiguration

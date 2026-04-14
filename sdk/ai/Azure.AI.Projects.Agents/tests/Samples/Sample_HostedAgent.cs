@@ -33,7 +33,7 @@ internal class FeaturePolicy(string feature) : PipelinePolicy
 public class Sample_HostedAgent : SamplesBase
 {
     #region Snippet:Sample_Agents_ImageBasedHostedAgentDefinition_HostedAgent
-    private static  HostedAgentDefinition GetAgentDefinition(string dockerImage, string modelDeploymentName, string accountId, string applicationInsightConnectionString, string projectEndpoint)
+    private static HostedAgentDefinition GetAgentDefinition(string dockerImage, string modelDeploymentName, string accountId, string applicationInsightConnectionString, string projectEndpoint)
     {
         HostedAgentDefinition agentDefinition = new(
             versions: [new ProtocolVersionRecord(ProjectsAgentProtocol.ActivityProtocol, "v1")],

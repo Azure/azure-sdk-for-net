@@ -41,6 +41,9 @@ public class ReasoningSummaryPartBuilder
     /// <summary>The final text passed to <see cref="EmitTextDone"/>. Null if not yet finalized.</summary>
     public string? FinalText => _finalText;
 
+    /// <summary>Whether this builder has completed its full lifecycle (<see cref="EmitDone"/> called).</summary>
+    internal bool IsDone => _lifecycleState == BuilderLifecycleState.Done;
+
     /// <summary>The summary index assigned to this summary part.</summary>
     public long SummaryIndex => _summaryIndex;
 
@@ -66,6 +69,11 @@ public class ReasoningSummaryPartBuilder
     /// <returns>A <see cref="ResponseReasoningSummaryTextDeltaEvent"/> with the delta.</returns>
     public virtual ResponseReasoningSummaryTextDeltaEvent EmitTextDelta(string text)
     {
+        if (_lifecycleState != BuilderLifecycleState.Added)
+            throw new InvalidOperationException($"Cannot call EmitTextDelta — builder is in '{_lifecycleState}' state.");
+        if (_finalText is not null)
+            throw new InvalidOperationException("Cannot emit deltas after EmitTextDone has been called.");
+
         return new ResponseReasoningSummaryTextDeltaEvent(
             _stream.NextSequenceNumber(), _itemId, _outputIndex, _summaryIndex, text);
     }
@@ -77,6 +85,11 @@ public class ReasoningSummaryPartBuilder
     /// <returns>A <see cref="ResponseReasoningSummaryTextDoneEvent"/> with the final text.</returns>
     public virtual ResponseReasoningSummaryTextDoneEvent EmitTextDone(string finalText)
     {
+        if (_lifecycleState != BuilderLifecycleState.Added)
+            throw new InvalidOperationException($"Cannot call EmitTextDone — builder is in '{_lifecycleState}' state.");
+        if (_finalText is not null)
+            throw new InvalidOperationException("EmitTextDone has already been called.");
+
         _finalText = finalText;
         return new ResponseReasoningSummaryTextDoneEvent(
             _stream.NextSequenceNumber(), _itemId, _outputIndex, _summaryIndex, finalText);

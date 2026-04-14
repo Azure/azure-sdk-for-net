@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.StorageMover
         {
             if (id.ResourceType != JobDefinitionResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, JobDefinitionResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, JobDefinitionResource.ResourceType), nameof(id));
             }
         }
 
@@ -184,7 +184,8 @@ namespace Azure.ResourceManager.StorageMover
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new JobRunResource(Client, data));
+                context,
+                "JobRunCollection.GetAll"), data => new JobRunResource(Client, data));
         }
 
         /// <summary>
@@ -219,7 +220,8 @@ namespace Azure.ResourceManager.StorageMover
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new JobRunResource(Client, data));
+                context,
+                "JobRunCollection.GetAll"), data => new JobRunResource(Client, data));
         }
 
         /// <summary>

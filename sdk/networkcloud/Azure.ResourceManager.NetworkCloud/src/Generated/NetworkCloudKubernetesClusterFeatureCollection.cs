@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             if (id.ResourceType != NetworkCloudKubernetesClusterResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, NetworkCloudKubernetesClusterResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, NetworkCloudKubernetesClusterResource.ResourceType), nameof(id));
             }
         }
 
@@ -304,7 +304,8 @@ namespace Azure.ResourceManager.NetworkCloud
                 Id.Name,
                 top,
                 skipToken,
-                context), data => new NetworkCloudKubernetesClusterFeatureResource(Client, data));
+                context,
+                "NetworkCloudKubernetesClusterFeatureCollection.GetAll"), data => new NetworkCloudKubernetesClusterFeatureResource(Client, data));
         }
 
         /// <summary>
@@ -341,7 +342,8 @@ namespace Azure.ResourceManager.NetworkCloud
                 Id.Name,
                 top,
                 skipToken,
-                context), data => new NetworkCloudKubernetesClusterFeatureResource(Client, data));
+                context,
+                "NetworkCloudKubernetesClusterFeatureCollection.GetAll"), data => new NetworkCloudKubernetesClusterFeatureResource(Client, data));
         }
 
         /// <summary>

@@ -45,8 +45,33 @@ foreach ($file in $apiListingFiles) {
         $content = $content -replace "`r`n", "`n"
         # Replace any remaining CR with LF
         $content = $content -replace "`r", "`n"
+        # Remove CCI dummy type reference artifacts emitted by GenAPI --follow-type-forwards.
+        # These appear in dependent listings (e.g. Azure.Identity) even when exporting other
+        # service directories, because GenAPI rebuilds the full dependency graph.
+        $beforeCount = ([regex]::Matches($content, 'Microsoft\.Cci\.DummyTypeReference')).Count
+        if ($beforeCount -gt 0) {
+            $content = ($content -split "`n" | Where-Object { $_ -notmatch '\[Microsoft\.Cci\.DummyTypeReference\]' }) -join "`n"
+            Write-Host "Stripped $beforeCount CCI DummyTypeReference artifacts from $($file.Name)"
+        }
         # Write back without adding extra newline
         Set-Content -Path $file.FullName -Value $content -NoNewline
+    }
+}
+
+# Also strip CCI artifacts from Azure.Identity API listings that may have been regenerated
+# as transitive dependencies during other service directory exports. GenAPI's --follow-type-forwards
+# flag (used only by Azure.Identity) emits [Microsoft.Cci.DummyTypeReference] on netstandard2.0
+# async methods when resolving forwarded types.
+$identityApiFiles = Get-ChildItem -Path "$PSScriptRoot/../../sdk/identity/Azure.Identity/api/*.cs" -ErrorAction SilentlyContinue
+foreach ($file in $identityApiFiles) {
+    $content = Get-Content -Path $file.FullName -Raw
+    if ($content -and $content -match 'Microsoft\.Cci\.DummyTypeReference') {
+        $content = $content -replace "`r`n", "`n"
+        $content = $content -replace "`r", "`n"
+        $beforeCount = ([regex]::Matches($content, 'Microsoft\.Cci\.DummyTypeReference')).Count
+        $content = ($content -split "`n" | Where-Object { $_ -notmatch '\[Microsoft\.Cci\.DummyTypeReference\]' }) -join "`n"
+        Set-Content -Path $file.FullName -Value $content -NoNewline
+        Write-Host "Stripped $beforeCount CCI DummyTypeReference artifacts from $($file.Name) (transitive dependency)"
     }
 }
 

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             if (id.ResourceType != GlobalRulestackResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, GlobalRulestackResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, GlobalRulestackResource.ResourceType), nameof(id));
             }
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<GlobalRulestackFqdnData, GlobalRulestackFqdnResource>(new FqdnListGlobalRulestackGetAllAsyncCollectionResultOfT(_fqdnListGlobalRulestackRestClient, Id.Name, context), data => new GlobalRulestackFqdnResource(Client, data));
+            return new AsyncPageableWrapper<GlobalRulestackFqdnData, GlobalRulestackFqdnResource>(new FqdnListGlobalRulestackGetAllAsyncCollectionResultOfT(_fqdnListGlobalRulestackRestClient, Id.Name, context, "GlobalRulestackFqdnCollection.GetAll"), data => new GlobalRulestackFqdnResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<GlobalRulestackFqdnData, GlobalRulestackFqdnResource>(new FqdnListGlobalRulestackGetAllCollectionResultOfT(_fqdnListGlobalRulestackRestClient, Id.Name, context), data => new GlobalRulestackFqdnResource(Client, data));
+            return new PageableWrapper<GlobalRulestackFqdnData, GlobalRulestackFqdnResource>(new FqdnListGlobalRulestackGetAllCollectionResultOfT(_fqdnListGlobalRulestackRestClient, Id.Name, context, "GlobalRulestackFqdnCollection.GetAll"), data => new GlobalRulestackFqdnResource(Client, data));
         }
 
         /// <summary>

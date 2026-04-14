@@ -19,6 +19,8 @@ namespace Azure.ResourceManager.ContainerService.Models
         private const string EnabledValue = "Enabled";
         /// <summary> Inbound traffic to managedCluster is disabled, traffic from managedCluster is allowed. </summary>
         private const string DisabledValue = "Disabled";
+        /// <summary> Inbound/Outbound traffic is managed by Microsoft.Network/NetworkSecurityPerimeters. </summary>
+        private const string SecuredByPerimeterValue = "SecuredByPerimeter";
 
         /// <summary> Initializes a new instance of <see cref="ContainerServicePublicNetworkAccess"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -35,6 +37,9 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Inbound traffic to managedCluster is disabled, traffic from managedCluster is allowed. </summary>
         public static ContainerServicePublicNetworkAccess Disabled { get; } = new ContainerServicePublicNetworkAccess(DisabledValue);
+
+        /// <summary> Inbound/Outbound traffic is managed by Microsoft.Network/NetworkSecurityPerimeters. </summary>
+        public static ContainerServicePublicNetworkAccess SecuredByPerimeter { get; } = new ContainerServicePublicNetworkAccess(SecuredByPerimeterValue);
 
         /// <summary> Determines if two <see cref="ContainerServicePublicNetworkAccess"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

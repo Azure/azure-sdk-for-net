@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ServiceBus
         {
             if (id.ResourceType != ServiceBusNamespaceResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ServiceBusNamespaceResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ServiceBusNamespaceResource.ResourceType), nameof(id));
             }
         }
 
@@ -287,7 +287,13 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ServiceBusAuthorizationRuleData, ServiceBusNamespaceAuthorizationRuleResource>(new SBAuthorizationRulesGetAuthorizationRulesAsyncCollectionResultOfT(_sbAuthorizationRulesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ServiceBusNamespaceAuthorizationRuleResource(Client, data));
+            return new AsyncPageableWrapper<ServiceBusAuthorizationRuleData, ServiceBusNamespaceAuthorizationRuleResource>(new SBAuthorizationRulesGetAuthorizationRulesAsyncCollectionResultOfT(
+                _sbAuthorizationRulesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ServiceBusNamespaceAuthorizationRuleCollection.GetAll"), data => new ServiceBusNamespaceAuthorizationRuleResource(Client, data));
         }
 
         /// <summary>
@@ -315,7 +321,13 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ServiceBusAuthorizationRuleData, ServiceBusNamespaceAuthorizationRuleResource>(new SBAuthorizationRulesGetAuthorizationRulesCollectionResultOfT(_sbAuthorizationRulesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ServiceBusNamespaceAuthorizationRuleResource(Client, data));
+            return new PageableWrapper<ServiceBusAuthorizationRuleData, ServiceBusNamespaceAuthorizationRuleResource>(new SBAuthorizationRulesGetAuthorizationRulesCollectionResultOfT(
+                _sbAuthorizationRulesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ServiceBusNamespaceAuthorizationRuleCollection.GetAll"), data => new ServiceBusNamespaceAuthorizationRuleResource(Client, data));
         }
 
         /// <summary>
