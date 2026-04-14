@@ -18,8 +18,8 @@ namespace Azure.Security.ConfidentialLedger
     {
         /// <summary>
         /// Maximum number of consecutive 404 (Not Found) responses to tolerate
-        /// before treating the transaction as failed. Matches the default
-        /// <see cref="RetryOptions.MaxRetries"/> value (3).
+        /// while polling for the posted ledger entry before treating the
+        /// transaction as failed.
         /// </summary>
         private const int MaxNotFoundRetries = 3;
 
