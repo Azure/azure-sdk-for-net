@@ -185,3 +185,8 @@ steps:
   - template: /eng/common/pipelines/templates/steps/validate-all-packages.yml
     parameters:
       Artifacts: ${{ parameters.Artifacts }}
+
+  - ${{ if eq(variables['Build.Reason'], 'Manual') }}:
+    - template: /eng/common/pipelines/templates/steps/verify-codeowners.yml
+      parameters:
+        ArtifactPath: '$(Build.ArtifactStagingDirectory)/PackageInfo'

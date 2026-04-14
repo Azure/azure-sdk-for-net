@@ -1,0 +1,20 @@
+parameters:
+  - name: ArtifactPath
+    type: string
+    default: $(Build.ArtifactStagingDirectory)/PackageInfo
+
+steps:
+  - template: /eng/common/pipelines/templates/steps/install-azsdk-cli.yml
+    parameters:
+      Condition: and(succeeded(), ne(variables['Skip.CodeownersValidation'], 'true'))
+
+  - task: PowerShell@2
+    displayName: Verify Codeowners
+    condition: and(succeeded(), ne(variables['Skip.CodeownersValidation'], 'true'))
+    inputs:
+      pwsh: true
+      filePath: eng/common/scripts/Test-Codeowners.ps1
+      arguments: >-
+        -AzsdkPath '$(AZSDK)'
+        -ArtifactPath '${{ parameters.ArtifactPath }}'
+        -Repo '$(Build.Repository.Name)'
