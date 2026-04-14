@@ -6,18 +6,13 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Maintenance;
 using Azure.ResourceManager.Maintenance.Models;
 
 namespace Azure.ResourceManager.Maintenance.Mocking
 {
-    /// <summary>
-    /// Backward-compatibility extension methods for MockableMaintenanceResourceGroupResource.
-    /// </summary>
+    // Backward-compatibility extension methods for MockableMaintenanceResourceGroupResource.
     public partial class MockableMaintenanceResourceGroupResource
     {
         private ClientDiagnostics _maintenanceApplyUpdateClientDiagnostics;

@@ -6,21 +6,17 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Maintenance.Mocking;
 
 namespace Azure.ResourceManager.Maintenance
 {
-    /// <summary>
-    /// A backward-compatibility wrapper representing a collection of public maintenance configuration resources.
-    /// In the old (autorest-generated) SDK, this was a separate collection type for subscription-level
-    /// read-only access to public maintenance configurations. In the new TypeSpec SDK, these operations
-    /// are merged into <see cref="MaintenanceConfigurationCollection"/>.
-    /// </summary>
+    // A backward-compatibility wrapper representing a collection of public maintenance configuration resources.
+    // In the old (autorest-generated) SDK, this was a separate collection type for subscription-level
+    // read-only access to public maintenance configurations. In the new TypeSpec SDK, these operations
+    // are merged into <see cref="MaintenanceConfigurationCollection"/>.
     public partial class MaintenancePublicConfigurationCollection : ArmCollection, IAsyncEnumerable<MaintenancePublicConfigurationResource>, IEnumerable<MaintenancePublicConfigurationResource>
     {
         private readonly ClientDiagnostics _publicMaintenanceConfigurationsClientDiagnostics;

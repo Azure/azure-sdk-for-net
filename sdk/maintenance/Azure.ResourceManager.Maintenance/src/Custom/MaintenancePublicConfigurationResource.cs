@@ -5,7 +5,6 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Diagnostics;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,12 +13,10 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.Maintenance
 {
-    /// <summary>
-    /// A backward-compatibility wrapper representing a public maintenance configuration resource.
-    /// In the old (autorest-generated) SDK, this was a separate resource type for subscription-level
-    /// read-only access to public maintenance configurations. In the new TypeSpec SDK, these operations
-    /// are merged into <see cref="MaintenanceConfigurationResource"/>.
-    /// </summary>
+    // A backward-compatibility wrapper representing a public maintenance configuration resource.
+    // In the old (autorest-generated) SDK, this was a separate resource type for subscription-level
+    // read-only access to public maintenance configurations. In the new TypeSpec SDK, these operations
+    // are merged into <see cref="MaintenanceConfigurationResource"/>.
     public partial class MaintenancePublicConfigurationResource : ArmResource, IJsonModel<MaintenanceConfigurationData>, IPersistableModel<MaintenanceConfigurationData>
     {
         private readonly ClientDiagnostics _publicMaintenanceConfigurationsClientDiagnostics;
