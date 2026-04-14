@@ -163,7 +163,7 @@
     <PackageVersion Include="Azure.Search.Documents" Version="11.7.0" />
     <PackageVersion Include="Azure.Security.KeyVault.Certificates" Version="4.8.0" />
     <PackageVersion Include="Azure.Security.KeyVault.Keys" Version="4.9.0" />
-    <PackageVersion Include="Azure.Security.KeyVault.Secrets" Version="4.9.0" />
+    <PackageVersion Include="Azure.Security.KeyVault.Secrets" Version="4.10.0" />
     <PackageVersion Include="Azure.Storage.Blobs" Version="12.26.0" />
     <PackageVersion Include="Azure.Storage.Common" Version="12.25.0" />
     <PackageVersion Include="Azure.Storage.Files.Shares" Version="12.24.0" />
