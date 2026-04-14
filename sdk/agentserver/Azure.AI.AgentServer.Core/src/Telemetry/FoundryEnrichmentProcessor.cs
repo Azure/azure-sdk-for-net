@@ -43,6 +43,23 @@ internal sealed class FoundryEnrichmentProcessor : BaseProcessor<Activity>
         {
             activity.SetTag("microsoft.foundry.project.id", _projectId);
         }
+
+        // Session ID and conversation ID are correlation IDs propagated via
+        // OTel baggage by the calling service / hosting packages. Stamp them
+        // as span attributes so every span (root + framework child) carries
+        // them without extra plumbing. The two are independent — no fallback
+        // between them.
+        var sessionId = activity.GetBaggageItem("azure.ai.agentserver.session_id");
+        if (!string.IsNullOrWhiteSpace(sessionId))
+        {
+            activity.SetTag("microsoft.session.id", sessionId);
+        }
+
+        var conversationId = activity.GetBaggageItem("azure.ai.agentserver.conversation_id");
+        if (!string.IsNullOrWhiteSpace(conversationId))
+        {
+            activity.SetTag("gen_ai.conversation.id", conversationId);
+        }
     }
 
     /// <inheritdoc/>

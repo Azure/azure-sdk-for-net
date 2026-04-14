@@ -263,27 +263,37 @@ dotnet format Azure.AI.AgentServer.sln
 
 ### Pre-commit checks (strict ordering)
 
-Run these **in this exact order** before every commit. Order matters — `dotnet format`
+Run these **in this exact order** before every commit. Order matters — tests must
+run **first** to catch regressions before any formatting work, and `dotnet format`
 must run **last** so it catches formatting issues introduced by earlier steps.
 
-Steps 1–2 run from the **repo root**; steps 3–4 run from `sdk/agentserver/`.
+Step 1 runs from `sdk/agentserver/`; steps 2–3 run from the **repo root**;
+steps 4–5 run from `sdk/agentserver/`.
 
 ```powershell
-# 1. Export public API  (from repo root)
+# 1. Run tests FIRST  (from sdk/agentserver/ — catches regressions before formatting)
+cd sdk/agentserver
+dotnet test Azure.AI.AgentServer.sln --filter TestCategory!=Live
+
+# 2. Export public API  (from repo root)
 eng/scripts/Export-API.ps1 agentserver
 
-# 2. Update doc snippets  (from repo root — syncs #region blocks into markdown)
+# 3. Update doc snippets  (from repo root — syncs #region blocks into markdown)
 eng/scripts/Update-Snippets.ps1 agentserver
 
-# 3. Build snippets  (from sdk/agentserver/ — reproduces CI "Build snippets" step)
+# 4. Build snippets  (from sdk/agentserver/ — reproduces CI "Build snippets" step)
 cd sdk/agentserver
 dotnet build Azure.AI.AgentServer.sln /p:BuildSnippets=true
 
-# 4. Format LAST  (from sdk/agentserver/ — catches indent/whitespace from all prior steps)
+# 5. Format LAST  (from sdk/agentserver/ — catches indent/whitespace from all prior steps)
 dotnet format Azure.AI.AgentServer.sln
 ```
 
-**Why format last?** Steps 1–3 may modify files (API listings, snippet markdown, or
+**Why tests first?** Lifecycle validation, protocol compliance, and handler logic
+bugs are only caught by tests — not by formatting or API export. Running tests
+first prevents pushing regressions that pass all static checks but fail at runtime.
+
+**Why format last?** Steps 2–4 may modify files (API listings, snippet markdown, or
 code via scripts like `sed`). Running format first would miss those changes. The CI
 "Build snippets" step defines the `SNIPPET` preprocessor constant — snippet code must
 compile in that mode.
