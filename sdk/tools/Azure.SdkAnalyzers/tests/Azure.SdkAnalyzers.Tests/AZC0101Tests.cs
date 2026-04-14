@@ -118,5 +118,49 @@ namespace RandomNamespace
 }";
             await Verifier.VerifyAnalyzerAsync(code);
         }
+
+        [Test]
+        public async Task AZC0101ErrorOnNamedArgumentConfigureAwaitTrue()
+        {
+            const string code = @"
+namespace RandomNamespace
+{
+    public class MyClass
+    {
+        public static async System.Threading.Tasks.Task Foo()
+        {
+            await System.Threading.Tasks.Task.Run(() => {}).{|AZC0101:ConfigureAwait(continueOnCapturedContext: true)|};
+        }
+    }
+}";
+            await Verifier.VerifyAnalyzerAsync(code);
+        }
+
+        [Test]
+        public async Task AZC0101NoErrorInSyncScope()
+        {
+            const string code = @"
+namespace RandomNamespace
+{
+    using System.Threading.Tasks;
+    using Azure.Core.Pipeline;
+
+    public class MyClass
+    {
+        private static async Task FooAsync(bool async)
+        {
+            if (!async)
+            {
+                // In sync scope — ConfigureAwait(true) should not be flagged
+                Task.Run(() => {}).ConfigureAwait(true).GetAwaiter().GetResult();
+            }
+        }
+    }
+}";
+
+            await Verifier.CreateAnalyzer(code)
+                .WithSources(AzureCorePipelineTaskExtensions)
+                .RunAsync();
+        }
     }
 }
