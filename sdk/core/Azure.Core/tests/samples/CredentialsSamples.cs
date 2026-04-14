@@ -15,7 +15,7 @@ namespace Azure.Core.Samples
         public void AuthenticateWithDefaultCredential()
         {
             #region Snippet:AzureCoreDefaultCredential
-            // No Azure.Identity package reference required for client SDKs that depend on Azure.Core 1.53.0+
+            // No Azure.Identity package reference required for client libraries that depend on Azure.Core 1.53.0+
             var credential = new DefaultAzureCredential();
             var client = new SecretClient(new Uri("https://myvault.vault.azure.net/"), credential);
             #endregion
