@@ -145,6 +145,18 @@ public class EchoHandlerFullControl : ResponseHandler
 }
 ```
 
+### ResponseContext
+
+Injected into every `CreateAsync` call, `ResponseContext` provides access to the client's input and a unique response ID:
+
+- **`GetInputItemsAsync(resolveReferences, cancellationToken)`** — returns the resolved input items from the request. Reference items (`ItemReferenceParam`) are resolved to their referenced content by default; pass `resolveReferences: false` to receive them as-is. The result is computed once and cached per resolve mode.
+- **`GetInputTextAsync(resolveReferences, cancellationToken)`** — shorthand that resolves input items and concatenates all text content from `ItemMessage` entries.
+- **`ResponseId`** — the unique ID for this response, used to construct child item IDs.
+
+For collections of `Item` objects, the `GetInputText()` extension method (on `IEnumerable<Item>`) extracts and joins text content without needing a `ResponseContext`.
+
+See the [handler implementation guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/handler-implementation-guide.md#responsecontext) for the full `ResponseContext` API reference.
+
 ### ResponseEventStream
 
 Manages `sequenceNumber`, `outputIndex`, `contentIndex`, and `itemId` tracking internally. Each `yield return` maps 1:1 to an SSE event with zero bookkeeping.
