@@ -6,8 +6,6 @@ This package is automatically included in all Azure SDK libraries in this reposi
 
 ## Implemented Rules
 
-### Suppressible (Warning severity)
-
 | Rule | Description | Fix |
 |------|-------------|-----|
 | [**AZC0012**](docs/list-of-diagnostics.md#azc0012) | Avoid single word type names | — |
