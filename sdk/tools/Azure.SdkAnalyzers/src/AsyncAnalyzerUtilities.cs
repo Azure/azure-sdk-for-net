@@ -41,7 +41,11 @@ namespace Azure.SdkAnalyzers
                 return true;
             }
 
-            if (method.Parameters.Length == 2 && SymbolEqualityComparer.Default.Equals(method.ReceiverType, TaskAsyncEnumerableExtensionsSymbol))
+            // Extension method call: e.g. asyncEnumerable.ConfigureAwait(true)
+            // For reduced extension calls, ContainingType or ReducedFrom.ContainingType
+            // points to the static extensions class, not the receiver type.
+            var containingType = method.ReducedFrom?.ContainingType ?? method.ContainingType;
+            if (SymbolEqualityComparer.Default.Equals(containingType, TaskAsyncEnumerableExtensionsSymbol))
             {
                 return true;
             }
