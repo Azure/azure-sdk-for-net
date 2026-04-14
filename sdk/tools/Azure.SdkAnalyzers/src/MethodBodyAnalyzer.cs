@@ -112,7 +112,8 @@ namespace Azure.SdkAnalyzers
             }
         }
 
-        // Scope tracking: async parameter references in if/else or ternary determine async/sync scope
+        // Scope tracking only applies when the async parameter is the direct condition of an if/ternary
+        // expression, or is directly negated (!async) as that condition.
         private void AnalyzeAsyncParameterReference(in MethodAnalysisContext context, IOperation reference)
         {
             switch (reference.Parent)
