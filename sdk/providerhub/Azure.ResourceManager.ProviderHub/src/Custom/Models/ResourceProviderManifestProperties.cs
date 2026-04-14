@@ -50,13 +50,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public FeaturesPolicy? RequiredFeaturesPolicy
         {
             get => FeaturesRule is null ? default(FeaturesPolicy?) : FeaturesRule.RequiredFeaturesPolicy;
-            set
-            {
-                if (FeaturesRule is null)
-                    FeaturesRule = new ProviderFeaturesRule();
-                if (value.HasValue)
-                    FeaturesRule.RequiredFeaturesPolicy = value.Value;
-            }
+            set => FeaturesRule = value.HasValue ? new ProviderFeaturesRule(value.Value) : default;
         }
     }
 }
