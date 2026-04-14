@@ -44,12 +44,12 @@ namespace Azure.SdkAnalyzers
             context.RegisterCodeFix(
                 CodeAction.Create(
                     title: "Use ConfigureAwait(false)",
-                    createChangedDocument: c => ReplaceWithFalseAsync(context.Document, invocation.Span, c),
+                    createChangedDocument: c => ReplaceWithFalseAsync(context.Document, diagnostic.Location.SourceSpan, c),
                     equivalenceKey: "AZC0101_UseConfigureAwaitFalse"),
                 diagnostic);
         }
 
-        private static async Task<Document> ReplaceWithFalseAsync(Document document, Microsoft.CodeAnalysis.Text.TextSpan invocationSpan, CancellationToken cancellationToken)
+        private static async Task<Document> ReplaceWithFalseAsync(Document document, Microsoft.CodeAnalysis.Text.TextSpan diagnosticSpan, CancellationToken cancellationToken)
         {
             SyntaxNode root = await document.GetSyntaxRootAsync(cancellationToken).ConfigureAwait(false);
             if (root is null)
@@ -57,8 +57,8 @@ namespace Azure.SdkAnalyzers
                 return document;
             }
 
-            // Re-locate the invocation from the current root using the original span
-            InvocationExpressionSyntax invocation = root.FindNode(invocationSpan)
+            // Re-locate the invocation from the current root using the diagnostic span
+            InvocationExpressionSyntax invocation = root.FindNode(diagnosticSpan)
                 .AncestorsAndSelf()
                 .OfType<InvocationExpressionSyntax>()
                 .FirstOrDefault(i => i.Expression is MemberAccessExpressionSyntax m && m.Name.Identifier.Text == "ConfigureAwait");
