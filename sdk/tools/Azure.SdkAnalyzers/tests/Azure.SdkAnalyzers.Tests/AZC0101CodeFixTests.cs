@@ -116,6 +116,70 @@ namespace RandomNamespace
             await test.RunAsync(CancellationToken.None);
         }
 
+        [NUnit.Framework.Test]
+        public async Task FixReplacesNamedArgumentConfigureAwaitTrue()
+        {
+            const string code = @"
+namespace RandomNamespace
+{
+    public class MyClass
+    {
+        public static async System.Threading.Tasks.Task Foo()
+        {
+            await System.Threading.Tasks.Task.Run(() => {}).{|AZC0101:ConfigureAwait(continueOnCapturedContext: true)|};
+        }
+    }
+}";
+
+            const string fixedCode = @"
+namespace RandomNamespace
+{
+    public class MyClass
+    {
+        public static async System.Threading.Tasks.Task Foo()
+        {
+            await System.Threading.Tasks.Task.Run(() => {}).ConfigureAwait(continueOnCapturedContext: false);
+        }
+    }
+}";
+
+            await CreateCodeFixTest(code, fixedCode).RunAsync(CancellationToken.None);
+        }
+
+        [NUnit.Framework.Test]
+        public async Task FixReplacesConfigureAwaitTrueOnGenericTask()
+        {
+            const string code = @"
+namespace RandomNamespace
+{
+    using System.Threading.Tasks;
+
+    public class MyClass
+    {
+        public static async Task Foo()
+        {
+            await Task.FromResult(42).{|AZC0101:ConfigureAwait(true)|};
+        }
+    }
+}";
+
+            const string fixedCode = @"
+namespace RandomNamespace
+{
+    using System.Threading.Tasks;
+
+    public class MyClass
+    {
+        public static async Task Foo()
+        {
+            await Task.FromResult(42).ConfigureAwait(false);
+        }
+    }
+}";
+
+            await CreateCodeFixTest(code, fixedCode).RunAsync(CancellationToken.None);
+        }
+
         private const string AzureCorePipelineTaskExtensions = @"
 namespace Azure.Core.Pipeline
 {
