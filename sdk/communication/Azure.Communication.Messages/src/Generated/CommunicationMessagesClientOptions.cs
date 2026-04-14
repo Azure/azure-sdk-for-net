@@ -15,7 +15,7 @@ namespace Azure.Communication.Messages
     /// <summary> Client options for clients in this library. </summary>
     public partial class CommunicationMessagesClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.Vc2025_09_01_Preview;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2025_09_01_Preview;
 
         /// <summary> Initializes a new instance of NotificationMessagesClientOptions. </summary>
         /// <param name="version"> The service version. </param>
@@ -25,11 +25,9 @@ namespace Azure.Communication.Messages
             {
                 ServiceVersion.V2024_02_01 => "2024-02-01",
                 ServiceVersion.V2024_08_30 => "2024-08-30",
-                ServiceVersion.Vc2024_02_01 => "2024-02-01",
-                ServiceVersion.Vc2024_08_30 => "2024-08-30",
-                ServiceVersion.Vc2025_01_15_Preview => "2025-01-15-preview",
-                ServiceVersion.Vc2025_04_01_Preview => "2025-04-01-preview",
-                ServiceVersion.Vc2025_09_01_Preview => "2025-09-01-preview",
+                ServiceVersion.V2025_01_15_Preview => "2025-01-15-preview",
+                ServiceVersion.V2025_04_01_Preview => "2025-04-01-preview",
+                ServiceVersion.V2025_09_01_Preview => "2025-09-01-preview",
                 _ => throw new NotSupportedException()
             };
             ConfigureLogging();
@@ -61,20 +59,16 @@ namespace Azure.Communication.Messages
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
         {
-            /// <summary> Service version "2024-02-01". </summary>
-            V2024_02_01 = 1,
-            /// <summary> Service version "2024-08-30". </summary>
-            V2024_08_30 = 2,
             /// <summary> Azure Communication Messages 2024-02-01 api version. </summary>
-            Vc2024_02_01 = 3,
+            V2024_02_01 = 1,
             /// <summary> Azure Communication Messages 2024-08-30 api version. </summary>
-            Vc2024_08_30 = 4,
+            V2024_08_30 = 2,
             /// <summary> Azure Communication Messages 2025-01-15-preview api version. </summary>
-            Vc2025_01_15_Preview = 5,
+            V2025_01_15_Preview = 3,
             /// <summary> Azure Communication Messages 2025-04-01-preview api version. </summary>
-            Vc2025_04_01_Preview = 6,
+            V2025_04_01_Preview = 4,
             /// <summary> Azure Communication Messages 2025-09-01-preview api version. </summary>
-            Vc2025_09_01_Preview = 7
+            V2025_09_01_Preview = 5
         }
     }
 }

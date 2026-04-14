@@ -9,10 +9,10 @@ namespace Azure.Communication.Messages
     public abstract partial class MessageTemplateItem
     {
         /// <summary> Initializes a new instance of <see cref="MessageTemplateItem"/>. </summary>
-        /// <param name="name"> The template's name. </param>
+        /// <param name="language"> The template's language. </param>
         /// <param name="status"> The aggregated template status. </param>
-        protected MessageTemplateItem(string name, MessageTemplateStatus status)
-            : this(name, default, status, default(CommunicationMessagesChannel), null)
+        protected MessageTemplateItem(string language, MessageTemplateStatus status)
+            : this(default, language, status, default(CommunicationMessagesChannel), null)
         {
         }
     }

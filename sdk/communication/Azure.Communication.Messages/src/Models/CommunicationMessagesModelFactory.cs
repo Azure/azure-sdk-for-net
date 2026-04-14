@@ -22,7 +22,7 @@ namespace Azure.Communication.Messages
         /// <param name="mediaUri"> A media url for the file. </param>
         /// <returns> A new <see cref="AudioNotificationContent"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AudioNotificationContent AudioNotificationContent(Guid channelRegistrationId, IEnumerable<string> to, Uri mediaUri)
+        public static AudioNotificationContent AudioNotificationContent(Guid channelRegistrationId = default, IEnumerable<string> to = default, Uri mediaUri = default)
         {
             to ??= new ChangeTrackingList<string>();
 
@@ -37,7 +37,7 @@ namespace Azure.Communication.Messages
         /// <param name="mediaUri"> A media url for the file. </param>
         /// <returns> A new <see cref="DocumentNotificationContent"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DocumentNotificationContent DocumentNotificationContent(Guid channelRegistrationId, IEnumerable<string> to, string caption, string fileName, Uri mediaUri)
+        public static DocumentNotificationContent DocumentNotificationContent(Guid channelRegistrationId = default, IEnumerable<string> to = default, string caption = default, string fileName = default, Uri mediaUri = default)
         {
             to ??= new ChangeTrackingList<string>();
 
@@ -58,7 +58,7 @@ namespace Azure.Communication.Messages
         /// <param name="mediaUri"> A media url for the file. </param>
         /// <returns> A new <see cref="ImageNotificationContent"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ImageNotificationContent ImageNotificationContent(Guid channelRegistrationId, IEnumerable<string> to, string caption, Uri mediaUri)
+        public static ImageNotificationContent ImageNotificationContent(Guid channelRegistrationId = default, IEnumerable<string> to = default, string caption = default, Uri mediaUri = default)
         {
             to ??= new ChangeTrackingList<string>();
 
@@ -79,7 +79,7 @@ namespace Azure.Communication.Messages
         /// <returns> A new <see cref="MediaNotificationContent"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable CS0618
-        public static MediaNotificationContent MediaNotificationContent(Guid channelRegistrationId, IEnumerable<string> to, string content, Uri mediaUri)
+        public static MediaNotificationContent MediaNotificationContent(Guid channelRegistrationId = default, IEnumerable<string> to = default, string content = default, Uri mediaUri = default)
             => MessagesModelFactory.MediaNotificationContent(channelRegistrationId, to, content, mediaUri);
 #pragma warning restore CS0618
 
@@ -88,7 +88,7 @@ namespace Azure.Communication.Messages
         /// <param name="to"> The native external platform user identifier of the recipient. </param>
         /// <returns> A new <see cref="Messages.MessageReceipt"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static MessageReceipt MessageReceipt(string messageId, string to)
+        public static MessageReceipt MessageReceipt(string messageId = default, string to = default)
             => new MessageReceipt(messageId, to, additionalBinaryDataProperties: null);
 
         /// <summary> The template object used to create templates. </summary>
@@ -98,7 +98,7 @@ namespace Azure.Communication.Messages
         /// <param name="bindings"> The binding object to link values to the template specific locations. </param>
         /// <returns> A new <see cref="Messages.MessageTemplate"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static MessageTemplate MessageTemplate(string name, string language, IEnumerable<MessageTemplateValue> values, MessageTemplateBindings bindings)
+        public static MessageTemplate MessageTemplate(string name = default, string language = default, IEnumerable<MessageTemplateValue> values = default, MessageTemplateBindings bindings = default)
         {
             values ??= new ChangeTrackingList<MessageTemplateValue>();
 
@@ -112,7 +112,7 @@ namespace Azure.Communication.Messages
         /// <param name="fileName"> The [optional] filename of the media file. </param>
         /// <returns> A new <see cref="Messages.MessageTemplateDocument"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static MessageTemplateDocument MessageTemplateDocument(string name, Uri uri, string caption, string fileName)
+        public static MessageTemplateDocument MessageTemplateDocument(string name = default, Uri uri = default, string caption = default, string fileName = default)
             => new MessageTemplateDocument(name, MessageTemplateValueKind.Document, additionalBinaryDataProperties: null, uri, caption, fileName);
 
         /// <summary> The message template's image value information. </summary>
@@ -122,7 +122,7 @@ namespace Azure.Communication.Messages
         /// <param name="fileName"> The [optional] filename of the media file. </param>
         /// <returns> A new <see cref="Messages.MessageTemplateImage"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static MessageTemplateImage MessageTemplateImage(string name, Uri uri, string caption, string fileName)
+        public static MessageTemplateImage MessageTemplateImage(string name = default, Uri uri = default, string caption = default, string fileName = default)
             => new MessageTemplateImage(name, MessageTemplateValueKind.Image, additionalBinaryDataProperties: null, uri, caption, fileName);
 
         /// <summary> The message template as returned from the service. </summary>
@@ -132,7 +132,7 @@ namespace Azure.Communication.Messages
         /// <param name="kind"> The type discriminator describing a template type. </param>
         /// <returns> A new <see cref="Messages.MessageTemplateItem"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static MessageTemplateItem MessageTemplateItem(string name, string language, MessageTemplateStatus status, string kind)
+        public static MessageTemplateItem MessageTemplateItem(string name = default, string language = default, MessageTemplateStatus status = default, string kind = default)
             => new UnknownMessageTemplateItem(name, language, status, new CommunicationMessagesChannel(kind), additionalBinaryDataProperties: null);
 
         /// <summary> The message template's quick action value information. </summary>
@@ -141,7 +141,7 @@ namespace Azure.Communication.Messages
         /// <param name="payload"> The [Optional] quick action payload. </param>
         /// <returns> A new <see cref="Messages.MessageTemplateQuickAction"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static MessageTemplateQuickAction MessageTemplateQuickAction(string name, string text, string payload)
+        public static MessageTemplateQuickAction MessageTemplateQuickAction(string name = default, string text = default, string payload = default)
             => new MessageTemplateQuickAction(name, MessageTemplateValueKind.QuickAction, additionalBinaryDataProperties: null, text, payload);
 
         /// <summary> The message template's text value information. </summary>
@@ -149,7 +149,7 @@ namespace Azure.Communication.Messages
         /// <param name="text"> The text value. </param>
         /// <returns> A new <see cref="Messages.MessageTemplateText"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static MessageTemplateText MessageTemplateText(string name, string text)
+        public static MessageTemplateText MessageTemplateText(string name = default, string text = default)
             => new MessageTemplateText(name, MessageTemplateValueKind.Text, additionalBinaryDataProperties: null, text);
 
         /// <summary> The class describes a parameter of a template. </summary>
@@ -157,7 +157,7 @@ namespace Azure.Communication.Messages
         /// <param name="kind"> The type discriminator describing a template parameter type. </param>
         /// <returns> A new <see cref="Messages.MessageTemplateValue"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static MessageTemplateValue MessageTemplateValue(string name, string kind)
+        public static MessageTemplateValue MessageTemplateValue(string name = default, string kind = default)
             => new UnknownMessageTemplateValue(name, new MessageTemplateValueKind(kind), additionalBinaryDataProperties: null);
 
         /// <summary> The message template's video value information. </summary>
@@ -167,7 +167,7 @@ namespace Azure.Communication.Messages
         /// <param name="fileName"> The [optional] filename of the media file. </param>
         /// <returns> A new <see cref="Messages.MessageTemplateVideo"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static MessageTemplateVideo MessageTemplateVideo(string name, Uri uri, string caption, string fileName)
+        public static MessageTemplateVideo MessageTemplateVideo(string name = default, Uri uri = default, string caption = default, string fileName = default)
             => new MessageTemplateVideo(name, MessageTemplateValueKind.Video, additionalBinaryDataProperties: null, uri, caption, fileName);
 
         /// <summary> Details of the message to send. </summary>
@@ -176,7 +176,7 @@ namespace Azure.Communication.Messages
         /// <param name="kind"> The type discriminator describing a message type. </param>
         /// <returns> A new <see cref="Messages.NotificationContent"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NotificationContent NotificationContent(Guid channelRegistrationId, IEnumerable<string> to, string kind)
+        public static NotificationContent NotificationContent(Guid channelRegistrationId = default, IEnumerable<string> to = default, string kind = default)
         {
             to ??= new ChangeTrackingList<string>();
 
@@ -187,7 +187,7 @@ namespace Azure.Communication.Messages
         /// <param name="receipts"> Receipts of the send message operation. </param>
         /// <returns> A new <see cref="Messages.SendMessageResult"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SendMessageResult SendMessageResult(IEnumerable<MessageReceipt> receipts)
+        public static SendMessageResult SendMessageResult(IEnumerable<MessageReceipt> receipts = default)
         {
             receipts ??= new ChangeTrackingList<MessageReceipt>();
 
@@ -200,7 +200,7 @@ namespace Azure.Communication.Messages
         /// <param name="template"> The template object used to create templates. </param>
         /// <returns> A new <see cref="Messages.TemplateNotificationContent"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static TemplateNotificationContent TemplateNotificationContent(Guid channelRegistrationId, IEnumerable<string> to, MessageTemplate template)
+        public static TemplateNotificationContent TemplateNotificationContent(Guid channelRegistrationId = default, IEnumerable<string> to = default, MessageTemplate template = default)
         {
             to ??= new ChangeTrackingList<string>();
 
@@ -213,7 +213,7 @@ namespace Azure.Communication.Messages
         /// <param name="content"> Message content. </param>
         /// <returns> A new <see cref="Messages.TextNotificationContent"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static TextNotificationContent TextNotificationContent(Guid channelRegistrationId, IEnumerable<string> to, string content)
+        public static TextNotificationContent TextNotificationContent(Guid channelRegistrationId = default, IEnumerable<string> to = default, string content = default)
         {
             to ??= new ChangeTrackingList<string>();
 
@@ -227,7 +227,7 @@ namespace Azure.Communication.Messages
         /// <param name="mediaUri"> A media url for the file. </param>
         /// <returns> A new <see cref="Messages.VideoNotificationContent"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static VideoNotificationContent VideoNotificationContent(Guid channelRegistrationId, IEnumerable<string> to, string caption, Uri mediaUri)
+        public static VideoNotificationContent VideoNotificationContent(Guid channelRegistrationId = default, IEnumerable<string> to = default, string caption = default, Uri mediaUri = default)
         {
             to ??= new ChangeTrackingList<string>();
 
@@ -248,7 +248,7 @@ namespace Azure.Communication.Messages
         /// <returns> A new <see cref="Models.Channels.WhatsAppMessageTemplateItem"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable CS0618
-        public static Models.Channels.WhatsAppMessageTemplateItem WhatsAppMessageTemplateItem(string name, string language, MessageTemplateStatus status, BinaryData content)
+        public static Models.Channels.WhatsAppMessageTemplateItem WhatsAppMessageTemplateItem(string name = default, string language = default, MessageTemplateStatus status = default, BinaryData content = default)
             => new Models.Channels.WhatsAppMessageTemplateItem(
                 name,
                 language,

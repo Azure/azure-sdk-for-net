@@ -200,16 +200,14 @@ namespace Azure.Communication.Messages
     }
     public partial class CommunicationMessagesClientOptions : Azure.Core.ClientOptions
     {
-        public CommunicationMessagesClientOptions(Azure.Communication.Messages.CommunicationMessagesClientOptions.ServiceVersion version = Azure.Communication.Messages.CommunicationMessagesClientOptions.ServiceVersion.Vc2025_09_01_Preview) { }
+        public CommunicationMessagesClientOptions(Azure.Communication.Messages.CommunicationMessagesClientOptions.ServiceVersion version = Azure.Communication.Messages.CommunicationMessagesClientOptions.ServiceVersion.V2025_09_01_Preview) { }
         public enum ServiceVersion
         {
             V2024_02_01 = 1,
             V2024_08_30 = 2,
-            Vc2024_02_01 = 3,
-            Vc2024_08_30 = 4,
-            Vc2025_01_15_Preview = 5,
-            Vc2025_04_01_Preview = 6,
-            Vc2025_09_01_Preview = 7,
+            V2025_01_15_Preview = 3,
+            V2025_04_01_Preview = 4,
+            V2025_09_01_Preview = 5,
         }
     }
     public static partial class CommunicationMessagesModelFactory
@@ -221,7 +219,7 @@ namespace Azure.Communication.Messages
         public static Azure.Communication.Messages.AddParticipantsOptions AddParticipantsOptions(System.Collections.Generic.IEnumerable<Azure.Communication.Messages.ConversationParticipant> participants = null) { throw null; }
         public static Azure.Communication.Messages.AddParticipantsResult AddParticipantsResult(System.Collections.Generic.IEnumerable<Azure.Communication.Messages.UpdateParticipantsResult> invalidParticipants = null) { throw null; }
         public static Azure.Communication.Messages.AudioConversationMessageContent AudioConversationMessageContent(System.Uri mediaUri = null) { throw null; }
-        public static Azure.Communication.Messages.AudioNotificationContent AudioNotificationContent(System.Guid channelRegistrationId, System.Collections.Generic.IEnumerable<string> to, System.Uri mediaUri) { throw null; }
+        public static Azure.Communication.Messages.AudioNotificationContent AudioNotificationContent(System.Guid channelRegistrationId = default(System.Guid), System.Collections.Generic.IEnumerable<string> to = null, System.Uri mediaUri = null) { throw null; }
         public static Azure.Communication.Messages.BotContact BotContact(string id = null, string botAppId = null) { throw null; }
         public static Azure.Communication.Messages.ButtonContent ButtonContent(string id = null, string title = null) { throw null; }
         public static Azure.Communication.Messages.ButtonSetContent ButtonSetContent(System.Collections.Generic.IEnumerable<Azure.Communication.Messages.ButtonContent> buttons = null) { throw null; }
@@ -234,53 +232,53 @@ namespace Azure.Communication.Messages
         public static Azure.Communication.Messages.ConversationParticipant ConversationParticipant(string id = null, string displayName = null, string kind = null) { throw null; }
         public static Azure.Communication.Messages.DocumentConversationMessageContent DocumentConversationMessageContent(string caption = null, string fileName = null, System.Uri mediaUri = null) { throw null; }
         public static Azure.Communication.Messages.DocumentMessageContent DocumentMessageContent(System.Uri mediaUri = null) { throw null; }
-        public static Azure.Communication.Messages.DocumentNotificationContent DocumentNotificationContent(System.Guid channelRegistrationId, System.Collections.Generic.IEnumerable<string> to, string caption, string fileName, System.Uri mediaUri) { throw null; }
+        public static Azure.Communication.Messages.DocumentNotificationContent DocumentNotificationContent(System.Guid channelRegistrationId = default(System.Guid), System.Collections.Generic.IEnumerable<string> to = null, string caption = null, string fileName = null, System.Uri mediaUri = null) { throw null; }
         public static Azure.Communication.Messages.ExternalConversationParticipant ExternalConversationParticipant(string id = null, string displayName = null, System.Collections.Generic.IEnumerable<Azure.Communication.Messages.ConversationContact> contacts = null) { throw null; }
         public static Azure.Communication.Messages.GetConversationThreadAnalysisResult GetConversationThreadAnalysisResult(string summary = null) { throw null; }
         public static Azure.Communication.Messages.ImageConversationMessageContent ImageConversationMessageContent(string caption = null, System.Uri mediaUri = null) { throw null; }
         public static Azure.Communication.Messages.ImageMessageContent ImageMessageContent(System.Uri mediaUri = null) { throw null; }
-        public static Azure.Communication.Messages.ImageNotificationContent ImageNotificationContent(System.Guid channelRegistrationId, System.Collections.Generic.IEnumerable<string> to, string caption, System.Uri mediaUri) { throw null; }
+        public static Azure.Communication.Messages.ImageNotificationContent ImageNotificationContent(System.Guid channelRegistrationId = default(System.Guid), System.Collections.Generic.IEnumerable<string> to = null, string caption = null, System.Uri mediaUri = null) { throw null; }
         public static Azure.Communication.Messages.InteractiveMessage InteractiveMessage(Azure.Communication.Messages.MessageContent header = null, Azure.Communication.Messages.TextMessageContent body = null, Azure.Communication.Messages.TextMessageContent footer = null, Azure.Communication.Messages.ActionBindings action = null) { throw null; }
         public static Azure.Communication.Messages.InteractiveNotificationContent InteractiveNotificationContent(System.Guid channelRegistrationId = default(System.Guid), System.Collections.Generic.IEnumerable<string> to = null, Azure.Communication.Messages.InteractiveMessage interactiveMessage = null) { throw null; }
         public static Azure.Communication.Messages.InternalConversationParticipant InternalConversationParticipant(string id = null, string displayName = null, Azure.Communication.Messages.ConversationContact contact = null) { throw null; }
         public static Azure.Communication.Messages.LinkContent LinkContent(string title = null, System.Uri uri = null) { throw null; }
-        public static Azure.Communication.Messages.MediaNotificationContent MediaNotificationContent(System.Guid channelRegistrationId, System.Collections.Generic.IEnumerable<string> to, string content, System.Uri mediaUri) { throw null; }
+        public static Azure.Communication.Messages.MediaNotificationContent MediaNotificationContent(System.Guid channelRegistrationId = default(System.Guid), System.Collections.Generic.IEnumerable<string> to = null, string content = null, System.Uri mediaUri = null) { throw null; }
         public static Azure.Communication.Messages.MessageContent MessageContent(string kind = null) { throw null; }
-        public static Azure.Communication.Messages.MessageReceipt MessageReceipt(string messageId, string to) { throw null; }
-        public static Azure.Communication.Messages.MessageTemplate MessageTemplate(string name, string language, System.Collections.Generic.IEnumerable<Azure.Communication.Messages.MessageTemplateValue> values, Azure.Communication.Messages.MessageTemplateBindings bindings) { throw null; }
+        public static Azure.Communication.Messages.MessageReceipt MessageReceipt(string messageId = null, string to = null) { throw null; }
+        public static Azure.Communication.Messages.MessageTemplate MessageTemplate(string name = null, string language = null, System.Collections.Generic.IEnumerable<Azure.Communication.Messages.MessageTemplateValue> values = null, Azure.Communication.Messages.MessageTemplateBindings bindings = null) { throw null; }
         public static Azure.Communication.Messages.MessageTemplateBindings MessageTemplateBindings(string kind = null) { throw null; }
-        public static Azure.Communication.Messages.MessageTemplateDocument MessageTemplateDocument(string name, System.Uri uri, string caption, string fileName) { throw null; }
-        public static Azure.Communication.Messages.MessageTemplateImage MessageTemplateImage(string name, System.Uri uri, string caption, string fileName) { throw null; }
-        public static Azure.Communication.Messages.MessageTemplateItem MessageTemplateItem(string name, string language, Azure.Communication.Messages.MessageTemplateStatus status, string kind) { throw null; }
-        public static Azure.Communication.Messages.MessageTemplateQuickAction MessageTemplateQuickAction(string name, string text, string payload) { throw null; }
-        public static Azure.Communication.Messages.MessageTemplateText MessageTemplateText(string name, string text) { throw null; }
-        public static Azure.Communication.Messages.MessageTemplateValue MessageTemplateValue(string name, string kind) { throw null; }
-        public static Azure.Communication.Messages.MessageTemplateVideo MessageTemplateVideo(string name, System.Uri uri, string caption, string fileName) { throw null; }
-        public static Azure.Communication.Messages.NotificationContent NotificationContent(System.Guid channelRegistrationId, System.Collections.Generic.IEnumerable<string> to, string kind) { throw null; }
+        public static Azure.Communication.Messages.MessageTemplateDocument MessageTemplateDocument(string name = null, System.Uri uri = null, string caption = null, string fileName = null) { throw null; }
+        public static Azure.Communication.Messages.MessageTemplateImage MessageTemplateImage(string name = null, System.Uri uri = null, string caption = null, string fileName = null) { throw null; }
+        public static Azure.Communication.Messages.MessageTemplateItem MessageTemplateItem(string name = null, string language = null, Azure.Communication.Messages.MessageTemplateStatus status = default(Azure.Communication.Messages.MessageTemplateStatus), string kind = null) { throw null; }
+        public static Azure.Communication.Messages.MessageTemplateQuickAction MessageTemplateQuickAction(string name = null, string text = null, string payload = null) { throw null; }
+        public static Azure.Communication.Messages.MessageTemplateText MessageTemplateText(string name = null, string text = null) { throw null; }
+        public static Azure.Communication.Messages.MessageTemplateValue MessageTemplateValue(string name = null, string kind = null) { throw null; }
+        public static Azure.Communication.Messages.MessageTemplateVideo MessageTemplateVideo(string name = null, System.Uri uri = null, string caption = null, string fileName = null) { throw null; }
+        public static Azure.Communication.Messages.NotificationContent NotificationContent(System.Guid channelRegistrationId = default(System.Guid), System.Collections.Generic.IEnumerable<string> to = null, string kind = null) { throw null; }
         public static Azure.Communication.Messages.ReactionNotificationContent ReactionNotificationContent(System.Guid channelRegistrationId = default(System.Guid), System.Collections.Generic.IEnumerable<string> to = null, string emoji = null, string messageId = null) { throw null; }
         public static Azure.Communication.Messages.ReadReceiptContent ReadReceiptContent(string messageId = null, System.Guid channelRegistrationId = default(System.Guid), bool? typingIndicator = default(bool?)) { throw null; }
         public static Azure.Communication.Messages.RemoveParticipantsOptions RemoveParticipantsOptions(System.Collections.Generic.IEnumerable<string> participantIds = null) { throw null; }
         public static Azure.Communication.Messages.RemoveParticipantsResult RemoveParticipantsResult(System.Collections.Generic.IEnumerable<Azure.Communication.Messages.UpdateParticipantsResult> invalidParticipants = null) { throw null; }
         public static Azure.Communication.Messages.SendConversationMessageOptions SendConversationMessageOptions(Azure.Communication.Messages.ConversationMessageContent request = null, Azure.Communication.Messages.OutboundDeliveryStrategyKind? outboundDeliveryStrategy = default(Azure.Communication.Messages.OutboundDeliveryStrategyKind?)) { throw null; }
         public static Azure.Communication.Messages.SendConversationMessageResult SendConversationMessageResult(string messageId = null) { throw null; }
-        public static Azure.Communication.Messages.SendMessageResult SendMessageResult(System.Collections.Generic.IEnumerable<Azure.Communication.Messages.MessageReceipt> receipts) { throw null; }
+        public static Azure.Communication.Messages.SendMessageResult SendMessageResult(System.Collections.Generic.IEnumerable<Azure.Communication.Messages.MessageReceipt> receipts = null) { throw null; }
         public static Azure.Communication.Messages.StickerNotificationContent StickerNotificationContent(System.Guid channelRegistrationId = default(System.Guid), System.Collections.Generic.IEnumerable<string> to = null, System.Uri mediaUri = null) { throw null; }
         public static Azure.Communication.Messages.TemplateConversationMessageContent TemplateConversationMessageContent(Azure.Communication.Messages.MessageTemplate template = null) { throw null; }
-        public static Azure.Communication.Messages.TemplateNotificationContent TemplateNotificationContent(System.Guid channelRegistrationId, System.Collections.Generic.IEnumerable<string> to, Azure.Communication.Messages.MessageTemplate template) { throw null; }
+        public static Azure.Communication.Messages.TemplateNotificationContent TemplateNotificationContent(System.Guid channelRegistrationId = default(System.Guid), System.Collections.Generic.IEnumerable<string> to = null, Azure.Communication.Messages.MessageTemplate template = null) { throw null; }
         public static Azure.Communication.Messages.TextConversationMessageContent TextConversationMessageContent(string content = null) { throw null; }
         public static Azure.Communication.Messages.TextMessageContent TextMessageContent(string text = null) { throw null; }
-        public static Azure.Communication.Messages.TextNotificationContent TextNotificationContent(System.Guid channelRegistrationId, System.Collections.Generic.IEnumerable<string> to, string content) { throw null; }
+        public static Azure.Communication.Messages.TextNotificationContent TextNotificationContent(System.Guid channelRegistrationId = default(System.Guid), System.Collections.Generic.IEnumerable<string> to = null, string content = null) { throw null; }
         public static Azure.Communication.Messages.UpdateParticipantsResult UpdateParticipantsResult(string id = null, Azure.ResponseError error = null) { throw null; }
         public static Azure.Communication.Messages.VideoConversationMessageContent VideoConversationMessageContent(string caption = null, System.Uri mediaUri = null) { throw null; }
         public static Azure.Communication.Messages.VideoMessageContent VideoMessageContent(System.Uri mediaUri = null) { throw null; }
-        public static Azure.Communication.Messages.VideoNotificationContent VideoNotificationContent(System.Guid channelRegistrationId, System.Collections.Generic.IEnumerable<string> to, string caption, System.Uri mediaUri) { throw null; }
+        public static Azure.Communication.Messages.VideoNotificationContent VideoNotificationContent(System.Guid channelRegistrationId = default(System.Guid), System.Collections.Generic.IEnumerable<string> to = null, string caption = null, System.Uri mediaUri = null) { throw null; }
         public static Azure.Communication.Messages.Models.Channels.WhatsAppButtonActionBindings WhatsAppButtonActionBindings(Azure.Communication.Messages.ButtonSetContent content = null) { throw null; }
         public static Azure.Communication.Messages.Models.Channels.WhatsAppContact WhatsAppContact(string id = null) { throw null; }
         public static Azure.Communication.Messages.Models.Channels.WhatsAppListActionBindings WhatsAppListActionBindings(Azure.Communication.Messages.ActionGroupContent content = null) { throw null; }
         public static Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateBindings WhatsAppMessageTemplateBindings(System.Collections.Generic.IEnumerable<Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateBindingsComponent> header = null, System.Collections.Generic.IEnumerable<Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateBindingsComponent> body = null, System.Collections.Generic.IEnumerable<Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateBindingsComponent> footer = null, System.Collections.Generic.IEnumerable<Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateBindingsButton> buttons = null) { throw null; }
         public static Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateBindingsButton WhatsAppMessageTemplateBindingsButton(string subType = null, string refValue = null) { throw null; }
         public static Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateBindingsComponent WhatsAppMessageTemplateBindingsComponent(string refValue = null) { throw null; }
-        public static Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateItem WhatsAppMessageTemplateItem(string name, string language, Azure.Communication.Messages.MessageTemplateStatus status, System.BinaryData content) { throw null; }
+        public static Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateItem WhatsAppMessageTemplateItem(string name = null, string language = null, Azure.Communication.Messages.MessageTemplateStatus status = default(Azure.Communication.Messages.MessageTemplateStatus), System.BinaryData content = null) { throw null; }
         public static Azure.Communication.Messages.Models.Channels.WhatsAppUrlActionBindings WhatsAppUrlActionBindings(Azure.Communication.Messages.LinkContent content = null) { throw null; }
     }
     public partial class ConversationAdministrationClient
@@ -769,7 +767,7 @@ namespace Azure.Communication.Messages
     }
     public abstract partial class MessageTemplateItem : System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.MessageTemplateItem>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.MessageTemplateItem>
     {
-        protected MessageTemplateItem(string name, Azure.Communication.Messages.MessageTemplateStatus status) { }
+        protected MessageTemplateItem(string language, Azure.Communication.Messages.MessageTemplateStatus status) { }
         public string Language { get { throw null; } }
         public string Name { get { throw null; } }
         public Azure.Communication.Messages.MessageTemplateStatus Status { get { throw null; } }
