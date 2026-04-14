@@ -407,7 +407,8 @@ Output is constructed through a **builder hierarchy** that enforces correct even
 ResponseEventStream
   └── OutputItemBuilder (message, function call, reasoning, etc.)
         ├── TextContentBuilder    : EmitAdded → EmitDelta* → EmitTextDone → EmitAnnotationAdded* → EmitDone
-        └── RefusalContentBuilder : EmitAdded → EmitDelta* → EmitRefusalDone → EmitDone
+        ├── RefusalContentBuilder : EmitAdded → EmitDelta* → EmitRefusalDone → EmitDone
+        └── (other content builders follow the same Added → … → Done pattern)
 ```
 
 Each builder tracks its lifecycle state (`NotStarted` → `Added` → `Done`) and will throw if you emit events out of order. This prevents protocol violations at development time rather than runtime.

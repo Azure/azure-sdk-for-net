@@ -97,7 +97,7 @@ public class MyAgent : ResponseHandler
         CancellationToken cancellationToken = default)
     {
         // Input text extraction is built-in
-        string inputText = await context.GetInputTextAsync(cancellationToken);
+        string inputText = await context.GetInputTextAsync(cancellationToken: cancellationToken);
 
         // One-liner for a complete text message with all SSE events
         var stream = new ResponseEventStream(context, request);
@@ -171,6 +171,9 @@ public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
 ### Server startup
 
 **Before (prior to beta.21):**
+
+```csharp
+await AgentServerApplication.RunAsync(new ApplicationOptions(
     ConfigureServices: services => services.AddSingleton<IAgentInvocation, MyAgent>()
 ));
 ```
