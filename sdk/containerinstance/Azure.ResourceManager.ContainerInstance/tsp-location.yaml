@@ -1,4 +1,4 @@
-directory: specification/containerinstance/ContainerInstance.Management
+directory: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/ContainerInstance
 commit: d0b54aa1e570dea209955d8dbb8461a13a728d7a
 repo: Azure/azure-rest-api-specs
 cleanup: true
