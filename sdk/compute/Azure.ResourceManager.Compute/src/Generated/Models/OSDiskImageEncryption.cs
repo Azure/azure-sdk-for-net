@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -22,7 +23,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="diskEncryptionSetId"> A relative URI containing the resource ID of the disk encryption set. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="securityProfile"> This property specifies the security profile of an OS disk image. </param>
-        internal OSDiskImageEncryption(string diskEncryptionSetId, IDictionary<string, BinaryData> additionalBinaryDataProperties, OSDiskImageSecurityProfile securityProfile) : base(diskEncryptionSetId, additionalBinaryDataProperties)
+        internal OSDiskImageEncryption(ResourceIdentifier diskEncryptionSetId, IDictionary<string, BinaryData> additionalBinaryDataProperties, OSDiskImageSecurityProfile securityProfile) : base(diskEncryptionSetId, additionalBinaryDataProperties)
         {
             SecurityProfile = securityProfile;
         }

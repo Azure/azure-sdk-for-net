@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -127,7 +128,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             DiskSecurityType? securityType = default;
-            string secureVMDiskEncryptionSetId = default;
+            ResourceIdentifier secureVMDiskEncryptionSetId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -142,7 +143,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (prop.NameEquals("secureVMDiskEncryptionSetId"u8))
                 {
-                    secureVMDiskEncryptionSetId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    secureVMDiskEncryptionSetId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

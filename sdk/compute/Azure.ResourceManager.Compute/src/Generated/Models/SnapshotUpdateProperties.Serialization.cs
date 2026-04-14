@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -176,7 +177,7 @@ namespace Azure.ResourceManager.Compute.Models
             EncryptionSettingsGroup encryptionSettingsCollection = default;
             DiskEncryption encryption = default;
             NetworkAccessPolicy? networkAccessPolicy = default;
-            string diskAccessId = default;
+            ResourceIdentifier diskAccessId = default;
             bool? supportsHibernation = default;
             DiskPublicNetworkAccess? publicNetworkAccess = default;
             DataAccessAuthMode? dataAccessAuthMode = default;
@@ -232,7 +233,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (prop.NameEquals("diskAccessId"u8))
                 {
-                    diskAccessId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    diskAccessId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("supportsHibernation"u8))

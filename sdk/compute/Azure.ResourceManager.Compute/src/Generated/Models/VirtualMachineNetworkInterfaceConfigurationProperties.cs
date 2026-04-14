@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.Compute.Models
         public ComputeNetworkInterfaceAuxiliarySku? AuxiliarySku { get; set; }
 
         /// <summary> Resource Id. </summary>
-        public string NetworkSecurityGroupId
+        public ResourceIdentifier NetworkSecurityGroupId
         {
             get
             {
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Resource Id. </summary>
-        public string DscpConfigurationId
+        public ResourceIdentifier DscpConfigurationId
         {
             get
             {

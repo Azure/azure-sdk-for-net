@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="provisionedBandwidthCopySpeed"> If this field is set on a snapshot and createOption is CopyStart, the snapshot will be copied at a quicker speed. </param>
         /// <param name="instantAccessDurationMinutes"> For snapshots created from Premium SSD v2 or Ultra disk, this property determines the time in minutes the snapshot is retained for instant access to enable faster restore. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DiskCreationData(DiskCreateOption createOption, string storageAccountId, ImageDiskReference imageReference, ImageDiskReference galleryImageReference, string sourceUri, string sourceResourceId, string sourceUniqueId, long? uploadSizeBytes, int? logicalSectorSize, string securityDataUri, Uri securityMetadataUri, bool? performancePlus, string elasticSanResourceId, ProvisionedBandwidthCopyOption? provisionedBandwidthCopySpeed, long? instantAccessDurationMinutes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DiskCreationData(DiskCreateOption createOption, ResourceIdentifier storageAccountId, ImageDiskReference imageReference, ImageDiskReference galleryImageReference, string sourceUri, ResourceIdentifier sourceResourceId, string sourceUniqueId, long? uploadSizeBytes, int? logicalSectorSize, string securityDataUri, Uri securityMetadataUri, bool? performancePlus, ResourceIdentifier elasticSanResourceId, ProvisionedBandwidthCopyOption? provisionedBandwidthCopySpeed, long? instantAccessDurationMinutes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CreateOption = createOption;
             StorageAccountId = storageAccountId;
@@ -64,7 +65,7 @@ namespace Azure.ResourceManager.Compute.Models
         public DiskCreateOption CreateOption { get; set; }
 
         /// <summary> Required if createOption is Import. The Azure Resource Manager identifier of the storage account containing the blob to import as a disk. </summary>
-        public string StorageAccountId { get; set; }
+        public ResourceIdentifier StorageAccountId { get; set; }
 
         /// <summary> Disk source information for PIR or user images. </summary>
         public ImageDiskReference ImageReference { get; set; }
@@ -76,7 +77,7 @@ namespace Azure.ResourceManager.Compute.Models
         public string SourceUri { get; set; }
 
         /// <summary> If createOption is Copy, this is the ARM id of the source snapshot or disk. </summary>
-        public string SourceResourceId { get; set; }
+        public ResourceIdentifier SourceResourceId { get; set; }
 
         /// <summary> If this field is set, this is the unique id identifying the source of this resource. </summary>
         public string SourceUniqueId { get; }
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.Compute.Models
         public bool? PerformancePlus { get; set; }
 
         /// <summary> Required if createOption is CopyFromSanSnapshot. This is the ARM id of the source elastic san volume snapshot. </summary>
-        public string ElasticSanResourceId { get; set; }
+        public ResourceIdentifier ElasticSanResourceId { get; set; }
 
         /// <summary> If this field is set on a snapshot and createOption is CopyStart, the snapshot will be copied at a quicker speed. </summary>
         public ProvisionedBandwidthCopyOption? ProvisionedBandwidthCopySpeed { get; set; }

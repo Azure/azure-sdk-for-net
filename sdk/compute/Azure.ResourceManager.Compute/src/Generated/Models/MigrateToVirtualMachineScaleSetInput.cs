@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -35,7 +36,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal ComputeSubResourceData VirtualMachineScaleSetFlexible { get; }
 
         /// <summary> Resource Id. </summary>
-        public string VirtualMachineScaleSetFlexibleId
+        public ResourceIdentifier VirtualMachineScaleSetFlexibleId
         {
             get
             {

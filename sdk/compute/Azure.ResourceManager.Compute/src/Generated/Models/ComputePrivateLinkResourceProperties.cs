@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -29,7 +30,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="requiredMembers"> The private link resource required member names. </param>
         /// <param name="requiredZoneNames"> The private link resource DNS zone name. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputePrivateLinkResourceProperties(string groupId, IReadOnlyList<string> requiredMembers, IList<string> requiredZoneNames, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputePrivateLinkResourceProperties(ResourceIdentifier groupId, IReadOnlyList<string> requiredMembers, IList<string> requiredZoneNames, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             GroupId = groupId;
             RequiredMembers = requiredMembers;
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The private link resource group id. </summary>
-        public string GroupId { get; }
+        public ResourceIdentifier GroupId { get; }
 
         /// <summary> The private link resource required member names. </summary>
         public IReadOnlyList<string> RequiredMembers { get; } = new ChangeTrackingList<string>();

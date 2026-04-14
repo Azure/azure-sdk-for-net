@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal ApiEntityReference SourceDiskRestorePoint { get; set; }
 
         /// <summary> The ARM resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/... </summary>
-        public string SourceDiskRestorePointId
+        public ResourceIdentifier SourceDiskRestorePointId
         {
             get
             {

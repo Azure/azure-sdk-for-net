@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Resource Id. </summary>
-        public string ProximityPlacementGroupId
+        public ResourceIdentifier ProximityPlacementGroupId
         {
             get
             {

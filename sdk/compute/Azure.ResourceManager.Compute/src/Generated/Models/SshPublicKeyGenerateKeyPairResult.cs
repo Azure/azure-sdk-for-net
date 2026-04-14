@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -20,7 +21,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="privateKey"> Private key portion of the key pair used to authenticate to a virtual machine through ssh. The private key is returned in RFC3447 format and should be treated as a secret. </param>
         /// <param name="publicKey"> Public key portion of the key pair used to authenticate to a virtual machine through ssh. The public key is in ssh-rsa format. </param>
         /// <param name="id"> The ARM resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.Compute/sshPublicKeys/{SshPublicKeyName}. </param>
-        internal SshPublicKeyGenerateKeyPairResult(string privateKey, string publicKey, string id)
+        internal SshPublicKeyGenerateKeyPairResult(string privateKey, string publicKey, ResourceIdentifier id)
         {
             PrivateKey = privateKey;
             PublicKey = publicKey;
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="publicKey"> Public key portion of the key pair used to authenticate to a virtual machine through ssh. The public key is in ssh-rsa format. </param>
         /// <param name="id"> The ARM resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.Compute/sshPublicKeys/{SshPublicKeyName}. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SshPublicKeyGenerateKeyPairResult(string privateKey, string publicKey, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SshPublicKeyGenerateKeyPairResult(string privateKey, string publicKey, ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PrivateKey = privateKey;
             PublicKey = publicKey;
@@ -47,6 +48,6 @@ namespace Azure.ResourceManager.Compute.Models
         public string PublicKey { get; }
 
         /// <summary> The ARM resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.Compute/sshPublicKeys/{SshPublicKeyName}. </summary>
-        public string Id { get; }
+        public ResourceIdentifier Id { get; }
     }
 }

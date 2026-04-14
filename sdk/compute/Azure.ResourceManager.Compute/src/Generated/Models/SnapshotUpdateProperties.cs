@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="supportedCapabilities"> List of supported capabilities for the image from which the OS disk was created. </param>
         /// <param name="snapshotAccessState"> The state of snapshot which determines the access availability of the snapshot. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SnapshotUpdateProperties(OperatingSystemType? osType, int? diskSizeGB, EncryptionSettingsGroup encryptionSettingsCollection, DiskEncryption encryption, NetworkAccessPolicy? networkAccessPolicy, string diskAccessId, bool? supportsHibernation, DiskPublicNetworkAccess? publicNetworkAccess, DataAccessAuthMode? dataAccessAuthMode, SupportedCapabilities supportedCapabilities, SnapshotAccessState? snapshotAccessState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SnapshotUpdateProperties(OperatingSystemType? osType, int? diskSizeGB, EncryptionSettingsGroup encryptionSettingsCollection, DiskEncryption encryption, NetworkAccessPolicy? networkAccessPolicy, ResourceIdentifier diskAccessId, bool? supportsHibernation, DiskPublicNetworkAccess? publicNetworkAccess, DataAccessAuthMode? dataAccessAuthMode, SupportedCapabilities supportedCapabilities, SnapshotAccessState? snapshotAccessState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OsType = osType;
             DiskSizeGB = diskSizeGB;
@@ -66,7 +67,7 @@ namespace Azure.ResourceManager.Compute.Models
         public NetworkAccessPolicy? NetworkAccessPolicy { get; set; }
 
         /// <summary> ARM id of the DiskAccess resource for using private endpoints on disks. </summary>
-        public string DiskAccessId { get; set; }
+        public ResourceIdentifier DiskAccessId { get; set; }
 
         /// <summary> Indicates the OS on a snapshot supports hibernation. </summary>
         public bool? SupportsHibernation { get; set; }

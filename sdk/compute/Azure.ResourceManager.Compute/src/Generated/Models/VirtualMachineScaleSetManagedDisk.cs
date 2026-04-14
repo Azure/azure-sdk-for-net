@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -44,7 +45,7 @@ namespace Azure.ResourceManager.Compute.Models
         public VirtualMachineDiskSecurityProfile SecurityProfile { get; set; }
 
         /// <summary> Resource Id. </summary>
-        public string DiskEncryptionSetId
+        public ResourceIdentifier DiskEncryptionSetId
         {
             get
             {

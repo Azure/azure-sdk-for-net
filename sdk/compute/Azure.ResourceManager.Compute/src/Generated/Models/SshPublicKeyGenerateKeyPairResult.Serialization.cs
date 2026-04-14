@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
+using Azure.Core;
 using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -137,7 +138,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             string privateKey = default;
             string publicKey = default;
-            string id = default;
+            ResourceIdentifier id = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -153,7 +154,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (prop.NameEquals("id"u8))
                 {
-                    id = prop.Value.GetString();
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

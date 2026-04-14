@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -25,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="securityType"> Specifies the SecurityType of the VM. Applicable for OS disks only. </param>
         /// <param name="secureVMDiskEncryptionSetId"> ResourceId of the disk encryption set associated to Confidential VM supported disk encrypted with customer managed key. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DiskSecurityProfile(DiskSecurityType? securityType, string secureVMDiskEncryptionSetId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DiskSecurityProfile(DiskSecurityType? securityType, ResourceIdentifier secureVMDiskEncryptionSetId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SecurityType = securityType;
             SecureVMDiskEncryptionSetId = secureVMDiskEncryptionSetId;
@@ -36,6 +37,6 @@ namespace Azure.ResourceManager.Compute.Models
         public DiskSecurityType? SecurityType { get; set; }
 
         /// <summary> ResourceId of the disk encryption set associated to Confidential VM supported disk encrypted with customer managed key. </summary>
-        public string SecureVMDiskEncryptionSetId { get; set; }
+        public ResourceIdentifier SecureVMDiskEncryptionSetId { get; set; }
     }
 }

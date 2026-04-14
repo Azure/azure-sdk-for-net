@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -308,7 +309,7 @@ namespace Azure.ResourceManager.Compute.Models
             int? maxShares = default;
             IReadOnlyList<ShareInfoElement> shareInfo = default;
             NetworkAccessPolicy? networkAccessPolicy = default;
-            string diskAccessId = default;
+            ResourceIdentifier diskAccessId = default;
             DateTimeOffset? burstingEnabledOn = default;
             string tier = default;
             bool? burstingEnabled = default;
@@ -499,7 +500,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (prop.NameEquals("diskAccessId"u8))
                 {
-                    diskAccessId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    diskAccessId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("burstingEnabledTime"u8))

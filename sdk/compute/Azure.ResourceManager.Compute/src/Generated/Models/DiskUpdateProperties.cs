@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -44,7 +45,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="optimizedForFrequentAttach"> Setting this property to true improves reliability and performance of data disks that are frequently (more than 5 times a day) by detached from one virtual machine and attached to another. This property should not be set for disks that are not detached and attached frequently as it causes the disks to not align with the fault domain of the virtual machine. </param>
         /// <param name="availabilityPolicy"> Determines how platform treats disk failures. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DiskUpdateProperties(OperatingSystemType? osType, int? diskSizeGB, EncryptionSettingsGroup encryptionSettingsCollection, long? diskIOPSReadWrite, long? diskMBpsReadWrite, long? diskIOPSReadOnly, long? diskMBpsReadOnly, int? maxShares, DiskEncryption encryption, NetworkAccessPolicy? networkAccessPolicy, string diskAccessId, string tier, bool? burstingEnabled, DiskPurchasePlan purchasePlan, SupportedCapabilities supportedCapabilities, PropertyUpdatesInProgress propertyUpdatesInProgress, bool? supportsHibernation, DiskPublicNetworkAccess? publicNetworkAccess, DataAccessAuthMode? dataAccessAuthMode, bool? optimizedForFrequentAttach, AvailabilityPolicy availabilityPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DiskUpdateProperties(OperatingSystemType? osType, int? diskSizeGB, EncryptionSettingsGroup encryptionSettingsCollection, long? diskIOPSReadWrite, long? diskMBpsReadWrite, long? diskIOPSReadOnly, long? diskMBpsReadOnly, int? maxShares, DiskEncryption encryption, NetworkAccessPolicy? networkAccessPolicy, ResourceIdentifier diskAccessId, string tier, bool? burstingEnabled, DiskPurchasePlan purchasePlan, SupportedCapabilities supportedCapabilities, PropertyUpdatesInProgress propertyUpdatesInProgress, bool? supportsHibernation, DiskPublicNetworkAccess? publicNetworkAccess, DataAccessAuthMode? dataAccessAuthMode, bool? optimizedForFrequentAttach, AvailabilityPolicy availabilityPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OsType = osType;
             DiskSizeGB = diskSizeGB;
@@ -101,7 +102,7 @@ namespace Azure.ResourceManager.Compute.Models
         public NetworkAccessPolicy? NetworkAccessPolicy { get; set; }
 
         /// <summary> ARM id of the DiskAccess resource for using private endpoints on disks. </summary>
-        public string DiskAccessId { get; set; }
+        public ResourceIdentifier DiskAccessId { get; set; }
 
         /// <summary> Performance tier of the disk (e.g, P4, S10) as described here: https://azure.microsoft.com/en-us/pricing/details/managed-disks/. Does not apply to Ultra disks. </summary>
         public string Tier { get; set; }

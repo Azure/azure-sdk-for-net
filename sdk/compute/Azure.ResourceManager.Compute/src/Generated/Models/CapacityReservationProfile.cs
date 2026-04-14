@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal ComputeSubResourceData CapacityReservationGroup { get; set; }
 
         /// <summary> Resource Id. </summary>
-        public string CapacityReservationGroupId
+        public ResourceIdentifier CapacityReservationGroupId
         {
             get
             {

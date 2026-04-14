@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -20,7 +21,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="ComputeSecurityPostureReference"/>. </summary>
         /// <param name="id"> The security posture reference id in the form of /CommunityGalleries/{communityGalleryName}/securityPostures/{securityPostureName}/versions/{major.minor.patch}|latest. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public ComputeSecurityPostureReference(string id)
+        public ComputeSecurityPostureReference(ResourceIdentifier id)
         {
             Argument.AssertNotNull(id, nameof(id));
 
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="excludeExtensions"> The list of virtual machine extension names to exclude when applying the security posture. </param>
         /// <param name="isOverridable"> Whether the security posture can be overridden by the user. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeSecurityPostureReference(string id, IList<VirtualMachineExtensionData> excludeExtensions, bool? isOverridable, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeSecurityPostureReference(ResourceIdentifier id, IList<VirtualMachineExtensionData> excludeExtensions, bool? isOverridable, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             ExcludeExtensions = excludeExtensions;
@@ -42,7 +43,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The security posture reference id in the form of /CommunityGalleries/{communityGalleryName}/securityPostures/{securityPostureName}/versions/{major.minor.patch}|latest. </summary>
-        public string Id { get; set; }
+        public ResourceIdentifier Id { get; set; }
 
         /// <summary> The list of virtual machine extension names to exclude when applying the security posture. </summary>
         public IList<VirtualMachineExtensionData> ExcludeExtensions { get; }

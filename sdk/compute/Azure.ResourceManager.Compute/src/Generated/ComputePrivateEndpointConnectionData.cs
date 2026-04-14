@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> The ARM identifier for Private Endpoint. </summary>
-        public string PrivateEndpointId
+        public ResourceIdentifier PrivateEndpointId
         {
             get
             {

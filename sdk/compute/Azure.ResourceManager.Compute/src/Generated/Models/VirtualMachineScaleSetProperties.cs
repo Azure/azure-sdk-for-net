@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -149,7 +150,7 @@ namespace Azure.ResourceManager.Compute.Models
         public HighSpeedInterconnectPlacement? HighSpeedInterconnectPlacement { get; set; }
 
         /// <summary> Resource Id. </summary>
-        public string ProximityPlacementGroupId
+        public ResourceIdentifier ProximityPlacementGroupId
         {
             get
             {
@@ -166,7 +167,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Resource Id. </summary>
-        public string HostGroupId
+        public ResourceIdentifier HostGroupId
         {
             get
             {

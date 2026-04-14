@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="communityGalleryImageId"> A relative uri containing a community Azure Compute Gallery image reference. </param>
         /// <param name="lun"> If the disk is created from an image's data disk, this is an index that indicates which of the data disks in the image to use. For OS disks, this field is null. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ImageDiskReference(string id, string sharedGalleryImageId, string communityGalleryImageId, int? lun, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ImageDiskReference(ResourceIdentifier id, string sharedGalleryImageId, string communityGalleryImageId, int? lun, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             SharedGalleryImageId = sharedGalleryImageId;
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> A relative uri containing either a Platform Image Repository, user image, or Azure Compute Gallery image reference. </summary>
-        public string Id { get; set; }
+        public ResourceIdentifier Id { get; set; }
 
         /// <summary> A relative uri containing a direct shared Azure Compute Gallery image reference. </summary>
         public string SharedGalleryImageId { get; set; }

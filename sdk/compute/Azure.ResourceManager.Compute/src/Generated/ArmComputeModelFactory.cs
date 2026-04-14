@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="skuProfile"> Specifies the sku profile for the virtual machine scale set. </param>
         /// <param name="highSpeedInterconnectPlacement"> Specifies the high speed interconnect placement for the virtual machine scale set. </param>
         /// <returns> A new <see cref="Models.VirtualMachineScaleSetProperties"/> instance for mocking. </returns>
-        public static VirtualMachineScaleSetProperties VirtualMachineScaleSetProperties(VirtualMachineScaleSetUpgradePolicy upgradePolicy = default, ScheduledEventsPolicy scheduledEventsPolicy = default, AutomaticRepairsPolicy automaticRepairsPolicy = default, VirtualMachineScaleSetVmProfile virtualMachineProfile = default, string provisioningState = default, bool? overprovision = default, bool? doNotRunExtensionsOnOverprovisionedVMs = default, string uniqueId = default, bool? singlePlacementGroup = default, bool? zoneBalance = default, int? platformFaultDomainCount = default, string proximityPlacementGroupId = default, string hostGroupId = default, AdditionalCapabilities additionalCapabilities = default, ScaleInPolicy scaleInPolicy = default, OrchestrationMode? orchestrationMode = default, SpotRestorePolicy spotRestorePolicy = default, VirtualMachineScaleSetPriorityMixPolicy priorityMixPolicy = default, DateTimeOffset? timeCreated = default, bool? constrainedMaximumCapacity = default, ResiliencyPolicy resiliencyPolicy = default, ZonalPlatformFaultDomainAlignMode? zonalPlatformFaultDomainAlignMode = default, ComputeSkuProfile skuProfile = default, HighSpeedInterconnectPlacement? highSpeedInterconnectPlacement = default)
+        public static VirtualMachineScaleSetProperties VirtualMachineScaleSetProperties(VirtualMachineScaleSetUpgradePolicy upgradePolicy = default, ScheduledEventsPolicy scheduledEventsPolicy = default, AutomaticRepairsPolicy automaticRepairsPolicy = default, VirtualMachineScaleSetVmProfile virtualMachineProfile = default, string provisioningState = default, bool? overprovision = default, bool? doNotRunExtensionsOnOverprovisionedVMs = default, string uniqueId = default, bool? singlePlacementGroup = default, bool? zoneBalance = default, int? platformFaultDomainCount = default, ResourceIdentifier proximityPlacementGroupId = default, ResourceIdentifier hostGroupId = default, AdditionalCapabilities additionalCapabilities = default, ScaleInPolicy scaleInPolicy = default, OrchestrationMode? orchestrationMode = default, SpotRestorePolicy spotRestorePolicy = default, VirtualMachineScaleSetPriorityMixPolicy priorityMixPolicy = default, DateTimeOffset? timeCreated = default, bool? constrainedMaximumCapacity = default, ResiliencyPolicy resiliencyPolicy = default, ZonalPlatformFaultDomainAlignMode? zonalPlatformFaultDomainAlignMode = default, ComputeSkuProfile skuProfile = default, HighSpeedInterconnectPlacement? highSpeedInterconnectPlacement = default)
         {
             return new VirtualMachineScaleSetProperties(
                 upgradePolicy,
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="securityPostureReference"> Specifies the security posture to be used in the scale set. Minimum api-version: 2023-03-01. </param>
         /// <param name="timeCreated"> Specifies the time in which this VM profile for the Virtual Machine Scale Set was created. This value will be added to VMSS Flex VM tags when creating/updating the VMSS VM Profile. Minimum API version for this property is 2023-09-01. </param>
         /// <returns> A new <see cref="Models.VirtualMachineScaleSetVmProfile"/> instance for mocking. </returns>
-        public static VirtualMachineScaleSetVmProfile VirtualMachineScaleSetVmProfile(VirtualMachineScaleSetOSProfile osProfile = default, VirtualMachineScaleSetStorageProfile storageProfile = default, VirtualMachineScaleSetNetworkProfile networkProfile = default, SecurityProfile securityProfile = default, BootDiagnostics bootDiagnostics = default, VirtualMachineScaleSetExtensionProfile extensionProfile = default, string licenseType = default, VirtualMachinePriorityType? priority = default, VirtualMachineEvictionPolicyType? evictionPolicy = default, double? billingMaxPrice = default, ComputeScheduledEventsProfile scheduledEventsProfile = default, string userData = default, string capacityReservationGroupId = default, IEnumerable<VirtualMachineGalleryApplication> galleryApplications = default, VirtualMachineSizeProperties hardwareVmSizeProperties = default, string serviceArtifactReferenceId = default, ComputeSecurityPostureReference securityPostureReference = default, DateTimeOffset? timeCreated = default)
+        public static VirtualMachineScaleSetVmProfile VirtualMachineScaleSetVmProfile(VirtualMachineScaleSetOSProfile osProfile = default, VirtualMachineScaleSetStorageProfile storageProfile = default, VirtualMachineScaleSetNetworkProfile networkProfile = default, SecurityProfile securityProfile = default, BootDiagnostics bootDiagnostics = default, VirtualMachineScaleSetExtensionProfile extensionProfile = default, string licenseType = default, VirtualMachinePriorityType? priority = default, VirtualMachineEvictionPolicyType? evictionPolicy = default, double? billingMaxPrice = default, ComputeScheduledEventsProfile scheduledEventsProfile = default, string userData = default, ResourceIdentifier capacityReservationGroupId = default, IEnumerable<VirtualMachineGalleryApplication> galleryApplications = default, VirtualMachineSizeProperties hardwareVmSizeProperties = default, ResourceIdentifier serviceArtifactReferenceId = default, ComputeSecurityPostureReference securityPostureReference = default, DateTimeOffset? timeCreated = default)
         {
             return new VirtualMachineScaleSetVmProfile(
                 osProfile,
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="sourceVaultId"> Resource Id. </param>
         /// <param name="vaultCertificates"> The list of key vault references in SourceVault which contain certificates. </param>
         /// <returns> A new <see cref="Models.VaultSecretGroup"/> instance for mocking. </returns>
-        public static VaultSecretGroup VaultSecretGroup(string sourceVaultId = default, IEnumerable<VaultCertificate> vaultCertificates = default)
+        public static VaultSecretGroup VaultSecretGroup(ResourceIdentifier sourceVaultId = default, IEnumerable<VaultCertificate> vaultCertificates = default)
         {
             vaultCertificates ??= new ChangeTrackingList<VaultCertificate>();
 
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="sharedGalleryImageId"> Specified the shared gallery image unique id for vm deployment. This can be fetched from shared gallery image GET call. </param>
         /// <param name="communityGalleryImageId"> Specified the community gallery image unique id for vm deployment. This can be fetched from community gallery image GET call. </param>
         /// <returns> A new <see cref="Models.ImageReference"/> instance for mocking. </returns>
-        public static ImageReference ImageReference(string id = default, string publisher = default, string offer = default, string sku = default, string version = default, string exactVersion = default, string sharedGalleryImageId = default, string communityGalleryImageId = default)
+        public static ImageReference ImageReference(ResourceIdentifier id = default, string publisher = default, string offer = default, string sku = default, string version = default, string exactVersion = default, string sharedGalleryImageId = default, string communityGalleryImageId = default)
         {
             return new ImageReference(
                 id,
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="networkInterfaceConfigurations"> The list of network configurations. </param>
         /// <param name="networkApiVersion"> specifies the Microsoft.Network API version used when creating networking resources in the Network Interface Configurations for Virtual Machine Scale Set with orchestration mode 'Flexible'. </param>
         /// <returns> A new <see cref="Models.VirtualMachineScaleSetNetworkProfile"/> instance for mocking. </returns>
-        public static VirtualMachineScaleSetNetworkProfile VirtualMachineScaleSetNetworkProfile(string healthProbeId = default, IEnumerable<VirtualMachineScaleSetNetworkConfiguration> networkInterfaceConfigurations = default, NetworkApiVersion? networkApiVersion = default)
+        public static VirtualMachineScaleSetNetworkProfile VirtualMachineScaleSetNetworkProfile(ResourceIdentifier healthProbeId = default, IEnumerable<VirtualMachineScaleSetNetworkConfiguration> networkInterfaceConfigurations = default, NetworkApiVersion? networkApiVersion = default)
         {
             networkInterfaceConfigurations ??= new ChangeTrackingList<VirtualMachineScaleSetNetworkConfiguration>();
 
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="dnsServers"> List of DNS servers IP addresses. </param>
         /// <param name="tags"> Resource tags applied to the networkInterface address created by this NetworkInterfaceConfiguration. </param>
         /// <returns> A new <see cref="Models.VirtualMachineScaleSetNetworkConfiguration"/> instance for mocking. </returns>
-        public static VirtualMachineScaleSetNetworkConfiguration VirtualMachineScaleSetNetworkConfiguration(string name = default, bool? primary = default, bool? enableAcceleratedNetworking = default, bool? disableTcpStateTracking = default, bool? enableFpga = default, IEnumerable<VirtualMachineScaleSetIPConfiguration> ipConfigurations = default, bool? enableIPForwarding = default, ComputeDeleteOption? deleteOption = default, ComputeNetworkInterfaceAuxiliaryMode? auxiliaryMode = default, ComputeNetworkInterfaceAuxiliarySku? auxiliarySku = default, string networkSecurityGroupId = default, IEnumerable<string> dnsServers = default, IDictionary<string, string> tags = default)
+        public static VirtualMachineScaleSetNetworkConfiguration VirtualMachineScaleSetNetworkConfiguration(string name = default, bool? primary = default, bool? enableAcceleratedNetworking = default, bool? disableTcpStateTracking = default, bool? enableFpga = default, IEnumerable<VirtualMachineScaleSetIPConfiguration> ipConfigurations = default, bool? enableIPForwarding = default, ComputeDeleteOption? deleteOption = default, ComputeNetworkInterfaceAuxiliaryMode? auxiliaryMode = default, ComputeNetworkInterfaceAuxiliarySku? auxiliarySku = default, ResourceIdentifier networkSecurityGroupId = default, IEnumerable<string> dnsServers = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="sku"> Describes the public IP Sku. It can only be set with OrchestrationMode as Flexible. </param>
         /// <param name="tags"> Resource tags applied to the publicIP address created by this PublicIPAddressConfiguration. </param>
         /// <returns> A new <see cref="Models.VirtualMachineScaleSetPublicIPAddressConfiguration"/> instance for mocking. </returns>
-        public static VirtualMachineScaleSetPublicIPAddressConfiguration VirtualMachineScaleSetPublicIPAddressConfiguration(string name = default, int? idleTimeoutInMinutes = default, VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings dnsSettings = default, IEnumerable<VirtualMachineScaleSetIPTag> ipTags = default, IPVersion? publicIPAddressVersion = default, ComputeDeleteOption? deleteOption = default, string publicIPPrefixId = default, ComputePublicIPAddressSku sku = default, IDictionary<string, string> tags = default)
+        public static VirtualMachineScaleSetPublicIPAddressConfiguration VirtualMachineScaleSetPublicIPAddressConfiguration(string name = default, int? idleTimeoutInMinutes = default, VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings dnsSettings = default, IEnumerable<VirtualMachineScaleSetIPTag> ipTags = default, IPVersion? publicIPAddressVersion = default, ComputeDeleteOption? deleteOption = default, ResourceIdentifier publicIPPrefixId = default, ComputePublicIPAddressSku sku = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -460,7 +460,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="excludeExtensions"> The list of virtual machine extension names to exclude when applying the security posture. </param>
         /// <param name="isOverridable"> Whether the security posture can be overridden by the user. </param>
         /// <returns> A new <see cref="Models.ComputeSecurityPostureReference"/> instance for mocking. </returns>
-        public static ComputeSecurityPostureReference ComputeSecurityPostureReference(string id = default, IEnumerable<VirtualMachineExtensionData> excludeExtensions = default, bool? isOverridable = default)
+        public static ComputeSecurityPostureReference ComputeSecurityPostureReference(ResourceIdentifier id = default, IEnumerable<VirtualMachineExtensionData> excludeExtensions = default, bool? isOverridable = default)
         {
             excludeExtensions ??= new ChangeTrackingList<VirtualMachineExtensionData>();
 
@@ -603,7 +603,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="networkInterfaceConfigurations"> The list of network configurations. </param>
         /// <param name="networkApiVersion"> specifies the Microsoft.Network API version used when creating networking resources in the Network Interface Configurations for Virtual Machine Scale Set with orchestration mode 'Flexible'. </param>
         /// <returns> A new <see cref="Models.VirtualMachineScaleSetUpdateNetworkProfile"/> instance for mocking. </returns>
-        public static VirtualMachineScaleSetUpdateNetworkProfile VirtualMachineScaleSetUpdateNetworkProfile(string healthProbeId = default, IEnumerable<VirtualMachineScaleSetUpdateNetworkConfiguration> networkInterfaceConfigurations = default, NetworkApiVersion? networkApiVersion = default)
+        public static VirtualMachineScaleSetUpdateNetworkProfile VirtualMachineScaleSetUpdateNetworkProfile(ResourceIdentifier healthProbeId = default, IEnumerable<VirtualMachineScaleSetUpdateNetworkConfiguration> networkInterfaceConfigurations = default, NetworkApiVersion? networkApiVersion = default)
         {
             networkInterfaceConfigurations ??= new ChangeTrackingList<VirtualMachineScaleSetUpdateNetworkConfiguration>();
 
@@ -624,7 +624,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="dnsServers"> List of DNS servers IP addresses. </param>
         /// <param name="tags"> Resource tags applied to the networkInterface address created by this NetworkInterfaceConfiguration. </param>
         /// <returns> A new <see cref="Models.VirtualMachineScaleSetUpdateNetworkConfiguration"/> instance for mocking. </returns>
-        public static VirtualMachineScaleSetUpdateNetworkConfiguration VirtualMachineScaleSetUpdateNetworkConfiguration(string name = default, bool? primary = default, bool? enableAcceleratedNetworking = default, bool? disableTcpStateTracking = default, bool? enableFpga = default, IEnumerable<VirtualMachineScaleSetUpdateIPConfiguration> ipConfigurations = default, bool? enableIPForwarding = default, ComputeDeleteOption? deleteOption = default, ComputeNetworkInterfaceAuxiliaryMode? auxiliaryMode = default, ComputeNetworkInterfaceAuxiliarySku? auxiliarySku = default, string networkSecurityGroupId = default, IEnumerable<string> dnsServers = default, IDictionary<string, string> tags = default)
+        public static VirtualMachineScaleSetUpdateNetworkConfiguration VirtualMachineScaleSetUpdateNetworkConfiguration(string name = default, bool? primary = default, bool? enableAcceleratedNetworking = default, bool? disableTcpStateTracking = default, bool? enableFpga = default, IEnumerable<VirtualMachineScaleSetUpdateIPConfiguration> ipConfigurations = default, bool? enableIPForwarding = default, ComputeDeleteOption? deleteOption = default, ComputeNetworkInterfaceAuxiliaryMode? auxiliaryMode = default, ComputeNetworkInterfaceAuxiliarySku? auxiliarySku = default, ResourceIdentifier networkSecurityGroupId = default, IEnumerable<string> dnsServers = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -650,7 +650,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="publicIPPrefixId"> Resource Id. </param>
         /// <param name="tags"> Resource tags applied to the publicIP address created by this PublicIPAddressConfiguration. </param>
         /// <returns> A new <see cref="Models.VirtualMachineScaleSetUpdatePublicIPAddressConfiguration"/> instance for mocking. </returns>
-        public static VirtualMachineScaleSetUpdatePublicIPAddressConfiguration VirtualMachineScaleSetUpdatePublicIPAddressConfiguration(string name = default, int? idleTimeoutInMinutes = default, VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings dnsSettings = default, ComputeDeleteOption? deleteOption = default, string publicIPPrefixId = default, IDictionary<string, string> tags = default)
+        public static VirtualMachineScaleSetUpdatePublicIPAddressConfiguration VirtualMachineScaleSetUpdatePublicIPAddressConfiguration(string name = default, int? idleTimeoutInMinutes = default, VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings dnsSettings = default, ComputeDeleteOption? deleteOption = default, ResourceIdentifier publicIPPrefixId = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1002,7 +1002,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="userData"> UserData for the VM, which must be base-64 encoded. Customer should not pass any secrets in here. Minimum api-version: 2021-03-01. </param>
         /// <param name="timeCreated"> Specifies the time at which the Virtual Machine resource was created. Minimum api-version: 2021-11-01. </param>
         /// <returns> A new <see cref="Models.VirtualMachineScaleSetVmProperties"/> instance for mocking. </returns>
-        public static VirtualMachineScaleSetVmProperties VirtualMachineScaleSetVmProperties(bool? latestModelApplied = default, string vmId = default, VirtualMachineScaleSetVmInstanceView instanceView = default, VirtualMachineHardwareProfile hardwareProfile = default, ResilientVmDeletionStatus? resilientVMDeletionStatus = default, VirtualMachineStorageProfile storageProfile = default, AdditionalCapabilities additionalCapabilities = default, VirtualMachineOSProfile osProfile = default, SecurityProfile securityProfile = default, VirtualMachineNetworkProfile networkProfile = default, IEnumerable<VirtualMachineScaleSetNetworkConfiguration> networkInterfaceConfigurations = default, BootDiagnostics bootDiagnostics = default, string availabilitySetId = default, string provisioningState = default, string licenseType = default, string modelDefinitionApplied = default, VirtualMachineScaleSetVmProtectionPolicy protectionPolicy = default, string userData = default, DateTimeOffset? timeCreated = default)
+        public static VirtualMachineScaleSetVmProperties VirtualMachineScaleSetVmProperties(bool? latestModelApplied = default, string vmId = default, VirtualMachineScaleSetVmInstanceView instanceView = default, VirtualMachineHardwareProfile hardwareProfile = default, ResilientVmDeletionStatus? resilientVMDeletionStatus = default, VirtualMachineStorageProfile storageProfile = default, AdditionalCapabilities additionalCapabilities = default, VirtualMachineOSProfile osProfile = default, SecurityProfile securityProfile = default, VirtualMachineNetworkProfile networkProfile = default, IEnumerable<VirtualMachineScaleSetNetworkConfiguration> networkInterfaceConfigurations = default, BootDiagnostics bootDiagnostics = default, ResourceIdentifier availabilitySetId = default, string provisioningState = default, string licenseType = default, string modelDefinitionApplied = default, VirtualMachineScaleSetVmProtectionPolicy protectionPolicy = default, string userData = default, DateTimeOffset? timeCreated = default)
         {
             return new VirtualMachineScaleSetVmProperties(
                 latestModelApplied,
@@ -1044,7 +1044,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="osVersion"> The version of Operating System running on the hybrid machine. </param>
         /// <param name="hyperVGeneration"> The hypervisor generation of the Virtual Machine [V1, V2]. </param>
         /// <returns> A new <see cref="Models.VirtualMachineScaleSetVmInstanceView"/> instance for mocking. </returns>
-        public static VirtualMachineScaleSetVmInstanceView VirtualMachineScaleSetVmInstanceView(int? platformUpdateDomain = default, int? platformFaultDomain = default, string rdpThumbPrint = default, VirtualMachineAgentInstanceView vmAgent = default, MaintenanceRedeployStatus maintenanceRedeployStatus = default, IEnumerable<DiskInstanceView> disks = default, IEnumerable<VirtualMachineExtensionInstanceView> extensions = default, InstanceViewStatus vmHealthStatus = default, BootDiagnosticsInstanceView bootDiagnostics = default, IEnumerable<InstanceViewStatus> statuses = default, string assignedHost = default, string placementGroupId = default, string computerName = default, string osName = default, string osVersion = default, HyperVGeneration? hyperVGeneration = default)
+        public static VirtualMachineScaleSetVmInstanceView VirtualMachineScaleSetVmInstanceView(int? platformUpdateDomain = default, int? platformFaultDomain = default, string rdpThumbPrint = default, VirtualMachineAgentInstanceView vmAgent = default, MaintenanceRedeployStatus maintenanceRedeployStatus = default, IEnumerable<DiskInstanceView> disks = default, IEnumerable<VirtualMachineExtensionInstanceView> extensions = default, InstanceViewStatus vmHealthStatus = default, BootDiagnosticsInstanceView bootDiagnostics = default, IEnumerable<InstanceViewStatus> statuses = default, ResourceIdentifier assignedHost = default, string placementGroupId = default, string computerName = default, string osName = default, string osVersion = default, HyperVGeneration? hyperVGeneration = default)
         {
             disks ??= new ChangeTrackingList<DiskInstanceView>();
             extensions ??= new ChangeTrackingList<VirtualMachineExtensionInstanceView>();
@@ -1235,7 +1235,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="dscpConfigurationId"> Resource Id. </param>
         /// <param name="tags"> Resource tags applied to the networkInterface address created by this NetworkInterfaceConfiguration. </param>
         /// <returns> A new <see cref="Models.VirtualMachineNetworkInterfaceConfiguration"/> instance for mocking. </returns>
-        public static VirtualMachineNetworkInterfaceConfiguration VirtualMachineNetworkInterfaceConfiguration(string name = default, bool? primary = default, ComputeDeleteOption? deleteOption = default, bool? enableAcceleratedNetworking = default, bool? disableTcpStateTracking = default, bool? enableFpga = default, bool? enableIPForwarding = default, IEnumerable<VirtualMachineNetworkInterfaceIPConfiguration> ipConfigurations = default, ComputeNetworkInterfaceAuxiliaryMode? auxiliaryMode = default, ComputeNetworkInterfaceAuxiliarySku? auxiliarySku = default, string networkSecurityGroupId = default, IEnumerable<string> dnsServers = default, string dscpConfigurationId = default, IDictionary<string, string> tags = default)
+        public static VirtualMachineNetworkInterfaceConfiguration VirtualMachineNetworkInterfaceConfiguration(string name = default, bool? primary = default, ComputeDeleteOption? deleteOption = default, bool? enableAcceleratedNetworking = default, bool? disableTcpStateTracking = default, bool? enableFpga = default, bool? enableIPForwarding = default, IEnumerable<VirtualMachineNetworkInterfaceIPConfiguration> ipConfigurations = default, ComputeNetworkInterfaceAuxiliaryMode? auxiliaryMode = default, ComputeNetworkInterfaceAuxiliarySku? auxiliarySku = default, ResourceIdentifier networkSecurityGroupId = default, IEnumerable<string> dnsServers = default, ResourceIdentifier dscpConfigurationId = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1266,7 +1266,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="sku"> Describes the public IP Sku. It can only be set with OrchestrationMode as Flexible. </param>
         /// <param name="tags"> Resource tags applied to the publicIP address created by this PublicIPAddressConfiguration. </param>
         /// <returns> A new <see cref="Models.VirtualMachinePublicIPAddressConfiguration"/> instance for mocking. </returns>
-        public static VirtualMachinePublicIPAddressConfiguration VirtualMachinePublicIPAddressConfiguration(string name = default, int? idleTimeoutInMinutes = default, ComputeDeleteOption? deleteOption = default, VirtualMachinePublicIPAddressDnsSettingsConfiguration dnsSettings = default, IEnumerable<VirtualMachineIPTag> ipTags = default, IPVersions? publicIPAddressVersion = default, PublicIPAllocationMethod? publicIPAllocationMethod = default, string publicIPPrefixId = default, ComputePublicIPAddressSku sku = default, IDictionary<string, string> tags = default)
+        public static VirtualMachinePublicIPAddressConfiguration VirtualMachinePublicIPAddressConfiguration(string name = default, int? idleTimeoutInMinutes = default, ComputeDeleteOption? deleteOption = default, VirtualMachinePublicIPAddressDnsSettingsConfiguration dnsSettings = default, IEnumerable<VirtualMachineIPTag> ipTags = default, IPVersions? publicIPAddressVersion = default, PublicIPAllocationMethod? publicIPAllocationMethod = default, ResourceIdentifier publicIPPrefixId = default, ComputePublicIPAddressSku sku = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1362,7 +1362,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="diskEncryptionSetId"> Resource Id. </param>
         /// <param name="writeAcceleratorEnabled"> Specifies whether writeAccelerator should be enabled or disabled on the disk. </param>
         /// <returns> A new <see cref="Models.DataDisksToAttach"/> instance for mocking. </returns>
-        public static DataDisksToAttach DataDisksToAttach(string diskId = default, int? lun = default, CachingType? caching = default, DiskDeleteOptionType? deleteOption = default, string diskEncryptionSetId = default, bool? writeAcceleratorEnabled = default)
+        public static DataDisksToAttach DataDisksToAttach(string diskId = default, int? lun = default, CachingType? caching = default, DiskDeleteOptionType? deleteOption = default, ResourceIdentifier diskEncryptionSetId = default, bool? writeAcceleratorEnabled = default)
         {
             return new DataDisksToAttach(
                 diskId,
@@ -1534,7 +1534,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="etag"> Etag is property returned in Create/Update/Get response of the VM, so that customer can supply it in the header to ensure optimistic updates. </param>
         /// <param name="placement"> Placement section specifies the user-defined constraints for virtual machine hardware placement. This property cannot be changed once VM is provisioned. Minimum api-version: 2024-11-01. </param>
         /// <returns> A new <see cref="Compute.VirtualMachineData"/> instance for mocking. </returns>
-        public static VirtualMachineData VirtualMachineData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, VirtualMachineHardwareProfile hardwareProfile = default, ScheduledEventsPolicy scheduledEventsPolicy = default, VirtualMachineStorageProfile storageProfile = default, AdditionalCapabilities additionalCapabilities = default, VirtualMachineOSProfile osProfile = default, VirtualMachineNetworkProfile networkProfile = default, SecurityProfile securityProfile = default, VirtualMachinePriorityType? priority = default, VirtualMachineEvictionPolicyType? evictionPolicy = default, string provisioningState = default, VirtualMachineInstanceView instanceView = default, string licenseType = default, string vmId = default, string extensionsTimeBudget = default, int? platformFaultDomain = default, ComputeScheduledEventsProfile scheduledEventsProfile = default, string userData = default, DateTimeOffset? timeCreated = default, BootDiagnostics bootDiagnostics = default, string availabilitySetId = default, string virtualMachineScaleSetId = default, string proximityPlacementGroupId = default, double? billingMaxPrice = default, string hostId = default, string hostGroupId = default, string capacityReservationGroupId = default, IEnumerable<VirtualMachineGalleryApplication> galleryApplications = default, ComputePlan plan = default, IEnumerable<VirtualMachineExtensionData> resources = default, VirtualMachineIdentity identity = default, IEnumerable<string> zones = default, ExtendedLocation extendedLocation = default, string managedBy = default, string etag = default, VirtualMachinePlacement placement = default)
+        public static VirtualMachineData VirtualMachineData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, VirtualMachineHardwareProfile hardwareProfile = default, ScheduledEventsPolicy scheduledEventsPolicy = default, VirtualMachineStorageProfile storageProfile = default, AdditionalCapabilities additionalCapabilities = default, VirtualMachineOSProfile osProfile = default, VirtualMachineNetworkProfile networkProfile = default, SecurityProfile securityProfile = default, VirtualMachinePriorityType? priority = default, VirtualMachineEvictionPolicyType? evictionPolicy = default, string provisioningState = default, VirtualMachineInstanceView instanceView = default, string licenseType = default, string vmId = default, string extensionsTimeBudget = default, int? platformFaultDomain = default, ComputeScheduledEventsProfile scheduledEventsProfile = default, string userData = default, DateTimeOffset? timeCreated = default, BootDiagnostics bootDiagnostics = default, ResourceIdentifier availabilitySetId = default, ResourceIdentifier virtualMachineScaleSetId = default, ResourceIdentifier proximityPlacementGroupId = default, double? billingMaxPrice = default, ResourceIdentifier hostId = default, ResourceIdentifier hostGroupId = default, ResourceIdentifier capacityReservationGroupId = default, IEnumerable<VirtualMachineGalleryApplication> galleryApplications = default, ComputePlan plan = default, IEnumerable<VirtualMachineExtensionData> resources = default, VirtualMachineIdentity identity = default, IEnumerable<string> zones = default, ExtendedLocation extendedLocation = default, string managedBy = default, string etag = default, VirtualMachinePlacement placement = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             resources ??= new ChangeTrackingList<VirtualMachineExtensionData>();
@@ -1730,7 +1730,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="identity"> The identity of the virtual machine, if configured. </param>
         /// <param name="zones"> The virtual machine zones. </param>
         /// <returns> A new <see cref="Models.VirtualMachinePatch"/> instance for mocking. </returns>
-        public static VirtualMachinePatch VirtualMachinePatch(IDictionary<string, string> tags = default, ComputePlan plan = default, VirtualMachineHardwareProfile hardwareProfile = default, ScheduledEventsPolicy scheduledEventsPolicy = default, VirtualMachineStorageProfile storageProfile = default, AdditionalCapabilities additionalCapabilities = default, VirtualMachineOSProfile osProfile = default, VirtualMachineNetworkProfile networkProfile = default, SecurityProfile securityProfile = default, VirtualMachinePriorityType? priority = default, VirtualMachineEvictionPolicyType? evictionPolicy = default, string provisioningState = default, VirtualMachineInstanceView instanceView = default, string licenseType = default, string vmId = default, string extensionsTimeBudget = default, int? platformFaultDomain = default, ComputeScheduledEventsProfile scheduledEventsProfile = default, string userData = default, DateTimeOffset? timeCreated = default, BootDiagnostics bootDiagnostics = default, string availabilitySetId = default, string virtualMachineScaleSetId = default, string proximityPlacementGroupId = default, double? billingMaxPrice = default, string hostId = default, string hostGroupId = default, string capacityReservationGroupId = default, IEnumerable<VirtualMachineGalleryApplication> galleryApplications = default, VirtualMachineIdentity identity = default, IEnumerable<string> zones = default)
+        public static VirtualMachinePatch VirtualMachinePatch(IDictionary<string, string> tags = default, ComputePlan plan = default, VirtualMachineHardwareProfile hardwareProfile = default, ScheduledEventsPolicy scheduledEventsPolicy = default, VirtualMachineStorageProfile storageProfile = default, AdditionalCapabilities additionalCapabilities = default, VirtualMachineOSProfile osProfile = default, VirtualMachineNetworkProfile networkProfile = default, SecurityProfile securityProfile = default, VirtualMachinePriorityType? priority = default, VirtualMachineEvictionPolicyType? evictionPolicy = default, string provisioningState = default, VirtualMachineInstanceView instanceView = default, string licenseType = default, string vmId = default, string extensionsTimeBudget = default, int? platformFaultDomain = default, ComputeScheduledEventsProfile scheduledEventsProfile = default, string userData = default, DateTimeOffset? timeCreated = default, BootDiagnostics bootDiagnostics = default, ResourceIdentifier availabilitySetId = default, ResourceIdentifier virtualMachineScaleSetId = default, ResourceIdentifier proximityPlacementGroupId = default, double? billingMaxPrice = default, ResourceIdentifier hostId = default, ResourceIdentifier hostGroupId = default, ResourceIdentifier capacityReservationGroupId = default, IEnumerable<VirtualMachineGalleryApplication> galleryApplications = default, VirtualMachineIdentity identity = default, IEnumerable<string> zones = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             zones ??= new ChangeTrackingList<string>();
@@ -1845,7 +1845,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="parameters"> parameters of the captured virtual machine. </param>
         /// <param name="resources"> a list of resource items of the captured virtual machine. </param>
         /// <returns> A new <see cref="Models.VirtualMachineCaptureResult"/> instance for mocking. </returns>
-        public static VirtualMachineCaptureResult VirtualMachineCaptureResult(string id = default, string schema = default, string contentVersion = default, BinaryData parameters = default, IEnumerable<BinaryData> resources = default)
+        public static VirtualMachineCaptureResult VirtualMachineCaptureResult(ResourceIdentifier id = default, string schema = default, string contentVersion = default, BinaryData parameters = default, IEnumerable<BinaryData> resources = default)
         {
             resources ??= new ChangeTrackingList<BinaryData>();
 
@@ -2066,7 +2066,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="proximityPlacementGroupId"> Resource Id. </param>
         /// <param name="sku"> Sku of the availability set, only name is required to be set. See AvailabilitySetSkuTypes for possible set of values. Use 'Aligned' for virtual machines with managed disks and 'Classic' for virtual machines with unmanaged disks. Default value is 'Classic'. </param>
         /// <returns> A new <see cref="Compute.AvailabilitySetData"/> instance for mocking. </returns>
-        public static AvailabilitySetData AvailabilitySetData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, int? platformUpdateDomainCount = default, int? platformFaultDomainCount = default, IEnumerable<ComputeSubResourceData> virtualMachines = default, IEnumerable<InstanceViewStatus> statuses = default, ScheduledEventsPolicy scheduledEventsPolicy = default, VirtualMachineScaleSetMigrationInfo virtualMachineScaleSetMigrationInfo = default, string proximityPlacementGroupId = default, ComputeSku sku = default)
+        public static AvailabilitySetData AvailabilitySetData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, int? platformUpdateDomainCount = default, int? platformFaultDomainCount = default, IEnumerable<ComputeSubResourceData> virtualMachines = default, IEnumerable<InstanceViewStatus> statuses = default, ScheduledEventsPolicy scheduledEventsPolicy = default, VirtualMachineScaleSetMigrationInfo virtualMachineScaleSetMigrationInfo = default, ResourceIdentifier proximityPlacementGroupId = default, ComputeSku sku = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -2093,7 +2093,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="defaultVirtualMachineScaleSetInfo"> Indicates the target Virtual Machine ScaleSet properties upon triggering a seamless migration without downtime of the VMs via the ConvertToVirtualMachineScaleSet API. </param>
         /// <param name="migrateToVirtualMachineScaleSetId"> Resource Id. </param>
         /// <returns> A new <see cref="Models.VirtualMachineScaleSetMigrationInfo"/> instance for mocking. </returns>
-        public static VirtualMachineScaleSetMigrationInfo VirtualMachineScaleSetMigrationInfo(DefaultVirtualMachineScaleSetInfo defaultVirtualMachineScaleSetInfo = default, string migrateToVirtualMachineScaleSetId = default)
+        public static VirtualMachineScaleSetMigrationInfo VirtualMachineScaleSetMigrationInfo(DefaultVirtualMachineScaleSetInfo defaultVirtualMachineScaleSetInfo = default, ResourceIdentifier migrateToVirtualMachineScaleSetId = default)
         {
             return new VirtualMachineScaleSetMigrationInfo(defaultVirtualMachineScaleSetInfo, migrateToVirtualMachineScaleSetId is null ? default : new ComputeSubResourceData(migrateToVirtualMachineScaleSetId, null), additionalBinaryDataProperties: null);
         }
@@ -2101,7 +2101,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="constrainedMaximumCapacity"> Indicates if the the maximum capacity of the default migrated Virtual Machine Scale Set after its migration will be constrained to a limited number of VMs. </param>
         /// <param name="defaultVirtualMachineScaleSetId"> Resource Id. </param>
         /// <returns> A new <see cref="Models.DefaultVirtualMachineScaleSetInfo"/> instance for mocking. </returns>
-        public static DefaultVirtualMachineScaleSetInfo DefaultVirtualMachineScaleSetInfo(bool? constrainedMaximumCapacity = default, string defaultVirtualMachineScaleSetId = default)
+        public static DefaultVirtualMachineScaleSetInfo DefaultVirtualMachineScaleSetInfo(bool? constrainedMaximumCapacity = default, ResourceIdentifier defaultVirtualMachineScaleSetId = default)
         {
             return new DefaultVirtualMachineScaleSetInfo(constrainedMaximumCapacity, defaultVirtualMachineScaleSetId is null ? default : new ComputeSubResourceData(defaultVirtualMachineScaleSetId, null), additionalBinaryDataProperties: null);
         }
@@ -2116,7 +2116,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="proximityPlacementGroupId"> Resource Id. </param>
         /// <param name="sku"> Sku of the availability set. </param>
         /// <returns> A new <see cref="Models.AvailabilitySetPatch"/> instance for mocking. </returns>
-        public static AvailabilitySetPatch AvailabilitySetPatch(IDictionary<string, string> tags = default, int? platformUpdateDomainCount = default, int? platformFaultDomainCount = default, IEnumerable<ComputeSubResourceData> virtualMachines = default, IEnumerable<InstanceViewStatus> statuses = default, ScheduledEventsPolicy scheduledEventsPolicy = default, VirtualMachineScaleSetMigrationInfo virtualMachineScaleSetMigrationInfo = default, string proximityPlacementGroupId = default, ComputeSku sku = default)
+        public static AvailabilitySetPatch AvailabilitySetPatch(IDictionary<string, string> tags = default, int? platformUpdateDomainCount = default, int? platformFaultDomainCount = default, IEnumerable<ComputeSubResourceData> virtualMachines = default, IEnumerable<InstanceViewStatus> statuses = default, ScheduledEventsPolicy scheduledEventsPolicy = default, VirtualMachineScaleSetMigrationInfo virtualMachineScaleSetMigrationInfo = default, ResourceIdentifier proximityPlacementGroupId = default, ComputeSku sku = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -2133,7 +2133,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <param name="virtualMachineScaleSetFlexibleId"> Resource Id. </param>
         /// <returns> A new <see cref="Models.MigrateToVirtualMachineScaleSetInput"/> instance for mocking. </returns>
-        public static MigrateToVirtualMachineScaleSetInput MigrateToVirtualMachineScaleSetInput(string virtualMachineScaleSetFlexibleId = default)
+        public static MigrateToVirtualMachineScaleSetInput MigrateToVirtualMachineScaleSetInput(ResourceIdentifier virtualMachineScaleSetFlexibleId = default)
         {
             return new MigrateToVirtualMachineScaleSetInput(virtualMachineScaleSetFlexibleId is null ? default : new ComputeSubResourceData(virtualMachineScaleSetFlexibleId, null), additionalBinaryDataProperties: null);
         }
@@ -2142,7 +2142,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="id"> Resource Id. </param>
         /// <param name="colocationStatus"> Describes colocation status of a resource in the Proximity Placement Group. </param>
         /// <returns> A new <see cref="Models.ComputeSubResourceDataWithColocationStatus"/> instance for mocking. </returns>
-        public static ComputeSubResourceDataWithColocationStatus ComputeSubResourceDataWithColocationStatus(string id = default, InstanceViewStatus colocationStatus = default)
+        public static ComputeSubResourceDataWithColocationStatus ComputeSubResourceDataWithColocationStatus(ResourceIdentifier id = default, InstanceViewStatus colocationStatus = default)
         {
             return new ComputeSubResourceDataWithColocationStatus(id, additionalBinaryDataProperties: null, colocationStatus);
         }
@@ -2357,7 +2357,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="publicKey"> Public key portion of the key pair used to authenticate to a virtual machine through ssh. The public key is in ssh-rsa format. </param>
         /// <param name="id"> The ARM resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.Compute/sshPublicKeys/{SshPublicKeyName}. </param>
         /// <returns> A new <see cref="Models.SshPublicKeyGenerateKeyPairResult"/> instance for mocking. </returns>
-        public static SshPublicKeyGenerateKeyPairResult SshPublicKeyGenerateKeyPairResult(string privateKey = default, string publicKey = default, string id = default)
+        public static SshPublicKeyGenerateKeyPairResult SshPublicKeyGenerateKeyPairResult(string privateKey = default, string publicKey = default, ResourceIdentifier id = default)
         {
             return new SshPublicKeyGenerateKeyPairResult(privateKey, publicKey, id, additionalBinaryDataProperties: null);
         }
@@ -2374,7 +2374,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="sourceVirtualMachineId"> Resource Id. </param>
         /// <param name="extendedLocation"> The extended location of the Image. </param>
         /// <returns> A new <see cref="Compute.DiskImageData"/> instance for mocking. </returns>
-        public static DiskImageData DiskImageData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ImageStorageProfile storageProfile = default, string provisioningState = default, HyperVGenerationTypes? hyperVGeneration = default, string sourceVirtualMachineId = default, ExtendedLocation extendedLocation = default)
+        public static DiskImageData DiskImageData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ImageStorageProfile storageProfile = default, string provisioningState = default, HyperVGenerationTypes? hyperVGeneration = default, ResourceIdentifier sourceVirtualMachineId = default, ExtendedLocation extendedLocation = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -2408,7 +2408,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="hyperVGeneration"> Specifies the HyperVGenerationType of the VirtualMachine created from the image. From API Version 2019-03-01 if the image source is a blob, then we need the user to specify the value, if the source is managed resource like disk or snapshot, we may require the user to specify the property if we cannot deduce it from the source managed resource. </param>
         /// <param name="sourceVirtualMachineId"> Resource Id. </param>
         /// <returns> A new <see cref="Models.DiskImagePatch"/> instance for mocking. </returns>
-        public static DiskImagePatch DiskImagePatch(IDictionary<string, string> tags = default, ImageStorageProfile storageProfile = default, string provisioningState = default, HyperVGenerationTypes? hyperVGeneration = default, string sourceVirtualMachineId = default)
+        public static DiskImagePatch DiskImagePatch(IDictionary<string, string> tags = default, ImageStorageProfile storageProfile = default, string provisioningState = default, HyperVGenerationTypes? hyperVGeneration = default, ResourceIdentifier sourceVirtualMachineId = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -2452,7 +2452,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="location"> Location of the source resource used to create this restore point collection. </param>
         /// <param name="id"> Resource Id of the source resource used to create this restore point collection. </param>
         /// <returns> A new <see cref="Models.RestorePointGroupSource"/> instance for mocking. </returns>
-        public static RestorePointGroupSource RestorePointGroupSource(string location = default, string id = default)
+        public static RestorePointGroupSource RestorePointGroupSource(string location = default, ResourceIdentifier id = default)
         {
             return new RestorePointGroupSource(location, id, additionalBinaryDataProperties: null);
         }
@@ -2470,7 +2470,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="instantAccessDurationMinutes"> This property determines the time in minutes the snapshot is retained as instant access for restoring Premium SSD v2 or Ultra disk with fast restore performance in this restore point. </param>
         /// <param name="sourceRestorePointId"> The ARM resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/... </param>
         /// <returns> A new <see cref="Compute.RestorePointData"/> instance for mocking. </returns>
-        public static RestorePointData RestorePointData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<ApiEntityReference> excludeDisks = default, RestorePointSourceMetadata sourceMetadata = default, string provisioningState = default, ConsistencyModeType? consistencyMode = default, DateTimeOffset? timeCreated = default, RestorePointInstanceView instanceView = default, int? instantAccessDurationMinutes = default, string sourceRestorePointId = default)
+        public static RestorePointData RestorePointData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<ApiEntityReference> excludeDisks = default, RestorePointSourceMetadata sourceMetadata = default, string provisioningState = default, ConsistencyModeType? consistencyMode = default, DateTimeOffset? timeCreated = default, RestorePointInstanceView instanceView = default, int? instantAccessDurationMinutes = default, ResourceIdentifier sourceRestorePointId = default)
         {
             return new RestorePointData(
                 id,
@@ -2557,7 +2557,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="encryption"> Encryption at rest settings for disk restore point. It is an optional property that can be specified in the input while creating a restore point. </param>
         /// <param name="sourceDiskRestorePointId"> The ARM resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/... </param>
         /// <returns> A new <see cref="Models.DiskRestorePointAttributes"/> instance for mocking. </returns>
-        public static DiskRestorePointAttributes DiskRestorePointAttributes(ResourceIdentifier id = default, RestorePointEncryption encryption = default, string sourceDiskRestorePointId = default)
+        public static DiskRestorePointAttributes DiskRestorePointAttributes(ResourceIdentifier id = default, RestorePointEncryption encryption = default, ResourceIdentifier sourceDiskRestorePointId = default)
         {
             return new DiskRestorePointAttributes(id, additionalBinaryDataProperties: null, encryption, sourceDiskRestorePointId is null ? default : new ApiEntityReference(sourceDiskRestorePointId, null));
         }
@@ -2949,7 +2949,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="tags"> Specifies the tags that are assigned to the virtual machine. For more information about using tags, see [Using tags to organize your Azure resources](https://docs.microsoft.com/azure/azure-resource-manager/resource-group-using-tags.md). </param>
         /// <param name="extendedLocation"> The extended location of the Virtual Machine. </param>
         /// <returns> A new <see cref="Models.VirtualMachineImageBase"/> instance for mocking. </returns>
-        public static VirtualMachineImageBase VirtualMachineImageBase(string id = default, string name = default, string location = default, IDictionary<string, string> tags = default, ExtendedLocation extendedLocation = default)
+        public static VirtualMachineImageBase VirtualMachineImageBase(ResourceIdentifier id = default, string name = default, string location = default, IDictionary<string, string> tags = default, ExtendedLocation extendedLocation = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -2977,7 +2977,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="automaticOSUpgradeSupported"> Specifies whether automatic OS upgrade is supported on the image. </param>
         /// <param name="disallowedVmDiskType"> VM disk types which are disallowed. </param>
         /// <returns> A new <see cref="Models.VirtualMachineImage"/> instance for mocking. </returns>
-        public static VirtualMachineImage VirtualMachineImage(string id = default, string name = default, string location = default, IDictionary<string, string> tags = default, ExtendedLocation extendedLocation = default, PurchasePlan plan = default, IEnumerable<DataDiskImage> dataDiskImages = default, HyperVGenerationTypes? hyperVGeneration = default, IEnumerable<VirtualMachineImageFeature> features = default, ArchitectureType? architecture = default, ImageDeprecationStatus imageDeprecationStatus = default, OperatingSystemType? osDiskImageOperatingSystem = default, bool? automaticOSUpgradeSupported = default, VirtualMachineDiskType? disallowedVmDiskType = default)
+        public static VirtualMachineImage VirtualMachineImage(ResourceIdentifier id = default, string name = default, string location = default, IDictionary<string, string> tags = default, ExtendedLocation extendedLocation = default, PurchasePlan plan = default, IEnumerable<DataDiskImage> dataDiskImages = default, HyperVGenerationTypes? hyperVGeneration = default, IEnumerable<VirtualMachineImageFeature> features = default, ArchitectureType? architecture = default, ImageDeprecationStatus imageDeprecationStatus = default, OperatingSystemType? osDiskImageOperatingSystem = default, bool? automaticOSUpgradeSupported = default, VirtualMachineDiskType? disallowedVmDiskType = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -3238,10 +3238,9 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="zones"> The Logical zone list for Disk. </param>
         /// <param name="extendedLocation"> The extended location where the disk will be created. Extended location cannot be changed. </param>
         /// <returns> A new <see cref="Compute.ManagedDiskData"/> instance for mocking. </returns>
-        public static ManagedDiskData ManagedDiskData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DateTimeOffset? timeCreated = default, OperatingSystemType? osType = default, HyperVGeneration? hyperVGeneration = default, DiskPurchasePlan purchasePlan = default, SupportedCapabilities supportedCapabilities = default, DiskCreationData creationData = default, int? diskSizeGB = default, long? diskSizeBytes = default, string uniqueId = default, EncryptionSettingsGroup encryptionSettingsCollection = default, string provisioningState = default, long? diskIOPSReadWrite = default, long? diskMBpsReadWrite = default, long? diskIOPSReadOnly = default, long? diskMBpsReadOnly = default, DiskState? diskState = default, DiskEncryption encryption = default, int? maxShares = default, IEnumerable<ShareInfoElement> shareInfo = default, NetworkAccessPolicy? networkAccessPolicy = default, string diskAccessId = default, DateTimeOffset? burstingEnabledOn = default, string tier = default, bool? burstingEnabled = default, bool? supportsHibernation = default, DiskSecurityProfile securityProfile = default, float? completionPercent = default, DiskPublicNetworkAccess? publicNetworkAccess = default, DataAccessAuthMode? dataAccessAuthMode = default, bool? optimizedForFrequentAttach = default, DateTimeOffset? lastOwnershipUpdateOn = default, string propertyUpdatesInProgressTargetTier = default, AvailabilityPolicyDiskDelay? availabilityActionOnDiskDelay = default, string managedBy = default, IEnumerable<string> managedByExtended = default, DiskSku sku = default, IEnumerable<string> zones = default, ExtendedLocation extendedLocation = default)
+        public static ManagedDiskData ManagedDiskData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DateTimeOffset? timeCreated = default, OperatingSystemType? osType = default, HyperVGeneration? hyperVGeneration = default, DiskPurchasePlan purchasePlan = default, SupportedCapabilities supportedCapabilities = default, DiskCreationData creationData = default, int? diskSizeGB = default, long? diskSizeBytes = default, string uniqueId = default, EncryptionSettingsGroup encryptionSettingsCollection = default, string provisioningState = default, long? diskIOPSReadWrite = default, long? diskMBpsReadWrite = default, long? diskIOPSReadOnly = default, long? diskMBpsReadOnly = default, DiskState? diskState = default, DiskEncryption encryption = default, int? maxShares = default, IEnumerable<ShareInfoElement> shareInfo = default, NetworkAccessPolicy? networkAccessPolicy = default, ResourceIdentifier diskAccessId = default, DateTimeOffset? burstingEnabledOn = default, string tier = default, bool? burstingEnabled = default, bool? supportsHibernation = default, DiskSecurityProfile securityProfile = default, float? completionPercent = default, DiskPublicNetworkAccess? publicNetworkAccess = default, DataAccessAuthMode? dataAccessAuthMode = default, bool? optimizedForFrequentAttach = default, DateTimeOffset? lastOwnershipUpdateOn = default, string propertyUpdatesInProgressTargetTier = default, AvailabilityPolicyDiskDelay? availabilityActionOnDiskDelay = default, ResourceIdentifier managedBy = default, ResourceIdentifier managedByExtended = default, DiskSku sku = default, IEnumerable<string> zones = default, ExtendedLocation extendedLocation = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
-            managedByExtended ??= new ChangeTrackingList<string>();
             zones ??= new ChangeTrackingList<string>();
 
             return new ManagedDiskData(
@@ -3288,7 +3287,7 @@ namespace Azure.ResourceManager.Compute.Models
                     new AvailabilityPolicy(availabilityActionOnDiskDelay, null),
                     null),
                 managedBy,
-                managedByExtended.ToList(),
+                managedByExtended,
                 sku,
                 zones.ToList(),
                 extendedLocation);
@@ -3311,7 +3310,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="provisionedBandwidthCopySpeed"> If this field is set on a snapshot and createOption is CopyStart, the snapshot will be copied at a quicker speed. </param>
         /// <param name="instantAccessDurationMinutes"> For snapshots created from Premium SSD v2 or Ultra disk, this property determines the time in minutes the snapshot is retained for instant access to enable faster restore. </param>
         /// <returns> A new <see cref="Models.DiskCreationData"/> instance for mocking. </returns>
-        public static DiskCreationData DiskCreationData(DiskCreateOption createOption = default, string storageAccountId = default, ImageDiskReference imageReference = default, ImageDiskReference galleryImageReference = default, string sourceUri = default, string sourceResourceId = default, string sourceUniqueId = default, long? uploadSizeBytes = default, int? logicalSectorSize = default, string securityDataUri = default, Uri securityMetadataUri = default, bool? performancePlus = default, string elasticSanResourceId = default, ProvisionedBandwidthCopyOption? provisionedBandwidthCopySpeed = default, long? instantAccessDurationMinutes = default)
+        public static DiskCreationData DiskCreationData(DiskCreateOption createOption = default, ResourceIdentifier storageAccountId = default, ImageDiskReference imageReference = default, ImageDiskReference galleryImageReference = default, string sourceUri = default, ResourceIdentifier sourceResourceId = default, string sourceUniqueId = default, long? uploadSizeBytes = default, int? logicalSectorSize = default, string securityDataUri = default, Uri securityMetadataUri = default, bool? performancePlus = default, ResourceIdentifier elasticSanResourceId = default, ProvisionedBandwidthCopyOption? provisionedBandwidthCopySpeed = default, long? instantAccessDurationMinutes = default)
         {
             return new DiskCreationData(
                 createOption,
@@ -3385,7 +3384,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="sku"> The disks sku name. Can be Standard_LRS, Premium_LRS, StandardSSD_LRS, UltraSSD_LRS, Premium_ZRS, StandardSSD_ZRS, or PremiumV2_LRS. </param>
         /// <returns> A new <see cref="Models.ManagedDiskPatch"/> instance for mocking. </returns>
-        public static ManagedDiskPatch ManagedDiskPatch(OperatingSystemType? osType = default, int? diskSizeGB = default, EncryptionSettingsGroup encryptionSettingsCollection = default, long? diskIOPSReadWrite = default, long? diskMBpsReadWrite = default, long? diskIOPSReadOnly = default, long? diskMBpsReadOnly = default, int? maxShares = default, DiskEncryption encryption = default, NetworkAccessPolicy? networkAccessPolicy = default, string diskAccessId = default, string tier = default, bool? burstingEnabled = default, DiskPurchasePlan purchasePlan = default, SupportedCapabilities supportedCapabilities = default, bool? supportsHibernation = default, DiskPublicNetworkAccess? publicNetworkAccess = default, DataAccessAuthMode? dataAccessAuthMode = default, bool? optimizedForFrequentAttach = default, string propertyUpdatesInProgressTargetTier = default, AvailabilityPolicyDiskDelay? availabilityActionOnDiskDelay = default, IDictionary<string, string> tags = default, DiskSku sku = default)
+        public static ManagedDiskPatch ManagedDiskPatch(OperatingSystemType? osType = default, int? diskSizeGB = default, EncryptionSettingsGroup encryptionSettingsCollection = default, long? diskIOPSReadWrite = default, long? diskMBpsReadWrite = default, long? diskIOPSReadOnly = default, long? diskMBpsReadOnly = default, int? maxShares = default, DiskEncryption encryption = default, NetworkAccessPolicy? networkAccessPolicy = default, ResourceIdentifier diskAccessId = default, string tier = default, bool? burstingEnabled = default, DiskPurchasePlan purchasePlan = default, SupportedCapabilities supportedCapabilities = default, bool? supportsHibernation = default, DiskPublicNetworkAccess? publicNetworkAccess = default, DataAccessAuthMode? dataAccessAuthMode = default, bool? optimizedForFrequentAttach = default, string propertyUpdatesInProgressTargetTier = default, AvailabilityPolicyDiskDelay? availabilityActionOnDiskDelay = default, IDictionary<string, string> tags = default, DiskSku sku = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -3470,7 +3469,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
         /// <param name="privateEndpointId"> The ARM identifier for Private Endpoint. </param>
         /// <returns> A new <see cref="Compute.ComputePrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static ComputePrivateEndpointConnectionData ComputePrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ComputePrivateLinkServiceConnectionState privateLinkServiceConnectionState = default, ComputePrivateEndpointConnectionProvisioningState? provisioningState = default, string privateEndpointId = default)
+        public static ComputePrivateEndpointConnectionData ComputePrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ComputePrivateLinkServiceConnectionState privateLinkServiceConnectionState = default, ComputePrivateEndpointConnectionProvisioningState? provisioningState = default, ResourceIdentifier privateEndpointId = default)
         {
             return new ComputePrivateEndpointConnectionData(
                 id,
@@ -3508,7 +3507,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="name"> private link resource name. </param>
         /// <param name="type"> private link resource type. </param>
         /// <returns> A new <see cref="Models.ComputePrivateLinkResourceData"/> instance for mocking. </returns>
-        public static ComputePrivateLinkResourceData ComputePrivateLinkResourceData(string groupId = default, IEnumerable<string> requiredMembers = default, IEnumerable<string> requiredZoneNames = default, string id = default, string name = default, string @type = default)
+        public static ComputePrivateLinkResourceData ComputePrivateLinkResourceData(ResourceIdentifier groupId = default, IEnumerable<string> requiredMembers = default, IEnumerable<string> requiredZoneNames = default, string id = default, string name = default, string @type = default)
         {
             return new ComputePrivateLinkResourceData(groupId is null && requiredMembers is null && requiredZoneNames is null ? default : new ComputePrivateLinkResourceProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), null), id, name, @type, additionalBinaryDataProperties: null);
         }
@@ -3604,7 +3603,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="securityProfile"> Contains the security related information for the resource. </param>
         /// <param name="logicalSectorSize"> Logical sector size in bytes for disk restore points of UltraSSD_LRS and PremiumV2_LRS disks. Supported values are 512 and 4096. 4096 is the default. </param>
         /// <returns> A new <see cref="Compute.DiskRestorePointData"/> instance for mocking. </returns>
-        public static DiskRestorePointData DiskRestorePointData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DateTimeOffset? timeCreated = default, string sourceResourceId = default, OperatingSystemType? osType = default, HyperVGeneration? hyperVGeneration = default, DiskPurchasePlan purchasePlan = default, SupportedCapabilities supportedCapabilities = default, string familyId = default, string sourceUniqueId = default, DiskEncryption encryption = default, bool? supportsHibernation = default, NetworkAccessPolicy? networkAccessPolicy = default, DiskPublicNetworkAccess? publicNetworkAccess = default, string diskAccessId = default, float? completionPercent = default, string replicationState = default, string sourceResourceLocation = default, DiskSecurityProfile securityProfile = default, int? logicalSectorSize = default)
+        public static DiskRestorePointData DiskRestorePointData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DateTimeOffset? timeCreated = default, ResourceIdentifier sourceResourceId = default, OperatingSystemType? osType = default, HyperVGeneration? hyperVGeneration = default, DiskPurchasePlan purchasePlan = default, SupportedCapabilities supportedCapabilities = default, string familyId = default, string sourceUniqueId = default, DiskEncryption encryption = default, bool? supportsHibernation = default, NetworkAccessPolicy? networkAccessPolicy = default, DiskPublicNetworkAccess? publicNetworkAccess = default, ResourceIdentifier diskAccessId = default, float? completionPercent = default, string replicationState = default, string sourceResourceLocation = default, DiskSecurityProfile securityProfile = default, int? logicalSectorSize = default)
         {
             return new DiskRestorePointData(
                 id,
@@ -3668,7 +3667,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="sku"> The snapshots sku name. Can be Standard_LRS, Premium_LRS, or Standard_ZRS. This is an optional parameter for incremental snapshot and the default behavior is the SKU will be set to the same sku as the previous snapshot. </param>
         /// <param name="extendedLocation"> The extended location where the snapshot will be created. Extended location cannot be changed. </param>
         /// <returns> A new <see cref="Compute.SnapshotData"/> instance for mocking. </returns>
-        public static SnapshotData SnapshotData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DateTimeOffset? timeCreated = default, OperatingSystemType? osType = default, HyperVGeneration? hyperVGeneration = default, DiskPurchasePlan purchasePlan = default, SupportedCapabilities supportedCapabilities = default, DiskCreationData creationData = default, int? diskSizeGB = default, long? diskSizeBytes = default, DiskState? diskState = default, string uniqueId = default, EncryptionSettingsGroup encryptionSettingsCollection = default, string provisioningState = default, bool? incremental = default, string incrementalSnapshotFamilyId = default, DiskEncryption encryption = default, NetworkAccessPolicy? networkAccessPolicy = default, string diskAccessId = default, DiskSecurityProfile securityProfile = default, bool? supportsHibernation = default, DiskPublicNetworkAccess? publicNetworkAccess = default, float? completionPercent = default, CopyCompletionError copyCompletionError = default, DataAccessAuthMode? dataAccessAuthMode = default, SnapshotAccessState? snapshotAccessState = default, string managedBy = default, SnapshotSku sku = default, ExtendedLocation extendedLocation = default)
+        public static SnapshotData SnapshotData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DateTimeOffset? timeCreated = default, OperatingSystemType? osType = default, HyperVGeneration? hyperVGeneration = default, DiskPurchasePlan purchasePlan = default, SupportedCapabilities supportedCapabilities = default, DiskCreationData creationData = default, int? diskSizeGB = default, long? diskSizeBytes = default, DiskState? diskState = default, string uniqueId = default, EncryptionSettingsGroup encryptionSettingsCollection = default, string provisioningState = default, bool? incremental = default, string incrementalSnapshotFamilyId = default, DiskEncryption encryption = default, NetworkAccessPolicy? networkAccessPolicy = default, ResourceIdentifier diskAccessId = default, DiskSecurityProfile securityProfile = default, bool? supportsHibernation = default, DiskPublicNetworkAccess? publicNetworkAccess = default, float? completionPercent = default, CopyCompletionError copyCompletionError = default, DataAccessAuthMode? dataAccessAuthMode = default, SnapshotAccessState? snapshotAccessState = default, string managedBy = default, SnapshotSku sku = default, ExtendedLocation extendedLocation = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -3734,7 +3733,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="sku"> The snapshots sku name. Can be Standard_LRS, Premium_LRS, or Standard_ZRS. This is an optional parameter for incremental snapshot and the default behavior is the SKU will be set to the same sku as the previous snapshot. </param>
         /// <returns> A new <see cref="Models.SnapshotPatch"/> instance for mocking. </returns>
-        public static SnapshotPatch SnapshotPatch(OperatingSystemType? osType = default, int? diskSizeGB = default, EncryptionSettingsGroup encryptionSettingsCollection = default, DiskEncryption encryption = default, NetworkAccessPolicy? networkAccessPolicy = default, string diskAccessId = default, bool? supportsHibernation = default, DiskPublicNetworkAccess? publicNetworkAccess = default, DataAccessAuthMode? dataAccessAuthMode = default, SupportedCapabilities supportedCapabilities = default, SnapshotAccessState? snapshotAccessState = default, IDictionary<string, string> tags = default, SnapshotSku sku = default)
+        public static SnapshotPatch SnapshotPatch(OperatingSystemType? osType = default, int? diskSizeGB = default, EncryptionSettingsGroup encryptionSettingsCollection = default, DiskEncryption encryption = default, NetworkAccessPolicy? networkAccessPolicy = default, ResourceIdentifier diskAccessId = default, bool? supportsHibernation = default, DiskPublicNetworkAccess? publicNetworkAccess = default, DataAccessAuthMode? dataAccessAuthMode = default, SupportedCapabilities supportedCapabilities = default, SnapshotAccessState? snapshotAccessState = default, IDictionary<string, string> tags = default, SnapshotSku sku = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -6095,31 +6094,6 @@ namespace Azure.ResourceManager.Compute.Models
                 skuProfile,
                 highSpeedInterconnectPlacement,
                 additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ImageReference"/>. </summary>
-        /// <param name="id"> Resource Id. </param>
-        /// <param name="publisher"> The image publisher. </param>
-        /// <param name="offer"> Specifies the offer of the platform image or marketplace image used to create the virtual machine. </param>
-        /// <param name="sku"> The image SKU. </param>
-        /// <param name="version"> Specifies the version of the platform image or marketplace image used to create the virtual machine. The allowed formats are Major.Minor.Build or 'latest'. Major, Minor, and Build are decimal numbers. Specify 'latest' to use the latest version of an image available at deploy time. Even if you use 'latest', the VM image will not automatically update after deploy time even if a new version becomes available. Please do not use field 'version' for gallery image deployment, gallery image should always use 'id' field for deployment, to use 'latest' version of gallery image, just set '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/images/{imageName}' in the 'id' field without version input. </param>
-        /// <param name="exactVersion"> Specifies in decimal numbers, the version of platform image or marketplace image used to create the virtual machine. This readonly field differs from 'version', only if the value specified in 'version' field is 'latest'. </param>
-        /// <param name="sharedGalleryImageUniqueId"> Specified the shared gallery image unique id for vm deployment. This can be fetched from shared gallery image GET call. </param>
-        /// <param name="communityGalleryImageId"> Specified the community gallery image unique id for vm deployment. This can be fetched from community gallery image GET call. </param>
-        /// <returns> A new <see cref="Models.ImageReference"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ImageReference ImageReference(ResourceIdentifier id, string publisher, string offer, string sku, string version, string exactVersion, string sharedGalleryImageUniqueId, string communityGalleryImageId)
-        {
-            return new ImageReference(
-                id,
-                additionalBinaryDataProperties: null,
-                publisher,
-                offer,
-                sku,
-                version,
-                exactVersion,
-                default,
-                communityGalleryImageId);
         }
 
         /// <summary> Initializes a new instance of <see cref="Compute.VirtualMachineScaleSetExtensionData"/>. </summary>

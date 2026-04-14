@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> ARM id of the DiskAccess resource for using private endpoints on disks. </summary>
-        public string DiskAccessId
+        public ResourceIdentifier DiskAccessId
         {
             get
             {

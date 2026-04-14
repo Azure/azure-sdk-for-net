@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -131,7 +132,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> ARM id of the DiskAccess resource for using private endpoints on disks. </summary>
-        public string DiskAccessId
+        public ResourceIdentifier DiskAccessId
         {
             get
             {

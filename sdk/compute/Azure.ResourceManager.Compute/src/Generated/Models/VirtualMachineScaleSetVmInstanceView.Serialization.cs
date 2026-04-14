@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
+using Azure.Core;
 using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -229,7 +230,7 @@ namespace Azure.ResourceManager.Compute.Models
             VirtualMachineHealthStatus vmHealth = default;
             BootDiagnosticsInstanceView bootDiagnostics = default;
             IReadOnlyList<InstanceViewStatus> statuses = default;
-            string assignedHost = default;
+            ResourceIdentifier assignedHost = default;
             string placementGroupId = default;
             string computerName = default;
             string osName = default;
@@ -341,7 +342,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (prop.NameEquals("assignedHost"u8))
                 {
-                    assignedHost = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    assignedHost = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("placementGroupId"u8))

@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -151,7 +152,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            string groupId = default;
+            ResourceIdentifier groupId = default;
             IReadOnlyList<string> requiredMembers = default;
             IList<string> requiredZoneNames = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -159,7 +160,11 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (prop.NameEquals("groupId"u8))
                 {
-                    groupId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    groupId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("requiredMembers"u8))

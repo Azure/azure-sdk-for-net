@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -25,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="diskEncryptionSetId"> ResourceId of the disk encryption set to use for enabling encryption at rest. </param>
         /// <param name="type"> The type of key used to encrypt the data of the disk. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DiskEncryption(string diskEncryptionSetId, ComputeEncryptionType? @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DiskEncryption(ResourceIdentifier diskEncryptionSetId, ComputeEncryptionType? @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DiskEncryptionSetId = diskEncryptionSetId;
             Type = @type;
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> ResourceId of the disk encryption set to use for enabling encryption at rest. </summary>
-        public string DiskEncryptionSetId { get; set; }
+        public ResourceIdentifier DiskEncryptionSetId { get; set; }
 
         /// <summary> The type of key used to encrypt the data of the disk. </summary>
         public ComputeEncryptionType? Type { get; set; }

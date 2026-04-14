@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -142,7 +143,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The ARM resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/... </summary>
-        public string SubnetId
+        public ResourceIdentifier SubnetId
         {
             get
             {

@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -194,18 +195,18 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             DiskCreateOption createOption = default;
-            string storageAccountId = default;
+            ResourceIdentifier storageAccountId = default;
             ImageDiskReference imageReference = default;
             ImageDiskReference galleryImageReference = default;
             string sourceUri = default;
-            string sourceResourceId = default;
+            ResourceIdentifier sourceResourceId = default;
             string sourceUniqueId = default;
             long? uploadSizeBytes = default;
             int? logicalSectorSize = default;
             string securityDataUri = default;
             Uri securityMetadataUri = default;
             bool? performancePlus = default;
-            string elasticSanResourceId = default;
+            ResourceIdentifier elasticSanResourceId = default;
             ProvisionedBandwidthCopyOption? provisionedBandwidthCopySpeed = default;
             long? instantAccessDurationMinutes = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -218,7 +219,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (prop.NameEquals("storageAccountId"u8))
                 {
-                    storageAccountId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    storageAccountId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("imageReference"u8))
@@ -246,7 +251,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (prop.NameEquals("sourceResourceId"u8))
                 {
-                    sourceResourceId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sourceResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("sourceUniqueId"u8))
@@ -297,7 +306,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (prop.NameEquals("elasticSanResourceId"u8))
                 {
-                    elasticSanResourceId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    elasticSanResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("provisionedBandwidthCopySpeed"u8))

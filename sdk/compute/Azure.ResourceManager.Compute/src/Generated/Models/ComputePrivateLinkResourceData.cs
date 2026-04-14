@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.Compute.Models
         public string Type { get; }
 
         /// <summary> The private link resource group id. </summary>
-        public string GroupId
+        public ResourceIdentifier GroupId
         {
             get
             {

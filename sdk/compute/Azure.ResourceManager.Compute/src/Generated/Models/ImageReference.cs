@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="exactVersion"> Specifies in decimal numbers, the version of platform image or marketplace image used to create the virtual machine. This readonly field differs from 'version', only if the value specified in 'version' field is 'latest'. </param>
         /// <param name="sharedGalleryImageId"> Specified the shared gallery image unique id for vm deployment. This can be fetched from shared gallery image GET call. </param>
         /// <param name="communityGalleryImageId"> Specified the community gallery image unique id for vm deployment. This can be fetched from community gallery image GET call. </param>
-        internal ImageReference(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string publisher, string offer, string sku, string version, string exactVersion, string sharedGalleryImageId, string communityGalleryImageId) : base(id, additionalBinaryDataProperties)
+        internal ImageReference(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string publisher, string offer, string sku, string version, string exactVersion, string sharedGalleryImageId, string communityGalleryImageId) : base(id, additionalBinaryDataProperties)
         {
             Publisher = publisher;
             Offer = offer;

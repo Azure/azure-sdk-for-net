@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -67,7 +68,7 @@ namespace Azure.ResourceManager.Compute.Models
         public VirtualMachineScaleSetMigrationInfo VirtualMachineScaleSetMigrationInfo { get; }
 
         /// <summary> Resource Id. </summary>
-        public string ProximityPlacementGroupId
+        public ResourceIdentifier ProximityPlacementGroupId
         {
             get
             {

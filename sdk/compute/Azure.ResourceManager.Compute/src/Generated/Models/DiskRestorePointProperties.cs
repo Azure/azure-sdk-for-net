@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="securityProfile"> Contains the security related information for the resource. </param>
         /// <param name="logicalSectorSize"> Logical sector size in bytes for disk restore points of UltraSSD_LRS and PremiumV2_LRS disks. Supported values are 512 and 4096. 4096 is the default. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DiskRestorePointProperties(DateTimeOffset? timeCreated, string sourceResourceId, OperatingSystemType? osType, HyperVGeneration? hyperVGeneration, DiskPurchasePlan purchasePlan, SupportedCapabilities supportedCapabilities, string familyId, string sourceUniqueId, DiskEncryption encryption, bool? supportsHibernation, NetworkAccessPolicy? networkAccessPolicy, DiskPublicNetworkAccess? publicNetworkAccess, string diskAccessId, float? completionPercent, string replicationState, string sourceResourceLocation, DiskSecurityProfile securityProfile, int? logicalSectorSize, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DiskRestorePointProperties(DateTimeOffset? timeCreated, ResourceIdentifier sourceResourceId, OperatingSystemType? osType, HyperVGeneration? hyperVGeneration, DiskPurchasePlan purchasePlan, SupportedCapabilities supportedCapabilities, string familyId, string sourceUniqueId, DiskEncryption encryption, bool? supportsHibernation, NetworkAccessPolicy? networkAccessPolicy, DiskPublicNetworkAccess? publicNetworkAccess, ResourceIdentifier diskAccessId, float? completionPercent, string replicationState, string sourceResourceLocation, DiskSecurityProfile securityProfile, int? logicalSectorSize, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TimeCreated = timeCreated;
             SourceResourceId = sourceResourceId;
@@ -68,7 +69,7 @@ namespace Azure.ResourceManager.Compute.Models
         public DateTimeOffset? TimeCreated { get; }
 
         /// <summary> arm id of source disk or source disk restore point. </summary>
-        public string SourceResourceId { get; }
+        public ResourceIdentifier SourceResourceId { get; }
 
         /// <summary> The Operating System type. </summary>
         public OperatingSystemType? OsType { get; }
@@ -101,7 +102,7 @@ namespace Azure.ResourceManager.Compute.Models
         public DiskPublicNetworkAccess? PublicNetworkAccess { get; }
 
         /// <summary> ARM id of the DiskAccess resource for using private endpoints on disks. </summary>
-        public string DiskAccessId { get; }
+        public ResourceIdentifier DiskAccessId { get; }
 
         /// <summary> Percentage complete for the background copy of disk restore point when source resource is from a different region. </summary>
         public float? CompletionPercent { get; }

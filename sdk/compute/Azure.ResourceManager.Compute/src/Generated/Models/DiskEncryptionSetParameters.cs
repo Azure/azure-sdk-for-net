@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -21,7 +22,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="DiskEncryptionSetParameters"/>. </summary>
         /// <param name="id"> Resource Id. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DiskEncryptionSetParameters(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, additionalBinaryDataProperties)
+        internal DiskEncryptionSetParameters(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, additionalBinaryDataProperties)
         {
         }
     }

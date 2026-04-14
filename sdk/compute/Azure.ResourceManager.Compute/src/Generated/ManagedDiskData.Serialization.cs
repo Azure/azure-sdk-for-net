@@ -111,20 +111,10 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("managedBy"u8);
                 writer.WriteStringValue(ManagedBy);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ManagedByExtended))
+            if (options.Format != "W" && Optional.IsDefined(ManagedByExtended))
             {
                 writer.WritePropertyName("managedByExtended"u8);
-                writer.WriteStartArray();
-                foreach (string item in ManagedByExtended)
-                {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
+                writer.WriteStringValue(ManagedByExtended);
             }
             if (Optional.IsDefined(Sku))
             {
@@ -186,8 +176,8 @@ namespace Azure.ResourceManager.Compute
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             DiskProperties properties = default;
-            string managedBy = default;
-            IReadOnlyList<string> managedByExtended = default;
+            ResourceIdentifier managedBy = default;
+            ResourceIdentifier managedByExtended = default;
             DiskSku sku = default;
             IList<string> zones = default;
             ExtendedLocation extendedLocation = default;
@@ -262,7 +252,11 @@ namespace Azure.ResourceManager.Compute
                 }
                 if (prop.NameEquals("managedBy"u8))
                 {
-                    managedBy = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    managedBy = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("managedByExtended"u8))
@@ -271,19 +265,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         continue;
                     }
-                    List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
-                    }
-                    managedByExtended = array;
+                    managedByExtended = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("sku"u8))
@@ -340,7 +322,7 @@ namespace Azure.ResourceManager.Compute
                 location,
                 properties,
                 managedBy,
-                managedByExtended ?? new ChangeTrackingList<string>(),
+                managedByExtended,
                 sku,
                 zones ?? new ChangeTrackingList<string>(),
                 extendedLocation);

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -50,7 +51,7 @@ namespace Azure.ResourceManager.Compute.Models
         public ComputePrivateEndpointConnectionProvisioningState? ProvisioningState { get; }
 
         /// <summary> The ARM identifier for Private Endpoint. </summary>
-        public string PrivateEndpointId
+        public ResourceIdentifier PrivateEndpointId
         {
             get
             {

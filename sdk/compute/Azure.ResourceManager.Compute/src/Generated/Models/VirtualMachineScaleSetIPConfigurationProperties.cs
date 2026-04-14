@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.Compute.Models
         public IList<ComputeSubResourceData> LoadBalancerInboundNatPools { get; } = new ChangeTrackingList<ComputeSubResourceData>();
 
         /// <summary> The ARM resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/... </summary>
-        public string SubnetId
+        public ResourceIdentifier SubnetId
         {
             get
             {

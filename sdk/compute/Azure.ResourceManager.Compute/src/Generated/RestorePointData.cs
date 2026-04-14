@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> The ARM resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/... </summary>
-        public string SourceRestorePointId
+        public ResourceIdentifier SourceRestorePointId
         {
             get
             {

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.Compute.Models
         public HyperVGenerationTypes? HyperVGeneration { get; set; }
 
         /// <summary> Resource Id. </summary>
-        public string SourceVirtualMachineId
+        public ResourceIdentifier SourceVirtualMachineId
         {
             get
             {

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -153,7 +154,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Resource Id. </summary>
-        public string CapacityReservationGroupId
+        public ResourceIdentifier CapacityReservationGroupId
         {
             get
             {
@@ -200,7 +201,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The service artifact reference id in the form of /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/galleries/{galleryName}/serviceArtifacts/{serviceArtifactName}/vmArtifactsProfiles/{vmArtifactsProfilesName}. </summary>
-        public string ServiceArtifactReferenceId
+        public ResourceIdentifier ServiceArtifactReferenceId
         {
             get
             {

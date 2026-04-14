@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> arm id of source disk or source disk restore point. </summary>
-        public string SourceResourceId
+        public ResourceIdentifier SourceResourceId
         {
             get
             {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> ARM id of the DiskAccess resource for using private endpoints on disks. </summary>
-        public string DiskAccessId
+        public ResourceIdentifier DiskAccessId
         {
             get
             {

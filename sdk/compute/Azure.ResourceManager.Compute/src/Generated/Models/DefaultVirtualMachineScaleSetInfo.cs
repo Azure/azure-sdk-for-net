@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal ComputeSubResourceData DefaultVirtualMachineScaleSet { get; }
 
         /// <summary> Resource Id. </summary>
-        public string DefaultVirtualMachineScaleSetId
+        public ResourceIdentifier DefaultVirtualMachineScaleSetId
         {
             get
             {

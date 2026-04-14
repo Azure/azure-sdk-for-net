@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -138,7 +139,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            string id = default;
+            ResourceIdentifier id = default;
             IList<VirtualMachineExtensionData> excludeExtensions = default;
             bool? isOverridable = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -146,7 +147,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (prop.NameEquals("id"u8))
                 {
-                    id = prop.Value.GetString();
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("excludeExtensions"u8))

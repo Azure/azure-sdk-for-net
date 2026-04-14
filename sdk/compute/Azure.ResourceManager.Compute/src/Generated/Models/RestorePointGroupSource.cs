@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -25,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="location"> Location of the source resource used to create this restore point collection. </param>
         /// <param name="id"> Resource Id of the source resource used to create this restore point collection. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RestorePointGroupSource(string location, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RestorePointGroupSource(string location, ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Location = location;
             Id = id;
@@ -36,6 +37,6 @@ namespace Azure.ResourceManager.Compute.Models
         public string Location { get; }
 
         /// <summary> Resource Id of the source resource used to create this restore point collection. </summary>
-        public string Id { get; set; }
+        public ResourceIdentifier Id { get; set; }
     }
 }

@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -207,7 +208,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             DateTimeOffset? timeCreated = default;
-            string sourceResourceId = default;
+            ResourceIdentifier sourceResourceId = default;
             OperatingSystemType? osType = default;
             HyperVGeneration? hyperVGeneration = default;
             DiskPurchasePlan purchasePlan = default;
@@ -218,7 +219,7 @@ namespace Azure.ResourceManager.Compute.Models
             bool? supportsHibernation = default;
             NetworkAccessPolicy? networkAccessPolicy = default;
             DiskPublicNetworkAccess? publicNetworkAccess = default;
-            string diskAccessId = default;
+            ResourceIdentifier diskAccessId = default;
             float? completionPercent = default;
             string replicationState = default;
             string sourceResourceLocation = default;
@@ -238,7 +239,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (prop.NameEquals("sourceResourceId"u8))
                 {
-                    sourceResourceId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sourceResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("osType"u8))
@@ -325,7 +330,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (prop.NameEquals("diskAccessId"u8))
                 {
-                    diskAccessId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    diskAccessId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("completionPercent"u8))

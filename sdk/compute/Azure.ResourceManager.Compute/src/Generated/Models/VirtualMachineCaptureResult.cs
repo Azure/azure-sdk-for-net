@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="contentVersion"> the version of the content. </param>
         /// <param name="parameters"> parameters of the captured virtual machine. </param>
         /// <param name="resources"> a list of resource items of the captured virtual machine. </param>
-        internal VirtualMachineCaptureResult(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string schema, string contentVersion, BinaryData parameters, IReadOnlyList<BinaryData> resources) : base(id, additionalBinaryDataProperties)
+        internal VirtualMachineCaptureResult(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string schema, string contentVersion, BinaryData parameters, IReadOnlyList<BinaryData> resources) : base(id, additionalBinaryDataProperties)
         {
             Schema = schema;
             ContentVersion = contentVersion;

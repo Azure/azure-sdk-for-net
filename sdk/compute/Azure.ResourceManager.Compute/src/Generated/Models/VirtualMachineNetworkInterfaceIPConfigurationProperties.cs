@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -68,7 +69,7 @@ namespace Azure.ResourceManager.Compute.Models
         public IList<ComputeSubResourceData> LoadBalancerBackendAddressPools { get; } = new ChangeTrackingList<ComputeSubResourceData>();
 
         /// <summary> Resource Id. </summary>
-        public string SubnetId
+        public ResourceIdentifier SubnetId
         {
             get
             {

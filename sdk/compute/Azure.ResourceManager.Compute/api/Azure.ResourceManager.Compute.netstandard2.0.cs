@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Compute
         public AvailabilitySetData(Azure.Core.AzureLocation location) { }
         public int? PlatformFaultDomainCount { get { throw null; } set { } }
         public int? PlatformUpdateDomainCount { get { throw null; } set { } }
-        public string ProximityPlacementGroupId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier ProximityPlacementGroupId { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.ScheduledEventsPolicy ScheduledEventsPolicy { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.ComputeSku Sku { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.InstanceViewStatus> Statuses { get { throw null; } }
@@ -862,7 +862,7 @@ namespace Azure.ResourceManager.Compute
     public partial class ComputePrivateEndpointConnectionData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.ComputePrivateEndpointConnectionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.ComputePrivateEndpointConnectionData>
     {
         public ComputePrivateEndpointConnectionData() { }
-        public string PrivateEndpointId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.ComputePrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.ComputePrivateEndpointConnectionProvisioningState? ProvisioningState { get { throw null; } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1182,7 +1182,7 @@ namespace Azure.ResourceManager.Compute
         public Azure.ResourceManager.Compute.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.HyperVGenerationTypes? HyperVGeneration { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
-        public string SourceVirtualMachineId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier SourceVirtualMachineId { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.ImageStorageProfile StorageProfile { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1238,7 +1238,7 @@ namespace Azure.ResourceManager.Compute
     {
         internal DiskRestorePointData() { }
         public float? CompletionPercent { get { throw null; } }
-        public string DiskAccessId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier DiskAccessId { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.DiskEncryption Encryption { get { throw null; } }
         public string FamilyId { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.HyperVGeneration? HyperVGeneration { get { throw null; } }
@@ -1249,7 +1249,7 @@ namespace Azure.ResourceManager.Compute
         public Azure.ResourceManager.Compute.Models.DiskPurchasePlan PurchasePlan { get { throw null; } }
         public string ReplicationState { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.DiskSecurityProfile SecurityProfile { get { throw null; } }
-        public string SourceResourceId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier SourceResourceId { get { throw null; } }
         public string SourceResourceLocation { get { throw null; } }
         public string SourceUniqueId { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.SupportedCapabilities SupportedCapabilities { get { throw null; } }
@@ -1880,7 +1880,7 @@ namespace Azure.ResourceManager.Compute
         public float? CompletionPercent { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.DiskCreationData CreationData { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.DataAccessAuthMode? DataAccessAuthMode { get { throw null; } set { } }
-        public string DiskAccessId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier DiskAccessId { get { throw null; } set { } }
         public long? DiskIOPSReadOnly { get { throw null; } set { } }
         public long? DiskIOPSReadWrite { get { throw null; } set { } }
         public long? DiskMBpsReadOnly { get { throw null; } set { } }
@@ -1893,8 +1893,8 @@ namespace Azure.ResourceManager.Compute
         public Azure.ResourceManager.Compute.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.HyperVGeneration? HyperVGeneration { get { throw null; } set { } }
         public System.DateTimeOffset? LastOwnershipUpdateOn { get { throw null; } }
-        public string ManagedBy { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<string> ManagedByExtended { get { throw null; } }
+        public Azure.Core.ResourceIdentifier ManagedBy { get { throw null; } }
+        public Azure.Core.ResourceIdentifier ManagedByExtended { get { throw null; } }
         public int? MaxShares { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.NetworkAccessPolicy? NetworkAccessPolicy { get { throw null; } set { } }
         public bool? OptimizedForFrequentAttach { get { throw null; } set { } }
@@ -2034,7 +2034,7 @@ namespace Azure.ResourceManager.Compute
         public int? InstantAccessDurationMinutes { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.RestorePointSourceMetadata SourceMetadata { get { throw null; } set { } }
-        public string SourceRestorePointId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier SourceRestorePointId { get { throw null; } set { } }
         public System.DateTimeOffset? TimeCreated { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -2315,7 +2315,7 @@ namespace Azure.ResourceManager.Compute
         public Azure.ResourceManager.Compute.Models.CopyCompletionError CopyCompletionError { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.DiskCreationData CreationData { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.DataAccessAuthMode? DataAccessAuthMode { get { throw null; } set { } }
-        public string DiskAccessId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier DiskAccessId { get { throw null; } set { } }
         public long? DiskSizeBytes { get { throw null; } }
         public int? DiskSizeGB { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.DiskState? DiskState { get { throw null; } }
@@ -2456,18 +2456,18 @@ namespace Azure.ResourceManager.Compute
     {
         public VirtualMachineData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Compute.Models.AdditionalCapabilities AdditionalCapabilities { get { throw null; } set { } }
-        public string AvailabilitySetId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier AvailabilitySetId { get { throw null; } set { } }
         public double? BillingMaxPrice { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.BootDiagnostics BootDiagnostics { get { throw null; } set { } }
-        public string CapacityReservationGroupId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier CapacityReservationGroupId { get { throw null; } set { } }
         public string ETag { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.VirtualMachineEvictionPolicyType? EvictionPolicy { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public string ExtensionsTimeBudget { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VirtualMachineGalleryApplication> GalleryApplications { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.VirtualMachineHardwareProfile HardwareProfile { get { throw null; } set { } }
-        public string HostGroupId { get { throw null; } set { } }
-        public string HostId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier HostGroupId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier HostId { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.VirtualMachineIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.VirtualMachineInstanceView InstanceView { get { throw null; } }
         public string LicenseType { get { throw null; } set { } }
@@ -2479,7 +2479,7 @@ namespace Azure.ResourceManager.Compute
         public int? PlatformFaultDomain { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.VirtualMachinePriorityType? Priority { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
-        public string ProximityPlacementGroupId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier ProximityPlacementGroupId { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.VirtualMachineExtensionData> Resources { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.ScheduledEventsPolicy ScheduledEventsPolicy { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.ComputeScheduledEventsProfile ScheduledEventsProfile { get { throw null; } set { } }
@@ -2487,7 +2487,7 @@ namespace Azure.ResourceManager.Compute
         public Azure.ResourceManager.Compute.Models.VirtualMachineStorageProfile StorageProfile { get { throw null; } set { } }
         public System.DateTimeOffset? TimeCreated { get { throw null; } }
         public string UserData { get { throw null; } set { } }
-        public string VirtualMachineScaleSetId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier VirtualMachineScaleSetId { get { throw null; } set { } }
         public string VmId { get { throw null; } }
         public System.Collections.Generic.IList<string> Zones { get { throw null; } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3467,7 +3467,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class ApiEntityReference : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.ApiEntityReference>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.ApiEntityReference>
     {
         public ApiEntityReference() { }
-        public string Id { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Compute.Models.ApiEntityReference JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Compute.Models.ApiEntityReference PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3601,7 +3601,7 @@ namespace Azure.ResourceManager.Compute.Models
         public AvailabilitySetPatch() { }
         public int? PlatformFaultDomainCount { get { throw null; } set { } }
         public int? PlatformUpdateDomainCount { get { throw null; } set { } }
-        public string ProximityPlacementGroupId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier ProximityPlacementGroupId { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.ScheduledEventsPolicy ScheduledEventsPolicy { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.ComputeSku Sku { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.InstanceViewStatus> Statuses { get { throw null; } }
@@ -4302,7 +4302,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class ComputePrivateLinkResourceData : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.ComputePrivateLinkResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.ComputePrivateLinkResourceData>
     {
         internal ComputePrivateLinkResourceData() { }
-        public string GroupId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier GroupId { get { throw null; } }
         public string Id { get { throw null; } }
         public string Name { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> RequiredMembers { get { throw null; } }
@@ -4567,9 +4567,9 @@ namespace Azure.ResourceManager.Compute.Models
     }
     public partial class ComputeSecurityPostureReference : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.ComputeSecurityPostureReference>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.ComputeSecurityPostureReference>
     {
-        public ComputeSecurityPostureReference(string id) { }
+        public ComputeSecurityPostureReference(Azure.Core.ResourceIdentifier id) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.VirtualMachineExtensionData> ExcludeExtensions { get { throw null; } }
-        public string Id { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
         public bool? IsOverridable { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Compute.Models.ComputeSecurityPostureReference JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -4636,7 +4636,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class ComputeSubResourceData : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.ComputeSubResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.ComputeSubResourceData>
     {
         public ComputeSubResourceData() { }
-        public string Id { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Compute.Models.ComputeSubResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Compute.Models.ComputeSubResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4853,7 +4853,7 @@ namespace Azure.ResourceManager.Compute.Models
         public DataDisksToAttach(string diskId) { }
         public Azure.ResourceManager.Compute.Models.CachingType? Caching { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.DiskDeleteOptionType? DeleteOption { get { throw null; } set { } }
-        public string DiskEncryptionSetId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier DiskEncryptionSetId { get { throw null; } set { } }
         public string DiskId { get { throw null; } }
         public int? Lun { get { throw null; } set { } }
         public bool? WriteAcceleratorEnabled { get { throw null; } set { } }
@@ -4979,7 +4979,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal DefaultVirtualMachineScaleSetInfo() { }
         public bool? ConstrainedMaximumCapacity { get { throw null; } }
-        public string DefaultVirtualMachineScaleSetId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier DefaultVirtualMachineScaleSetId { get { throw null; } }
         protected virtual Azure.ResourceManager.Compute.Models.DefaultVirtualMachineScaleSetInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Compute.Models.DefaultVirtualMachineScaleSetInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5120,7 +5120,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         public DiskCreationData(Azure.ResourceManager.Compute.Models.DiskCreateOption createOption) { }
         public Azure.ResourceManager.Compute.Models.DiskCreateOption CreateOption { get { throw null; } set { } }
-        public string ElasticSanResourceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier ElasticSanResourceId { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.ImageDiskReference GalleryImageReference { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.ImageDiskReference ImageReference { get { throw null; } set { } }
         public long? InstantAccessDurationMinutes { get { throw null; } set { } }
@@ -5129,10 +5129,10 @@ namespace Azure.ResourceManager.Compute.Models
         public Azure.ResourceManager.Compute.Models.ProvisionedBandwidthCopyOption? ProvisionedBandwidthCopySpeed { get { throw null; } set { } }
         public string SecurityDataUri { get { throw null; } set { } }
         public System.Uri SecurityMetadataUri { get { throw null; } set { } }
-        public string SourceResourceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier SourceResourceId { get { throw null; } set { } }
         public string SourceUniqueId { get { throw null; } }
         public string SourceUri { get { throw null; } set { } }
-        public string StorageAccountId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier StorageAccountId { get { throw null; } set { } }
         public long? UploadSizeBytes { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Compute.Models.DiskCreationData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -5180,7 +5180,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class DiskEncryption : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.DiskEncryption>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.DiskEncryption>
     {
         public DiskEncryption() { }
-        public string DiskEncryptionSetId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier DiskEncryptionSetId { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.ComputeEncryptionType? Type { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Compute.Models.DiskEncryption JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -5280,7 +5280,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class DiskImageEncryption : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.DiskImageEncryption>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.DiskImageEncryption>
     {
         public DiskImageEncryption() { }
-        public string DiskEncryptionSetId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier DiskEncryptionSetId { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Compute.Models.DiskImageEncryption JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Compute.Models.DiskImageEncryption PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5313,7 +5313,7 @@ namespace Azure.ResourceManager.Compute.Models
         public DiskImagePatch() { }
         public Azure.ResourceManager.Compute.Models.HyperVGenerationTypes? HyperVGeneration { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
-        public string SourceVirtualMachineId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier SourceVirtualMachineId { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.ImageStorageProfile StorageProfile { get { throw null; } set { } }
         protected override Azure.ResourceManager.Compute.Models.ComputeResourcePatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -5379,7 +5379,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         public DiskRestorePointAttributes() { }
         public Azure.ResourceManager.Compute.Models.RestorePointEncryption Encryption { get { throw null; } set { } }
-        public string SourceDiskRestorePointId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier SourceDiskRestorePointId { get { throw null; } set { } }
         protected override Azure.ResourceManager.Compute.Models.ComputeWriteableSubResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override Azure.ResourceManager.Compute.Models.ComputeWriteableSubResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5424,7 +5424,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class DiskSecurityProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.DiskSecurityProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.DiskSecurityProfile>
     {
         public DiskSecurityProfile() { }
-        public string SecureVMDiskEncryptionSetId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier SecureVMDiskEncryptionSetId { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.DiskSecurityType? SecurityType { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Compute.Models.DiskSecurityProfile JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -5884,7 +5884,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         public GalleryArtifactVersionFullSource() { }
         public string CommunityGalleryImageId { get { throw null; } set { } }
-        public string VirtualMachineId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier VirtualMachineId { get { throw null; } set { } }
         protected override Azure.ResourceManager.Compute.Models.GalleryArtifactVersionSource JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override Azure.ResourceManager.Compute.Models.GalleryArtifactVersionSource PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5898,7 +5898,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class GalleryArtifactVersionSource : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.GalleryArtifactVersionSource>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.GalleryArtifactVersionSource>
     {
         public GalleryArtifactVersionSource() { }
-        public string Id { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Compute.Models.GalleryArtifactVersionSource JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Compute.Models.GalleryArtifactVersionSource PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5942,7 +5942,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class GalleryDiskImageSource : Azure.ResourceManager.Compute.Models.GalleryArtifactVersionSource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.GalleryDiskImageSource>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.GalleryDiskImageSource>
     {
         public GalleryDiskImageSource() { }
-        public string StorageAccountId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier StorageAccountId { get { throw null; } set { } }
         public string Uri { get { throw null; } set { } }
         protected override Azure.ResourceManager.Compute.Models.GalleryArtifactVersionSource JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -6894,10 +6894,10 @@ namespace Azure.ResourceManager.Compute.Models
         public ImageDisk() { }
         public string BlobUri { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.CachingType? Caching { get { throw null; } set { } }
-        public string DiskEncryptionSetId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier DiskEncryptionSetId { get { throw null; } set { } }
         public int? DiskSizeGB { get { throw null; } set { } }
-        public string ManagedDiskId { get { throw null; } set { } }
-        public string SnapshotId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier ManagedDiskId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier SnapshotId { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.StorageAccountType? StorageAccountType { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Compute.Models.ImageDisk JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -6913,7 +6913,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         public ImageDiskReference() { }
         public string CommunityGalleryImageId { get { throw null; } set { } }
-        public string Id { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
         public int? Lun { get { throw null; } set { } }
         public string SharedGalleryImageId { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Compute.Models.ImageDiskReference JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -7126,7 +7126,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         public KeyForDiskEncryptionSet(string keyUri) { }
         public string KeyUri { get { throw null; } set { } }
-        public string SourceVaultId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier SourceVaultId { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Compute.Models.KeyForDiskEncryptionSet JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Compute.Models.KeyForDiskEncryptionSet PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -7141,7 +7141,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         public KeyVaultAndKeyReference(string keyUri) { }
         public string KeyUri { get { throw null; } set { } }
-        public string SourceVaultId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier SourceVaultId { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Compute.Models.KeyVaultAndKeyReference JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Compute.Models.KeyVaultAndKeyReference PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -7156,7 +7156,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         public KeyVaultAndSecretReference(string secretUri) { }
         public string SecretUri { get { throw null; } set { } }
-        public string SourceVaultId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier SourceVaultId { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Compute.Models.KeyVaultAndSecretReference JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Compute.Models.KeyVaultAndSecretReference PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -7171,7 +7171,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         public KeyVaultKeyReference(string keyUri) { }
         public string KeyUri { get { throw null; } set { } }
-        public string SourceVaultId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier SourceVaultId { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Compute.Models.KeyVaultKeyReference JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Compute.Models.KeyVaultKeyReference PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -7186,7 +7186,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         public KeyVaultSecretReference(string secretUri) { }
         public string SecretUri { get { throw null; } set { } }
-        public string SourceVaultId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier SourceVaultId { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Compute.Models.KeyVaultSecretReference JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Compute.Models.KeyVaultSecretReference PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -7422,7 +7422,7 @@ namespace Azure.ResourceManager.Compute.Models
         public Azure.ResourceManager.Compute.Models.AvailabilityPolicyDiskDelay? AvailabilityActionOnDiskDelay { get { throw null; } set { } }
         public bool? BurstingEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.DataAccessAuthMode? DataAccessAuthMode { get { throw null; } set { } }
-        public string DiskAccessId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier DiskAccessId { get { throw null; } set { } }
         public long? DiskIOPSReadOnly { get { throw null; } set { } }
         public long? DiskIOPSReadWrite { get { throw null; } set { } }
         public long? DiskMBpsReadOnly { get { throw null; } set { } }
@@ -7470,7 +7470,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class MigrateToVirtualMachineScaleSetInput : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.MigrateToVirtualMachineScaleSetInput>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.MigrateToVirtualMachineScaleSetInput>
     {
         public MigrateToVirtualMachineScaleSetInput() { }
-        public string VirtualMachineScaleSetFlexibleId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier VirtualMachineScaleSetFlexibleId { get { throw null; } }
         protected virtual Azure.ResourceManager.Compute.Models.MigrateToVirtualMachineScaleSetInput JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Compute.Models.MigrateToVirtualMachineScaleSetInput PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -8249,7 +8249,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class RestorePointEncryption : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.RestorePointEncryption>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.RestorePointEncryption>
     {
         public RestorePointEncryption() { }
-        public string DiskEncryptionSetId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier DiskEncryptionSetId { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.RestorePointEncryptionType? Type { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Compute.Models.RestorePointEncryption JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -8332,7 +8332,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class RestorePointGroupSource : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.RestorePointGroupSource>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.RestorePointGroupSource>
     {
         public RestorePointGroupSource() { }
-        public string Id { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
         public string Location { get { throw null; } }
         protected virtual Azure.ResourceManager.Compute.Models.RestorePointGroupSource JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -9073,7 +9073,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         public SnapshotPatch() { }
         public Azure.ResourceManager.Compute.Models.DataAccessAuthMode? DataAccessAuthMode { get { throw null; } set { } }
-        public string DiskAccessId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier DiskAccessId { get { throw null; } set { } }
         public int? DiskSizeGB { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.DiskEncryption Encryption { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.EncryptionSettingsGroup EncryptionSettingsCollection { get { throw null; } set { } }
@@ -9192,7 +9192,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class SshPublicKeyGenerateKeyPairResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.SshPublicKeyGenerateKeyPairResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.SshPublicKeyGenerateKeyPairResult>
     {
         internal SshPublicKeyGenerateKeyPairResult() { }
-        public string Id { get { throw null; } }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } }
         public string PrivateKey { get { throw null; } }
         public string PublicKey { get { throw null; } }
         protected virtual Azure.ResourceManager.Compute.Models.SshPublicKeyGenerateKeyPairResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -9623,7 +9623,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class VaultSecretGroup : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.VaultSecretGroup>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.VaultSecretGroup>
     {
         public VaultSecretGroup() { }
-        public string SourceVaultId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier SourceVaultId { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VaultCertificate> VaultCertificates { get { throw null; } }
         protected virtual Azure.ResourceManager.Compute.Models.VaultSecretGroup JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -9719,7 +9719,7 @@ namespace Azure.ResourceManager.Compute.Models
         public int Lun { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.VirtualMachineManagedDisk ManagedDisk { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
-        public string SourceResourceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier SourceResourceId { get { throw null; } set { } }
         public bool? ToBeDetached { get { throw null; } set { } }
         public string VhdUri { get { throw null; } set { } }
         public bool? WriteAcceleratorEnabled { get { throw null; } set { } }
@@ -9736,7 +9736,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class VirtualMachineDiskSecurityProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.VirtualMachineDiskSecurityProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.VirtualMachineDiskSecurityProfile>
     {
         public VirtualMachineDiskSecurityProfile() { }
-        public string DiskEncryptionSetId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier DiskEncryptionSetId { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.SecurityEncryptionType? SecurityEncryptionType { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Compute.Models.VirtualMachineDiskSecurityProfile JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -10034,7 +10034,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class VirtualMachineManagedDisk : Azure.ResourceManager.Compute.Models.ComputeSubResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.VirtualMachineManagedDisk>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.VirtualMachineManagedDisk>
     {
         public VirtualMachineManagedDisk() { }
-        public string DiskEncryptionSetId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier DiskEncryptionSetId { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.VirtualMachineDiskSecurityProfile SecurityProfile { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.StorageAccountType? StorageAccountType { get { throw null; } set { } }
         protected override Azure.ResourceManager.Compute.Models.ComputeSubResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -10055,13 +10055,13 @@ namespace Azure.ResourceManager.Compute.Models
         public Azure.ResourceManager.Compute.Models.ComputeDeleteOption? DeleteOption { get { throw null; } set { } }
         public bool? DisableTcpStateTracking { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> DnsServers { get { throw null; } }
-        public string DscpConfigurationId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier DscpConfigurationId { get { throw null; } set { } }
         public bool? EnableAcceleratedNetworking { get { throw null; } set { } }
         public bool? EnableFpga { get { throw null; } set { } }
         public bool? EnableIPForwarding { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VirtualMachineNetworkInterfaceIPConfiguration> IpConfigurations { get { throw null; } }
         public string Name { get { throw null; } set { } }
-        public string NetworkSecurityGroupId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier NetworkSecurityGroupId { get { throw null; } set { } }
         public bool? Primary { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         protected virtual Azure.ResourceManager.Compute.Models.VirtualMachineNetworkInterfaceConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -10084,7 +10084,7 @@ namespace Azure.ResourceManager.Compute.Models
         public bool? Primary { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.IPVersions? PrivateIPAddressVersion { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.VirtualMachinePublicIPAddressConfiguration PublicIPAddressConfiguration { get { throw null; } set { } }
-        public string SubnetId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Compute.Models.VirtualMachineNetworkInterfaceIPConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Compute.Models.VirtualMachineNetworkInterfaceIPConfiguration PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -10177,16 +10177,16 @@ namespace Azure.ResourceManager.Compute.Models
     {
         public VirtualMachinePatch() { }
         public Azure.ResourceManager.Compute.Models.AdditionalCapabilities AdditionalCapabilities { get { throw null; } set { } }
-        public string AvailabilitySetId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier AvailabilitySetId { get { throw null; } set { } }
         public double? BillingMaxPrice { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.BootDiagnostics BootDiagnostics { get { throw null; } set { } }
-        public string CapacityReservationGroupId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier CapacityReservationGroupId { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.VirtualMachineEvictionPolicyType? EvictionPolicy { get { throw null; } set { } }
         public string ExtensionsTimeBudget { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VirtualMachineGalleryApplication> GalleryApplications { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.VirtualMachineHardwareProfile HardwareProfile { get { throw null; } set { } }
-        public string HostGroupId { get { throw null; } set { } }
-        public string HostId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier HostGroupId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier HostId { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.VirtualMachineIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.VirtualMachineInstanceView InstanceView { get { throw null; } }
         public string LicenseType { get { throw null; } set { } }
@@ -10196,14 +10196,14 @@ namespace Azure.ResourceManager.Compute.Models
         public int? PlatformFaultDomain { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.VirtualMachinePriorityType? Priority { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
-        public string ProximityPlacementGroupId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier ProximityPlacementGroupId { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.ScheduledEventsPolicy ScheduledEventsPolicy { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.ComputeScheduledEventsProfile ScheduledEventsProfile { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.SecurityProfile SecurityProfile { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.VirtualMachineStorageProfile StorageProfile { get { throw null; } set { } }
         public System.DateTimeOffset? TimeCreated { get { throw null; } }
         public string UserData { get { throw null; } set { } }
-        public string VirtualMachineScaleSetId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier VirtualMachineScaleSetId { get { throw null; } set { } }
         public string VmId { get { throw null; } }
         public System.Collections.Generic.IList<string> Zones { get { throw null; } }
         protected override Azure.ResourceManager.Compute.Models.ComputeResourcePatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -10276,7 +10276,7 @@ namespace Azure.ResourceManager.Compute.Models
         public string Name { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.IPVersions? PublicIPAddressVersion { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.PublicIPAllocationMethod? PublicIPAllocationMethod { get { throw null; } set { } }
-        public string PublicIPPrefixId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier PublicIPPrefixId { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.ComputePublicIPAddressSku Sku { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         protected virtual Azure.ResourceManager.Compute.Models.VirtualMachinePublicIPAddressConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -10541,7 +10541,7 @@ namespace Azure.ResourceManager.Compute.Models
         public bool? Primary { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.IPVersion? PrivateIPAddressVersion { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetPublicIPAddressConfiguration PublicIPAddressConfiguration { get { throw null; } set { } }
-        public string SubnetId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetIPConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetIPConfiguration PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -10570,7 +10570,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class VirtualMachineScaleSetManagedDisk : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetManagedDisk>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetManagedDisk>
     {
         public VirtualMachineScaleSetManagedDisk() { }
-        public string DiskEncryptionSetId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier DiskEncryptionSetId { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.VirtualMachineDiskSecurityProfile SecurityProfile { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.StorageAccountType? StorageAccountType { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetManagedDisk JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -10587,7 +10587,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal VirtualMachineScaleSetMigrationInfo() { }
         public Azure.ResourceManager.Compute.Models.DefaultVirtualMachineScaleSetInfo DefaultVirtualMachineScaleSetInfo { get { throw null; } }
-        public string MigrateToVirtualMachineScaleSetId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier MigrateToVirtualMachineScaleSetId { get { throw null; } }
         protected virtual Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetMigrationInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetMigrationInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -10611,7 +10611,7 @@ namespace Azure.ResourceManager.Compute.Models
         public bool? EnableIPForwarding { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetIPConfiguration> IpConfigurations { get { throw null; } }
         public string Name { get { throw null; } set { } }
-        public string NetworkSecurityGroupId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier NetworkSecurityGroupId { get { throw null; } set { } }
         public bool? Primary { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         protected virtual Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetNetworkConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -10627,7 +10627,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class VirtualMachineScaleSetNetworkProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetNetworkProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetNetworkProfile>
     {
         public VirtualMachineScaleSetNetworkProfile() { }
-        public string HealthProbeId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier HealthProbeId { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.NetworkApiVersion? NetworkApiVersion { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetNetworkConfiguration> NetworkInterfaceConfigurations { get { throw null; } }
         protected virtual Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetNetworkProfile JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -10712,7 +10712,7 @@ namespace Azure.ResourceManager.Compute.Models
         public bool? DoNotRunExtensionsOnOverprovisionedVMs { get { throw null; } set { } }
         public bool? Overprovision { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetPriorityMixPolicy PriorityMixPolicy { get { throw null; } set { } }
-        public string ProximityPlacementGroupId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier ProximityPlacementGroupId { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.ResiliencyPolicy ResiliencyPolicy { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.ScaleInPolicy ScaleInPolicy { get { throw null; } set { } }
         public bool? SinglePlacementGroup { get { throw null; } set { } }
@@ -10754,13 +10754,13 @@ namespace Azure.ResourceManager.Compute.Models
         public bool? ConstrainedMaximumCapacity { get { throw null; } set { } }
         public bool? DoNotRunExtensionsOnOverprovisionedVMs { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.HighSpeedInterconnectPlacement? HighSpeedInterconnectPlacement { get { throw null; } set { } }
-        public string HostGroupId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier HostGroupId { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.OrchestrationMode? OrchestrationMode { get { throw null; } set { } }
         public bool? Overprovision { get { throw null; } set { } }
         public int? PlatformFaultDomainCount { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetPriorityMixPolicy PriorityMixPolicy { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
-        public string ProximityPlacementGroupId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier ProximityPlacementGroupId { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.ResiliencyPolicy ResiliencyPolicy { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.ScaleInPolicy ScaleInPolicy { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.ScheduledEventsPolicy ScheduledEventsPolicy { get { throw null; } set { } }
@@ -10792,7 +10792,7 @@ namespace Azure.ResourceManager.Compute.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetIPTag> IpTags { get { throw null; } }
         public string Name { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.IPVersion? PublicIPAddressVersion { get { throw null; } set { } }
-        public string PublicIPPrefixId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier PublicIPPrefixId { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.ComputePublicIPAddressSku Sku { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         protected virtual Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetPublicIPAddressConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -10933,7 +10933,7 @@ namespace Azure.ResourceManager.Compute.Models
         public bool? Primary { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.IPVersion? PrivateIPAddressVersion { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetUpdatePublicIPAddressConfiguration PublicIPAddressConfiguration { get { throw null; } set { } }
-        public string SubnetId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetUpdateIPConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetUpdateIPConfiguration PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -10957,7 +10957,7 @@ namespace Azure.ResourceManager.Compute.Models
         public bool? EnableIPForwarding { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetUpdateIPConfiguration> IpConfigurations { get { throw null; } }
         public string Name { get { throw null; } set { } }
-        public string NetworkSecurityGroupId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier NetworkSecurityGroupId { get { throw null; } set { } }
         public bool? Primary { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         protected virtual Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetUpdateNetworkConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -10973,7 +10973,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class VirtualMachineScaleSetUpdateNetworkProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetUpdateNetworkProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetUpdateNetworkProfile>
     {
         public VirtualMachineScaleSetUpdateNetworkProfile() { }
-        public string HealthProbeId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier HealthProbeId { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.NetworkApiVersion? NetworkApiVersion { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetUpdateNetworkConfiguration> NetworkInterfaceConfigurations { get { throw null; } }
         protected virtual Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetUpdateNetworkProfile JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -11031,7 +11031,7 @@ namespace Azure.ResourceManager.Compute.Models
         public Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings DnsSettings { get { throw null; } set { } }
         public int? IdleTimeoutInMinutes { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
-        public string PublicIPPrefixId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier PublicIPPrefixId { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         protected virtual Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetUpdatePublicIPAddressConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -11178,7 +11178,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class VirtualMachineScaleSetVmInstanceView : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmInstanceView>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmInstanceView>
     {
         internal VirtualMachineScaleSetVmInstanceView() { }
-        public string AssignedHost { get { throw null; } }
+        public Azure.Core.ResourceIdentifier AssignedHost { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.BootDiagnosticsInstanceView BootDiagnostics { get { throw null; } }
         public string ComputerName { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.DiskInstanceView> Disks { get { throw null; } }
@@ -11209,7 +11209,7 @@ namespace Azure.ResourceManager.Compute.Models
         public VirtualMachineScaleSetVmProfile() { }
         public double? BillingMaxPrice { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.BootDiagnostics BootDiagnostics { get { throw null; } set { } }
-        public string CapacityReservationGroupId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier CapacityReservationGroupId { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.VirtualMachineEvictionPolicyType? EvictionPolicy { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetExtensionProfile ExtensionProfile { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VirtualMachineGalleryApplication> GalleryApplications { get { throw null; } }
@@ -11221,7 +11221,7 @@ namespace Azure.ResourceManager.Compute.Models
         public Azure.ResourceManager.Compute.Models.ComputeScheduledEventsProfile ScheduledEventsProfile { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.ComputeSecurityPostureReference SecurityPostureReference { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.SecurityProfile SecurityProfile { get { throw null; } set { } }
-        public string ServiceArtifactReferenceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier ServiceArtifactReferenceId { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetStorageProfile StorageProfile { get { throw null; } set { } }
         public System.DateTimeOffset? TimeCreated { get { throw null; } }
         public string UserData { get { throw null; } set { } }
@@ -11239,7 +11239,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         public VirtualMachineScaleSetVmProperties() { }
         public Azure.ResourceManager.Compute.Models.AdditionalCapabilities AdditionalCapabilities { get { throw null; } set { } }
-        public string AvailabilitySetId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier AvailabilitySetId { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.BootDiagnostics BootDiagnostics { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.VirtualMachineHardwareProfile HardwareProfile { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmInstanceView InstanceView { get { throw null; } }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -71,7 +72,7 @@ namespace Azure.ResourceManager.Compute.Models
         public int? InstantAccessDurationMinutes { get; set; }
 
         /// <summary> The ARM resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/... </summary>
-        public string SourceRestorePointId
+        public ResourceIdentifier SourceRestorePointId
         {
             get
             {
