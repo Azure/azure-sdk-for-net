@@ -7,10 +7,9 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Azure" />
-    <!-- TODO: Remove after a new version of Microsoft.Extensions.Azure ships without Azure.Identity dependency.
-         Currently MEA NuGet 1.13.1 transitively pulls in Azure.Identity, causing CS0433 ambiguity with Azure.Core
-         which now contains the same identity types. See https://github.com/Azure/azure-sdk-for-net/issues/58129 -->
-    <PackageReference Include="Azure.Identity" ExcludeAssets="all" PrivateAssets="all" />
+    <!-- Pin Azure.Identity to 1.21+ facade to resolve CS0433 with transitive older versions.
+         See https://github.com/Azure/azure-sdk-for-net/issues/58129 -->
+    <PackageReference Include="Azure.Identity" />
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />
     <PackageReference Include="Microsoft.Extensions.Configuration" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
