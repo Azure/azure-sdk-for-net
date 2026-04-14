@@ -65,8 +65,8 @@ public class RawEventInteropTests
 
         var text = msg.AddTextContent();
         events.Add(text.EmitAdded());          // 3
-        events.Add(text.EmitDone("Hello"));    // 4
-        events.Add(msg.EmitContentDone(text)); // 5
+        events.Add(text.EmitTextDone("Hello"));    // 4
+        events.Add(text.EmitDone()); // 5
         events.Add(msg.EmitDone());            // 6
 
         // Use raw event for a custom output item manually

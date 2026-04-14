@@ -1,14 +1,11 @@
 # Release History
 
-## 1.2.0-beta.3 (Unreleased)
+## 1.2.0-beta.3 (2026-04-14)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Upgraded api-version to '2026-02-01-preview'.
+- Added `MaxConcurrency` support for update groups and update stages.
 
 ## 1.2.0-beta.2 (2026-04-06)
 

@@ -13,131 +13,256 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Hci
 {
-    /// <summary>
-    /// A class representing the HciClusterUpdateSummary data model.
-    /// Get the update summaries for the cluster
-    /// </summary>
+    /// <summary> Get the update summaries for the cluster. </summary>
     public partial class HciClusterUpdateSummaryData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HciClusterUpdateSummaryData"/>. </summary>
         public HciClusterUpdateSummaryData()
         {
-            PackageVersions = new ChangeTrackingList<HciPackageVersionInfo>();
-            HealthCheckResult = new ChangeTrackingList<HciPrecheckResult>();
         }
 
         /// <summary> Initializes a new instance of <see cref="HciClusterUpdateSummaryData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Update summaries properties. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="provisioningState"> Provisioning state of the UpdateSummaries proxy resource. </param>
-        /// <param name="oemFamily"> OEM family name. </param>
-        /// <param name="currentOemVersion"> Current OEM Version. </param>
-        /// <param name="hardwareModel"> Name of the hardware model. </param>
-        /// <param name="packageVersions"> Current version of each updatable component. </param>
-        /// <param name="currentVersion"> Current Solution Bundle version of the stamp. </param>
-        /// <param name="currentSbeVersion"> Current Sbe version of the stamp. </param>
-        /// <param name="lastUpdatedOn"> Last time an update installation completed successfully. </param>
-        /// <param name="lastCheckedOn"> Last time the update service successfully checked for updates. </param>
-        /// <param name="healthState"> Overall health state for update-specific health checks. </param>
-        /// <param name="healthCheckResult"> An array of pre-check result objects. </param>
-        /// <param name="healthCheckOn"> Last time the package-specific checks were run. </param>
-        /// <param name="state"> Overall update state of the stamp. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HciClusterUpdateSummaryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, HciProvisioningState? provisioningState, string oemFamily, string currentOemVersion, string hardwareModel, IList<HciPackageVersionInfo> packageVersions, string currentVersion, string currentSbeVersion, DateTimeOffset? lastUpdatedOn, DateTimeOffset? lastCheckedOn, HciHealthState? healthState, IList<HciPrecheckResult> healthCheckResult, DateTimeOffset? healthCheckOn, HciClusterUpdateState? state, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal HciClusterUpdateSummaryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, UpdateSummariesProperties properties, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
             Location = location;
-            ProvisioningState = provisioningState;
-            OemFamily = oemFamily;
-            CurrentOemVersion = currentOemVersion;
-            HardwareModel = hardwareModel;
-            PackageVersions = packageVersions;
-            CurrentVersion = currentVersion;
-            CurrentSbeVersion = currentSbeVersion;
-            LastUpdatedOn = lastUpdatedOn;
-            LastCheckedOn = lastCheckedOn;
-            HealthState = healthState;
-            HealthCheckResult = healthCheckResult;
-            HealthCheckOn = healthCheckOn;
-            State = state;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
+
+        /// <summary> Update summaries properties. </summary>
+        [WirePath("properties")]
+        internal UpdateSummariesProperties Properties { get; set; }
 
         /// <summary> The geo-location where the resource lives. </summary>
         [WirePath("location")]
         public AzureLocation? Location { get; set; }
-        /// <summary> Provisioning state of the UpdateSummaries proxy resource. </summary>
+
+        /// <summary> Provisioning state of the UpdateSummaries proxy resource. Indicates the current lifecycle status of the update summary operation, such as whether it has been accepted, is in progress, or has completed. </summary>
         [WirePath("properties.provisioningState")]
-        public HciProvisioningState? ProvisioningState { get; }
+        public HciProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> OEM family name. </summary>
         [WirePath("properties.oemFamily")]
-        public string OemFamily { get; set; }
+        public string OemFamily
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OemFamily;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UpdateSummariesProperties();
+                }
+                Properties.OemFamily = value;
+            }
+        }
+
         /// <summary> Current OEM Version. </summary>
         [WirePath("properties.currentOemVersion")]
-        public string CurrentOemVersion { get; set; }
+        public string CurrentOemVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CurrentOemVersion;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UpdateSummariesProperties();
+                }
+                Properties.CurrentOemVersion = value;
+            }
+        }
+
         /// <summary> Name of the hardware model. </summary>
         [WirePath("properties.hardwareModel")]
-        public string HardwareModel { get; set; }
+        public string HardwareModel
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HardwareModel;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UpdateSummariesProperties();
+                }
+                Properties.HardwareModel = value;
+            }
+        }
+
         /// <summary> Current version of each updatable component. </summary>
         [WirePath("properties.packageVersions")]
-        public IList<HciPackageVersionInfo> PackageVersions { get; }
+        public IList<HciPackageVersionInfo> PackageVersions
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new UpdateSummariesProperties();
+                }
+                return Properties.PackageVersions;
+            }
+        }
+
         /// <summary> Current Solution Bundle version of the stamp. </summary>
         [WirePath("properties.currentVersion")]
-        public string CurrentVersion { get; set; }
+        public string CurrentVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CurrentVersion;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UpdateSummariesProperties();
+                }
+                Properties.CurrentVersion = value;
+            }
+        }
+
         /// <summary> Current Sbe version of the stamp. </summary>
         [WirePath("properties.currentSbeVersion")]
-        public string CurrentSbeVersion { get; set; }
+        public string CurrentSbeVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CurrentSbeVersion;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UpdateSummariesProperties();
+                }
+                Properties.CurrentSbeVersion = value;
+            }
+        }
+
         /// <summary> Last time an update installation completed successfully. </summary>
         [WirePath("properties.lastUpdated")]
-        public DateTimeOffset? LastUpdatedOn { get; set; }
+        public DateTimeOffset? LastUpdatedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastUpdatedOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UpdateSummariesProperties();
+                }
+                Properties.LastUpdatedOn = value.Value;
+            }
+        }
+
         /// <summary> Last time the update service successfully checked for updates. </summary>
         [WirePath("properties.lastChecked")]
-        public DateTimeOffset? LastCheckedOn { get; set; }
+        public DateTimeOffset? LastCheckedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastCheckedOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UpdateSummariesProperties();
+                }
+                Properties.LastCheckedOn = value.Value;
+            }
+        }
+
         /// <summary> Overall health state for update-specific health checks. </summary>
         [WirePath("properties.healthState")]
-        public HciHealthState? HealthState { get; set; }
+        public HciHealthState? HealthState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HealthState;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UpdateSummariesProperties();
+                }
+                Properties.HealthState = value.Value;
+            }
+        }
+
         /// <summary> An array of pre-check result objects. </summary>
         [WirePath("properties.healthCheckResult")]
-        public IList<HciPrecheckResult> HealthCheckResult { get; }
+        public IList<HciPrecheckResult> HealthCheckResult
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new UpdateSummariesProperties();
+                }
+                return Properties.HealthCheckResult;
+            }
+        }
+
         /// <summary> Last time the package-specific checks were run. </summary>
         [WirePath("properties.healthCheckDate")]
-        public DateTimeOffset? HealthCheckOn { get; set; }
-        /// <summary> Overall update state of the stamp. </summary>
+        public DateTimeOffset? HealthCheckOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HealthCheckOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UpdateSummariesProperties();
+                }
+                Properties.HealthCheckOn = value.Value;
+            }
+        }
+
+        /// <summary> Overall update state of the stamp. Indicates the current status of update deployment across the stamp, including preparation, application, and any issues encountered. </summary>
         [WirePath("properties.state")]
-        public HciClusterUpdateState? State { get; set; }
+        public HciClusterUpdateState? State
+        {
+            get
+            {
+                return Properties is null ? default : Properties.State;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UpdateSummariesProperties();
+                }
+                Properties.State = value.Value;
+            }
+        }
     }
 }

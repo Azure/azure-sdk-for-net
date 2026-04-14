@@ -320,9 +320,9 @@ public class EchoHandler : ResponseHandler
         var text = message.AddTextContent();
         yield return text.EmitAdded();
         yield return text.EmitDelta("Hello, world!");
-        yield return text.EmitDone("Hello, world!");
+        yield return text.EmitTextDone("Hello, world!");
 
-        yield return message.EmitContentDone(text);
+        yield return text.EmitDone();
         yield return message.EmitDone();
 
         // 3. Signal completion
@@ -343,7 +343,7 @@ It provides:
 |---|---|
 | **Response** | `Response` — the underlying `Response` object. Set custom `Metadata` or `Instructions` before `EmitCreated()` |
 | **Lifecycle** | `EmitCreated()`, `EmitInProgress()`, `EmitQueued()`, `EmitCompleted()`, `EmitFailed()`, `EmitIncomplete()` |
-| **Output factories** | `AddOutputItemMessage()`, `AddOutputItemFunctionCall()`, `AddOutputItemReasoningItem()`, `AddOutputItemCodeInterpreterCall()`, `AddOutputItemFileSearchCall()`, `AddOutputItemWebSearchCall()`, `AddOutputItemImageGenCall()`, `AddOutputItemMcpCall()`, `AddOutputItemCustomToolCall()`, and more |
+| **Output factories** | `AddOutputItemMessage()`, `AddOutputItemFunctionCall()`, `AddOutputItemReasoningItem()`, `AddOutputItemCodeInterpreterCall()`, `AddOutputItemFileSearchCall()`, `AddOutputItemWebSearchCall()`, `AddOutputItemImageGenCall()`, `AddOutputItemMcpCall()`, `AddOutputItemCustomToolCall()`, `AddOutputItemStructuredOutputs()`, `AddOutputItemComputerCall()`, `AddOutputItemLocalShellCall()`, `AddOutputItemApplyPatchCall()`, `AddOutputItemMcpApprovalRequest()`, `AddOutputItemCompaction()`, and more |
 
 ### Setting Custom Metadata
 
@@ -643,9 +643,9 @@ yield return text.EmitDelta("First chunk of text. ");
 yield return text.EmitDelta("Second chunk. ");
 
 // Finalise the text content (final text = full accumulated text)
-yield return text.EmitDone("First chunk of text. Second chunk. ");
+yield return text.EmitTextDone("First chunk of text. Second chunk. ");
 
-yield return message.EmitContentDone(text);
+yield return text.EmitDone();
 yield return message.EmitDone();
 ```
 
@@ -765,7 +765,6 @@ yield return summary.EmitAdded();
 yield return summary.EmitTextDelta("Let me think about this...");
 yield return summary.EmitTextDone("Let me think about this...");
 yield return summary.EmitDone();
-reasoning.EmitSummaryPartDone(summary);
 yield return reasoning.EmitDone();
 ```
 
@@ -797,11 +796,47 @@ The library provides specialised builders for each tool call type. Each also has
 | `OutputItemCodeInterpreterCallBuilder` | `AddOutputItemCodeInterpreterCall()` | `EmitAdded()` → `EmitInProgress()` → `EmitInterpreting()` → `EmitCodeDelta()` → `EmitCodeDone()` → `EmitCompleted()` → `EmitDone()` | `Code(string\|IAsyncEnumerable<string>)` |
 | `OutputItemFileSearchCallBuilder` | `AddOutputItemFileSearchCall()` | `EmitAdded()` → `EmitInProgress()` → `EmitSearching()` → `EmitCompleted()` → `EmitDone()` | — |
 | `OutputItemWebSearchCallBuilder` | `AddOutputItemWebSearchCall()` | `EmitAdded()` → `EmitInProgress()` → `EmitSearching()` → `EmitCompleted()` → `EmitDone()` | — |
-| `OutputItemImageGenCallBuilder` | `AddOutputItemImageGenCall()` | `EmitAdded()` → `EmitInProgress()` → `EmitGenerating()` → `EmitPartialImage()` → `EmitCompleted()` → `EmitDone()` | — |
+| `OutputItemImageGenCallBuilder` | `AddOutputItemImageGenCall()` | `EmitAdded()` → `EmitInProgress()` → `EmitGenerating()` → `EmitPartialImage()` → `EmitCompleted()` → `EmitDone(result)` | — |
 | `OutputItemMcpCallBuilder` | `AddOutputItemMcpCall(serverLabel, name)` | `EmitAdded()` → `EmitInProgress()` → `EmitArgumentsDelta()` → `EmitArgumentsDone()` → `EmitCompleted()` / `EmitFailed()` → `EmitDone()` | `Arguments(string\|IAsyncEnumerable<string>)` |
 | `OutputItemCustomToolCallBuilder` | `AddOutputItemCustomToolCall(callId, name)` | `EmitAdded()` → `EmitInputDelta()` → `EmitInputDone()` → `EmitDone()` | `Input(string\|IAsyncEnumerable<string>)` |
 
 Each builder enforces its own lifecycle ordering — follow the method progression from left to right.
+
+### Simple Output Items (Add + Done)
+
+Many output item types have no intermediate SSE events — just `output_item.added` and `output_item.done`. For these, `ResponseEventStream` provides one-liner convenience generators that accept the domain-specific parameters, auto-generate the item ID, and yield the complete event pair:
+
+| Convenience Method | Description |
+|---|---|
+| `OutputItemFunctionCallOutput(callId, output)` | Server-side tool execution result |
+| `OutputItemStructuredOutputs(output)` | Arbitrary structured JSON data |
+| `OutputItemImageGenCall(resultBase64)` | Image generation result (with status transitions) |
+| `OutputItemComputerCall(callId, action, pendingSafetyChecks, status)` | Computer tool call |
+| `OutputItemComputerCallOutput(callId, output)` | Computer tool call output |
+| `OutputItemLocalShellCall(callId, action, status)` | Local shell tool call |
+| `OutputItemLocalShellCallOutput(output)` | Local shell tool call output |
+| `OutputItemFunctionShellCall(callId, action, status, environment)` | Function shell call |
+| `OutputItemFunctionShellCallOutput(callId, status, output, maxOutputLength?)` | Function shell call output |
+| `OutputItemApplyPatchCall(callId, status, operation)` | Apply-patch tool call |
+| `OutputItemApplyPatchCallOutput(callId, status)` | Apply-patch tool call output |
+| `OutputItemCustomToolCallOutput(callId, output)` | Custom tool call output |
+| `OutputItemMcpApprovalRequest(serverLabel, name, arguments)` | MCP approval request |
+| `OutputItemMcpApprovalResponse(approvalRequestId, approve)` | MCP approval response |
+| `OutputItemCompaction(encryptedContent)` | Compaction item |
+
+Example:
+
+```csharp
+// Emit a function call output (no deltas — just added + done)
+foreach (var evt in stream.OutputItemFunctionCallOutput("call_1", BinaryData.FromString(resultJson)))
+    yield return evt;
+
+// Emit a structured JSON payload
+foreach (var evt in stream.OutputItemStructuredOutputs(BinaryData.FromObjectAsJson(new { score = 0.95 })))
+    yield return evt;
+```
+
+For fine-grained control, use the corresponding `Add*()` builder factory and call `EmitAdded(item)` / `EmitDone(item)` manually.
 
 ### MCP Terminal State
 
@@ -936,8 +971,8 @@ public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
         yield return text.EmitDelta(chunk);
     }
 
-    yield return text.EmitDone(fullText);
-    yield return message.EmitContentDone(text);
+    yield return text.EmitTextDone(fullText);
+    yield return text.EmitDone();
     yield return message.EmitDone();
     yield return stream.EmitCompleted();
 }
@@ -1518,17 +1553,17 @@ yield return stream.EmitCompleted();
 ### Not Closing Content Builders
 
 ```csharp
-// ❌ Missing EmitContentDone
+// ❌ Missing EmitDone on the content builder
 var text = message.AddTextContent();
 yield return text.EmitAdded();
-yield return text.EmitDone("text");
+yield return text.EmitTextDone("text");
 yield return message.EmitDone(); // Content wasn't properly closed
 
-// ✅ Always call EmitContentDone before closing the message
+// ✅ Always call EmitDone on the content builder before closing the message
 var text = message.AddTextContent();
 yield return text.EmitAdded();
-yield return text.EmitDone("text");
-yield return message.EmitContentDone(text); // Close the content part
+yield return text.EmitTextDone("text");
+yield return text.EmitDone(); // Close the content part
 yield return message.EmitDone();
 ```
 
