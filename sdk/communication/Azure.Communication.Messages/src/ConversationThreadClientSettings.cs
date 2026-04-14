@@ -10,8 +10,12 @@ using Microsoft.TypeSpec.Generator.Customizations;
 namespace Azure.Communication.Messages
 {
     [CodeGenSuppress("BindCore", typeof(IConfigurationSection))]
+    [CodeGenSuppress("CommunicationTokenCredential")]
     public partial class ConversationThreadClientSettings
     {
+        /// <summary> Gets or sets the CommunicationTokenCredential. </summary>
+        public CommunicationTokenCredential CommunicationTokenCredential { get; set; }
+
         /// <summary> Binds configuration values from the given section. </summary>
         /// <param name="section"> The configuration section. </param>
         protected override void BindCore(IConfigurationSection section)
