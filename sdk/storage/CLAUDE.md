@@ -99,7 +99,7 @@ dotnet build
 dotnet test --filter TestCategory!=Live
 
 # Run tests for a single framework
-dotnet test -f net8.0
+dotnet test -f net10.0
 
 # Regenerate REST clients from swagger (run from the package's src/ directory)
 dotnet build /t:GenerateCode
