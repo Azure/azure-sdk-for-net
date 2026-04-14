@@ -12,7 +12,7 @@ This guide covers the scenarios where you may need to take action.
 | `Azure.Core` 1.53+ with `Azure.Identity` 1.21+ | ✅ Builds | No action needed. The facade forwards all types correctly. |
 | `Azure.Core` 1.53+ with a **direct** `Azure.Identity` 1.19 or later reference | ❌ CS0433 | [Remove the `Azure.Identity` PackageReference](#direct-reference-to-an-older-azureidentity) |
 | `Azure.Core` 1.53+ with a **transitive** `Azure.Identity` 1.19 or later reference (via a third-party library) | ❌ CS0433 | [Add a direct `Azure.Identity` 1.21+ PackageReference](#transitive-reference-to-an-older-azureidentity) |
-| `Azure.Identity` 1.21+ with `Azure.Identity.Broker` 1.5.0 or earlier | ⚠️ Broker silently fails | [Update `Azure.Identity.Broker` to 1.6.0+](#azureidentitybroker-compatibility) |
+| `Azure.Identity` 1.21+ with `Azure.Identity.Broker` 1.5.0 or earlier | ❌ TypeLoadException | [Update `Azure.Identity.Broker` to 1.6.0+](#azureidentitybroker-compatibility) |
 
 ## Understanding CS0433
 
@@ -74,12 +74,14 @@ Older versions of `Azure.Identity.Broker` (1.5.0 and earlier) reference internal
 
 ### Symptoms
 
-- Brokered authentication silently stops working — `DefaultAzureCredential` falls back to non-broker credentials without any error.
-- If you attempt to load Broker types directly via reflection, you may see:
-  ```
-  TypeLoadException: Could not load type 'Azure.Identity.IMsalSettablePublicClientInitializerOptions'
-  from assembly 'Azure.Identity, Version=1.21.0.0, ...'
-  ```
+When attempting brokered authentication, you will see an error such as:
+
+```
+TypeLoadException: Could not load type 'Azure.Identity.IMsalSettablePublicClientInitializerOptions'
+from assembly 'Azure.Identity, Version=1.21.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8'.
+```
+
+This may surface as a connection failure when using libraries like `Microsoft.Data.SqlClient` with `Authentication=ActiveDirectoryDefault`.
 
 ### Fix
 
