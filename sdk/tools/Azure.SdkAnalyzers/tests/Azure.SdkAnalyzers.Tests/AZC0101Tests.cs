@@ -80,5 +80,43 @@ namespace Azure.Core.Pipeline
     }
 }
 ";
+
+        [Test]
+        public async Task AZC0101ErrorOnGenericTaskConfigureAwaitTrue()
+        {
+            const string code = @"
+namespace RandomNamespace
+{
+    using System.Threading.Tasks;
+
+    public class MyClass
+    {
+        public static async Task Foo()
+        {
+            await Task.FromResult(42).{|AZC0101:ConfigureAwait(true)|};
+        }
+    }
+}";
+            await Verifier.VerifyAnalyzerAsync(code);
+        }
+
+        [Test]
+        public async Task AZC0101NoErrorOnGenericTaskConfigureAwaitFalse()
+        {
+            const string code = @"
+namespace RandomNamespace
+{
+    using System.Threading.Tasks;
+
+    public class MyClass
+    {
+        public static async Task Foo()
+        {
+            await Task.FromResult(42).ConfigureAwait(false);
+        }
+    }
+}";
+            await Verifier.VerifyAnalyzerAsync(code);
+        }
     }
 }
