@@ -435,21 +435,21 @@ namespace Azure.ResourceManager.CognitiveServices
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="CognitiveServicesProjectCapabilityHostResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="CognitiveServicesProjectScopedCapabilityHostResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCognitiveServicesArmClient.GetCognitiveServicesProjectCapabilityHostResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCognitiveServicesArmClient.GetCognitiveServicesProjectScopedCapabilityHostResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="CognitiveServicesProjectCapabilityHostResource"/> object. </returns>
-        public static CognitiveServicesProjectCapabilityHostResource GetCognitiveServicesProjectCapabilityHostResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CognitiveServicesProjectScopedCapabilityHostResource"/> object. </returns>
+        public static CognitiveServicesProjectScopedCapabilityHostResource GetCognitiveServicesProjectScopedCapabilityHostResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableCognitiveServicesArmClient(client).GetCognitiveServicesProjectCapabilityHostResource(id);
+            return GetMockableCognitiveServicesArmClient(client).GetCognitiveServicesProjectScopedCapabilityHostResource(id);
         }
 
         /// <summary>

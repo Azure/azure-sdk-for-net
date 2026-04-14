@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Initializes a new instance of <see cref="ProjectCapabilityHostResourceArmPaginatedResult"/>. </summary>
         internal ProjectCapabilityHostResourceArmPaginatedResult()
         {
-            Value = new ChangeTrackingList<CognitiveServicesProjectCapabilityHostData>();
+            Value = new ChangeTrackingList<CognitiveServicesProjectScopedCapabilityHostData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ProjectCapabilityHostResourceArmPaginatedResult"/>. </summary>
         /// <param name="nextLink"> The link to the next page of Project Capability Host objects. If null, there are no additional pages. </param>
         /// <param name="value"> An array of objects of type Project Capability Host. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProjectCapabilityHostResourceArmPaginatedResult(string nextLink, IList<CognitiveServicesProjectCapabilityHostData> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProjectCapabilityHostResourceArmPaginatedResult(string nextLink, IList<CognitiveServicesProjectScopedCapabilityHostData> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NextLink = nextLink;
             Value = value;
@@ -40,6 +40,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> An array of objects of type Project Capability Host. </summary>
         [WirePath("value")]
-        public IList<CognitiveServicesProjectCapabilityHostData> Value { get; }
+        public IList<CognitiveServicesProjectScopedCapabilityHostData> Value { get; }
     }
 }

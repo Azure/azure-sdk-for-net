@@ -1573,10 +1573,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> [Required] Additional attributes of the entity. </param>
-        /// <returns> A new <see cref="CognitiveServices.CognitiveServicesProjectCapabilityHostData"/> instance for mocking. </returns>
-        public static CognitiveServicesProjectCapabilityHostData CognitiveServicesProjectCapabilityHostData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CognitiveServicesProjectCapabilityHostProperties properties = default)
+        /// <returns> A new <see cref="CognitiveServices.CognitiveServicesProjectScopedCapabilityHostData"/> instance for mocking. </returns>
+        public static CognitiveServicesProjectScopedCapabilityHostData CognitiveServicesProjectScopedCapabilityHostData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CognitiveServicesProjectScopedCapabilityHostProperties properties = default)
         {
-            return new CognitiveServicesProjectCapabilityHostData(
+            return new CognitiveServicesProjectScopedCapabilityHostData(
                 id,
                 name,
                 resourceType,
@@ -1585,21 +1585,21 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 properties);
         }
 
-        /// <summary> The CognitiveServicesProjectCapabilityHostProperties. </summary>
+        /// <summary> The CognitiveServicesProjectScopedCapabilityHostProperties. </summary>
         /// <param name="aiServicesConnections"> List of AI services connections. </param>
         /// <param name="vectorStoreConnections"> List of connection names from those available in the account or project to be used for vector database (e.g. CosmosDB). </param>
         /// <param name="storageConnections"> List of connection names from those available in the account or project to be used as a storage resource. </param>
         /// <param name="threadStorageConnections"> List of connection names from those available in the account or project to be used for Thread storage. </param>
         /// <param name="provisioningState"> Provisioning state for the CapabilityHost. </param>
-        /// <returns> A new <see cref="Models.CognitiveServicesProjectCapabilityHostProperties"/> instance for mocking. </returns>
-        public static CognitiveServicesProjectCapabilityHostProperties CognitiveServicesProjectCapabilityHostProperties(IEnumerable<string> aiServicesConnections = default, IEnumerable<string> vectorStoreConnections = default, IEnumerable<string> storageConnections = default, IEnumerable<string> threadStorageConnections = default, CapabilityHostProvisioningState? provisioningState = default)
+        /// <returns> A new <see cref="Models.CognitiveServicesProjectScopedCapabilityHostProperties"/> instance for mocking. </returns>
+        public static CognitiveServicesProjectScopedCapabilityHostProperties CognitiveServicesProjectScopedCapabilityHostProperties(IEnumerable<string> aiServicesConnections = default, IEnumerable<string> vectorStoreConnections = default, IEnumerable<string> storageConnections = default, IEnumerable<string> threadStorageConnections = default, CapabilityHostProvisioningState? provisioningState = default)
         {
             aiServicesConnections ??= new ChangeTrackingList<string>();
             vectorStoreConnections ??= new ChangeTrackingList<string>();
             storageConnections ??= new ChangeTrackingList<string>();
             threadStorageConnections ??= new ChangeTrackingList<string>();
 
-            return new CognitiveServicesProjectCapabilityHostProperties(
+            return new CognitiveServicesProjectScopedCapabilityHostProperties(
                 aiServicesConnections.ToList(),
                 vectorStoreConnections.ToList(),
                 storageConnections.ToList(),

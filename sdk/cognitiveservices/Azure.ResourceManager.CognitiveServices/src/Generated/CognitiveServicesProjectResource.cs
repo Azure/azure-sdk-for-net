@@ -712,11 +712,11 @@ namespace Azure.ResourceManager.CognitiveServices
             return GetCognitiveServicesProjectConnections().Get(connectionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of CognitiveServicesProjectCapabilityHosts in the <see cref="CognitiveServicesProjectResource"/>. </summary>
-        /// <returns> An object representing collection of CognitiveServicesProjectCapabilityHosts and their operations over a CognitiveServicesProjectCapabilityHostResource. </returns>
-        public virtual CognitiveServicesProjectCapabilityHostCollection GetCognitiveServicesProjectCapabilityHosts()
+        /// <summary> Gets a collection of CognitiveServicesProjectScopedCapabilityHosts in the <see cref="CognitiveServicesProjectResource"/>. </summary>
+        /// <returns> An object representing collection of CognitiveServicesProjectScopedCapabilityHosts and their operations over a CognitiveServicesProjectScopedCapabilityHostResource. </returns>
+        public virtual CognitiveServicesProjectScopedCapabilityHostCollection GetCognitiveServicesProjectScopedCapabilityHosts()
         {
-            return GetCachedClient(client => new CognitiveServicesProjectCapabilityHostCollection(client, Id));
+            return GetCachedClient(client => new CognitiveServicesProjectScopedCapabilityHostCollection(client, Id));
         }
 
         /// <summary> Get project capabilityHost. </summary>
@@ -725,11 +725,11 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <exception cref="ArgumentNullException"> <paramref name="capabilityHostName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="capabilityHostName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<CognitiveServicesProjectCapabilityHostResource>> GetCognitiveServicesProjectCapabilityHostAsync(string capabilityHostName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CognitiveServicesProjectScopedCapabilityHostResource>> GetCognitiveServicesProjectScopedCapabilityHostAsync(string capabilityHostName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(capabilityHostName, nameof(capabilityHostName));
 
-            return await GetCognitiveServicesProjectCapabilityHosts().GetAsync(capabilityHostName, cancellationToken).ConfigureAwait(false);
+            return await GetCognitiveServicesProjectScopedCapabilityHosts().GetAsync(capabilityHostName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get project capabilityHost. </summary>
@@ -738,11 +738,11 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <exception cref="ArgumentNullException"> <paramref name="capabilityHostName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="capabilityHostName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<CognitiveServicesProjectCapabilityHostResource> GetCognitiveServicesProjectCapabilityHost(string capabilityHostName, CancellationToken cancellationToken = default)
+        public virtual Response<CognitiveServicesProjectScopedCapabilityHostResource> GetCognitiveServicesProjectScopedCapabilityHost(string capabilityHostName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(capabilityHostName, nameof(capabilityHostName));
 
-            return GetCognitiveServicesProjectCapabilityHosts().Get(capabilityHostName, cancellationToken);
+            return GetCognitiveServicesProjectScopedCapabilityHosts().Get(capabilityHostName, cancellationToken);
         }
 
         /// <summary> Gets a collection of CognitiveServicesAgentApplications in the <see cref="CognitiveServicesProjectResource"/>. </summary>

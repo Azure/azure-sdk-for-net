@@ -224,13 +224,13 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
             return new CognitiveServicesCapabilityHostResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="CognitiveServicesProjectCapabilityHostResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="CognitiveServicesProjectScopedCapabilityHostResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CognitiveServicesProjectCapabilityHostResource"/> object. </returns>
-        public virtual CognitiveServicesProjectCapabilityHostResource GetCognitiveServicesProjectCapabilityHostResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CognitiveServicesProjectScopedCapabilityHostResource"/> object. </returns>
+        public virtual CognitiveServicesProjectScopedCapabilityHostResource GetCognitiveServicesProjectScopedCapabilityHostResource(ResourceIdentifier id)
         {
-            CognitiveServicesProjectCapabilityHostResource.ValidateResourceId(id);
-            return new CognitiveServicesProjectCapabilityHostResource(Client, id);
+            CognitiveServicesProjectScopedCapabilityHostResource.ValidateResourceId(id);
+            return new CognitiveServicesProjectScopedCapabilityHostResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="CognitiveServicesQuotaTierResource"/> along with the instance operations that can be performed on it but with no data. </summary>
