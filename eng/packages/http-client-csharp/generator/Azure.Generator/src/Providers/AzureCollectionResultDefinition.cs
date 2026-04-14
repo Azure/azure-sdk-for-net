@@ -24,6 +24,7 @@ namespace Azure.Generator.Providers
     internal class AzureCollectionResultDefinition : CollectionResultDefinition
     {
         private readonly InputOperation _operation;
+        private readonly InputPagingServiceMethod _serviceMethod;
         private readonly CSharpType _itemModelType;
         private readonly InputPagingServiceMetadata _paging;
         private readonly string _scopeName;
@@ -45,6 +46,7 @@ namespace Azure.Generator.Providers
 
         public AzureCollectionResultDefinition(ClientProvider client, InputPagingServiceMethod serviceMethod, CSharpType? itemModelType, bool isAsync) : base(client, serviceMethod, itemModelType, isAsync)
         {
+            _serviceMethod = serviceMethod;
             _paging = serviceMethod.PagingMetadata;
             _getNextResponseMethodName = isAsync ? "GetNextResponseAsync" : "GetNextResponse";
 
@@ -57,6 +59,29 @@ namespace Azure.Generator.Providers
                 typeof(string),
                 "_diagnosticScope",
                 this);
+        }
+
+        /// <summary>
+        /// Overrides the base BuildName to use CrossLanguageDefinitionId for the operation
+        /// identifier. This prevents name collisions when @@clientName creates overloads
+        /// sharing the same C# method name for different operations.
+        /// See: https://github.com/Azure/azure-sdk-for-net/issues/58138
+        /// </summary>
+        protected override string BuildName()
+        {
+            var clid = _serviceMethod.CrossLanguageDefinitionId;
+            if (!string.IsNullOrEmpty(clid))
+            {
+                var parts = clid.Split('.');
+                if (parts.Length >= 1)
+                {
+                    var operationSuffix = parts[^1].ToIdentifierName();
+                    var ofTSuffix = ItemModelType == null ? "" : "OfT";
+                    return $"{Client.Type.Name}{operationSuffix}{(IsAsync ? "Async" : "")}CollectionResult{ofTSuffix}";
+                }
+            }
+
+            return base.BuildName();
         }
 
         private IReadOnlyList<ParameterProvider> CreateRequestParameters

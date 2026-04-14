@@ -93,9 +93,38 @@ namespace Azure.Generator.Management.Providers
 
         protected override string BuildName()
         {
-            // Use the enclosing type name (e.g., "FooResource") and actual method name
-            // The method name already contains "Async" suffix when it's async, so we don't need to add/remove it
-            return $"{_enclosingTypeName}{_methodName}CollectionResultOfT";
+            // Use the enclosing type name and an operation-specific identifier derived from
+            // CrossLanguageDefinitionId to ensure uniqueness. When @@clientName creates overloads
+            // sharing the same C# name, the CLDI remains unique per operation, preventing
+            // class name collisions that cause CS1729 build errors.
+            // See: https://github.com/Azure/azure-sdk-for-net/issues/58138
+            var operationSuffix = GetUniqueOperationSuffix();
+            var asyncSuffix = _isAsync ? "Async" : "";
+            return $"{_enclosingTypeName}{operationSuffix}{asyncSuffix}CollectionResultOfT";
+        }
+
+        /// <summary>
+        /// Extracts a unique, PascalCase operation identifier from the CrossLanguageDefinitionId.
+        /// Falls back to the C# method name if CLDI is unavailable.
+        /// </summary>
+        private string GetUniqueOperationSuffix()
+        {
+            var clid = _serviceMethod.CrossLanguageDefinitionId;
+            if (!string.IsNullOrEmpty(clid))
+            {
+                var parts = clid.Split('.');
+                if (parts.Length >= 1)
+                {
+                    return parts[^1].FirstCharToUpperCase();
+                }
+            }
+            // Fallback to the C# method name (without Async suffix)
+            var name = _methodName;
+            if (name.EndsWith("Async"))
+            {
+                name = name.Substring(0, name.Length - 5);
+            }
+            return name;
         }
 
         protected override TypeSignatureModifiers BuildDeclarationModifiers() =>
