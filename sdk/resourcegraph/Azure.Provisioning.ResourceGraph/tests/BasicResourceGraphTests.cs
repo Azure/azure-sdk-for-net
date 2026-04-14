@@ -20,8 +20,8 @@ public class BasicResourceGraphTests
                 ResourceGraphQuery query =
                     new(nameof(query))
                     {
-                        Query = "Resources | project name, type | limit 5",
-                        Description = "A sample resource graph query",
+                        Query = "Resources | where type =~ 'Microsoft.Compute/virtualMachines' | summarize count() by tostring(properties.storageProfile.osDisk.osType)",
+                        Description = "This shared query counts all virtual machine resources and summarizes by the OS type.",
                     };
                 infra.Add(query);
                 #endregion
@@ -44,8 +44,8 @@ public class BasicResourceGraphTests
               name: take('query${uniqueString(resourceGroup().id)}', 24)
               location: location
               properties: {
-                description: 'A sample resource graph query'
-                query: 'Resources | project name, type | limit 5'
+                description: 'This shared query counts all virtual machine resources and summarizes by the OS type.'
+                query: 'Resources | where type =~ \'Microsoft.Compute/virtualMachines\' | summarize count() by tostring(properties.storageProfile.osDisk.osType)'
               }
             }
             """);
