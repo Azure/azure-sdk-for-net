@@ -101,13 +101,13 @@ namespace Azure.SdkAnalyzers
             switch (reference.Parent)
             {
                 case IConditionalOperation conditional:
-                    _symbolIteratorsStack.Pop();
+                    _symbolIteratorsStack.Pop().Item1.Dispose();
                     TryPushOperationToStack(context, conditional.WhenFalse, Scope.Sync);
                     TryPushOperationToStack(context, conditional.WhenTrue, Scope.Async);
                     return;
                 case IUnaryOperation unary when unary.OperatorKind == UnaryOperatorKind.Not && unary.Parent is IConditionalOperation conditional:
-                    _symbolIteratorsStack.Pop();
-                    _symbolIteratorsStack.Pop();
+                    _symbolIteratorsStack.Pop().Item1.Dispose();
+                    _symbolIteratorsStack.Pop().Item1.Dispose();
                     TryPushOperationToStack(context, conditional.WhenFalse, Scope.Async);
                     TryPushOperationToStack(context, conditional.WhenTrue, Scope.Sync);
                     return;
