@@ -1,6 +1,6 @@
 # Azure SDK for .NET Libraries Inventory
 
-> **Auto-generated** by `Library_Inventory` on 2026-04-03 23:43:21 UTC.
+> **Auto-generated** by `Library_Inventory` on 2026-04-10 07:17:14 UTC.
 > Run that script to refresh this file.
 
 ## Table of Contents
@@ -16,18 +16,18 @@
 
 ## Summary
 
-- Total libraries: 398
+- Total libraries: 399
 - Management Plane (MPG): 232
-  - Autorest/Swagger: 102
-  - New Emitter (TypeSpec): 130
+  - Autorest/Swagger: 100
+  - New Emitter (TypeSpec): 132
   - Old TypeSpec: 0
 - Data Plane (DPG): 128
   - Autorest/Swagger: 37
-  - New Emitter (TypeSpec): 41
-  - Old TypeSpec: 2
-- Provisioning: 38
+  - New Emitter (TypeSpec): 42
+  - Old TypeSpec: 1
+- Provisioning: 39
   - Reflection-based generator: 34
-  - TypeSpec-based generator: 2
+  - TypeSpec-based generator: 3
   - No generator: 2
 - No generator: 48
 
@@ -36,12 +36,12 @@
 
 Libraries that provide client APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 41 / 43 (95.3%)
+**Migration Status**: 42 / 43 (97.7%)
 
 | Service | Library | New Emitter | Using SCM |
 | ------- | ------- | ----------- | --------- |
 | agentserver | Azure.AI.AgentServer.Responses | ✅ | ✅ |
-| ai | Azure.AI.Agents.Persistent |  |  |
+| ai | Azure.AI.Agents.Persistent | ✅ |  |
 | ai | Azure.AI.Extensions.OpenAI | ✅ | ✅ |
 | ai | Azure.AI.Projects | ✅ | ✅ |
 | ai | Azure.AI.Projects.Agents | ✅ | ✅ |
@@ -134,7 +134,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 37
 
 Libraries that provide resource management APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 130 / 130 (100%)
+**Migration Status**: 132 / 132 (100%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -152,6 +152,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | azurelargeinstance | Azure.ResourceManager.LargeInstance | ✅ |
 | azurestackhci | Azure.ResourceManager.Hci.Vm | ✅ |
 | batch | Azure.ResourceManager.Batch | ✅ |
+| billingbenefits | Azure.ResourceManager.BillingBenefits | ✅ |
 | botservice | Azure.ResourceManager.BotService | ✅ |
 | carbon | Azure.ResourceManager.CarbonOptimization | ✅ |
 | certificateregistration | Azure.ResourceManager.CertificateRegistration | ✅ |
@@ -169,6 +170,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | containerregistry | Azure.ResourceManager.ContainerRegistry | ✅ |
 | containerregistry | Azure.ResourceManager.ContainerRegistry.Tasks | ✅ |
 | containerservice | Azure.ResourceManager.ContainerService | ✅ |
+| cosmosdbforpostgresql | Azure.ResourceManager.CosmosDBForPostgreSql | ✅ |
 | databasewatcher | Azure.ResourceManager.DatabaseWatcher | ✅ |
 | databox | Azure.ResourceManager.DataBox | ✅ |
 | datadog | Azure.ResourceManager.Datadog | ✅ |
@@ -272,7 +274,7 @@ Libraries that provide resource management APIs for Azure services and have been
 
 ## Management Plane Libraries (MPG) - Still on Swagger
 
-Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 102
+Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 100
 
 | Service | Library |
 | ------- | ------- |
@@ -287,7 +289,6 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 10
 | automation | Azure.ResourceManager.Automation |
 | azurestackhci | Azure.ResourceManager.Hci |
 | billing | Azure.ResourceManager.Billing |
-| billingbenefits | Azure.ResourceManager.BillingBenefits |
 | blueprint | Azure.ResourceManager.Blueprint |
 | cdn | Azure.ResourceManager.Cdn |
 | changeanalysis | Azure.ResourceManager.ChangeAnalysis |
@@ -298,7 +299,6 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 10
 | containerapps | Azure.ResourceManager.AppContainers |
 | containerinstance | Azure.ResourceManager.ContainerInstance |
 | cosmosdb | Azure.ResourceManager.CosmosDB |
-| cosmosdbforpostgresql | Azure.ResourceManager.CosmosDBForPostgreSql |
 | costmanagement | Azure.ResourceManager.CostManagement |
 | customer-insights | Azure.ResourceManager.CustomerInsights |
 | databoxedge | Azure.ResourceManager.DataBoxEdge |
@@ -384,7 +384,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 10
 
 Libraries that provide infrastructure-as-code capabilities for Azure services. These libraries allow you to declaratively specify Azure infrastructure natively in .NET and generate Bicep templates for deployment.
 
-**Migration Status**: 2 / 38 migrated to TypeSpec-based generator
+**Migration Status**: 3 / 39 migrated to TypeSpec-based generator
 
 | Service | Library | Mgmt Peer Library | Generator |
 | ------- | ------- | ----------------- | --------- |
@@ -410,6 +410,7 @@ Libraries that provide infrastructure-as-code capabilities for Azure services. T
 | kubernetesconfiguration | Azure.Provisioning.KubernetesConfiguration | Azure.ResourceManager.KubernetesConfiguration | Reflection |
 | kusto | Azure.Provisioning.Kusto | Azure.ResourceManager.Kusto | Reflection |
 | monitor | Azure.Provisioning.Monitor | Azure.ResourceManager.Monitor | Reflection |
+| mysql | Azure.Provisioning.MySql | Azure.ResourceManager.MySql ✅ | TypeSpec ✅ |
 | network | Azure.Provisioning.Network | Azure.ResourceManager.Network | Reflection |
 | operationalinsights | Azure.Provisioning.OperationalInsights | Azure.ResourceManager.OperationalInsights | Reflection |
 | postgresql | Azure.Provisioning.PostgreSql | Azure.ResourceManager.PostgreSql | Reflection |

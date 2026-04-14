@@ -555,9 +555,104 @@ namespace Azure.Generator.Mgmt.Tests
         }
 
         /// <summary>
-        /// A mock custom code view TypeProvider that adds an [Obsolete] property
-        /// to simulate a backward-compat alias defined in a partial class.
+        /// Verifies the bug fix: when a base model is safe-flattened (a single-property wrapper type
+        /// becomes internal and its property is promoted), the derived class's public constructor
+        /// parameters AND base initializer (: base(...)) are both updated to use the flattened type.
+        ///
+        /// Scenario (mirrors CommonExportProperties / ExportProperties):
+        ///   - WrapperModel has one required public property: Value (string)
+        ///   - BaseModel has: wrapper (WrapperModel, required), name (string, required)
+        ///   - DerivedModel extends BaseModel with: description (string, optional)
+        ///
+        /// After safe-flatten:
+        ///   - BaseModel.wrapper becomes internal, WrapperValue (string) is promoted
+        ///   - BaseModel public ctor: (string wrapperValue, string name)
+        ///   - DerivedModel public ctor must also use (string wrapperValue, string name), NOT (WrapperModel wrapper, string name)
+        ///   - DerivedModel base initializer must pass wrapperValue, not wrapper
         /// </summary>
+        [Test]
+        public void TestSafeFlattenUpdatesDerivedClassCtorParamsAndBaseInitializer()
+        {
+            // Create WrapperModel with a single required property.
+            var valueProp = InputFactory.Property("value", InputPrimitiveType.String, isRequired: true, serializedName: "value");
+            var wrapperModel = InputFactory.Model(
+                "WrapperModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [valueProp]);
+
+            // Create BaseModel with wrapper (WrapperModel, required) + name (string, required).
+            var wrapperProp = InputFactory.Property("wrapper", wrapperModel, isRequired: true, serializedName: "wrapper");
+            var nameProp = InputFactory.Property("name", InputPrimitiveType.String, isRequired: true, serializedName: "name");
+            var baseModel = InputFactory.Model(
+                "BaseModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [wrapperProp, nameProp]);
+
+            // Create DerivedModel extending BaseModel with an optional description.
+            var descriptionProp = InputFactory.Property("description", InputPrimitiveType.String, isRequired: false, serializedName: "description");
+            var derivedModel = InputFactory.Model(
+                "DerivedModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                baseModel: baseModel,
+                properties: [descriptionProp]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [wrapperModel, baseModel, derivedModel]);
+
+            var baseModelProvider = plugin.Object.TypeFactory.CreateModel(baseModel)!;
+            var derivedModelProvider = plugin.Object.TypeFactory.CreateModel(derivedModel)!;
+            Assert.IsNotNull(baseModelProvider);
+            Assert.IsNotNull(derivedModelProvider);
+
+            // Precondition: before visitors, DerivedModel public ctor has WrapperModel param.
+            var preVisitPublicCtor = derivedModelProvider.Constructors
+                .SingleOrDefault(c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public));
+            Assert.IsNotNull(preVisitPublicCtor, "DerivedModel should have a public ctor before visitors");
+            Assert.IsTrue(
+                preVisitPublicCtor!.Signature.Parameters.Any(p => p.Type.Name == "WrapperModel"),
+                "Precondition: DerivedModel ctor should have WrapperModel param before flatten");
+
+            // Run only the FlattenPropertyVisitor on both models (base must be processed first to populate the flatten map).
+            var visitor = new FlattenPropertyVisitor();
+            var visitTypeCore = typeof(LibraryVisitor).GetMethod(
+                "VisitTypeCore",
+                BindingFlags.NonPublic | BindingFlags.Instance);
+            Assert.IsNotNull(visitTypeCore);
+
+            visitTypeCore!.Invoke(visitor, [derivedModelProvider]);
+            visitTypeCore!.Invoke(visitor, [baseModelProvider]);
+
+            // After visitors: DerivedModel public ctor should use the flattened type (string), not WrapperModel.
+            var publicCtor = derivedModelProvider.Constructors
+                .SingleOrDefault(c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public));
+            Assert.IsNotNull(publicCtor, "DerivedModel should still have a public ctor after flatten");
+
+            Assert.IsFalse(
+                publicCtor!.Signature.Parameters.Any(p => p.Type.Name == "WrapperModel"),
+                "DerivedModel public ctor should NOT have WrapperModel param after safe-flatten");
+            Assert.IsTrue(
+                publicCtor.Signature.Parameters.Any(p => p.Name == "wrapperValue"),
+                "DerivedModel public ctor should have the flattened 'wrapperValue' (string) param");
+
+            // The base initializer must exist and be a base (not this) call.
+            var initializer = publicCtor.Signature.Initializer;
+            Assert.IsNotNull(initializer, "DerivedModel public ctor should have a base initializer");
+            Assert.IsTrue(initializer!.IsBase, "Initializer should be a base call");
+
+            // None of the base initializer arguments should reference the old WrapperModel param.
+            var initializerArgNames = initializer.Arguments
+                .OfType<VariableExpression>()
+                .Select(v => v.Declaration.RequestedName)
+                .ToList();
+
+            Assert.IsFalse(
+                initializerArgNames.Contains("wrapper"),
+                $"Base initializer should NOT pass 'wrapper' (WrapperModel). Args: [{string.Join(", ", initializerArgNames)}]");
+            Assert.IsTrue(
+                initializerArgNames.Contains("wrapperValue"),
+                $"Base initializer should pass the flattened 'wrapperValue'. Args: [{string.Join(", ", initializerArgNames)}]");
+        }
+
         private class ObsoletePropertyCustomCodeView : TypeProvider
         {
             private readonly TypeProvider _enclosingType;

@@ -11,9 +11,14 @@
 - `ResponseEventStream` builder for full control over SSE event generation with automatic `sequenceNumber`, `outputIndex`, `contentIndex`, and `itemId` tracking.
 - `ResponseEventStream` convenience generators for emitting complete output items in one call:
   - `OutputItemMessage(string text)` — emits a full text message output item (handles all inner SSE events automatically)
+  - `OutputItemMessage(string text, IEnumerable<Annotation> annotations)` — emits a text message with file annotations
   - `OutputItemMessage(IAsyncEnumerable<string> tokens, CancellationToken)` — streams tokens as `response.output_text.delta` events
   - `OutputItemFunctionCall(name, callId, arguments)` — emits a complete function call output item
+  - `OutputItemFunctionCallOutput(callId, output)` — emits a function call output (no deltas)
   - `OutputItemReasoningItem(...)` — emits a reasoning output item
+  - `OutputItemImageGenCall(resultBase64)` — emits an image generation result with status transitions
+  - `OutputItemStructuredOutputs(output)` — emits an arbitrary structured JSON output item
+  - One-liner convenience generators for all remaining simple output item types: computer calls, local shell calls, function shell calls, apply-patch calls, custom tool call outputs, MCP approval requests/responses, and compaction
 - `ResponseContext` with `GetInputItemsAsync()` (returns `IReadOnlyList<Item>`) and `GetInputTextAsync()` convenience for accessing resolved input items and text content.
 - `IEnumerable<Item>.GetInputText()` extension method for extracting text from any sequence of input items.
 - `CreateResponse.GetInputExpanded()` extension for advanced access to expanded input items as `OutputItem` types.

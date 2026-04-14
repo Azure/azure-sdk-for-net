@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.Hci.Models
     public readonly partial struct EceSecret : IEquatable<EceSecret>
     {
         private readonly string _value;
+        /// <summary> AzureStackLCMUserCredential used for LCM operations for AzureStackHCI cluster. </summary>
+        private const string AzureStackLcmUserCredentialValue = "AzureStackLCMUserCredential";
+        /// <summary> DefaultARBApplication used to manage Azure Arc resource bridge (ARB) for AzureStackHCI cluster. </summary>
+        private const string DefaultArbApplicationValue = "DefaultARBApplication";
+        /// <summary> LocalAdminCredential used for admin operations for AzureStackHCI cluster. </summary>
+        private const string LocalAdminCredentialValue = "LocalAdminCredential";
+        /// <summary> WitnessStorageKey used for setting up a cloud witness for AzureStackHCI cluster. </summary>
+        private const string WitnessStorageKeyValue = "WitnessStorageKey";
 
         /// <summary> Initializes a new instance of <see cref="EceSecret"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public EceSecret(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AzureStackLcmUserCredentialValue = "AzureStackLCMUserCredential";
-        private const string DefaultArbApplicationValue = "DefaultARBApplication";
-        private const string LocalAdminCredentialValue = "LocalAdminCredential";
-        private const string WitnessStorageKeyValue = "WitnessStorageKey";
+            _value = value;
+        }
 
         /// <summary> AzureStackLCMUserCredential used for LCM operations for AzureStackHCI cluster. </summary>
         public static EceSecret AzureStackLcmUserCredential { get; } = new EceSecret(AzureStackLcmUserCredentialValue);
+
         /// <summary> DefaultARBApplication used to manage Azure Arc resource bridge (ARB) for AzureStackHCI cluster. </summary>
         public static EceSecret DefaultArbApplication { get; } = new EceSecret(DefaultArbApplicationValue);
+
         /// <summary> LocalAdminCredential used for admin operations for AzureStackHCI cluster. </summary>
         public static EceSecret LocalAdminCredential { get; } = new EceSecret(LocalAdminCredentialValue);
+
         /// <summary> WitnessStorageKey used for setting up a cloud witness for AzureStackHCI cluster. </summary>
         public static EceSecret WitnessStorageKey { get; } = new EceSecret(WitnessStorageKeyValue);
+
         /// <summary> Determines if two <see cref="EceSecret"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EceSecret left, EceSecret right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="EceSecret"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EceSecret left, EceSecret right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="EceSecret"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="EceSecret"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator EceSecret(string value) => new EceSecret(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="EceSecret"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator EceSecret?(string value) => value == null ? null : new EceSecret(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EceSecret other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(EceSecret other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

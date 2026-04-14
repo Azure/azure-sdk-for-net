@@ -972,6 +972,20 @@ namespace Azure.AI.VoiceLive
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.RequestTextContentPart>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.RequestTextContentPart>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class RequireApprovalOption : System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.RequireApprovalOption>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.RequireApprovalOption>
+    {
+        public RequireApprovalOption(Azure.AI.VoiceLive.MCPApprovalType approvalType) { }
+        public RequireApprovalOption(System.Collections.Generic.IList<string> alwaysRequireApproval = null, System.Collections.Generic.IList<string> neverRequireApproval = null) { }
+        public System.Collections.Generic.IList<string> AlwaysRequireApproval { get { throw null; } }
+        public Azure.AI.VoiceLive.MCPApprovalType? ApprovalType { get { throw null; } }
+        public System.Collections.Generic.IList<string> NeverRequireApproval { get { throw null; } }
+        public static implicit operator Azure.AI.VoiceLive.RequireApprovalOption (Azure.AI.VoiceLive.MCPApprovalType approvalType) { throw null; }
+        Azure.AI.VoiceLive.RequireApprovalOption System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.RequireApprovalOption>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.RequireApprovalOption>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.VoiceLive.RequireApprovalOption System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.RequireApprovalOption>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.RequireApprovalOption>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.RequireApprovalOption>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class ResponseAudioContentPart : Azure.AI.VoiceLive.VoiceLiveContentPart, System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.ResponseAudioContentPart>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.ResponseAudioContentPart>
     {
         internal ResponseAudioContentPart() { }
@@ -2366,7 +2380,7 @@ namespace Azure.AI.VoiceLive
         public System.Collections.Generic.IList<string> AllowedTools { get { throw null; } }
         public string Authorization { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Headers { get { throw null; } }
-        public System.BinaryData RequireApproval { get { throw null; } set { } }
+        public Azure.AI.VoiceLive.RequireApprovalOption RequireApproval { get { throw null; } set { } }
         public string ServerLabel { get { throw null; } set { } }
         public string ServerUrl { get { throw null; } set { } }
         protected override Azure.AI.VoiceLive.VoiceLiveToolDefinition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
