@@ -18,14 +18,17 @@ namespace Azure.ResourceManager.Quota
     {
         private readonly QuotaOperation _client;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of QuotaOperationGetAllCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The QuotaOperation client used to send requests. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public QuotaOperationGetAllCollectionResultOfT(QuotaOperation client, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public QuotaOperationGetAllCollectionResultOfT(QuotaOperation client, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of QuotaOperationGetAllCollectionResultOfT as an enumerable collection. </summary>
@@ -59,7 +62,7 @@ namespace Azure.ResourceManager.Quota
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _context) : _client.CreateGetAllRequest(_context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableQuotaTenantResource.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

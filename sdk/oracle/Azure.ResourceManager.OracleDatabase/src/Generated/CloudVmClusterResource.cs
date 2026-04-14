@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -562,7 +562,8 @@ namespace Azure.ResourceManager.OracleDatabase
                 Id.ResourceGroupName,
                 Id.Name,
                 PrivateIPAddressesContent.ToRequestContent(content),
-                context);
+                context,
+                "CloudVmClusterResource.GetPrivateIPAddresses");
         }
 
         /// <summary>
@@ -604,7 +605,8 @@ namespace Azure.ResourceManager.OracleDatabase
                 Id.ResourceGroupName,
                 Id.Name,
                 PrivateIPAddressesContent.ToRequestContent(content),
-                context);
+                context,
+                "CloudVmClusterResource.GetPrivateIPAddresses");
         }
 
         /// <summary>

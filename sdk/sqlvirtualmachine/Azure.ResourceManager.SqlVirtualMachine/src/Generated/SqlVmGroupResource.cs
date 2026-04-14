@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -438,7 +438,13 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SqlVmData, SqlVmResource>(new SqlVirtualMachinesGetSqlVmsBySqlVmGroupAsyncCollectionResultOfT(_sqlVirtualMachinesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new SqlVmResource(Client, data));
+            return new AsyncPageableWrapper<SqlVmData, SqlVmResource>(new SqlVirtualMachinesGetSqlVmsBySqlVmGroupAsyncCollectionResultOfT(
+                _sqlVirtualMachinesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "SqlVmGroupResource.GetSqlVmsBySqlVmGroup"), data => new SqlVmResource(Client, data));
         }
 
         /// <summary>
@@ -470,7 +476,13 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SqlVmData, SqlVmResource>(new SqlVirtualMachinesGetSqlVmsBySqlVmGroupCollectionResultOfT(_sqlVirtualMachinesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new SqlVmResource(Client, data));
+            return new PageableWrapper<SqlVmData, SqlVmResource>(new SqlVirtualMachinesGetSqlVmsBySqlVmGroupCollectionResultOfT(
+                _sqlVirtualMachinesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "SqlVmGroupResource.GetSqlVmsBySqlVmGroup"), data => new SqlVmResource(Client, data));
         }
 
         /// <summary> Add a tag to the current resource. </summary>

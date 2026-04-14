@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -534,7 +534,13 @@ namespace Azure.ResourceManager.DevCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new SkusGetByProjectAsyncCollectionResultOfT(_skusRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new SkusGetByProjectAsyncCollectionResultOfT(
+                _skusRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DevCenterProjectResource.GetByProject");
         }
 
         /// <summary>
@@ -566,7 +572,13 @@ namespace Azure.ResourceManager.DevCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new SkusGetByProjectCollectionResultOfT(_skusRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new SkusGetByProjectCollectionResultOfT(
+                _skusRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DevCenterProjectResource.GetByProject");
         }
 
         /// <summary> Add a tag to the current resource. </summary>

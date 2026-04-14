@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -310,7 +310,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 Id.ResourceGroupName,
                 _vaultName,
                 filter,
-                context), data => new BackupProtectionPolicyResource(Client, data));
+                context,
+                "BackupProtectionPolicyCollection.GetAll"), data => new BackupProtectionPolicyResource(Client, data));
         }
 
         /// <summary>
@@ -346,7 +347,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 Id.ResourceGroupName,
                 _vaultName,
                 filter,
-                context), data => new BackupProtectionPolicyResource(Client, data));
+                context,
+                "BackupProtectionPolicyCollection.GetAll"), data => new BackupProtectionPolicyResource(Client, data));
         }
 
         /// <summary>

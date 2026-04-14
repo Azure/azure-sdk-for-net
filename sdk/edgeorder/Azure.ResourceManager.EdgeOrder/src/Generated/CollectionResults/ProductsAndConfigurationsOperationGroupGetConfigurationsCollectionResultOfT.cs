@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.EdgeOrder
         private readonly RequestContent _content;
         private readonly string _skipToken;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of ProductsAndConfigurationsOperationGroupGetConfigurationsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The ProductsAndConfigurationsOperationGroup client used to send requests. </param>
@@ -28,13 +29,15 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="skipToken"> $skipToken is supported on list of configurations, which provides the next page in the list of configurations. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ProductsAndConfigurationsOperationGroupGetConfigurationsCollectionResultOfT(ProductsAndConfigurationsOperationGroup client, Guid subscriptionId, RequestContent content, string skipToken, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public ProductsAndConfigurationsOperationGroupGetConfigurationsCollectionResultOfT(ProductsAndConfigurationsOperationGroup client, Guid subscriptionId, RequestContent content, string skipToken, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _content = content;
             _skipToken = skipToken;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of ProductsAndConfigurationsOperationGroupGetConfigurationsCollectionResultOfT as an enumerable collection. </summary>
@@ -67,7 +70,7 @@ namespace Azure.ResourceManager.EdgeOrder
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetConfigurationsRequest(nextLink, _subscriptionId, _content, _skipToken, _context) : _client.CreateGetConfigurationsRequest(_subscriptionId, _content, _skipToken, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableEdgeOrderSubscriptionResource.GetConfigurations");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

@@ -303,7 +303,13 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BarData, BarResource>(new BarsGetAllAsyncCollectionResultOfT(_barsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new BarResource(Client, data));
+            return new AsyncPageableWrapper<BarData, BarResource>(new BarsGetAllAsyncCollectionResultOfT(
+                _barsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "BarCollection.GetAll"), data => new BarResource(Client, data));
         }
 
         /// <summary>
@@ -331,7 +337,13 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BarData, BarResource>(new BarsGetAllCollectionResultOfT(_barsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new BarResource(Client, data));
+            return new PageableWrapper<BarData, BarResource>(new BarsGetAllCollectionResultOfT(
+                _barsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "BarCollection.GetAll"), data => new BarResource(Client, data));
         }
 
         /// <summary>

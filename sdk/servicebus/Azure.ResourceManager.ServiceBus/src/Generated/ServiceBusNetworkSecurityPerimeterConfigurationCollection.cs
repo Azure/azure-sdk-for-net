@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ServiceBus
         {
             if (id.ResourceType != ServiceBusNamespaceResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ServiceBusNamespaceResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ServiceBusNamespaceResource.ResourceType), nameof(id));
             }
         }
 
@@ -181,7 +181,13 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ServiceBusNetworkSecurityPerimeterConfigurationData, ServiceBusNetworkSecurityPerimeterConfigurationResource>(new NetworkSecurityPerimeterConfigurationGetAllAsyncCollectionResultOfT(_networkSecurityPerimeterConfigurationRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ServiceBusNetworkSecurityPerimeterConfigurationResource(Client, data));
+            return new AsyncPageableWrapper<ServiceBusNetworkSecurityPerimeterConfigurationData, ServiceBusNetworkSecurityPerimeterConfigurationResource>(new NetworkSecurityPerimeterConfigurationGetAllAsyncCollectionResultOfT(
+                _networkSecurityPerimeterConfigurationRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ServiceBusNetworkSecurityPerimeterConfigurationCollection.GetAll"), data => new ServiceBusNetworkSecurityPerimeterConfigurationResource(Client, data));
         }
 
         /// <summary>
@@ -209,7 +215,13 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ServiceBusNetworkSecurityPerimeterConfigurationData, ServiceBusNetworkSecurityPerimeterConfigurationResource>(new NetworkSecurityPerimeterConfigurationGetAllCollectionResultOfT(_networkSecurityPerimeterConfigurationRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ServiceBusNetworkSecurityPerimeterConfigurationResource(Client, data));
+            return new PageableWrapper<ServiceBusNetworkSecurityPerimeterConfigurationData, ServiceBusNetworkSecurityPerimeterConfigurationResource>(new NetworkSecurityPerimeterConfigurationGetAllCollectionResultOfT(
+                _networkSecurityPerimeterConfigurationRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ServiceBusNetworkSecurityPerimeterConfigurationCollection.GetAll"), data => new ServiceBusNetworkSecurityPerimeterConfigurationResource(Client, data));
         }
 
         /// <summary>

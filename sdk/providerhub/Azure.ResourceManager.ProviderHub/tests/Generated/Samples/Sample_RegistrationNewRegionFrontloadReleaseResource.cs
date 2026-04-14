@@ -91,7 +91,7 @@ SubscriptionId = "e4eae963-2d15-43e6-a097-98bd75b33edd",
                 new Uri("https://resource-endpoint.com/"),
                 new string[] { "East US" },
                 new string[] { "<feature flag>" },
-                default,
+                (FeaturesPolicy?)null,
                 XmlConvert.ToTimeSpan("PT20S"),
                 ProviderEndpointType.Production,
                 new ProviderDstsConfiguration("resourceprovider")

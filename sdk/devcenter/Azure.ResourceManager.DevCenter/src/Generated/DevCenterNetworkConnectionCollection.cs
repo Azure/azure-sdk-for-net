@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -295,7 +295,13 @@ namespace Azure.ResourceManager.DevCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DevCenterNetworkConnectionData, DevCenterNetworkConnectionResource>(new NetworkConnectionsGetByResourceGroupAsyncCollectionResultOfT(_networkConnectionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, top, context), data => new DevCenterNetworkConnectionResource(Client, data));
+            return new AsyncPageableWrapper<DevCenterNetworkConnectionData, DevCenterNetworkConnectionResource>(new NetworkConnectionsGetByResourceGroupAsyncCollectionResultOfT(
+                _networkConnectionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                top,
+                context,
+                "DevCenterNetworkConnectionCollection.GetAll"), data => new DevCenterNetworkConnectionResource(Client, data));
         }
 
         /// <summary>
@@ -324,7 +330,13 @@ namespace Azure.ResourceManager.DevCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DevCenterNetworkConnectionData, DevCenterNetworkConnectionResource>(new NetworkConnectionsGetByResourceGroupCollectionResultOfT(_networkConnectionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, top, context), data => new DevCenterNetworkConnectionResource(Client, data));
+            return new PageableWrapper<DevCenterNetworkConnectionData, DevCenterNetworkConnectionResource>(new NetworkConnectionsGetByResourceGroupCollectionResultOfT(
+                _networkConnectionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                top,
+                context,
+                "DevCenterNetworkConnectionCollection.GetAll"), data => new DevCenterNetworkConnectionResource(Client, data));
         }
 
         /// <summary>

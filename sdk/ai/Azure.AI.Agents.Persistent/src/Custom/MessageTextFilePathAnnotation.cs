@@ -25,12 +25,11 @@ public partial class MessageTextFilePathAnnotation : MessageTextAnnotation
     /// <param name="text"> The textual content associated with this text annotation item. </param>
     /// <param name="internalDetails"> A URL for the file that's generated when the agent used the code_interpreter tool to generate a file. </param>
     /// <exception cref="ArgumentNullException"> <paramref name="text"/> or <paramref name="internalDetails"/> is null. </exception>
-    internal MessageTextFilePathAnnotation(string text, InternalMessageTextFilePathDetails internalDetails) : base(text)
+    internal MessageTextFilePathAnnotation(string text, InternalMessageTextFilePathDetails internalDetails) : base("file_path", text)
     {
         Argument.AssertNotNull(text, nameof(text));
         Argument.AssertNotNull(internalDetails, nameof(internalDetails));
 
-        Type = "file_path";
         InternalDetails = internalDetails;
     }
 }

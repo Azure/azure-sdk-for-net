@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Storage
         {
             if (id.ResourceType != StorageAccountResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, StorageAccountResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, StorageAccountResource.ResourceType), nameof(id));
             }
         }
 
@@ -299,7 +299,8 @@ namespace Azure.ResourceManager.Storage
                 maxpagesize,
                 filter,
                 include?.ToString(),
-                context), data => new StorageAccountLocalUserResource(Client, data));
+                context,
+                "StorageAccountLocalUserCollection.GetAll"), data => new StorageAccountLocalUserResource(Client, data));
         }
 
         /// <summary>
@@ -338,7 +339,8 @@ namespace Azure.ResourceManager.Storage
                 maxpagesize,
                 filter,
                 include?.ToString(),
-                context), data => new StorageAccountLocalUserResource(Client, data));
+                context,
+                "StorageAccountLocalUserCollection.GetAll"), data => new StorageAccountLocalUserResource(Client, data));
         }
 
         /// <summary>

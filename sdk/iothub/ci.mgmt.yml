@@ -10,4 +10,3 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.IotHub
       safeName: AzureResourceManagerIotHub
-    TestDependsOnDependency: Azure.ResourceManager.IotHub

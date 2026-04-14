@@ -10,6 +10,8 @@
 
 ### Other Changes
 
+- Updated dependency from `Azure.Identity` to `Azure.Core` directly, as the `Azure.Identity` types moved to `Azure.Core`.
+
 ## 1.5.0 (2026-04-02)
 
 ### Features Added

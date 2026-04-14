@@ -33,7 +33,14 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
             Assert.That(handler, Is.Not.Null);
         }
 
-        #region Snippet:Responses_Sample4_WeatherHandler
+        [Test]
+        public void Implement_WeatherHandlerFullControl()
+        {
+            var handler = new WeatherHandlerFullControl();
+            Assert.That(handler, Is.Not.Null);
+        }
+
+        #region Snippet:Responses_Sample4_WeatherHandlerConvenience
 
         public class WeatherHandler : ResponseHandler
         {
@@ -46,7 +53,56 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
                 var stream = new ResponseEventStream(context, request);
 
                 // Check if the input contains a function call output (turn 2)
-                var inputItems = request.GetInputExpanded();
+                var inputItems = await context.GetInputItemsAsync(cancellationToken: cancellationToken);
+                var toolOutput = inputItems.OfType<FunctionCallOutputItemParam>().FirstOrDefault();
+
+                if (toolOutput is not null)
+                {
+                    // Turn 2: function output received — return the weather as a text message
+                    var weatherJson = toolOutput.Output is not null
+                        ? JsonSerializer.Deserialize<string>(toolOutput.Output) ?? "{}"
+                        : "{}";
+
+                    yield return stream.EmitCreated();
+                    yield return stream.EmitInProgress();
+
+                    foreach (var evt in stream.OutputItemMessage($"The weather is: {weatherJson}"))
+                        yield return evt;
+
+                    yield return stream.EmitCompleted();
+                }
+                else
+                {
+                    // Turn 1: emit a function call for "get_weather"
+                    yield return stream.EmitCreated();
+                    yield return stream.EmitInProgress();
+
+                    var arguments = JsonSerializer.Serialize(
+                        new { location = "Seattle", unit = "fahrenheit" });
+                    foreach (var evt in stream.OutputItemFunctionCall("get_weather", "call_weather_1", arguments))
+                        yield return evt;
+
+                    yield return stream.EmitCompleted();
+                }
+            }
+        }
+
+        #endregion
+
+        #region Snippet:Responses_Sample4_WeatherHandler
+
+        public class WeatherHandlerFullControl : ResponseHandler
+        {
+            public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
+                CreateResponse request,
+                ResponseContext context,
+                [EnumeratorCancellation] CancellationToken cancellationToken)
+            {
+                await Task.CompletedTask;
+                var stream = new ResponseEventStream(context, request);
+
+                // Check if the input contains a function call output (turn 2)
+                var inputItems = await context.GetInputItemsAsync(cancellationToken: cancellationToken);
                 var toolOutput = inputItems.OfType<FunctionCallOutputItemParam>().FirstOrDefault();
 
                 if (toolOutput is not null)
@@ -67,9 +123,9 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
 
                     var reply = $"The weather is: {weatherJson}";
                     yield return text.EmitDelta(reply);
-                    yield return text.EmitDone(reply);
+                    yield return text.EmitTextDone(reply);
 
-                    yield return message.EmitContentDone(text);
+                    yield return text.EmitDone();
                     yield return message.EmitDone();
 
                     yield return stream.EmitCompleted();
