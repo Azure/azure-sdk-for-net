@@ -15,66 +15,66 @@ using Azure.ResourceManager.Cdn;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> compare deployment versions request parameter. </summary>
-    public partial class CompareDeploymentVersionsParameter : IJsonModel<CompareDeploymentVersionsParameter>
+    public partial class CompareDeploymentVersionsContent : IJsonModel<CompareDeploymentVersionsContent>
     {
-        /// <summary> Initializes a new instance of <see cref="CompareDeploymentVersionsParameter"/> for deserialization. </summary>
-        internal CompareDeploymentVersionsParameter()
+        /// <summary> Initializes a new instance of <see cref="CompareDeploymentVersionsContent"/> for deserialization. </summary>
+        internal CompareDeploymentVersionsContent()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CompareDeploymentVersionsParameter PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual CompareDeploymentVersionsContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CompareDeploymentVersionsParameter>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CompareDeploymentVersionsContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeCompareDeploymentVersionsParameter(document.RootElement, options);
+                        return DeserializeCompareDeploymentVersionsContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CompareDeploymentVersionsParameter)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CompareDeploymentVersionsContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CompareDeploymentVersionsParameter>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CompareDeploymentVersionsContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(CompareDeploymentVersionsParameter)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CompareDeploymentVersionsContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CompareDeploymentVersionsParameter>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<CompareDeploymentVersionsContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CompareDeploymentVersionsParameter IPersistableModel<CompareDeploymentVersionsParameter>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        CompareDeploymentVersionsContent IPersistableModel<CompareDeploymentVersionsContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CompareDeploymentVersionsParameter>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CompareDeploymentVersionsContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="compareDeploymentVersionsParameter"> The <see cref="CompareDeploymentVersionsParameter"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(CompareDeploymentVersionsParameter compareDeploymentVersionsParameter)
+        /// <param name="compareDeploymentVersionsContent"> The <see cref="CompareDeploymentVersionsContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(CompareDeploymentVersionsContent compareDeploymentVersionsContent)
         {
-            if (compareDeploymentVersionsParameter == null)
+            if (compareDeploymentVersionsContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(compareDeploymentVersionsParameter, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(compareDeploymentVersionsContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<CompareDeploymentVersionsParameter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CompareDeploymentVersionsContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CompareDeploymentVersionsParameter>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CompareDeploymentVersionsContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CompareDeploymentVersionsParameter)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CompareDeploymentVersionsContent)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("compareTo"u8);
             writer.WriteStringValue(CompareTo);
@@ -111,24 +111,24 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CompareDeploymentVersionsParameter IJsonModel<CompareDeploymentVersionsParameter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        CompareDeploymentVersionsContent IJsonModel<CompareDeploymentVersionsContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CompareDeploymentVersionsParameter JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual CompareDeploymentVersionsContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CompareDeploymentVersionsParameter>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CompareDeploymentVersionsContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CompareDeploymentVersionsParameter)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CompareDeploymentVersionsContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCompareDeploymentVersionsParameter(document.RootElement, options);
+            return DeserializeCompareDeploymentVersionsContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static CompareDeploymentVersionsParameter DeserializeCompareDeploymentVersionsParameter(JsonElement element, ModelReaderWriterOptions options)
+        internal static CompareDeploymentVersionsContent DeserializeCompareDeploymentVersionsContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CompareDeploymentVersionsParameter(compareTo, additionalBinaryDataProperties);
+            return new CompareDeploymentVersionsContent(compareTo, additionalBinaryDataProperties);
         }
     }
 }

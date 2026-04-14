@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// Deployment change under the profile
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DeploymentVersionRouteChange"/>, <see cref="DeploymentVersionAFDOriginGroupChange"/>, <see cref="DeploymentVersionAFDOriginChange"/>, <see cref="DeploymentVersionRuleSetChange"/>, <see cref="DeploymentVersionRuleChange"/>, and <see cref="DeploymentVersionSecurityPolicyChange"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DeploymentVersionRouteChange"/>, <see cref="DeploymentVersionAfdOriginGroupChange"/>, <see cref="DeploymentVersionAfdOriginChange"/>, <see cref="DeploymentVersionRuleSetChange"/>, <see cref="DeploymentVersionRuleChange"/>, and <see cref="DeploymentVersionSecurityPolicyChange"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownDeploymentVersionChange))]
     public abstract partial class DeploymentVersionChange : IJsonModel<DeploymentVersionChange>
@@ -143,9 +143,9 @@ namespace Azure.ResourceManager.Cdn.Models
                     case "Microsoft.Cdn/profiles/afdEndpoints/routes":
                         return DeploymentVersionRouteChange.DeserializeDeploymentVersionRouteChange(element, options);
                     case "Microsoft.Cdn/profiles/originGroups":
-                        return DeploymentVersionAFDOriginGroupChange.DeserializeDeploymentVersionAFDOriginGroupChange(element, options);
+                        return DeploymentVersionAfdOriginGroupChange.DeserializeDeploymentVersionAfdOriginGroupChange(element, options);
                     case "Microsoft.Cdn/profiles/originGroups/origins":
-                        return DeploymentVersionAFDOriginChange.DeserializeDeploymentVersionAFDOriginChange(element, options);
+                        return DeploymentVersionAfdOriginChange.DeserializeDeploymentVersionAfdOriginChange(element, options);
                     case "Microsoft.Cdn/profiles/ruleSets":
                         return DeploymentVersionRuleSetChange.DeserializeDeploymentVersionRuleSetChange(element, options);
                     case "Microsoft.Cdn/profiles/ruleSets/rules":

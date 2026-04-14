@@ -13,21 +13,21 @@ using Azure.ResourceManager.Cdn;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Deployment change of the origin group under the profile. </summary>
-    public partial class DeploymentVersionAFDOriginGroupChange : DeploymentVersionChange
+    public partial class DeploymentVersionAfdOriginGroupChange : DeploymentVersionChange
     {
-        /// <summary> Initializes a new instance of <see cref="DeploymentVersionAFDOriginGroupChange"/>. </summary>
-        internal DeploymentVersionAFDOriginGroupChange() : base(PreviewSupportedResourceType.MicrosoftCdnProfilesOriginGroups)
+        /// <summary> Initializes a new instance of <see cref="DeploymentVersionAfdOriginGroupChange"/>. </summary>
+        internal DeploymentVersionAfdOriginGroupChange() : base(PreviewSupportedResourceType.MicrosoftCdnProfilesOriginGroups)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeploymentVersionAFDOriginGroupChange"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeploymentVersionAfdOriginGroupChange"/>. </summary>
         /// <param name="resourceType"> Resource type supported by preview. </param>
         /// <param name="resourceId"></param>
         /// <param name="resourceName"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="previousProperties"> The JSON object that contains the properties of the origin group. </param>
         /// <param name="currentProperties"> The JSON object that contains the properties of the origin group. </param>
-        internal DeploymentVersionAFDOriginGroupChange(PreviewSupportedResourceType resourceType, ResourceIdentifier resourceId, string resourceName, IDictionary<string, BinaryData> additionalBinaryDataProperties, FrontDoorOriginGroupProperties previousProperties, FrontDoorOriginGroupProperties currentProperties) : base(resourceType, resourceId, resourceName, additionalBinaryDataProperties)
+        internal DeploymentVersionAfdOriginGroupChange(PreviewSupportedResourceType resourceType, ResourceIdentifier resourceId, string resourceName, IDictionary<string, BinaryData> additionalBinaryDataProperties, FrontDoorOriginGroupProperties previousProperties, FrontDoorOriginGroupProperties currentProperties) : base(resourceType, resourceId, resourceName, additionalBinaryDataProperties)
         {
             PreviousProperties = previousProperties;
             CurrentProperties = currentProperties;

@@ -1437,25 +1437,25 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> compare deployment versions request parameter. </summary>
         /// <param name="compareTo"> the deployment version name to be compared to. </param>
-        /// <returns> A new <see cref="Models.CompareDeploymentVersionsParameter"/> instance for mocking. </returns>
-        public static CompareDeploymentVersionsParameter CompareDeploymentVersionsParameter(string compareTo = default)
+        /// <returns> A new <see cref="Models.CompareDeploymentVersionsContent"/> instance for mocking. </returns>
+        public static CompareDeploymentVersionsContent CompareDeploymentVersionsContent(string compareTo = default)
         {
-            return new CompareDeploymentVersionsParameter(compareTo, additionalBinaryDataProperties: null);
+            return new CompareDeploymentVersionsContent(compareTo, additionalBinaryDataProperties: null);
         }
 
         /// <summary> compare deployment versions response. </summary>
         /// <param name="value"> The difference between two deployment versions. </param>
-        /// <returns> A new <see cref="Models.CompareDeploymentVersionsResponse"/> instance for mocking. </returns>
-        public static CompareDeploymentVersionsResponse CompareDeploymentVersionsResponse(IEnumerable<DeploymentVersionChange> value = default)
+        /// <returns> A new <see cref="Models.CompareDeploymentVersionsResult"/> instance for mocking. </returns>
+        public static CompareDeploymentVersionsResult CompareDeploymentVersionsResult(IEnumerable<DeploymentVersionChange> value = default)
         {
             value ??= new ChangeTrackingList<DeploymentVersionChange>();
 
-            return new CompareDeploymentVersionsResponse(value.ToList(), additionalBinaryDataProperties: null);
+            return new CompareDeploymentVersionsResult(value.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary>
         /// Deployment change under the profile
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DeploymentVersionRouteChange"/>, <see cref="Models.DeploymentVersionAFDOriginGroupChange"/>, <see cref="Models.DeploymentVersionAFDOriginChange"/>, <see cref="Models.DeploymentVersionRuleSetChange"/>, <see cref="Models.DeploymentVersionRuleChange"/>, and <see cref="Models.DeploymentVersionSecurityPolicyChange"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DeploymentVersionRouteChange"/>, <see cref="Models.DeploymentVersionAfdOriginGroupChange"/>, <see cref="Models.DeploymentVersionAfdOriginChange"/>, <see cref="Models.DeploymentVersionRuleSetChange"/>, <see cref="Models.DeploymentVersionRuleChange"/>, and <see cref="Models.DeploymentVersionSecurityPolicyChange"/>.
         /// </summary>
         /// <param name="resourceType"> Resource type supported by preview. </param>
         /// <param name="resourceId"></param>
@@ -1488,10 +1488,10 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="resourceName"></param>
         /// <param name="previousProperties"> The JSON object that contains the properties of the origin group. </param>
         /// <param name="currentProperties"> The JSON object that contains the properties of the origin group. </param>
-        /// <returns> A new <see cref="Models.DeploymentVersionAFDOriginGroupChange"/> instance for mocking. </returns>
-        public static DeploymentVersionAFDOriginGroupChange DeploymentVersionAFDOriginGroupChange(ResourceIdentifier resourceId = default, string resourceName = default, FrontDoorOriginGroupProperties previousProperties = default, FrontDoorOriginGroupProperties currentProperties = default)
+        /// <returns> A new <see cref="Models.DeploymentVersionAfdOriginGroupChange"/> instance for mocking. </returns>
+        public static DeploymentVersionAfdOriginGroupChange DeploymentVersionAfdOriginGroupChange(ResourceIdentifier resourceId = default, string resourceName = default, FrontDoorOriginGroupProperties previousProperties = default, FrontDoorOriginGroupProperties currentProperties = default)
         {
-            return new DeploymentVersionAFDOriginGroupChange(
+            return new DeploymentVersionAfdOriginGroupChange(
                 PreviewSupportedResourceType.MicrosoftCdnProfilesOriginGroups,
                 resourceId,
                 resourceName,
@@ -1505,10 +1505,10 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="resourceName"></param>
         /// <param name="previousProperties"> The JSON object that contains the properties of the origin. </param>
         /// <param name="currentProperties"> The JSON object that contains the properties of the origin. </param>
-        /// <returns> A new <see cref="Models.DeploymentVersionAFDOriginChange"/> instance for mocking. </returns>
-        public static DeploymentVersionAFDOriginChange DeploymentVersionAFDOriginChange(ResourceIdentifier resourceId = default, string resourceName = default, FrontDoorOriginProperties previousProperties = default, FrontDoorOriginProperties currentProperties = default)
+        /// <returns> A new <see cref="Models.DeploymentVersionAfdOriginChange"/> instance for mocking. </returns>
+        public static DeploymentVersionAfdOriginChange DeploymentVersionAfdOriginChange(ResourceIdentifier resourceId = default, string resourceName = default, FrontDoorOriginProperties previousProperties = default, FrontDoorOriginProperties currentProperties = default)
         {
-            return new DeploymentVersionAFDOriginChange(
+            return new DeploymentVersionAfdOriginChange(
                 PreviewSupportedResourceType.MicrosoftCdnProfilesOriginGroupsOrigins,
                 resourceId,
                 resourceName,
