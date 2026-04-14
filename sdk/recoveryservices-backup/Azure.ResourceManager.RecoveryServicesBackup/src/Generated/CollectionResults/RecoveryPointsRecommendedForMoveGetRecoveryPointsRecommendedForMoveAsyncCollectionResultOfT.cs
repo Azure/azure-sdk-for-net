@@ -26,6 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         private readonly string _protectedItemName;
         private readonly RequestContent _content;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of RecoveryPointsRecommendedForMoveGetRecoveryPointsRecommendedForMoveAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The RecoveryPointsRecommendedForMove client used to send requests. </param>
@@ -37,7 +38,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="protectedItemName"> Backed up item name whose details are to be fetched. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public RecoveryPointsRecommendedForMoveGetRecoveryPointsRecommendedForMoveAsyncCollectionResultOfT(RecoveryPointsRecommendedForMove client, string subscriptionId, string resourceGroupName, string vaultName, string fabricName, string containerName, string protectedItemName, RequestContent content, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public RecoveryPointsRecommendedForMoveGetRecoveryPointsRecommendedForMoveAsyncCollectionResultOfT(RecoveryPointsRecommendedForMove client, string subscriptionId, string resourceGroupName, string vaultName, string fabricName, string containerName, string protectedItemName, RequestContent content, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -48,6 +50,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             _protectedItemName = protectedItemName;
             _content = content;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of RecoveryPointsRecommendedForMoveGetRecoveryPointsRecommendedForMoveAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -81,7 +84,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetRecoveryPointsRecommendedForMoveRequest(nextLink, _subscriptionId, _resourceGroupName, _vaultName, _fabricName, _containerName, _protectedItemName, _content, _context) : _client.CreateGetRecoveryPointsRecommendedForMoveRequest(_subscriptionId, _resourceGroupName, _vaultName, _fabricName, _containerName, _protectedItemName, _content, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("BackupProtectedItemResource.GetRecoveryPointsRecommendedForMove");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

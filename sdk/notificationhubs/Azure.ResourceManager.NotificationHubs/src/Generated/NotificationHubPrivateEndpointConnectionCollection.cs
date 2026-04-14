@@ -298,7 +298,13 @@ namespace Azure.ResourceManager.NotificationHubs
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NotificationHubPrivateEndpointConnectionData, NotificationHubPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetAllAsyncCollectionResultOfT(_privateEndpointConnectionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new NotificationHubPrivateEndpointConnectionResource(Client, data));
+            return new AsyncPageableWrapper<NotificationHubPrivateEndpointConnectionData, NotificationHubPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetAllAsyncCollectionResultOfT(
+                _privateEndpointConnectionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "NotificationHubPrivateEndpointConnectionCollection.GetAll"), data => new NotificationHubPrivateEndpointConnectionResource(Client, data));
         }
 
         /// <summary>
@@ -327,7 +333,13 @@ namespace Azure.ResourceManager.NotificationHubs
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NotificationHubPrivateEndpointConnectionData, NotificationHubPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetAllCollectionResultOfT(_privateEndpointConnectionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new NotificationHubPrivateEndpointConnectionResource(Client, data));
+            return new PageableWrapper<NotificationHubPrivateEndpointConnectionData, NotificationHubPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetAllCollectionResultOfT(
+                _privateEndpointConnectionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "NotificationHubPrivateEndpointConnectionCollection.GetAll"), data => new NotificationHubPrivateEndpointConnectionResource(Client, data));
         }
 
         /// <summary>

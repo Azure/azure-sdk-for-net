@@ -51,7 +51,7 @@ AIProjectConnection tripadvisorConnection = await projectClient.Connections.GetC
 OpenApiFunctionDefinition toolDefinition = new(
     name: "tripadvisor",
     specificationBytes: BinaryData.FromBytes(File.ReadAllBytes(filePath)),
-    authentication:  new OpenApiProjectConnectionAuthenticationDetails(new OpenApiProjectConnectionSecurityScheme(
+    authentication: new OpenApiProjectConnectionAuthenticationDetails(new OpenApiProjectConnectionSecurityScheme(
         projectConnectionId: tripadvisorConnection.Id
     ))
 );
@@ -61,7 +61,7 @@ OpenAPITool openapiTool = new(toolDefinition);
 DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a helpful assistant.",
-    Tools = {openapiTool}
+    Tools = { openapiTool }
 };
 ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
     agentName: "myAgent",

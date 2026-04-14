@@ -1,106 +1,187 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable disable
-
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using Azure.Core;
+using Azure.ResourceManager.ProviderHub.Models;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> Model factory for models. </summary>
+    // Backward-compat: restores model factory overloads whose baseline signatures no longer match
+    // the generated constructors after migration. These overloads require custom object wiring, so
+    // they cannot be recovered with TypeSpec decorators alone.
     public static partial class ArmProviderHubModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="Models.CheckinManifestInfo"/>. </summary>
-        /// <param name="isCheckedIn"></param>
-        /// <param name="statusMessage"></param>
-        /// <param name="pullRequest"></param>
-        /// <param name="commitId"></param>
-        /// <returns> A new <see cref="Models.CheckinManifestInfo"/> instance for mocking. </returns>
+        /// <summary> Backward-compat factory method for ProviderRegistrationProperties (34 params). </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static CheckinManifestInfo CheckinManifestInfo(bool isCheckedIn = default, string statusMessage = null, string pullRequest = null, string commitId = null)
-            => new CheckinManifestInfo(isCheckedIn, statusMessage, pullRequest, commitId, null);
+        public static ProviderRegistrationProperties ProviderRegistrationProperties(
+            IEnumerable<string> providerAuthenticationAllowedAudiences = null,
+            IEnumerable<ResourceProviderAuthorization> providerAuthorizations = null,
+            string @namespace = null,
+            IEnumerable<ResourceProviderService> services = null,
+            string serviceName = null,
+            string providerVersion = null,
+            ResourceProviderType? providerType = null,
+            IEnumerable<string> requiredFeatures = null,
+            FeaturesPolicy? requiredFeaturesPolicy = null,
+            ProviderRequestHeaderOptions requestHeaderOptions = null,
+            ResourceProviderManagement management = null,
+            IEnumerable<ResourceProviderCapabilities> capabilities = null,
+            CrossTenantTokenValidation? crossTenantTokenValidation = null,
+            BinaryData metadata = null,
+            TemplateDeploymentOptions templateDeploymentOptions = null,
+            IEnumerable<ResourceProviderEndpoint> globalNotificationEndpoints = null,
+            bool? enableTenantLinkedNotification = null,
+            IEnumerable<ProviderNotification> notifications = null,
+            IEnumerable<FanoutLinkedNotificationRule> linkedNotificationRules = null,
+            AsyncOperationPollingRules asyncOperationPollingRules = null,
+            ProviderDstsConfiguration dstsConfiguration = null,
+            ProviderNotificationOption? notificationOptions = null,
+            IEnumerable<ResourceHydrationAccount> resourceHydrationAccounts = null,
+            IEnumerable<SubscriberSetting> notificationSubscriberSettings = null,
+            IEnumerable<ResourceProviderEndpoint> managementGroupGlobalNotificationEndpoints = null,
+            IEnumerable<string> optionalFeatures = null,
+            BlockActionVerb? resourceGroupLockOptionDuringMoveBlockActionVerb = null,
+            ServiceClientOptionsType? serviceClientOptionsType = null,
+            string legacyNamespace = null,
+            IEnumerable<string> legacyRegistrations = null,
+            string customManifestVersion = null,
+            ProviderHubMetadata providerHubMetadata = null,
+            ProviderHubProvisioningState? provisioningState = null,
+            SubscriptionLifecycleNotificationSpecifications subscriptionLifecycleNotificationSpecifications = null,
+            IEnumerable<string> privateResourceProviderAllowedSubscriptions = null,
+            TokenAuthConfiguration tokenAuthConfiguration = null)
+        {
+            return new ProviderRegistrationProperties(
+                providerAuthenticationAllowedAudiences is null ? null : new ResourceProviderAuthentication(providerAuthenticationAllowedAudiences.ToList(), null),
+                providerAuthorizations?.ToList(),
+                @namespace,
+                services?.ToList(),
+                serviceName,
+                providerVersion,
+                providerType,
+                requiredFeatures?.ToList(),
+                requiredFeaturesPolicy is null ? default : new ProviderFeaturesRule(requiredFeaturesPolicy.Value, null),
+                requestHeaderOptions,
+                management,
+                capabilities?.ToList(),
+                crossTenantTokenValidation,
+                metadata,
+                templateDeploymentOptions,
+                globalNotificationEndpoints?.ToList(),
+                enableTenantLinkedNotification,
+                notifications?.ToList(),
+                linkedNotificationRules?.ToList(),
+                asyncOperationPollingRules is null ? default : new ResourceProviderAuthorizationRules(asyncOperationPollingRules, null),
+                dstsConfiguration,
+                notificationOptions,
+                resourceHydrationAccounts?.ToList(),
+                notificationSubscriberSettings is null ? default : new ResourceProviderManifestNotificationSettings(notificationSubscriberSettings.ToList(), null),
+                managementGroupGlobalNotificationEndpoints?.ToList(),
+                optionalFeatures?.ToList(),
+                resourceGroupLockOptionDuringMoveBlockActionVerb is null ? default : new ResourceProviderManifestResourceGroupLockOptionDuringMove(resourceGroupLockOptionDuringMoveBlockActionVerb, null),
+                serviceClientOptionsType is null ? default : new ResourceProviderManifestResponseOptions(serviceClientOptionsType, null),
+                legacyNamespace,
+                legacyRegistrations?.ToList(),
+                customManifestVersion,
+                additionalBinaryDataProperties: null,
+                providerHubMetadata,
+                provisioningState,
+                subscriptionLifecycleNotificationSpecifications,
+                privateResourceProviderAllowedSubscriptions is null ? default : new PrivateResourceProviderConfiguration(privateResourceProviderAllowedSubscriptions.ToList(), null),
+                tokenAuthConfiguration);
+        }
 
-        /// <summary> Initializes a new instance of <see cref="Models.LinkedOperationRule"/>. </summary>
-        /// <param name="linkedOperation"></param>
-        /// <param name="linkedAction"></param>
-        /// <returns> A new <see cref="Models.LinkedOperationRule"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static LinkedOperationRule LinkedOperationRule(LinkedOperation linkedOperation = default, LinkedAction linkedAction = default)
-            => new LinkedOperationRule(linkedOperation, linkedAction, new ChangeTrackingList<string>(), null);
+        /// <summary> Backward-compat factory method for ResourceProviderManifest (20 params). </summary>
+        public static ResourceProviderManifest ResourceProviderManifest(
+            IEnumerable<string> providerAuthenticationAllowedAudiences = null,
+            IEnumerable<ResourceProviderAuthorization> providerAuthorizations = null,
+            string @namespace = null,
+            IEnumerable<ResourceProviderService> services = null,
+            string serviceName = null,
+            string providerVersion = null,
+            ResourceProviderType? providerType = null,
+            IEnumerable<string> requiredFeatures = null,
+            FeaturesPolicy? requiredFeaturesPolicy = null,
+            ProviderRequestHeaderOptions requestHeaderOptions = null,
+            IEnumerable<ProviderResourceType> resourceTypes = null,
+            ResourceProviderManagement management = null,
+            IEnumerable<ResourceProviderCapabilities> capabilities = null,
+            CrossTenantTokenValidation? crossTenantTokenValidation = null,
+            BinaryData metadata = null,
+            IEnumerable<ResourceProviderEndpoint> globalNotificationEndpoints = null,
+            ReRegisterSubscriptionMetadata reRegisterSubscriptionMetadata = null,
+            bool? isTenantLinkedNotificationEnabled = null,
+            IEnumerable<ProviderNotification> notifications = null,
+            IEnumerable<FanoutLinkedNotificationRule> linkedNotificationRules = null,
+            AsyncOperationPollingRules asyncOperationPollingRules = null)
+        {
+            var resourceProviderAuthorizationRules = asyncOperationPollingRules is null
+                ? default
+                : new ResourceProviderAuthorizationRules(asyncOperationPollingRules, null);
+            return new ResourceProviderManifest(
+                providerAuthenticationAllowedAudiences is null ? null : new ResourceProviderAuthentication(providerAuthenticationAllowedAudiences.ToList(), null),
+                providerAuthorizations?.ToList(),
+                @namespace,
+                services?.ToList(),
+                serviceName,
+                providerVersion,
+                providerType,
+                requiredFeatures?.ToList(),
+                requiredFeaturesPolicy is null ? default : new ProviderFeaturesRule(requiredFeaturesPolicy.Value, null),
+                requestHeaderOptions,
+                resourceTypes?.ToList(),
+                management,
+                capabilities?.ToList(),
+                crossTenantTokenValidation,
+                metadata,
+                globalNotificationEndpoints?.ToList(),
+                reRegisterSubscriptionMetadata,
+                isTenantLinkedNotificationEnabled,
+                notifications?.ToList(),
+                linkedNotificationRules?.ToList(),
+                resourceProviderAuthorizationRules,
+                additionalBinaryDataProperties: null);
+        }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ProviderResourceType"/>. </summary>
-        /// <param name="name"></param>
-        /// <param name="routingType"></param>
-        /// <param name="resourceValidation"></param>
-        /// <param name="allowedUnauthorizedActions"></param>
-        /// <param name="authorizationActionMappings"></param>
-        /// <param name="linkedAccessChecks"></param>
-        /// <param name="defaultApiVersion"></param>
-        /// <param name="loggingRules"></param>
-        /// <param name="throttlingRules"></param>
-        /// <param name="endpoints"></param>
-        /// <param name="marketplaceType"></param>
-        /// <param name="managementType"></param>
-        /// <param name="metadata"> Anything. </param>
-        /// <param name="requiredFeatures"></param>
-        /// <param name="requiredFeaturesPolicy"></param>
-        /// <param name="subscriptionStateRules"></param>
-        /// <param name="serviceTreeInfos"></param>
-        /// <param name="optInHeaders"></param>
-        /// <param name="skuLink"></param>
-        /// <param name="disallowedActionVerbs"></param>
-        /// <param name="templateDeploymentPolicy"></param>
-        /// <param name="extendedLocations"></param>
-        /// <param name="linkedOperationRules"></param>
-        /// <param name="resourceDeletionPolicy"></param>
-        /// <returns> A new <see cref="Models.ProviderResourceType"/> instance for mocking. </returns>
+        /// <summary> Backward-compat factory method for ResourceProviderManifest (14 params with OptInHeaderType). </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ProviderResourceType ProviderResourceType(string name = null, ResourceRoutingType? routingType = null, ResourceValidation? resourceValidation = null, IEnumerable<string> allowedUnauthorizedActions = null, IEnumerable<AuthorizationActionMapping> authorizationActionMappings = null, IEnumerable<LinkedAccessCheck> linkedAccessChecks = null, string defaultApiVersion = null, IEnumerable<LoggingRule> loggingRules = null, IEnumerable<ThrottlingRule> throttlingRules = null, IEnumerable<ResourceProviderEndpoint> endpoints = null, MarketplaceType? marketplaceType = null, IdentityManagementType? managementType = null, BinaryData metadata = null, IEnumerable<string> requiredFeatures = null, FeaturesPolicy? requiredFeaturesPolicy = null, IEnumerable<ProviderSubscriptionStateRule> subscriptionStateRules = null, IEnumerable<ServiceTreeInfo> serviceTreeInfos = null, OptInHeaderType? optInHeaders = null, string skuLink = null, IEnumerable<string> disallowedActionVerbs = null, TemplateDeploymentPolicy templateDeploymentPolicy = null, IEnumerable<ProviderHubExtendedLocationOptions> extendedLocations = null, IEnumerable<LinkedOperationRule> linkedOperationRules = null, ManifestResourceDeletionPolicy? resourceDeletionPolicy = null)
-            => new ProviderResourceType(name, routingType, null, null, resourceValidation, allowedUnauthorizedActions.ToList(), null, authorizationActionMappings.ToList(), linkedAccessChecks.ToList(), defaultApiVersion, loggingRules.ToList(), throttlingRules.ToList(), endpoints.ToList(), marketplaceType, null, metadata, requiredFeatures.ToList(), null, subscriptionStateRules.ToList(), null, null, skuLink, disallowedActionVerbs.ToList(), templateDeploymentPolicy, extendedLocations.ToList(), linkedOperationRules.ToList(), resourceDeletionPolicy, null, null, null, null, null);
-
-        /// <summary> Initializes a new instance of <see cref="Models.ResourceProviderEndpoint"/>. </summary>
-        /// <param name="isEnabled"></param>
-        /// <param name="apiVersions"></param>
-        /// <param name="endpointUri"></param>
-        /// <param name="locations"></param>
-        /// <param name="requiredFeatures"></param>
-        /// <param name="requiredFeaturesPolicy"></param>
-        /// <param name="timeout"></param>
-        /// <returns> A new <see cref="Models.ResourceProviderEndpoint"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ResourceProviderEndpoint ResourceProviderEndpoint(bool? isEnabled = null, IEnumerable<string> apiVersions = null, Uri endpointUri = null, IEnumerable<AzureLocation> locations = null, IEnumerable<string> requiredFeatures = null, FeaturesPolicy? requiredFeaturesPolicy = null, TimeSpan? timeout = null)
-            => new ResourceProviderEndpoint(isEnabled, apiVersions.ToList(), endpointUri, locations.ToList(), requiredFeatures.ToList(), null, timeout, null, null, null);
-
-        /// <summary> Initializes a new instance of <see cref="Models.ResourceProviderManifest"/>. </summary>
-        /// <param name="providerAuthenticationAllowedAudiences"></param>
-        /// <param name="providerAuthorizations"></param>
-        /// <param name="namespace"></param>
-        /// <param name="providerVersion"></param>
-        /// <param name="providerType"></param>
-        /// <param name="requiredFeatures"></param>
-        /// <param name="requiredFeaturesPolicy"></param>
-        /// <param name="optInHeaders"></param>
-        /// <param name="resourceTypes"></param>
-        /// <param name="management"></param>
-        /// <param name="capabilities"></param>
-        /// <param name="metadata"> Anything. </param>
-        /// <param name="globalNotificationEndpoints"></param>
-        /// <param name="reRegisterSubscriptionMetadata"></param>
-        /// <returns> A new <see cref="Models.ResourceProviderManifest"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ResourceProviderManifest ResourceProviderManifest(IEnumerable<string> providerAuthenticationAllowedAudiences = null, IEnumerable<ResourceProviderAuthorization> providerAuthorizations = null, string @namespace = null, string providerVersion = null, ResourceProviderType? providerType = null, IEnumerable<string> requiredFeatures = null, FeaturesPolicy? requiredFeaturesPolicy = null, OptInHeaderType? optInHeaders = null, IEnumerable<ProviderResourceType> resourceTypes = null, ResourceProviderManagement management = null, IEnumerable<ResourceProviderCapabilities> capabilities = null, BinaryData metadata = null, IEnumerable<ResourceProviderEndpoint> globalNotificationEndpoints = null, ReRegisterSubscriptionMetadata reRegisterSubscriptionMetadata = null)
-            => new ResourceProviderManifest(null, providerAuthorizations.ToList(), @namespace, null, null, providerVersion, providerType, requiredFeatures.ToList(), null, null, resourceTypes.ToList(), management, capabilities.ToList(), null, metadata, globalNotificationEndpoints.ToList(), reRegisterSubscriptionMetadata, null, null, null, null, null);
-
-        /// <summary> Initializes a new instance of <see cref="Models.TemplateDeploymentPolicy"/>. </summary>
-        /// <param name="capabilities"></param>
-        /// <param name="preflightOptions"></param>
-        /// <returns> A new <see cref="Models.TemplateDeploymentPolicy"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static TemplateDeploymentPolicy TemplateDeploymentPolicy(TemplateDeploymentCapability capabilities = default, TemplateDeploymentPreflightOption preflightOptions = default)
-            => new TemplateDeploymentPolicy(capabilities, preflightOptions, null, null);
+        public static ResourceProviderManifest ResourceProviderManifest(
+            IEnumerable<string> providerAuthenticationAllowedAudiences = null,
+            IEnumerable<ResourceProviderAuthorization> providerAuthorizations = null,
+            string @namespace = null,
+            string providerVersion = null,
+            ResourceProviderType? providerType = null,
+            IEnumerable<string> requiredFeatures = null,
+            FeaturesPolicy? requiredFeaturesPolicy = null,
+            OptInHeaderType? optInHeaders = null,
+            IEnumerable<ProviderResourceType> resourceTypes = null,
+            ResourceProviderManagement management = null,
+            IEnumerable<ResourceProviderCapabilities> capabilities = null,
+            BinaryData metadata = null,
+            IEnumerable<ResourceProviderEndpoint> globalNotificationEndpoints = null,
+            ReRegisterSubscriptionMetadata reRegisterSubscriptionMetadata = null)
+        {
+            var requestHeaderOptions = optInHeaders is null
+                ? default
+                : new ProviderRequestHeaderOptions { OptInHeaders = optInHeaders };
+            return ResourceProviderManifest(
+                providerAuthenticationAllowedAudiences: providerAuthenticationAllowedAudiences,
+                providerAuthorizations: providerAuthorizations,
+                @namespace: @namespace,
+                providerVersion: providerVersion,
+                providerType: providerType,
+                requiredFeatures: requiredFeatures,
+                requiredFeaturesPolicy: requiredFeaturesPolicy,
+                requestHeaderOptions: requestHeaderOptions,
+                resourceTypes: resourceTypes,
+                management: management,
+                capabilities: capabilities,
+                metadata: metadata,
+                globalNotificationEndpoints: globalNotificationEndpoints,
+                reRegisterSubscriptionMetadata: reRegisterSubscriptionMetadata);
+        }
     }
 }

@@ -300,7 +300,8 @@ namespace Azure.ResourceManager.ContainerRegistry
                 Id.ResourceGroupName,
                 Id.Name,
                 filter,
-                context), data => new ConnectedRegistryResource(Client, data));
+                context,
+                "ConnectedRegistryCollection.GetAll"), data => new ConnectedRegistryResource(Client, data));
         }
 
         /// <summary>
@@ -335,7 +336,8 @@ namespace Azure.ResourceManager.ContainerRegistry
                 Id.ResourceGroupName,
                 Id.Name,
                 filter,
-                context), data => new ConnectedRegistryResource(Client, data));
+                context,
+                "ConnectedRegistryCollection.GetAll"), data => new ConnectedRegistryResource(Client, data));
         }
 
         /// <summary>

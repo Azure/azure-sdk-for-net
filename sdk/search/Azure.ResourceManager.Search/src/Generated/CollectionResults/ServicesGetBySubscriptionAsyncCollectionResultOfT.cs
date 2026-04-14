@@ -21,18 +21,21 @@ namespace Azure.ResourceManager.Search
         private readonly Guid _subscriptionId;
         private readonly string _clientRequestId;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of ServicesGetBySubscriptionAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Services client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="clientRequestId"> A client-generated GUID value that identifies this request. If specified, this will be included in response information as a way to track the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ServicesGetBySubscriptionAsyncCollectionResultOfT(Services client, Guid subscriptionId, string clientRequestId, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public ServicesGetBySubscriptionAsyncCollectionResultOfT(Services client, Guid subscriptionId, string clientRequestId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _clientRequestId = clientRequestId;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of ServicesGetBySubscriptionAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -66,7 +69,7 @@ namespace Azure.ResourceManager.Search
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetBySubscriptionRequest(nextLink, _subscriptionId, _clientRequestId, _context) : _client.CreateGetBySubscriptionRequest(_subscriptionId, _clientRequestId, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableSearchSubscriptionResource.GetSearchServices");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

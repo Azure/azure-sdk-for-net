@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.ArtifactSigning
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ArtifactSigningAccountData, ArtifactSigningAccountResource>(new CodeSigningAccountsGetByResourceGroupAsyncCollectionResultOfT(_codeSigningAccountsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new ArtifactSigningAccountResource(Client, data));
+            return new AsyncPageableWrapper<ArtifactSigningAccountData, ArtifactSigningAccountResource>(new CodeSigningAccountsGetByResourceGroupAsyncCollectionResultOfT(_codeSigningAccountsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ArtifactSigningAccountCollection.GetAll"), data => new ArtifactSigningAccountResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.ArtifactSigning
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ArtifactSigningAccountData, ArtifactSigningAccountResource>(new CodeSigningAccountsGetByResourceGroupCollectionResultOfT(_codeSigningAccountsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new ArtifactSigningAccountResource(Client, data));
+            return new PageableWrapper<ArtifactSigningAccountData, ArtifactSigningAccountResource>(new CodeSigningAccountsGetByResourceGroupCollectionResultOfT(_codeSigningAccountsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ArtifactSigningAccountCollection.GetAll"), data => new ArtifactSigningAccountResource(Client, data));
         }
 
         /// <summary>

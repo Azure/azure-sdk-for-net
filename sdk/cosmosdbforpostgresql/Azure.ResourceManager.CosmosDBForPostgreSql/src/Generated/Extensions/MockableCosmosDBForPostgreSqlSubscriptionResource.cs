@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CosmosDBForPostgreSqlClusterData, CosmosDBForPostgreSqlClusterResource>(new ClustersGetAllAsyncCollectionResultOfT(ClustersRestClient, Guid.Parse(Id.SubscriptionId), context), data => new CosmosDBForPostgreSqlClusterResource(Client, data));
+            return new AsyncPageableWrapper<CosmosDBForPostgreSqlClusterData, CosmosDBForPostgreSqlClusterResource>(new ClustersGetAllAsyncCollectionResultOfT(ClustersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCosmosDBForPostgreSqlSubscriptionResource.GetCosmosDBForPostgreSqlClusters"), data => new CosmosDBForPostgreSqlClusterResource(Client, data));
         }
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CosmosDBForPostgreSqlClusterData, CosmosDBForPostgreSqlClusterResource>(new ClustersGetAllCollectionResultOfT(ClustersRestClient, Guid.Parse(Id.SubscriptionId), context), data => new CosmosDBForPostgreSqlClusterResource(Client, data));
+            return new PageableWrapper<CosmosDBForPostgreSqlClusterData, CosmosDBForPostgreSqlClusterResource>(new ClustersGetAllCollectionResultOfT(ClustersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCosmosDBForPostgreSqlSubscriptionResource.GetCosmosDBForPostgreSqlClusters"), data => new CosmosDBForPostgreSqlClusterResource(Client, data));
         }
 
         /// <summary>

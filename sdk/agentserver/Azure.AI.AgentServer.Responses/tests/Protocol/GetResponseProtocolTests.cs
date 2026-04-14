@@ -40,7 +40,7 @@ public class GetResponseProtocolTests : ProtocolTestBase
 
         var responseId = await CreateDefaultResponseAsync();
 
-        // SSE replay on non-bg response → 400 (per FR-018)
+        // SSE replay on non-bg response → 400 (per B14/B35)
         var getResponse = await GetResponseStreamAsync(responseId);
 
         Assert.That(getResponse.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
@@ -315,9 +315,9 @@ public class GetResponseProtocolTests : ProtocolTestBase
         yield return text.EmitAdded();
 
         yield return text.EmitDelta("Hello");
-        yield return text.EmitDone("Hello");
+        yield return text.EmitTextDone("Hello");
 
-        yield return message.EmitContentDone(text);
+        yield return text.EmitDone();
         yield return message.EmitDone();
 
         yield return stream.EmitCompleted();

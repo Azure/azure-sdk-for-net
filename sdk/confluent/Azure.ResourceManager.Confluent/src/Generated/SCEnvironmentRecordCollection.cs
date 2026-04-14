@@ -298,7 +298,8 @@ namespace Azure.ResourceManager.Confluent
                 Id.Name,
                 pageSize,
                 pageToken,
-                context), data => new SCEnvironmentRecordResource(Client, data));
+                context,
+                "SCEnvironmentRecordCollection.GetAll"), data => new SCEnvironmentRecordResource(Client, data));
         }
 
         /// <summary>
@@ -335,7 +336,8 @@ namespace Azure.ResourceManager.Confluent
                 Id.Name,
                 pageSize,
                 pageToken,
-                context), data => new SCEnvironmentRecordResource(Client, data));
+                context,
+                "SCEnvironmentRecordCollection.GetAll"), data => new SCEnvironmentRecordResource(Client, data));
         }
 
         /// <summary>

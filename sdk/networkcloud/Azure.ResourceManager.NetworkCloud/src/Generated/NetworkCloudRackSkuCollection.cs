@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkCloudRackSkuData, NetworkCloudRackSkuResource>(new RackSkusGetBySubscriptionAsyncCollectionResultOfT(_rackSkusRestClient, Guid.Parse(Id.SubscriptionId), context), data => new NetworkCloudRackSkuResource(Client, data));
+            return new AsyncPageableWrapper<NetworkCloudRackSkuData, NetworkCloudRackSkuResource>(new RackSkusGetBySubscriptionAsyncCollectionResultOfT(_rackSkusRestClient, Guid.Parse(Id.SubscriptionId), context, "NetworkCloudRackSkuCollection.GetAll"), data => new NetworkCloudRackSkuResource(Client, data));
         }
 
         /// <summary>
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkCloudRackSkuData, NetworkCloudRackSkuResource>(new RackSkusGetBySubscriptionCollectionResultOfT(_rackSkusRestClient, Guid.Parse(Id.SubscriptionId), context), data => new NetworkCloudRackSkuResource(Client, data));
+            return new PageableWrapper<NetworkCloudRackSkuData, NetworkCloudRackSkuResource>(new RackSkusGetBySubscriptionCollectionResultOfT(_rackSkusRestClient, Guid.Parse(Id.SubscriptionId), context, "NetworkCloudRackSkuCollection.GetAll"), data => new NetworkCloudRackSkuResource(Client, data));
         }
 
         /// <summary>

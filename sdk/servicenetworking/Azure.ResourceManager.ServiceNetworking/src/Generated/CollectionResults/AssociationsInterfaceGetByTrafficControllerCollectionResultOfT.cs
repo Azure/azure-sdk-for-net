@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         private readonly string _resourceGroupName;
         private readonly string _trafficControllerName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of AssociationsInterfaceGetByTrafficControllerCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The AssociationsInterface client used to send requests. </param>
@@ -28,13 +29,15 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="trafficControllerName"> traffic controller name for path. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public AssociationsInterfaceGetByTrafficControllerCollectionResultOfT(AssociationsInterface client, string subscriptionId, string resourceGroupName, string trafficControllerName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public AssociationsInterfaceGetByTrafficControllerCollectionResultOfT(AssociationsInterface client, string subscriptionId, string resourceGroupName, string trafficControllerName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
             _trafficControllerName = trafficControllerName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of AssociationsInterfaceGetByTrafficControllerCollectionResultOfT as an enumerable collection. </summary>
@@ -67,7 +70,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByTrafficControllerRequest(nextLink, _subscriptionId, _resourceGroupName, _trafficControllerName, _context) : _client.CreateGetByTrafficControllerRequest(_subscriptionId, _resourceGroupName, _trafficControllerName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("TrafficControllerAssociationCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

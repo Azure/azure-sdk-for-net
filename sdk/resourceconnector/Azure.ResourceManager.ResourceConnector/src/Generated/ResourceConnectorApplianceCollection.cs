@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.ResourceConnector
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ResourceConnectorApplianceData, ResourceConnectorApplianceResource>(new AppliancesGetByResourceGroupAsyncCollectionResultOfT(_appliancesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new ResourceConnectorApplianceResource(Client, data));
+            return new AsyncPageableWrapper<ResourceConnectorApplianceData, ResourceConnectorApplianceResource>(new AppliancesGetByResourceGroupAsyncCollectionResultOfT(_appliancesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "ResourceConnectorApplianceCollection.GetAll"), data => new ResourceConnectorApplianceResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.ResourceConnector
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ResourceConnectorApplianceData, ResourceConnectorApplianceResource>(new AppliancesGetByResourceGroupCollectionResultOfT(_appliancesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new ResourceConnectorApplianceResource(Client, data));
+            return new PageableWrapper<ResourceConnectorApplianceData, ResourceConnectorApplianceResource>(new AppliancesGetByResourceGroupCollectionResultOfT(_appliancesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "ResourceConnectorApplianceCollection.GetAll"), data => new ResourceConnectorApplianceResource(Client, data));
         }
 
         /// <summary>

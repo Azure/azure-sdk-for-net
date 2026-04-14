@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Resources.Policy
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VariableData, VariableResource>(new VariablesGetAllAsyncCollectionResultOfT(_variablesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new VariableResource(Client, data));
+            return new AsyncPageableWrapper<VariableData, VariableResource>(new VariablesGetAllAsyncCollectionResultOfT(_variablesRestClient, Guid.Parse(Id.SubscriptionId), context, "VariableCollection.GetAll"), data => new VariableResource(Client, data));
         }
 
         /// <summary>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.Resources.Policy
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VariableData, VariableResource>(new VariablesGetAllCollectionResultOfT(_variablesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new VariableResource(Client, data));
+            return new PageableWrapper<VariableData, VariableResource>(new VariablesGetAllCollectionResultOfT(_variablesRestClient, Guid.Parse(Id.SubscriptionId), context, "VariableCollection.GetAll"), data => new VariableResource(Client, data));
         }
 
         /// <summary>

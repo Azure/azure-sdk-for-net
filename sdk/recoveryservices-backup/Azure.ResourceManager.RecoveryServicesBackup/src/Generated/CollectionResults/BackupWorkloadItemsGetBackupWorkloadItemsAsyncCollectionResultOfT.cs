@@ -26,6 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         private readonly string _filter;
         private readonly string _skipToken;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of BackupWorkloadItemsGetBackupWorkloadItemsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The BackupWorkloadItems client used to send requests. </param>
@@ -37,7 +38,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="filter"> OData filter options. </param>
         /// <param name="skipToken"> skipToken Filter. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public BackupWorkloadItemsGetBackupWorkloadItemsAsyncCollectionResultOfT(BackupWorkloadItems client, string subscriptionId, string resourceGroupName, string vaultName, string fabricName, string containerName, string filter, string skipToken, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public BackupWorkloadItemsGetBackupWorkloadItemsAsyncCollectionResultOfT(BackupWorkloadItems client, string subscriptionId, string resourceGroupName, string vaultName, string fabricName, string containerName, string filter, string skipToken, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -48,6 +50,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             _filter = filter;
             _skipToken = skipToken;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of BackupWorkloadItemsGetBackupWorkloadItemsAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -81,7 +84,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetBackupWorkloadItemsRequest(nextLink, _subscriptionId, _resourceGroupName, _vaultName, _fabricName, _containerName, _filter, _skipToken, _context) : _client.CreateGetBackupWorkloadItemsRequest(_subscriptionId, _resourceGroupName, _vaultName, _fabricName, _containerName, _filter, _skipToken, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("BackupProtectionContainerResource.GetBackupWorkloadItems");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

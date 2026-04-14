@@ -5,7 +5,7 @@
 This update restores compatibility with the latest `2.9.*` release of `OpenAI` and enables access to the latest features. For details, please see the full [OpenAI 2.9.0](https://github.com/openai/openai-dotnet/blob/main/CHANGELOG.md#290-2026-02-27) and [OpenAI 2.9.1](https://github.com/openai/openai-dotnet/blob/main/CHANGELOG.md#291-2026-03-02) release notes.
 
 > [!NOTE]
-> Consider removing the Azure OpenAI SDK from your application in favor of using the OpenAI SDK only for broader models, unified APIs, latest features, and simpler authentication.
+> Consider [removing the Azure OpenAI SDK from your application](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/openai/Azure.AI.OpenAI/migration-guidance.md) in favor of using the OpenAI SDK only for broader models, unified APIs, latest features, and simpler authentication.
 
 ### Features Added
 
@@ -143,7 +143,7 @@ This preview release aligns with the corresponding `2.2.0` beta of `OpenAI` and 
 
 New features include since 2.1.0-beta.2 include:
 
-- Audio input for Chat Completions using `gpt-4o-audio-preview` or other compatible models: provide input audio via `ChatMessageContentPart.CreateInputAudioPart()`, set `AudioOptions` and `ResponseModalities` on `ChatCompletionOptions`, retrieve response audio via `OutputAudio` on `ChatCompletion`, and reference audio history from the assistant by using the `AssistantChatMessage(ChatCompletion)` constructor or using `ChatMessageContentPart.CreateAudioPart(string)`. For more information, refer to the examples in [the OpenAI README](https://github.com/openai/openai-dotnet/blob/main/README.md). 
+- Audio input for Chat Completions using `gpt-4o-audio-preview` or other compatible models: provide input audio via `ChatMessageContentPart.CreateInputAudioPart()`, set `AudioOptions` and `ResponseModalities` on `ChatCompletionOptions`, retrieve response audio via `OutputAudio` on `ChatCompletion`, and reference audio history from the assistant by using the `AssistantChatMessage(ChatCompletion)` constructor or using `ChatMessageContentPart.CreateAudioPart(string)`. For more information, refer to the examples in [the OpenAI README](https://github.com/openai/openai-dotnet/blob/main/README.md).
 - Predicted outputs in Chat Completions: `ChatCompletionOptions` accepts an `OutputPrediction` property that can be used via `ChatOutputPrediction.CreateStaticContentPrediction()` with text content to optimize operation efficiency for scenarios like code completion. For more information, see [OpenAI's predicted outputs announcement](https://community.openai.com/t/introducing-predicted-outputs/1004502).
 - Chat Completions `o`-series model feature support: the new `developer` message role via `DeveloperChatMessage` (used just like `SystemChatMessage`), `ReasoningEffortLevel` on Chat Completion options
 - [AOAI exclusive] `UserSecurityContext` integration with [Defender for Cloud](https://learn.microsoft.com/azure/defender-for-cloud/gain-end-user-context-ai); add a `UserSecurityContext` instance to `ChatCompletionOptions` with `SetUserSecurityContext()`
@@ -213,7 +213,7 @@ Relative to the prior GA release, this update restores preview surfaces, re-targ
 ### Features Added
 
 - Added a new `RealtimeConversationClient` in a corresponding scenario namespace. ([ff75da4](https://github.com/openai/openai-dotnet/commit/ff75da4167bc83fa85eb69ac142cab88a963ed06))
-  - This maps to the new `/realtime` beta endpoint and is thus marked with a new `[Experimental("OPENAI002")]` diagnostic tag. 
+  - This maps to the new `/realtime` beta endpoint and is thus marked with a new `[Experimental("OPENAI002")]` diagnostic tag.
   - This is a very early version of the convenience surface and thus subject to significant change
   - Documentation and samples will arrive soon; in the interim, see the scenario test files (in `/tests`) for basic usage
   - You can also find an external sample employing this client, together with Azure OpenAI support, at https://github.com/Azure-Samples/aoai-realtime-audio-sdk/tree/main/dotnet/samples
@@ -528,7 +528,7 @@ This release targets the latest `2024-03-01-preview` service API label and bring
 - Image generation response now includes content filtering details (specific to Azure OpenAI endpoint):
   - `ImageGenerationData.ContentFilterResults`: Information about the content filtering results. (REST: `content_filter_results`)
   - `ImageGenerationData.PromptFilterResults`: Information about the content filtering category (REST: `prompt_filter_results`)
-  
+
 ## 1.0.0-beta.13 (2024-02-01)
 
 ### Breaking Changes

@@ -149,8 +149,8 @@ public class ResponseIdAutoStampProtocolTests : ProtocolTestBase
         var text = message.AddTextContent();
         yield return text.EmitAdded();
         yield return text.EmitDelta("Hello");
-        yield return text.EmitDone("Hello");
-        yield return message.EmitContentDone(text);
+        yield return text.EmitTextDone("Hello");
+        yield return text.EmitDone();
         yield return message.EmitDone();
 
         yield return stream.EmitCompleted();
@@ -195,8 +195,8 @@ public class ResponseIdAutoStampProtocolTests : ProtocolTestBase
         yield return msg1.EmitAdded();
         var text1 = msg1.AddTextContent();
         yield return text1.EmitAdded();
-        yield return text1.EmitDone("Hello");
-        yield return msg1.EmitContentDone(text1);
+        yield return text1.EmitTextDone("Hello");
+        yield return text1.EmitDone();
         yield return msg1.EmitDone();
 
         // Second output item
@@ -204,8 +204,8 @@ public class ResponseIdAutoStampProtocolTests : ProtocolTestBase
         yield return msg2.EmitAdded();
         var text2 = msg2.AddTextContent();
         yield return text2.EmitAdded();
-        yield return text2.EmitDone("World");
-        yield return msg2.EmitContentDone(text2);
+        yield return text2.EmitTextDone("World");
+        yield return text2.EmitDone();
         yield return msg2.EmitDone();
 
         yield return stream.EmitCompleted();

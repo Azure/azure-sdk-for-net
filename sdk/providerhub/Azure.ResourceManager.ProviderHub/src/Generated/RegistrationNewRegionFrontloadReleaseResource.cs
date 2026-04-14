@@ -6,46 +6,36 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.ProviderHub.Models;
 
 namespace Azure.ResourceManager.ProviderHub
 {
     /// <summary>
-    /// A Class representing a RegistrationNewRegionFrontloadRelease along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="RegistrationNewRegionFrontloadReleaseResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetRegistrationNewRegionFrontloadReleaseResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ProviderRegistrationResource"/> using the GetRegistrationNewRegionFrontloadRelease method.
+    /// A class representing a RegistrationNewRegionFrontloadRelease along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="RegistrationNewRegionFrontloadReleaseResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ProviderRegistrationResource"/> using the GetRegistrationNewRegionFrontloadReleases method.
     /// </summary>
     public partial class RegistrationNewRegionFrontloadReleaseResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="RegistrationNewRegionFrontloadReleaseResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="providerNamespace"> The providerNamespace. </param>
-        /// <param name="releaseName"> The releaseName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string providerNamespace, string releaseName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/newRegionFrontloadRelease/{releaseName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _registrationNewRegionFrontloadReleaseNewRegionFrontloadReleaseClientDiagnostics;
-        private readonly NewRegionFrontloadReleaseRestOperations _registrationNewRegionFrontloadReleaseNewRegionFrontloadReleaseRestClient;
+        private readonly ClientDiagnostics _registrationNewRegionFrontloadReleasesClientDiagnostics;
+        private readonly RegistrationNewRegionFrontloadReleases _registrationNewRegionFrontloadReleasesRestClient;
         private readonly DefaultRolloutData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ProviderHub/providerRegistrations/newRegionFrontloadRelease";
 
-        /// <summary> Initializes a new instance of the <see cref="RegistrationNewRegionFrontloadReleaseResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of RegistrationNewRegionFrontloadReleaseResource for mocking. </summary>
         protected RegistrationNewRegionFrontloadReleaseResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="RegistrationNewRegionFrontloadReleaseResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="RegistrationNewRegionFrontloadReleaseResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal RegistrationNewRegionFrontloadReleaseResource(ArmClient client, DefaultRolloutData data) : this(client, data.Id)
@@ -54,71 +44,92 @@ namespace Azure.ResourceManager.ProviderHub
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="RegistrationNewRegionFrontloadReleaseResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="RegistrationNewRegionFrontloadReleaseResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal RegistrationNewRegionFrontloadReleaseResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _registrationNewRegionFrontloadReleaseNewRegionFrontloadReleaseClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ProviderHub", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string registrationNewRegionFrontloadReleaseNewRegionFrontloadReleaseApiVersion);
-            _registrationNewRegionFrontloadReleaseNewRegionFrontloadReleaseRestClient = new NewRegionFrontloadReleaseRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, registrationNewRegionFrontloadReleaseNewRegionFrontloadReleaseApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string registrationNewRegionFrontloadReleaseApiVersion);
+            _registrationNewRegionFrontloadReleasesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ProviderHub", ResourceType.Namespace, Diagnostics);
+            _registrationNewRegionFrontloadReleasesRestClient = new RegistrationNewRegionFrontloadReleases(_registrationNewRegionFrontloadReleasesClientDiagnostics, Pipeline, Endpoint, registrationNewRegionFrontloadReleaseApiVersion ?? "2024-09-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual DefaultRolloutData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="providerNamespace"> The providerNamespace. </param>
+        /// <param name="releaseName"> The releaseName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string providerNamespace, string releaseName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/newRegionFrontloadRelease/{releaseName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets a new region frontload release.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/newRegionFrontloadRelease/{releaseName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/newRegionFrontloadRelease/{releaseName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NewRegionFrontloadRelease_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NewRegionFrontloadRelease_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RegistrationNewRegionFrontloadReleaseResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="RegistrationNewRegionFrontloadReleaseResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<RegistrationNewRegionFrontloadReleaseResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _registrationNewRegionFrontloadReleaseNewRegionFrontloadReleaseClientDiagnostics.CreateScope("RegistrationNewRegionFrontloadReleaseResource.Get");
+            using DiagnosticScope scope = _registrationNewRegionFrontloadReleasesClientDiagnostics.CreateScope("RegistrationNewRegionFrontloadReleaseResource.Get");
             scope.Start();
             try
             {
-                var response = await _registrationNewRegionFrontloadReleaseNewRegionFrontloadReleaseRestClient.GetAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _registrationNewRegionFrontloadReleasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DefaultRolloutData> response = Response.FromValue(DefaultRolloutData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new RegistrationNewRegionFrontloadReleaseResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -132,33 +143,41 @@ namespace Azure.ResourceManager.ProviderHub
         /// Gets a new region frontload release.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/newRegionFrontloadRelease/{releaseName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/newRegionFrontloadRelease/{releaseName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NewRegionFrontloadRelease_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NewRegionFrontloadRelease_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RegistrationNewRegionFrontloadReleaseResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="RegistrationNewRegionFrontloadReleaseResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<RegistrationNewRegionFrontloadReleaseResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _registrationNewRegionFrontloadReleaseNewRegionFrontloadReleaseClientDiagnostics.CreateScope("RegistrationNewRegionFrontloadReleaseResource.Get");
+            using DiagnosticScope scope = _registrationNewRegionFrontloadReleasesClientDiagnostics.CreateScope("RegistrationNewRegionFrontloadReleaseResource.Get");
             scope.Start();
             try
             {
-                var response = _registrationNewRegionFrontloadReleaseNewRegionFrontloadReleaseRestClient.Get(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _registrationNewRegionFrontloadReleasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DefaultRolloutData> response = Response.FromValue(DefaultRolloutData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new RegistrationNewRegionFrontloadReleaseResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -169,130 +188,39 @@ namespace Azure.ResourceManager.ProviderHub
         }
 
         /// <summary>
-        /// Creates or updates a new region frontload release.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/newRegionFrontloadRelease/{releaseName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NewRegionFrontloadRelease_CreateOrUpdate</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RegistrationNewRegionFrontloadReleaseResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="properties"> The <see cref="ProviderFrontloadPayload"/> to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public virtual async Task<ArmOperation<RegistrationNewRegionFrontloadReleaseResource>> UpdateAsync(WaitUntil waitUntil, ProviderFrontloadPayload properties, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(properties, nameof(properties));
-
-            using var scope = _registrationNewRegionFrontloadReleaseNewRegionFrontloadReleaseClientDiagnostics.CreateScope("RegistrationNewRegionFrontloadReleaseResource.Update");
-            scope.Start();
-            try
-            {
-                var response = await _registrationNewRegionFrontloadReleaseNewRegionFrontloadReleaseRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, properties, cancellationToken).ConfigureAwait(false);
-                var uri = _registrationNewRegionFrontloadReleaseNewRegionFrontloadReleaseRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.Parent.Name, Id.Name, properties);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ProviderHubArmOperation<RegistrationNewRegionFrontloadReleaseResource>(Response.FromValue(new RegistrationNewRegionFrontloadReleaseResource(Client, response), response.GetRawResponse()), rehydrationToken);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Creates or updates a new region frontload release.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/newRegionFrontloadRelease/{releaseName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NewRegionFrontloadRelease_CreateOrUpdate</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RegistrationNewRegionFrontloadReleaseResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="properties"> The <see cref="ProviderFrontloadPayload"/> to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public virtual ArmOperation<RegistrationNewRegionFrontloadReleaseResource> Update(WaitUntil waitUntil, ProviderFrontloadPayload properties, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(properties, nameof(properties));
-
-            using var scope = _registrationNewRegionFrontloadReleaseNewRegionFrontloadReleaseClientDiagnostics.CreateScope("RegistrationNewRegionFrontloadReleaseResource.Update");
-            scope.Start();
-            try
-            {
-                var response = _registrationNewRegionFrontloadReleaseNewRegionFrontloadReleaseRestClient.CreateOrUpdate(Id.SubscriptionId, Id.Parent.Name, Id.Name, properties, cancellationToken);
-                var uri = _registrationNewRegionFrontloadReleaseNewRegionFrontloadReleaseRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.Parent.Name, Id.Name, properties);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ProviderHubArmOperation<RegistrationNewRegionFrontloadReleaseResource>(Response.FromValue(new RegistrationNewRegionFrontloadReleaseResource(Client, response), response.GetRawResponse()), rehydrationToken);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
         /// Stops a new region frontload release.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/newRegionFrontloadRelease/{releaseName}/stop</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/newRegionFrontloadRelease/{releaseName}/stop. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NewRegionFrontloadRelease_Stop</description>
+        /// <term> Operation Id. </term>
+        /// <description> NewRegionFrontloadRelease_Stop. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RegistrationNewRegionFrontloadReleaseResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="RegistrationNewRegionFrontloadReleaseResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> StopAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _registrationNewRegionFrontloadReleaseNewRegionFrontloadReleaseClientDiagnostics.CreateScope("RegistrationNewRegionFrontloadReleaseResource.Stop");
+            using DiagnosticScope scope = _registrationNewRegionFrontloadReleasesClientDiagnostics.CreateScope("RegistrationNewRegionFrontloadReleaseResource.Stop");
             scope.Start();
             try
             {
-                var response = await _registrationNewRegionFrontloadReleaseNewRegionFrontloadReleaseRestClient.StopAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _registrationNewRegionFrontloadReleasesRestClient.CreateStopRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -306,32 +234,149 @@ namespace Azure.ResourceManager.ProviderHub
         /// Stops a new region frontload release.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/newRegionFrontloadRelease/{releaseName}/stop</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/newRegionFrontloadRelease/{releaseName}/stop. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NewRegionFrontloadRelease_Stop</description>
+        /// <term> Operation Id. </term>
+        /// <description> NewRegionFrontloadRelease_Stop. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RegistrationNewRegionFrontloadReleaseResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="RegistrationNewRegionFrontloadReleaseResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response Stop(CancellationToken cancellationToken = default)
         {
-            using var scope = _registrationNewRegionFrontloadReleaseNewRegionFrontloadReleaseClientDiagnostics.CreateScope("RegistrationNewRegionFrontloadReleaseResource.Stop");
+            using DiagnosticScope scope = _registrationNewRegionFrontloadReleasesClientDiagnostics.CreateScope("RegistrationNewRegionFrontloadReleaseResource.Stop");
             scope.Start();
             try
             {
-                var response = _registrationNewRegionFrontloadReleaseNewRegionFrontloadReleaseRestClient.Stop(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _registrationNewRegionFrontloadReleasesRestClient.CreateStopRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
                 return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update a RegistrationNewRegionFrontloadRelease.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/newRegionFrontloadRelease/{releaseName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NewRegionFrontloadRelease_CreateOrUpdate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="RegistrationNewRegionFrontloadReleaseResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="properties"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
+        public virtual async Task<ArmOperation<RegistrationNewRegionFrontloadReleaseResource>> UpdateAsync(WaitUntil waitUntil, ProviderFrontloadPayload properties, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(properties, nameof(properties));
+
+            using DiagnosticScope scope = _registrationNewRegionFrontloadReleasesClientDiagnostics.CreateScope("RegistrationNewRegionFrontloadReleaseResource.Update");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _registrationNewRegionFrontloadReleasesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, ProviderFrontloadPayload.ToRequestContent(properties), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DefaultRolloutData> response = Response.FromValue(DefaultRolloutData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                ProviderHubArmOperation<RegistrationNewRegionFrontloadReleaseResource> operation = new ProviderHubArmOperation<RegistrationNewRegionFrontloadReleaseResource>(Response.FromValue(new RegistrationNewRegionFrontloadReleaseResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update a RegistrationNewRegionFrontloadRelease.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/newRegionFrontloadRelease/{releaseName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NewRegionFrontloadRelease_CreateOrUpdate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="RegistrationNewRegionFrontloadReleaseResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="properties"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
+        public virtual ArmOperation<RegistrationNewRegionFrontloadReleaseResource> Update(WaitUntil waitUntil, ProviderFrontloadPayload properties, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(properties, nameof(properties));
+
+            using DiagnosticScope scope = _registrationNewRegionFrontloadReleasesClientDiagnostics.CreateScope("RegistrationNewRegionFrontloadReleaseResource.Update");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _registrationNewRegionFrontloadReleasesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, ProviderFrontloadPayload.ToRequestContent(properties), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DefaultRolloutData> response = Response.FromValue(DefaultRolloutData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                ProviderHubArmOperation<RegistrationNewRegionFrontloadReleaseResource> operation = new ProviderHubArmOperation<RegistrationNewRegionFrontloadReleaseResource>(Response.FromValue(new RegistrationNewRegionFrontloadReleaseResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
             }
             catch (Exception e)
             {

@@ -67,7 +67,13 @@ namespace Azure.ResourceManager.NotificationHubs.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NotificationHubNamespaceData, NotificationHubNamespaceResource>(new NamespacesGetNotificationHubNamespacesAsyncCollectionResultOfT(NamespacesRestClient, Guid.Parse(Id.SubscriptionId), skipToken, top, context), data => new NotificationHubNamespaceResource(Client, data));
+            return new AsyncPageableWrapper<NotificationHubNamespaceData, NotificationHubNamespaceResource>(new NamespacesGetNotificationHubNamespacesAsyncCollectionResultOfT(
+                NamespacesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                skipToken,
+                top,
+                context,
+                "MockableNotificationHubsSubscriptionResource.GetNotificationHubNamespaces"), data => new NotificationHubNamespaceResource(Client, data));
         }
 
         /// <summary>
@@ -97,7 +103,13 @@ namespace Azure.ResourceManager.NotificationHubs.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NotificationHubNamespaceData, NotificationHubNamespaceResource>(new NamespacesGetNotificationHubNamespacesCollectionResultOfT(NamespacesRestClient, Guid.Parse(Id.SubscriptionId), skipToken, top, context), data => new NotificationHubNamespaceResource(Client, data));
+            return new PageableWrapper<NotificationHubNamespaceData, NotificationHubNamespaceResource>(new NamespacesGetNotificationHubNamespacesCollectionResultOfT(
+                NamespacesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                skipToken,
+                top,
+                context,
+                "MockableNotificationHubsSubscriptionResource.GetNotificationHubNamespaces"), data => new NotificationHubNamespaceResource(Client, data));
         }
 
         /// <summary>

@@ -294,7 +294,8 @@ namespace Azure.ResourceManager.Purview
                 Id.ResourceGroupName,
                 Id.Name,
                 skipToken,
-                context), data => new PurviewKafkaConfigurationResource(Client, data));
+                context,
+                "PurviewKafkaConfigurationCollection.GetAll"), data => new PurviewKafkaConfigurationResource(Client, data));
         }
 
         /// <summary>
@@ -329,7 +330,8 @@ namespace Azure.ResourceManager.Purview
                 Id.ResourceGroupName,
                 Id.Name,
                 skipToken,
-                context), data => new PurviewKafkaConfigurationResource(Client, data));
+                context,
+                "PurviewKafkaConfigurationCollection.GetAll"), data => new PurviewKafkaConfigurationResource(Client, data));
         }
 
         /// <summary>

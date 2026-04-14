@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Hci.Vm
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HciVmNatGatewayData, HciVmNatGatewayResource>(new NatGatewaysGetByResourceGroupAsyncCollectionResultOfT(_natGatewaysRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new HciVmNatGatewayResource(Client, data));
+            return new AsyncPageableWrapper<HciVmNatGatewayData, HciVmNatGatewayResource>(new NatGatewaysGetByResourceGroupAsyncCollectionResultOfT(_natGatewaysRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HciVmNatGatewayCollection.GetAll"), data => new HciVmNatGatewayResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Hci.Vm
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HciVmNatGatewayData, HciVmNatGatewayResource>(new NatGatewaysGetByResourceGroupCollectionResultOfT(_natGatewaysRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new HciVmNatGatewayResource(Client, data));
+            return new PageableWrapper<HciVmNatGatewayData, HciVmNatGatewayResource>(new NatGatewaysGetByResourceGroupCollectionResultOfT(_natGatewaysRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HciVmNatGatewayCollection.GetAll"), data => new HciVmNatGatewayResource(Client, data));
         }
 
         /// <summary>

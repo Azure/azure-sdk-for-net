@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> ArcIdentity details. </summary>
     public partial class ArcIdentityResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ArcIdentityResult"/>. </summary>
         internal ArcIdentityResult()
@@ -51,31 +23,56 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ArcIdentityResult"/>. </summary>
-        /// <param name="arcApplicationClientId"></param>
-        /// <param name="arcApplicationTenantId"></param>
-        /// <param name="arcServicePrincipalObjectId"></param>
-        /// <param name="arcApplicationObjectId"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ArcIdentityResult(Guid? arcApplicationClientId, Guid? arcApplicationTenantId, Guid? arcServicePrincipalObjectId, Guid? arcApplicationObjectId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> ArcIdentity properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ArcIdentityResult(ArcIdentityResponseProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ArcApplicationClientId = arcApplicationClientId;
-            ArcApplicationTenantId = arcApplicationTenantId;
-            ArcServicePrincipalObjectId = arcServicePrincipalObjectId;
-            ArcApplicationObjectId = arcApplicationObjectId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the arc application client id. </summary>
+        /// <summary> ArcIdentity properties. </summary>
+        [WirePath("properties")]
+        internal ArcIdentityResponseProperties Properties { get; }
+
+        /// <summary> Gets the ArcApplicationClientId. </summary>
         [WirePath("properties.arcApplicationClientId")]
-        public Guid? ArcApplicationClientId { get; }
-        /// <summary> Gets the arc application tenant id. </summary>
+        public Guid? ArcApplicationClientId
+        {
+            get
+            {
+                return Properties.ArcApplicationClientId;
+            }
+        }
+
+        /// <summary> Gets the ArcApplicationTenantId. </summary>
         [WirePath("properties.arcApplicationTenantId")]
-        public Guid? ArcApplicationTenantId { get; }
-        /// <summary> Gets the arc service principal object id. </summary>
+        public Guid? ArcApplicationTenantId
+        {
+            get
+            {
+                return Properties.ArcApplicationTenantId;
+            }
+        }
+
+        /// <summary> Gets the ArcServicePrincipalObjectId. </summary>
         [WirePath("properties.arcServicePrincipalObjectId")]
-        public Guid? ArcServicePrincipalObjectId { get; }
-        /// <summary> Gets the arc application object id. </summary>
+        public Guid? ArcServicePrincipalObjectId
+        {
+            get
+            {
+                return Properties.ArcServicePrincipalObjectId;
+            }
+        }
+
+        /// <summary> Gets the ArcApplicationObjectId. </summary>
         [WirePath("properties.arcApplicationObjectId")]
-        public Guid? ArcApplicationObjectId { get; }
+        public Guid? ArcApplicationObjectId
+        {
+            get
+            {
+                return Properties.ArcApplicationObjectId;
+            }
+        }
     }
 }

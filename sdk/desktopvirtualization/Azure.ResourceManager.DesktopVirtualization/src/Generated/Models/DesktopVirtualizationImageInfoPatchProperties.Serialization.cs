@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 return null;
             }
             DesktopVirtualizationImageType? imageType = default;
-            MarketplaceInfoPatchProperties marketplaceInfo = default;
+            DesktopVirtualizationMarketplaceInfoPatchProperties marketplaceInfo = default;
             CustomInfoPatchProperties customInfo = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    marketplaceInfo = MarketplaceInfoPatchProperties.DeserializeMarketplaceInfoPatchProperties(prop.Value, options);
+                    marketplaceInfo = DesktopVirtualizationMarketplaceInfoPatchProperties.DeserializeDesktopVirtualizationMarketplaceInfoPatchProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("customInfo"u8))

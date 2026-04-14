@@ -15,4 +15,3 @@ extends:
       safeName: AzureProvisioningStorage
     TestSetupSteps:
     - template: /sdk/storage/tests-install-azurite.yml
-    TestDependsOnDependency: Azure.Provisioning.Storage Azure.ResourceManager.Storage

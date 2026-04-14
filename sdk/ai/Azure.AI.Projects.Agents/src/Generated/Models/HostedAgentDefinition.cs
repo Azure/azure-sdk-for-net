@@ -4,7 +4,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -12,21 +11,20 @@ namespace Azure.AI.Projects.Agents
     public partial class HostedAgentDefinition : ProjectsAgentDefinition
     {
         /// <summary> Initializes a new instance of <see cref="HostedAgentDefinition"/>. </summary>
-        /// <param name="versions"> The protocols that the agent supports for ingress communication of the containers. </param>
         /// <param name="cpu"> The CPU configuration for the hosted agent. </param>
         /// <param name="memory"> The memory configuration for the hosted agent. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="versions"/>, <paramref name="cpu"/> or <paramref name="memory"/> is null. </exception>
-        public HostedAgentDefinition(IEnumerable<ProtocolVersionRecord> versions, string cpu, string memory) : base(ProjectsAgentKind.Hosted)
+        /// <exception cref="ArgumentNullException"> <paramref name="cpu"/> or <paramref name="memory"/> is null. </exception>
+        public HostedAgentDefinition(string cpu, string memory) : base(ProjectsAgentKind.Hosted)
         {
-            Argument.AssertNotNull(versions, nameof(versions));
             Argument.AssertNotNull(cpu, nameof(cpu));
             Argument.AssertNotNull(memory, nameof(memory));
 
             Tools = new ChangeTrackingList<ProjectsAgentTool>();
-            Versions = versions.ToList();
+            Versions = new ChangeTrackingList<ProtocolVersionRecord>();
             Cpu = cpu;
             Memory = memory;
             EnvironmentVariables = new ChangeTrackingDictionary<string, string>();
+            ProtocolVersions = new ChangeTrackingList<ProtocolVersionRecord>();
         }
 
         /// <summary> Initializes a new instance of <see cref="HostedAgentDefinition"/>. </summary>
@@ -42,7 +40,10 @@ namespace Azure.AI.Projects.Agents
         /// <param name="memory"> The memory configuration for the hosted agent. </param>
         /// <param name="environmentVariables"> Environment variables to set in the hosted agent container. </param>
         /// <param name="image"> The image ID for the agent, applicable to image-based hosted agents. </param>
-        internal HostedAgentDefinition(ProjectsAgentKind kind, ContentFilterConfiguration contentFilterConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<ProjectsAgentTool> tools, IList<ProtocolVersionRecord> versions, string cpu, string memory, IDictionary<string, string> environmentVariables, string image) : base(kind, contentFilterConfiguration, additionalBinaryDataProperties)
+        /// <param name="containerConfiguration"> Container-based deployment configuration. Provide this for image-based deployments. Mutually exclusive with code_configuration — the service validates that exactly one is set. </param>
+        /// <param name="protocolVersions"> The protocols that the agent supports for ingress communication. </param>
+        /// <param name="codeConfiguration"> Code-based deployment configuration. Provide this for code-based deployments. Mutually exclusive with container_configuration — the service validates that exactly one is set. </param>
+        internal HostedAgentDefinition(ProjectsAgentKind kind, ContentFilterConfiguration contentFilterConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<ProjectsAgentTool> tools, IList<ProtocolVersionRecord> versions, string cpu, string memory, IDictionary<string, string> environmentVariables, string image, ContainerConfiguration containerConfiguration, IList<ProtocolVersionRecord> protocolVersions, CodeConfiguration codeConfiguration) : base(kind, contentFilterConfiguration, additionalBinaryDataProperties)
         {
             Tools = tools;
             Versions = versions;
@@ -50,6 +51,9 @@ namespace Azure.AI.Projects.Agents
             Memory = memory;
             EnvironmentVariables = environmentVariables;
             Image = image;
+            ContainerConfiguration = containerConfiguration;
+            ProtocolVersions = protocolVersions;
+            CodeConfiguration = codeConfiguration;
         }
 
         /// <summary>
@@ -72,5 +76,14 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> The image ID for the agent, applicable to image-based hosted agents. </summary>
         public string Image { get; set; }
+
+        /// <summary> Container-based deployment configuration. Provide this for image-based deployments. Mutually exclusive with code_configuration — the service validates that exactly one is set. </summary>
+        public ContainerConfiguration ContainerConfiguration { get; set; }
+
+        /// <summary> The protocols that the agent supports for ingress communication. </summary>
+        public IList<ProtocolVersionRecord> ProtocolVersions { get; }
+
+        /// <summary> Code-based deployment configuration. Provide this for code-based deployments. Mutually exclusive with container_configuration — the service validates that exactly one is set. </summary>
+        public CodeConfiguration CodeConfiguration { get; set; }
     }
 }
