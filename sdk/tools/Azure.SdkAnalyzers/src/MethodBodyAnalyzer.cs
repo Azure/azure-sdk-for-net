@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -20,7 +21,7 @@ namespace Azure.SdkAnalyzers
     internal readonly struct MethodBodyAnalyzer
     {
         private readonly AsyncAnalyzerUtilities _asyncUtilities;
-        private readonly Stack<(IEnumerator<IOperation>, MethodAnalysisContext)> _symbolIteratorsStack;
+        private readonly List<StackFrame> _frames;
         private readonly Action<Diagnostic> _reportDiagnostic;
 
         public static void Run(Action<Diagnostic> reportDiagnostic, AsyncAnalyzerUtilities utilities, IMethodSymbol method, IBlockOperation methodBody)
@@ -30,49 +31,65 @@ namespace Azure.SdkAnalyzers
         {
             _reportDiagnostic = reportDiagnostic;
             _asyncUtilities = utilities;
-            _symbolIteratorsStack = new Stack<(IEnumerator<IOperation>, MethodAnalysisContext)>();
+            _frames = new List<StackFrame>();
         }
 
         private void Run(IMethodSymbol method, IBlockOperation methodBody)
         {
             var asyncParameter = GetAsyncParameter(method);
 
-            _symbolIteratorsStack.Push((methodBody.Children.GetEnumerator(), new MethodAnalysisContext(method, asyncParameter)));
+            PushChildren(methodBody, new MethodAnalysisContext(method, asyncParameter));
 
-            try
+            while (_frames.Count > 0)
             {
-                while (_symbolIteratorsStack.Count > 0)
+                var frame = PeekFrame();
+                if (frame.Index >= frame.Children.Length)
                 {
-                    var (enumerator, context) = _symbolIteratorsStack.Peek();
-                    if (!enumerator.MoveNext())
-                    {
-                        var (completedEnumerator, _) = _symbolIteratorsStack.Pop();
-                        completedEnumerator.Dispose();
-                        continue;
-                    }
-
-                    var current = enumerator.Current;
-                    if (current == null)
-                    {
-                        continue;
-                    }
-
-                    var analyzeChildren = AnalyzeOperation(current, ref context);
-                    if (analyzeChildren)
-                    {
-                        _symbolIteratorsStack.Push((current.Children.GetEnumerator(), context));
-                    }
+                    PopFrame();
+                    continue;
                 }
-            }
-            finally
-            {
-                while (_symbolIteratorsStack.Count > 0)
+
+                var current = frame.Children[frame.Index];
+                AdvanceFrame();
+
+                if (current == null)
                 {
-                    var (enumerator, _) = _symbolIteratorsStack.Pop();
-                    enumerator.Dispose();
+                    continue;
+                }
+
+                var context = frame.Context;
+                var analyzeChildren = AnalyzeOperation(current, ref context);
+                if (analyzeChildren)
+                {
+                    PushChildren(current, context);
                 }
             }
         }
+
+        private void PushChildren(IOperation parent, MethodAnalysisContext context)
+        {
+            var children = parent.Children.ToImmutableArray();
+            if (children.Length > 0)
+            {
+                _frames.Add(new StackFrame(children, context));
+            }
+        }
+
+        private void PushSingleOperation(IOperation operation, MethodAnalysisContext context)
+        {
+            _frames.Add(new StackFrame(ImmutableArray.Create(operation), context));
+        }
+
+        private StackFrame PeekFrame() => _frames[_frames.Count - 1];
+
+        private void AdvanceFrame()
+        {
+            var frame = _frames[_frames.Count - 1];
+            frame.Index++;
+            _frames[_frames.Count - 1] = frame;
+        }
+
+        private void PopFrame() => _frames.RemoveAt(_frames.Count - 1);
 
         private bool AnalyzeOperation(IOperation current, ref MethodAnalysisContext context)
         {
@@ -101,13 +118,13 @@ namespace Azure.SdkAnalyzers
             switch (reference.Parent)
             {
                 case IConditionalOperation conditional:
-                    _symbolIteratorsStack.Pop().Item1.Dispose();
+                    PopFrame();
                     TryPushOperationToStack(context, conditional.WhenFalse, Scope.Sync);
                     TryPushOperationToStack(context, conditional.WhenTrue, Scope.Async);
                     return;
                 case IUnaryOperation unary when unary.OperatorKind == UnaryOperatorKind.Not && unary.Parent is IConditionalOperation conditional:
-                    _symbolIteratorsStack.Pop().Item1.Dispose();
-                    _symbolIteratorsStack.Pop().Item1.Dispose();
+                    PopFrame();
+                    PopFrame();
                     TryPushOperationToStack(context, conditional.WhenFalse, Scope.Async);
                     TryPushOperationToStack(context, conditional.WhenTrue, Scope.Sync);
                     return;
@@ -155,8 +172,7 @@ namespace Azure.SdkAnalyzers
                 return;
             }
 
-            IEnumerable<IOperation> enumerable = new[] {operation};
-            _symbolIteratorsStack.Push((enumerable.GetEnumerator(), context.WithScope(scope)));
+            PushSingleOperation(operation, context.WithScope(scope));
         }
 
         private void ReportDiagnosticOnMember(IOperation operation, DiagnosticDescriptor diagnosticDescriptor, params object[] messageArgs)
@@ -173,6 +189,20 @@ namespace Azure.SdkAnalyzers
             var start = name.Span.Start;
             var end = invocation.Span.End;
             return TextSpan.FromBounds(start, end);
+        }
+
+        private struct StackFrame
+        {
+            public readonly ImmutableArray<IOperation> Children;
+            public int Index;
+            public readonly MethodAnalysisContext Context;
+
+            public StackFrame(ImmutableArray<IOperation> children, MethodAnalysisContext context)
+            {
+                Children = children;
+                Index = 0;
+                Context = context;
+            }
         }
 
         private readonly struct MethodAnalysisContext
