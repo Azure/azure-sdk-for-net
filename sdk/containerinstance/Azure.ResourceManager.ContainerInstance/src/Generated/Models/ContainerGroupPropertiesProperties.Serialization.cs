@@ -116,15 +116,15 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 writer.WritePropertyName("restartPolicy"u8);
                 writer.WriteStringValue(RestartPolicy.Value.ToString());
             }
-            if (Optional.IsDefined(IpAddress))
+            if (Optional.IsDefined(IPAddress))
             {
                 writer.WritePropertyName("ipAddress"u8);
-                writer.WriteObjectValue(IpAddress, options);
+                writer.WriteObjectValue(IPAddress, options);
             }
-            if (Optional.IsDefined(OsType))
+            if (Optional.IsDefined(ContainerGroupOSType))
             {
                 writer.WritePropertyName("osType"u8);
-                writer.WriteStringValue(OsType.Value.ToString());
+                writer.WriteStringValue(ContainerGroupOSType.Value.ToString());
             }
             if (Optional.IsCollectionDefined(Volumes))
             {
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             IList<ContainerGroupImageRegistryCredential> imageRegistryCredentials = default;
             ContainerGroupRestartPolicy? restartPolicy = default;
             ContainerGroupIPAddress ipAddress = default;
-            ContainerInstanceOperatingSystemType? osType = default;
+            ContainerInstanceOperatingSystemType? containerGroupOSType = default;
             IList<ContainerVolume> volumes = default;
             ContainerGroupInstanceView instanceView = default;
             ContainerGroupDiagnostics diagnostics = default;
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    osType = new ContainerInstanceOperatingSystemType(prop.Value.GetString());
+                    containerGroupOSType = new ContainerInstanceOperatingSystemType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("volumes"u8))
@@ -525,7 +525,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 imageRegistryCredentials ?? new ChangeTrackingList<ContainerGroupImageRegistryCredential>(),
                 restartPolicy,
                 ipAddress,
-                osType,
+                containerGroupOSType,
                 volumes ?? new ChangeTrackingList<ContainerVolume>(),
                 instanceView,
                 diagnostics,

@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.ContainerInstance;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
@@ -74,10 +75,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 throw new FormatException($"The model {nameof(ApiEntityReference)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Id))
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                writer.WriteStringValue(ResourceId);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -121,13 +122,17 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 return null;
             }
-            string id = default;
+            ResourceIdentifier resourceId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
                 {
-                    id = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -135,7 +140,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ApiEntityReference(id, additionalBinaryDataProperties);
+            return new ApiEntityReference(resourceId, additionalBinaryDataProperties);
         }
     }
 }

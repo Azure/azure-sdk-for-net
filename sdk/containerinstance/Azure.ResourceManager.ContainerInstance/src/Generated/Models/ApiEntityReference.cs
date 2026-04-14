@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
@@ -22,15 +23,15 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiEntityReference"/>. </summary>
-        /// <param name="id"> The ARM resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/... </param>
+        /// <param name="resourceId"> The ARM resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/... </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApiEntityReference(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApiEntityReference(ResourceIdentifier resourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Id = id;
+            ResourceId = resourceId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The ARM resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/... </summary>
-        public string Id { get; set; }
+        public ResourceIdentifier ResourceId { get; set; }
     }
 }

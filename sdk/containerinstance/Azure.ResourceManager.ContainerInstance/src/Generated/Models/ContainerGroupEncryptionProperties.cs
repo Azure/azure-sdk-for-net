@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="keyName"> The encryption key name. </param>
         /// <param name="keyVersion"> The encryption key version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUri"/>, <paramref name="keyName"/> or <paramref name="keyVersion"/> is null. </exception>
-        public ContainerGroupEncryptionProperties(string vaultBaseUri, string keyName, string keyVersion)
+        public ContainerGroupEncryptionProperties(Uri vaultBaseUri, string keyName, string keyVersion)
         {
             Argument.AssertNotNull(vaultBaseUri, nameof(vaultBaseUri));
             Argument.AssertNotNull(keyName, nameof(keyName));
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="keyVersion"> The encryption key version. </param>
         /// <param name="identity"> The keyvault managed identity. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerGroupEncryptionProperties(string vaultBaseUri, string keyName, string keyVersion, string identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerGroupEncryptionProperties(Uri vaultBaseUri, string keyName, string keyVersion, string identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VaultBaseUri = vaultBaseUri;
             KeyName = keyName;
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         }
 
         /// <summary> The keyvault base url. </summary>
-        public string VaultBaseUri { get; set; }
+        public Uri VaultBaseUri { get; set; }
 
         /// <summary> The encryption key name. </summary>
         public string KeyName { get; set; }

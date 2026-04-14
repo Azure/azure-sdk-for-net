@@ -80,20 +80,20 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(OsType))
+            if (options.Format != "W" && Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
-                writer.WriteStringValue(OsType);
+                writer.WriteStringValue(OSType);
             }
             if (options.Format != "W" && Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(IpAddressType))
+            if (options.Format != "W" && Optional.IsDefined(IPAddressType))
             {
                 writer.WritePropertyName("ipAddressType"u8);
-                writer.WriteStringValue(IpAddressType);
+                writer.WriteStringValue(IPAddressType);
             }
             if (options.Format != "W" && Optional.IsDefined(Gpu))
             {

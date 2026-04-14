@@ -136,10 +136,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 writer.WritePropertyName("shutdownGracePeriod"u8);
                 writer.WriteStringValue(ShutdownGracePeriod.Value, "O");
             }
-            if (Optional.IsDefined(IpAddress))
+            if (Optional.IsDefined(IPAddress))
             {
                 writer.WritePropertyName("ipAddress"u8);
-                writer.WriteObjectValue(IpAddress, options);
+                writer.WriteObjectValue(IPAddress, options);
             }
             if (Optional.IsDefined(TimeToLive))
             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 writer.WriteStringValue(TimeToLive.Value, "O");
             }
             writer.WritePropertyName("osType"u8);
-            writer.WriteStringValue(OsType.ToString());
+            writer.WriteStringValue(OSType.ToString());
             if (Optional.IsCollectionDefined(Volumes))
             {
                 writer.WritePropertyName("volumes"u8);

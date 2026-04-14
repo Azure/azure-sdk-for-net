@@ -24,21 +24,21 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <summary> Initializes a new instance of <see cref="ContainerProbe"/>. </summary>
         /// <param name="exec"> The execution command to probe. </param>
         /// <param name="httpGet"> The Http Get settings to probe. </param>
-        /// <param name="initialDelaySeconds"> The initial delay seconds. </param>
-        /// <param name="periodSeconds"> The period seconds. </param>
+        /// <param name="initialDelayInSeconds"> The initial delay seconds. </param>
+        /// <param name="periodInSeconds"> The period seconds. </param>
         /// <param name="failureThreshold"> The failure threshold. </param>
         /// <param name="successThreshold"> The success threshold. </param>
-        /// <param name="timeoutSeconds"> The timeout seconds. </param>
+        /// <param name="timeoutInSeconds"> The timeout seconds. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerProbe(ContainerExec exec, ContainerHttpGet httpGet, int? initialDelaySeconds, int? periodSeconds, int? failureThreshold, int? successThreshold, int? timeoutSeconds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerProbe(ContainerExec exec, ContainerHttpGet httpGet, int? initialDelayInSeconds, int? periodInSeconds, int? failureThreshold, int? successThreshold, int? timeoutInSeconds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Exec = exec;
             HttpGet = httpGet;
-            InitialDelaySeconds = initialDelaySeconds;
-            PeriodSeconds = periodSeconds;
+            InitialDelayInSeconds = initialDelayInSeconds;
+            PeriodInSeconds = periodInSeconds;
             FailureThreshold = failureThreshold;
             SuccessThreshold = successThreshold;
-            TimeoutSeconds = timeoutSeconds;
+            TimeoutInSeconds = timeoutInSeconds;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -49,10 +49,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public ContainerHttpGet HttpGet { get; set; }
 
         /// <summary> The initial delay seconds. </summary>
-        public int? InitialDelaySeconds { get; set; }
+        public int? InitialDelayInSeconds { get; set; }
 
         /// <summary> The period seconds. </summary>
-        public int? PeriodSeconds { get; set; }
+        public int? PeriodInSeconds { get; set; }
 
         /// <summary> The failure threshold. </summary>
         public int? FailureThreshold { get; set; }
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public int? SuccessThreshold { get; set; }
 
         /// <summary> The timeout seconds. </summary>
-        public int? TimeoutSeconds { get; set; }
+        public int? TimeoutInSeconds { get; set; }
 
         /// <summary> The commands to execute within the container. </summary>
         public IList<string> ExecCommand

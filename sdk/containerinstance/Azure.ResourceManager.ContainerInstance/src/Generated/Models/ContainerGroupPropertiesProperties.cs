@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <list type="bullet"><item><description>`Always` Always restart</description></item><item><description>`OnFailure` Restart on failure</description></item><item><description>`Never` Never restart</description></item></list>
         /// </param>
         /// <param name="ipAddress"> The IP address type of the container group. </param>
-        /// <param name="osType"> The operating system type required by the containers in the container group. </param>
+        /// <param name="containerGroupOSType"> The operating system type required by the containers in the container group. </param>
         /// <param name="volumes"> The list of volumes that can be mounted by containers in this container group. </param>
         /// <param name="instanceView"> The instance view of the container group. Only valid in response. </param>
         /// <param name="diagnostics"> The diagnostic information for a container group. </param>
@@ -61,15 +61,15 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="standbyPoolProfile"> The reference standby pool profile properties. </param>
         /// <param name="isCreatedFromStandbyPool"> The flag to determine whether the container group is created from standby pool. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerGroupPropertiesProperties(string provisioningState, IList<ContainerGroupSecretReference> secretReferences, IList<ContainerInstanceContainer> containers, IList<ContainerGroupImageRegistryCredential> imageRegistryCredentials, ContainerGroupRestartPolicy? restartPolicy, ContainerGroupIPAddress ipAddress, ContainerInstanceOperatingSystemType? osType, IList<ContainerVolume> volumes, ContainerGroupInstanceView instanceView, ContainerGroupDiagnostics diagnostics, IList<ContainerGroupSubnetId> subnetIds, ContainerGroupDnsConfiguration dnsConfig, ContainerGroupSku? sku, ContainerGroupEncryptionProperties encryptionProperties, IList<InitContainerDefinitionContent> initContainers, IList<DeploymentExtensionSpec> extensions, ConfidentialComputeProperties confidentialComputeProperties, ContainerGroupPriority? priority, ContainerGroupIdentityAccessControlLevels identityAcls, ContainerGroupProfileReferenceDefinition containerGroupProfile, StandbyPoolProfileDefinition standbyPoolProfile, bool? isCreatedFromStandbyPool, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerGroupPropertiesProperties(string provisioningState, IList<ContainerGroupSecretReference> secretReferences, IList<ContainerInstanceContainer> containers, IList<ContainerGroupImageRegistryCredential> imageRegistryCredentials, ContainerGroupRestartPolicy? restartPolicy, ContainerGroupIPAddress ipAddress, ContainerInstanceOperatingSystemType? containerGroupOSType, IList<ContainerVolume> volumes, ContainerGroupInstanceView instanceView, ContainerGroupDiagnostics diagnostics, IList<ContainerGroupSubnetId> subnetIds, ContainerGroupDnsConfiguration dnsConfig, ContainerGroupSku? sku, ContainerGroupEncryptionProperties encryptionProperties, IList<InitContainerDefinitionContent> initContainers, IList<DeploymentExtensionSpec> extensions, ConfidentialComputeProperties confidentialComputeProperties, ContainerGroupPriority? priority, ContainerGroupIdentityAccessControlLevels identityAcls, ContainerGroupProfileReferenceDefinition containerGroupProfile, StandbyPoolProfileDefinition standbyPoolProfile, bool? isCreatedFromStandbyPool, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             SecretReferences = secretReferences;
             Containers = containers;
             ImageRegistryCredentials = imageRegistryCredentials;
             RestartPolicy = restartPolicy;
-            IpAddress = ipAddress;
-            OsType = osType;
+            IPAddress = ipAddress;
+            ContainerGroupOSType = containerGroupOSType;
             Volumes = volumes;
             InstanceView = instanceView;
             Diagnostics = diagnostics;
@@ -107,10 +107,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public ContainerGroupRestartPolicy? RestartPolicy { get; set; }
 
         /// <summary> The IP address type of the container group. </summary>
-        public ContainerGroupIPAddress IpAddress { get; set; }
+        public ContainerGroupIPAddress IPAddress { get; set; }
 
         /// <summary> The operating system type required by the containers in the container group. </summary>
-        public ContainerInstanceOperatingSystemType? OsType { get; set; }
+        public ContainerInstanceOperatingSystemType? ContainerGroupOSType { get; set; }
 
         /// <summary> The list of volumes that can be mounted by containers in this container group. </summary>
         public IList<ContainerVolume> Volumes { get; } = new ChangeTrackingList<ContainerVolume>();

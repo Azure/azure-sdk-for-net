@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="image"> The cached image name. </param>
         internal CachedImages(string osType, string image)
         {
-            OsType = osType;
+            OSType = osType;
             Image = image;
         }
 
@@ -31,13 +31,13 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal CachedImages(string osType, string image, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            OsType = osType;
+            OSType = osType;
             Image = image;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The OS type of the cached image. </summary>
-        public string OsType { get; }
+        public string OSType { get; }
 
         /// <summary> The cached image name. </summary>
         public string Image { get; }

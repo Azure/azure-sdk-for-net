@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             if (Optional.IsDefined(IdentityUri))
             {
                 writer.WritePropertyName("identityUrl"u8);
-                writer.WriteStringValue(IdentityUri);
+                writer.WriteStringValue(IdentityUri.AbsoluteUri);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             string password = default;
             string passwordReference = default;
             string identity = default;
-            string identityUri = default;
+            Uri identityUri = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -184,7 +184,11 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
                 if (prop.NameEquals("identityUrl"u8))
                 {
-                    identityUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identityUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (options.Format != "W")

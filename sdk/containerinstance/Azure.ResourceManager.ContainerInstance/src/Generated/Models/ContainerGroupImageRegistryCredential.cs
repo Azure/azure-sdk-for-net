@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="identity"> The identity for the private registry. </param>
         /// <param name="identityUri"> The identity URL for the private registry. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerGroupImageRegistryCredential(string server, string username, string password, string passwordReference, string identity, string identityUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerGroupImageRegistryCredential(string server, string username, string password, string passwordReference, string identity, Uri identityUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Server = server;
             Username = username;
@@ -62,6 +62,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public string Identity { get; set; }
 
         /// <summary> The identity URL for the private registry. </summary>
-        public string IdentityUri { get; set; }
+        public Uri IdentityUri { get; set; }
     }
 }

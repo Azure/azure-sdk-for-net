@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         internal ContainerCapabilities(string resourceType, string osType, AzureLocation? location, string ipAddressType, string gpu, ContainerSupportedCapabilities capabilities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceType = resourceType;
-            OsType = osType;
+            OSType = osType;
             Location = location;
-            IpAddressType = ipAddressType;
+            IPAddressType = ipAddressType;
             Gpu = gpu;
             Capabilities = capabilities;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -45,13 +45,13 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public string ResourceType { get; }
 
         /// <summary> The OS type that this capability describes. </summary>
-        public string OsType { get; }
+        public string OSType { get; }
 
         /// <summary> The resource location. </summary>
         public AzureLocation? Location { get; }
 
         /// <summary> The ip address type that this capability describes. </summary>
-        public string IpAddressType { get; }
+        public string IPAddressType { get; }
 
         /// <summary> The GPU sku that this capability describes. </summary>
         public string Gpu { get; }

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             InitContainers = new ChangeTrackingList<InitContainerDefinitionContent>();
             Extensions = new ChangeTrackingList<DeploymentExtensionSpec>();
             ImageRegistryCredentials = new ChangeTrackingList<ContainerGroupImageRegistryCredential>();
-            OsType = osType;
+            OSType = osType;
             Volumes = new ChangeTrackingList<ContainerVolume>();
             RegisteredRevisions = new ChangeTrackingList<int>();
         }
@@ -69,9 +69,9 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             ImageRegistryCredentials = imageRegistryCredentials;
             RestartPolicy = restartPolicy;
             ShutdownGracePeriod = shutdownGracePeriod;
-            IpAddress = ipAddress;
+            IPAddress = ipAddress;
             TimeToLive = timeToLive;
-            OsType = osType;
+            OSType = osType;
             Volumes = volumes;
             Diagnostics = diagnostics;
             Priority = priority;
@@ -111,13 +111,13 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public DateTimeOffset? ShutdownGracePeriod { get; set; }
 
         /// <summary> The IP address type of the container group. </summary>
-        public ContainerGroupIPAddress IpAddress { get; set; }
+        public ContainerGroupIPAddress IPAddress { get; set; }
 
         /// <summary> Post completion time to live for containers of a CG. </summary>
         public DateTimeOffset? TimeToLive { get; set; }
 
         /// <summary> The operating system type required by the containers in the container group. </summary>
-        public ContainerInstanceOperatingSystemType OsType { get; set; }
+        public ContainerInstanceOperatingSystemType OSType { get; set; }
 
         /// <summary> The list of volumes that can be mounted by containers in this container group. </summary>
         public IList<ContainerVolume> Volumes { get; } = new ChangeTrackingList<ContainerVolume>();

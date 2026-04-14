@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 throw new FormatException($"The model {nameof(CachedImages)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("osType"u8);
-            writer.WriteStringValue(OsType);
+            writer.WriteStringValue(OSType);
             writer.WritePropertyName("image"u8);
             writer.WriteStringValue(Image);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)

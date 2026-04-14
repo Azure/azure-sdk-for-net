@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 throw new FormatException($"The model {nameof(ContainerGroupEncryptionProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("vaultBaseUrl"u8);
-            writer.WriteStringValue(VaultBaseUri);
+            writer.WriteStringValue(VaultBaseUri.AbsoluteUri);
             writer.WritePropertyName("keyName"u8);
             writer.WriteStringValue(KeyName);
             writer.WritePropertyName("keyVersion"u8);
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 return null;
             }
-            string vaultBaseUri = default;
+            Uri vaultBaseUri = default;
             string keyName = default;
             string keyVersion = default;
             string identity = default;
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 if (prop.NameEquals("vaultBaseUrl"u8))
                 {
-                    vaultBaseUri = prop.Value.GetString();
+                    vaultBaseUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("keyName"u8))

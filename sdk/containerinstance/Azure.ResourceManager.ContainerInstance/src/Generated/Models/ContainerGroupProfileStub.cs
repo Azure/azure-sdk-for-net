@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
@@ -54,11 +55,11 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public NGroupContainerGroupProperties ContainerGroupProperties { get; set; }
 
         /// <summary> The ARM resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/... </summary>
-        public string ResourceId
+        public ResourceIdentifier ResourceId
         {
             get
             {
-                return Resource is null ? default : Resource.Id;
+                return Resource is null ? default : Resource.ResourceId;
             }
             set
             {
@@ -66,7 +67,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 {
                     Resource = new ApiEntityReference();
                 }
-                Resource.Id = value;
+                Resource.ResourceId = value;
             }
         }
 

@@ -99,10 +99,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (options.Format != "W" && Optional.IsDefined(Type))
+            if (options.Format != "W" && Optional.IsDefined(EventType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type);
+                writer.WriteStringValue(EventType);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             DateTimeOffset? lastTimestamp = default;
             string name = default;
             string message = default;
-            string @type = default;
+            string eventType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    eventType = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 lastTimestamp,
                 name,
                 message,
-                @type,
+                eventType,
                 additionalBinaryDataProperties);
         }
     }

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <list type="bullet"><item><description>`Always` Always restart</description></item><item><description>`OnFailure` Restart on failure</description></item><item><description>`Never` Never restart</description></item></list>
         /// </param>
         /// <param name="ipAddress"> The IP address type of the container group. </param>
-        /// <param name="osType"> The operating system type required by the containers in the container group. </param>
+        /// <param name="containerGroupOSType"> The operating system type required by the containers in the container group. </param>
         /// <param name="volumes"> The list of volumes that can be mounted by containers in this container group. </param>
         /// <param name="instanceView"> The instance view of the container group. Only valid in response. </param>
         /// <param name="subnetIds"> The subnet resource IDs for a container group. </param>
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="diagnosticsLogAnalytics"> Container group log analytics information. </param>
         /// <param name="confidentialComputeCcePolicy"> The base64 encoded confidential compute enforcement policy. </param>
         /// <returns> A new <see cref="ContainerInstance.ContainerGroupData"/> instance for mocking. </returns>
-        public static ContainerGroupData ContainerGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation location = default, IDictionary<string, string> tags = default, IEnumerable<string> zones = default, ManagedServiceIdentity identity = default, string provisioningState = default, IEnumerable<ContainerGroupSecretReference> secretReferences = default, IEnumerable<ContainerInstanceContainer> containers = default, IEnumerable<ContainerGroupImageRegistryCredential> imageRegistryCredentials = default, ContainerGroupRestartPolicy? restartPolicy = default, ContainerGroupIPAddress ipAddress = default, ContainerInstanceOperatingSystemType? osType = default, IEnumerable<ContainerVolume> volumes = default, ContainerGroupInstanceView instanceView = default, IEnumerable<ContainerGroupSubnetId> subnetIds = default, ContainerGroupDnsConfiguration dnsConfig = default, ContainerGroupSku? sku = default, ContainerGroupEncryptionProperties encryptionProperties = default, IEnumerable<InitContainerDefinitionContent> initContainers = default, IEnumerable<DeploymentExtensionSpec> extensions = default, ContainerGroupPriority? priority = default, ContainerGroupIdentityAccessControlLevels identityAcls = default, ContainerGroupProfileReferenceDefinition containerGroupProfile = default, StandbyPoolProfileDefinition standbyPoolProfile = default, bool? isCreatedFromStandbyPool = default, ContainerGroupLogAnalytics diagnosticsLogAnalytics = default, string confidentialComputeCcePolicy = default)
+        public static ContainerGroupData ContainerGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation location = default, IDictionary<string, string> tags = default, IEnumerable<string> zones = default, ManagedServiceIdentity identity = default, string provisioningState = default, IEnumerable<ContainerGroupSecretReference> secretReferences = default, IEnumerable<ContainerInstanceContainer> containers = default, IEnumerable<ContainerGroupImageRegistryCredential> imageRegistryCredentials = default, ContainerGroupRestartPolicy? restartPolicy = default, ContainerGroupIPAddress ipAddress = default, ContainerInstanceOperatingSystemType? containerGroupOSType = default, IEnumerable<ContainerVolume> volumes = default, ContainerGroupInstanceView instanceView = default, IEnumerable<ContainerGroupSubnetId> subnetIds = default, ContainerGroupDnsConfiguration dnsConfig = default, ContainerGroupSku? sku = default, ContainerGroupEncryptionProperties encryptionProperties = default, IEnumerable<InitContainerDefinitionContent> initContainers = default, IEnumerable<DeploymentExtensionSpec> extensions = default, ContainerGroupPriority? priority = default, ContainerGroupIdentityAccessControlLevels identityAcls = default, ContainerGroupProfileReferenceDefinition containerGroupProfile = default, StandbyPoolProfileDefinition standbyPoolProfile = default, bool? isCreatedFromStandbyPool = default, ContainerGroupLogAnalytics diagnosticsLogAnalytics = default, string confidentialComputeCcePolicy = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             zones ??= new ChangeTrackingList<string>();
@@ -69,14 +69,14 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 tags,
                 zones.ToList(),
                 identity,
-                provisioningState is null && secretReferences is null && containers is null && imageRegistryCredentials is null && restartPolicy is null && ipAddress is null && osType is null && volumes is null && instanceView is null && subnetIds is null && dnsConfig is null && sku is null && encryptionProperties is null && initContainers is null && extensions is null && priority is null && identityAcls is null && containerGroupProfile is null && standbyPoolProfile is null && isCreatedFromStandbyPool is null && diagnosticsLogAnalytics is null && confidentialComputeCcePolicy is null ? default : new ContainerGroupPropertiesProperties(
+                provisioningState is null && secretReferences is null && containers is null && imageRegistryCredentials is null && restartPolicy is null && ipAddress is null && containerGroupOSType is null && volumes is null && instanceView is null && subnetIds is null && dnsConfig is null && sku is null && encryptionProperties is null && initContainers is null && extensions is null && priority is null && identityAcls is null && containerGroupProfile is null && standbyPoolProfile is null && isCreatedFromStandbyPool is null && diagnosticsLogAnalytics is null && confidentialComputeCcePolicy is null ? default : new ContainerGroupPropertiesProperties(
                     provisioningState,
                     (secretReferences ?? new ChangeTrackingList<ContainerGroupSecretReference>()).ToList(),
                     (containers ?? new ChangeTrackingList<ContainerInstanceContainer>()).ToList(),
                     (imageRegistryCredentials ?? new ChangeTrackingList<ContainerGroupImageRegistryCredential>()).ToList(),
                     restartPolicy,
                     ipAddress,
-                    osType,
+                    containerGroupOSType,
                     (volumes ?? new ChangeTrackingList<ContainerVolume>()).ToList(),
                     instanceView,
                     new ContainerGroupDiagnostics(diagnosticsLogAnalytics, null),
@@ -132,9 +132,9 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="lastTimestamp"> The date-time of the latest logged event. </param>
         /// <param name="name"> The event name. </param>
         /// <param name="message"> The event message. </param>
-        /// <param name="type"> The event type. </param>
+        /// <param name="eventType"> The event type. </param>
         /// <returns> A new <see cref="Models.ContainerEvent"/> instance for mocking. </returns>
-        public static ContainerEvent ContainerEvent(int? count = default, DateTimeOffset? firstTimestamp = default, DateTimeOffset? lastTimestamp = default, string name = default, string message = default, string @type = default)
+        public static ContainerEvent ContainerEvent(int? count = default, DateTimeOffset? firstTimestamp = default, DateTimeOffset? lastTimestamp = default, string name = default, string message = default, string eventType = default)
         {
             return new ContainerEvent(
                 count,
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 lastTimestamp,
                 name,
                 message,
-                @type,
+                eventType,
                 additionalBinaryDataProperties: null);
         }
 
@@ -173,22 +173,22 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         /// <summary> IP address for the container group. </summary>
         /// <param name="ports"> The list of ports exposed on the container group. </param>
-        /// <param name="type"> Specifies if the IP is exposed to the public internet or private VNET. </param>
+        /// <param name="addressType"> Specifies if the IP is exposed to the public internet or private VNET. </param>
         /// <param name="ip"> The IP exposed to the public internet. </param>
         /// <param name="dnsNameLabel"> The Dns name label for the IP. </param>
-        /// <param name="autoGeneratedDomainNameLabelScope"> The value representing the security enum. The 'Unsecure' value is the default value if not selected and means the object's domain name label is not secured against subdomain takeover. The 'TenantReuse' value is the default value if selected and means the object's domain name label can be reused within the same tenant. The 'SubscriptionReuse' value means the object's domain name label can be reused within the same subscription. The 'ResourceGroupReuse' value means the object's domain name label can be reused within the same resource group. The 'NoReuse' value means the object's domain name label cannot be reused within the same resource group, subscription, or tenant. </param>
+        /// <param name="dnsNameLabelReusePolicy"> The value representing the security enum. The 'Unsecure' value is the default value if not selected and means the object's domain name label is not secured against subdomain takeover. The 'TenantReuse' value is the default value if selected and means the object's domain name label can be reused within the same tenant. The 'SubscriptionReuse' value means the object's domain name label can be reused within the same subscription. The 'ResourceGroupReuse' value means the object's domain name label can be reused within the same resource group. The 'NoReuse' value means the object's domain name label cannot be reused within the same resource group, subscription, or tenant. </param>
         /// <param name="fqdn"> The FQDN for the IP. </param>
         /// <returns> A new <see cref="Models.ContainerGroupIPAddress"/> instance for mocking. </returns>
-        public static ContainerGroupIPAddress ContainerGroupIPAddress(IEnumerable<ContainerGroupPort> ports = default, ContainerGroupIPAddressType @type = default, string ip = default, string dnsNameLabel = default, DnsNameLabelReusePolicy? autoGeneratedDomainNameLabelScope = default, string fqdn = default)
+        public static ContainerGroupIPAddress ContainerGroupIPAddress(IEnumerable<ContainerGroupPort> ports = default, ContainerGroupIPAddressType addressType = default, string ip = default, string dnsNameLabel = default, AutoGeneratedDomainNameLabelScope? dnsNameLabelReusePolicy = default, string fqdn = default)
         {
             ports ??= new ChangeTrackingList<ContainerGroupPort>();
 
             return new ContainerGroupIPAddress(
                 ports.ToList(),
-                @type,
+                addressType,
                 ip,
                 dnsNameLabel,
-                autoGeneratedDomainNameLabelScope,
+                dnsNameLabelReusePolicy,
                 fqdn,
                 additionalBinaryDataProperties: null);
         }
@@ -573,7 +573,26 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ContainerGroupData ContainerGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IEnumerable<string> zones, ManagedServiceIdentity identity, string provisioningState, IEnumerable<ContainerInstanceContainer> containers, IEnumerable<ContainerGroupImageRegistryCredential> imageRegistryCredentials, ContainerGroupRestartPolicy? restartPolicy, ContainerGroupIPAddress ipAddress, ContainerInstanceOperatingSystemType osType, IEnumerable<ContainerVolume> volumes, ContainerGroupInstanceView instanceView, ContainerGroupLogAnalytics diagnosticsLogAnalytics, IEnumerable<ContainerGroupSubnetId> subnetIds, ContainerGroupDnsConfiguration dnsConfig, ContainerGroupSku? sku, ContainerGroupEncryptionProperties encryptionProperties, IEnumerable<InitContainerDefinitionContent> initContainers, IEnumerable<DeploymentExtensionSpec> extensions, string confidentialComputeCcePolicy, ContainerGroupPriority? priority)
         {
-            return ContainerGroupData(id, name, resourceType, systemData, location, tags, zones, identity, provisioningState, secretReferences: default, containers, imageRegistryCredentials, restartPolicy, ipAddress, osType, volumes, instanceView, subnetIds, dnsConfig, sku, encryptionProperties, initContainers, extensions, priority, identityAcls: default, containerGroupProfile: default, standbyPoolProfile: default, isCreatedFromStandbyPool: default, diagnosticsLogAnalytics, confidentialComputeCcePolicy);
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            zones ??= new ChangeTrackingList<string>();
+            containers ??= new ChangeTrackingList<ContainerInstanceContainer>();
+            imageRegistryCredentials ??= new ChangeTrackingList<ContainerGroupImageRegistryCredential>();
+            volumes ??= new ChangeTrackingList<ContainerVolume>();
+            subnetIds ??= new ChangeTrackingList<ContainerGroupSubnetId>();
+            initContainers ??= new ChangeTrackingList<InitContainerDefinitionContent>();
+            extensions ??= new ChangeTrackingList<DeploymentExtensionSpec>();
+
+            return new ContainerGroupData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                location,
+                tags,
+                zones.ToList(),
+                identity,
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerInstance.ContainerGroupData"/>. </summary>

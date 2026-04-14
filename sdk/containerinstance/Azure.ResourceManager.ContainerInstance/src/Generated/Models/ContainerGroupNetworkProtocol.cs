@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     {
         private readonly string _value;
         /// <summary> TCP. </summary>
-        private const string TCPValue = "TCP";
+        private const string TcpValue = "TCP";
         /// <summary> UDP. </summary>
-        private const string UDPValue = "UDP";
+        private const string UdpValue = "UDP";
 
         /// <summary> Initializes a new instance of <see cref="ContainerGroupNetworkProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         }
 
         /// <summary> TCP. </summary>
-        public static ContainerGroupNetworkProtocol TCP { get; } = new ContainerGroupNetworkProtocol(TCPValue);
+        public static ContainerGroupNetworkProtocol Tcp { get; } = new ContainerGroupNetworkProtocol(TcpValue);
 
         /// <summary> UDP. </summary>
-        public static ContainerGroupNetworkProtocol UDP { get; } = new ContainerGroupNetworkProtocol(UDPValue);
+        public static ContainerGroupNetworkProtocol Udp { get; } = new ContainerGroupNetworkProtocol(UdpValue);
 
         /// <summary> Determines if two <see cref="ContainerGroupNetworkProtocol"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

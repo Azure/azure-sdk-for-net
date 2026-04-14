@@ -128,11 +128,11 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary> The IP address type of the container group. </summary>
-        public ContainerGroupIPAddress IpAddress
+        public ContainerGroupIPAddress IPAddress
         {
             get
             {
-                return Properties is null ? default : Properties.IpAddress;
+                return Properties is null ? default : Properties.IPAddress;
             }
             set
             {
@@ -140,16 +140,16 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     Properties = new ContainerGroupPropertiesProperties();
                 }
-                Properties.IpAddress = value;
+                Properties.IPAddress = value;
             }
         }
 
         /// <summary> The operating system type required by the containers in the container group. </summary>
-        public ContainerInstanceOperatingSystemType? OsType
+        public ContainerInstanceOperatingSystemType? ContainerGroupOSType
         {
             get
             {
-                return Properties is null ? default : Properties.OsType;
+                return Properties is null ? default : Properties.ContainerGroupOSType;
             }
             set
             {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     Properties = new ContainerGroupPropertiesProperties();
                 }
-                Properties.OsType = value.Value;
+                Properties.ContainerGroupOSType = value.Value;
             }
         }
 

@@ -27,16 +27,16 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="lastTimestamp"> The date-time of the latest logged event. </param>
         /// <param name="name"> The event name. </param>
         /// <param name="message"> The event message. </param>
-        /// <param name="type"> The event type. </param>
+        /// <param name="eventType"> The event type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerEvent(int? count, DateTimeOffset? firstTimestamp, DateTimeOffset? lastTimestamp, string name, string message, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerEvent(int? count, DateTimeOffset? firstTimestamp, DateTimeOffset? lastTimestamp, string name, string message, string eventType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Count = count;
             FirstTimestamp = firstTimestamp;
             LastTimestamp = lastTimestamp;
             Name = name;
             Message = message;
-            Type = @type;
+            EventType = eventType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -56,6 +56,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public string Message { get; }
 
         /// <summary> The event type. </summary>
-        public string Type { get; }
+        public string EventType { get; }
     }
 }

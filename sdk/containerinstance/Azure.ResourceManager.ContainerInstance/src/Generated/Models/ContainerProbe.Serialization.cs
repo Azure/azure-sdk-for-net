@@ -84,15 +84,15 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 writer.WritePropertyName("httpGet"u8);
                 writer.WriteObjectValue(HttpGet, options);
             }
-            if (Optional.IsDefined(InitialDelaySeconds))
+            if (Optional.IsDefined(InitialDelayInSeconds))
             {
                 writer.WritePropertyName("initialDelaySeconds"u8);
-                writer.WriteNumberValue(InitialDelaySeconds.Value);
+                writer.WriteNumberValue(InitialDelayInSeconds.Value);
             }
-            if (Optional.IsDefined(PeriodSeconds))
+            if (Optional.IsDefined(PeriodInSeconds))
             {
                 writer.WritePropertyName("periodSeconds"u8);
-                writer.WriteNumberValue(PeriodSeconds.Value);
+                writer.WriteNumberValue(PeriodInSeconds.Value);
             }
             if (Optional.IsDefined(FailureThreshold))
             {
@@ -104,10 +104,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 writer.WritePropertyName("successThreshold"u8);
                 writer.WriteNumberValue(SuccessThreshold.Value);
             }
-            if (Optional.IsDefined(TimeoutSeconds))
+            if (Optional.IsDefined(TimeoutInSeconds))
             {
                 writer.WritePropertyName("timeoutSeconds"u8);
-                writer.WriteNumberValue(TimeoutSeconds.Value);
+                writer.WriteNumberValue(TimeoutInSeconds.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -153,11 +153,11 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
             ContainerExec exec = default;
             ContainerHttpGet httpGet = default;
-            int? initialDelaySeconds = default;
-            int? periodSeconds = default;
+            int? initialDelayInSeconds = default;
+            int? periodInSeconds = default;
             int? failureThreshold = default;
             int? successThreshold = default;
-            int? timeoutSeconds = default;
+            int? timeoutInSeconds = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    initialDelaySeconds = prop.Value.GetInt32();
+                    initialDelayInSeconds = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("periodSeconds"u8))
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    periodSeconds = prop.Value.GetInt32();
+                    periodInSeconds = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("failureThreshold"u8))
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    timeoutSeconds = prop.Value.GetInt32();
+                    timeoutInSeconds = prop.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
@@ -232,11 +232,11 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             return new ContainerProbe(
                 exec,
                 httpGet,
-                initialDelaySeconds,
-                periodSeconds,
+                initialDelayInSeconds,
+                periodInSeconds,
                 failureThreshold,
                 successThreshold,
-                timeoutSeconds,
+                timeoutInSeconds,
                 additionalBinaryDataProperties);
         }
     }
