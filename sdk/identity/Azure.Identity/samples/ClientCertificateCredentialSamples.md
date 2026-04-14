@@ -18,7 +18,7 @@ var certificate = new X509Certificate2("./certs/cert-password-protected.pfx", "p
 var credential = new ClientCertificateCredential(tenantId, clientId, certificate);
 ```
 
-## Loading certificates from an X509Store
+## Loading certificates from the certificate store
 
 Applications running on platforms which provide a secure certificate store might prefer to store and retrieve certificates from there. While the `ClientCertificateCredential` doesn't directly provide a mechanism for this, the application can retrieve the appropriate certificate from the store and use it to construct the `ClientCertificateCredential`.
 
