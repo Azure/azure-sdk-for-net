@@ -3,7 +3,6 @@
 
 using System.Collections.Immutable;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.CodeAnalysis.Operations;
 
@@ -30,29 +29,12 @@ namespace Azure.SdkAnalyzers
         {
             var asyncUtilities = new AsyncAnalyzerUtilities(context.Compilation);
 
-            context.RegisterSyntaxNodeAction(
-                ctx => AnalyzeArrowExpressionClause(ctx, asyncUtilities),
-                SyntaxKind.ArrowExpressionClause);
             context.RegisterOperationAction(
                 ctx => AnalyzeMethodBody(ctx, asyncUtilities),
                 OperationKind.MethodBody);
             context.RegisterOperationAction(
                 ctx => AnalyzeAnonymousFunction(ctx, asyncUtilities),
                 OperationKind.AnonymousFunction);
-        }
-
-        private static void AnalyzeArrowExpressionClause(SyntaxNodeAnalysisContext context, AsyncAnalyzerUtilities asyncUtilities)
-        {
-            if (!(context.ContainingSymbol is IMethodSymbol method) || method.MethodKind != MethodKind.PropertyGet)
-            {
-                return;
-            }
-
-            var operation = context.SemanticModel.GetOperation(context.Node, context.CancellationToken);
-            if (operation is IBlockOperation block && block.Parent == null)
-            {
-                MethodBodyAnalyzer.Run(context.ReportDiagnostic, asyncUtilities, method, block);
-            }
         }
 
         private static void AnalyzeMethodBody(OperationAnalysisContext context, AsyncAnalyzerUtilities asyncUtilities)
