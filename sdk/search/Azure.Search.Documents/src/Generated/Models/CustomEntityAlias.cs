@@ -43,7 +43,7 @@ namespace Azure.Search.Documents.Indexes.Models
         }
 
         /// <summary> The text of the alias. </summary>
-        public string Text { get; set; }
+        public string Text { get; }
 
         /// <summary> Determine if the alias is case sensitive. </summary>
         public bool? CaseSensitive { get; set; }

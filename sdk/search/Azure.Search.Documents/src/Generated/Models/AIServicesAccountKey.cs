@@ -40,9 +40,9 @@ namespace Azure.Search.Documents.Indexes.Models
         }
 
         /// <summary> The key used to provision the Azure AI service resource attached to a skillset. </summary>
-        public string Key { get; set; }
+        public string Key { get; }
 
         /// <summary> The subdomain url for the corresponding AI Service. </summary>
-        public string SubdomainUrl { get; set; }
+        public string SubdomainUrl { get; }
     }
 }

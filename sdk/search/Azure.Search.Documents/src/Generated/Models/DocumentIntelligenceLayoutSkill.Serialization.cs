@@ -151,7 +151,7 @@ namespace Azure.Search.Documents.Indexes.Models
             DocumentIntelligenceLayoutSkillChunkingProperties chunkingProperties = default;
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("@odata.type"u8))
+                if (prop.NameEquals("odataType"u8))
                 {
                     odataType = prop.Value.GetString();
                     continue;

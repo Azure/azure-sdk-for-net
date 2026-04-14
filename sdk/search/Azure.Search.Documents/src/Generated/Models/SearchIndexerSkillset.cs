@@ -56,7 +56,7 @@ namespace Azure.Search.Documents.Indexes.Models
         }
 
         /// <summary> The name of the skillset. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
 
         /// <summary> The description of the skillset. </summary>
         public string Description { get; set; }

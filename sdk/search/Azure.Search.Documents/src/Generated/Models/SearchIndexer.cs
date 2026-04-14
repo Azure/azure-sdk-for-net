@@ -70,19 +70,19 @@ namespace Azure.Search.Documents.Indexes.Models
         }
 
         /// <summary> The name of the indexer. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
 
         /// <summary> The description of the indexer. </summary>
         public string Description { get; set; }
 
         /// <summary> The name of the datasource from which this indexer reads data. </summary>
-        public string DataSourceName { get; set; }
+        public string DataSourceName { get; }
 
         /// <summary> The name of the skillset executing with this indexer. </summary>
         public string SkillsetName { get; set; }
 
         /// <summary> The name of the index to which this indexer writes data. </summary>
-        public string TargetIndexName { get; set; }
+        public string TargetIndexName { get; }
 
         /// <summary> The schedule for this indexer. </summary>
         public IndexingSchedule Schedule { get; set; }

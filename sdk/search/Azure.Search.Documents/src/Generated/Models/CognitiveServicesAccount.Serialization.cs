@@ -78,7 +78,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 throw new FormatException($"The model {nameof(CognitiveServicesAccount)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("@odata.type"u8);
+            writer.WritePropertyName("odataType"u8);
             writer.WriteStringValue(OdataType);
             if (Optional.IsDefined(Description))
             {
@@ -127,7 +127,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            if (element.TryGetProperty("@odata.type"u8, out JsonElement discriminator))
+            if (element.TryGetProperty("odataType"u8, out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {

@@ -14,7 +14,7 @@ namespace Azure.Search.Documents.Indexes.Models
     /// Specifies the connection parameters for the model to use for query planning.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="KnowledgeBaseAzureOpenAIModel"/>.
     /// </summary>
-    public abstract partial class KnowledgeBaseModel
+    internal abstract partial class KnowledgeBaseModel
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

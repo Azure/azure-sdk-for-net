@@ -79,11 +79,11 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 throw new FormatException($"The model {nameof(SearchResourceEncryptionKey)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("keyVaultKeyName"u8);
+            writer.WritePropertyName("keyName"u8);
             writer.WriteStringValue(KeyName);
             if (Optional.IsDefined(KeyVersion))
             {
-                writer.WritePropertyName("keyVaultKeyVersion"u8);
+                writer.WritePropertyName("keyVersion"u8);
                 writer.WriteStringValue(KeyVersion);
             }
             if (Optional.IsDefined(AccessCredentialsInternal))
@@ -96,7 +96,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity, options);
             }
-            writer.WritePropertyName("keyVaultUri"u8);
+            writer.WritePropertyName("vaultUri"u8);
             writer.WriteStringValue(_vaultUri);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -148,12 +148,12 @@ namespace Azure.Search.Documents.Indexes.Models
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("keyVaultKeyName"u8))
+                if (prop.NameEquals("keyName"u8))
                 {
                     keyName = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("keyVaultKeyVersion"u8))
+                if (prop.NameEquals("keyVersion"u8))
                 {
                     keyVersion = prop.Value.GetString();
                     continue;
@@ -177,7 +177,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     identity = SearchIndexerDataIdentity.DeserializeSearchIndexerDataIdentity(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("keyVaultUri"u8))
+                if (prop.NameEquals("vaultUri"u8))
                 {
                     vaultUri = prop.Value.GetString();
                     continue;

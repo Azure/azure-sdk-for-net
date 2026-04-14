@@ -83,12 +83,12 @@ namespace Azure.Search.Documents.Indexes.Models
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(ScoringUri))
             {
-                writer.WritePropertyName("uri"u8);
+                writer.WritePropertyName("scoringUri"u8);
                 writer.WriteStringValue(ScoringUri.AbsoluteUri);
             }
             if (Optional.IsDefined(AuthenticationKey))
             {
-                writer.WritePropertyName("key"u8);
+                writer.WritePropertyName("authenticationKey"u8);
                 writer.WriteStringValue(AuthenticationKey);
             }
             if (Optional.IsDefined(ResourceId))
@@ -103,7 +103,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             if (Optional.IsDefined(Location))
             {
-                writer.WritePropertyName("region"u8);
+                writer.WritePropertyName("Location"u8);
                 writer.WriteStringValue(Location.Value);
             }
             if (Optional.IsDefined(DegreeOfParallelism))
@@ -153,7 +153,7 @@ namespace Azure.Search.Documents.Indexes.Models
             int? degreeOfParallelism = default;
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("@odata.type"u8))
+                if (prop.NameEquals("odataType"u8))
                 {
                     odataType = prop.Value.GetString();
                     continue;
@@ -193,7 +193,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     outputs = array;
                     continue;
                 }
-                if (prop.NameEquals("uri"u8))
+                if (prop.NameEquals("scoringUri"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -203,7 +203,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     scoringUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
-                if (prop.NameEquals("key"u8))
+                if (prop.NameEquals("authenticationKey"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -232,7 +232,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     timeout = prop.Value.GetTimeSpan("P");
                     continue;
                 }
-                if (prop.NameEquals("region"u8))
+                if (prop.NameEquals("Location"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {

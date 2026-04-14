@@ -60,7 +60,7 @@ namespace Azure.Search.Documents.Indexes.Models
         }
 
         /// <summary> The top-level entity descriptor. Matches in the skill output will be grouped by this name, and it should represent the "normalized" form of the text being found. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
 
         /// <summary> This field can be used as a passthrough for custom metadata about the matched text(s). The value of this field will appear with every match of its entity in the skill output. </summary>
         public string Description { get; set; }

@@ -76,7 +76,7 @@ namespace Azure.Search.Documents
             }
             if (Optional.IsDefined(IncludeTotalCount))
             {
-                writer.WritePropertyName("count"u8);
+                writer.WritePropertyName("includeTotalCount"u8);
                 writer.WriteBooleanValue(IncludeTotalCount.Value);
             }
             if (Optional.IsCollectionDefined(Facets))
@@ -101,7 +101,7 @@ namespace Azure.Search.Documents
             }
             if (Optional.IsDefined(HighlightFieldsRaw))
             {
-                writer.WritePropertyName("highlight"u8);
+                writer.WritePropertyName("highlightFields"u8);
                 writer.WriteStringValue(HighlightFieldsRaw);
             }
             if (Optional.IsDefined(HighlightPostTag))
@@ -121,7 +121,7 @@ namespace Azure.Search.Documents
             }
             if (Optional.IsDefined(OrderByRaw))
             {
-                writer.WritePropertyName("orderby"u8);
+                writer.WritePropertyName("orderBy"u8);
                 writer.WriteStringValue(OrderByRaw);
             }
             if (Optional.IsDefined(QueryType))
@@ -166,7 +166,7 @@ namespace Azure.Search.Documents
             }
             if (Optional.IsDefined(SearchText))
             {
-                writer.WritePropertyName("search"u8);
+                writer.WritePropertyName("searchText"u8);
                 writer.WriteStringValue(SearchText);
             }
             if (Optional.IsDefined(SearchFieldsRaw))
@@ -186,7 +186,7 @@ namespace Azure.Search.Documents
             }
             if (Optional.IsDefined(QuerySpeller))
             {
-                writer.WritePropertyName("speller"u8);
+                writer.WritePropertyName("querySpeller"u8);
                 writer.WriteStringValue(QuerySpeller.Value.ToString());
             }
             if (Optional.IsDefined(SelectRaw))
@@ -206,7 +206,7 @@ namespace Azure.Search.Documents
             }
             if (Optional.IsDefined(SemanticConfigurationName))
             {
-                writer.WritePropertyName("semanticConfiguration"u8);
+                writer.WritePropertyName("semanticConfigurationName"u8);
                 writer.WriteStringValue(SemanticConfigurationName);
             }
             if (Optional.IsDefined(SemanticErrorMode))
@@ -342,7 +342,7 @@ namespace Azure.Search.Documents
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("count"u8))
+                if (prop.NameEquals("includeTotalCount"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -377,7 +377,7 @@ namespace Azure.Search.Documents
                     filter = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("highlight"u8))
+                if (prop.NameEquals("highlightFields"u8))
                 {
                     highlightFieldsRaw = prop.Value.GetString();
                     continue;
@@ -401,7 +401,7 @@ namespace Azure.Search.Documents
                     minimumCoverage = prop.Value.GetDouble();
                     continue;
                 }
-                if (prop.NameEquals("orderby"u8))
+                if (prop.NameEquals("orderBy"u8))
                 {
                     orderByRaw = prop.Value.GetString();
                     continue;
@@ -464,7 +464,7 @@ namespace Azure.Search.Documents
                     debug = new QueryDebugMode(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("search"u8))
+                if (prop.NameEquals("searchText"u8))
                 {
                     searchText = prop.Value.GetString();
                     continue;
@@ -492,7 +492,7 @@ namespace Azure.Search.Documents
                     queryLanguage = new QueryLanguage(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("speller"u8))
+                if (prop.NameEquals("querySpeller"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -524,7 +524,7 @@ namespace Azure.Search.Documents
                     size = prop.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("semanticConfiguration"u8))
+                if (prop.NameEquals("semanticConfigurationName"u8))
                 {
                     semanticConfigurationName = prop.Value.GetString();
                     continue;

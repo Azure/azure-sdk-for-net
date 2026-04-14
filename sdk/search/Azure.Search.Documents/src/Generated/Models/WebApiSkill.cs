@@ -59,7 +59,7 @@ namespace Azure.Search.Documents.Indexes.Models
         }
 
         /// <summary> The url for the Web API. </summary>
-        public string Uri { get; set; }
+        public string Uri { get; }
 
         /// <summary> The method for the http request. </summary>
         public string HttpMethod { get; set; }

@@ -17,7 +17,7 @@ namespace Azure.Search.Documents.Indexes.Models
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="KnowledgeBaseAzureOpenAIModel"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownKnowledgeBaseModel))]
-    public abstract partial class KnowledgeBaseModel : IJsonModel<KnowledgeBaseModel>
+    internal abstract partial class KnowledgeBaseModel : IJsonModel<KnowledgeBaseModel>
     {
         /// <summary> Initializes a new instance of <see cref="KnowledgeBaseModel"/> for deserialization. </summary>
         internal KnowledgeBaseModel()

@@ -14,7 +14,7 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Specifies the parameters for connecting to the Azure OpenAI resource. </summary>
-    public partial class AzureOpenAIVectorizerParameters : IJsonModel<AzureOpenAIVectorizerParameters>
+    internal partial class AzureOpenAIVectorizerParameters : IJsonModel<AzureOpenAIVectorizerParameters>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -81,7 +81,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             if (Optional.IsDefined(DeploymentName))
             {
-                writer.WritePropertyName("deploymentId"u8);
+                writer.WritePropertyName("deploymentName"u8);
                 writer.WriteStringValue(DeploymentName);
             }
             if (Optional.IsDefined(ApiKey))
@@ -91,7 +91,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             if (Optional.IsDefined(AuthenticationIdentity))
             {
-                writer.WritePropertyName("authIdentity"u8);
+                writer.WritePropertyName("authenticationIdentity"u8);
                 writer.WriteObjectValue(AuthenticationIdentity, options);
             }
             if (Optional.IsDefined(ModelName))
@@ -158,7 +158,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     resourceUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
-                if (prop.NameEquals("deploymentId"u8))
+                if (prop.NameEquals("deploymentName"u8))
                 {
                     deploymentName = prop.Value.GetString();
                     continue;
@@ -168,7 +168,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     apiKey = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("authIdentity"u8))
+                if (prop.NameEquals("authenticationIdentity"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {

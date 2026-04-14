@@ -41,7 +41,7 @@ namespace Azure.Search.Documents.Indexes.Models
         }
 
         /// <summary> The name of the field in the data source. </summary>
-        public string SourceFieldName { get; set; }
+        public string SourceFieldName { get; }
 
         /// <summary> The name of the target field in the index. Same as the source field name by default. </summary>
         public string TargetFieldName { get; set; }

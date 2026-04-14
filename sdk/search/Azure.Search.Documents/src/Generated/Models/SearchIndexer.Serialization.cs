@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
-using Azure.Core;
 using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
@@ -62,23 +61,6 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<SearchIndexer>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="searchIndexer"> The <see cref="SearchIndexer"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(SearchIndexer searchIndexer)
-        {
-            if (searchIndexer == null)
-            {
-                return null;
-            }
-            return RequestContent.Create(searchIndexer, ModelSerializationExtensions.WireOptions);
-        }
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SearchIndexer"/> from. </param>
-        public static explicit operator SearchIndexer(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeSearchIndexer(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -146,7 +128,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             if (Optional.IsDefined(IsDisabled))
             {
-                writer.WritePropertyName("disabled"u8);
+                writer.WritePropertyName("isDisabled"u8);
                 writer.WriteBooleanValue(IsDisabled.Value);
             }
             if (Optional.IsDefined(ETag))
@@ -295,7 +277,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     outputFieldMappings = array;
                     continue;
                 }
-                if (prop.NameEquals("disabled"u8))
+                if (prop.NameEquals("isDisabled"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {

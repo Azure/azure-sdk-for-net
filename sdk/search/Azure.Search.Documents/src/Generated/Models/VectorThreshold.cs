@@ -10,18 +10,15 @@ using System.Collections.Generic;
 
 namespace Azure.Search.Documents.Models
 {
-    /// <summary>
-    /// The threshold used for vector queries.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VectorSimilarityThreshold"/> and <see cref="SearchScoreThreshold"/>.
-    /// </summary>
-    public abstract partial class VectorThreshold
+    /// <summary> The threshold used for vector queries. </summary>
+    public partial class VectorThreshold
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VectorThreshold"/>. </summary>
         /// <param name="kind"> Type of threshold. </param>
-        private protected VectorThreshold(VectorThresholdKind kind)
+        internal VectorThreshold(VectorThresholdKind kind)
         {
             Kind = kind;
         }

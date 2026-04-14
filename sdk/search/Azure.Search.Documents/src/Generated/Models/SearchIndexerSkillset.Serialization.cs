@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
-using Azure.Core;
 using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
@@ -63,23 +62,6 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<SearchIndexerSkillset>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="searchIndexerSkillset"> The <see cref="SearchIndexerSkillset"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(SearchIndexerSkillset searchIndexerSkillset)
-        {
-            if (searchIndexerSkillset == null)
-            {
-                return null;
-            }
-            return RequestContent.Create(searchIndexerSkillset, ModelSerializationExtensions.WireOptions);
-        }
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SearchIndexerSkillset"/> from. </param>
-        public static explicit operator SearchIndexerSkillset(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeSearchIndexerSkillset(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
-
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SearchIndexerSkillset>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -114,7 +96,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteEndArray();
             if (Optional.IsDefined(CognitiveServicesAccount))
             {
-                writer.WritePropertyName("cognitiveServices"u8);
+                writer.WritePropertyName("cognitiveServicesAccount"u8);
                 writer.WriteObjectValue(CognitiveServicesAccount, options);
             }
             if (Optional.IsDefined(KnowledgeStore))
@@ -124,7 +106,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             if (Optional.IsDefined(IndexProjection))
             {
-                writer.WritePropertyName("indexProjections"u8);
+                writer.WritePropertyName("indexProjection"u8);
                 writer.WriteObjectValue(IndexProjection, options);
             }
             if (Optional.IsDefined(ETag))
@@ -210,7 +192,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     skills = array;
                     continue;
                 }
-                if (prop.NameEquals("cognitiveServices"u8))
+                if (prop.NameEquals("cognitiveServicesAccount"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -228,7 +210,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     knowledgeStore = KnowledgeStore.DeserializeKnowledgeStore(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("indexProjections"u8))
+                if (prop.NameEquals("indexProjection"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {

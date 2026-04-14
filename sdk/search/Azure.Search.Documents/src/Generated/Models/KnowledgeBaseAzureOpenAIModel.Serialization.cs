@@ -14,7 +14,7 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Specifies the Azure OpenAI resource used to do query planning. </summary>
-    public partial class KnowledgeBaseAzureOpenAIModel : KnowledgeBaseModel, IJsonModel<KnowledgeBaseAzureOpenAIModel>
+    internal partial class KnowledgeBaseAzureOpenAIModel : KnowledgeBaseModel, IJsonModel<KnowledgeBaseAzureOpenAIModel>
     {
         /// <summary> Initializes a new instance of <see cref="KnowledgeBaseAzureOpenAIModel"/> for deserialization. </summary>
         internal KnowledgeBaseAzureOpenAIModel()

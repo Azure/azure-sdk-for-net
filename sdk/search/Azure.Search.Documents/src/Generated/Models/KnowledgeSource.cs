@@ -13,7 +13,7 @@ namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary>
     /// Represents a knowledge source definition.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SearchIndexKnowledgeSource"/>, <see cref="AzureBlobKnowledgeSource"/>, <see cref="IndexedSharePointKnowledgeSource"/>, <see cref="IndexedOneLakeKnowledgeSource"/>, <see cref="WebKnowledgeSource"/>, and <see cref="RemoteSharePointKnowledgeSource"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="WebKnowledgeSource"/> and <see cref="RemoteSharePointKnowledgeSource"/>.
     /// </summary>
     public abstract partial class KnowledgeSource
     {
@@ -47,7 +47,7 @@ namespace Azure.Search.Documents.Indexes.Models
         }
 
         /// <summary> The name of the knowledge source. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
 
         /// <summary> Optional user-defined description. </summary>
         public string Description { get; set; }

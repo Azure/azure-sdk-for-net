@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
@@ -62,16 +61,6 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AnalyzeTextOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="analyzeTextOptions"> The <see cref="AnalyzeTextOptions"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(AnalyzeTextOptions analyzeTextOptions)
-        {
-            if (analyzeTextOptions == null)
-            {
-                return null;
-            }
-            return RequestContent.Create(analyzeTextOptions, ModelSerializationExtensions.WireOptions);
-        }
-
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AnalyzeTextOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -94,17 +83,17 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStringValue(Text);
             if (Optional.IsDefined(AnalyzerName))
             {
-                writer.WritePropertyName("analyzer"u8);
+                writer.WritePropertyName("analyzerName"u8);
                 writer.WriteStringValue(AnalyzerName.Value.ToString());
             }
             if (Optional.IsDefined(TokenizerName))
             {
-                writer.WritePropertyName("tokenizer"u8);
+                writer.WritePropertyName("tokenizerName"u8);
                 writer.WriteStringValue(TokenizerName.Value.ToString());
             }
             if (Optional.IsDefined(NormalizerName))
             {
-                writer.WritePropertyName("normalizer"u8);
+                writer.WritePropertyName("normalizerName"u8);
                 writer.WriteStringValue(NormalizerName.Value.ToString());
             }
             if (Optional.IsCollectionDefined(TokenFilters))
@@ -188,7 +177,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     text = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("analyzer"u8))
+                if (prop.NameEquals("analyzerName"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -197,7 +186,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     analyzerName = new LexicalAnalyzerName(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("tokenizer"u8))
+                if (prop.NameEquals("tokenizerName"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -206,7 +195,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     tokenizerName = new LexicalTokenizerName(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("normalizer"u8))
+                if (prop.NameEquals("normalizerName"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -44,7 +44,7 @@ namespace Azure.Search.Documents.Indexes.Models
         }
 
         /// <summary> The name of the input. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
 
         /// <summary> The source of the input. </summary>
         public string Source { get; set; }

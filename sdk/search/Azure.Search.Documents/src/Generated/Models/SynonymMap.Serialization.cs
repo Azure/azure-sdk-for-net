@@ -8,8 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure;
-using Azure.Core;
 using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
@@ -61,23 +59,6 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<SynonymMap>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="synonymMap"> The <see cref="SynonymMap"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(SynonymMap synonymMap)
-        {
-            if (synonymMap == null)
-            {
-                return null;
-            }
-            return RequestContent.Create(synonymMap, ModelSerializationExtensions.WireOptions);
-        }
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SynonymMap"/> from. </param>
-        public static explicit operator SynonymMap(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeSynonymMap(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

@@ -14,7 +14,7 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Models
 {
     /// <summary> The result of Autocomplete requests. </summary>
-    public partial class AutocompleteItem : IJsonModel<AutocompleteItem>
+    internal partial class AutocompleteItem : IJsonModel<AutocompleteItem>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

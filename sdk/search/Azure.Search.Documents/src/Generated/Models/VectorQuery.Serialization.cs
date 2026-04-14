@@ -7,16 +7,13 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Models
 {
-    /// <summary>
-    /// The query parameters for vector and hybrid search queries.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VectorizedQuery"/>, <see cref="VectorizableTextQuery"/>, <see cref="VectorizableImageUrlQuery"/>, and <see cref="VectorizableImageBinaryQuery"/>.
-    /// </summary>
-    [PersistableModelProxy(typeof(UnknownVectorQuery))]
+    /// <summary> The query parameters for vector and hybrid search queries. </summary>
     public abstract partial class VectorQuery : IJsonModel<VectorQuery>
     {
         /// <param name="data"> The data to parse. </param>
@@ -79,7 +76,7 @@ namespace Azure.Search.Documents.Models
             }
             if (Optional.IsDefined(KNearestNeighborsCount))
             {
-                writer.WritePropertyName("k"u8);
+                writer.WritePropertyName("kNearestNeighborsCount"u8);
                 writer.WriteNumberValue(KNearestNeighborsCount.Value);
             }
             if (Optional.IsDefined(FieldsRaw))
@@ -161,21 +158,103 @@ namespace Azure.Search.Documents.Models
             {
                 return null;
             }
-            if (element.TryGetProperty("kind"u8, out JsonElement discriminator))
+            int? kNearestNeighborsCount = default;
+            string fieldsRaw = default;
+            bool? exhaustive = default;
+            double? oversampling = default;
+            float? weight = default;
+            VectorThreshold threshold = default;
+            string filterOverride = default;
+            int? perDocumentVectorLimit = default;
+            VectorQueryKind kind = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                switch (discriminator.GetString())
+                if (prop.NameEquals("kNearestNeighborsCount"u8))
                 {
-                    case "vector":
-                        return VectorizedQuery.DeserializeVectorizedQuery(element, options);
-                    case "text":
-                        return VectorizableTextQuery.DeserializeVectorizableTextQuery(element, options);
-                    case "imageUrl":
-                        return VectorizableImageUrlQuery.DeserializeVectorizableImageUrlQuery(element, options);
-                    case "imageBinary":
-                        return VectorizableImageBinaryQuery.DeserializeVectorizableImageBinaryQuery(element, options);
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    kNearestNeighborsCount = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("fields"u8))
+                {
+                    fieldsRaw = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("exhaustive"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    exhaustive = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("oversampling"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    oversampling = prop.Value.GetDouble();
+                    continue;
+                }
+                if (prop.NameEquals("weight"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    weight = prop.Value.GetSingle();
+                    continue;
+                }
+                if (prop.NameEquals("threshold"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    threshold = VectorThreshold.DeserializeVectorThreshold(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("filterOverride"u8))
+                {
+                    filterOverride = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("perDocumentVectorLimit"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    perDocumentVectorLimit = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("kind"u8))
+                {
+                    kind = new VectorQueryKind(prop.Value.GetString());
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return UnknownVectorQuery.DeserializeUnknownVectorQuery(element, options);
+            return new Models.VectorQuery(
+                kNearestNeighborsCount,
+                fieldsRaw,
+                exhaustive,
+                oversampling,
+                weight,
+                threshold,
+                filterOverride,
+                perDocumentVectorLimit,
+                kind,
+                additionalBinaryDataProperties);
         }
     }
 }

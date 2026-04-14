@@ -36,10 +36,12 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="extractionOptions"> Controls the cardinality of the content extracted from the document by the skill. </param>
         /// <param name="chunkingProperties"> Controls the cardinality for chunking the content. </param>
-        internal ContentUnderstandingSkill(string odataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<ContentUnderstandingSkillExtractionOptions> extractionOptions, ContentUnderstandingSkillChunkingProperties chunkingProperties) : base(odataType, name, description, context, inputs, outputs, additionalBinaryDataProperties)
+        /// <param name="odataType0"> A URI fragment specifying the type of skill. </param>
+        internal ContentUnderstandingSkill(string odataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<ContentUnderstandingSkillExtractionOptions> extractionOptions, ContentUnderstandingSkillChunkingProperties chunkingProperties, string odataType0) : base(odataType, name, description, context, inputs, outputs, additionalBinaryDataProperties)
         {
             ExtractionOptions = extractionOptions;
             ChunkingProperties = chunkingProperties;
+            OdataType = odataType0;
         }
 
         /// <summary> Controls the cardinality of the content extracted from the document by the skill. </summary>
@@ -47,5 +49,8 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Controls the cardinality for chunking the content. </summary>
         public ContentUnderstandingSkillChunkingProperties ChunkingProperties { get; set; }
+
+        /// <summary> A URI fragment specifying the type of skill. </summary>
+        internal string OdataType { get; set; } = "#Microsoft.Skills.Util.ContentUnderstandingSkill";
     }
 }

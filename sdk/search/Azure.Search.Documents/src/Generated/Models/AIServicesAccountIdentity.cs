@@ -40,6 +40,6 @@ namespace Azure.Search.Documents.Indexes.Models
         public SearchIndexerDataIdentity Identity { get; set; }
 
         /// <summary> The subdomain url for the corresponding AI Service. </summary>
-        public string SubdomainUrl { get; set; }
+        public string SubdomainUrl { get; }
     }
 }

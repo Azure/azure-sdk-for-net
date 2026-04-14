@@ -77,7 +77,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 throw new FormatException($"The model {nameof(SearchIndexerDataIdentity)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("@odata.type"u8);
+            writer.WritePropertyName("odataType"u8);
             writer.WriteStringValue(OdataType);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -121,7 +121,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            if (element.TryGetProperty("@odata.type"u8, out JsonElement discriminator))
+            if (element.TryGetProperty("odataType"u8, out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {

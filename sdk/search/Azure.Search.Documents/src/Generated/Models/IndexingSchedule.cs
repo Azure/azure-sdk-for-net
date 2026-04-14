@@ -35,7 +35,7 @@ namespace Azure.Search.Documents.Indexes.Models
         }
 
         /// <summary> The interval of time between indexer executions. </summary>
-        public TimeSpan Interval { get; set; }
+        public TimeSpan Interval { get; }
 
         /// <summary> The time when an indexer should start running. </summary>
         public DateTimeOffset? StartTime { get; set; }

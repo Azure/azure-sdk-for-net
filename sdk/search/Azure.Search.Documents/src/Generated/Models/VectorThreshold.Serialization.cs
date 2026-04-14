@@ -7,17 +7,14 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Models
 {
-    /// <summary>
-    /// The threshold used for vector queries.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VectorSimilarityThreshold"/> and <see cref="SearchScoreThreshold"/>.
-    /// </summary>
-    [PersistableModelProxy(typeof(UnknownVectorThreshold))]
-    public abstract partial class VectorThreshold : IJsonModel<VectorThreshold>
+    /// <summary> The threshold used for vector queries. </summary>
+    public partial class VectorThreshold : IJsonModel<VectorThreshold>
     {
         /// <summary> Initializes a new instance of <see cref="VectorThreshold"/> for deserialization. </summary>
         internal VectorThreshold()
@@ -126,17 +123,21 @@ namespace Azure.Search.Documents.Models
             {
                 return null;
             }
-            if (element.TryGetProperty("kind"u8, out JsonElement discriminator))
+            VectorThresholdKind kind = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                switch (discriminator.GetString())
+                if (prop.NameEquals("kind"u8))
                 {
-                    case "vectorSimilarity":
-                        return VectorSimilarityThreshold.DeserializeVectorSimilarityThreshold(element, options);
-                    case "searchScore":
-                        return SearchScoreThreshold.DeserializeSearchScoreThreshold(element, options);
+                    kind = new VectorThresholdKind(prop.Value.GetString());
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return UnknownVectorThreshold.DeserializeUnknownVectorThreshold(element, options);
+            return new VectorThreshold(kind, additionalBinaryDataProperties);
         }
     }
 }

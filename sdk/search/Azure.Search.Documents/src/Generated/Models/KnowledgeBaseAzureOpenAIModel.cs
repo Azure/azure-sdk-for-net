@@ -12,7 +12,7 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Specifies the Azure OpenAI resource used to do query planning. </summary>
-    public partial class KnowledgeBaseAzureOpenAIModel : KnowledgeBaseModel
+    internal partial class KnowledgeBaseAzureOpenAIModel : KnowledgeBaseModel
     {
         /// <summary> Initializes a new instance of <see cref="KnowledgeBaseAzureOpenAIModel"/>. </summary>
         /// <param name="azureOpenAIParameters"> Azure OpenAI parameters. </param>
@@ -34,6 +34,6 @@ namespace Azure.Search.Documents.Indexes.Models
         }
 
         /// <summary> Azure OpenAI parameters. </summary>
-        public AzureOpenAIVectorizerParameters AzureOpenAIParameters { get; set; }
+        public AzureOpenAIVectorizerParameters AzureOpenAIParameters { get; }
     }
 }

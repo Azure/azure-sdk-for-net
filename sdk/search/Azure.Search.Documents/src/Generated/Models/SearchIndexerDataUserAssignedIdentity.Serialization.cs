@@ -80,7 +80,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 throw new FormatException($"The model {nameof(SearchIndexerDataUserAssignedIdentity)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("userAssignedIdentity"u8);
+            writer.WritePropertyName("resourceId"u8);
             writer.WriteStringValue(ResourceId);
         }
 
@@ -114,12 +114,12 @@ namespace Azure.Search.Documents.Indexes.Models
             string resourceId = default;
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("@odata.type"u8))
+                if (prop.NameEquals("odataType"u8))
                 {
                     odataType = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("userAssignedIdentity"u8))
+                if (prop.NameEquals("resourceId"u8))
                 {
                     resourceId = prop.Value.GetString();
                     continue;

@@ -17,7 +17,7 @@ namespace Azure.Search.Documents.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HybridSearch"/>. </summary>
-        public HybridSearch()
+        internal HybridSearch()
         {
         }
 
@@ -33,9 +33,9 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> Determines the maximum number of documents to be retrieved by the text query portion of a hybrid search request. Those documents will be combined with the documents matching the vector queries to produce a single final list of results. Choosing a larger maxTextRecallSize value will allow retrieving and paging through more documents (using the top and skip parameters), at the cost of higher resource utilization and higher latency. The value needs to be between 1 and 10,000. Default is 1000. </summary>
-        public int? MaxTextRecallSize { get; set; }
+        public int? MaxTextRecallSize { get; }
 
         /// <summary> Determines whether the count and facets should includes all documents that matched the search query, or only the documents that are retrieved within the 'maxTextRecallSize' window. </summary>
-        public HybridCountAndFacetMode? CountAndFacetMode { get; set; }
+        public HybridCountAndFacetMode? CountAndFacetMode { get; }
     }
 }

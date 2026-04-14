@@ -87,7 +87,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             if (Optional.IsDefined(MinPrecision))
             {
-                writer.WritePropertyName("minimumPrecision"u8);
+                writer.WritePropertyName("minPrecision"u8);
                 writer.WriteNumberValue(MinPrecision.Value);
             }
             if (Optional.IsDefined(MaskingMode))
@@ -97,7 +97,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             if (Optional.IsDefined(Mask))
             {
-                writer.WritePropertyName("maskingCharacter"u8);
+                writer.WritePropertyName("mask"u8);
                 writer.WriteStringValue(Mask);
             }
             if (Optional.IsDefined(ModelVersion))
@@ -168,7 +168,7 @@ namespace Azure.Search.Documents.Indexes.Models
             string domain = default;
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("@odata.type"u8))
+                if (prop.NameEquals("odataType"u8))
                 {
                     odataType = prop.Value.GetString();
                     continue;
@@ -218,7 +218,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     defaultLanguageCode = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("minimumPrecision"u8))
+                if (prop.NameEquals("minPrecision"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -236,7 +236,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     maskingMode = new PiiDetectionSkillMaskingMode(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("maskingCharacter"u8))
+                if (prop.NameEquals("mask"u8))
                 {
                     mask = prop.Value.GetString();
                     continue;

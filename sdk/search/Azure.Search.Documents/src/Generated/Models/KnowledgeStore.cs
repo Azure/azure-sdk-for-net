@@ -47,7 +47,7 @@ namespace Azure.Search.Documents.Indexes.Models
         }
 
         /// <summary> The connection string to the storage account projections will be stored in. </summary>
-        public string StorageConnectionString { get; set; }
+        public string StorageConnectionString { get; }
 
         /// <summary> A list of additional projections to perform during indexing. </summary>
         public IList<KnowledgeStoreProjection> Projections { get; }

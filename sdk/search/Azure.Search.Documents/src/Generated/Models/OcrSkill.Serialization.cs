@@ -87,7 +87,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             if (Optional.IsDefined(ShouldDetectOrientation))
             {
-                writer.WritePropertyName("detectOrientation"u8);
+                writer.WritePropertyName("shouldDetectOrientation"u8);
                 writer.WriteBooleanValue(ShouldDetectOrientation.Value);
             }
             if (Optional.IsDefined(LineEnding))
@@ -134,7 +134,7 @@ namespace Azure.Search.Documents.Indexes.Models
             OcrLineEnding? lineEnding = default;
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("@odata.type"u8))
+                if (prop.NameEquals("odataType"u8))
                 {
                     odataType = prop.Value.GetString();
                     continue;
@@ -183,7 +183,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     defaultLanguageCode = new OcrSkillLanguage(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("detectOrientation"u8))
+                if (prop.NameEquals("shouldDetectOrientation"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {

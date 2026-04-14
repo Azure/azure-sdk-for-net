@@ -53,13 +53,13 @@ namespace Azure.Search.Documents.Indexes.Models
         }
 
         /// <summary> Name of the search index to project to. Must have a key field with the 'keyword' analyzer set. </summary>
-        public string TargetIndexName { get; set; }
+        public string TargetIndexName { get; }
 
         /// <summary> Name of the field in the search index to map the parent document's key value to. Must be a string field that is filterable and not the key field. </summary>
-        public string ParentKeyFieldName { get; set; }
+        public string ParentKeyFieldName { get; }
 
         /// <summary> Source context for the projections. Represents the cardinality at which the document will be split into multiple sub documents. </summary>
-        public string SourceContext { get; set; }
+        public string SourceContext { get; }
 
         /// <summary> Mappings for the projection, or which source should be mapped to which field in the target index. </summary>
         public IList<InputFieldMappingEntry> Mappings { get; }

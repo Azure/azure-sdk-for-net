@@ -42,6 +42,6 @@ namespace Azure.Search.Documents.Indexes.Models
         }
 
         /// <summary> The version of the model to use when calling the AI Services Vision service. It will default to the latest available when not specified. </summary>
-        public string ModelVersion { get; set; }
+        public string ModelVersion { get; }
     }
 }

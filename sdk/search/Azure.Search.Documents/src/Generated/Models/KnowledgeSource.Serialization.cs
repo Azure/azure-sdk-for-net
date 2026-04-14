@@ -8,15 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure;
-using Azure.Core;
 using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary>
     /// Represents a knowledge source definition.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SearchIndexKnowledgeSource"/>, <see cref="AzureBlobKnowledgeSource"/>, <see cref="IndexedSharePointKnowledgeSource"/>, <see cref="IndexedOneLakeKnowledgeSource"/>, <see cref="WebKnowledgeSource"/>, and <see cref="RemoteSharePointKnowledgeSource"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="WebKnowledgeSource"/> and <see cref="RemoteSharePointKnowledgeSource"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownKnowledgeSource))]
     public abstract partial class KnowledgeSource : IJsonModel<KnowledgeSource>
@@ -65,23 +63,6 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<KnowledgeSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="knowledgeSource"> The <see cref="KnowledgeSource"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(KnowledgeSource knowledgeSource)
-        {
-            if (knowledgeSource == null)
-            {
-                return null;
-            }
-            return RequestContent.Create(knowledgeSource, ModelSerializationExtensions.WireOptions);
-        }
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="KnowledgeSource"/> from. </param>
-        public static explicit operator KnowledgeSource(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeKnowledgeSource(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -166,14 +147,6 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "searchIndex":
-                        return SearchIndexKnowledgeSource.DeserializeSearchIndexKnowledgeSource(element, options);
-                    case "azureBlob":
-                        return AzureBlobKnowledgeSource.DeserializeAzureBlobKnowledgeSource(element, options);
-                    case "indexedSharePoint":
-                        return IndexedSharePointKnowledgeSource.DeserializeIndexedSharePointKnowledgeSource(element, options);
-                    case "indexedOneLake":
-                        return IndexedOneLakeKnowledgeSource.DeserializeIndexedOneLakeKnowledgeSource(element, options);
                     case "web":
                         return WebKnowledgeSource.DeserializeWebKnowledgeSource(element, options);
                     case "remoteSharePoint":

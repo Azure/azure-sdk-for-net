@@ -7,13 +7,10 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Threading;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Search.Documents;
-using Azure.Search.Documents.KnowledgeBases.Models;
 
 namespace Azure.Search.Documents.KnowledgeBases
 {
@@ -23,7 +20,6 @@ namespace Azure.Search.Documents.KnowledgeBases
         private readonly Uri _endpoint;
         private const string AuthorizationHeader = "api-key";
         private static readonly string[] AuthorizationScopes = new string[] { "https://search.azure.com/.default" };
-        private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of KnowledgeBaseRetrievalClient. </summary>
         /// <param name="endpoint"> Service endpoint. </param>
@@ -53,109 +49,5 @@ namespace Azure.Search.Documents.KnowledgeBases
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
-
-        /// <summary>
-        /// [Protocol Method] KnowledgeBase retrieves relevant data from backing stores.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="knowledgeBaseName"> The name of the knowledge base. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="querySourceAuthorization"> Token identifying the user for which the query is being executed. This token is used to enforce security restrictions on documents. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="knowledgeBaseName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="knowledgeBaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response Retrieve(string knowledgeBaseName, RequestContent content, string querySourceAuthorization = default, RequestContext context = null)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("KnowledgeBaseRetrievalClient.Retrieve");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(knowledgeBaseName, nameof(knowledgeBaseName));
-                Argument.AssertNotNull(content, nameof(content));
-
-                using HttpMessage message = CreateRetrieveRequest(knowledgeBaseName, content, querySourceAuthorization, context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] KnowledgeBase retrieves relevant data from backing stores.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="knowledgeBaseName"> The name of the knowledge base. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="querySourceAuthorization"> Token identifying the user for which the query is being executed. This token is used to enforce security restrictions on documents. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="knowledgeBaseName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="knowledgeBaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> RetrieveAsync(string knowledgeBaseName, RequestContent content, string querySourceAuthorization = default, RequestContext context = null)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("KnowledgeBaseRetrievalClient.Retrieve");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(knowledgeBaseName, nameof(knowledgeBaseName));
-                Argument.AssertNotNull(content, nameof(content));
-
-                using HttpMessage message = CreateRetrieveRequest(knowledgeBaseName, content, querySourceAuthorization, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> KnowledgeBase retrieves relevant data from backing stores. </summary>
-        /// <param name="knowledgeBaseName"> The name of the knowledge base. </param>
-        /// <param name="retrievalRequest"> The retrieval request to process. </param>
-        /// <param name="querySourceAuthorization"> Token identifying the user for which the query is being executed. This token is used to enforce security restrictions on documents. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="knowledgeBaseName"/> or <paramref name="retrievalRequest"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="knowledgeBaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<KnowledgeBaseRetrievalResponse> Retrieve(string knowledgeBaseName, KnowledgeBaseRetrievalRequest retrievalRequest, string querySourceAuthorization = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(knowledgeBaseName, nameof(knowledgeBaseName));
-            Argument.AssertNotNull(retrievalRequest, nameof(retrievalRequest));
-
-            Response result = Retrieve(knowledgeBaseName, retrievalRequest, querySourceAuthorization, cancellationToken.ToRequestContext());
-            return Response.FromValue((KnowledgeBaseRetrievalResponse)result, result);
-        }
-
-        /// <summary> KnowledgeBase retrieves relevant data from backing stores. </summary>
-        /// <param name="knowledgeBaseName"> The name of the knowledge base. </param>
-        /// <param name="retrievalRequest"> The retrieval request to process. </param>
-        /// <param name="querySourceAuthorization"> Token identifying the user for which the query is being executed. This token is used to enforce security restrictions on documents. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="knowledgeBaseName"/> or <paramref name="retrievalRequest"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="knowledgeBaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<KnowledgeBaseRetrievalResponse>> RetrieveAsync(string knowledgeBaseName, KnowledgeBaseRetrievalRequest retrievalRequest, string querySourceAuthorization = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(knowledgeBaseName, nameof(knowledgeBaseName));
-            Argument.AssertNotNull(retrievalRequest, nameof(retrievalRequest));
-
-            Response result = await RetrieveAsync(knowledgeBaseName, retrievalRequest, querySourceAuthorization, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((KnowledgeBaseRetrievalResponse)result, result);
-        }
     }
 }

@@ -38,6 +38,6 @@ namespace Azure.Search.Documents.Indexes.Models
         }
 
         /// <summary> Blob container to store projections in. </summary>
-        public string StorageContainer { get; set; }
+        public string StorageContainer { get; }
     }
 }

@@ -35,6 +35,6 @@ namespace Azure.Search.Documents.Indexes.Models
         }
 
         /// <summary> The key used to provision the Azure AI service resource attached to a skillset. </summary>
-        public string Key { get; set; }
+        public string Key { get; }
     }
 }
