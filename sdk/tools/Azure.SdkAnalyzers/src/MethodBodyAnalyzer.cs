@@ -39,25 +39,37 @@ namespace Azure.SdkAnalyzers
 
             _symbolIteratorsStack.Push((methodBody.Children.GetEnumerator(), new MethodAnalysisContext(method, asyncParameter)));
 
-            while (_symbolIteratorsStack.Count > 0)
+            try
             {
-                var (enumerator, context) = _symbolIteratorsStack.Peek();
-                if (!enumerator.MoveNext())
+                while (_symbolIteratorsStack.Count > 0)
                 {
-                    _symbolIteratorsStack.Pop();
-                    continue;
-                }
+                    var (enumerator, context) = _symbolIteratorsStack.Peek();
+                    if (!enumerator.MoveNext())
+                    {
+                        var (completedEnumerator, _) = _symbolIteratorsStack.Pop();
+                        completedEnumerator.Dispose();
+                        continue;
+                    }
 
-                var current = enumerator.Current;
-                if (current == null)
-                {
-                    continue;
-                }
+                    var current = enumerator.Current;
+                    if (current == null)
+                    {
+                        continue;
+                    }
 
-                var analyzeChildren = AnalyzeOperation(current, ref context);
-                if (analyzeChildren)
+                    var analyzeChildren = AnalyzeOperation(current, ref context);
+                    if (analyzeChildren)
+                    {
+                        _symbolIteratorsStack.Push((current.Children.GetEnumerator(), context));
+                    }
+                }
+            }
+            finally
+            {
+                while (_symbolIteratorsStack.Count > 0)
                 {
-                    _symbolIteratorsStack.Push((current.Children.GetEnumerator(), context));
+                    var (enumerator, _) = _symbolIteratorsStack.Pop();
+                    enumerator.Dispose();
                 }
             }
         }
