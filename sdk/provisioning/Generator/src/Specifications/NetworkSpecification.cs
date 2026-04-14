@@ -4,7 +4,6 @@
 using Azure.Provisioning.Generator.Model;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Network;
-using Azure.ResourceManager.Network.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,31 +22,6 @@ public class NetworkSpecification() :
         CustomizeResource<ProbeResource>(r => r.Name = "ProbeResource");
         RemoveProperty<VirtualNetworkPeeringResource>("SyncRemoteAddressSpace");
 
-        // BaseAdminRule polymorphic types (discriminator: "kind")
-        CustomizeResource<NetworkAdminRule>(r =>
-        {
-            r.BaseType = GetModel<BaseAdminRuleResource>() as TypeModel;
-            r.DiscriminatorName = "kind";
-            r.DiscriminatorValue = "Custom";
-        });
-        CustomizeResource<NetworkDefaultAdminRule>(r =>
-        {
-            r.BaseType = GetModel<BaseAdminRuleResource>() as TypeModel;
-            r.DiscriminatorName = "kind";
-            r.DiscriminatorValue = "Default";
-        });
-        RemoveProperties<NetworkAdminRule>("Id", "Name", "SystemData", "ETag");
-        RemoveProperties<NetworkDefaultAdminRule>("Id", "Name", "SystemData", "ETag");
-
-        // FirewallPolicyRuleCollectionInfo subtypes (discriminator: "ruleCollectionType")
-        CustomizeSimpleModel<FirewallPolicyFilterRuleCollectionInfo>(m => { m.DiscriminatorName = "ruleCollectionType"; m.DiscriminatorValue = "FirewallPolicyFilterRuleCollection"; });
-        CustomizeSimpleModel<FirewallPolicyNatRuleCollectionInfo>(m => { m.DiscriminatorName = "ruleCollectionType"; m.DiscriminatorValue = "FirewallPolicyNatRuleCollection"; });
-
-        // FirewallPolicyRule subtypes (discriminator: "ruleType")
-        CustomizeSimpleModel<ApplicationRule>(m => { m.DiscriminatorName = "ruleType"; m.DiscriminatorValue = "ApplicationRule"; });
-        CustomizeSimpleModel<NatRule>(m => { m.DiscriminatorName = "ruleType"; m.DiscriminatorValue = "NatRule"; });
-        CustomizeSimpleModel<NetworkRule>(m => { m.DiscriminatorName = "ruleType"; m.DiscriminatorValue = "NetworkRule"; });
-
         // Fix Id to be readonly on all resources — NRP ARM SDK base types
         // (NetworkTrackedResourceData, SubResource, etc.) define Id with a public
         // setter, making it writable in the provisioning schema. Id is server-computed.
@@ -59,20 +33,6 @@ public class NetworkSpecification() :
                 idProp.IsReadOnly = true;
             }
         }
-
-        // Fix Name readonly for child resources with workaround methods.
-        // These resources lack standard createOrUpdate so the generator cannot
-        // detect the name parameter and marks Name as output-only.
-        CustomizeProperty<FirewallPolicyDraftResource>("Name", p => { p.IsReadOnly = false; p.IsRequired = true; });
-        CustomizeProperty<FrontendIPConfigurationResource>("Name", p => { p.IsReadOnly = false; p.IsRequired = true; });
-        CustomizeProperty<LoadBalancingRuleResource>("Name", p => { p.IsReadOnly = false; p.IsRequired = true; });
-        CustomizeProperty<NetworkInterfaceIPConfigurationResource>("Name", p => { p.IsReadOnly = false; p.IsRequired = true; });
-        CustomizeProperty<OutboundRuleResource>("Name", p => { p.IsReadOnly = false; p.IsRequired = true; });
-        CustomizeProperty<ProbeResource>("Name", p => { p.IsReadOnly = false; p.IsRequired = true; });
-
-        // Fix other readonly/writable issues
-        CustomizeProperty<PolicySignaturesOverridesForIdpsResource>("Name", p => { p.IsReadOnly = false; p.IsRequired = true; });
-        CustomizeProperty<PolicySignaturesOverridesForIdpsResource>("Signatures", p => p.IsReadOnly = false);
 
         // Backward compatibility: restore writable Id on resources that were
         // already released with a public Id setter (removing it would be a
@@ -104,6 +64,13 @@ public class NetworkSpecification() :
         CustomizeProperty<VirtualNetworkPeeringResource>("Id", p => p.IsReadOnly = false);
         CustomizeProperty<VirtualNetworkTapResource>("Id", p => p.IsReadOnly = false);
 
+        // Fix Name readonly for child resources with workaround methods.
+        CustomizeProperty<FrontendIPConfigurationResource>("Name", p => { p.IsReadOnly = false; p.IsRequired = true; });
+        CustomizeProperty<LoadBalancingRuleResource>("Name", p => { p.IsReadOnly = false; p.IsRequired = true; });
+        CustomizeProperty<NetworkInterfaceIPConfigurationResource>("Name", p => { p.IsReadOnly = false; p.IsRequired = true; });
+        CustomizeProperty<OutboundRuleResource>("Name", p => { p.IsReadOnly = false; p.IsRequired = true; });
+        CustomizeProperty<ProbeResource>("Name", p => { p.IsReadOnly = false; p.IsRequired = true; });
+
         // Naming requirements
         AddNameRequirements<ApplicationSecurityGroupResource>(min: 1, max: 80, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true);
         AddNameRequirements<FirewallPolicyResource>(min: 1, max: 80, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true);
@@ -130,16 +97,66 @@ public class NetworkSpecification() :
     {
         var resources = base.FindConstructibleResources();
 
+        // For the 1.1.0 stable release, only include the resources that were
+        // in 1.1.0-beta.1 (the original 1.0.0 resources + NSP resources).
+        // The remaining 83 resources added in beta.2 will be re-added in a
+        // future beta release.
+        HashSet<Type> stableResources =
+        [
+            typeof(ApplicationSecurityGroupResource),
+            typeof(BackendAddressPoolResource),
+            typeof(FirewallPolicyResource),
+            typeof(FlowLogResource),
+            typeof(FrontendIPConfigurationResource),
+            typeof(InboundNatRuleResource),
+            typeof(LoadBalancerResource),
+            typeof(LoadBalancingRuleResource),
+            typeof(NatGatewayResource),
+            typeof(NetworkInterfaceResource),
+            typeof(NetworkInterfaceIPConfigurationResource),
+            typeof(NetworkInterfaceTapConfigurationResource),
+            typeof(NetworkPrivateEndpointConnectionResource),
+            typeof(NetworkSecurityGroupResource),
+            typeof(NetworkSecurityPerimeterResource),
+            typeof(NetworkSecurityPerimeterAccessRuleResource),
+            typeof(NetworkSecurityPerimeterAssociationResource),
+            typeof(NetworkSecurityPerimeterLinkResource),
+            typeof(NetworkSecurityPerimeterLoggingConfigurationResource),
+            typeof(NetworkSecurityPerimeterProfileResource),
+            typeof(NetworkWatcherResource),
+            typeof(OutboundRuleResource),
+            typeof(PrivateDnsZoneGroupResource),
+            typeof(PrivateEndpointResource),
+            typeof(PrivateLinkServiceResource),
+            typeof(ProbeResource),
+            typeof(PublicIPAddressResource),
+            typeof(PublicIPPrefixResource),
+            typeof(RouteResource),
+            typeof(RouteTableResource),
+            typeof(SecurityRuleResource),
+            typeof(ServiceEndpointPolicyResource),
+            typeof(ServiceEndpointPolicyDefinitionResource),
+            typeof(SubnetResource),
+            typeof(VirtualNetworkResource),
+            typeof(VirtualNetworkPeeringResource),
+            typeof(VirtualNetworkTapResource),
+        ];
+
+        // Filter to only stable resources
+        foreach (var key in resources.Keys.ToList())
+        {
+            if (!stableResources.Contains(key))
+            {
+                resources.Remove(key);
+            }
+        }
+
         // Resources without a createOrUpdate method need workaround entries.
         resources.Add(typeof(NetworkInterfaceIPConfigurationResource), typeof(NetworkSpecification).GetMethod(nameof(CreateOrUpdateNetworkInterfaceIPConfiguration), BindingFlags.NonPublic | BindingFlags.Static)!);
         resources.Add(typeof(FrontendIPConfigurationResource), typeof(NetworkSpecification).GetMethod(nameof(CreateOrUpdateFrontendIPConfiguration), BindingFlags.NonPublic | BindingFlags.Static)!);
         resources.Add(typeof(ProbeResource), typeof(NetworkSpecification).GetMethod(nameof(CreateOrUpdateProbeResource), BindingFlags.NonPublic | BindingFlags.Static)!);
         resources.Add(typeof(LoadBalancingRuleResource), typeof(NetworkSpecification).GetMethod(nameof(CreateOrUpdateLoadBalancingRuleResource), BindingFlags.NonPublic | BindingFlags.Static)!);
         resources.Add(typeof(OutboundRuleResource), typeof(NetworkSpecification).GetMethod(nameof(CreateOrUpdateOutboundRuleResource), BindingFlags.NonPublic | BindingFlags.Static)!);
-
-        // Polymorphic resource types (BaseAdminRule discriminated subtypes)
-        resources.Add(typeof(NetworkAdminRule), typeof(NetworkSpecification).GetMethod(nameof(CreateOrUpdateNetworkAdminRule), BindingFlags.NonPublic | BindingFlags.Static)!);
-        resources.Add(typeof(NetworkDefaultAdminRule), typeof(NetworkSpecification).GetMethod(nameof(CreateOrUpdateNetworkDefaultAdminRule), BindingFlags.NonPublic | BindingFlags.Static)!);
 
         return resources;
     }
@@ -150,8 +167,4 @@ public class NetworkSpecification() :
     private static ArmOperation<ProbeResource> CreateOrUpdateProbeResource() { return null!; }
     private static ArmOperation<LoadBalancingRuleResource> CreateOrUpdateLoadBalancingRuleResource() { return null!; }
     private static ArmOperation<OutboundRuleResource> CreateOrUpdateOutboundRuleResource() { return null!; }
-
-    // Workaround methods for polymorphic resource subtypes.
-    private static ArmOperation<BaseAdminRuleResource> CreateOrUpdateNetworkAdminRule(NetworkAdminRule content) { return null!; }
-    private static ArmOperation<BaseAdminRuleResource> CreateOrUpdateNetworkDefaultAdminRule(NetworkDefaultAdminRule content) { return null!; }
 }
