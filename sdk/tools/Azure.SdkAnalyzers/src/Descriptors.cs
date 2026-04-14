@@ -14,9 +14,8 @@ namespace Azure.SdkAnalyzers
             "Use ConfigureAwait(false) instead of ConfigureAwait(true).",
             "Use ConfigureAwait(false) instead of ConfigureAwait(true).",
             DiagnosticCategory.Usage,
-            DiagnosticSeverity.Error,
-            true,
-            customTags: new[] { WellKnownDiagnosticTags.NotConfigurable });
+            DiagnosticSeverity.Warning,
+            true);
 
         public static DiagnosticDescriptor AZC0108 = new(
             nameof(AZC0108),

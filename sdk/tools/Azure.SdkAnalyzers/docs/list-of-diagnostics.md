@@ -1,8 +1,6 @@
 # List of diagnostics produced by Azure.SdkAnalyzers
 
-## Unsuppressible Rules (Error severity)
-
-These rules enforce internal implementation correctness and cannot be disabled via `#pragma`, `<NoWarn>`, or `.editorconfig`. They exist to prevent deadlocks, threading issues, and other runtime problems in Azure SDK libraries.
+## Suppressible Rules (Warning severity)
 
 ### AZC0101
 
@@ -10,8 +8,8 @@ These rules enforce internal implementation correctness and cannot be disabled v
 
 | Property | Value |
 |----------|-------|
-| **Severity** | Error |
-| **Suppressible** | No |
+| **Severity** | Warning |
+| **Suppressible** | Yes |
 | **Code fix** | Yes |
 
 #### Cause
@@ -30,8 +28,6 @@ Replace `true` with `false`. A code fix is available:
 See [AZC0101 documentation](AZC0101.md) for details.
 
 ---
-
-## Suppressible Rules (Warning severity)
 
 ## AZC0012
 
