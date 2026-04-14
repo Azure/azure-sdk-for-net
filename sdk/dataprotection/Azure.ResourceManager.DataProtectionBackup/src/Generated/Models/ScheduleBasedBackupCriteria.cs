@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -14,7 +15,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     public partial class ScheduleBasedBackupCriteria : DataProtectionBackupCriteria
     {
         /// <summary> Initializes a new instance of <see cref="ScheduleBasedBackupCriteria"/>. </summary>
-        public ScheduleBasedBackupCriteria()
+        public ScheduleBasedBackupCriteria() : base("ScheduleBasedBackupCriteria")
         {
             AbsoluteCriteria = new ChangeTrackingList<BackupAbsoluteMarker>();
             DaysOfMonth = new ChangeTrackingList<DataProtectionBackupDay>();
@@ -22,12 +23,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             MonthsOfYear = new ChangeTrackingList<DataProtectionBackupMonth>();
             ScheduleTimes = new ChangeTrackingList<DateTimeOffset>();
             WeeksOfMonth = new ChangeTrackingList<DataProtectionBackupWeekNumber>();
-            ObjectType = "ScheduleBasedBackupCriteria";
         }
 
         /// <summary> Initializes a new instance of <see cref="ScheduleBasedBackupCriteria"/>. </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="absoluteCriteria">
         /// it contains absolute values like "AllBackup" / "FirstOfDay" / "FirstOfWeek" / "FirstOfMonth"
         /// and should be part of AbsoluteMarker enum
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="monthsOfYear"> It should be January/February/....../December. </param>
         /// <param name="scheduleTimes"> List of schedule times for backup. </param>
         /// <param name="weeksOfMonth"> It should be First/Second/Third/Fourth/Last. </param>
-        internal ScheduleBasedBackupCriteria(string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<BackupAbsoluteMarker> absoluteCriteria, IList<DataProtectionBackupDay> daysOfMonth, IList<DataProtectionBackupDayOfWeek> daysOfWeek, IList<DataProtectionBackupMonth> monthsOfYear, IList<DateTimeOffset> scheduleTimes, IList<DataProtectionBackupWeekNumber> weeksOfMonth) : base(objectType, serializedAdditionalRawData)
+        internal ScheduleBasedBackupCriteria(string objectType, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<BackupAbsoluteMarker> absoluteCriteria, IList<DataProtectionBackupDay> daysOfMonth, IList<DataProtectionBackupDayOfWeek> daysOfWeek, IList<DataProtectionBackupMonth> monthsOfYear, IList<DateTimeOffset> scheduleTimes, IList<DataProtectionBackupWeekNumber> weeksOfMonth) : base(objectType, additionalBinaryDataProperties)
         {
             AbsoluteCriteria = absoluteCriteria;
             DaysOfMonth = daysOfMonth;
@@ -45,7 +45,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             MonthsOfYear = monthsOfYear;
             ScheduleTimes = scheduleTimes;
             WeeksOfMonth = weeksOfMonth;
-            ObjectType = objectType ?? "ScheduleBasedBackupCriteria";
         }
 
         /// <summary>
@@ -53,14 +52,19 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// and should be part of AbsoluteMarker enum
         /// </summary>
         public IList<BackupAbsoluteMarker> AbsoluteCriteria { get; }
+
         /// <summary> This is day of the month from 1 to 28 other wise last of month. </summary>
         public IList<DataProtectionBackupDay> DaysOfMonth { get; }
+
         /// <summary> It should be Sunday/Monday/T..../Saturday. </summary>
         public IList<DataProtectionBackupDayOfWeek> DaysOfWeek { get; }
+
         /// <summary> It should be January/February/....../December. </summary>
         public IList<DataProtectionBackupMonth> MonthsOfYear { get; }
+
         /// <summary> List of schedule times for backup. </summary>
         public IList<DateTimeOffset> ScheduleTimes { get; }
+
         /// <summary> It should be First/Second/Third/Fourth/Last. </summary>
         public IList<DataProtectionBackupWeekNumber> WeeksOfMonth { get; }
     }

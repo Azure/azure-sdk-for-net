@@ -9,7 +9,7 @@ using OpenAI;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> A tool for integrating memories into the agent. </summary>
-    public partial class MemorySearchPreviewTool : AgentTool
+    public partial class MemorySearchPreviewTool : ProjectsAgentTool
     {
         /// <summary> Initializes a new instance of <see cref="MemorySearchPreviewTool"/>. </summary>
         /// <param name="memoryStoreName"> The name of the memory store to use. </param>
@@ -38,13 +38,13 @@ namespace Azure.AI.Projects.Agents
         /// Use special variable `{{$userId}}` to scope memories to the current signed-in user.
         /// </param>
         /// <param name="searchOptions"> Options for searching the memory store. </param>
-        /// <param name="updateDelay"> Time to wait before updating memories after inactivity (seconds). Default 300. </param>
-        internal MemorySearchPreviewTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string memoryStoreName, string scope, MemorySearchToolOptions searchOptions, int? updateDelay) : base(@type, additionalBinaryDataProperties)
+        /// <param name="updateDelayInSecs"> Time to wait before updating memories after inactivity (seconds). Default 300. </param>
+        internal MemorySearchPreviewTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string memoryStoreName, string scope, MemorySearchToolOptions searchOptions, int? updateDelayInSecs) : base(@type, additionalBinaryDataProperties)
         {
             MemoryStoreName = memoryStoreName;
             Scope = scope;
             SearchOptions = searchOptions;
-            UpdateDelay = updateDelay;
+            UpdateDelayInSecs = updateDelayInSecs;
         }
 
         /// <summary> The name of the memory store to use. </summary>
@@ -61,6 +61,6 @@ namespace Azure.AI.Projects.Agents
         public MemorySearchToolOptions SearchOptions { get; set; }
 
         /// <summary> Time to wait before updating memories after inactivity (seconds). Default 300. </summary>
-        public int? UpdateDelay { get; set; }
+        public int? UpdateDelayInSecs { get; set; }
     }
 }

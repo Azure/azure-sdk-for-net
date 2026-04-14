@@ -291,6 +291,7 @@ namespace Azure.AI.Translation.Text
     public partial class TextTranslationClient
     {
         protected TextTranslationClient() { }
+        public TextTranslationClient(Azure.AI.Translation.Text.TextTranslationClientSettings settings) { }
         public TextTranslationClient(Azure.AzureKeyCredential credential, string region = "global", Azure.AI.Translation.Text.TextTranslationClientOptions options = null) { }
         public TextTranslationClient(Azure.AzureKeyCredential credential, System.Uri endpoint, string region = "global", Azure.AI.Translation.Text.TextTranslationClientOptions options = null) { }
         public TextTranslationClient(Azure.Core.TokenCredential credential, Azure.AI.Translation.Text.TextTranslationClientOptions options = null) { }
@@ -365,6 +366,16 @@ namespace Azure.AI.Translation.Text
             V3_0 = 1,
             V2025_10_01_Preview = 2,
         }
+    }
+    public partial class TextTranslationClientSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public TextTranslationClientSettings() { }
+        public System.Uri Endpoint { get { throw null; } set { } }
+        public Azure.AI.Translation.Text.TextTranslationClientOptions Options { get { throw null; } set { } }
+        public string Region { get { throw null; } set { } }
+        public string ResourceId { get { throw null; } set { } }
+        public string TokenScope { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
     [System.ObsoleteAttribute("This class is deprecated and will be removed in a future release.")]
     public partial class TextTranslationTranslateOptions

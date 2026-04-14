@@ -10,16 +10,75 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.ServiceBus.Models;
 
 namespace Azure.ResourceManager.ServiceBus
 {
-    public partial class ServiceBusQueueData : IUtf8JsonSerializable, IJsonModel<ServiceBusQueueData>
+    /// <summary> Description of queue Resource. </summary>
+    public partial class ServiceBusQueueData : ResourceData, IJsonModel<ServiceBusQueueData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceBusQueueData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceBusQueueData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeServiceBusQueueData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ServiceBusQueueData)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceBusQueueData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceBusContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ServiceBusQueueData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ServiceBusQueueData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ServiceBusQueueData IPersistableModel<ServiceBusQueueData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ServiceBusQueueData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ServiceBusQueueData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="serviceBusQueueData"> The <see cref="ServiceBusQueueData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ServiceBusQueueData serviceBusQueueData)
+        {
+            if (serviceBusQueueData == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(serviceBusQueueData, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ServiceBusQueueData"/> from. </param>
+        internal static ServiceBusQueueData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeServiceBusQueueData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ServiceBusQueueData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -31,967 +90,121 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ServiceBusQueueData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceBusQueueData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ServiceBusQueueData)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
             if (options.Format != "W" && Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(CountDetails))
-            {
-                writer.WritePropertyName("countDetails"u8);
-                writer.WriteObjectValue(CountDetails, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
-            {
-                writer.WritePropertyName("createdAt"u8);
-                writer.WriteStringValue(CreatedOn.Value, "O");
-            }
-            if (options.Format != "W" && Optional.IsDefined(UpdatedOn))
-            {
-                writer.WritePropertyName("updatedAt"u8);
-                writer.WriteStringValue(UpdatedOn.Value, "O");
-            }
-            if (options.Format != "W" && Optional.IsDefined(AccessedOn))
-            {
-                writer.WritePropertyName("accessedAt"u8);
-                writer.WriteStringValue(AccessedOn.Value, "O");
-            }
-            if (options.Format != "W" && Optional.IsDefined(SizeInBytes))
-            {
-                writer.WritePropertyName("sizeInBytes"u8);
-                writer.WriteNumberValue(SizeInBytes.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(MessageCount))
-            {
-                writer.WritePropertyName("messageCount"u8);
-                writer.WriteNumberValue(MessageCount.Value);
-            }
-            if (Optional.IsDefined(LockDuration))
-            {
-                writer.WritePropertyName("lockDuration"u8);
-                writer.WriteStringValue(LockDuration.Value, "P");
-            }
-            if (Optional.IsDefined(MaxSizeInMegabytes))
-            {
-                writer.WritePropertyName("maxSizeInMegabytes"u8);
-                writer.WriteNumberValue(MaxSizeInMegabytes.Value);
-            }
-            if (Optional.IsDefined(MaxMessageSizeInKilobytes))
-            {
-                writer.WritePropertyName("maxMessageSizeInKilobytes"u8);
-                writer.WriteNumberValue(MaxMessageSizeInKilobytes.Value);
-            }
-            if (Optional.IsDefined(RequiresDuplicateDetection))
-            {
-                writer.WritePropertyName("requiresDuplicateDetection"u8);
-                writer.WriteBooleanValue(RequiresDuplicateDetection.Value);
-            }
-            if (Optional.IsDefined(RequiresSession))
-            {
-                writer.WritePropertyName("requiresSession"u8);
-                writer.WriteBooleanValue(RequiresSession.Value);
-            }
-            if (Optional.IsDefined(DefaultMessageTimeToLive))
-            {
-                writer.WritePropertyName("defaultMessageTimeToLive"u8);
-                writer.WriteStringValue(DefaultMessageTimeToLive.Value, "P");
-            }
-            if (Optional.IsDefined(DeadLetteringOnMessageExpiration))
-            {
-                writer.WritePropertyName("deadLetteringOnMessageExpiration"u8);
-                writer.WriteBooleanValue(DeadLetteringOnMessageExpiration.Value);
-            }
-            if (Optional.IsDefined(DuplicateDetectionHistoryTimeWindow))
-            {
-                writer.WritePropertyName("duplicateDetectionHistoryTimeWindow"u8);
-                writer.WriteStringValue(DuplicateDetectionHistoryTimeWindow.Value, "P");
-            }
-            if (Optional.IsDefined(MaxDeliveryCount))
-            {
-                writer.WritePropertyName("maxDeliveryCount"u8);
-                writer.WriteNumberValue(MaxDeliveryCount.Value);
-            }
-            if (Optional.IsDefined(Status))
-            {
-                writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status.Value.ToSerialString());
-            }
-            if (Optional.IsDefined(EnableBatchedOperations))
-            {
-                writer.WritePropertyName("enableBatchedOperations"u8);
-                writer.WriteBooleanValue(EnableBatchedOperations.Value);
-            }
-            if (Optional.IsDefined(AutoDeleteOnIdle))
-            {
-                writer.WritePropertyName("autoDeleteOnIdle"u8);
-                writer.WriteStringValue(AutoDeleteOnIdle.Value, "P");
-            }
-            if (Optional.IsDefined(EnablePartitioning))
-            {
-                writer.WritePropertyName("enablePartitioning"u8);
-                writer.WriteBooleanValue(EnablePartitioning.Value);
-            }
-            if (Optional.IsDefined(EnableExpress))
-            {
-                writer.WritePropertyName("enableExpress"u8);
-                writer.WriteBooleanValue(EnableExpress.Value);
-            }
-            if (Optional.IsDefined(ForwardTo))
-            {
-                writer.WritePropertyName("forwardTo"u8);
-                writer.WriteStringValue(ForwardTo);
-            }
-            if (Optional.IsDefined(ForwardDeadLetteredMessagesTo))
-            {
-                writer.WritePropertyName("forwardDeadLetteredMessagesTo"u8);
-                writer.WriteStringValue(ForwardDeadLetteredMessagesTo);
-            }
-            if (Optional.IsDefined(UserMetadata))
-            {
-                writer.WritePropertyName("userMetadata"u8);
-                writer.WriteStringValue(UserMetadata);
-            }
-            writer.WriteEndObject();
         }
 
-        ServiceBusQueueData IJsonModel<ServiceBusQueueData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ServiceBusQueueData IJsonModel<ServiceBusQueueData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ServiceBusQueueData)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ServiceBusQueueData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceBusQueueData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ServiceBusQueueData)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeServiceBusQueueData(document.RootElement, options);
         }
 
-        internal static ServiceBusQueueData DeserializeServiceBusQueueData(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ServiceBusQueueData DeserializeServiceBusQueueData(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            ResourceType resourceType = default;
             SystemData systemData = default;
-            MessageCountDetails countDetails = default;
-            DateTimeOffset? createdAt = default;
-            DateTimeOffset? updatedAt = default;
-            DateTimeOffset? accessedAt = default;
-            long? sizeInBytes = default;
-            long? messageCount = default;
-            TimeSpan? lockDuration = default;
-            int? maxSizeInMegabytes = default;
-            long? maxMessageSizeInKilobytes = default;
-            bool? requiresDuplicateDetection = default;
-            bool? requiresSession = default;
-            TimeSpan? defaultMessageTimeToLive = default;
-            bool? deadLetteringOnMessageExpiration = default;
-            TimeSpan? duplicateDetectionHistoryTimeWindow = default;
-            int? maxDeliveryCount = default;
-            ServiceBusMessagingEntityStatus? status = default;
-            bool? enableBatchedOperations = default;
-            TimeSpan? autoDeleteOnIdle = default;
-            bool? enablePartitioning = default;
-            bool? enableExpress = default;
-            string forwardTo = default;
-            string forwardDeadLetteredMessagesTo = default;
-            string userMetadata = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            SBQueueProperties properties = default;
+            AzureLocation? location = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("location"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    location = new AzureLocation(property.Value.GetString());
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    id = new ResourceIdentifier(property.Value.GetString());
+                    name = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"u8))
+                if (prop.NameEquals("type"u8))
                 {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerServiceBusContext.Default);
+                    resourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("systemData"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerServiceBusContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        if (property0.NameEquals("countDetails"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            countDetails = MessageCountDetails.DeserializeMessageCountDetails(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("createdAt"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            createdAt = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
-                        if (property0.NameEquals("updatedAt"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            updatedAt = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
-                        if (property0.NameEquals("accessedAt"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            accessedAt = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
-                        if (property0.NameEquals("sizeInBytes"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            sizeInBytes = property0.Value.GetInt64();
-                            continue;
-                        }
-                        if (property0.NameEquals("messageCount"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            messageCount = property0.Value.GetInt64();
-                            continue;
-                        }
-                        if (property0.NameEquals("lockDuration"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            lockDuration = property0.Value.GetTimeSpan("P");
-                            continue;
-                        }
-                        if (property0.NameEquals("maxSizeInMegabytes"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            maxSizeInMegabytes = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("maxMessageSizeInKilobytes"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            maxMessageSizeInKilobytes = property0.Value.GetInt64();
-                            continue;
-                        }
-                        if (property0.NameEquals("requiresDuplicateDetection"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            requiresDuplicateDetection = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("requiresSession"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            requiresSession = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("defaultMessageTimeToLive"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            defaultMessageTimeToLive = property0.Value.GetTimeSpan("P");
-                            continue;
-                        }
-                        if (property0.NameEquals("deadLetteringOnMessageExpiration"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            deadLetteringOnMessageExpiration = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("duplicateDetectionHistoryTimeWindow"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            duplicateDetectionHistoryTimeWindow = property0.Value.GetTimeSpan("P");
-                            continue;
-                        }
-                        if (property0.NameEquals("maxDeliveryCount"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            maxDeliveryCount = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("status"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            status = property0.Value.GetString().ToServiceBusMessagingEntityStatus();
-                            continue;
-                        }
-                        if (property0.NameEquals("enableBatchedOperations"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            enableBatchedOperations = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("autoDeleteOnIdle"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            autoDeleteOnIdle = property0.Value.GetTimeSpan("P");
-                            continue;
-                        }
-                        if (property0.NameEquals("enablePartitioning"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            enablePartitioning = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("enableExpress"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            enableExpress = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("forwardTo"u8))
-                        {
-                            forwardTo = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("forwardDeadLetteredMessagesTo"u8))
-                        {
-                            forwardDeadLetteredMessagesTo = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("userMetadata"u8))
-                        {
-                            userMetadata = property0.Value.GetString();
-                            continue;
-                        }
+                        continue;
                     }
+                    properties = SBQueueProperties.DeserializeSBQueueProperties(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("location"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ServiceBusQueueData(
                 id,
                 name,
-                type,
+                resourceType,
                 systemData,
-                location,
-                countDetails,
-                createdAt,
-                updatedAt,
-                accessedAt,
-                sizeInBytes,
-                messageCount,
-                lockDuration,
-                maxSizeInMegabytes,
-                maxMessageSizeInKilobytes,
-                requiresDuplicateDetection,
-                requiresSession,
-                defaultMessageTimeToLive,
-                deadLetteringOnMessageExpiration,
-                duplicateDetectionHistoryTimeWindow,
-                maxDeliveryCount,
-                status,
-                enableBatchedOperations,
-                autoDeleteOnIdle,
-                enablePartitioning,
-                enableExpress,
-                forwardTo,
-                forwardDeadLetteredMessagesTo,
-                userMetadata,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties,
+                properties,
+                location);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  name: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Name))
-                {
-                    builder.Append("  name: ");
-                    if (Name.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Name}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Name}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Location), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  location: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Location))
-                {
-                    builder.Append("  location: ");
-                    builder.AppendLine($"'{Location.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  id: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Id))
-                {
-                    builder.Append("  id: ");
-                    builder.AppendLine($"'{Id.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  systemData: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SystemData))
-                {
-                    builder.Append("  systemData: ");
-                    builder.AppendLine($"'{SystemData.ToString()}'");
-                }
-            }
-
-            builder.Append("  properties:");
-            builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CountDetails), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    countDetails: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CountDetails))
-                {
-                    builder.Append("    countDetails: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, CountDetails, options, 4, false, "    countDetails: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CreatedOn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    createdAt: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CreatedOn))
-                {
-                    builder.Append("    createdAt: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(CreatedOn.Value, "o");
-                    builder.AppendLine($"'{formattedDateTimeString}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UpdatedOn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    updatedAt: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(UpdatedOn))
-                {
-                    builder.Append("    updatedAt: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(UpdatedOn.Value, "o");
-                    builder.AppendLine($"'{formattedDateTimeString}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AccessedOn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    accessedAt: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(AccessedOn))
-                {
-                    builder.Append("    accessedAt: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(AccessedOn.Value, "o");
-                    builder.AppendLine($"'{formattedDateTimeString}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SizeInBytes), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    sizeInBytes: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SizeInBytes))
-                {
-                    builder.Append("    sizeInBytes: ");
-                    builder.AppendLine($"'{SizeInBytes.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MessageCount), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    messageCount: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(MessageCount))
-                {
-                    builder.Append("    messageCount: ");
-                    builder.AppendLine($"'{MessageCount.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LockDuration), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    lockDuration: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(LockDuration))
-                {
-                    builder.Append("    lockDuration: ");
-                    var formattedTimeSpan = TypeFormatters.ToString(LockDuration.Value, "P");
-                    builder.AppendLine($"'{formattedTimeSpan}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxSizeInMegabytes), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    maxSizeInMegabytes: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(MaxSizeInMegabytes))
-                {
-                    builder.Append("    maxSizeInMegabytes: ");
-                    builder.AppendLine($"{MaxSizeInMegabytes.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxMessageSizeInKilobytes), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    maxMessageSizeInKilobytes: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(MaxMessageSizeInKilobytes))
-                {
-                    builder.Append("    maxMessageSizeInKilobytes: ");
-                    builder.AppendLine($"'{MaxMessageSizeInKilobytes.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequiresDuplicateDetection), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    requiresDuplicateDetection: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(RequiresDuplicateDetection))
-                {
-                    builder.Append("    requiresDuplicateDetection: ");
-                    var boolValue = RequiresDuplicateDetection.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequiresSession), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    requiresSession: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(RequiresSession))
-                {
-                    builder.Append("    requiresSession: ");
-                    var boolValue = RequiresSession.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DefaultMessageTimeToLive), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    defaultMessageTimeToLive: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(DefaultMessageTimeToLive))
-                {
-                    builder.Append("    defaultMessageTimeToLive: ");
-                    var formattedTimeSpan = TypeFormatters.ToString(DefaultMessageTimeToLive.Value, "P");
-                    builder.AppendLine($"'{formattedTimeSpan}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DeadLetteringOnMessageExpiration), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    deadLetteringOnMessageExpiration: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(DeadLetteringOnMessageExpiration))
-                {
-                    builder.Append("    deadLetteringOnMessageExpiration: ");
-                    var boolValue = DeadLetteringOnMessageExpiration.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DuplicateDetectionHistoryTimeWindow), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    duplicateDetectionHistoryTimeWindow: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(DuplicateDetectionHistoryTimeWindow))
-                {
-                    builder.Append("    duplicateDetectionHistoryTimeWindow: ");
-                    var formattedTimeSpan = TypeFormatters.ToString(DuplicateDetectionHistoryTimeWindow.Value, "P");
-                    builder.AppendLine($"'{formattedTimeSpan}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxDeliveryCount), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    maxDeliveryCount: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(MaxDeliveryCount))
-                {
-                    builder.Append("    maxDeliveryCount: ");
-                    builder.AppendLine($"{MaxDeliveryCount.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    status: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Status))
-                {
-                    builder.Append("    status: ");
-                    builder.AppendLine($"'{Status.Value.ToSerialString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnableBatchedOperations), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    enableBatchedOperations: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(EnableBatchedOperations))
-                {
-                    builder.Append("    enableBatchedOperations: ");
-                    var boolValue = EnableBatchedOperations.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AutoDeleteOnIdle), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    autoDeleteOnIdle: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(AutoDeleteOnIdle))
-                {
-                    builder.Append("    autoDeleteOnIdle: ");
-                    var formattedTimeSpan = TypeFormatters.ToString(AutoDeleteOnIdle.Value, "P");
-                    builder.AppendLine($"'{formattedTimeSpan}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnablePartitioning), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    enablePartitioning: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(EnablePartitioning))
-                {
-                    builder.Append("    enablePartitioning: ");
-                    var boolValue = EnablePartitioning.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnableExpress), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    enableExpress: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(EnableExpress))
-                {
-                    builder.Append("    enableExpress: ");
-                    var boolValue = EnableExpress.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ForwardTo), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    forwardTo: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ForwardTo))
-                {
-                    builder.Append("    forwardTo: ");
-                    if (ForwardTo.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ForwardTo}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ForwardTo}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ForwardDeadLetteredMessagesTo), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    forwardDeadLetteredMessagesTo: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ForwardDeadLetteredMessagesTo))
-                {
-                    builder.Append("    forwardDeadLetteredMessagesTo: ");
-                    if (ForwardDeadLetteredMessagesTo.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ForwardDeadLetteredMessagesTo}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ForwardDeadLetteredMessagesTo}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UserMetadata), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    userMetadata: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(UserMetadata))
-                {
-                    builder.Append("    userMetadata: ");
-                    if (UserMetadata.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{UserMetadata}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{UserMetadata}'");
-                    }
-                }
-            }
-
-            builder.AppendLine("  }");
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<ServiceBusQueueData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ServiceBusQueueData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceBusContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(ServiceBusQueueData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ServiceBusQueueData IPersistableModel<ServiceBusQueueData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ServiceBusQueueData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeServiceBusQueueData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ServiceBusQueueData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ServiceBusQueueData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

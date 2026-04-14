@@ -9,28 +9,28 @@ using OpenAI;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The input definition information for an OpenAPI tool as used to configure an agent. </summary>
-    public partial class OpenAPITool : AgentTool
+    public partial class OpenAPITool : ProjectsAgentTool
     {
         /// <summary> Initializes a new instance of <see cref="OpenAPITool"/>. </summary>
-        /// <param name="openapi"> The openapi function definition. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="openapi"/> is null. </exception>
-        public OpenAPITool(OpenAPIFunctionDefinition openapi) : base(ToolType.Openapi)
+        /// <param name="functionDefinition"> The openapi function definition. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="functionDefinition"/> is null. </exception>
+        public OpenAPITool(OpenApiFunctionDefinition functionDefinition) : base(ToolType.Openapi)
         {
-            Argument.AssertNotNull(openapi, nameof(openapi));
+            Argument.AssertNotNull(functionDefinition, nameof(functionDefinition));
 
-            Openapi = openapi;
+            FunctionDefinition = functionDefinition;
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenAPITool"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="openapi"> The openapi function definition. </param>
-        internal OpenAPITool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, OpenAPIFunctionDefinition openapi) : base(@type, additionalBinaryDataProperties)
+        /// <param name="functionDefinition"> The openapi function definition. </param>
+        internal OpenAPITool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, OpenApiFunctionDefinition functionDefinition) : base(@type, additionalBinaryDataProperties)
         {
-            Openapi = openapi;
+            FunctionDefinition = functionDefinition;
         }
 
         /// <summary> The openapi function definition. </summary>
-        public OpenAPIFunctionDefinition Openapi { get; set; }
+        public OpenApiFunctionDefinition FunctionDefinition { get; set; }
     }
 }

@@ -7,42 +7,59 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ServiceBus;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
-    /// <summary> Enumerates the possible value of keySource for Encryption. </summary>
+    /// <summary></summary>
     public readonly partial struct ServiceBusEncryptionKeySource : IEquatable<ServiceBusEncryptionKeySource>
     {
         private readonly string _value;
+        private const string MicrosoftKeyVaultValue = "Microsoft.KeyVault";
 
         /// <summary> Initializes a new instance of <see cref="ServiceBusEncryptionKeySource"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ServiceBusEncryptionKeySource(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string MicrosoftKeyVaultValue = "Microsoft.KeyVault";
-
-        /// <summary> Microsoft.KeyVault. </summary>
+        /// <summary> Gets the MicrosoftKeyVault. </summary>
         public static ServiceBusEncryptionKeySource MicrosoftKeyVault { get; } = new ServiceBusEncryptionKeySource(MicrosoftKeyVaultValue);
+
         /// <summary> Determines if two <see cref="ServiceBusEncryptionKeySource"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ServiceBusEncryptionKeySource left, ServiceBusEncryptionKeySource right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ServiceBusEncryptionKeySource"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ServiceBusEncryptionKeySource left, ServiceBusEncryptionKeySource right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ServiceBusEncryptionKeySource"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ServiceBusEncryptionKeySource"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ServiceBusEncryptionKeySource(string value) => new ServiceBusEncryptionKeySource(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ServiceBusEncryptionKeySource"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ServiceBusEncryptionKeySource?(string value) => value == null ? null : new ServiceBusEncryptionKeySource(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ServiceBusEncryptionKeySource other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ServiceBusEncryptionKeySource other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

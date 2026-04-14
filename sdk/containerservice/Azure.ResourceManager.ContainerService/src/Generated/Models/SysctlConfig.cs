@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> Sysctl settings for Linux agent nodes. </summary>
     public partial class SysctlConfig
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SysctlConfig"/>. </summary>
         public SysctlConfig()
@@ -64,7 +36,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="netIPv4TcpKeepaliveTime"> Sysctl setting net.ipv4.tcp_keepalive_time. </param>
         /// <param name="netIPv4TcpKeepaliveProbes"> Sysctl setting net.ipv4.tcp_keepalive_probes. </param>
         /// <param name="netIPv4TcpKeepaliveIntvl"> Sysctl setting net.ipv4.tcp_keepalive_intvl. </param>
-        /// <param name="netIPv4TcpTwReuse"> Sysctl setting net.ipv4.tcp_tw_reuse. </param>
+        /// <param name="isNetIpv4TcpTwReuseEnabled"> Sysctl setting net.ipv4.tcp_tw_reuse. </param>
         /// <param name="netIPv4IPLocalPortRange"> Sysctl setting net.ipv4.ip_local_port_range. </param>
         /// <param name="netIPv4NeighDefaultGcThresh1"> Sysctl setting net.ipv4.neigh.default.gc_thresh1. </param>
         /// <param name="netIPv4NeighDefaultGcThresh2"> Sysctl setting net.ipv4.neigh.default.gc_thresh2. </param>
@@ -79,8 +51,8 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="vmMaxMapCount"> Sysctl setting vm.max_map_count. </param>
         /// <param name="vmSwappiness"> Sysctl setting vm.swappiness. </param>
         /// <param name="vmVfsCachePressure"> Sysctl setting vm.vfs_cache_pressure. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SysctlConfig(int? netCoreSomaxconn, int? netCoreNetdevMaxBacklog, int? netCoreRmemDefault, int? netCoreRmemMax, int? netCoreWmemDefault, int? netCoreWmemMax, int? netCoreOptmemMax, int? netIPv4TcpMaxSynBacklog, int? netIPv4TcpMaxTwBuckets, int? netIPv4TcpFinTimeout, int? netIPv4TcpKeepaliveTime, int? netIPv4TcpKeepaliveProbes, int? netIPv4TcpKeepaliveIntvl, bool? netIPv4TcpTwReuse, string netIPv4IPLocalPortRange, int? netIPv4NeighDefaultGcThresh1, int? netIPv4NeighDefaultGcThresh2, int? netIPv4NeighDefaultGcThresh3, int? netNetfilterNfConntrackMax, int? netNetfilterNfConntrackBuckets, int? fsInotifyMaxUserWatches, int? fsFileMax, int? fsAioMaxNr, int? fsNrOpen, int? kernelThreadsMax, int? vmMaxMapCount, int? vmSwappiness, int? vmVfsCachePressure, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SysctlConfig(int? netCoreSomaxconn, int? netCoreNetdevMaxBacklog, int? netCoreRmemDefault, int? netCoreRmemMax, int? netCoreWmemDefault, int? netCoreWmemMax, int? netCoreOptmemMax, int? netIPv4TcpMaxSynBacklog, int? netIPv4TcpMaxTwBuckets, int? netIPv4TcpFinTimeout, int? netIPv4TcpKeepaliveTime, int? netIPv4TcpKeepaliveProbes, int? netIPv4TcpKeepaliveIntvl, bool? isNetIpv4TcpTwReuseEnabled, string netIPv4IPLocalPortRange, int? netIPv4NeighDefaultGcThresh1, int? netIPv4NeighDefaultGcThresh2, int? netIPv4NeighDefaultGcThresh3, int? netNetfilterNfConntrackMax, int? netNetfilterNfConntrackBuckets, int? fsInotifyMaxUserWatches, int? fsFileMax, int? fsAioMaxNr, int? fsNrOpen, int? kernelThreadsMax, int? vmMaxMapCount, int? vmSwappiness, int? vmVfsCachePressure, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NetCoreSomaxconn = netCoreSomaxconn;
             NetCoreNetdevMaxBacklog = netCoreNetdevMaxBacklog;
@@ -95,7 +67,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             NetIPv4TcpKeepaliveTime = netIPv4TcpKeepaliveTime;
             NetIPv4TcpKeepaliveProbes = netIPv4TcpKeepaliveProbes;
             NetIPv4TcpKeepaliveIntvl = netIPv4TcpKeepaliveIntvl;
-            NetIPv4TcpTwReuse = netIPv4TcpTwReuse;
+            IsNetIpv4TcpTwReuseEnabled = isNetIpv4TcpTwReuseEnabled;
             NetIPv4IPLocalPortRange = netIPv4IPLocalPortRange;
             NetIPv4NeighDefaultGcThresh1 = netIPv4NeighDefaultGcThresh1;
             NetIPv4NeighDefaultGcThresh2 = netIPv4NeighDefaultGcThresh2;
@@ -110,90 +82,117 @@ namespace Azure.ResourceManager.ContainerService.Models
             VmMaxMapCount = vmMaxMapCount;
             VmSwappiness = vmSwappiness;
             VmVfsCachePressure = vmVfsCachePressure;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Sysctl setting net.core.somaxconn. </summary>
         [WirePath("netCoreSomaxconn")]
         public int? NetCoreSomaxconn { get; set; }
+
         /// <summary> Sysctl setting net.core.netdev_max_backlog. </summary>
         [WirePath("netCoreNetdevMaxBacklog")]
         public int? NetCoreNetdevMaxBacklog { get; set; }
+
         /// <summary> Sysctl setting net.core.rmem_default. </summary>
         [WirePath("netCoreRmemDefault")]
         public int? NetCoreRmemDefault { get; set; }
+
         /// <summary> Sysctl setting net.core.rmem_max. </summary>
         [WirePath("netCoreRmemMax")]
         public int? NetCoreRmemMax { get; set; }
+
         /// <summary> Sysctl setting net.core.wmem_default. </summary>
         [WirePath("netCoreWmemDefault")]
         public int? NetCoreWmemDefault { get; set; }
+
         /// <summary> Sysctl setting net.core.wmem_max. </summary>
         [WirePath("netCoreWmemMax")]
         public int? NetCoreWmemMax { get; set; }
+
         /// <summary> Sysctl setting net.core.optmem_max. </summary>
         [WirePath("netCoreOptmemMax")]
         public int? NetCoreOptmemMax { get; set; }
+
         /// <summary> Sysctl setting net.ipv4.tcp_max_syn_backlog. </summary>
         [WirePath("netIpv4TcpMaxSynBacklog")]
         public int? NetIPv4TcpMaxSynBacklog { get; set; }
+
         /// <summary> Sysctl setting net.ipv4.tcp_max_tw_buckets. </summary>
         [WirePath("netIpv4TcpMaxTwBuckets")]
         public int? NetIPv4TcpMaxTwBuckets { get; set; }
+
         /// <summary> Sysctl setting net.ipv4.tcp_fin_timeout. </summary>
         [WirePath("netIpv4TcpFinTimeout")]
         public int? NetIPv4TcpFinTimeout { get; set; }
+
         /// <summary> Sysctl setting net.ipv4.tcp_keepalive_time. </summary>
         [WirePath("netIpv4TcpKeepaliveTime")]
         public int? NetIPv4TcpKeepaliveTime { get; set; }
+
         /// <summary> Sysctl setting net.ipv4.tcp_keepalive_probes. </summary>
         [WirePath("netIpv4TcpKeepaliveProbes")]
         public int? NetIPv4TcpKeepaliveProbes { get; set; }
+
         /// <summary> Sysctl setting net.ipv4.tcp_keepalive_intvl. </summary>
         [WirePath("netIpv4TcpkeepaliveIntvl")]
         public int? NetIPv4TcpKeepaliveIntvl { get; set; }
+
         /// <summary> Sysctl setting net.ipv4.tcp_tw_reuse. </summary>
         [WirePath("netIpv4TcpTwReuse")]
-        public bool? NetIPv4TcpTwReuse { get; set; }
+        public bool? IsNetIpv4TcpTwReuseEnabled { get; set; }
+
         /// <summary> Sysctl setting net.ipv4.ip_local_port_range. </summary>
         [WirePath("netIpv4IpLocalPortRange")]
         public string NetIPv4IPLocalPortRange { get; set; }
+
         /// <summary> Sysctl setting net.ipv4.neigh.default.gc_thresh1. </summary>
         [WirePath("netIpv4NeighDefaultGcThresh1")]
         public int? NetIPv4NeighDefaultGcThresh1 { get; set; }
+
         /// <summary> Sysctl setting net.ipv4.neigh.default.gc_thresh2. </summary>
         [WirePath("netIpv4NeighDefaultGcThresh2")]
         public int? NetIPv4NeighDefaultGcThresh2 { get; set; }
+
         /// <summary> Sysctl setting net.ipv4.neigh.default.gc_thresh3. </summary>
         [WirePath("netIpv4NeighDefaultGcThresh3")]
         public int? NetIPv4NeighDefaultGcThresh3 { get; set; }
+
         /// <summary> Sysctl setting net.netfilter.nf_conntrack_max. </summary>
         [WirePath("netNetfilterNfConntrackMax")]
         public int? NetNetfilterNfConntrackMax { get; set; }
+
         /// <summary> Sysctl setting net.netfilter.nf_conntrack_buckets. </summary>
         [WirePath("netNetfilterNfConntrackBuckets")]
         public int? NetNetfilterNfConntrackBuckets { get; set; }
+
         /// <summary> Sysctl setting fs.inotify.max_user_watches. </summary>
         [WirePath("fsInotifyMaxUserWatches")]
         public int? FsInotifyMaxUserWatches { get; set; }
+
         /// <summary> Sysctl setting fs.file-max. </summary>
         [WirePath("fsFileMax")]
         public int? FsFileMax { get; set; }
+
         /// <summary> Sysctl setting fs.aio-max-nr. </summary>
         [WirePath("fsAioMaxNr")]
         public int? FsAioMaxNr { get; set; }
+
         /// <summary> Sysctl setting fs.nr_open. </summary>
         [WirePath("fsNrOpen")]
         public int? FsNrOpen { get; set; }
+
         /// <summary> Sysctl setting kernel.threads-max. </summary>
         [WirePath("kernelThreadsMax")]
         public int? KernelThreadsMax { get; set; }
+
         /// <summary> Sysctl setting vm.max_map_count. </summary>
         [WirePath("vmMaxMapCount")]
         public int? VmMaxMapCount { get; set; }
+
         /// <summary> Sysctl setting vm.swappiness. </summary>
         [WirePath("vmSwappiness")]
         public int? VmSwappiness { get; set; }
+
         /// <summary> Sysctl setting vm.vfs_cache_pressure. </summary>
         [WirePath("vmVfsCachePressure")]
         public int? VmVfsCachePressure { get; set; }

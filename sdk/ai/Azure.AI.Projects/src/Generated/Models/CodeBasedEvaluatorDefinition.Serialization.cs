@@ -6,8 +6,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Code-based evaluator definition using python code. </summary>
     public partial class CodeBasedEvaluatorDefinition : EvaluatorDefinition, IJsonModel<CodeBasedEvaluatorDefinition>
@@ -86,6 +87,11 @@ namespace Azure.AI.Projects
                 writer.WritePropertyName("image_tag"u8);
                 writer.WriteStringValue(ImageTag);
             }
+            if (Optional.IsDefined(BlobUri))
+            {
+                writer.WritePropertyName("blob_uri"u8);
+                writer.WriteStringValue(BlobUri.AbsoluteUri);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -121,6 +127,7 @@ namespace Azure.AI.Projects
             string codeText = default;
             string entryPoint = default;
             string imageTag = default;
+            Uri blobUri = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -175,6 +182,15 @@ namespace Azure.AI.Projects
                     imageTag = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("blob_uri"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    blobUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -188,7 +204,8 @@ namespace Azure.AI.Projects
                 additionalBinaryDataProperties,
                 codeText,
                 entryPoint,
-                imageTag);
+                imageTag,
+                blobUri);
         }
     }
 }

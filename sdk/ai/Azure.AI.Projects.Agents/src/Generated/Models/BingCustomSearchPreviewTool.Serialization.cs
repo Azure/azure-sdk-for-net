@@ -11,7 +11,7 @@ using OpenAI;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The input definition information for a Bing custom search tool as used to configure an agent. </summary>
-    public partial class BingCustomSearchPreviewTool : AgentTool, IJsonModel<BingCustomSearchPreviewTool>
+    public partial class BingCustomSearchPreviewTool : ProjectsAgentTool, IJsonModel<BingCustomSearchPreviewTool>
     {
         /// <summary> Initializes a new instance of <see cref="BingCustomSearchPreviewTool"/> for deserialization. </summary>
         internal BingCustomSearchPreviewTool()
@@ -20,7 +20,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AgentTool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override ProjectsAgentTool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<BingCustomSearchPreviewTool>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -87,7 +87,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AgentTool JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override ProjectsAgentTool JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<BingCustomSearchPreviewTool>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -108,7 +108,7 @@ namespace Azure.AI.Projects.Agents
             }
             ToolType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            BingCustomSearchToolParameters bingCustomSearchPreview = default;
+            BingCustomSearchToolOptions bingCustomSearchPreview = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -118,7 +118,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("bing_custom_search_preview"u8))
                 {
-                    bingCustomSearchPreview = BingCustomSearchToolParameters.DeserializeBingCustomSearchToolParameters(prop.Value, options);
+                    bingCustomSearchPreview = BingCustomSearchToolOptions.DeserializeBingCustomSearchToolOptions(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

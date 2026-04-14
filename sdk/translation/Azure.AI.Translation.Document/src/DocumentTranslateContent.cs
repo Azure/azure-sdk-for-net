@@ -3,18 +3,21 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using Azure.Core;
-
+using Microsoft.TypeSpec.Generator.Customizations;
 namespace Azure.AI.Translation.Document
 {
+    [CodeGenType("DocumentTranslateContent")]
     [CodeGenSuppress("Document")]
     [CodeGenSuppress("Glossary")]
-    [CodeGenSuppress("DocumentTranslateContent", typeof(Stream))]
-    [CodeGenSuppress("DocumentTranslateContent", typeof(Stream), typeof(IList<Stream>), typeof(IDictionary<string, BinaryData>))]
+    [CodeGenSuppress("DocumentTranslateContent", typeof(BinaryData))]
+    [CodeGenSuppress("DocumentTranslateContent", typeof(BinaryData), typeof(IList<BinaryData>), typeof(IDictionary<string, BinaryData>))]
     public partial class DocumentTranslateContent
     {
+        /// <summary> Initializes a new instance of <see cref="DocumentTranslateContent"/> for deserialization. </summary>
+        internal DocumentTranslateContent()
+        {
+        }
+
         /// <summary> Document to be translated in the form. </summary>
         public MultipartFormFileData MultipartDocument { get; }
 
@@ -55,7 +58,7 @@ namespace Azure.AI.Translation.Document
         {
             MultipartDocument = document;
             MultipartGlossary = glossary;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = serializedAdditionalRawData;
         }
     }
 }

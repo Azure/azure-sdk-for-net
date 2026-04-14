@@ -25,3 +25,5 @@
 # Generated code
 **/Generated/**/*.cs linguist-generated=true
 **/Generated/**/*.csproj linguist-generated=true
+
+.github/workflows/*.lock.yml linguist-generated=true merge=ours

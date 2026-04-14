@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> Cluster Identity details. </summary>
     public partial class HciClusterIdentityResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HciClusterIdentityResult"/>. </summary>
         internal HciClusterIdentityResult()
@@ -51,31 +23,56 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="HciClusterIdentityResult"/>. </summary>
-        /// <param name="aadClientId"></param>
-        /// <param name="aadTenantId"></param>
-        /// <param name="aadServicePrincipalObjectId"></param>
-        /// <param name="aadApplicationObjectId"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HciClusterIdentityResult(Guid? aadClientId, Guid? aadTenantId, Guid? aadServicePrincipalObjectId, Guid? aadApplicationObjectId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> Cluster identity properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal HciClusterIdentityResult(ClusterIdentityResponseProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            AadClientId = aadClientId;
-            AadTenantId = aadTenantId;
-            AadServicePrincipalObjectId = aadServicePrincipalObjectId;
-            AadApplicationObjectId = aadApplicationObjectId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the aad client id. </summary>
+        /// <summary> Cluster identity properties. </summary>
+        [WirePath("properties")]
+        internal ClusterIdentityResponseProperties Properties { get; }
+
+        /// <summary> Gets the AadClientId. </summary>
         [WirePath("properties.aadClientId")]
-        public Guid? AadClientId { get; }
-        /// <summary> Gets the aad tenant id. </summary>
+        public Guid? AadClientId
+        {
+            get
+            {
+                return Properties.AadClientId;
+            }
+        }
+
+        /// <summary> Gets the AadTenantId. </summary>
         [WirePath("properties.aadTenantId")]
-        public Guid? AadTenantId { get; }
-        /// <summary> Gets the aad service principal object id. </summary>
+        public Guid? AadTenantId
+        {
+            get
+            {
+                return Properties.AadTenantId;
+            }
+        }
+
+        /// <summary> Gets the AadServicePrincipalObjectId. </summary>
         [WirePath("properties.aadServicePrincipalObjectId")]
-        public Guid? AadServicePrincipalObjectId { get; }
-        /// <summary> Gets the aad application object id. </summary>
+        public Guid? AadServicePrincipalObjectId
+        {
+            get
+            {
+                return Properties.AadServicePrincipalObjectId;
+            }
+        }
+
+        /// <summary> Gets the AadApplicationObjectId. </summary>
         [WirePath("properties.aadApplicationObjectId")]
-        public Guid? AadApplicationObjectId { get; }
+        public Guid? AadApplicationObjectId
+        {
+            get
+            {
+                return Properties.AadApplicationObjectId;
+            }
+        }
     }
 }

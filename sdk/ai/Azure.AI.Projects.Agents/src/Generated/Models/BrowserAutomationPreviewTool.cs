@@ -9,28 +9,28 @@ using OpenAI;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The input definition information for a Browser Automation Tool, as used to configure an Agent. </summary>
-    public partial class BrowserAutomationPreviewTool : AgentTool
+    public partial class BrowserAutomationPreviewTool : ProjectsAgentTool
     {
         /// <summary> Initializes a new instance of <see cref="BrowserAutomationPreviewTool"/>. </summary>
-        /// <param name="browserAutomationPreview"> The Browser Automation Tool parameters. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="browserAutomationPreview"/> is null. </exception>
-        public BrowserAutomationPreviewTool(BrowserAutomationToolParameters browserAutomationPreview) : base(ToolType.BrowserAutomationPreview)
+        /// <param name="toolParameters"> The Browser Automation Tool parameters. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="toolParameters"/> is null. </exception>
+        public BrowserAutomationPreviewTool(BrowserAutomationToolOptions toolParameters) : base(ToolType.BrowserAutomationPreview)
         {
-            Argument.AssertNotNull(browserAutomationPreview, nameof(browserAutomationPreview));
+            Argument.AssertNotNull(toolParameters, nameof(toolParameters));
 
-            BrowserAutomationPreview = browserAutomationPreview;
+            ToolParameters = toolParameters;
         }
 
         /// <summary> Initializes a new instance of <see cref="BrowserAutomationPreviewTool"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="browserAutomationPreview"> The Browser Automation Tool parameters. </param>
-        internal BrowserAutomationPreviewTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, BrowserAutomationToolParameters browserAutomationPreview) : base(@type, additionalBinaryDataProperties)
+        /// <param name="toolParameters"> The Browser Automation Tool parameters. </param>
+        internal BrowserAutomationPreviewTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, BrowserAutomationToolOptions toolParameters) : base(@type, additionalBinaryDataProperties)
         {
-            BrowserAutomationPreview = browserAutomationPreview;
+            ToolParameters = toolParameters;
         }
 
         /// <summary> The Browser Automation Tool parameters. </summary>
-        public BrowserAutomationToolParameters BrowserAutomationPreview { get; set; }
+        public BrowserAutomationToolOptions ToolParameters { get; set; }
     }
 }

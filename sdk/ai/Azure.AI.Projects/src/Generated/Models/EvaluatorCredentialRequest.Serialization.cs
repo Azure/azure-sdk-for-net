@@ -86,7 +86,7 @@ namespace Azure.AI.Projects
             {
                 throw new FormatException($"The model {nameof(EvaluatorCredentialRequest)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("blobUri"u8);
+            writer.WritePropertyName("blob_uri"u8);
             writer.WriteStringValue(BlobUri.AbsoluteUri);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -134,7 +134,7 @@ namespace Azure.AI.Projects
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("blobUri"u8))
+                if (prop.NameEquals("blob_uri"u8))
                 {
                     blobUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;

@@ -7,70 +7,60 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> Reported properties pushed from edge device. </summary>
     public partial class HciEdgeDeviceReportedProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HciEdgeDeviceReportedProperties"/>. </summary>
-        internal HciEdgeDeviceReportedProperties()
+        public HciEdgeDeviceReportedProperties()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="HciEdgeDeviceReportedProperties"/>. </summary>
         /// <param name="deviceState"> edge device state. </param>
         /// <param name="extensionProfile"> Extensions details for edge device. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HciEdgeDeviceReportedProperties(HciEdgeDeviceState? deviceState, HciEdgeDeviceExtensionProfile extensionProfile, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="lastSyncedOn"> Most recent edge device sync timestamp in UTC. </param>
+        /// <param name="confidentialVmProfile"> CVM support details for edge device. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal HciEdgeDeviceReportedProperties(HciEdgeDeviceState? deviceState, ExtensionProfile extensionProfile, DateTimeOffset? lastSyncedOn, ConfidentialVmProfile confidentialVmProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DeviceState = deviceState;
             ExtensionProfile = extensionProfile;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            LastSyncedOn = lastSyncedOn;
+            ConfidentialVmProfile = confidentialVmProfile;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> edge device state. </summary>
         [WirePath("deviceState")]
         public HciEdgeDeviceState? DeviceState { get; }
+
         /// <summary> Extensions details for edge device. </summary>
-        internal HciEdgeDeviceExtensionProfile ExtensionProfile { get; }
+        [WirePath("extensionProfile")]
+        internal ExtensionProfile ExtensionProfile { get; }
+
+        /// <summary> Most recent edge device sync timestamp in UTC. </summary>
+        [WirePath("lastSyncTimestamp")]
+        public DateTimeOffset? LastSyncedOn { get; }
+
+        /// <summary> CVM support details for edge device. </summary>
+        [WirePath("confidentialVmProfile")]
+        public ConfidentialVmProfile ConfidentialVmProfile { get; }
+
         /// <summary> List of Arc extensions installed on edge device. </summary>
         [WirePath("extensionProfile.extensions")]
         public IReadOnlyList<HciEdgeDeviceArcExtension> Extensions
         {
-            get => ExtensionProfile?.Extensions;
+            get
+            {
+                return ExtensionProfile.Extensions;
+            }
         }
     }
 }

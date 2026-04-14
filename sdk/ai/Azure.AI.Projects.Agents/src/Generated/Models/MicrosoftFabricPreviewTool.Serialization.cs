@@ -11,7 +11,7 @@ using OpenAI;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The input definition information for a Microsoft Fabric tool as used to configure an agent. </summary>
-    public partial class MicrosoftFabricPreviewTool : AgentTool, IJsonModel<MicrosoftFabricPreviewTool>
+    public partial class MicrosoftFabricPreviewTool : ProjectsAgentTool, IJsonModel<MicrosoftFabricPreviewTool>
     {
         /// <summary> Initializes a new instance of <see cref="MicrosoftFabricPreviewTool"/> for deserialization. </summary>
         internal MicrosoftFabricPreviewTool()
@@ -20,7 +20,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AgentTool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override ProjectsAgentTool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<MicrosoftFabricPreviewTool>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -78,7 +78,7 @@ namespace Azure.AI.Projects.Agents
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("fabric_dataagent_preview"u8);
-            writer.WriteObjectValue(FabricDataagentPreview, options);
+            writer.WriteObjectValue(ToolOptions, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -87,7 +87,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AgentTool JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override ProjectsAgentTool JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<MicrosoftFabricPreviewTool>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -108,7 +108,7 @@ namespace Azure.AI.Projects.Agents
             }
             ToolType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            FabricDataAgentToolOptions fabricDataagentPreview = default;
+            FabricDataAgentToolOptions toolOptions = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -118,7 +118,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("fabric_dataagent_preview"u8))
                 {
-                    fabricDataagentPreview = FabricDataAgentToolOptions.DeserializeFabricDataAgentToolOptions(prop.Value, options);
+                    toolOptions = FabricDataAgentToolOptions.DeserializeFabricDataAgentToolOptions(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -126,7 +126,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MicrosoftFabricPreviewTool(@type, additionalBinaryDataProperties, fabricDataagentPreview);
+            return new MicrosoftFabricPreviewTool(@type, additionalBinaryDataProperties, toolOptions);
         }
     }
 }

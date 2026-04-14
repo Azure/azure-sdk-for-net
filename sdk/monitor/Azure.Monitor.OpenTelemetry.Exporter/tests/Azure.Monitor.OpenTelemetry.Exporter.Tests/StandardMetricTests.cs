@@ -632,7 +632,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var traceTelemetryItems = new List<TelemetryItem>();
             var metricTelemetryItems = new List<TelemetryItem>();
 
-            var options = new AzureMonitorExporterOptions { EnablePerfCounters = false };
+            var options = new AzureMonitorExporterOptions { EnablePerformanceCounters = false };
             var standardMetricCustomProcessor = new StandardMetricsExtractionProcessor(new AzureMonitorMetricExporter(new MockTransmitter(metricTelemetryItems)), options);
 
             using var tracerProvider = Sdk.CreateTracerProviderBuilder()
@@ -687,7 +687,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var options = new AzureMonitorExporterOptions
             {
                 EnableStandardMetrics = false,
-                EnablePerfCounters = false
+                EnablePerformanceCounters = false
             };
             var standardMetricCustomProcessor = new StandardMetricsExtractionProcessor(new AzureMonitorMetricExporter(new MockTransmitter(metricTelemetryItems)), options);
 
@@ -724,7 +724,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [InlineData(true, false)]
         [InlineData(false, true)]
         [InlineData(false, false)]
-        public void ValidateEnablePropertiesConfiguration(bool enableStandardMetrics, bool enablePerfCounters)
+        public void ValidateEnablePropertiesConfiguration(bool enableStandardMetrics, bool enablePerformanceCounters)
         {
             var activitySource = new ActivitySource(nameof(StandardMetricTests.ValidateEnablePropertiesConfiguration));
             var traceTelemetryItems = new List<TelemetryItem>();
@@ -733,7 +733,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var options = new AzureMonitorExporterOptions
             {
                 EnableStandardMetrics = enableStandardMetrics,
-                EnablePerfCounters = enablePerfCounters
+                EnablePerformanceCounters = enablePerformanceCounters
             };
             var standardMetricCustomProcessor = new StandardMetricsExtractionProcessor(new AzureMonitorMetricExporter(new MockTransmitter(metricTelemetryItems)), options);
 
@@ -785,7 +785,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var requestRate = FindMetric(PerfCounterConstants.RequestRateMetricIdValue);
             var privateBytes = FindMetric(PerfCounterConstants.ProcessPrivateBytesMetricIdValue);
 
-            if (enablePerfCounters)
+            if (enablePerformanceCounters)
             {
                 // At least some perf counter metrics should be present
                 Assert.True(requestRate != null || privateBytes != null, "Expected at least one performance counter metric when enabled");

@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.HealthBot.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HealthBotData, HealthBotResource>(new BotsGetAllAsyncCollectionResultOfT(BotsRestClient, Id.SubscriptionId, context), data => new HealthBotResource(Client, data));
+            return new AsyncPageableWrapper<HealthBotData, HealthBotResource>(new BotsGetAllAsyncCollectionResultOfT(BotsRestClient, Id.SubscriptionId, context, "MockableHealthBotSubscriptionResource.GetHealthBots"), data => new HealthBotResource(Client, data));
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.HealthBot.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HealthBotData, HealthBotResource>(new BotsGetAllCollectionResultOfT(BotsRestClient, Id.SubscriptionId, context), data => new HealthBotResource(Client, data));
+            return new PageableWrapper<HealthBotData, HealthBotResource>(new BotsGetAllCollectionResultOfT(BotsRestClient, Id.SubscriptionId, context, "MockableHealthBotSubscriptionResource.GetHealthBots"), data => new HealthBotResource(Client, data));
         }
     }
 }

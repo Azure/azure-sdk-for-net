@@ -67,16 +67,10 @@ jobs:
             Write-Host "##vso[task.setvariable variable=TagName]$tag"
             Write-Host "Publishing packages with tag: $tag"
           displayName: 'Packages to be published'
-
-        - template: /eng/common/pipelines/templates/steps/create-authenticated-npmrc.yml
-          parameters:
-            npmrcPath: $(ArtifactPath)/.npmrc
-            registryUrl: ${{ parameters.Registry }}
-            CustomCondition: and(succeeded(), ne(variables['SkipPublishing'], 'true'))
   
         - ${{ if eq(parameters.Registry, 'https://registry.npmjs.org/') }}:
 
-          - task: EsrpRelease@9
+          - task: EsrpRelease@11
             displayName: 'Publish ${{ parameters.ArtifactName }} via ESRP'
             condition: and(succeeded(), ne(variables['SkipPublishing'], 'true'))
             inputs:
@@ -119,6 +113,13 @@ jobs:
             condition: and(succeeded(), ne(variables['SkipPublishing'], 'true'))
 
         - ${{ else }}:
+
+          - template: /eng/common/pipelines/templates/steps/create-authenticated-npmrc.yml
+            parameters:
+              npmrcPath: $(ArtifactPath)/.npmrc
+              registryUrl: ${{ parameters.Registry }}
+              CustomCondition: and(succeeded(), ne(variables['SkipPublishing'], 'true'))
+
           - pwsh: |
               foreach ($package in (dir $(ArtifactPath) *.tgz -Recurse)) {
                 Write-Host "npm publish $package --verbose --access public --tag $(TagName) --registry ${{ parameters.Registry }}"

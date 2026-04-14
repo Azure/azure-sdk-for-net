@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DevCenter
 {
-    internal class DevCenterProjectOperationSource : IOperationSource<DevCenterProjectResource>
+    /// <summary></summary>
+    internal partial class DevCenterProjectOperationSource : IOperationSource<DevCenterProjectResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal DevCenterProjectOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         DevCenterProjectResource IOperationSource<DevCenterProjectResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DevCenterProjectData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDevCenterContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            DevCenterProjectData data = DevCenterProjectData.DeserializeDevCenterProjectData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new DevCenterProjectResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<DevCenterProjectResource> IOperationSource<DevCenterProjectResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DevCenterProjectData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDevCenterContext.Default);
-            return await Task.FromResult(new DevCenterProjectResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            DevCenterProjectData data = DevCenterProjectData.DeserializeDevCenterProjectData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new DevCenterProjectResource(_client, data);
         }
     }
 }

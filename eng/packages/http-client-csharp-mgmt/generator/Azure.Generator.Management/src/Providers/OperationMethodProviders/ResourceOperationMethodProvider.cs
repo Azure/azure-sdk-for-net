@@ -427,6 +427,13 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 Static(typeof(OperationFinalStateVia)).Property(finalStateVia.ToString())
             ];
 
+            // TODO: Temporary workaround - pass skipApiVersionOverride: true to prevent LRO polling from
+            // overriding the api-version. Remove once the issue is properly resolved in Azure.Core.
+            if (ManagementClientGenerator.Instance.IsSkipApiVersionOverrideEnabled())
+            {
+                commonArmOperationArguments = [.. commonArmOperationArguments, Literal(true)];
+            }
+
             ValueExpression? operationSourceInstance = null;
             if (_returnBodyResourceClient != null)
             {

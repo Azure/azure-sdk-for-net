@@ -26,12 +26,20 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         private const string EndUserIdAttributeName = "enduser.id";
         private const string UserAgentOriginalAttributeName = "user_agent.original";
         private const string OperationNameAttributeName = "microsoft.operation_name";
+        private const string SessionIdAttributeName = "microsoft.session.id";
+        private const string DeviceIdAttributeName = "ai.device.id";
+        private const string DeviceModelAttributeName = "ai.device.model";
+        private const string DeviceTypeAttributeName = "ai.device.type";
+        private const string DeviceOsVersionAttributeName = "ai.device.osVersion";
+        private const string SyntheticSourceAttributeName = "microsoft.synthetic_source";
+        private const string UserAccountIdAttributeName = "microsoft.user.account_id";
         private const string AvailabilityIdAttributeName = "microsoft.availability.id";
         private const string AvailabilityNameAttributeName = "microsoft.availability.name";
         private const string AvailabilityDurationAttributeName = "microsoft.availability.duration";
         private const string AvailabilitySuccessAttributeName = "microsoft.availability.success";
         private const string AvailabilityRunLocationAttributeName = "microsoft.availability.runLocation";
         private const string AvailabilityMessageAttributeName = "microsoft.availability.message";
+        private const string AvailabilityTestTimestampAttributeName = "microsoft.availability.testTimestamp";
         private const int Version = 2;
         private static readonly Action<LogRecordScope, IDictionary<string, string>> s_processScope = (scope, properties) =>
         {
@@ -49,7 +57,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     {
                         if (!properties.ContainsKey(scopeItem.Key))
                         {
-                            properties.Add(scopeItem.Key, Convert.ToString(scopeItem.Value, CultureInfo.InvariantCulture)?.Truncate(SchemaConstants.MessageData_Properties_MaxValueLength)!);
+                            var maxValueLength = SchemaConstants.GenAiProperties.Contains(scopeItem.Key)
+                                ? SchemaConstants.GenAi_Properties_MaxValueLength
+                                : SchemaConstants.MessageData_Properties_MaxValueLength;
+                            var stringValue = Convert.ToString(scopeItem.Value, CultureInfo.InvariantCulture)?.Truncate(maxValueLength)!;
+                            properties.Add(scopeItem.Key, stringValue);
                         }
                     }
                     catch (Exception ex)
@@ -99,7 +111,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     }
                     else if (availabilityInfo is not null)
                     {
-                        telemetryItem = new TelemetryItem("Availability", logRecord, resource, instrumentationKey, logContext)
+                        DateTimeOffset envelopeTime = availabilityInfo.Value.TestTimestamp != null
+                            && DateTimeOffset.TryParse(
+                                availabilityInfo.Value.TestTimestamp,
+                                CultureInfo.InvariantCulture,
+                                System.Globalization.DateTimeStyles.RoundtripKind,
+                                out var parsedTs)
+                            ? parsedTs.ToUniversalTime()
+                            : TelemetryItem.FormatUtcTimestamp(logRecord.Timestamp);
+
+                        telemetryItem = new TelemetryItem("Availability", envelopeTime, logRecord, resource, instrumentationKey, logContext)
                         {
                             Data = new MonitorBase
                             {
@@ -166,6 +187,27 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     case OperationNameAttributeName:
                         logContext.OperationName = item.Value?.ToString();
                         break;
+                    case SessionIdAttributeName:
+                        logContext.SessionId = item.Value?.ToString();
+                        break;
+                    case DeviceIdAttributeName:
+                        logContext.DeviceId = item.Value?.ToString();
+                        break;
+                    case DeviceModelAttributeName:
+                        logContext.DeviceModel = item.Value?.ToString();
+                        break;
+                    case DeviceTypeAttributeName:
+                        logContext.DeviceType = item.Value?.ToString();
+                        break;
+                    case DeviceOsVersionAttributeName:
+                        logContext.DeviceOsVersion = item.Value?.ToString();
+                        break;
+                    case SyntheticSourceAttributeName:
+                        logContext.SyntheticSource = item.Value?.ToString();
+                        break;
+                    case UserAccountIdAttributeName:
+                        logContext.UserAccountId = item.Value?.ToString();
+                        break;
                     default:
                         // Note: if Key exceeds MaxLength, the entire KVP will be dropped.
                         if (item.Key.Length <= SchemaConstants.MessageData_Properties_MaxKeyLength && item.Value != null)
@@ -187,7 +229,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                                 {
                                     if (!properties.ContainsKey(item.Key))
                                     {
-                                        properties.Add(item.Key, item.Value.ToString().Truncate(SchemaConstants.MessageData_Properties_MaxValueLength)!);
+                                        var maxValueLength = SchemaConstants.GenAiProperties.Contains(item.Key)
+                                            ? SchemaConstants.GenAi_Properties_MaxValueLength
+                                            : SchemaConstants.MessageData_Properties_MaxValueLength;
+                                        var stringValue = item.Value.ToString().Truncate(maxValueLength)!;
+                                        properties.Add(item.Key, stringValue);
                                     }
                                 }
                             }
@@ -242,6 +288,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             string? availabilitySuccess = null;
             string? availabilityRunLocation = null;
             string? availabilityMessage = null;
+            string? availabilityTestTimestamp = null;
             logContext = default;
 
             foreach (KeyValuePair<string, object?> item in logRecord.Attributes ?? Enumerable.Empty<KeyValuePair<string, object?>>())
@@ -266,6 +313,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     case AvailabilityMessageAttributeName:
                         availabilityMessage = item.Value?.ToString();
                         break;
+                    case AvailabilityTestTimestampAttributeName:
+                        availabilityTestTimestamp = item.Value?.ToString();
+                        break;
                     case ClientIpAttributeName:
                         logContext.MicrosoftClientIp = item.Value?.ToString().Truncate(SchemaConstants.AvailabilityData_Properties_MaxValueLength);
                         break;
@@ -280,6 +330,27 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                         break;
                     case OperationNameAttributeName:
                         logContext.OperationName = item.Value?.ToString();
+                        break;
+                    case SessionIdAttributeName:
+                        logContext.SessionId = item.Value?.ToString();
+                        break;
+                    case DeviceIdAttributeName:
+                        logContext.DeviceId = item.Value?.ToString();
+                        break;
+                    case DeviceModelAttributeName:
+                        logContext.DeviceModel = item.Value?.ToString();
+                        break;
+                    case DeviceTypeAttributeName:
+                        logContext.DeviceType = item.Value?.ToString();
+                        break;
+                    case DeviceOsVersionAttributeName:
+                        logContext.DeviceOsVersion = item.Value?.ToString();
+                        break;
+                    case SyntheticSourceAttributeName:
+                        logContext.SyntheticSource = item.Value?.ToString();
+                        break;
+                    case UserAccountIdAttributeName:
+                        logContext.UserAccountId = item.Value?.ToString();
                         break;
                     default:
                         if (item.Key.Length <= SchemaConstants.AvailabilityData_Properties_MaxValueLength && item.Value != null && !properties.ContainsKey(item.Key))
@@ -302,7 +373,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     Duration = availabilityDuration!,
                     Success = bool.TryParse(availabilitySuccess, out var success) ? success : false,
                     RunLocation = availabilityRunLocation,
-                    Message = availabilityMessage ?? message
+                    Message = availabilityMessage ?? message,
+                    TestTimestamp = availabilityTestTimestamp
                 };
             }
 
@@ -384,5 +456,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         public bool Success { get; set; }
         public string? RunLocation { get; set; }
         public string? Message { get; set; }
+        public string? TestTimestamp { get; set; }
     }
 }

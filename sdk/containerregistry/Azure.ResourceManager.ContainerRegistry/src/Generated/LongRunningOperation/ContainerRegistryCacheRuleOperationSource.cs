@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ContainerRegistry
 {
-    internal class ContainerRegistryCacheRuleOperationSource : IOperationSource<ContainerRegistryCacheRuleResource>
+    /// <summary></summary>
+    internal partial class ContainerRegistryCacheRuleOperationSource : IOperationSource<ContainerRegistryCacheRuleResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal ContainerRegistryCacheRuleOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         ContainerRegistryCacheRuleResource IOperationSource<ContainerRegistryCacheRuleResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ContainerRegistryCacheRuleData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerContainerRegistryContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            ContainerRegistryCacheRuleData data = ContainerRegistryCacheRuleData.DeserializeContainerRegistryCacheRuleData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new ContainerRegistryCacheRuleResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<ContainerRegistryCacheRuleResource> IOperationSource<ContainerRegistryCacheRuleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ContainerRegistryCacheRuleData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerContainerRegistryContext.Default);
-            return await Task.FromResult(new ContainerRegistryCacheRuleResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            ContainerRegistryCacheRuleData data = ContainerRegistryCacheRuleData.DeserializeContainerRegistryCacheRuleData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ContainerRegistryCacheRuleResource(_client, data);
         }
     }
 }

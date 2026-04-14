@@ -10,7 +10,7 @@ To create a `ConversationAnalysisAuthoringClient`, you will need the service end
 Uri endpoint = new Uri("{endpoint}");
 AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
 ConversationAnalysisAuthoringClientOptions options = new ConversationAnalysisAuthoringClientOptions(ConversationAnalysisAuthoringClientOptions.ServiceVersion.V2025_11_15_Preview);
-ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential, options);
+ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential, options);
 ```
 
 The values of the endpoint and apiKey variables can be retrieved from environment variables, configuration settings, or any other secure approach that works for your application.
@@ -24,9 +24,9 @@ To delete a project, call DeleteProject on the `ConversationAuthoringProject` cl
 
 ```C# Snippet:Sample5_ConversationsAuthoring_DeleteProject
 string projectName = "{projectName}";
-ConversationAuthoringProject projectClient = client.GetProject(projectName);
-Operation operation = projectClient.DeleteProject(
-    waitUntil: WaitUntil.Completed
+Operation operation = client.DeleteProject(
+    waitUntil: WaitUntil.Completed,
+    projectName: projectName
 );
 
 // Extract the operation-location header
@@ -42,9 +42,9 @@ To delete a project, call DeleteProjectAsync on the `ConversationAuthoringProjec
 
 ```C# Snippet:Sample5_ConversationsAuthoring_DeleteProjectAsync
 string projectName = "{projectName}";
-ConversationAuthoringProject projectClient = client.GetProject(projectName);
-Operation operation = await projectClient.DeleteProjectAsync(
-    waitUntil: WaitUntil.Completed
+Operation operation = await client.DeleteProjectAsync(
+    waitUntil: WaitUntil.Completed,
+    projectName: projectName
 );
 
 // Extract the operation-location header
