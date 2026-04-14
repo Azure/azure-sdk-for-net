@@ -16,8 +16,6 @@ namespace Azure.SdkAnalyzers
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public sealed class AsyncPatternAnalyzer : DiagnosticAnalyzer
     {
-        private AsyncAnalyzerUtilities _asyncUtilities;
-
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics { get; } =
             ImmutableArray.Create(Descriptors.AZC0101);
 
@@ -28,16 +26,22 @@ namespace Azure.SdkAnalyzers
             context.RegisterCompilationStartAction(CompilationStart);
         }
 
-        private void CompilationStart(CompilationStartAnalysisContext context)
+        private static void CompilationStart(CompilationStartAnalysisContext context)
         {
-            _asyncUtilities = new AsyncAnalyzerUtilities(context.Compilation);
+            var asyncUtilities = new AsyncAnalyzerUtilities(context.Compilation);
 
-            context.RegisterSyntaxNodeAction(AnalyzeArrowExpressionClause, SyntaxKind.ArrowExpressionClause);
-            context.RegisterOperationAction(AnalyzeMethodBody, OperationKind.MethodBody);
-            context.RegisterOperationAction(AnalyzeAnonymousFunction, OperationKind.AnonymousFunction);
+            context.RegisterSyntaxNodeAction(
+                ctx => AnalyzeArrowExpressionClause(ctx, asyncUtilities),
+                SyntaxKind.ArrowExpressionClause);
+            context.RegisterOperationAction(
+                ctx => AnalyzeMethodBody(ctx, asyncUtilities),
+                OperationKind.MethodBody);
+            context.RegisterOperationAction(
+                ctx => AnalyzeAnonymousFunction(ctx, asyncUtilities),
+                OperationKind.AnonymousFunction);
         }
 
-        private void AnalyzeArrowExpressionClause(SyntaxNodeAnalysisContext context)
+        private static void AnalyzeArrowExpressionClause(SyntaxNodeAnalysisContext context, AsyncAnalyzerUtilities asyncUtilities)
         {
             if (!(context.ContainingSymbol is IMethodSymbol method) || method.MethodKind != MethodKind.PropertyGet)
             {
@@ -47,24 +51,24 @@ namespace Azure.SdkAnalyzers
             var operation = context.SemanticModel.GetOperation(context.Node, context.CancellationToken);
             if (operation is IBlockOperation block && block.Parent == null)
             {
-                MethodBodyAnalyzer.Run(context.ReportDiagnostic, context.Compilation, _asyncUtilities, method, block);
+                MethodBodyAnalyzer.Run(context.ReportDiagnostic, context.Compilation, asyncUtilities, method, block);
             }
         }
 
-        private void AnalyzeMethodBody(OperationAnalysisContext context)
+        private static void AnalyzeMethodBody(OperationAnalysisContext context, AsyncAnalyzerUtilities asyncUtilities)
         {
             var method = (IMethodSymbol) context.ContainingSymbol;
             var methodBody = (IMethodBodyOperation)context.Operation;
-            MethodBodyAnalyzer.Run(context.ReportDiagnostic, context.Compilation, _asyncUtilities, method, methodBody.BlockBody ?? methodBody.ExpressionBody);
+            MethodBodyAnalyzer.Run(context.ReportDiagnostic, context.Compilation, asyncUtilities, method, methodBody.BlockBody ?? methodBody.ExpressionBody);
         }
 
-        private void AnalyzeAnonymousFunction(OperationAnalysisContext context)
+        private static void AnalyzeAnonymousFunction(OperationAnalysisContext context, AsyncAnalyzerUtilities asyncUtilities)
         {
             var operation = (IAnonymousFunctionOperation) context.Operation;
             var method = operation.Symbol;
             if (method.ContainingSymbol.Kind != SymbolKind.Method)
             {
-                MethodBodyAnalyzer.Run(context.ReportDiagnostic, context.Compilation, _asyncUtilities, method, operation.Body);
+                MethodBodyAnalyzer.Run(context.ReportDiagnostic, context.Compilation, asyncUtilities, method, operation.Body);
             }
         }
     }
