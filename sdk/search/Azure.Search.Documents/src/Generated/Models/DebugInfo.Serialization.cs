@@ -74,11 +74,6 @@ namespace Azure.Search.Documents.Models
             {
                 throw new FormatException($"The model {nameof(DebugInfo)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(QueryRewrites))
-            {
-                writer.WritePropertyName("queryRewrites"u8);
-                writer.WriteObjectValue(QueryRewrites, options);
-            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -121,25 +116,15 @@ namespace Azure.Search.Documents.Models
             {
                 return null;
             }
-            QueryRewritesDebugInfo queryRewrites = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("queryRewrites"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    queryRewrites = QueryRewritesDebugInfo.DeserializeQueryRewritesDebugInfo(prop.Value, options);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DebugInfo(queryRewrites, additionalBinaryDataProperties);
+            return new DebugInfo(additionalBinaryDataProperties);
         }
     }
 }

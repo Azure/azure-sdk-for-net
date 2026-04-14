@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Specifies the parameters for connecting to the Azure OpenAI resource. </summary>
-    internal partial class AzureOpenAIVectorizerParameters
+    public partial class AzureOpenAIVectorizerParameters
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

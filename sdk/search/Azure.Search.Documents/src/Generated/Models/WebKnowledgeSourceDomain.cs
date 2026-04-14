@@ -39,7 +39,7 @@ namespace Azure.Search.Documents.Indexes.Models
         }
 
         /// <summary> The address of the domain. </summary>
-        public string Address { get; }
+        public string Address { get; set; }
 
         /// <summary> Whether or not to include subpages from this domain. </summary>
         public bool? IncludeSubpages { get; set; }

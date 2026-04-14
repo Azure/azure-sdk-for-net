@@ -86,12 +86,12 @@ namespace Azure.Search.Documents.Models
             }
             if (options.Format != "W")
             {
-                writer.WritePropertyName("succeeded"u8);
+                writer.WritePropertyName("status"u8);
                 writer.WriteBooleanValue(Succeeded);
             }
             if (options.Format != "W")
             {
-                writer.WritePropertyName("Status"u8);
+                writer.WritePropertyName("statusCode"u8);
                 writer.WriteNumberValue(Status);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
@@ -153,12 +153,12 @@ namespace Azure.Search.Documents.Models
                     errorMessage = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("succeeded"u8))
+                if (prop.NameEquals("status"u8))
                 {
                     succeeded = prop.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("Status"u8))
+                if (prop.NameEquals("statusCode"u8))
                 {
                     status = prop.Value.GetInt32();
                     continue;

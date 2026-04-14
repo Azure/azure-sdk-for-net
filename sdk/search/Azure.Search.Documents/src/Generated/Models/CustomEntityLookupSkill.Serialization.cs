@@ -157,7 +157,7 @@ namespace Azure.Search.Documents.Indexes.Models
             int? globalDefaultFuzzyEditDistance = default;
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("odataType"u8))
+                if (prop.NameEquals("@odata.type"u8))
                 {
                     odataType = prop.Value.GetString();
                     continue;

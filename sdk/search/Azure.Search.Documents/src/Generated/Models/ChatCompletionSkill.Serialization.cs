@@ -82,36 +82,6 @@ namespace Azure.Search.Documents.Indexes.Models
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("uri"u8);
             writer.WriteStringValue(Uri);
-            if (Optional.IsDefined(HttpHeaders))
-            {
-                writer.WritePropertyName("httpHeaders"u8);
-                writer.WriteObjectValue(HttpHeaders, options);
-            }
-            if (Optional.IsDefined(HttpMethod))
-            {
-                writer.WritePropertyName("httpMethod"u8);
-                writer.WriteStringValue(HttpMethod);
-            }
-            if (Optional.IsDefined(Timeout))
-            {
-                writer.WritePropertyName("timeout"u8);
-                writer.WriteStringValue(Timeout.Value, "P");
-            }
-            if (Optional.IsDefined(BatchSize))
-            {
-                writer.WritePropertyName("batchSize"u8);
-                writer.WriteNumberValue(BatchSize.Value);
-            }
-            if (Optional.IsDefined(DegreeOfParallelism))
-            {
-                writer.WritePropertyName("degreeOfParallelism"u8);
-                writer.WriteNumberValue(DegreeOfParallelism.Value);
-            }
-            if (Optional.IsDefined(AuthResourceId))
-            {
-                writer.WritePropertyName("authResourceId"u8);
-                writer.WriteStringValue(AuthResourceId);
-            }
             if (Optional.IsDefined(AuthIdentity))
             {
                 writer.WritePropertyName("authIdentity"u8);
@@ -160,8 +130,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("responseFormat"u8);
                 writer.WriteObjectValue(ResponseFormat, options);
             }
-            writer.WritePropertyName("@odata.type"u8);
-            writer.WriteStringValue(OdataType);
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -197,22 +165,15 @@ namespace Azure.Search.Documents.Indexes.Models
             IList<OutputFieldMappingEntry> outputs = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string uri = default;
-            WebApiHttpHeaders httpHeaders = default;
-            string httpMethod = default;
-            TimeSpan? timeout = default;
-            int? batchSize = default;
-            int? degreeOfParallelism = default;
-            string authResourceId = default;
             SearchIndexerDataIdentity authIdentity = default;
             string apiKey = default;
             ChatCompletionCommonModelParameters commonModelParameters = default;
             IDictionary<string, BinaryData> extraParameters = default;
             ChatCompletionExtraParametersBehavior? extraParametersBehavior = default;
             ChatCompletionResponseFormat responseFormat = default;
-            string odataType0 = "#Microsoft.Skills.Custom.ChatCompletionSkill";
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("odataType"u8))
+                if (prop.NameEquals("@odata.type"u8))
                 {
                     odataType = prop.Value.GetString();
                     continue;
@@ -255,59 +216,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (prop.NameEquals("uri"u8))
                 {
                     uri = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("httpHeaders"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    httpHeaders = WebApiHttpHeaders.DeserializeWebApiHttpHeaders(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("httpMethod"u8))
-                {
-                    httpMethod = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("timeout"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    timeout = prop.Value.GetTimeSpan("P");
-                    continue;
-                }
-                if (prop.NameEquals("batchSize"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        batchSize = null;
-                        continue;
-                    }
-                    batchSize = prop.Value.GetInt32();
-                    continue;
-                }
-                if (prop.NameEquals("degreeOfParallelism"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        degreeOfParallelism = null;
-                        continue;
-                    }
-                    degreeOfParallelism = prop.Value.GetInt32();
-                    continue;
-                }
-                if (prop.NameEquals("authResourceId"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        authResourceId = null;
-                        continue;
-                    }
-                    authResourceId = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("authIdentity"u8))
@@ -373,11 +281,6 @@ namespace Azure.Search.Documents.Indexes.Models
                     responseFormat = ChatCompletionResponseFormat.DeserializeChatCompletionResponseFormat(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("@odata.type"u8))
-                {
-                    odataType0 = prop.Value.GetString();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -392,19 +295,12 @@ namespace Azure.Search.Documents.Indexes.Models
                 outputs,
                 additionalBinaryDataProperties,
                 uri,
-                httpHeaders,
-                httpMethod,
-                timeout,
-                batchSize,
-                degreeOfParallelism,
-                authResourceId,
                 authIdentity,
                 apiKey,
                 commonModelParameters,
                 extraParameters ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 extraParametersBehavior,
-                responseFormat,
-                odataType0);
+                responseFormat);
         }
     }
 }

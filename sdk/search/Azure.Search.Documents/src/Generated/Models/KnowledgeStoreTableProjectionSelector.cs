@@ -41,9 +41,13 @@ namespace Azure.Search.Documents.Indexes.Models
         }
 
         /// <summary> Name of generated key to store projection under. </summary>
-        public new string GeneratedKeyName => _generatedKeyName ?? default;
+        public new string GeneratedKeyName
+        {
+            get => _generatedKeyName ?? default;
+            set => _generatedKeyName = value;
+        }
 
         /// <summary> Name of the Azure table to store projected data in. </summary>
-        public string TableName { get; }
+        public string TableName { get; set; }
     }
 }

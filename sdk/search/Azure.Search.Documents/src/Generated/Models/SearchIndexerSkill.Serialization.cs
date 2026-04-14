@@ -78,7 +78,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 throw new FormatException($"The model {nameof(SearchIndexerSkill)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("odataType"u8);
+            writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
             if (Optional.IsDefined(Name))
             {
@@ -151,7 +151,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            if (element.TryGetProperty("odataType"u8, out JsonElement discriminator))
+            if (element.TryGetProperty("@odata.type"u8, out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
@@ -189,12 +189,8 @@ namespace Azure.Search.Documents.Indexes.Models
                         return DocumentIntelligenceLayoutSkill.DeserializeDocumentIntelligenceLayoutSkill(element, options);
                     case "#Microsoft.Skills.Custom.WebApiSkill":
                         return WebApiSkill.DeserializeWebApiSkill(element, options);
-                    case "#Microsoft.Skills.Custom.AmlSkill":
-                        return AzureMachineLearningSkill.DeserializeAzureMachineLearningSkill(element, options);
                     case "#Microsoft.Skills.Text.AzureOpenAIEmbeddingSkill":
                         return AzureOpenAIEmbeddingSkill.DeserializeAzureOpenAIEmbeddingSkill(element, options);
-                    case "#Microsoft.Skills.Vision.VectorizeSkill":
-                        return VisionVectorizeSkill.DeserializeVisionVectorizeSkill(element, options);
                     case "#Microsoft.Skills.Util.ContentUnderstandingSkill":
                         return ContentUnderstandingSkill.DeserializeContentUnderstandingSkill(element, options);
                     case "#Microsoft.Skills.Custom.ChatCompletionSkill":

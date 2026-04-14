@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.Search.Documents.Models
 {
-    /// <summary> The query parameters for vector and hybrid search queries. </summary>
+    /// <summary>
+    /// The query parameters for vector and hybrid search queries.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VectorizedQuery"/>, <see cref="VectorizableTextQuery"/>, <see cref="VectorizableImageUrlQuery"/>, and <see cref="VectorizableImageBinaryQuery"/>.
+    /// </summary>
     public abstract partial class VectorQuery
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -29,45 +32,30 @@ namespace Azure.Search.Documents.Models
         /// <param name="exhaustive"> When true, triggers an exhaustive k-nearest neighbor search across all vectors within the vector index. Useful for scenarios where exact matches are critical, such as determining ground truth values. </param>
         /// <param name="oversampling"> Oversampling factor. Minimum value is 1. It overrides the 'defaultOversampling' parameter configured in the index definition. It can be set only when 'rerankWithOriginalVectors' is true. This parameter is only permitted when a compression method is used on the underlying vector field. </param>
         /// <param name="weight"> Relative weight of the vector query when compared to other vector query and/or the text query within the same search request. This value is used when combining the results of multiple ranking lists produced by the different vector queries and/or the results retrieved through the text query. The higher the weight, the higher the documents that matched that query will be in the final ranking. Default is 1.0 and the value needs to be a positive number larger than zero. </param>
-        /// <param name="threshold"> The threshold used for vector queries. Note this can only be set if all 'fields' use the same similarity metric. </param>
-        /// <param name="filterOverride"> The OData filter expression to apply to this specific vector query. If no filter expression is defined at the vector level, the expression defined in the top level filter parameter is used instead. </param>
-        /// <param name="perDocumentVectorLimit"> Controls how many vectors can be matched from each document in a vector search query. Setting it to 1 ensures at most one vector per document is matched, guaranteeing results come from distinct documents. Setting it to 0 (unlimited) allows multiple relevant vectors from the same document to be matched. Default is 0. </param>
         /// <param name="kind"> Type of query. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VectorQuery(int? kNearestNeighborsCount, string fieldsRaw, bool? exhaustive, double? oversampling, float? weight, VectorThreshold threshold, string filterOverride, int? perDocumentVectorLimit, VectorQueryKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VectorQuery(int? kNearestNeighborsCount, string fieldsRaw, bool? exhaustive, double? oversampling, float? weight, VectorQueryKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             KNearestNeighborsCount = kNearestNeighborsCount;
             FieldsRaw = fieldsRaw;
             Exhaustive = exhaustive;
             Oversampling = oversampling;
             Weight = weight;
-            Threshold = threshold;
-            FilterOverride = filterOverride;
-            PerDocumentVectorLimit = perDocumentVectorLimit;
             Kind = kind;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Number of nearest neighbors to return as top hits. </summary>
-        public int? KNearestNeighborsCount { get; }
+        public int? KNearestNeighborsCount { get; set; }
 
         /// <summary> When true, triggers an exhaustive k-nearest neighbor search across all vectors within the vector index. Useful for scenarios where exact matches are critical, such as determining ground truth values. </summary>
-        public bool? Exhaustive { get; }
+        public bool? Exhaustive { get; set; }
 
         /// <summary> Oversampling factor. Minimum value is 1. It overrides the 'defaultOversampling' parameter configured in the index definition. It can be set only when 'rerankWithOriginalVectors' is true. This parameter is only permitted when a compression method is used on the underlying vector field. </summary>
-        public double? Oversampling { get; }
+        public double? Oversampling { get; set; }
 
         /// <summary> Relative weight of the vector query when compared to other vector query and/or the text query within the same search request. This value is used when combining the results of multiple ranking lists produced by the different vector queries and/or the results retrieved through the text query. The higher the weight, the higher the documents that matched that query will be in the final ranking. Default is 1.0 and the value needs to be a positive number larger than zero. </summary>
-        public float? Weight { get; }
-
-        /// <summary> The threshold used for vector queries. Note this can only be set if all 'fields' use the same similarity metric. </summary>
-        public VectorThreshold Threshold { get; }
-
-        /// <summary> The OData filter expression to apply to this specific vector query. If no filter expression is defined at the vector level, the expression defined in the top level filter parameter is used instead. </summary>
-        public string FilterOverride { get; }
-
-        /// <summary> Controls how many vectors can be matched from each document in a vector search query. Setting it to 1 ensures at most one vector per document is matched, guaranteeing results come from distinct documents. Setting it to 0 (unlimited) allows multiple relevant vectors from the same document to be matched. Default is 0. </summary>
-        public int? PerDocumentVectorLimit { get; }
+        public float? Weight { get; set; }
 
         /// <summary> Type of query. </summary>
         internal VectorQueryKind Kind { get; set; }
