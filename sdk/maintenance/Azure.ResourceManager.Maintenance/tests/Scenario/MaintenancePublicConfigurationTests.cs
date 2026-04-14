@@ -24,12 +24,11 @@ namespace Azure.ResourceManager.Maintenance.Tests
         {
             //string assetName = "maintenance-config-";
             string subscriptionId = "eee2cef4-bc47-4278-b4f8-cfc65f25dfd8";
-            string resourceGroupName = "testRG";
             string resourceName = "aks-mrp-cfg-weekday_utc-7-eastus2euap";
-            ResourceIdentifier maintenanceConfigurationResourceId = MaintenanceConfigurationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
-            MaintenanceConfigurationResource maintenanceConfiguration = Client.GetMaintenanceConfigurationResource(maintenanceConfigurationResourceId);
+            ResourceIdentifier maintenancePublicConfigurationResourceId = MaintenancePublicConfigurationResource.CreateResourceIdentifier(subscriptionId, resourceName);
+            MaintenancePublicConfigurationResource maintenanceConfiguration = Client.GetMaintenancePublicConfigurationResource(maintenancePublicConfigurationResourceId);
 
-            MaintenanceConfigurationResource result = await maintenanceConfiguration.GetAsync();
+            MaintenancePublicConfigurationResource result = await maintenanceConfiguration.GetAsync();
 
             MaintenanceConfigurationData resourceData = result.Data;
 

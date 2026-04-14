@@ -7,7 +7,12 @@ namespace Azure.ResourceManager.TestFramework
     {
         public ModelReaderWriterImplementationValidation()
         {
-            ExceptionList = System.Array.Empty<string>();
+            ExceptionList = new[]
+            {
+                "Azure.ResourceManager.Maintenance.Models.ResourceGroupResourceCreateOrUpdateConfigurationAssignmentByParentOptions",
+                "Azure.ResourceManager.Maintenance.Models.ResourceGroupResourceDeleteConfigurationAssignmentByParentOptions",
+                "Azure.ResourceManager.Maintenance.Models.ResourceGroupResourceGetApplyUpdatesByParentOptions",
+            };
         }
     }
 }

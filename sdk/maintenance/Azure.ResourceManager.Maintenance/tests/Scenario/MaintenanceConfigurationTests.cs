@@ -89,13 +89,13 @@ namespace Azure.ResourceManager.Maintenance.Tests
         private async Task<MaintenanceConfigurationResource> CreateMaintenanceConfiguration()
         {
             string resourceName = Recording.GenerateAssetName("maintenance-config-");
-            MaintenanceConfigurationData data = new MaintenanceConfigurationData()
+            MaintenanceConfigurationData data = new MaintenanceConfigurationData(Location)
             {
                 Namespace = "Microsoft.Maintenance",
                 MaintenanceScope = MaintenanceScope.InGuestPatch,
                 Visibility = MaintenanceConfigurationVisibility.Custom,
-                StartOn = DateTimeOffset.Parse("2024-12-31 14:00"),
-                ExpireOn = DateTimeOffset.Parse("9999-12-31 00:00"),
+                StartOn = new DateTimeOffset(2024, 12, 31, 14, 0, 0, TimeSpan.Zero),
+                ExpireOn = new DateTimeOffset(9999, 12, 31, 0, 0, 0, TimeSpan.Zero),
                 Duration = TimeSpan.Parse("03:00"),
                 TimeZone = "Pacific Standard Time",
                 RecurEvery = "Day",
