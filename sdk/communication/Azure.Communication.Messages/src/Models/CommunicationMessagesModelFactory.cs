@@ -80,7 +80,17 @@ namespace Azure.Communication.Messages
         [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable CS0618
         public static MediaNotificationContent MediaNotificationContent(Guid channelRegistrationId = default, IEnumerable<string> to = default, string content = default, Uri mediaUri = default)
-            => MessagesModelFactory.MediaNotificationContent(channelRegistrationId, to, content, mediaUri);
+        {
+            to ??= new ChangeTrackingList<string>();
+
+            return new MediaNotificationContent(
+                channelRegistrationId,
+                to.ToList(),
+                CommunicationMessageKind.ImageV0,
+                additionalBinaryDataProperties: null,
+                content,
+                mediaUri);
+        }
 #pragma warning restore CS0618
 
         /// <summary> Receipt of the sending one message. </summary>

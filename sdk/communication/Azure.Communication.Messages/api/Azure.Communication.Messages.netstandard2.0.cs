@@ -675,10 +675,6 @@ namespace Azure.Communication.Messages
         string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.MessageReceipt>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.MessageReceipt>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public static partial class MessagesModelFactory
-    {
-        public static Azure.Communication.Messages.MediaNotificationContent MediaNotificationContent(System.Guid channelRegistrationId = default(System.Guid), System.Collections.Generic.IEnumerable<string> to = null, string content = null, System.Uri mediaUri = null) { throw null; }
-    }
     public partial class MessageTemplate : System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.MessageTemplate>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.MessageTemplate>
     {
         public MessageTemplate(string name, string language) { }
