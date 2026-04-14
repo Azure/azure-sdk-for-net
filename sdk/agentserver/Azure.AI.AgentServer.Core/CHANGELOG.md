@@ -29,10 +29,10 @@ for upgrading from earlier beta versions.
 - `FoundryEnvironment` for Azure AI Foundry platform variable resolution.
 - Distributed tracing context propagation via request ID baggage.
 
-## Previous versions (1.0.0-beta.1 through 1.0.0-beta.11)
+## Previous versions (prior to 1.0.0-beta.21)
 
-Earlier beta versions used a monolithic architecture where `Azure.AI.AgentServer.Core` bundled
-protocol logic and depended on `Azure.AI.AgentServer.Contracts` for generated models. These
-versions are superseded by the new 3-package architecture. See the
+Versions prior to `1.0.0-beta.21` used a monolithic architecture where `Azure.AI.AgentServer.Core`
+bundled protocol logic and depended on `Azure.AI.AgentServer.Contracts` for generated models.
+These versions are superseded by the new 3-package architecture. See the
 [Migration Guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Core/MigrationGuide.md)
 for details.

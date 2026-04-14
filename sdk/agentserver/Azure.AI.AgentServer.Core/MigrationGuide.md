@@ -1,6 +1,6 @@
 # Guide for migrating to the new Azure.AI.AgentServer package architecture
 
-This guide helps you migrate from the earlier `Azure.AI.AgentServer.Core` (1.0.0-beta.1 through 1.0.0-beta.11) and `Azure.AI.AgentServer.Contracts` packages to the new three-package architecture introduced in `Azure.AI.AgentServer.Core` 1.0.0-beta.21.
+This guide helps you migrate from the earlier `Azure.AI.AgentServer.Core` (any version prior to 1.0.0-beta.21) and `Azure.AI.AgentServer.Contracts` packages to the new three-package architecture introduced in `Azure.AI.AgentServer.Core` 1.0.0-beta.21.
 
 ## Table of contents
 
@@ -29,8 +29,8 @@ The new package architecture provides:
 
 | Before | After | Notes |
 |--------|-------|-------|
-| `Azure.AI.AgentServer.Core` 1.0.0-beta.11 | `Azure.AI.AgentServer.Core` 1.0.0-beta.21 | Stripped to hosting foundation only |
-| `Azure.AI.AgentServer.Contracts` 1.0.0-beta.11 | _(removed)_ | Models are now built into `Azure.AI.AgentServer.Responses` |
+| `Azure.AI.AgentServer.Core` < 1.0.0-beta.21 | `Azure.AI.AgentServer.Core` 1.0.0-beta.21 | Stripped to hosting foundation only |
+| `Azure.AI.AgentServer.Contracts` (any version) | _(removed)_ | Models are now built into `Azure.AI.AgentServer.Responses` |
 | _(n/a)_ | `Azure.AI.AgentServer.Responses` 1.0.0-beta.1 | New — Responses API protocol |
 | _(n/a)_ | `Azure.AI.AgentServer.Invocations` 1.0.0-beta.1 | New — Invocations protocol |
 
@@ -53,7 +53,7 @@ dotnet add package Azure.AI.AgentServer.Invocations --prerelease
 
 ### Non-streaming handler
 
-**Before (beta.11):**
+**Before (prior to beta.21):**
 
 ```csharp
 using Azure.AI.AgentServer.Contracts.Generated.OpenAI;
@@ -117,7 +117,7 @@ ResponsesServer.Run<TextResponse>(async context => "Hello!");
 
 ### Streaming handler
 
-**Before (beta.11):**
+**Before (prior to beta.21):**
 
 ```csharp
 public async IAsyncEnumerable<ResponseStreamEvent> InvokeStreamAsync(
@@ -170,10 +170,7 @@ public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
 
 ### Server startup
 
-**Before (beta.11):**
-
-```csharp
-await AgentServerApplication.RunAsync(new ApplicationOptions(
+**Before (prior to beta.21):**
     ConfigureServices: services => services.AddSingleton<IAgentInvocation, MyAgent>()
 ));
 ```
@@ -207,7 +204,7 @@ app.Run();
 
 ## Deprecation of Azure.AI.AgentServer.Contracts
 
-The `Azure.AI.AgentServer.Contracts` package (1.0.0-beta.1 through 1.0.0-beta.11) is deprecated and will not receive further updates. All model types that were previously in Contracts are now generated directly into `Azure.AI.AgentServer.Responses` from TypeSpec definitions.
+The `Azure.AI.AgentServer.Contracts` package is deprecated and will not receive further updates. All model types that were previously in Contracts are now generated directly into `Azure.AI.AgentServer.Responses` from TypeSpec definitions.
 
 To migrate: remove the `Azure.AI.AgentServer.Contracts` package reference and add `Azure.AI.AgentServer.Responses` instead. Update `using` directives as shown in the [namespace changes](#namespace-changes) table above.
 
