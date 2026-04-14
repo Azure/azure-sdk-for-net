@@ -13,7 +13,7 @@ steps:
     condition: and(succeeded(), ne(variables['Skip.CodeownersValidation'], 'true'))
     inputs:
       pwsh: true
-      filePath: eng/common/scripts/Test-Codeowners.ps1
+      filePath: eng/common/scripts/Test-CodeownersForArtifacts.ps1
       arguments: >-
         -AzsdkPath '$(AZSDK)'
         -ArtifactPath '${{ parameters.ArtifactPath }}'
