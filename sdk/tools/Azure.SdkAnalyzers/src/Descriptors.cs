@@ -7,7 +7,7 @@ namespace Azure.SdkAnalyzers
 {
     internal class Descriptors
     {
-        public static DiagnosticDescriptor AZC0101 = new(
+        public static readonly DiagnosticDescriptor AZC0101 = new(
             nameof(AZC0101),
             "Use ConfigureAwait(false) instead of ConfigureAwait(true).",
             "Use ConfigureAwait(false) instead of ConfigureAwait(true).",
@@ -15,7 +15,7 @@ namespace Azure.SdkAnalyzers
             DiagnosticSeverity.Warning,
             true);
 
-        public static DiagnosticDescriptor AZC0012 = new(
+        public static readonly DiagnosticDescriptor AZC0012 = new(
             nameof(AZC0012),
             "Avoid single word type names",
             "Type name '{0}' is too generic and has high chance of collision with BCL types or types from other libraries. Consider renaming to: {1}",
@@ -24,7 +24,7 @@ namespace Azure.SdkAnalyzers
             true,
             "Single word type names are too generic and have high chance of collision with BCL types or types from other libraries.");
 
-        public static DiagnosticDescriptor AZC0020 = new(
+        public static readonly DiagnosticDescriptor AZC0020 = new(
             nameof(AZC0020),
             "Propagate CancellationToken to RequestContext",
             "Method '{0}' accepts a CancellationToken but does not propagate it to the RequestContext. Set RequestContext.CancellationToken to ensure proper cancellation support.",
