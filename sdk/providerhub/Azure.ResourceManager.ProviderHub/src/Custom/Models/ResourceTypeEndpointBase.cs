@@ -10,6 +10,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
 {
     public partial class ResourceTypeEndpointBase
     {
+        // Workaround: customizing the backward-compat constructor (below) prevents the generator from
+        // emitting the correct public constructor, so we add it here manually.
+        // See: https://github.com/Azure/azure-sdk-for-net/issues/57016
         /// <summary> Initializes a new instance of <see cref="ResourceTypeEndpointBase"/>. </summary>
         public ResourceTypeEndpointBase(
             bool enabled,
