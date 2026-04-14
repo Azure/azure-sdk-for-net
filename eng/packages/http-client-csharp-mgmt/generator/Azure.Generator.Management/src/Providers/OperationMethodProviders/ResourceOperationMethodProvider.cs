@@ -30,6 +30,12 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         public bool IsLongRunningOperation { get; }
         public bool IsFakeLongRunningOperation { get; }
 
+        /// <summary>
+        /// Determines whether LRO handling should be applied in the method body.
+        /// Subclasses like Exists/GetIfExists override this to false since they should never be LROs.
+        /// </summary>
+        protected virtual bool ShouldApplyLroHandling => IsLongRunningOperation || IsFakeLongRunningOperation;
+
         protected readonly TypeProvider _enclosingType;
         protected readonly OperationContext _operationContext;
         protected readonly ClientProvider _restClient;
@@ -248,7 +254,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
             tryStatements.AddRange(BuildClientPipelineProcessing(messageVariable, contextVariable, out var responseVariable));
 
-            if (IsLongRunningOperation || IsFakeLongRunningOperation)
+            if (ShouldApplyLroHandling)
             {
                 tryStatements.AddRange(
                     IsFakeLongRunningOperation ?
