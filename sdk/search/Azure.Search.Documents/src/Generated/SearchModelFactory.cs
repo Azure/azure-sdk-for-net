@@ -270,16 +270,6 @@ namespace Azure.Search.Documents.Models
             return new SingleVectorFieldResult(searchScore, vectorSimilarity, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> A document retrieved via a document lookup operation. </summary>
-        /// <param name="additionalProperties"></param>
-        /// <returns> A new <see cref="Models.LookupDocument"/> instance for mocking. </returns>
-        public static LookupDocument LookupDocument(IReadOnlyDictionary<string, BinaryData> additionalProperties = default)
-        {
-            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
-
-            return new LookupDocument(additionalProperties);
-        }
-
         /// <summary> The SuggestOptions. </summary>
         /// <param name="filter"> An OData expression that filters the documents considered for suggestions. </param>
         /// <param name="useFuzzyMatching"> A value indicating whether to use fuzzy matching for the suggestion query. Default is false. When set to true, the query will find suggestions even if there's a substituted or missing character in the search text. While this provides a better experience in some scenarios, it comes at a performance cost as fuzzy suggestion searches are slower and consume more resources. </param>

@@ -160,7 +160,6 @@ namespace Azure.Search.Documents
     [ModelReaderWriterBuildable(typeof(ListKnowledgeSourcesResult))]
     [ModelReaderWriterBuildable(typeof(ListSkillsetsResult))]
     [ModelReaderWriterBuildable(typeof(ListSynonymMapsResult))]
-    [ModelReaderWriterBuildable(typeof(LookupDocument))]
     [ModelReaderWriterBuildable(typeof(LuceneStandardAnalyzer))]
     [ModelReaderWriterBuildable(typeof(LuceneStandardTokenizer))]
     [ModelReaderWriterBuildable(typeof(MagnitudeScoringFunction))]

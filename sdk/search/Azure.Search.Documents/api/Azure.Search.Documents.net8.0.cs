@@ -74,10 +74,8 @@ namespace Azure.Search.Documents
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Search.Documents.Models.IndexDocumentsResult>> DeleteDocumentsAsync(string keyName, System.Collections.Generic.IEnumerable<string> keyValues, Azure.Search.Documents.IndexDocumentsOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Search.Documents.Models.IndexDocumentsResult>> DeleteDocumentsAsync<T>(System.Collections.Generic.IEnumerable<T> documents, Azure.Search.Documents.IndexDocumentsOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Search.Documents.Models.IndexDocumentsResult> DeleteDocuments<T>(System.Collections.Generic.IEnumerable<T> documents, Azure.Search.Documents.IndexDocumentsOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response GetDocument(string key, System.Collections.Generic.IEnumerable<string> selectedFields, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Response<Azure.Search.Documents.Models.LookupDocument> GetDocument(string key, System.Collections.Generic.IEnumerable<string> selectedFields = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetDocumentAsync(string key, System.Collections.Generic.IEnumerable<string> selectedFields, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Search.Documents.Models.LookupDocument>> GetDocumentAsync(string key, System.Collections.Generic.IEnumerable<string> selectedFields = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response GetDocument(string key, System.Collections.Generic.IEnumerable<string> selectedFields = null, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetDocumentAsync(string key, System.Collections.Generic.IEnumerable<string> selectedFields = null, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<T>> GetDocumentAsync<T>(string key, Azure.Search.Documents.GetDocumentOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetDocumentCount(Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<long> GetDocumentCount(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -6176,21 +6174,6 @@ namespace Azure.Search.Documents.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Models.IndexingResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Models.IndexingResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class LookupDocument : System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Models.LookupDocument>, System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Models.LookupDocument>
-    {
-        internal LookupDocument() { }
-        public System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
-        protected virtual Azure.Search.Documents.Models.LookupDocument JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        public static explicit operator Azure.Search.Documents.Models.LookupDocument (Azure.Response response) { throw null; }
-        protected virtual Azure.Search.Documents.Models.LookupDocument PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.Search.Documents.Models.LookupDocument System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Models.LookupDocument>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Models.LookupDocument>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Search.Documents.Models.LookupDocument System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Models.LookupDocument>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Models.LookupDocument>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Models.LookupDocument>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class QueryAnswer
     {
         public QueryAnswer(Azure.Search.Documents.Models.QueryAnswerType answerType) { }
@@ -6498,7 +6481,6 @@ namespace Azure.Search.Documents.Models
         public static Azure.Search.Documents.Indexes.Models.LexicalNormalizer LexicalNormalizer(string odataType = null, string name = null) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.LexicalTokenizer LexicalTokenizer(string oDataType, string name) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.LimitTokenFilter LimitTokenFilter(string name = null, int? maxTokenCount = default(int?), bool? consumeAllTokens = default(bool?)) { throw null; }
-        public static Azure.Search.Documents.Models.LookupDocument LookupDocument(System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> additionalProperties = null) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.LuceneStandardAnalyzer LuceneStandardAnalyzer(string name = null, int? maxTokenLength = default(int?), System.Collections.Generic.IEnumerable<string> stopwords = null) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.LuceneStandardTokenizer LuceneStandardTokenizer(string name = null, int? maxTokenLength = default(int?)) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.MagnitudeScoringFunction MagnitudeScoringFunction(string fieldName = null, double boost = 0, Azure.Search.Documents.Indexes.Models.ScoringFunctionInterpolation? interpolation = default(Azure.Search.Documents.Indexes.Models.ScoringFunctionInterpolation?), Azure.Search.Documents.Indexes.Models.MagnitudeScoringParameters parameters = null) { throw null; }

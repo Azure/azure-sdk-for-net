@@ -493,7 +493,7 @@ namespace Azure.Search.Documents
         /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetDocument(string key, IEnumerable<string> selectedFields, RequestContext context)
+        public virtual Response GetDocument(string key, IEnumerable<string> selectedFields = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchClient.GetDocument");
             scope.Start();
@@ -526,7 +526,7 @@ namespace Azure.Search.Documents
         /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetDocumentAsync(string key, IEnumerable<string> selectedFields, RequestContext context)
+        public virtual async Task<Response> GetDocumentAsync(string key, IEnumerable<string> selectedFields = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchClient.GetDocument");
             scope.Start();
@@ -542,36 +542,6 @@ namespace Azure.Search.Documents
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary> Retrieves a document from the index. </summary>
-        /// <param name="key"> The key of the document to retrieve. </param>
-        /// <param name="selectedFields"> List of field names to retrieve for the document; Any field not retrieved will be missing from the returned document. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<LookupDocument> GetDocument(string key, IEnumerable<string> selectedFields = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(key, nameof(key));
-
-            Response result = GetDocument(key, selectedFields, cancellationToken.ToRequestContext());
-            return Response.FromValue((LookupDocument)result, result);
-        }
-
-        /// <summary> Retrieves a document from the index. </summary>
-        /// <param name="key"> The key of the document to retrieve. </param>
-        /// <param name="selectedFields"> List of field names to retrieve for the document; Any field not retrieved will be missing from the returned document. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<LookupDocument>> GetDocumentAsync(string key, IEnumerable<string> selectedFields = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(key, nameof(key));
-
-            Response result = await GetDocumentAsync(key, selectedFields, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((LookupDocument)result, result);
         }
 
         /// <summary>
