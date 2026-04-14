@@ -15,7 +15,7 @@ Replace `true` with `false`. A code fix is available:
 + await task.ConfigureAwait(false);
 ```
 
-See [AZC0101 documentation](AZC0101.md) for details.
+See AZC0101 documentation for details.
 
 ## AZC0012
 
