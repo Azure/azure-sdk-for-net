@@ -217,7 +217,7 @@ namespace Azure.Generator.Primitives
 
             WriteFileIfNotExists(Path.Combine(outputDir, "README.md"), packageName, GetReadmeContent);
             WriteFileIfNotExists(Path.Combine(outputDir, "CHANGELOG.md"), packageName, GetChangelogContent);
-            WriteFileIfNotExists(Path.Combine(outputDir, "Directory.Build.props"), packageName,  GetDirectoryBuildPropsContent);
+            WriteFileIfNotExists(Path.Combine(outputDir, "Directory.Build.props"), packageName, GetDirectoryBuildPropsContent);
 
             // ci.yml goes to the service directory (parent of the package directory)
             string normalizedOutputDir = outputDir.TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
