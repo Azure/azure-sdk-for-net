@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Advisor
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
-        public virtual bool HasData { get; }
+        public virtual bool Data { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
         public virtual AdvisorMetadataEntityData Data
