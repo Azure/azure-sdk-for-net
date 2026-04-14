@@ -1,22 +1,12 @@
 # List of diagnostics produced by Azure.SdkAnalyzers
 
-## Suppressible Rules (Warning severity)
+## AZC0101
 
-### AZC0101
-
-**Do not use ConfigureAwait(true)**
-
-| Property | Value |
-|----------|-------|
-| **Severity** | Warning |
-| **Suppressible** | Yes |
-| **Code fix** | Yes |
-
-#### Cause
+### Cause
 
 An awaitable expression uses `ConfigureAwait(true)` instead of `ConfigureAwait(false)`.
 
-#### How to fix violation
+### How to fix violation
 
 Replace `true` with `false`. A code fix is available:
 
@@ -26,8 +16,6 @@ Replace `true` with `false`. A code fix is available:
 ```
 
 See [AZC0101 documentation](AZC0101.md) for details.
-
----
 
 ## AZC0012
 
