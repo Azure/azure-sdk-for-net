@@ -389,7 +389,7 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
             ),
             ToolType.A2A => new A2APreviewTool()
             {
-                ProjectConnectionId= TestEnvironment.A2A_CONNECTION_ID
+                ProjectConnectionId = TestEnvironment.A2A_CONNECTION_ID
             },
             ToolType.AzureFunction => GetFunctionTool(),
             _ => throw new InvalidOperationException($"Unknown tool type {toolType}")

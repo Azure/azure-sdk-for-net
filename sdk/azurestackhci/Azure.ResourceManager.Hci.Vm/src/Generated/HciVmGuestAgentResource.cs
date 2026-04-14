@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Hci.Vm
     /// <summary>
     /// A class representing a HciVmGuestAgent along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HciVmGuestAgentResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetHciVmGuestAgent method.
+    /// Otherwise you can get one from its parent resource <see cref="HciVmInstanceResource"/> using the GetHciVmGuestAgent method.
     /// </summary>
     public partial class HciVmGuestAgentResource : ArmResource
     {

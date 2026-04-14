@@ -3,7 +3,6 @@
     <Description>Azure Resource Manager client SDK for Azure resource provider Relationships.</Description>
     <Version>1.0.0-beta.1</Version>
     <PackageTags>azure;management;arm;resource manager;relationships</PackageTags>
-    <IncludeAutorestDependency>true</IncludeAutorestDependency>
     <PackageId>Azure.ResourceManager.Relationships</PackageId>
   </PropertyGroup>
 </Project>

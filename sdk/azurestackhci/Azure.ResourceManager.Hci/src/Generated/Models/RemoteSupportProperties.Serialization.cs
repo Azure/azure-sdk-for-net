@@ -8,17 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    public partial class RemoteSupportProperties : IUtf8JsonSerializable, IJsonModel<RemoteSupportProperties>
+    /// <summary> Remote Support properties of the cluster. </summary>
+    public partial class RemoteSupportProperties : IJsonModel<RemoteSupportProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RemoteSupportProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual RemoteSupportProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RemoteSupportProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeRemoteSupportProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RemoteSupportProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RemoteSupportProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHciContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(RemoteSupportProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<RemoteSupportProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RemoteSupportProperties IPersistableModel<RemoteSupportProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<RemoteSupportProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RemoteSupportProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,12 +69,11 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RemoteSupportProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RemoteSupportProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RemoteSupportProperties)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(AccessLevel))
             {
                 writer.WritePropertyName("accessLevel"u8);
@@ -55,7 +93,7 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 writer.WritePropertyName("remoteSupportNodeSettings"u8);
                 writer.WriteStartArray();
-                foreach (var item in RemoteSupportNodeSettings)
+                foreach (RemoteSupportNodeSettings item in RemoteSupportNodeSettings)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -65,21 +103,26 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 writer.WritePropertyName("remoteSupportSessionDetails"u8);
                 writer.WriteStartArray();
-                foreach (var item in RemoteSupportSessionDetails)
+                foreach (PerNodeRemoteSupportSession item in RemoteSupportSessionDetails)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && Optional.IsDefined(RemoteSupportProvisioningState))
             {
-                foreach (var item in _serializedAdditionalRawData)
+                writer.WritePropertyName("remoteSupportProvisioningState"u8);
+                writer.WriteStringValue(RemoteSupportProvisioningState.Value.ToString());
+            }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -88,243 +131,117 @@ namespace Azure.ResourceManager.Hci.Models
             }
         }
 
-        RemoteSupportProperties IJsonModel<RemoteSupportProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RemoteSupportProperties IJsonModel<RemoteSupportProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual RemoteSupportProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RemoteSupportProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RemoteSupportProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RemoteSupportProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeRemoteSupportProperties(document.RootElement, options);
         }
 
-        internal static RemoteSupportProperties DeserializeRemoteSupportProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static RemoteSupportProperties DeserializeRemoteSupportProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             HciClusterAccessLevel? accessLevel = default;
-            DateTimeOffset? expirationTimeStamp = default;
+            DateTimeOffset? expireOn = default;
             RemoteSupportType? remoteSupportType = default;
             IReadOnlyList<RemoteSupportNodeSettings> remoteSupportNodeSettings = default;
             IReadOnlyList<PerNodeRemoteSupportSession> remoteSupportSessionDetails = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            RemoteSupportProvisioningState? remoteSupportProvisioningState = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("accessLevel"u8))
+                if (prop.NameEquals("accessLevel"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    accessLevel = new HciClusterAccessLevel(property.Value.GetString());
+                    accessLevel = new HciClusterAccessLevel(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("expirationTimeStamp"u8))
+                if (prop.NameEquals("expirationTimeStamp"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    expirationTimeStamp = property.Value.GetDateTimeOffset("O");
+                    expireOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("remoteSupportType"u8))
+                if (prop.NameEquals("remoteSupportType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    remoteSupportType = new RemoteSupportType(property.Value.GetString());
+                    remoteSupportType = new RemoteSupportType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("remoteSupportNodeSettings"u8))
+                if (prop.NameEquals("remoteSupportNodeSettings"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<RemoteSupportNodeSettings> array = new List<RemoteSupportNodeSettings>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(Models.RemoteSupportNodeSettings.DeserializeRemoteSupportNodeSettings(item, options));
                     }
                     remoteSupportNodeSettings = array;
                     continue;
                 }
-                if (property.NameEquals("remoteSupportSessionDetails"u8))
+                if (prop.NameEquals("remoteSupportSessionDetails"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<PerNodeRemoteSupportSession> array = new List<PerNodeRemoteSupportSession>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(PerNodeRemoteSupportSession.DeserializePerNodeRemoteSupportSession(item, options));
                     }
                     remoteSupportSessionDetails = array;
                     continue;
                 }
+                if (prop.NameEquals("remoteSupportProvisioningState"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    remoteSupportProvisioningState = new RemoteSupportProvisioningState(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new RemoteSupportProperties(
                 accessLevel,
-                expirationTimeStamp,
+                expireOn,
                 remoteSupportType,
                 remoteSupportNodeSettings ?? new ChangeTrackingList<RemoteSupportNodeSettings>(),
                 remoteSupportSessionDetails ?? new ChangeTrackingList<PerNodeRemoteSupportSession>(),
-                serializedAdditionalRawData);
+                remoteSupportProvisioningState,
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AccessLevel), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  accessLevel: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(AccessLevel))
-                {
-                    builder.Append("  accessLevel: ");
-                    builder.AppendLine($"'{AccessLevel.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExpireOn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  expirationTimeStamp: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ExpireOn))
-                {
-                    builder.Append("  expirationTimeStamp: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(ExpireOn.Value, "o");
-                    builder.AppendLine($"'{formattedDateTimeString}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RemoteSupportType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  remoteSupportType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(RemoteSupportType))
-                {
-                    builder.Append("  remoteSupportType: ");
-                    builder.AppendLine($"'{RemoteSupportType.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RemoteSupportNodeSettings), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  remoteSupportNodeSettings: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(RemoteSupportNodeSettings))
-                {
-                    if (RemoteSupportNodeSettings.Any())
-                    {
-                        builder.Append("  remoteSupportNodeSettings: ");
-                        builder.AppendLine("[");
-                        foreach (var item in RemoteSupportNodeSettings)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  remoteSupportNodeSettings: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RemoteSupportSessionDetails), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  remoteSupportSessionDetails: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(RemoteSupportSessionDetails))
-                {
-                    if (RemoteSupportSessionDetails.Any())
-                    {
-                        builder.Append("  remoteSupportSessionDetails: ");
-                        builder.AppendLine("[");
-                        foreach (var item in RemoteSupportSessionDetails)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  remoteSupportSessionDetails: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<RemoteSupportProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<RemoteSupportProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHciContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(RemoteSupportProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        RemoteSupportProperties IPersistableModel<RemoteSupportProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<RemoteSupportProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeRemoteSupportProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(RemoteSupportProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<RemoteSupportProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -136,6 +136,162 @@ public class FoundryEnrichmentProcessorTests
         Assert.That(activity.GetTagItem("gen_ai.agent.id"), Is.EqualTo("my-agent:1.0"));
     }
 
+    // ── Session ID / Conversation ID baggage enrichment ────────────────
+
+    [Test]
+    public void SetsSessionId_WhenBaggagePresent()
+    {
+        BuildProvider();
+
+        using var parent = _activitySource.StartActivity("parent")!;
+        parent.SetBaggage("azure.ai.agentserver.session_id", "sess-123");
+
+        using var child = _activitySource.StartActivity("child")!;
+        child.Stop();
+
+        Assert.That(child.GetTagItem("microsoft.session.id"), Is.EqualTo("sess-123"));
+    }
+
+    [Test]
+    public void SetsConversationId_WhenBaggagePresent()
+    {
+        BuildProvider();
+
+        using var parent = _activitySource.StartActivity("parent")!;
+        parent.SetBaggage("azure.ai.agentserver.conversation_id", "conv-456");
+
+        using var child = _activitySource.StartActivity("child")!;
+        child.Stop();
+
+        Assert.That(child.GetTagItem("gen_ai.conversation.id"), Is.EqualTo("conv-456"));
+    }
+
+    [Test]
+    public void SetsBothIds_WhenBothBaggagePresent()
+    {
+        BuildProvider();
+
+        using var parent = _activitySource.StartActivity("parent")!;
+        parent.SetBaggage("azure.ai.agentserver.session_id", "sess-A");
+        parent.SetBaggage("azure.ai.agentserver.conversation_id", "conv-B");
+
+        using var child = _activitySource.StartActivity("child")!;
+        child.Stop();
+
+        Assert.That(child.GetTagItem("microsoft.session.id"), Is.EqualTo("sess-A"));
+        Assert.That(child.GetTagItem("gen_ai.conversation.id"), Is.EqualTo("conv-B"));
+    }
+
+    [Test]
+    public void DoesNotSetSessionId_WhenBaggageAbsent()
+    {
+        BuildProvider();
+
+        using var activity = _activitySource.StartActivity("test")!;
+        activity.Stop();
+
+        Assert.That(activity.GetTagItem("microsoft.session.id"), Is.Null);
+    }
+
+    [Test]
+    public void DoesNotSetConversationId_WhenBaggageAbsent()
+    {
+        BuildProvider();
+
+        using var activity = _activitySource.StartActivity("test")!;
+        activity.Stop();
+
+        Assert.That(activity.GetTagItem("gen_ai.conversation.id"), Is.Null);
+    }
+
+    [Test]
+    public void SessionId_DoesNotGoToConversationId()
+    {
+        BuildProvider();
+
+        using var parent = _activitySource.StartActivity("parent")!;
+        parent.SetBaggage("azure.ai.agentserver.session_id", "sess-only");
+
+        using var child = _activitySource.StartActivity("child")!;
+        child.Stop();
+
+        Assert.That(child.GetTagItem("microsoft.session.id"), Is.EqualTo("sess-only"));
+        Assert.That(child.GetTagItem("gen_ai.conversation.id"), Is.Null);
+    }
+
+    [Test]
+    public void ConversationId_DoesNotGoToSessionId()
+    {
+        BuildProvider();
+
+        using var parent = _activitySource.StartActivity("parent")!;
+        parent.SetBaggage("azure.ai.agentserver.conversation_id", "conv-only");
+
+        using var child = _activitySource.StartActivity("child")!;
+        child.Stop();
+
+        Assert.That(child.GetTagItem("gen_ai.conversation.id"), Is.EqualTo("conv-only"));
+        Assert.That(child.GetTagItem("microsoft.session.id"), Is.Null);
+    }
+
+    [Test]
+    public void SessionIdAndConversationId_AreIndependent()
+    {
+        BuildProvider();
+
+        using var parent = _activitySource.StartActivity("parent")!;
+        parent.SetBaggage("azure.ai.agentserver.session_id", "sess-X");
+        // No conversation_id baggage
+
+        using var child = _activitySource.StartActivity("child")!;
+        child.Stop();
+
+        Assert.That(child.GetTagItem("microsoft.session.id"), Is.EqualTo("sess-X"));
+        Assert.That(child.GetTagItem("gen_ai.conversation.id"), Is.Null);
+    }
+
+    [Test]
+    public void DoesNotSetSessionId_WhenBaggageIsEmpty()
+    {
+        BuildProvider();
+
+        using var parent = _activitySource.StartActivity("parent")!;
+        parent.SetBaggage("azure.ai.agentserver.session_id", string.Empty);
+
+        using var child = _activitySource.StartActivity("child")!;
+        child.Stop();
+
+        Assert.That(child.GetTagItem("microsoft.session.id"), Is.Null);
+    }
+
+    [Test]
+    public void DoesNotSetConversationId_WhenBaggageIsEmpty()
+    {
+        BuildProvider();
+
+        using var parent = _activitySource.StartActivity("parent")!;
+        parent.SetBaggage("azure.ai.agentserver.conversation_id", string.Empty);
+
+        using var child = _activitySource.StartActivity("child")!;
+        child.Stop();
+
+        Assert.That(child.GetTagItem("gen_ai.conversation.id"), Is.Null);
+    }
+
+    [Test]
+    public void DoesNotSetSessionId_WhenBaggageIsWhitespace()
+    {
+        BuildProvider();
+
+        using var parent = _activitySource.StartActivity("parent")!;
+        parent.SetBaggage("azure.ai.agentserver.session_id", "   ");
+
+        using var child = _activitySource.StartActivity("child")!;
+        child.Stop();
+
+        Assert.That(child.GetTagItem("microsoft.session.id"), Is.Null);
+    }
+
     private static void SetEnv(string? agentName = null, string? agentVersion = null, string? projectArmId = null)
     {
         Environment.SetEnvironmentVariable("FOUNDRY_AGENT_NAME", agentName);
