@@ -29,24 +29,25 @@ namespace Azure.SdkAnalyzers
                 return;
             }
 
-            Diagnostic diagnostic = context.Diagnostics.First();
-
-            // The diagnostic span covers "ConfigureAwait(true)" — find the invocation
-            SyntaxNode node = root.FindNode(diagnostic.Location.SourceSpan);
-            InvocationExpressionSyntax invocation = node.AncestorsAndSelf().OfType<InvocationExpressionSyntax>()
-                .FirstOrDefault(i => i.Expression is MemberAccessExpressionSyntax m && m.Name.Identifier.Text == "ConfigureAwait");
-
-            if (invocation == null)
+            foreach (Diagnostic diagnostic in context.Diagnostics)
             {
-                return;
-            }
+                // The diagnostic span covers "ConfigureAwait(true)" — find the invocation
+                SyntaxNode node = root.FindNode(diagnostic.Location.SourceSpan);
+                InvocationExpressionSyntax invocation = node.AncestorsAndSelf().OfType<InvocationExpressionSyntax>()
+                    .FirstOrDefault(i => i.Expression is MemberAccessExpressionSyntax m && m.Name.Identifier.Text == "ConfigureAwait");
 
-            context.RegisterCodeFix(
-                CodeAction.Create(
-                    title: "Use ConfigureAwait(false)",
-                    createChangedDocument: c => ReplaceWithFalseAsync(context.Document, diagnostic.Location.SourceSpan, c),
-                    equivalenceKey: "AZC0101_UseConfigureAwaitFalse"),
-                diagnostic);
+                if (invocation == null)
+                {
+                    continue;
+                }
+
+                context.RegisterCodeFix(
+                    CodeAction.Create(
+                        title: "Use ConfigureAwait(false)",
+                        createChangedDocument: c => ReplaceWithFalseAsync(context.Document, diagnostic.Location.SourceSpan, c),
+                        equivalenceKey: "AZC0101_UseConfigureAwaitFalse"),
+                    diagnostic);
+            }
         }
 
         private static async Task<Document> ReplaceWithFalseAsync(Document document, Microsoft.CodeAnalysis.Text.TextSpan diagnosticSpan, CancellationToken cancellationToken)
