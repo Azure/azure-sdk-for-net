@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <summary> Initializes a new instance of <see cref="ApplicationTypeVersionResourceProperties"/>. </summary>
         /// <param name="appPackageUri"> The URL to the application package. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="appPackageUri"/> is null. </exception>
-        public ApplicationTypeVersionResourceProperties(string appPackageUri)
+        public ApplicationTypeVersionResourceProperties(Uri appPackageUri)
         {
             Argument.AssertNotNull(appPackageUri, nameof(appPackageUri));
 
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <param name="appPackageUri"> The URL to the application package. </param>
         /// <param name="defaultParameterList"> List of application type parameters that can be overridden when creating or updating the application. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationTypeVersionResourceProperties(string provisioningState, string appPackageUri, IReadOnlyDictionary<string, string> defaultParameterList, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApplicationTypeVersionResourceProperties(string provisioningState, Uri appPackageUri, IReadOnlyDictionary<string, string> defaultParameterList, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             AppPackageUri = appPackageUri;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         public string ProvisioningState { get; }
 
         /// <summary> The URL to the application package. </summary>
-        public string AppPackageUri { get; set; }
+        public Uri AppPackageUri { get; set; }
 
         /// <summary> List of application type parameters that can be overridden when creating or updating the application. </summary>
         public IReadOnlyDictionary<string, string> DefaultParameterList { get; } = new ChangeTrackingDictionary<string, string>();

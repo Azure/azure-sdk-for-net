@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.ServiceFabric.Mocking
         {
         }
 
-        /// <summary> Gets an object representing a <see cref="ClusterResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="ServiceFabricClusterResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ClusterResource"/> object. </returns>
-        public virtual ClusterResource GetClusterResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServiceFabricClusterResource"/> object. </returns>
+        public virtual ServiceFabricClusterResource GetServiceFabricClusterResource(ResourceIdentifier id)
         {
-            ClusterResource.ValidateResourceId(id);
-            return new ClusterResource(Client, id);
+            ServiceFabricClusterResource.ValidateResourceId(id);
+            return new ServiceFabricClusterResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="VMSizeResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="ServiceFabricVmSizeResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VMSizeResource"/> object. </returns>
-        public virtual VMSizeResource GetVMSizeResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServiceFabricVmSizeResource"/> object. </returns>
+        public virtual ServiceFabricVmSizeResource GetServiceFabricVmSizeResource(ResourceIdentifier id)
         {
-            VMSizeResource.ValidateResourceId(id);
-            return new VMSizeResource(Client, id);
+            ServiceFabricVmSizeResource.ValidateResourceId(id);
+            return new ServiceFabricVmSizeResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="ServiceFabricApplicationTypeResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -78,24 +78,6 @@ namespace Azure.ResourceManager.ServiceFabric.Mocking
         {
             ServiceFabricServiceResource.ValidateResourceId(id);
             return new ServiceFabricServiceResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="ClusterVersionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ClusterVersionResource"/> object. </returns>
-        public virtual ClusterVersionResource GetClusterVersionResource(ResourceIdentifier id)
-        {
-            ClusterVersionResource.ValidateResourceId(id);
-            return new ClusterVersionResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="ClusterVersionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ClusterVersionResource"/> object. </returns>
-        public virtual ClusterVersionResource GetClusterVersionResource(ResourceIdentifier id)
-        {
-            ClusterVersionResource.ValidateResourceId(id);
-            return new ClusterVersionResource(Client, id);
         }
     }
 }

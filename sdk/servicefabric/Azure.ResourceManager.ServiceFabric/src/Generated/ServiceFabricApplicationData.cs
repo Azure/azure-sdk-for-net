@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.ServiceFabric.Models;
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="tags"> Azure resource tags. </param>
         /// <param name="eTag"> Azure resource etag. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        internal ServiceFabricApplicationData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation location, ApplicationResourceProperties properties, IDictionary<string, string> tags, string eTag, ManagedIdentity identity) : base(id, name, resourceType, systemData, tags, location)
+        internal ServiceFabricApplicationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation location, ApplicationResourceProperties properties, IDictionary<string, string> tags, ETag? eTag, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -48,10 +49,10 @@ namespace Azure.ResourceManager.ServiceFabric
         internal ApplicationResourceProperties Properties { get; set; }
 
         /// <summary> Azure resource etag. </summary>
-        public string ETag { get; }
+        public ETag? ETag { get; }
 
         /// <summary> The managed service identities assigned to this resource. </summary>
-        public ManagedIdentity Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> The version of the application type as defined in the application manifest. </summary>
         public string TypeVersion

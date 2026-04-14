@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 writer.WriteStringValue(ProvisioningState);
             }
             writer.WritePropertyName("appPackageUrl"u8);
-            writer.WriteStringValue(AppPackageUri);
+            writer.WriteStringValue(AppPackageUri.AbsoluteUri);
             if (options.Format != "W" && Optional.IsCollectionDefined(DefaultParameterList))
             {
                 writer.WritePropertyName("defaultParameterList"u8);
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 return null;
             }
             string provisioningState = default;
-            string appPackageUri = default;
+            Uri appPackageUri = default;
             IReadOnlyDictionary<string, string> defaultParameterList = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
                 if (prop.NameEquals("appPackageUrl"u8))
                 {
-                    appPackageUri = prop.Value.GetString();
+                    appPackageUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("defaultParameterList"u8))

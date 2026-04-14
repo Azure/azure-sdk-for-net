@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.ServiceFabric
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
-                writer.WriteStringValue(ETag);
+                writer.WriteStringValue(ETag.Value.ToString());
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ServiceFabric
             {
                 return null;
             }
-            string id = default;
+            ResourceIdentifier id = default;
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
@@ -146,12 +146,16 @@ namespace Azure.ResourceManager.ServiceFabric
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ClusterProperties properties = default;
-            string eTag = default;
+            ETag? eTag = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
                 {
-                    id = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
@@ -214,7 +218,11 @@ namespace Azure.ResourceManager.ServiceFabric
                 }
                 if (prop.NameEquals("etag"u8))
                 {
-                    eTag = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    eTag = new ETag(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

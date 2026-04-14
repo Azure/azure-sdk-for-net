@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ServiceFabric
     /// <summary>
     /// A class representing a ServiceFabricApplication along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ServiceFabricApplicationResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ClusterResource"/> using the GetServiceFabricApplications method.
+    /// Otherwise you can get one from its parent resource <see cref="ServiceFabricClusterResource"/> using the GetServiceFabricApplications method.
     /// </summary>
     public partial class ServiceFabricApplicationResource : ArmResource
     {

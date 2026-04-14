@@ -19,11 +19,6 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     [PersistableModelProxy(typeof(UnknownPartitionSchemeDescription))]
     public abstract partial class PartitionSchemeDescription : IJsonModel<PartitionSchemeDescription>
     {
-        /// <summary> Initializes a new instance of <see cref="PartitionSchemeDescription"/> for deserialization. </summary>
-        internal PartitionSchemeDescription()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual PartitionSchemeDescription PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

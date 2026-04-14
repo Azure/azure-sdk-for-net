@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             if (options.Format != "W" && Optional.IsDefined(ClusterId))
             {
                 writer.WritePropertyName("clusterId"u8);
-                writer.WriteStringValue(ClusterId);
+                writer.WriteStringValue(ClusterId.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(ClusterState))
             {
@@ -268,10 +268,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(EnableHttpGatewayExclusiveAuthMode))
+            if (Optional.IsDefined(IsHttpGatewayExclusiveAuthModeEnabled))
             {
                 writer.WritePropertyName("enableHttpGatewayExclusiveAuthMode"u8);
-                writer.WriteBooleanValue(EnableHttpGatewayExclusiveAuthMode.Value);
+                writer.WriteBooleanValue(IsHttpGatewayExclusiveAuthModeEnabled.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             IList<ClusterClientCertificateThumbprint> clientCertificateThumbprints = default;
             string clusterCodeVersion = default;
             Uri clusterEndpoint = default;
-            string clusterId = default;
+            Guid? clusterId = default;
             ServiceFabricClusterState? clusterState = default;
             DiagnosticsStorageAccountConfig diagnosticsStorageAccountConfig = default;
             bool? isEventStoreServiceEnabled = default;
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             DateTimeOffset? upgradePauseEndOn = default;
             bool? isWaveUpgradePaused = default;
             IList<ClusterNotification> notifications = default;
-            bool? enableHttpGatewayExclusiveAuthMode = default;
+            bool? isHttpGatewayExclusiveAuthModeEnabled = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -450,7 +450,11 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
                 if (prop.NameEquals("clusterId"u8))
                 {
-                    clusterId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    clusterId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("clusterState"u8))
@@ -660,7 +664,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     {
                         continue;
                     }
-                    enableHttpGatewayExclusiveAuthMode = prop.Value.GetBoolean();
+                    isHttpGatewayExclusiveAuthModeEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -701,7 +705,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 upgradePauseEndOn,
                 isWaveUpgradePaused,
                 notifications ?? new ChangeTrackingList<ClusterNotification>(),
-                enableHttpGatewayExclusiveAuthMode,
+                isHttpGatewayExclusiveAuthModeEnabled,
                 additionalBinaryDataProperties);
         }
     }

@@ -15,7 +15,7 @@ using Azure.ResourceManager.ServiceFabric;
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
     /// <summary> The response of a ClusterCodeVersions list operation. </summary>
-    public partial class ClusterCodeVersionsListResult : IJsonModel<ClusterCodeVersionsListResult>
+    internal partial class ClusterCodeVersionsListResult : IJsonModel<ClusterCodeVersionsListResult>
     {
         /// <summary> Initializes a new instance of <see cref="ClusterCodeVersionsListResult"/> for deserialization. </summary>
         internal ClusterCodeVersionsListResult()

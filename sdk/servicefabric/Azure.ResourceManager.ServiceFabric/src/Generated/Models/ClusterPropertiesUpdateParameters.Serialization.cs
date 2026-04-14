@@ -214,10 +214,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(EnableHttpGatewayExclusiveAuthMode))
+            if (Optional.IsDefined(IsHttpGatewayExclusiveAuthModeEnabled))
             {
                 writer.WritePropertyName("enableHttpGatewayExclusiveAuthMode"u8);
-                writer.WriteBooleanValue(EnableHttpGatewayExclusiveAuthMode.Value);
+                writer.WriteBooleanValue(IsHttpGatewayExclusiveAuthModeEnabled.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             DateTimeOffset? upgradePauseEndOn = default;
             bool? isWaveUpgradePaused = default;
             IList<ClusterNotification> notifications = default;
-            bool? enableHttpGatewayExclusiveAuthMode = default;
+            bool? isHttpGatewayExclusiveAuthModeEnabled = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -517,7 +517,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     {
                         continue;
                     }
-                    enableHttpGatewayExclusiveAuthMode = prop.Value.GetBoolean();
+                    isHttpGatewayExclusiveAuthModeEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 upgradePauseEndOn,
                 isWaveUpgradePaused,
                 notifications ?? new ChangeTrackingList<ClusterNotification>(),
-                enableHttpGatewayExclusiveAuthMode,
+                isHttpGatewayExclusiveAuthModeEnabled,
                 additionalBinaryDataProperties);
         }
     }

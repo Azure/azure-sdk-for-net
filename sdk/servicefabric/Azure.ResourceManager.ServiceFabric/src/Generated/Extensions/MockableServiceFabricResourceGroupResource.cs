@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.ServiceFabric.Mocking
         {
         }
 
-        /// <summary> Gets a collection of Clusters in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of Clusters and their operations over a ClusterResource. </returns>
-        public virtual ClusterCollection GetClusters()
+        /// <summary> Gets a collection of ServiceFabricClusters in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of ServiceFabricClusters and their operations over a ServiceFabricClusterResource. </returns>
+        public virtual ServiceFabricClusterCollection GetServiceFabricClusters()
         {
-            return GetCachedClient(client => new ClusterCollection(client, Id));
+            return GetCachedClient(client => new ServiceFabricClusterCollection(client, Id));
         }
 
         /// <summary>
@@ -60,11 +60,11 @@ namespace Azure.ResourceManager.ServiceFabric.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ClusterResource>> GetClusterAsync(string clusterName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceFabricClusterResource>> GetServiceFabricClusterAsync(string clusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
-            return await GetClusters().GetAsync(clusterName, cancellationToken).ConfigureAwait(false);
+            return await GetServiceFabricClusters().GetAsync(clusterName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.ServiceFabric.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ClusterResource> GetCluster(string clusterName, CancellationToken cancellationToken = default)
+        public virtual Response<ServiceFabricClusterResource> GetServiceFabricCluster(string clusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
-            return GetClusters().Get(clusterName, cancellationToken);
+            return GetServiceFabricClusters().Get(clusterName, cancellationToken);
         }
     }
 }

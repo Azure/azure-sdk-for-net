@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
     /// <summary> The response of a ClusterCodeVersions list operation. </summary>
-    public partial class ClusterCodeVersionsListResult
+    internal partial class ClusterCodeVersionsListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

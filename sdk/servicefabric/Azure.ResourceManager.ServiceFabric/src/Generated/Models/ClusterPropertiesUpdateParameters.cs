@@ -54,9 +54,9 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <param name="upgradePauseEndOn"> The end timestamp of pause runtime version upgrades on the cluster (UTC). </param>
         /// <param name="isWaveUpgradePaused"> Boolean to pause automatic runtime version upgrades to the cluster. </param>
         /// <param name="notifications"> Indicates a list of notification channels for cluster events. </param>
-        /// <param name="enableHttpGatewayExclusiveAuthMode"> If true, token-based authentication is not allowed on the HttpGatewayEndpoint. This is required to support TLS versions 1.3 and above. If token-based authentication is used, HttpGatewayTokenAuthEndpointPort must be defined. </param>
+        /// <param name="isHttpGatewayExclusiveAuthModeEnabled"> If true, token-based authentication is not allowed on the HttpGatewayEndpoint. This is required to support TLS versions 1.3 and above. If token-based authentication is used, HttpGatewayTokenAuthEndpointPort must be defined. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterPropertiesUpdateParameters(IList<ClusterAddOnFeature> addOnFeatures, ClusterCertificateDescription certificate, ClusterServerCertificateCommonNames certificateCommonNames, IList<ClusterClientCertificateCommonName> clientCertificateCommonNames, IList<ClusterClientCertificateThumbprint> clientCertificateThumbprints, string clusterCodeVersion, bool? isEventStoreServiceEnabled, IList<SettingsSectionDescription> fabricSettings, IList<ClusterNodeTypeDescription> nodeTypes, ClusterReliabilityLevel? reliabilityLevel, ClusterCertificateDescription reverseProxyCertificate, ClusterUpgradePolicy upgradeDescription, ApplicationTypeVersionsCleanupPolicy applicationTypeVersionsCleanupPolicy, ClusterUpgradeMode? upgradeMode, SfZonalUpgradeMode? sfZonalUpgradeMode, VmssZonalUpgradeMode? vmssZonalUpgradeMode, bool? isInfrastructureServiceManagerEnabled, ClusterUpgradeCadence? upgradeWave, DateTimeOffset? upgradePauseStartOn, DateTimeOffset? upgradePauseEndOn, bool? isWaveUpgradePaused, IList<ClusterNotification> notifications, bool? enableHttpGatewayExclusiveAuthMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ClusterPropertiesUpdateParameters(IList<ClusterAddOnFeature> addOnFeatures, ClusterCertificateDescription certificate, ClusterServerCertificateCommonNames certificateCommonNames, IList<ClusterClientCertificateCommonName> clientCertificateCommonNames, IList<ClusterClientCertificateThumbprint> clientCertificateThumbprints, string clusterCodeVersion, bool? isEventStoreServiceEnabled, IList<SettingsSectionDescription> fabricSettings, IList<ClusterNodeTypeDescription> nodeTypes, ClusterReliabilityLevel? reliabilityLevel, ClusterCertificateDescription reverseProxyCertificate, ClusterUpgradePolicy upgradeDescription, ApplicationTypeVersionsCleanupPolicy applicationTypeVersionsCleanupPolicy, ClusterUpgradeMode? upgradeMode, SfZonalUpgradeMode? sfZonalUpgradeMode, VmssZonalUpgradeMode? vmssZonalUpgradeMode, bool? isInfrastructureServiceManagerEnabled, ClusterUpgradeCadence? upgradeWave, DateTimeOffset? upgradePauseStartOn, DateTimeOffset? upgradePauseEndOn, bool? isWaveUpgradePaused, IList<ClusterNotification> notifications, bool? isHttpGatewayExclusiveAuthModeEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AddOnFeatures = addOnFeatures;
             Certificate = certificate;
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             UpgradePauseEndOn = upgradePauseEndOn;
             IsWaveUpgradePaused = isWaveUpgradePaused;
             Notifications = notifications;
-            EnableHttpGatewayExclusiveAuthMode = enableHttpGatewayExclusiveAuthMode;
+            IsHttpGatewayExclusiveAuthModeEnabled = isHttpGatewayExclusiveAuthModeEnabled;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         public IList<ClusterNotification> Notifications { get; } = new ChangeTrackingList<ClusterNotification>();
 
         /// <summary> If true, token-based authentication is not allowed on the HttpGatewayEndpoint. This is required to support TLS versions 1.3 and above. If token-based authentication is used, HttpGatewayTokenAuthEndpointPort must be defined. </summary>
-        public bool? EnableHttpGatewayExclusiveAuthMode { get; set; }
+        public bool? IsHttpGatewayExclusiveAuthModeEnabled { get; set; }
 
         /// <summary> Number of unused versions per application type to keep. </summary>
         public long? MaxUnusedVersionsToKeep

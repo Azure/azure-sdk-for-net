@@ -12,22 +12,22 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.ServiceFabric
 {
-    internal partial class ClusterVersions
+    internal partial class ClusterVersionDetails
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of ClusterVersions for mocking. </summary>
-        protected ClusterVersions()
+        /// <summary> Initializes a new instance of ClusterVersionDetails for mocking. </summary>
+        protected ClusterVersionDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of ClusterVersions. </summary>
+        /// <summary> Initializes a new instance of ClusterVersionDetails. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal ClusterVersions(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal ClusterVersionDetails(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetClusterVersionsRequest(string subscriptionId, AzureLocation location, RequestContext context)
+        internal HttpMessage CreateGetClusterVersionsRequest(string subscriptionId, AzureLocation location, string clusterVersion, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -49,7 +49,8 @@ namespace Azure.ResourceManager.ServiceFabric
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.ServiceFabric/locations/", false);
             uri.AppendPath(location.ToString(), true);
-            uri.AppendPath("/clusterVersions", false);
+            uri.AppendPath("/clusterVersions/", false);
+            uri.AppendPath(clusterVersion, true);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
@@ -62,7 +63,7 @@ namespace Azure.ResourceManager.ServiceFabric
             return message;
         }
 
-        internal HttpMessage CreateGetClusterVersionsByEnvironmentRequest(string subscriptionId, AzureLocation location, string environment, RequestContext context)
+        internal HttpMessage CreateGetClusterVersionsByEnvironmentRequest(string subscriptionId, AzureLocation location, string environment, string clusterVersion, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -72,7 +73,8 @@ namespace Azure.ResourceManager.ServiceFabric
             uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/environments/", false);
             uri.AppendPath(environment, true);
-            uri.AppendPath("/clusterVersions", false);
+            uri.AppendPath("/clusterVersions/", false);
+            uri.AppendPath(clusterVersion, true);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);

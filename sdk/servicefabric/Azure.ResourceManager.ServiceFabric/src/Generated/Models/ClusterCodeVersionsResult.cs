@@ -7,11 +7,13 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    /// <summary> The result of the Service Fabric runtime versions. </summary>
-    public partial class ClusterCodeVersionsResult
+    /// <summary> The ClusterCodeVersionsResult. </summary>
+    public partial class ClusterCodeVersionsResult : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -22,28 +24,17 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ClusterCodeVersionsResult"/>. </summary>
-        /// <param name="id"> The identification of the result. </param>
-        /// <param name="name"> The name of the result. </param>
-        /// <param name="type"> The result resource type. </param>
-        /// <param name="properties"> The detail of the Service Fabric runtime version result. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterCodeVersionsResult(string id, string name, string @type, ClusterVersionDetails properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="properties"> The detail of the Service Fabric runtime version result. </param>
+        internal ClusterCodeVersionsResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ClusterVersionDetails properties) : base(id, name, resourceType, systemData)
         {
-            Id = id;
-            Name = name;
-            Type = @type;
-            Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
-
-        /// <summary> The identification of the result. </summary>
-        public string Id { get; }
-
-        /// <summary> The name of the result. </summary>
-        public string Name { get; }
-
-        /// <summary> The result resource type. </summary>
-        public string Type { get; }
 
         /// <summary> The detail of the Service Fabric runtime version result. </summary>
         internal ClusterVersionDetails Properties { get; }

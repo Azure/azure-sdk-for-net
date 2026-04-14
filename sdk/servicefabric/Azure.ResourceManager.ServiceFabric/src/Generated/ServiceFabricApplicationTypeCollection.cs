@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.ServiceFabric
 {
     /// <summary>
     /// A class representing a collection of <see cref="ServiceFabricApplicationTypeResource"/> and their operations.
-    /// Each <see cref="ServiceFabricApplicationTypeResource"/> in the collection will belong to the same instance of <see cref="ClusterResource"/>.
-    /// To get a <see cref="ServiceFabricApplicationTypeCollection"/> instance call the GetServiceFabricApplicationTypes method from an instance of <see cref="ClusterResource"/>.
+    /// Each <see cref="ServiceFabricApplicationTypeResource"/> in the collection will belong to the same instance of <see cref="ServiceFabricClusterResource"/>.
+    /// To get a <see cref="ServiceFabricApplicationTypeCollection"/> instance call the GetServiceFabricApplicationTypes method from an instance of <see cref="ServiceFabricClusterResource"/>.
     /// </summary>
     public partial class ServiceFabricApplicationTypeCollection : ArmCollection, IEnumerable<ServiceFabricApplicationTypeResource>, IAsyncEnumerable<ServiceFabricApplicationTypeResource>
     {
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.ServiceFabric
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ClusterResource.ResourceType)
+            if (id.ResourceType != ServiceFabricClusterResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ClusterResource.ResourceType), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ServiceFabricClusterResource.ResourceType), nameof(id));
             }
         }
 

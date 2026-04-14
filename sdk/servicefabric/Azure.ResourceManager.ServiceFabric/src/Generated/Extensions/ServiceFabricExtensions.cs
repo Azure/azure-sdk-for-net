@@ -39,39 +39,39 @@ namespace Azure.ResourceManager.ServiceFabric
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ClusterResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="ServiceFabricClusterResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableServiceFabricArmClient.GetClusterResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableServiceFabricArmClient.GetServiceFabricClusterResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ClusterResource"/> object. </returns>
-        public static ClusterResource GetClusterResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServiceFabricClusterResource"/> object. </returns>
+        public static ServiceFabricClusterResource GetServiceFabricClusterResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableServiceFabricArmClient(client).GetClusterResource(id);
+            return GetMockableServiceFabricArmClient(client).GetServiceFabricClusterResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="VMSizeResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="ServiceFabricVmSizeResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableServiceFabricArmClient.GetVMSizeResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableServiceFabricArmClient.GetServiceFabricVmSizeResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="VMSizeResource"/> object. </returns>
-        public static VMSizeResource GetVMSizeResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServiceFabricVmSizeResource"/> object. </returns>
+        public static ServiceFabricVmSizeResource GetServiceFabricVmSizeResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableServiceFabricArmClient(client).GetVMSizeResource(id);
+            return GetMockableServiceFabricArmClient(client).GetServiceFabricVmSizeResource(id);
         }
 
         /// <summary>
@@ -147,63 +147,27 @@ namespace Azure.ResourceManager.ServiceFabric
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ClusterVersionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets a collection of ServiceFabricClusters in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableServiceFabricArmClient.GetClusterVersionResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ClusterVersionResource"/> object. </returns>
-        public static ClusterVersionResource GetClusterVersionResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableServiceFabricArmClient(client).GetClusterVersionResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ClusterVersionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableServiceFabricArmClient.GetClusterVersionResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ClusterVersionResource"/> object. </returns>
-        public static ClusterVersionResource GetClusterVersionResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableServiceFabricArmClient(client).GetClusterVersionResource(id);
-        }
-
-        /// <summary>
-        /// Gets a collection of Clusters in the <see cref="ResourceGroupResource"/>
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableServiceFabricResourceGroupResource.GetClusters()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableServiceFabricResourceGroupResource.GetServiceFabricClusters()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of Clusters and their operations over a ClusterResource. </returns>
-        public static ClusterCollection GetClusters(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of ServiceFabricClusters and their operations over a ServiceFabricClusterResource. </returns>
+        public static ServiceFabricClusterCollection GetServiceFabricClusters(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableServiceFabricResourceGroupResource(resourceGroupResource).GetClusters();
+            return GetMockableServiceFabricResourceGroupResource(resourceGroupResource).GetServiceFabricClusters();
         }
 
         /// <summary>
         /// Get a Service Fabric cluster resource created or in the process of being created in the specified resource group.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableServiceFabricResourceGroupResource.GetClusterAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableServiceFabricResourceGroupResource.GetServiceFabricClusterAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -211,18 +175,18 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ClusterResource>> GetClusterAsync(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ServiceFabricClusterResource>> GetServiceFabricClusterAsync(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableServiceFabricResourceGroupResource(resourceGroupResource).GetClusterAsync(clusterName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableServiceFabricResourceGroupResource(resourceGroupResource).GetServiceFabricClusterAsync(clusterName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get a Service Fabric cluster resource created or in the process of being created in the specified resource group.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableServiceFabricResourceGroupResource.GetCluster(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableServiceFabricResourceGroupResource.GetServiceFabricCluster(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -230,36 +194,36 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<ClusterResource> GetCluster(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
+        public static Response<ServiceFabricClusterResource> GetServiceFabricCluster(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableServiceFabricResourceGroupResource(resourceGroupResource).GetCluster(clusterName, cancellationToken);
+            return GetMockableServiceFabricResourceGroupResource(resourceGroupResource).GetServiceFabricCluster(clusterName, cancellationToken);
         }
 
         /// <summary>
-        /// Gets a collection of VMSizeResources in the <see cref="SubscriptionResource"/>
+        /// Gets a collection of ServiceFabricVmSizeResources in the <see cref="SubscriptionResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableServiceFabricSubscriptionResource.GetVMSizeResources(AzureLocation)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableServiceFabricSubscriptionResource.GetServiceFabricVmSizeResources(AzureLocation)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="location"> The location for the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An object representing collection of VMSizeResources and their operations over a VMSizeResource. </returns>
-        public static VMSizeResourceCollection GetVMSizeResources(this SubscriptionResource subscriptionResource, AzureLocation location)
+        /// <returns> An object representing collection of ServiceFabricVmSizeResources and their operations over a ServiceFabricVmSizeResource. </returns>
+        public static ServiceFabricVmSizeResourceCollection GetServiceFabricVmSizeResources(this SubscriptionResource subscriptionResource, AzureLocation location)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableServiceFabricSubscriptionResource(subscriptionResource).GetVMSizeResources(location);
+            return GetMockableServiceFabricSubscriptionResource(subscriptionResource).GetServiceFabricVmSizeResources(location);
         }
 
         /// <summary>
         /// Get unsupported vm size for Service Fabric Clusters.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableServiceFabricSubscriptionResource.GetVMSizeResourceAsync(AzureLocation, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableServiceFabricSubscriptionResource.GetServiceFabricVmSizeResourceAsync(AzureLocation, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -268,18 +232,18 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<VMSizeResource>> GetVMSizeResourceAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string vmSize, CancellationToken cancellationToken = default)
+        public static async Task<Response<ServiceFabricVmSizeResource>> GetServiceFabricVmSizeResourceAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string vmSize, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableServiceFabricSubscriptionResource(subscriptionResource).GetVMSizeResourceAsync(location, vmSize, cancellationToken).ConfigureAwait(false);
+            return await GetMockableServiceFabricSubscriptionResource(subscriptionResource).GetServiceFabricVmSizeResourceAsync(location, vmSize, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get unsupported vm size for Service Fabric Clusters.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableServiceFabricSubscriptionResource.GetVMSizeResource(AzureLocation, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableServiceFabricSubscriptionResource.GetServiceFabricVmSizeResource(AzureLocation, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -288,166 +252,207 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<VMSizeResource> GetVMSizeResource(this SubscriptionResource subscriptionResource, AzureLocation location, string vmSize, CancellationToken cancellationToken = default)
+        public static Response<ServiceFabricVmSizeResource> GetServiceFabricVmSizeResource(this SubscriptionResource subscriptionResource, AzureLocation location, string vmSize, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableServiceFabricSubscriptionResource(subscriptionResource).GetVMSizeResource(location, vmSize, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a collection of ClusterVersions in the <see cref="SubscriptionResource"/>
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableServiceFabricSubscriptionResource.GetClusterVersions(string)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="location"> The location for the resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An object representing collection of ClusterVersions and their operations over a ClusterVersionResource. </returns>
-        public static ClusterVersionCollection GetClusterVersions(this SubscriptionResource subscriptionResource, string location)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableServiceFabricSubscriptionResource(subscriptionResource).GetClusterVersions(location);
-        }
-
-        /// <summary>
-        /// Gets information about an available Service Fabric cluster code version.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableServiceFabricSubscriptionResource.GetClusterVersionAsync(string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="location"> The location for the resource. </param>
-        /// <param name="clusterVersion"> The cluster code version. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<ClusterCodeVersionsListResult>> GetClusterVersionAsync(this SubscriptionResource subscriptionResource, string location, string clusterVersion, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return await GetMockableServiceFabricSubscriptionResource(subscriptionResource).GetClusterVersionAsync(location, clusterVersion, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets information about an available Service Fabric cluster code version.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableServiceFabricSubscriptionResource.GetClusterVersion(string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="location"> The location for the resource. </param>
-        /// <param name="clusterVersion"> The cluster code version. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<ClusterCodeVersionsListResult> GetClusterVersion(this SubscriptionResource subscriptionResource, string location, string clusterVersion, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableServiceFabricSubscriptionResource(subscriptionResource).GetClusterVersion(location, clusterVersion, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a collection of ClusterVersions in the <see cref="SubscriptionResource"/>
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableServiceFabricSubscriptionResource.GetClusterVersions(string, ClusterVersionsEnvironment)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="location"> The location for the resource. </param>
-        /// <param name="environment"> The environment for the resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An object representing collection of ClusterVersions and their operations over a ClusterVersionResource. </returns>
-        public static ClusterVersionCollection GetClusterVersions(this SubscriptionResource subscriptionResource, string location, ClusterVersionsEnvironment environment)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableServiceFabricSubscriptionResource(subscriptionResource).GetClusterVersions(location, environment);
-        }
-
-        /// <summary>
-        /// Gets information about an available Service Fabric cluster code version by environment.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableServiceFabricSubscriptionResource.GetClusterVersionAsync(string, ClusterVersionsEnvironment, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="location"> The location for the resource. </param>
-        /// <param name="environment"> The environment for the resource. </param>
-        /// <param name="clusterVersion"> The cluster code version. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<ClusterCodeVersionsListResult>> GetClusterVersionAsync(this SubscriptionResource subscriptionResource, string location, ClusterVersionsEnvironment environment, string clusterVersion, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return await GetMockableServiceFabricSubscriptionResource(subscriptionResource).GetClusterVersionAsync(location, environment, clusterVersion, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets information about an available Service Fabric cluster code version by environment.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableServiceFabricSubscriptionResource.GetClusterVersion(string, ClusterVersionsEnvironment, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="location"> The location for the resource. </param>
-        /// <param name="environment"> The environment for the resource. </param>
-        /// <param name="clusterVersion"> The cluster code version. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<ClusterCodeVersionsListResult> GetClusterVersion(this SubscriptionResource subscriptionResource, string location, ClusterVersionsEnvironment environment, string clusterVersion, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableServiceFabricSubscriptionResource(subscriptionResource).GetClusterVersion(location, environment, clusterVersion, cancellationToken);
+            return GetMockableServiceFabricSubscriptionResource(subscriptionResource).GetServiceFabricVmSizeResource(location, vmSize, cancellationToken);
         }
 
         /// <summary>
         /// Gets all Service Fabric cluster resources created or in the process of being created in the subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableServiceFabricSubscriptionResource.GetClustersAsync(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableServiceFabricSubscriptionResource.GetServiceFabricClustersAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ClusterResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ClusterResource> GetClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ServiceFabricClusterResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ServiceFabricClusterResource> GetServiceFabricClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableServiceFabricSubscriptionResource(subscriptionResource).GetClustersAsync(cancellationToken);
+            return GetMockableServiceFabricSubscriptionResource(subscriptionResource).GetServiceFabricClustersAsync(cancellationToken);
         }
 
         /// <summary>
         /// Gets all Service Fabric cluster resources created or in the process of being created in the subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableServiceFabricSubscriptionResource.GetClusters(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableServiceFabricSubscriptionResource.GetServiceFabricClusters(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ClusterResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ClusterResource> GetClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ServiceFabricClusterResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ServiceFabricClusterResource> GetServiceFabricClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableServiceFabricSubscriptionResource(subscriptionResource).GetClusters(cancellationToken);
+            return GetMockableServiceFabricSubscriptionResource(subscriptionResource).GetServiceFabricClusters(cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets information about an available Service Fabric cluster code version.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableServiceFabricSubscriptionResource.GetClusterVersionsAsync(AzureLocation, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="clusterVersion"> The cluster code version. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ClusterCodeVersionsResult"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ClusterCodeVersionsResult> GetClusterVersionsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string clusterVersion, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableServiceFabricSubscriptionResource(subscriptionResource).GetClusterVersionsAsync(location, clusterVersion, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets information about an available Service Fabric cluster code version.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableServiceFabricSubscriptionResource.GetClusterVersions(AzureLocation, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="clusterVersion"> The cluster code version. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ClusterCodeVersionsResult"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ClusterCodeVersionsResult> GetClusterVersions(this SubscriptionResource subscriptionResource, AzureLocation location, string clusterVersion, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableServiceFabricSubscriptionResource(subscriptionResource).GetClusterVersions(location, clusterVersion, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets information about an available Service Fabric cluster code version by environment.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableServiceFabricSubscriptionResource.GetClusterVersionsByEnvironmentAsync(AzureLocation, ClusterVersionsEnvironment, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="environment"> The operating system of the cluster. The default means all. </param>
+        /// <param name="clusterVersion"> The cluster code version. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ClusterCodeVersionsResult"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ClusterCodeVersionsResult> GetClusterVersionsByEnvironmentAsync(this SubscriptionResource subscriptionResource, AzureLocation location, ClusterVersionsEnvironment environment, string clusterVersion, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableServiceFabricSubscriptionResource(subscriptionResource).GetClusterVersionsByEnvironmentAsync(location, environment, clusterVersion, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets information about an available Service Fabric cluster code version by environment.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableServiceFabricSubscriptionResource.GetClusterVersionsByEnvironment(AzureLocation, ClusterVersionsEnvironment, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="environment"> The operating system of the cluster. The default means all. </param>
+        /// <param name="clusterVersion"> The cluster code version. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ClusterCodeVersionsResult"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ClusterCodeVersionsResult> GetClusterVersionsByEnvironment(this SubscriptionResource subscriptionResource, AzureLocation location, ClusterVersionsEnvironment environment, string clusterVersion, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableServiceFabricSubscriptionResource(subscriptionResource).GetClusterVersionsByEnvironment(location, environment, clusterVersion, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets all available code versions for Service Fabric cluster resources by location.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableServiceFabricSubscriptionResource.GetClusterVersionsAsync(AzureLocation, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="location"> The location name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ClusterCodeVersionsResult"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ClusterCodeVersionsResult> GetClusterVersionsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableServiceFabricSubscriptionResource(subscriptionResource).GetClusterVersionsAsync(location, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets all available code versions for Service Fabric cluster resources by location.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableServiceFabricSubscriptionResource.GetClusterVersions(AzureLocation, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="location"> The location name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ClusterCodeVersionsResult"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ClusterCodeVersionsResult> GetClusterVersions(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableServiceFabricSubscriptionResource(subscriptionResource).GetClusterVersions(location, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets all available code versions for Service Fabric cluster resources by environment.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableServiceFabricSubscriptionResource.GetClusterVersionsByEnvironmentAsync(AzureLocation, ClusterVersionsEnvironment, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="location"> The location name. </param>
+        /// <param name="environment"> The operating system of the cluster. The default means all. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ClusterCodeVersionsResult"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ClusterCodeVersionsResult> GetClusterVersionsByEnvironmentAsync(this SubscriptionResource subscriptionResource, AzureLocation location, ClusterVersionsEnvironment environment, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableServiceFabricSubscriptionResource(subscriptionResource).GetClusterVersionsByEnvironmentAsync(location, environment, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets all available code versions for Service Fabric cluster resources by environment.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableServiceFabricSubscriptionResource.GetClusterVersionsByEnvironment(AzureLocation, ClusterVersionsEnvironment, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="location"> The location name. </param>
+        /// <param name="environment"> The operating system of the cluster. The default means all. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ClusterCodeVersionsResult"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ClusterCodeVersionsResult> GetClusterVersionsByEnvironment(this SubscriptionResource subscriptionResource, AzureLocation location, ClusterVersionsEnvironment environment, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableServiceFabricSubscriptionResource(subscriptionResource).GetClusterVersionsByEnvironment(location, environment, cancellationToken);
         }
     }
 }

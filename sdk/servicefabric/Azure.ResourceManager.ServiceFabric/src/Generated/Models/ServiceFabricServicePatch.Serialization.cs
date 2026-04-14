@@ -17,11 +17,16 @@ using Azure.ResourceManager.ServiceFabric;
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
     /// <summary> The service resource for patch operations. </summary>
-    public partial class ServiceFabricServicePatch : ServiceFabricProxyResource, IJsonModel<ServiceFabricServicePatch>
+    public partial class ServiceFabricServicePatch : TrackedResourceData, IJsonModel<ServiceFabricServicePatch>
     {
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricServicePatch"/> for deserialization. </summary>
+        internal ServiceFabricServicePatch()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ServiceFabricProxyResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ServiceFabricServicePatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -37,7 +42,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ServiceFabricServicePatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -101,7 +106,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ServiceFabricProxyResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ServiceFabricServicePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -120,20 +125,23 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             {
                 return null;
             }
-            string id = default;
+            ResourceIdentifier id = default;
             string name = default;
-            string @type = default;
-            string location = default;
-            IDictionary<string, string> tags = default;
-            string eTag = default;
+            ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, string> tags = default;
+            AzureLocation location = default;
             ServiceResourceUpdateProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
                 {
-                    id = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
@@ -143,12 +151,20 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("location"u8))
+                if (prop.NameEquals("systemData"u8))
                 {
-                    location = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerServiceFabricContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("tags"u8))
@@ -172,18 +188,9 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     tags = dictionary;
                     continue;
                 }
-                if (prop.NameEquals("etag"u8))
+                if (prop.NameEquals("location"u8))
                 {
-                    eTag = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("systemData"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerServiceFabricContext.Default);
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))
@@ -203,12 +210,11 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             return new ServiceFabricServicePatch(
                 id,
                 name,
-                @type,
-                location,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                eTag,
+                resourceType,
                 systemData,
                 additionalBinaryDataProperties,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
                 properties);
         }
     }

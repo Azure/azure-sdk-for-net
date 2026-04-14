@@ -12,7 +12,7 @@ using System.Text.Json;
 namespace Azure.ResourceManager.ServiceFabric
 {
     /// <summary></summary>
-    public partial class ClusterResource : IJsonModel<ServiceFabricClusterData>
+    public partial class ServiceFabricClusterResource : IJsonModel<ServiceFabricClusterData>
     {
         private static IJsonModel<ServiceFabricClusterData> s_dataDeserializationInstance;
 

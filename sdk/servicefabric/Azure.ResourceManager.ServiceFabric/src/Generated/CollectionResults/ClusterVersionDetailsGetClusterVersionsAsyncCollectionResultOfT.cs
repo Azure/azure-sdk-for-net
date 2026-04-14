@@ -15,33 +15,36 @@ using Azure.ResourceManager.ServiceFabric.Models;
 
 namespace Azure.ResourceManager.ServiceFabric
 {
-    internal partial class ClusterVersionsGetAllAsyncCollectionResultOfT : AsyncPageable<ClusterCodeVersionsResult>
+    internal partial class ClusterVersionDetailsGetClusterVersionsAsyncCollectionResultOfT : AsyncPageable<ClusterCodeVersionsResult>
     {
-        private readonly ClusterVersions _client;
+        private readonly ClusterVersionDetails _client;
         private readonly string _subscriptionId;
-        private readonly string _location;
+        private readonly AzureLocation _location;
+        private readonly string _clusterVersion;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of ClusterVersionsGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The ClusterVersions client used to send requests. </param>
+        /// <summary> Initializes a new instance of ClusterVersionDetailsGetClusterVersionsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The ClusterVersionDetails client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="location"> The location name. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="clusterVersion"> The cluster code version. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public ClusterVersionsGetAllAsyncCollectionResultOfT(ClusterVersions client, string subscriptionId, string location, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public ClusterVersionDetailsGetClusterVersionsAsyncCollectionResultOfT(ClusterVersionDetails client, string subscriptionId, AzureLocation location, string clusterVersion, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _location = location;
+            _clusterVersion = clusterVersion;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of ClusterVersionsGetAllAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of ClusterVersionDetailsGetClusterVersionsAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of ClusterVersionsGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of ClusterVersionDetailsGetClusterVersionsAsyncCollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<ClusterCodeVersionsResult>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Response response = await GetNextResponseAsync(pageSizeHint, null).ConfigureAwait(false);
@@ -54,7 +57,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, string continuationToken)
         {
-            HttpMessage message = _client.CreateGetAllRequest(_subscriptionId, _location, _context);
+            HttpMessage message = _client.CreateGetClusterVersionsRequest(_subscriptionId, _location, _clusterVersion, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

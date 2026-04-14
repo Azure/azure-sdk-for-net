@@ -19,11 +19,6 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     [PersistableModelProxy(typeof(UnknownServicePlacementPolicyDescription))]
     public abstract partial class ServicePlacementPolicyDescription : IJsonModel<ServicePlacementPolicyDescription>
     {
-        /// <summary> Initializes a new instance of <see cref="ServicePlacementPolicyDescription"/> for deserialization. </summary>
-        internal ServicePlacementPolicyDescription()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ServicePlacementPolicyDescription PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

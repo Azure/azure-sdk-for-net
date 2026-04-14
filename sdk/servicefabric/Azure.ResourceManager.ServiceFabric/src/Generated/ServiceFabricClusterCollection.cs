@@ -20,28 +20,28 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.ServiceFabric
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ClusterResource"/> and their operations.
-    /// Each <see cref="ClusterResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="ClusterCollection"/> instance call the GetClusters method from an instance of <see cref="ResourceGroupResource"/>.
+    /// A class representing a collection of <see cref="ServiceFabricClusterResource"/> and their operations.
+    /// Each <see cref="ServiceFabricClusterResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="ServiceFabricClusterCollection"/> instance call the GetServiceFabricClusters method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
-    public partial class ClusterCollection : ArmCollection, IEnumerable<ClusterResource>, IAsyncEnumerable<ClusterResource>
+    public partial class ServiceFabricClusterCollection : ArmCollection, IEnumerable<ServiceFabricClusterResource>, IAsyncEnumerable<ServiceFabricClusterResource>
     {
         private readonly ClientDiagnostics _clustersClientDiagnostics;
         private readonly Clusters _clustersRestClient;
 
-        /// <summary> Initializes a new instance of ClusterCollection for mocking. </summary>
-        protected ClusterCollection()
+        /// <summary> Initializes a new instance of ServiceFabricClusterCollection for mocking. </summary>
+        protected ServiceFabricClusterCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ClusterCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricClusterCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ClusterCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ServiceFabricClusterCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ClusterResource.ResourceType, out string clusterApiVersion);
-            _clustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceFabric", ClusterResource.ResourceType.Namespace, Diagnostics);
-            _clustersRestClient = new Clusters(_clustersClientDiagnostics, Pipeline, Endpoint, clusterApiVersion ?? "2026-03-01-preview");
+            TryGetApiVersion(ServiceFabricClusterResource.ResourceType, out string serviceFabricClusterApiVersion);
+            _clustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceFabric", ServiceFabricClusterResource.ResourceType.Namespace, Diagnostics);
+            _clustersRestClient = new Clusters(_clustersClientDiagnostics, Pipeline, Endpoint, serviceFabricClusterApiVersion ?? "2026-03-01-preview");
             ValidateResourceId(id);
         }
 
@@ -78,12 +78,12 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<ClusterResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string clusterName, ServiceFabricClusterData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ServiceFabricClusterResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string clusterName, ServiceFabricClusterData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _clustersClientDiagnostics.CreateScope("ClusterCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _clustersClientDiagnostics.CreateScope("ServiceFabricClusterCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -93,8 +93,8 @@ namespace Azure.ResourceManager.ServiceFabric
                 };
                 HttpMessage message = _clustersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, ServiceFabricClusterData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ServiceFabricArmOperation<ClusterResource> operation = new ServiceFabricArmOperation<ClusterResource>(
-                    new ClusterOperationSource(Client),
+                ServiceFabricArmOperation<ServiceFabricClusterResource> operation = new ServiceFabricArmOperation<ServiceFabricClusterResource>(
+                    new ServiceFabricClusterOperationSource(Client),
                     _clustersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -136,12 +136,12 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<ClusterResource> CreateOrUpdate(WaitUntil waitUntil, string clusterName, ServiceFabricClusterData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ServiceFabricClusterResource> CreateOrUpdate(WaitUntil waitUntil, string clusterName, ServiceFabricClusterData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _clustersClientDiagnostics.CreateScope("ClusterCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _clustersClientDiagnostics.CreateScope("ServiceFabricClusterCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -151,8 +151,8 @@ namespace Azure.ResourceManager.ServiceFabric
                 };
                 HttpMessage message = _clustersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, ServiceFabricClusterData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ServiceFabricArmOperation<ClusterResource> operation = new ServiceFabricArmOperation<ClusterResource>(
-                    new ClusterOperationSource(Client),
+                ServiceFabricArmOperation<ServiceFabricClusterResource> operation = new ServiceFabricArmOperation<ServiceFabricClusterResource>(
+                    new ServiceFabricClusterOperationSource(Client),
                     _clustersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -192,11 +192,11 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ClusterResource>> GetAsync(string clusterName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceFabricClusterResource>> GetAsync(string clusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
-            using DiagnosticScope scope = _clustersClientDiagnostics.CreateScope("ClusterCollection.Get");
+            using DiagnosticScope scope = _clustersClientDiagnostics.CreateScope("ServiceFabricClusterCollection.Get");
             scope.Start();
             try
             {
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ClusterResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceFabricClusterResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -241,11 +241,11 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ClusterResource> Get(string clusterName, CancellationToken cancellationToken = default)
+        public virtual Response<ServiceFabricClusterResource> Get(string clusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
-            using DiagnosticScope scope = _clustersClientDiagnostics.CreateScope("ClusterCollection.Get");
+            using DiagnosticScope scope = _clustersClientDiagnostics.CreateScope("ServiceFabricClusterCollection.Get");
             scope.Start();
             try
             {
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ClusterResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceFabricClusterResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -287,14 +287,14 @@ namespace Azure.ResourceManager.ServiceFabric
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ClusterResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ClusterResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ServiceFabricClusterResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ServiceFabricClusterResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ServiceFabricClusterData, ClusterResource>(new ClustersGetByResourceGroupAsyncCollectionResultOfT(_clustersRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "ClusterCollection.GetAll"), data => new ClusterResource(Client, data));
+            return new AsyncPageableWrapper<ServiceFabricClusterData, ServiceFabricClusterResource>(new ClustersGetByResourceGroupAsyncCollectionResultOfT(_clustersRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "ServiceFabricClusterCollection.GetAll"), data => new ServiceFabricClusterResource(Client, data));
         }
 
         /// <summary>
@@ -315,14 +315,14 @@ namespace Azure.ResourceManager.ServiceFabric
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ClusterResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ClusterResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ServiceFabricClusterResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ServiceFabricClusterResource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ServiceFabricClusterData, ClusterResource>(new ClustersGetByResourceGroupCollectionResultOfT(_clustersRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "ClusterCollection.GetAll"), data => new ClusterResource(Client, data));
+            return new PageableWrapper<ServiceFabricClusterData, ServiceFabricClusterResource>(new ClustersGetByResourceGroupCollectionResultOfT(_clustersRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "ServiceFabricClusterCollection.GetAll"), data => new ServiceFabricClusterResource(Client, data));
         }
 
         /// <summary>
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.ServiceFabric
         {
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
-            using DiagnosticScope scope = _clustersClientDiagnostics.CreateScope("ClusterCollection.Exists");
+            using DiagnosticScope scope = _clustersClientDiagnostics.CreateScope("ServiceFabricClusterCollection.Exists");
             scope.Start();
             try
             {
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.ServiceFabric
         {
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
-            using DiagnosticScope scope = _clustersClientDiagnostics.CreateScope("ClusterCollection.Exists");
+            using DiagnosticScope scope = _clustersClientDiagnostics.CreateScope("ServiceFabricClusterCollection.Exists");
             scope.Start();
             try
             {
@@ -460,11 +460,11 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<ClusterResource>> GetIfExistsAsync(string clusterName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<ServiceFabricClusterResource>> GetIfExistsAsync(string clusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
-            using DiagnosticScope scope = _clustersClientDiagnostics.CreateScope("ClusterCollection.GetIfExists");
+            using DiagnosticScope scope = _clustersClientDiagnostics.CreateScope("ServiceFabricClusterCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -489,9 +489,9 @@ namespace Azure.ResourceManager.ServiceFabric
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<ClusterResource>(response.GetRawResponse());
+                    return new NoValueResponse<ServiceFabricClusterResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new ClusterResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceFabricClusterResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -521,11 +521,11 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<ClusterResource> GetIfExists(string clusterName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<ServiceFabricClusterResource> GetIfExists(string clusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
-            using DiagnosticScope scope = _clustersClientDiagnostics.CreateScope("ClusterCollection.GetIfExists");
+            using DiagnosticScope scope = _clustersClientDiagnostics.CreateScope("ServiceFabricClusterCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -550,9 +550,9 @@ namespace Azure.ResourceManager.ServiceFabric
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<ClusterResource>(response.GetRawResponse());
+                    return new NoValueResponse<ServiceFabricClusterResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new ClusterResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceFabricClusterResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -561,7 +561,7 @@ namespace Azure.ResourceManager.ServiceFabric
             }
         }
 
-        IEnumerator<ClusterResource> IEnumerable<ClusterResource>.GetEnumerator()
+        IEnumerator<ServiceFabricClusterResource> IEnumerable<ServiceFabricClusterResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -572,7 +572,7 @@ namespace Azure.ResourceManager.ServiceFabric
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<ClusterResource> IAsyncEnumerable<ClusterResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<ServiceFabricClusterResource> IAsyncEnumerable<ServiceFabricClusterResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

@@ -109,12 +109,12 @@ namespace Azure.ResourceManager.ServiceFabric
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
-                writer.WriteStringValue(ETag);
+                writer.WriteStringValue(ETag.Value.ToString());
             }
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options);
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ServiceFabric
             {
                 return null;
             }
-            string id = default;
+            ResourceIdentifier id = default;
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
@@ -151,13 +151,17 @@ namespace Azure.ResourceManager.ServiceFabric
             AzureLocation location = default;
             ApplicationResourceProperties properties = default;
             IDictionary<string, string> tags = default;
-            string eTag = default;
-            ManagedIdentity identity = default;
+            ETag? eTag = default;
+            ManagedServiceIdentity identity = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
                 {
-                    id = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
@@ -220,7 +224,11 @@ namespace Azure.ResourceManager.ServiceFabric
                 }
                 if (prop.NameEquals("etag"u8))
                 {
-                    eTag = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    eTag = new ETag(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("identity"u8))
@@ -229,7 +237,7 @@ namespace Azure.ResourceManager.ServiceFabric
                     {
                         continue;
                     }
-                    identity = ManagedIdentity.DeserializeManagedIdentity(prop.Value, options);
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options, AzureResourceManagerServiceFabricContext.Default);
                     continue;
                 }
                 if (options.Format != "W")

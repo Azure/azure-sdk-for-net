@@ -22,15 +22,15 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="VMSize"/>. </summary>
-        /// <param name="size"> VM Size name. </param>
+        /// <param name="vmSize"> VM Size name. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VMSize(string size, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VMSize(string vmSize, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Size = size;
+            VmSize = vmSize;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> VM Size name. </summary>
-        public string Size { get; }
+        public string VmSize { get; }
     }
 }

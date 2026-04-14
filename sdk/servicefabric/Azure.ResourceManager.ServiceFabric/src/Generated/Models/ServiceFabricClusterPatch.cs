@@ -377,11 +377,11 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         }
 
         /// <summary> If true, token-based authentication is not allowed on the HttpGatewayEndpoint. This is required to support TLS versions 1.3 and above. If token-based authentication is used, HttpGatewayTokenAuthEndpointPort must be defined. </summary>
-        public bool? EnableHttpGatewayExclusiveAuthMode
+        public bool? IsHttpGatewayExclusiveAuthModeEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.EnableHttpGatewayExclusiveAuthMode;
+                return Properties is null ? default : Properties.IsHttpGatewayExclusiveAuthModeEnabled;
             }
             set
             {
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 {
                     Properties = new ClusterPropertiesUpdateParameters();
                 }
-                Properties.EnableHttpGatewayExclusiveAuthMode = value.Value;
+                Properties.IsHttpGatewayExclusiveAuthModeEnabled = value.Value;
             }
         }
 

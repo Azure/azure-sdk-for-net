@@ -63,11 +63,11 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <param name="upgradePauseEndOn"> Indicates the end date and time to pause automatic runtime version upgrades on the cluster for an specific period of time on the cluster (UTC). </param>
         /// <param name="isWaveUpgradePaused"> Boolean to pause automatic runtime version upgrades to the cluster. </param>
         /// <param name="notifications"> Indicates a list of notification channels for cluster events. </param>
-        /// <param name="enableHttpGatewayExclusiveAuthMode"> If true, token-based authentication is not allowed on the HttpGatewayEndpoint. This is required to support TLS versions 1.3 and above. If token-based authentication is used, HttpGatewayTokenAuthEndpointPort must be defined. </param>
+        /// <param name="isHttpGatewayExclusiveAuthModeEnabled"> If true, token-based authentication is not allowed on the HttpGatewayEndpoint. This is required to support TLS versions 1.3 and above. If token-based authentication is used, HttpGatewayTokenAuthEndpointPort must be defined. </param>
         /// <param name="maxUnusedVersionsToKeep"> Number of unused versions per application type to keep. </param>
         /// <param name="etag"> Azure resource etag. </param>
         /// <returns> A new <see cref="ServiceFabric.ServiceFabricClusterData"/> instance for mocking. </returns>
-        public static ServiceFabricClusterData ServiceFabricClusterData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, IEnumerable<ClusterAddOnFeature> addOnFeatures = default, IEnumerable<ClusterVersionDetails> availableClusterVersions = default, ClusterAadSetting azureActiveDirectory = default, ClusterCertificateDescription certificate = default, ClusterServerCertificateCommonNames certificateCommonNames = default, IEnumerable<ClusterClientCertificateCommonName> clientCertificateCommonNames = default, IEnumerable<ClusterClientCertificateThumbprint> clientCertificateThumbprints = default, string clusterCodeVersion = default, Uri clusterEndpoint = default, string clusterId = default, ServiceFabricClusterState? clusterState = default, DiagnosticsStorageAccountConfig diagnosticsStorageAccountConfig = default, bool? isEventStoreServiceEnabled = default, IEnumerable<SettingsSectionDescription> fabricSettings = default, Uri managementEndpoint = default, IEnumerable<ClusterNodeTypeDescription> nodeTypes = default, ServiceFabricProvisioningState? provisioningState = default, ClusterReliabilityLevel? reliabilityLevel = default, ClusterCertificateDescription reverseProxyCertificate = default, ClusterServerCertificateCommonNames reverseProxyCertificateCommonNames = default, ClusterUpgradePolicy upgradeDescription = default, ClusterUpgradeMode? upgradeMode = default, string vmImage = default, SfZonalUpgradeMode? serviceFabricZonalUpgradeMode = default, VmssZonalUpgradeMode? vmssZonalUpgradeMode = default, bool? isInfrastructureServiceManagerEnabled = default, ClusterUpgradeCadence? upgradeWave = default, DateTimeOffset? upgradePauseStartOn = default, DateTimeOffset? upgradePauseEndOn = default, bool? isWaveUpgradePaused = default, IEnumerable<ClusterNotification> notifications = default, bool? enableHttpGatewayExclusiveAuthMode = default, long? maxUnusedVersionsToKeep = default, string etag = default)
+        public static ServiceFabricClusterData ServiceFabricClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, IEnumerable<ClusterAddOnFeature> addOnFeatures = default, IEnumerable<ClusterVersionDetails> availableClusterVersions = default, ClusterAadSetting azureActiveDirectory = default, ClusterCertificateDescription certificate = default, ClusterServerCertificateCommonNames certificateCommonNames = default, IEnumerable<ClusterClientCertificateCommonName> clientCertificateCommonNames = default, IEnumerable<ClusterClientCertificateThumbprint> clientCertificateThumbprints = default, string clusterCodeVersion = default, Uri clusterEndpoint = default, Guid? clusterId = default, ServiceFabricClusterState? clusterState = default, DiagnosticsStorageAccountConfig diagnosticsStorageAccountConfig = default, bool? isEventStoreServiceEnabled = default, IEnumerable<SettingsSectionDescription> fabricSettings = default, Uri managementEndpoint = default, IEnumerable<ClusterNodeTypeDescription> nodeTypes = default, ServiceFabricProvisioningState? provisioningState = default, ClusterReliabilityLevel? reliabilityLevel = default, ClusterCertificateDescription reverseProxyCertificate = default, ClusterServerCertificateCommonNames reverseProxyCertificateCommonNames = default, ClusterUpgradePolicy upgradeDescription = default, ClusterUpgradeMode? upgradeMode = default, string vmImage = default, SfZonalUpgradeMode? serviceFabricZonalUpgradeMode = default, VmssZonalUpgradeMode? vmssZonalUpgradeMode = default, bool? isInfrastructureServiceManagerEnabled = default, ClusterUpgradeCadence? upgradeWave = default, DateTimeOffset? upgradePauseStartOn = default, DateTimeOffset? upgradePauseEndOn = default, bool? isWaveUpgradePaused = default, IEnumerable<ClusterNotification> notifications = default, bool? isHttpGatewayExclusiveAuthModeEnabled = default, long? maxUnusedVersionsToKeep = default, ETag? etag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                addOnFeatures is null && availableClusterVersions is null && azureActiveDirectory is null && certificate is null && certificateCommonNames is null && clientCertificateCommonNames is null && clientCertificateThumbprints is null && clusterCodeVersion is null && clusterEndpoint is null && clusterId is null && clusterState is null && diagnosticsStorageAccountConfig is null && isEventStoreServiceEnabled is null && fabricSettings is null && managementEndpoint is null && nodeTypes is null && provisioningState is null && reliabilityLevel is null && reverseProxyCertificate is null && reverseProxyCertificateCommonNames is null && upgradeDescription is null && upgradeMode is null && vmImage is null && serviceFabricZonalUpgradeMode is null && vmssZonalUpgradeMode is null && isInfrastructureServiceManagerEnabled is null && upgradeWave is null && upgradePauseStartOn is null && upgradePauseEndOn is null && isWaveUpgradePaused is null && notifications is null && enableHttpGatewayExclusiveAuthMode is null && maxUnusedVersionsToKeep is null ? default : new ClusterProperties(
+                addOnFeatures is null && availableClusterVersions is null && azureActiveDirectory is null && certificate is null && certificateCommonNames is null && clientCertificateCommonNames is null && clientCertificateThumbprints is null && clusterCodeVersion is null && clusterEndpoint is null && clusterId is null && clusterState is null && diagnosticsStorageAccountConfig is null && isEventStoreServiceEnabled is null && fabricSettings is null && managementEndpoint is null && nodeTypes is null && provisioningState is null && reliabilityLevel is null && reverseProxyCertificate is null && reverseProxyCertificateCommonNames is null && upgradeDescription is null && upgradeMode is null && vmImage is null && serviceFabricZonalUpgradeMode is null && vmssZonalUpgradeMode is null && isInfrastructureServiceManagerEnabled is null && upgradeWave is null && upgradePauseStartOn is null && upgradePauseEndOn is null && isWaveUpgradePaused is null && notifications is null && isHttpGatewayExclusiveAuthModeEnabled is null && maxUnusedVersionsToKeep is null ? default : new ClusterProperties(
                     (addOnFeatures ?? new ChangeTrackingList<ClusterAddOnFeature>()).ToList(),
                     (availableClusterVersions ?? new ChangeTrackingList<ClusterVersionDetails>()).ToList(),
                     azureActiveDirectory,
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     upgradePauseEndOn,
                     isWaveUpgradePaused,
                     (notifications ?? new ChangeTrackingList<ClusterNotification>()).ToList(),
-                    enableHttpGatewayExclusiveAuthMode,
+                    isHttpGatewayExclusiveAuthModeEnabled,
                     null),
                 etag);
         }
@@ -313,15 +313,15 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <param name="upgradePauseEndOn"> The end timestamp of pause runtime version upgrades on the cluster (UTC). </param>
         /// <param name="isWaveUpgradePaused"> Boolean to pause automatic runtime version upgrades to the cluster. </param>
         /// <param name="notifications"> Indicates a list of notification channels for cluster events. </param>
-        /// <param name="enableHttpGatewayExclusiveAuthMode"> If true, token-based authentication is not allowed on the HttpGatewayEndpoint. This is required to support TLS versions 1.3 and above. If token-based authentication is used, HttpGatewayTokenAuthEndpointPort must be defined. </param>
+        /// <param name="isHttpGatewayExclusiveAuthModeEnabled"> If true, token-based authentication is not allowed on the HttpGatewayEndpoint. This is required to support TLS versions 1.3 and above. If token-based authentication is used, HttpGatewayTokenAuthEndpointPort must be defined. </param>
         /// <param name="maxUnusedVersionsToKeep"> Number of unused versions per application type to keep. </param>
         /// <param name="tags"> Cluster update parameters. </param>
         /// <returns> A new <see cref="Models.ServiceFabricClusterPatch"/> instance for mocking. </returns>
-        public static ServiceFabricClusterPatch ServiceFabricClusterPatch(IEnumerable<ClusterAddOnFeature> addOnFeatures = default, ClusterCertificateDescription certificate = default, ClusterServerCertificateCommonNames certificateCommonNames = default, IEnumerable<ClusterClientCertificateCommonName> clientCertificateCommonNames = default, IEnumerable<ClusterClientCertificateThumbprint> clientCertificateThumbprints = default, string clusterCodeVersion = default, bool? isEventStoreServiceEnabled = default, IEnumerable<SettingsSectionDescription> fabricSettings = default, IEnumerable<ClusterNodeTypeDescription> nodeTypes = default, ClusterReliabilityLevel? reliabilityLevel = default, ClusterCertificateDescription reverseProxyCertificate = default, ClusterUpgradePolicy upgradeDescription = default, ClusterUpgradeMode? upgradeMode = default, SfZonalUpgradeMode? sfZonalUpgradeMode = default, VmssZonalUpgradeMode? vmssZonalUpgradeMode = default, bool? isInfrastructureServiceManagerEnabled = default, ClusterUpgradeCadence? upgradeWave = default, DateTimeOffset? upgradePauseStartOn = default, DateTimeOffset? upgradePauseEndOn = default, bool? isWaveUpgradePaused = default, IEnumerable<ClusterNotification> notifications = default, bool? enableHttpGatewayExclusiveAuthMode = default, long? maxUnusedVersionsToKeep = default, IDictionary<string, string> tags = default)
+        public static ServiceFabricClusterPatch ServiceFabricClusterPatch(IEnumerable<ClusterAddOnFeature> addOnFeatures = default, ClusterCertificateDescription certificate = default, ClusterServerCertificateCommonNames certificateCommonNames = default, IEnumerable<ClusterClientCertificateCommonName> clientCertificateCommonNames = default, IEnumerable<ClusterClientCertificateThumbprint> clientCertificateThumbprints = default, string clusterCodeVersion = default, bool? isEventStoreServiceEnabled = default, IEnumerable<SettingsSectionDescription> fabricSettings = default, IEnumerable<ClusterNodeTypeDescription> nodeTypes = default, ClusterReliabilityLevel? reliabilityLevel = default, ClusterCertificateDescription reverseProxyCertificate = default, ClusterUpgradePolicy upgradeDescription = default, ClusterUpgradeMode? upgradeMode = default, SfZonalUpgradeMode? sfZonalUpgradeMode = default, VmssZonalUpgradeMode? vmssZonalUpgradeMode = default, bool? isInfrastructureServiceManagerEnabled = default, ClusterUpgradeCadence? upgradeWave = default, DateTimeOffset? upgradePauseStartOn = default, DateTimeOffset? upgradePauseEndOn = default, bool? isWaveUpgradePaused = default, IEnumerable<ClusterNotification> notifications = default, bool? isHttpGatewayExclusiveAuthModeEnabled = default, long? maxUnusedVersionsToKeep = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ServiceFabricClusterPatch(addOnFeatures is null && certificate is null && certificateCommonNames is null && clientCertificateCommonNames is null && clientCertificateThumbprints is null && clusterCodeVersion is null && isEventStoreServiceEnabled is null && fabricSettings is null && nodeTypes is null && reliabilityLevel is null && reverseProxyCertificate is null && upgradeDescription is null && upgradeMode is null && sfZonalUpgradeMode is null && vmssZonalUpgradeMode is null && isInfrastructureServiceManagerEnabled is null && upgradeWave is null && upgradePauseStartOn is null && upgradePauseEndOn is null && isWaveUpgradePaused is null && notifications is null && enableHttpGatewayExclusiveAuthMode is null && maxUnusedVersionsToKeep is null ? default : new ClusterPropertiesUpdateParameters(
+            return new ServiceFabricClusterPatch(addOnFeatures is null && certificate is null && certificateCommonNames is null && clientCertificateCommonNames is null && clientCertificateThumbprints is null && clusterCodeVersion is null && isEventStoreServiceEnabled is null && fabricSettings is null && nodeTypes is null && reliabilityLevel is null && reverseProxyCertificate is null && upgradeDescription is null && upgradeMode is null && sfZonalUpgradeMode is null && vmssZonalUpgradeMode is null && isInfrastructureServiceManagerEnabled is null && upgradeWave is null && upgradePauseStartOn is null && upgradePauseEndOn is null && isWaveUpgradePaused is null && notifications is null && isHttpGatewayExclusiveAuthModeEnabled is null && maxUnusedVersionsToKeep is null ? default : new ClusterPropertiesUpdateParameters(
                 (addOnFeatures ?? new ChangeTrackingList<ClusterAddOnFeature>()).ToList(),
                 certificate,
                 certificateCommonNames,
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 upgradePauseEndOn,
                 isWaveUpgradePaused,
                 (notifications ?? new ChangeTrackingList<ClusterNotification>()).ToList(),
-                enableHttpGatewayExclusiveAuthMode,
+                isHttpGatewayExclusiveAuthModeEnabled,
                 null), tags, additionalBinaryDataProperties: null);
         }
 
@@ -371,115 +371,16 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="vmSize"> VM Size name. </param>
-        /// <returns> A new <see cref="ServiceFabric.VMSizeResourceData"/> instance for mocking. </returns>
-        public static VMSizeResourceData VMSizeResourceData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string vmSize = default)
+        /// <returns> A new <see cref="ServiceFabric.ServiceFabricVmSizeResourceData"/> instance for mocking. </returns>
+        public static ServiceFabricVmSizeResourceData ServiceFabricVmSizeResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string vmSize = default)
         {
-            return new VMSizeResourceData(
+            return new ServiceFabricVmSizeResourceData(
                 id,
                 name,
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
                 vmSize is null ? default : new VMSize(vmSize, null));
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="provisioningState"> The current deployment or provisioning state, which only appears in the response. </param>
-        /// <param name="tags"> Azure resource tags. </param>
-        /// <param name="etag"> Azure resource etag. </param>
-        /// <returns> A new <see cref="ServiceFabric.ServiceFabricApplicationTypeData"/> instance for mocking. </returns>
-        public static ServiceFabricApplicationTypeData ServiceFabricApplicationTypeData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation location = default, string provisioningState = default, IDictionary<string, string> tags = default, string etag = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ServiceFabricApplicationTypeData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                location,
-                provisioningState is null ? default : new ApplicationTypeResourceProperties(provisioningState, null),
-                tags,
-                etag);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="provisioningState"> The current deployment or provisioning state, which only appears in the response. </param>
-        /// <param name="appPackageUri"> The URL to the application package. </param>
-        /// <param name="defaultParameterList"> List of application type parameters that can be overridden when creating or updating the application. </param>
-        /// <param name="tags"> Azure resource tags. </param>
-        /// <param name="etag"> Azure resource etag. </param>
-        /// <returns> A new <see cref="ServiceFabric.ServiceFabricApplicationTypeVersionData"/> instance for mocking. </returns>
-        public static ServiceFabricApplicationTypeVersionData ServiceFabricApplicationTypeVersionData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation location = default, string provisioningState = default, string appPackageUri = default, IReadOnlyDictionary<string, string> defaultParameterList = default, IDictionary<string, string> tags = default, string etag = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ServiceFabricApplicationTypeVersionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                location,
-                provisioningState is null && appPackageUri is null && defaultParameterList is null ? default : new ApplicationTypeVersionResourceProperties(provisioningState, appPackageUri, defaultParameterList, null),
-                tags,
-                etag);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="typeVersion"> The version of the application type as defined in the application manifest. </param>
-        /// <param name="parameters"> List of application parameters with overridden values from their default values specified in the application manifest. </param>
-        /// <param name="upgradePolicy"> Describes the policy for a monitored application upgrade. </param>
-        /// <param name="minimumNodes"> The minimum number of nodes where Service Fabric will reserve capacity for this application. Note that this does not mean that the services of this application will be placed on all of those nodes. If this property is set to zero, no capacity will be reserved. The value of this property cannot be more than the value of the MaximumNodes property. </param>
-        /// <param name="maximumNodes"> The maximum number of nodes where Service Fabric will reserve capacity for this application. Note that this does not mean that the services of this application will be placed on all of those nodes. By default, the value of this property is zero and it means that the services can be placed on any node. </param>
-        /// <param name="removeApplicationCapacity"> Remove the current application capacity settings. </param>
-        /// <param name="metrics"> List of application capacity metric description. </param>
-        /// <param name="managedIdentities"> List of user assigned identities for the application, each mapped to a friendly name. </param>
-        /// <param name="provisioningState"> The current deployment or provisioning state, which only appears in the response. </param>
-        /// <param name="typeName"> The application type name as defined in the application manifest. </param>
-        /// <param name="tags"> Azure resource tags. </param>
-        /// <param name="etag"> Azure resource etag. </param>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <returns> A new <see cref="ServiceFabric.ServiceFabricApplicationData"/> instance for mocking. </returns>
-        public static ServiceFabricApplicationData ServiceFabricApplicationData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation location = default, string typeVersion = default, IDictionary<string, string> parameters = default, ApplicationUpgradePolicy upgradePolicy = default, long? minimumNodes = default, long? maximumNodes = default, bool? removeApplicationCapacity = default, IEnumerable<ApplicationMetricDescription> metrics = default, IEnumerable<ApplicationUserAssignedIdentity> managedIdentities = default, string provisioningState = default, string typeName = default, IDictionary<string, string> tags = default, string etag = default, ManagedIdentity identity = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ServiceFabricApplicationData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                location,
-                typeVersion is null && parameters is null && upgradePolicy is null && minimumNodes is null && maximumNodes is null && removeApplicationCapacity is null && metrics is null && managedIdentities is null && provisioningState is null && typeName is null ? default : new ApplicationResourceProperties(
-                    typeVersion,
-                    parameters,
-                    upgradePolicy,
-                    minimumNodes,
-                    maximumNodes,
-                    removeApplicationCapacity,
-                    (metrics ?? new ChangeTrackingList<ApplicationMetricDescription>()).ToList(),
-                    (managedIdentities ?? new ChangeTrackingList<ApplicationUserAssignedIdentity>()).ToList(),
-                    null,
-                    provisioningState,
-                    typeName),
-                tags,
-                etag,
-                identity);
         }
 
         /// <summary> Defines a health policy used to evaluate the health of an application or one of its children entities. </summary>
@@ -500,38 +401,12 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             return new ArmApplicationHealthPolicy(considerWarningAsError, maxPercentUnhealthyDeployedApplications, defaultServiceTypeHealthPolicy, serviceTypeHealthPolicyMap, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Describes the managed identities for an Azure resource. </summary>
-        /// <param name="principalId"> The principal id of the managed identity. This property will only be provided for a system assigned identity. </param>
-        /// <param name="tenantId"> The tenant id of the managed identity. This property will only be provided for a system assigned identity. </param>
-        /// <param name="type"> The type of managed identity for the resource. </param>
-        /// <param name="userAssignedIdentities">
-        /// The list of user identities associated with the resource. The user identity dictionary key references will be ARM resource ids in the form:
-        /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'.
-        /// </param>
-        /// <returns> A new <see cref="Models.ManagedIdentity"/> instance for mocking. </returns>
-        public static ManagedIdentity ManagedIdentity(string principalId = default, string tenantId = default, ManagedIdentityType? @type = default, IDictionary<string, UserAssignedIdentity> userAssignedIdentities = default)
-        {
-            userAssignedIdentities ??= new ChangeTrackingDictionary<string, UserAssignedIdentity>();
-
-            return new ManagedIdentity(principalId, tenantId, @type, userAssignedIdentities, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Describes a user assigned identity. </summary>
-        /// <param name="principalId"> The principal id of user assigned identity. </param>
-        /// <param name="clientId"> The client id of user assigned identity. </param>
-        /// <returns> A new <see cref="Models.UserAssignedIdentity"/> instance for mocking. </returns>
-        public static UserAssignedIdentity UserAssignedIdentity(string principalId = default, string clientId = default)
-        {
-            return new UserAssignedIdentity(principalId, clientId, additionalBinaryDataProperties: null);
-        }
-
-        /// <param name="id"> Azure resource identifier. </param>
-        /// <param name="name"> Azure resource name. </param>
-        /// <param name="type"> Azure resource type. </param>
-        /// <param name="location"> It will be deprecated in New API, resource location depends on the parent resource. </param>
-        /// <param name="tags"> Azure resource tags. </param>
-        /// <param name="etag"> Azure resource etag. </param>
-        /// <param name="systemData"> Metadata pertaining to creation and last modification of the resource. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="typeVersion"> The version of the application type as defined in the application manifest. </param>
         /// <param name="parameters"> List of application parameters with overridden values from their default values specified in the application manifest. </param>
         /// <param name="upgradePolicy"> Describes the policy for a monitored application upgrade. </param>
@@ -541,19 +416,18 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <param name="metrics"> List of application capacity metric description. </param>
         /// <param name="managedIdentities"> List of user assigned identities for the application, each mapped to a friendly name. </param>
         /// <returns> A new <see cref="Models.ServiceFabricApplicationPatch"/> instance for mocking. </returns>
-        public static ServiceFabricApplicationPatch ServiceFabricApplicationPatch(string id = default, string name = default, string @type = default, string location = default, IDictionary<string, string> tags = default, string etag = default, SystemData systemData = default, string typeVersion = default, IDictionary<string, string> parameters = default, ApplicationUpgradePolicy upgradePolicy = default, long? minimumNodes = default, long? maximumNodes = default, bool? removeApplicationCapacity = default, IEnumerable<ApplicationMetricDescription> metrics = default, IEnumerable<ApplicationUserAssignedIdentity> managedIdentities = default)
+        public static ServiceFabricApplicationPatch ServiceFabricApplicationPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string typeVersion = default, IDictionary<string, string> parameters = default, ApplicationUpgradePolicy upgradePolicy = default, long? minimumNodes = default, long? maximumNodes = default, bool? removeApplicationCapacity = default, IEnumerable<ApplicationMetricDescription> metrics = default, IEnumerable<ApplicationUserAssignedIdentity> managedIdentities = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new ServiceFabricApplicationPatch(
                 id,
                 name,
-                @type,
-                location,
-                tags,
-                etag,
+                resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
+                tags,
+                location,
                 typeVersion is null && parameters is null && upgradePolicy is null && minimumNodes is null && maximumNodes is null && removeApplicationCapacity is null && metrics is null && managedIdentities is null ? default : new ApplicationResourceUpdateProperties(
                     typeVersion,
                     parameters,
@@ -566,29 +440,6 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     null));
         }
 
-        /// <param name="id"> Azure resource identifier. </param>
-        /// <param name="name"> Azure resource name. </param>
-        /// <param name="type"> Azure resource type. </param>
-        /// <param name="location"> It will be deprecated in New API, resource location depends on the parent resource. </param>
-        /// <param name="tags"> Azure resource tags. </param>
-        /// <param name="etag"> Azure resource etag. </param>
-        /// <param name="systemData"> Metadata pertaining to creation and last modification of the resource. </param>
-        /// <returns> A new <see cref="Models.ServiceFabricProxyResource"/> instance for mocking. </returns>
-        public static ServiceFabricProxyResource ServiceFabricProxyResource(string id = default, string name = default, string @type = default, string location = default, IDictionary<string, string> tags = default, string etag = default, SystemData systemData = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ServiceFabricProxyResource(
-                id,
-                name,
-                @type,
-                location,
-                tags,
-                etag,
-                systemData,
-                additionalBinaryDataProperties: null);
-        }
-
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -598,7 +449,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <param name="tags"> Azure resource tags. </param>
         /// <param name="etag"> Azure resource etag. </param>
         /// <returns> A new <see cref="ServiceFabric.ServiceFabricServiceData"/> instance for mocking. </returns>
-        public static ServiceFabricServiceData ServiceFabricServiceData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation location = default, ServiceResourceProperties properties = default, IDictionary<string, string> tags = default, string etag = default)
+        public static ServiceFabricServiceData ServiceFabricServiceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation location = default, ServiceResourceProperties properties = default, IDictionary<string, string> tags = default, ETag? etag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -782,28 +633,27 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 minInstancePercentage);
         }
 
-        /// <param name="id"> Azure resource identifier. </param>
-        /// <param name="name"> Azure resource name. </param>
-        /// <param name="type"> Azure resource type. </param>
-        /// <param name="location"> It will be deprecated in New API, resource location depends on the parent resource. </param>
-        /// <param name="tags"> Azure resource tags. </param>
-        /// <param name="etag"> Azure resource etag. </param>
-        /// <param name="systemData"> Metadata pertaining to creation and last modification of the resource. </param>
+        /// <summary> The service resource for patch operations. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The RP-specific properties for this resource. </param>
         /// <returns> A new <see cref="Models.ServiceFabricServicePatch"/> instance for mocking. </returns>
-        public static ServiceFabricServicePatch ServiceFabricServicePatch(string id = default, string name = default, string @type = default, string location = default, IDictionary<string, string> tags = default, string etag = default, SystemData systemData = default, ServiceResourceUpdateProperties properties = default)
+        public static ServiceFabricServicePatch ServiceFabricServicePatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ServiceResourceUpdateProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new ServiceFabricServicePatch(
                 id,
                 name,
-                @type,
-                location,
-                tags,
-                etag,
+                resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
+                tags,
+                location,
                 properties);
         }
 
@@ -894,27 +744,23 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 instanceCloseDelayDuration);
         }
 
-        /// <summary> The response of a ClusterCodeVersions list operation. </summary>
-        /// <param name="value"> The ClusterCodeVersions items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
-        /// <returns> A new <see cref="Models.ClusterCodeVersionsListResult"/> instance for mocking. </returns>
-        public static ClusterCodeVersionsListResult ClusterCodeVersionsListResult(IEnumerable<ClusterCodeVersionsResult> value = default, Uri nextLink = default)
-        {
-            value ??= new ChangeTrackingList<ClusterCodeVersionsResult>();
-
-            return new ClusterCodeVersionsListResult(value.ToList(), nextLink, additionalBinaryDataProperties: null);
-        }
-
-        /// <param name="id"> The identification of the result. </param>
-        /// <param name="name"> The name of the result. </param>
-        /// <param name="type"> The result resource type. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="codeVersion"> The Service Fabric runtime version of the cluster. </param>
         /// <param name="supportExpireOn"> The date of expiry of support of the version. </param>
         /// <param name="environment"> Indicates if this version is for Windows or Linux operating system. </param>
         /// <returns> A new <see cref="Models.ClusterCodeVersionsResult"/> instance for mocking. </returns>
-        public static ClusterCodeVersionsResult ClusterCodeVersionsResult(string id = default, string name = default, string @type = default, string codeVersion = default, DateTimeOffset? supportExpireOn = default, ClusterEnvironment? environment = default)
+        public static ClusterCodeVersionsResult ClusterCodeVersionsResult(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string codeVersion = default, DateTimeOffset? supportExpireOn = default, ClusterEnvironment? environment = default)
         {
-            return new ClusterCodeVersionsResult(id, name, @type, codeVersion is null && supportExpireOn is null && environment is null ? default : new ClusterVersionDetails(codeVersion, supportExpireOn, environment, null), additionalBinaryDataProperties: null);
+            return new ClusterCodeVersionsResult(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                codeVersion is null && supportExpireOn is null && environment is null ? default : new ClusterVersionDetails(codeVersion, supportExpireOn, environment, null));
         }
 
         /// <summary> Initializes a new instance of ServiceFabricClusterData. </summary>
@@ -982,40 +828,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ServiceFabricClusterData ServiceFabricClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IEnumerable<ClusterAddOnFeature> addOnFeatures, IEnumerable<ClusterVersionDetails> availableClusterVersions, ClusterAadSetting azureActiveDirectory, ClusterCertificateDescription certificate, ClusterServerCertificateCommonNames certificateCommonNames, IEnumerable<ClusterClientCertificateCommonName> clientCertificateCommonNames, IEnumerable<ClusterClientCertificateThumbprint> clientCertificateThumbprints, string clusterCodeVersion, Uri clusterEndpoint, Guid? clusterId, ServiceFabricClusterState? clusterState, DiagnosticsStorageAccountConfig diagnosticsStorageAccountConfig, bool? isEventStoreServiceEnabled, IEnumerable<SettingsSectionDescription> fabricSettings, Uri managementEndpoint, IEnumerable<ClusterNodeTypeDescription> nodeTypes, ServiceFabricProvisioningState? provisioningState, ClusterReliabilityLevel? reliabilityLevel, ClusterCertificateDescription reverseProxyCertificate, ClusterServerCertificateCommonNames reverseProxyCertificateCommonNames, ClusterUpgradePolicy upgradeDescription, ClusterUpgradeMode? upgradeMode, long? maxUnusedVersionsToKeep, string vmImage, SfZonalUpgradeMode? serviceFabricZonalUpgradeMode, VmssZonalUpgradeMode? vmssZonalUpgradeMode, bool? isInfrastructureServiceManagerEnabled, ClusterUpgradeCadence? upgradeWave, DateTimeOffset? upgradePauseStartOn, DateTimeOffset? upgradePauseEndOn, bool? isWaveUpgradePaused, IEnumerable<ClusterNotification> notifications, ETag? etag)
         {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-            addOnFeatures ??= new ChangeTrackingList<ClusterAddOnFeature>();
-            availableClusterVersions ??= new ChangeTrackingList<ClusterVersionDetails>();
-            clientCertificateCommonNames ??= new ChangeTrackingList<ClusterClientCertificateCommonName>();
-            clientCertificateThumbprints ??= new ChangeTrackingList<ClusterClientCertificateThumbprint>();
-            fabricSettings ??= new ChangeTrackingList<SettingsSectionDescription>();
-            nodeTypes ??= new ChangeTrackingList<ClusterNodeTypeDescription>();
-            notifications ??= new ChangeTrackingList<ClusterNotification>();
-
-            return new ServiceFabricClusterData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                default,
-                default);
-        }
-
-        /// <summary> Initializes a new instance of ClusterCodeVersionsResult. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="codeVersion"> The Service Fabric runtime version of the cluster. </param>
-        /// <param name="supportExpireOn"> The date of expiry of support of the version. </param>
-        /// <param name="environment"> Indicates if this version is for Windows or Linux operating system. </param>
-        /// <returns> A new <see cref="Models.ClusterCodeVersionsResult"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ClusterCodeVersionsResult ClusterCodeVersionsResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string codeVersion, DateTimeOffset? supportExpireOn, ClusterEnvironment? environment)
-        {
-            return new ClusterCodeVersionsResult(id, name, default, default, additionalBinaryDataProperties: null);
+            return ServiceFabricClusterData(id, name, resourceType, systemData, tags, location, addOnFeatures, availableClusterVersions, azureActiveDirectory, certificate, certificateCommonNames, clientCertificateCommonNames, clientCertificateThumbprints, clusterCodeVersion, clusterEndpoint, clusterId, clusterState, diagnosticsStorageAccountConfig, isEventStoreServiceEnabled, fabricSettings, managementEndpoint, nodeTypes, provisioningState, reliabilityLevel, reverseProxyCertificate, reverseProxyCertificateCommonNames, upgradeDescription, upgradeMode, vmImage, serviceFabricZonalUpgradeMode, vmssZonalUpgradeMode, isInfrastructureServiceManagerEnabled, upgradeWave, upgradePauseStartOn, upgradePauseEndOn, isWaveUpgradePaused, notifications, isHttpGatewayExclusiveAuthModeEnabled: default, maxUnusedVersionsToKeep, etag);
         }
 
         /// <summary> Initializes a new instance of ServiceFabricApplicationTypeData. </summary>
@@ -1028,8 +841,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <param name="provisioningState"> The current deployment or provisioning state, which only appears in the response. </param>
         /// <param name="etag"> Azure resource etag. </param>
         /// <returns> A new <see cref="ServiceFabric.ServiceFabricApplicationTypeData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ServiceFabricApplicationTypeData ServiceFabricApplicationTypeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string provisioningState, ETag? etag)
+        public static ServiceFabricApplicationTypeData ServiceFabricApplicationTypeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string provisioningState = default, ETag? etag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1057,8 +869,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <param name="defaultParameterList"> List of application type parameters that can be overridden when creating or updating the application. </param>
         /// <param name="etag"> Azure resource etag. </param>
         /// <returns> A new <see cref="ServiceFabric.ServiceFabricApplicationTypeVersionData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ServiceFabricApplicationTypeVersionData ServiceFabricApplicationTypeVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string provisioningState, Uri appPackageUri, IReadOnlyDictionary<string, string> defaultParameterList, ETag? etag)
+        public static ServiceFabricApplicationTypeVersionData ServiceFabricApplicationTypeVersionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string provisioningState = default, Uri appPackageUri = default, IReadOnlyDictionary<string, string> defaultParameterList = default, ETag? etag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             defaultParameterList ??= new ChangeTrackingDictionary<string, string>();
@@ -1095,8 +906,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <param name="typeName"> The application type name as defined in the application manifest. </param>
         /// <param name="etag"> Azure resource etag. </param>
         /// <returns> A new <see cref="ServiceFabric.ServiceFabricApplicationData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ServiceFabricApplicationData ServiceFabricApplicationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string typeVersion, IDictionary<string, string> parameters, ApplicationUpgradePolicy upgradePolicy, long? minimumNodes, long? maximumNodes, bool? removeApplicationCapacity, IEnumerable<ApplicationMetricDescription> metrics, IEnumerable<ApplicationUserAssignedIdentity> managedIdentities, string provisioningState, string typeName, ETag? etag)
+        public static ServiceFabricApplicationData ServiceFabricApplicationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ManagedServiceIdentity identity = default, string typeVersion = default, IDictionary<string, string> parameters = default, ApplicationUpgradePolicy upgradePolicy = default, long? minimumNodes = default, long? maximumNodes = default, bool? removeApplicationCapacity = default, IEnumerable<ApplicationMetricDescription> metrics = default, IEnumerable<ApplicationUserAssignedIdentity> managedIdentities = default, string provisioningState = default, string typeName = default, ETag? etag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             parameters ??= new ChangeTrackingDictionary<string, string>();
@@ -1144,12 +954,11 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             return new ServiceFabricApplicationPatch(
                 id,
                 name,
-                default,
-                location,
-                tags,
-                default,
+                resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
+                tags,
+                location,
                 default);
         }
     }

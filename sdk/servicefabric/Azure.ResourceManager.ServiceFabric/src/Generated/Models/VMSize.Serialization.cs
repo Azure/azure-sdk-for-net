@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             {
                 throw new FormatException($"The model {nameof(VMSize)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(Size))
+            if (options.Format != "W" && Optional.IsDefined(VmSize))
             {
                 writer.WritePropertyName("size"u8);
-                writer.WriteStringValue(Size);
+                writer.WriteStringValue(VmSize);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -121,13 +121,13 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             {
                 return null;
             }
-            string size = default;
+            string vmSize = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("size"u8))
                 {
-                    size = prop.Value.GetString();
+                    vmSize = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new VMSize(size, additionalBinaryDataProperties);
+            return new VMSize(vmSize, additionalBinaryDataProperties);
         }
     }
 }

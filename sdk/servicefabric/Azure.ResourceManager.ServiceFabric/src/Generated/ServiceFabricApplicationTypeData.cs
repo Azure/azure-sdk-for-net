@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.ServiceFabric.Models;
@@ -35,7 +36,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="properties"> The application type name properties. </param>
         /// <param name="tags"> Azure resource tags. </param>
         /// <param name="eTag"> Azure resource etag. </param>
-        internal ServiceFabricApplicationTypeData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation location, ApplicationTypeResourceProperties properties, IDictionary<string, string> tags, string eTag) : base(id, name, resourceType, systemData, tags, location)
+        internal ServiceFabricApplicationTypeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation location, ApplicationTypeResourceProperties properties, IDictionary<string, string> tags, ETag? eTag) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.ServiceFabric
         internal ApplicationTypeResourceProperties Properties { get; set; }
 
         /// <summary> Azure resource etag. </summary>
-        public string ETag { get; }
+        public ETag? ETag { get; }
 
         /// <summary> The current deployment or provisioning state, which only appears in the response. </summary>
         public string ProvisioningState

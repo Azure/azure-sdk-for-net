@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.ServiceFabric.Models;
@@ -35,7 +36,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The cluster resource properties. </param>
         /// <param name="eTag"> Azure resource etag. </param>
-        internal ServiceFabricClusterData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, ClusterProperties properties, string eTag) : base(id, name, resourceType, systemData, tags, location)
+        internal ServiceFabricClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, ClusterProperties properties, ETag? eTag) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.ServiceFabric
         internal ClusterProperties Properties { get; set; }
 
         /// <summary> Azure resource etag. </summary>
-        public string ETag { get; }
+        public ETag? ETag { get; }
 
         /// <summary> The list of add-on features to enable in the cluster. </summary>
         public IList<ClusterAddOnFeature> AddOnFeatures
@@ -62,7 +63,7 @@ namespace Azure.ResourceManager.ServiceFabric
         }
 
         /// <summary> The Service Fabric runtime versions available for this cluster. </summary>
-        public IReadOnlyList<ClusterVersionDetails> AvailableClusterVersions
+        public IReadOnlyList<Models.ClusterVersionDetails> AvailableClusterVersions
         {
             get
             {
@@ -178,7 +179,7 @@ namespace Azure.ResourceManager.ServiceFabric
         }
 
         /// <summary> A service generated unique identifier for the cluster resource. </summary>
-        public string ClusterId
+        public Guid? ClusterId
         {
             get
             {
@@ -522,11 +523,11 @@ namespace Azure.ResourceManager.ServiceFabric
         }
 
         /// <summary> If true, token-based authentication is not allowed on the HttpGatewayEndpoint. This is required to support TLS versions 1.3 and above. If token-based authentication is used, HttpGatewayTokenAuthEndpointPort must be defined. </summary>
-        public bool? EnableHttpGatewayExclusiveAuthMode
+        public bool? IsHttpGatewayExclusiveAuthModeEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.EnableHttpGatewayExclusiveAuthMode;
+                return Properties is null ? default : Properties.IsHttpGatewayExclusiveAuthModeEnabled;
             }
             set
             {
@@ -534,7 +535,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 {
                     Properties = new ClusterProperties();
                 }
-                Properties.EnableHttpGatewayExclusiveAuthMode = value.Value;
+                Properties.IsHttpGatewayExclusiveAuthModeEnabled = value.Value;
             }
         }
 
