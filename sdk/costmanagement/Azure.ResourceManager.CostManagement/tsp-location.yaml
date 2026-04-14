@@ -1,0 +1,4 @@
+directory: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement
+commit: 7c5932c7a6c582b859ff34ca2d502df15301d1e5
+repo: Azure/azure-rest-api-specs
+emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"
