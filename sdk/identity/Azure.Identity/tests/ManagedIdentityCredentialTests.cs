@@ -520,7 +520,7 @@ namespace Azure.Identity.Tests
 
             ManagedIdentityCredential credential = InstrumentClient(new ManagedIdentityCredential(
                 new ManagedIdentityClient(
-                    new ManagedIdentityClientOptions() { ManagedIdentityId = clientId is null ? ManagedIdentityId.SystemAssigned : ManagedIdentityId.FromUserAssignedClientId(clientId), Pipeline = pipeline, IsForceRefreshEnabled = true, Options = options })
+                    new ManagedIdentityClientOptions() { ManagedIdentityId = clientId is null ? ManagedIdentityId.SystemAssigned : ManagedIdentityId.FromUserAssignedClientId(clientId), Pipeline = pipeline, IsForceRefreshEnabled = true, PreserveTransport = true, Options = options })
             ));
 
             AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
@@ -558,6 +558,7 @@ namespace Azure.Identity.Tests
                         Pipeline = CredentialPipeline.GetInstance(options),
                         ManagedIdentityId = ManagedIdentityId.FromUserAssignedResourceId(new ResourceIdentifier(_expectedResourceId)),
                         IsForceRefreshEnabled = true,
+                        PreserveTransport = true,
                         Options = options
                     })
             ));
