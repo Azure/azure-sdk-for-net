@@ -12,6 +12,29 @@
   - `NetworkSecurityPerimeterLoggingConfiguration`
   - `NetworkSecurityPerimeterProfile`
 
+## 1.1.0-beta.2 (2026-03-24)
+
+### Features Added
+
+- Added remaining Network resource types, bringing the total from 37 to 120 resources.
+- Added polymorphic type support for `BaseAdminRule` (`NetworkAdminRule`, `NetworkDefaultAdminRule`), `FirewallPolicyRuleCollectionInfo`, and `FirewallPolicyRule` subtypes.
+
+### Bugs Fixed
+
+- Fixed `Name` property to be writable on `FirewallPolicyDraft`, `FrontendIPConfiguration`, `LoadBalancingRule`, `NetworkInterfaceIPConfiguration`, `OutboundRule`, and `ProbeResource`.
+
+## 1.1.0-beta.1 (2026-03-11)
+
+### Features Added
+
+- Added support for `NetworkSecurityPerimeter` resources:
+  - `NetworkSecurityPerimeter`
+  - `NetworkSecurityPerimeterAccessRule`
+  - `NetworkSecurityPerimeterAssociation`
+  - `NetworkSecurityPerimeterLink`
+  - `NetworkSecurityPerimeterLoggingConfiguration`
+  - `NetworkSecurityPerimeterProfile`
+
 ## 1.0.0 (2026-03-04)
 
 ### Features Added
