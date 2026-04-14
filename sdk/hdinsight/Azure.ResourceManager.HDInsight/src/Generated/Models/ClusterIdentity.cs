@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <summary> Initializes a new instance of <see cref="ClusterIdentity"/>. </summary>
         public ClusterIdentity()
         {
-            UserAssignedIdentities = new ChangeTrackingDictionary<string, UserAssignedIdentity>();
+            UserAssignedIdentities = new ChangeTrackingDictionary<string, HDInsightClusterUserAssignedIdentity>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ClusterIdentity"/>. </summary>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="type"> The type of identity used for the cluster. The type 'SystemAssigned, UserAssigned' includes both an implicitly created identity and a set of user assigned identities. </param>
         /// <param name="userAssignedIdentities"> The list of user identities associated with the cluster. The user identity dictionary key references will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterIdentity(string principalId, string tenantId, ResourceIdentityType? @type, IDictionary<string, UserAssignedIdentity> userAssignedIdentities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ClusterIdentity(string principalId, string tenantId, ResourceIdentityType? @type, IDictionary<string, HDInsightClusterUserAssignedIdentity> userAssignedIdentities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PrincipalId = principalId;
             TenantId = tenantId;
@@ -48,6 +48,6 @@ namespace Azure.ResourceManager.HDInsight.Models
         public ResourceIdentityType? Type { get; set; }
 
         /// <summary> The list of user identities associated with the cluster. The user identity dictionary key references will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'. </summary>
-        public IDictionary<string, UserAssignedIdentity> UserAssignedIdentities { get; }
+        public IDictionary<string, HDInsightClusterUserAssignedIdentity> UserAssignedIdentities { get; }
     }
 }

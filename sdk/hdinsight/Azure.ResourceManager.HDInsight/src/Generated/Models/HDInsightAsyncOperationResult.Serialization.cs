@@ -14,59 +14,59 @@ using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary> A list of private link resources. </summary>
-    internal partial class HDInsightPrivateLinkResourceListResult : IJsonModel<HDInsightPrivateLinkResourceListResult>
+    /// <summary> The azure async operation response. </summary>
+    public partial class HDInsightAsyncOperationResult : IJsonModel<HDInsightAsyncOperationResult>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual HDInsightPrivateLinkResourceListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual HDInsightAsyncOperationResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HDInsightPrivateLinkResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HDInsightAsyncOperationResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeHDInsightPrivateLinkResourceListResult(document.RootElement, options);
+                        return DeserializeHDInsightAsyncOperationResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HDInsightPrivateLinkResourceListResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightAsyncOperationResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HDInsightPrivateLinkResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HDInsightAsyncOperationResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerHDInsightContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(HDInsightPrivateLinkResourceListResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightAsyncOperationResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<HDInsightPrivateLinkResourceListResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<HDInsightAsyncOperationResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HDInsightPrivateLinkResourceListResult IPersistableModel<HDInsightPrivateLinkResourceListResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        HDInsightAsyncOperationResult IPersistableModel<HDInsightAsyncOperationResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<HDInsightPrivateLinkResourceListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<HDInsightAsyncOperationResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="HDInsightPrivateLinkResourceListResult"/> from. </param>
-        internal static HDInsightPrivateLinkResourceListResult FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="HDInsightAsyncOperationResult"/> from. </param>
+        internal static HDInsightAsyncOperationResult FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeHDInsightPrivateLinkResourceListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeHDInsightAsyncOperationResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<HDInsightPrivateLinkResourceListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<HDInsightAsyncOperationResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -77,20 +77,20 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HDInsightPrivateLinkResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HDInsightAsyncOperationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HDInsightPrivateLinkResourceListResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightAsyncOperationResult)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(Value))
+            if (Optional.IsDefined(Status))
             {
-                writer.WritePropertyName("value"u8);
-                writer.WriteStartArray();
-                foreach (HDInsightPrivateLinkResourceData item in Value)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToString());
+            }
+            if (Optional.IsDefined(Error))
+            {
+                writer.WritePropertyName("error"u8);
+                writer.WriteObjectValue(Error, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -111,45 +111,50 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HDInsightPrivateLinkResourceListResult IJsonModel<HDInsightPrivateLinkResourceListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        HDInsightAsyncOperationResult IJsonModel<HDInsightAsyncOperationResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual HDInsightPrivateLinkResourceListResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual HDInsightAsyncOperationResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HDInsightPrivateLinkResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HDInsightAsyncOperationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HDInsightPrivateLinkResourceListResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightAsyncOperationResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeHDInsightPrivateLinkResourceListResult(document.RootElement, options);
+            return DeserializeHDInsightAsyncOperationResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static HDInsightPrivateLinkResourceListResult DeserializeHDInsightPrivateLinkResourceListResult(JsonElement element, ModelReaderWriterOptions options)
+        internal static HDInsightAsyncOperationResult DeserializeHDInsightAsyncOperationResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<HDInsightPrivateLinkResourceData> value = default;
+            HDInsightAsyncOperationState? status = default;
+            Errors error = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("value"u8))
+                if (prop.NameEquals("status"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<HDInsightPrivateLinkResourceData> array = new List<HDInsightPrivateLinkResourceData>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    status = new HDInsightAsyncOperationState(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("error"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        array.Add(HDInsightPrivateLinkResourceData.DeserializeHDInsightPrivateLinkResourceData(item, options));
+                        continue;
                     }
-                    value = array;
+                    error = Errors.DeserializeErrors(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -157,7 +162,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new HDInsightPrivateLinkResourceListResult(value ?? new ChangeTrackingList<HDInsightPrivateLinkResourceData>(), additionalBinaryDataProperties);
+            return new HDInsightAsyncOperationResult(status, error, additionalBinaryDataProperties);
         }
     }
 }

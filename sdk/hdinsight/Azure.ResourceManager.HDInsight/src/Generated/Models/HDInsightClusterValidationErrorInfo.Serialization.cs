@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             string code = default;
             string message = default;
             string errorResource = default;
-            IList<string> messageArguments = default;
+            IReadOnlyList<string> messageArguments = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

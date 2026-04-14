@@ -11,22 +11,22 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.HDInsight.Models
 {
     /// <summary> The User Assigned Identity. </summary>
-    public partial class UserAssignedIdentity
+    public partial class HDInsightClusterUserAssignedIdentity
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="UserAssignedIdentity"/>. </summary>
-        public UserAssignedIdentity()
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterUserAssignedIdentity"/>. </summary>
+        public HDInsightClusterUserAssignedIdentity()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="UserAssignedIdentity"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterUserAssignedIdentity"/>. </summary>
         /// <param name="principalId"> The principal id of user assigned identity. </param>
         /// <param name="clientId"> The client id of user assigned identity. </param>
         /// <param name="tenantId"> The tenant id of user assigned identity. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UserAssignedIdentity(string principalId, string clientId, string tenantId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HDInsightClusterUserAssignedIdentity(string principalId, string clientId, string tenantId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PrincipalId = principalId;
             ClientId = clientId;

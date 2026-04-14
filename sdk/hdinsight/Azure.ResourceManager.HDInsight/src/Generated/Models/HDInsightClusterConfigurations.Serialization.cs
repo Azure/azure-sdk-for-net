@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            IDictionary<string, IDictionary<string, string>> configurations = default;
+            IReadOnlyDictionary<string, IDictionary<string, string>> configurations = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

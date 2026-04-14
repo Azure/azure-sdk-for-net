@@ -34,6 +34,7 @@ namespace Azure.ResourceManager.HDInsight
     [ModelReaderWriterBuildable(typeof(HDInsightApplicationHttpsEndpoint))]
     [ModelReaderWriterBuildable(typeof(HDInsightApplicationProperties))]
     [ModelReaderWriterBuildable(typeof(HDInsightApplicationResource))]
+    [ModelReaderWriterBuildable(typeof(HDInsightAsyncOperationResult))]
     [ModelReaderWriterBuildable(typeof(HDInsightAutoScaleCapacity))]
     [ModelReaderWriterBuildable(typeof(HDInsightAutoScaleConfiguration))]
     [ModelReaderWriterBuildable(typeof(HDInsightAutoScaleConfigurationUpdateContent))]
@@ -50,7 +51,6 @@ namespace Azure.ResourceManager.HDInsight
     [ModelReaderWriterBuildable(typeof(HDInsightCapabilitiesResult))]
     [ModelReaderWriterBuildable(typeof(HDInsightClusterAaddsDetail))]
     [ModelReaderWriterBuildable(typeof(HDInsightClusterConfigurations))]
-    [ModelReaderWriterBuildable(typeof(HDInsightClusterCreateExtensionContent))]
     [ModelReaderWriterBuildable(typeof(HDInsightClusterCreateOrUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(HDInsightClusterCreationValidateContent))]
     [ModelReaderWriterBuildable(typeof(HDInsightClusterCreationValidateResult))]
@@ -71,6 +71,7 @@ namespace Azure.ResourceManager.HDInsight
     [ModelReaderWriterBuildable(typeof(HDInsightClusterRole))]
     [ModelReaderWriterBuildable(typeof(HDInsightClusterUpdateGatewaySettingsContent))]
     [ModelReaderWriterBuildable(typeof(HDInsightClusterUpdateIdentityCertificateContent))]
+    [ModelReaderWriterBuildable(typeof(HDInsightClusterUserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(HDInsightClusterValidationErrorInfo))]
     [ModelReaderWriterBuildable(typeof(HDInsightComputeIsolationProperties))]
     [ModelReaderWriterBuildable(typeof(HDInsightDiskBillingMeters))]
@@ -120,7 +121,6 @@ namespace Azure.ResourceManager.HDInsight
     [ModelReaderWriterBuildable(typeof(StorageProfile))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UsagesListResult))]
-    [ModelReaderWriterBuildable(typeof(Models.UserAssignedIdentity))]
     public partial class AzureResourceManagerHDInsightContext : ModelReaderWriterContext
     {
     }

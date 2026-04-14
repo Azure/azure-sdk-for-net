@@ -7,39 +7,32 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary> The response of a PrivateLinkResource list operation. </summary>
+    /// <summary> A list of private link resources. </summary>
     internal partial class HDInsightPrivateLinkResourceListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HDInsightPrivateLinkResourceListResult"/>. </summary>
-        /// <param name="value"> The PrivateLinkResource items on this page. </param>
-        internal HDInsightPrivateLinkResourceListResult(IEnumerable<HDInsightPrivateLinkResourceData> value)
+        internal HDInsightPrivateLinkResourceListResult()
         {
-            Value = value.ToList();
+            Value = new ChangeTrackingList<HDInsightPrivateLinkResourceData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="HDInsightPrivateLinkResourceListResult"/>. </summary>
-        /// <param name="value"> The PrivateLinkResource items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <param name="value"> Array of private link resources. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HDInsightPrivateLinkResourceListResult(IList<HDInsightPrivateLinkResourceData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HDInsightPrivateLinkResourceListResult(IList<HDInsightPrivateLinkResourceData> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
-            NextLink = nextLink;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The PrivateLinkResource items on this page. </summary>
+        /// <summary> Array of private link resources. </summary>
         public IList<HDInsightPrivateLinkResourceData> Value { get; }
-
-        /// <summary> The link to the next page of items. </summary>
-        public Uri NextLink { get; }
     }
 }

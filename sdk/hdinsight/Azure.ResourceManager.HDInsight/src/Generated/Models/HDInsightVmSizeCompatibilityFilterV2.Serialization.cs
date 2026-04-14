@@ -217,12 +217,12 @@ namespace Azure.ResourceManager.HDInsight.Models
                 return null;
             }
             HDInsightFilterMode? filterMode = default;
-            IList<string> regions = default;
-            IList<string> clusterFlavors = default;
-            IList<string> nodeTypes = default;
-            IList<string> clusterVersions = default;
+            IReadOnlyList<string> regions = default;
+            IReadOnlyList<string> clusterFlavors = default;
+            IReadOnlyList<string> nodeTypes = default;
+            IReadOnlyList<string> clusterVersions = default;
             IList<HDInsightOSType> osType = default;
-            IList<string> vmSizes = default;
+            IReadOnlyList<string> vmSizes = default;
             string espApplied = default;
             string computeIsolationSupported = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();

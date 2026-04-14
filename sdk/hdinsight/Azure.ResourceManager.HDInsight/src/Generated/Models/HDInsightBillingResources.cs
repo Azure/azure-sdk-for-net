@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="billingMeters"> The billing meter information. </param>
         /// <param name="diskBillingMeters"> The managed disk billing information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HDInsightBillingResources(string region, IList<HDInsightBillingMeters> billingMeters, IList<HDInsightDiskBillingMeters> diskBillingMeters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HDInsightBillingResources(string region, IReadOnlyList<HDInsightBillingMeters> billingMeters, IReadOnlyList<HDInsightDiskBillingMeters> diskBillingMeters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Region = region;
             BillingMeters = billingMeters;
@@ -41,9 +41,9 @@ namespace Azure.ResourceManager.HDInsight.Models
         public string Region { get; }
 
         /// <summary> The billing meter information. </summary>
-        public IList<HDInsightBillingMeters> BillingMeters { get; }
+        public IReadOnlyList<HDInsightBillingMeters> BillingMeters { get; }
 
         /// <summary> The managed disk billing information. </summary>
-        public IList<HDInsightDiskBillingMeters> DiskBillingMeters { get; }
+        public IReadOnlyList<HDInsightDiskBillingMeters> DiskBillingMeters { get; }
     }
 }

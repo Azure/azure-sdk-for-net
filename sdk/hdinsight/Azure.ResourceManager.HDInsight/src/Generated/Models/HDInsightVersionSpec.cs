@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="isDefault"> Whether or not the version is the default version. </param>
         /// <param name="componentVersions"> The component version property. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HDInsightVersionSpec(string friendlyName, string displayName, bool? isDefault, IDictionary<string, string> componentVersions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HDInsightVersionSpec(string friendlyName, string displayName, bool? isDefault, IReadOnlyDictionary<string, string> componentVersions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FriendlyName = friendlyName;
             DisplayName = displayName;
@@ -48,6 +48,6 @@ namespace Azure.ResourceManager.HDInsight.Models
         public bool? IsDefault { get; }
 
         /// <summary> The component version property. </summary>
-        public IDictionary<string, string> ComponentVersions { get; }
+        public IReadOnlyDictionary<string, string> ComponentVersions { get; }
     }
 }

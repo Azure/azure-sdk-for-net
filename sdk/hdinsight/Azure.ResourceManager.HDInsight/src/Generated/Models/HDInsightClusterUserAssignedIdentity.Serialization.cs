@@ -14,51 +14,51 @@ using Azure.ResourceManager.HDInsight;
 namespace Azure.ResourceManager.HDInsight.Models
 {
     /// <summary> The User Assigned Identity. </summary>
-    public partial class UserAssignedIdentity : IJsonModel<UserAssignedIdentity>
+    public partial class HDInsightClusterUserAssignedIdentity : IJsonModel<HDInsightClusterUserAssignedIdentity>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual UserAssignedIdentity PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual HDInsightClusterUserAssignedIdentity PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<UserAssignedIdentity>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HDInsightClusterUserAssignedIdentity>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeUserAssignedIdentity(document.RootElement, options);
+                        return DeserializeHDInsightClusterUserAssignedIdentity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UserAssignedIdentity)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightClusterUserAssignedIdentity)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<UserAssignedIdentity>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HDInsightClusterUserAssignedIdentity>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerHDInsightContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(UserAssignedIdentity)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightClusterUserAssignedIdentity)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<UserAssignedIdentity>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<HDInsightClusterUserAssignedIdentity>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        UserAssignedIdentity IPersistableModel<UserAssignedIdentity>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        HDInsightClusterUserAssignedIdentity IPersistableModel<HDInsightClusterUserAssignedIdentity>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<UserAssignedIdentity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<HDInsightClusterUserAssignedIdentity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<UserAssignedIdentity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<HDInsightClusterUserAssignedIdentity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<UserAssignedIdentity>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HDInsightClusterUserAssignedIdentity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UserAssignedIdentity)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightClusterUserAssignedIdentity)} does not support writing '{format}' format.");
             }
             if (options.Format != "W" && Optional.IsDefined(PrincipalId))
             {
@@ -108,24 +108,24 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        UserAssignedIdentity IJsonModel<UserAssignedIdentity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        HDInsightClusterUserAssignedIdentity IJsonModel<HDInsightClusterUserAssignedIdentity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual UserAssignedIdentity JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual HDInsightClusterUserAssignedIdentity JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<UserAssignedIdentity>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HDInsightClusterUserAssignedIdentity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UserAssignedIdentity)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightClusterUserAssignedIdentity)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUserAssignedIdentity(document.RootElement, options);
+            return DeserializeHDInsightClusterUserAssignedIdentity(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static UserAssignedIdentity DeserializeUserAssignedIdentity(JsonElement element, ModelReaderWriterOptions options)
+        internal static HDInsightClusterUserAssignedIdentity DeserializeHDInsightClusterUserAssignedIdentity(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new UserAssignedIdentity(principalId, clientId, tenantId, additionalBinaryDataProperties);
+            return new HDInsightClusterUserAssignedIdentity(principalId, clientId, tenantId, additionalBinaryDataProperties);
         }
     }
 }

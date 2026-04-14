@@ -159,10 +159,10 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            IList<HDInsightClusterValidationErrorInfo> validationErrors = default;
-            IList<HDInsightClusterValidationErrorInfo> validationWarnings = default;
+            IReadOnlyList<HDInsightClusterValidationErrorInfo> validationErrors = default;
+            IReadOnlyList<HDInsightClusterValidationErrorInfo> validationWarnings = default;
             TimeSpan? estimatedCreationDuration = default;
-            IList<HDInsightClusterAaddsDetail> aaddsResourcesDetails = default;
+            IReadOnlyList<HDInsightClusterAaddsDetail> aaddsResourcesDetails = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

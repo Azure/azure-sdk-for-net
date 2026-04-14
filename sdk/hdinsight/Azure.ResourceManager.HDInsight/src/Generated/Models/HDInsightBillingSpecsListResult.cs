@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="vmSizeProperties"> The vm size properties. </param>
         /// <param name="billingResources"> The billing and managed disk billing resources for a region. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HDInsightBillingSpecsListResult(IList<string> vmSizes, IList<string> vmSizesWithEncryptionAtHost, IList<HDInsightVmSizeCompatibilityFilterV2> vmSizeFilters, IReadOnlyList<HDInsightVmSizeProperty> vmSizeProperties, IList<HDInsightBillingResources> billingResources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HDInsightBillingSpecsListResult(IReadOnlyList<string> vmSizes, IReadOnlyList<string> vmSizesWithEncryptionAtHost, IReadOnlyList<HDInsightVmSizeCompatibilityFilterV2> vmSizeFilters, IReadOnlyList<HDInsightVmSizeProperty> vmSizeProperties, IReadOnlyList<HDInsightBillingResources> billingResources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VmSizes = vmSizes;
             VmSizesWithEncryptionAtHost = vmSizesWithEncryptionAtHost;
@@ -45,18 +45,18 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> The virtual machine sizes to include or exclude. </summary>
-        public IList<string> VmSizes { get; }
+        public IReadOnlyList<string> VmSizes { get; }
 
         /// <summary> The vm sizes which enable encryption at host. </summary>
-        public IList<string> VmSizesWithEncryptionAtHost { get; }
+        public IReadOnlyList<string> VmSizesWithEncryptionAtHost { get; }
 
         /// <summary> The virtual machine filtering mode. Effectively this can enabling or disabling the virtual machine sizes in a particular set. </summary>
-        public IList<HDInsightVmSizeCompatibilityFilterV2> VmSizeFilters { get; }
+        public IReadOnlyList<HDInsightVmSizeCompatibilityFilterV2> VmSizeFilters { get; }
 
         /// <summary> The vm size properties. </summary>
         public IReadOnlyList<HDInsightVmSizeProperty> VmSizeProperties { get; }
 
         /// <summary> The billing and managed disk billing resources for a region. </summary>
-        public IList<HDInsightBillingResources> BillingResources { get; }
+        public IReadOnlyList<HDInsightBillingResources> BillingResources { get; }
     }
 }

@@ -64,9 +64,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(hdInsightClusterUpdateGatewaySettingsContent, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(hdInsightClusterUpdateGatewaySettingsContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

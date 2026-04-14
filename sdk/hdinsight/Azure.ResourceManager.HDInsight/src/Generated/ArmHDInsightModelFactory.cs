@@ -10,10 +10,10 @@ using System.Collections.Generic;
 using System.Linq;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.HDInsight;
+using Azure.ResourceManager.HDInsight.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.HDInsight.Models
+namespace Azure.ResourceManager.HDInsight
 {
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmHDInsightModelFactory
@@ -55,13 +55,13 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="marketplaceIdentifier"> The marketplace identifier. </param>
         /// <param name="privateLinkConfigurations"> The private link configurations. </param>
         /// <returns> A new <see cref="Models.HDInsightApplicationProperties"/> instance for mocking. </returns>
-        public static HDInsightApplicationProperties HDInsightApplicationProperties(IEnumerable<HDInsightClusterRole> computeRoles = default, IEnumerable<RuntimeScriptAction> installScriptActions = default, IEnumerable<RuntimeScriptAction> uninstallScriptActions = default, IEnumerable<HDInsightApplicationHttpsEndpoint> httpsEndpoints = default, IEnumerable<HDInsightApplicationEndpoint> sshEndpoints = default, string provisioningState = default, string applicationType = default, string applicationState = default, IEnumerable<Errors> errors = default, string createdDate = default, string marketplaceIdentifier = default, IEnumerable<HDInsightPrivateLinkConfiguration> privateLinkConfigurations = default)
+        public static HDInsightApplicationProperties HDInsightApplicationProperties(IEnumerable<HDInsightClusterRole> computeRoles = default, IEnumerable<RuntimeScriptAction> installScriptActions = default, IEnumerable<RuntimeScriptAction> uninstallScriptActions = default, IEnumerable<HDInsightApplicationHttpsEndpoint> httpsEndpoints = default, IEnumerable<HDInsightApplicationEndpoint> sshEndpoints = default, string provisioningState = default, string applicationType = default, string applicationState = default, IEnumerable<ResponseError> errors = default, string createdDate = default, string marketplaceIdentifier = default, IEnumerable<HDInsightPrivateLinkConfiguration> privateLinkConfigurations = default)
         {
             installScriptActions ??= new ChangeTrackingList<RuntimeScriptAction>();
             uninstallScriptActions ??= new ChangeTrackingList<RuntimeScriptAction>();
             httpsEndpoints ??= new ChangeTrackingList<HDInsightApplicationHttpsEndpoint>();
             sshEndpoints ??= new ChangeTrackingList<HDInsightApplicationEndpoint>();
-            errors ??= new ChangeTrackingList<Errors>();
+            errors ??= new ChangeTrackingList<ResponseError>();
             privateLinkConfigurations ??= new ChangeTrackingList<HDInsightPrivateLinkConfiguration>();
 
             return new HDInsightApplicationProperties(
@@ -275,9 +275,9 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="privateLinkConfigurations"> The private link configurations. </param>
         /// <param name="privateEndpointConnections"> The list of private endpoint connections. </param>
         /// <returns> A new <see cref="Models.HDInsightClusterProperties"/> instance for mocking. </returns>
-        public static HDInsightClusterProperties HDInsightClusterProperties(string clusterVersion = default, string clusterHdpVersion = default, HDInsightOSType? osType = default, HDInsightTier? tier = default, string clusterId = default, HDInsightClusterDefinition clusterDefinition = default, KafkaRestProperties kafkaRestProperties = default, HDInsightSecurityProfile securityProfile = default, IEnumerable<HDInsightClusterRole> computeRoles = default, HDInsightClusterProvisioningState? provisioningState = default, string createdDate = default, string clusterState = default, int? quotaInfoCoresUsed = default, IEnumerable<Errors> errors = default, IEnumerable<ConnectivityEndpoint> connectivityEndpoints = default, HDInsightDiskEncryptionProperties diskEncryptionProperties = default, bool? isEncryptionInTransitEnabled = default, IEnumerable<HDInsightStorageAccountInfo> storageStorageaccounts = default, string minSupportedTlsVersion = default, ExcludedServicesConfig excludedServicesConfig = default, HDInsightClusterNetworkProperties networkProperties = default, HDInsightComputeIsolationProperties computeIsolationProperties = default, IEnumerable<HDInsightPrivateLinkConfiguration> privateLinkConfigurations = default, IEnumerable<HDInsightPrivateEndpointConnectionData> privateEndpointConnections = default)
+        public static HDInsightClusterProperties HDInsightClusterProperties(string clusterVersion = default, string clusterHdpVersion = default, HDInsightOSType? osType = default, HDInsightTier? tier = default, string clusterId = default, HDInsightClusterDefinition clusterDefinition = default, KafkaRestProperties kafkaRestProperties = default, HDInsightSecurityProfile securityProfile = default, IEnumerable<HDInsightClusterRole> computeRoles = default, HDInsightClusterProvisioningState? provisioningState = default, string createdDate = default, string clusterState = default, int? quotaInfoCoresUsed = default, IEnumerable<ResponseError> errors = default, IEnumerable<ConnectivityEndpoint> connectivityEndpoints = default, HDInsightDiskEncryptionProperties diskEncryptionProperties = default, bool? isEncryptionInTransitEnabled = default, IEnumerable<HDInsightStorageAccountInfo> storageStorageaccounts = default, string minSupportedTlsVersion = default, ExcludedServicesConfig excludedServicesConfig = default, HDInsightClusterNetworkProperties networkProperties = default, HDInsightComputeIsolationProperties computeIsolationProperties = default, IEnumerable<HDInsightPrivateLinkConfiguration> privateLinkConfigurations = default, IEnumerable<HDInsightPrivateEndpointConnectionData> privateEndpointConnections = default)
         {
-            errors ??= new ChangeTrackingList<Errors>();
+            errors ??= new ChangeTrackingList<ResponseError>();
             connectivityEndpoints ??= new ChangeTrackingList<ConnectivityEndpoint>();
             privateLinkConfigurations ??= new ChangeTrackingList<HDInsightPrivateLinkConfiguration>();
             privateEndpointConnections ??= new ChangeTrackingList<HDInsightPrivateEndpointConnectionData>();
@@ -416,9 +416,9 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="type"> The type of identity used for the cluster. The type 'SystemAssigned, UserAssigned' includes both an implicitly created identity and a set of user assigned identities. </param>
         /// <param name="userAssignedIdentities"> The list of user identities associated with the cluster. The user identity dictionary key references will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'. </param>
         /// <returns> A new <see cref="Models.ClusterIdentity"/> instance for mocking. </returns>
-        public static ClusterIdentity ClusterIdentity(string principalId = default, string tenantId = default, ResourceIdentityType? @type = default, IDictionary<string, UserAssignedIdentity> userAssignedIdentities = default)
+        public static ClusterIdentity ClusterIdentity(string principalId = default, string tenantId = default, ResourceIdentityType? @type = default, IDictionary<string, HDInsightClusterUserAssignedIdentity> userAssignedIdentities = default)
         {
-            userAssignedIdentities ??= new ChangeTrackingDictionary<string, UserAssignedIdentity>();
+            userAssignedIdentities ??= new ChangeTrackingDictionary<string, HDInsightClusterUserAssignedIdentity>();
 
             return new ClusterIdentity(principalId, tenantId, @type, userAssignedIdentities, additionalBinaryDataProperties: null);
         }
@@ -427,10 +427,10 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="principalId"> The principal id of user assigned identity. </param>
         /// <param name="clientId"> The client id of user assigned identity. </param>
         /// <param name="tenantId"> The tenant id of user assigned identity. </param>
-        /// <returns> A new <see cref="Models.UserAssignedIdentity"/> instance for mocking. </returns>
-        public static UserAssignedIdentity UserAssignedIdentity(string principalId = default, string clientId = default, string tenantId = default)
+        /// <returns> A new <see cref="Models.HDInsightClusterUserAssignedIdentity"/> instance for mocking. </returns>
+        public static HDInsightClusterUserAssignedIdentity HDInsightClusterUserAssignedIdentity(string principalId = default, string clientId = default, string tenantId = default)
         {
-            return new UserAssignedIdentity(principalId, clientId, tenantId, additionalBinaryDataProperties: null);
+            return new HDInsightClusterUserAssignedIdentity(principalId, clientId, tenantId, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The CreateCluster request parameters. </summary>
@@ -550,7 +550,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <summary> The configuration object for the specified cluster. </summary>
         /// <param name="configurations"> The configuration object for the specified configuration for the specified cluster. </param>
         /// <returns> A new <see cref="Models.HDInsightClusterConfigurations"/> instance for mocking. </returns>
-        public static HDInsightClusterConfigurations HDInsightClusterConfigurations(IDictionary<string, IDictionary<string, string>> configurations = default)
+        public static HDInsightClusterConfigurations HDInsightClusterConfigurations(IReadOnlyDictionary<string, IDictionary<string, string>> configurations = default)
         {
             configurations ??= new ChangeTrackingDictionary<string, IDictionary<string, string>>();
 
@@ -649,7 +649,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="features"> The capability features. </param>
         /// <param name="quota"> The quota capability. </param>
         /// <returns> A new <see cref="Models.HDInsightCapabilitiesResult"/> instance for mocking. </returns>
-        public static HDInsightCapabilitiesResult HDInsightCapabilitiesResult(IReadOnlyDictionary<string, HDInsightVersionsCapability> versions = default, IDictionary<string, RegionsCapability> regions = default, IEnumerable<string> features = default, QuotaCapability quota = default)
+        public static HDInsightCapabilitiesResult HDInsightCapabilitiesResult(IReadOnlyDictionary<string, HDInsightVersionsCapability> versions = default, IReadOnlyDictionary<string, RegionsCapability> regions = default, IEnumerable<string> features = default, QuotaCapability quota = default)
         {
             versions ??= new ChangeTrackingDictionary<string, HDInsightVersionsCapability>();
             regions ??= new ChangeTrackingDictionary<string, RegionsCapability>();
@@ -674,7 +674,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="isDefault"> Whether or not the version is the default version. </param>
         /// <param name="componentVersions"> The component version property. </param>
         /// <returns> A new <see cref="Models.HDInsightVersionSpec"/> instance for mocking. </returns>
-        public static HDInsightVersionSpec HDInsightVersionSpec(string friendlyName = default, string displayName = default, bool? isDefault = default, IDictionary<string, string> componentVersions = default)
+        public static HDInsightVersionSpec HDInsightVersionSpec(string friendlyName = default, string displayName = default, bool? isDefault = default, IReadOnlyDictionary<string, string> componentVersions = default)
         {
             componentVersions ??= new ChangeTrackingDictionary<string, string>();
 
@@ -859,6 +859,15 @@ namespace Azure.ResourceManager.HDInsight.Models
         public static HDInsightDiskBillingMeters HDInsightDiskBillingMeters(string diskRpMeter = default, string sku = default, HDInsightTier? tier = default)
         {
             return new HDInsightDiskBillingMeters(diskRpMeter, sku, tier, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The azure async operation response. </summary>
+        /// <param name="status"> The async operation state. </param>
+        /// <param name="error"> The operation error information. </param>
+        /// <returns> A new <see cref="Models.HDInsightAsyncOperationResult"/> instance for mocking. </returns>
+        public static HDInsightAsyncOperationResult HDInsightAsyncOperationResult(HDInsightAsyncOperationState? status = default, Errors error = default)
+        {
+            return new HDInsightAsyncOperationResult(status, error, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The response spec of checking name availability. </summary>

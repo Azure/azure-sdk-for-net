@@ -26,13 +26,13 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <summary> Initializes a new instance of <see cref="RegionsCapability"/>. </summary>
         /// <param name="available"> The list of region capabilities. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RegionsCapability(IList<string> available, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RegionsCapability(IReadOnlyList<string> available, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Available = available;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The list of region capabilities. </summary>
-        public IList<string> Available { get; }
+        public IReadOnlyList<string> Available { get; }
     }
 }

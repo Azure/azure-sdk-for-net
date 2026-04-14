@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             string principalId = default;
             string tenantId = default;
             ResourceIdentityType? @type = default;
-            IDictionary<string, UserAssignedIdentity> userAssignedIdentities = default;
+            IDictionary<string, HDInsightClusterUserAssignedIdentity> userAssignedIdentities = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -174,10 +174,10 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    Dictionary<string, UserAssignedIdentity> dictionary = new Dictionary<string, UserAssignedIdentity>();
+                    Dictionary<string, HDInsightClusterUserAssignedIdentity> dictionary = new Dictionary<string, HDInsightClusterUserAssignedIdentity>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(prop0.Name, UserAssignedIdentity.DeserializeUserAssignedIdentity(prop0.Value, options));
+                        dictionary.Add(prop0.Name, HDInsightClusterUserAssignedIdentity.DeserializeHDInsightClusterUserAssignedIdentity(prop0.Value, options));
                     }
                     userAssignedIdentities = dictionary;
                     continue;
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ClusterIdentity(principalId, tenantId, @type, userAssignedIdentities ?? new ChangeTrackingDictionary<string, UserAssignedIdentity>(), additionalBinaryDataProperties);
+            return new ClusterIdentity(principalId, tenantId, @type, userAssignedIdentities ?? new ChangeTrackingDictionary<string, HDInsightClusterUserAssignedIdentity>(), additionalBinaryDataProperties);
         }
     }
 }

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="features"> The capability features. </param>
         /// <param name="quota"> The quota capability. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HDInsightCapabilitiesResult(IReadOnlyDictionary<string, HDInsightVersionsCapability> versions, IDictionary<string, RegionsCapability> regions, IList<string> features, QuotaCapability quota, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HDInsightCapabilitiesResult(IReadOnlyDictionary<string, HDInsightVersionsCapability> versions, IReadOnlyDictionary<string, RegionsCapability> regions, IReadOnlyList<string> features, QuotaCapability quota, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Versions = versions;
             Regions = regions;
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.HDInsight.Models
         public IReadOnlyDictionary<string, HDInsightVersionsCapability> Versions { get; }
 
         /// <summary> The virtual machine size compatibility features. </summary>
-        public IDictionary<string, RegionsCapability> Regions { get; }
+        public IReadOnlyDictionary<string, RegionsCapability> Regions { get; }
 
         /// <summary> The capability features. </summary>
-        public IList<string> Features { get; }
+        public IReadOnlyList<string> Features { get; }
 
         /// <summary> The quota capability. </summary>
         public QuotaCapability Quota { get; }

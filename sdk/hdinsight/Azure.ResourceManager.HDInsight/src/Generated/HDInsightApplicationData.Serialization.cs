@@ -67,9 +67,7 @@ namespace Azure.ResourceManager.HDInsight
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(hdInsightApplicationData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(hdInsightApplicationData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="HDInsightApplicationData"/> from. </param>

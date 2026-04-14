@@ -26,13 +26,13 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <summary> Initializes a new instance of <see cref="HDInsightClusterConfigurations"/>. </summary>
         /// <param name="configurations"> The configuration object for the specified configuration for the specified cluster. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HDInsightClusterConfigurations(IDictionary<string, IDictionary<string, string>> configurations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HDInsightClusterConfigurations(IReadOnlyDictionary<string, IDictionary<string, string>> configurations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Configurations = configurations;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The configuration object for the specified configuration for the specified cluster. </summary>
-        public IDictionary<string, IDictionary<string, string>> Configurations { get; }
+        public IReadOnlyDictionary<string, IDictionary<string, string>> Configurations { get; }
     }
 }
