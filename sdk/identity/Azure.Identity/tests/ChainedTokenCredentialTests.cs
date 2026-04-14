@@ -2,20 +2,20 @@
 // Licensed under the MIT License.
 
 using System;
+using NUnit.Framework;
+using Azure.Core;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
-using Azure.Core.Pipeline;
+using Azure.Identity.Tests.Mock;
 using Azure.Core.TestFramework;
 using Azure.Core.Tests;
-using Azure.Identity.Tests.Mock;
-using NUnit.Framework;
+using Azure.Core.Pipeline;
 
 namespace Azure.Identity.Tests
 {
     public class ChainedTokenCredentialTests : ClientTestBase
     {
-        private protected CredentialPipeline _pipeline;
+        private CredentialPipeline _pipeline;
 
         public ChainedTokenCredentialTests(bool isAsync) : base(isAsync)
         { }
@@ -27,14 +27,8 @@ namespace Azure.Identity.Tests
         [SetUp]
         public void Setup()
         {
-            _pipeline = new CredentialPipeline(new HttpPipeline(new MockTransport()), new ClientDiagnostics(new TokenCredentialOptions() { AuthorityHost = new Uri("https://a.b.com") }));
+            _pipeline = new CredentialPipeline(new HttpPipeline(new MockTransport()), new ClientDiagnostics(new TokenCredentialOptions() { AuthorityHost = new Uri("https://a.b.com")}));
         }
-
-        internal virtual TokenCredential CreateChainedCredential(params TokenCredential[] sources)
-            => new ChainedTokenCredential(sources);
-
-        internal virtual TokenCredential InstrumentChainedCredential(TokenCredential cred)
-            => InstrumentClient((ChainedTokenCredential)cred);
 
         public class SimpleMockTokenCredential : TokenCredential
         {
@@ -127,7 +121,7 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        public virtual void CtorInvalidInput()
+        public void CtorInvalidInput()
         {
             Assert.Throws<ArgumentNullException>(() => new ChainedTokenCredential(null));
 
@@ -145,14 +139,14 @@ namespace Azure.Identity.Tests
             var cred2 = new SimpleMockTokenCredential("scopeB", "tokenB", _pipeline);
             var cred3 = new SimpleMockTokenCredential("scopeB", "NotToBeReturned", _pipeline);
             var cred4 = new SimpleMockTokenCredential("scopeC", "tokenC", _pipeline);
-            var provider = InstrumentChainedCredential(CreateChainedCredential(cred1, cred2, cred3, cred4));
+            var provider = InstrumentClient(new ChainedTokenCredential(cred1, cred2, cred3, cred4));
 
             using (ClientDiagnosticListener diagnosticListener = new ClientDiagnosticListener(s => s.StartsWith("Azure.Identity")))
 
-                Assert.AreEqual("tokenA", (await provider.GetTokenAsync(new TokenRequestContext(new string[] { "scopeA" }), default)).Token);
-            Assert.AreEqual("tokenB", (await provider.GetTokenAsync(new TokenRequestContext(new string[] { "scopeB" }), default)).Token);
-            Assert.AreEqual("tokenC", (await provider.GetTokenAsync(new TokenRequestContext(new string[] { "scopeC" }), default)).Token);
-            var ex = Assert.CatchAsync<AuthenticationFailedException>(async () => await provider.GetTokenAsync(new TokenRequestContext(new string[] { "ScopeD" }), default));
+                Assert.AreEqual("tokenA", (await provider.GetTokenAsync(new TokenRequestContext(new string[] { "scopeA" }))).Token);
+            Assert.AreEqual("tokenB", (await provider.GetTokenAsync(new TokenRequestContext(new string[] { "scopeB" }))).Token);
+            Assert.AreEqual("tokenC", (await provider.GetTokenAsync(new TokenRequestContext(new string[] { "scopeC" }))).Token);
+            var ex = Assert.CatchAsync<AuthenticationFailedException>(async () => await provider.GetTokenAsync(new TokenRequestContext(new string[] { "ScopeD" })));
 
             Assert.IsInstanceOf(typeof(AggregateException), ex.InnerException);
 
@@ -165,11 +159,11 @@ namespace Azure.Identity.Tests
             var cred1 = new SimpleMockTokenCredential("scopeA", "tokenA", _pipeline);
             var cred2 = new ExceptionalMockTokenCredential(_pipeline);
             var cred3 = new SimpleMockTokenCredential("scopeB", "tokenB", _pipeline);
-            var provider = InstrumentChainedCredential(CreateChainedCredential(cred1, cred2, cred3));
+            var provider = InstrumentClient(new ChainedTokenCredential(cred1, cred2, cred3));
 
-            Assert.AreEqual("tokenA", (await provider.GetTokenAsync(new TokenRequestContext(new string[] { "scopeA" }), default)).Token);
-            Assert.CatchAsync<AuthenticationFailedException>(async () => await provider.GetTokenAsync(new TokenRequestContext(new string[] { "ScopeB" }), default));
-            Assert.CatchAsync<AuthenticationFailedException>(async () => await provider.GetTokenAsync(new TokenRequestContext(new string[] { "ScopeC" }), default));
+            Assert.AreEqual("tokenA", (await provider.GetTokenAsync(new TokenRequestContext(new string[] { "scopeA" }))).Token);
+            Assert.CatchAsync<AuthenticationFailedException>(async () => await provider.GetTokenAsync(new TokenRequestContext(new string[] { "ScopeB" })));
+            Assert.CatchAsync<AuthenticationFailedException>(async () => await provider.GetTokenAsync(new TokenRequestContext(new string[] { "ScopeC" })));
         }
 
         [Test]
@@ -178,9 +172,9 @@ namespace Azure.Identity.Tests
             var cred1 = new UnavailbleCredential(_pipeline);
             var cred2 = new UnavailbleCredential(_pipeline);
 
-            var chain = InstrumentChainedCredential(CreateChainedCredential(cred1, cred2));
+            var chain = InstrumentClient(new ChainedTokenCredential(cred1, cred2));
 
-            var ex = Assert.CatchAsync<AuthenticationFailedException>(async () => await chain.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default));
+            var ex = Assert.CatchAsync<AuthenticationFailedException>(async () => await chain.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
 
             Assert.IsInstanceOf(typeof(AggregateException), ex.InnerException);
 

@@ -3,7 +3,6 @@
 
 using System;
 using System.IO;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -18,19 +17,11 @@ namespace Azure.Identity.Tests
         public ClientAssertionCredentialTests(bool isAsync) : base(isAsync)
         { }
 
-        protected virtual TokenCredential CreateCredential(string tenantId, string clientId, string assertionValue, ClientAssertionCredentialOptions options)
-        {
-            var credential = IsAsync
-                ? new ClientAssertionCredential(tenantId, clientId, (_) => Task.FromResult(assertionValue), options)
-                : new ClientAssertionCredential(tenantId, clientId, () => assertionValue, options);
-            return InstrumentClient(credential);
-        }
-
         public override TokenCredential GetTokenCredential(TokenCredentialOptions options)
         {
             var clientAssertionOptions = new ClientAssertionCredentialOptions { Diagnostics = { IsAccountIdentifierLoggingEnabled = options.Diagnostics.IsAccountIdentifierLoggingEnabled }, MsalClient = mockConfidentialMsalClient, Pipeline = CredentialPipeline.GetInstance(null) };
 
-            return CreateCredential(expectedTenantId, ClientId, "assertion", clientAssertionOptions);
+            return InstrumentClient(new ClientAssertionCredential(expectedTenantId, ClientId, () => "assertion", clientAssertionOptions));
         }
 
         public override TokenCredential GetTokenCredential(CommonCredentialTestConfig config)
@@ -58,7 +49,9 @@ namespace Azure.Identity.Tests
             }
             var pipeline = CredentialPipeline.GetInstance(options);
             options.Pipeline = pipeline;
-            return CreateCredential(config.TenantId, ClientId, "assertion", options);
+            return IsAsync ?
+                InstrumentClient(new ClientAssertionCredential(config.TenantId, ClientId, (_) => Task.FromResult("assertion"), options)) :
+                InstrumentClient(new ClientAssertionCredential(config.TenantId, ClientId, () => "assertion", options));
         }
 
         [Test]
@@ -92,7 +85,9 @@ namespace Azure.Identity.Tests
             var pipeline = CredentialPipeline.GetInstance(options);
             ((ClientAssertionCredentialOptions)options).Pipeline = pipeline;
 
-            var client = CreateCredential(TenantId, ClientId, expectedClientAssertion, options as ClientAssertionCredentialOptions);
+            ClientAssertionCredential client = IsAsync ?
+            InstrumentClient(new ClientAssertionCredential(TenantId, ClientId, (_) => Task.FromResult(expectedClientAssertion), options as ClientAssertionCredentialOptions)) :
+            InstrumentClient(new ClientAssertionCredential(TenantId, ClientId, () => expectedClientAssertion, options as ClientAssertionCredentialOptions));
 
             var token = await client.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default);
             Assert.AreEqual(expectedToken, token.Token, "Should be the expected token value");

@@ -398,8 +398,7 @@ namespace Azure.Identity.Tests
                 Assert.AreEqual(enableCae, args.IsCaeEnabled);
                 evt.Set();
                 return Task.CompletedTask;
-            }
-            ;
+            };
 
             evt.Wait();
         }

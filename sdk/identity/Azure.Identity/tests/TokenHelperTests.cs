@@ -2,9 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Diagnostics.Tracing;
-using Azure.Core.TestFramework;
 using NUnit.Framework;
+using Azure.Core.TestFramework;
+using System.Diagnostics.Tracing;
 
 namespace Azure.Identity.Tests
 {

@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Threading;
@@ -33,7 +32,7 @@ namespace Azure.Identity.Tests
             {
                 callCount++;
                 networkTimeouts.Add(msg.NetworkTimeout);
-                return msg.Request.Headers.TryGetValue(ImdsManagedIdentityProbeSource.metadataHeaderName, out string val) && val == "true" ?
+                return callCount > 1 ?
                  CreateMockResponse(200, "token").WithHeader("Content-Type", "application/json") :
                  CreateMockResponse(400, "Error").WithHeader("Content-Type", "application/json");
             });
@@ -183,14 +182,11 @@ namespace Azure.Identity.Tests
             {
                 callCount++;
                 networkTimeouts.Add(msg.NetworkTimeout);
-                Debug.WriteLine($"Call count: {callCount}, Has Metadata Header: {msg.Request.Headers.TryGetValue(ImdsManagedIdentityProbeSource.metadataHeaderName, out string val2)}");
-                Console.WriteLine($"Call count: {callCount}, Has Metadata Header: {msg.Request.Headers.TryGetValue(ImdsManagedIdentityProbeSource.metadataHeaderName, out val2)}");
                 return callCount switch
                 {
                     1 => throw new TaskCanceledException(),
-                    _ => msg.Request.Headers.TryGetValue(ImdsManagedIdentityProbeSource.metadataHeaderName, out string val) && val == "true" ?
-                        CreateMockResponse(200, "token").WithHeader("Content-Type", "application/json") :
-                        CreateMockResponse(400, "Error").WithHeader("Content-Type", "application/json")
+                    2 => CreateMockResponse(400, "Error").WithHeader("Content-Type", "application/json"),
+                    _ => CreateMockResponse(200, "token").WithHeader("Content-Type", "application/json"),
                 };
             });
 
@@ -232,9 +228,9 @@ namespace Azure.Identity.Tests
             {
                 callCount++;
                 networkTimeouts.Add(msg.NetworkTimeout);
-                return msg.Request.Headers.TryGetValue(ImdsManagedIdentityProbeSource.metadataHeaderName, out string val) && val == "true" ?
-                    CreateMockResponse(500, "Error").WithHeader("Content-Type", "application/json") :
-                    CreateMockResponse(400, "Error").WithHeader("Content-Type", "application/json");
+                return callCount > 1 ?
+                 CreateMockResponse(500, "Error").WithHeader("Content-Type", "application/json") :
+                 CreateMockResponse(400, "Error").WithHeader("Content-Type", "application/json");
             });
             var credOptions = new DefaultAzureCredentialOptions
             {
