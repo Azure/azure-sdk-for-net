@@ -127,7 +127,8 @@ function Set-ApiViewCommentForRelatedIssues {
     [string]$APIViewHost = "https://apiview.dev",
     [ValidateNotNullOrEmpty()]
     [Parameter(Mandatory = $true)]
-    $AuthToken
+    $AuthToken,
+    [string]$GitHubActionRunUrl = ""
   )
   . ${PSScriptRoot}\..\common.ps1
   $issuesForCommit = $null
@@ -144,7 +145,7 @@ function Set-ApiViewCommentForRelatedIssues {
   }
   $issuesForCommit.items | ForEach-Object {
     $urlParts = $_.url -split "/"
-    Set-ApiViewCommentForPR -RepoOwner $urlParts[4] -RepoName $urlParts[5] -PrNumber $urlParts[7] -HeadCommitish $HeadCommitish -APIViewHost $APIViewHost -AuthToken $AuthToken
+    Set-ApiViewCommentForPR -RepoOwner $urlParts[4] -RepoName $urlParts[5] -PrNumber $urlParts[7] -HeadCommitish $HeadCommitish -APIViewHost $APIViewHost -AuthToken $AuthToken -GitHubActionRunUrl $GitHubActionRunUrl
   }
 }
 
@@ -162,7 +163,8 @@ function Set-ApiViewCommentForPR {
     [string]$APIViewHost,
     [ValidateNotNullOrEmpty()]
     [Parameter(Mandatory = $true)]
-    $AuthToken
+    $AuthToken,
+    [string]$GitHubActionRunUrl = ""
   )
   $repoFullName = "$RepoOwner/$RepoName"
   $apiviewEndpoint = "$APIViewHost/api/pullrequests?pullRequestNumber=$PrNumber&repoName=$repoFullName&commitSHA=$HeadCommitish"
@@ -208,6 +210,12 @@ function Set-ApiViewCommentForPR {
   }
 
   $commentText += "<!-- Fetch URI: $apiviewEndpoint -->"
+  if ($GitHubActionRunUrl) {
+    $commentText += ""
+    $commentText += "[GitHub Action Run]($GitHubActionRunUrl)"
+    $commentText += ""
+    $commentText += ""
+  }
   $commentText = $commentText -join "`r`n"
   $existingComment = $null;
   $existingAPIViewComment = $null;
