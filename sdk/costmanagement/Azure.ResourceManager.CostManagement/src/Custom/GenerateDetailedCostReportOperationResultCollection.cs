@@ -11,6 +11,7 @@ using Microsoft.TypeSpec.Generator.Customizations;
 namespace Azure.ResourceManager.CostManagement
 {
     [CodeGenSuppress("ExistsAsync", typeof(WaitUntil), typeof(string), typeof(CancellationToken))]
+    // TODO: This file can be removed once https://github.com/Azure/azure-sdk-for-net/pull/58153 is resolved.
     [CodeGenSuppress("Exists", typeof(WaitUntil), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("GetIfExistsAsync", typeof(WaitUntil), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("GetIfExists", typeof(WaitUntil), typeof(string), typeof(CancellationToken))]

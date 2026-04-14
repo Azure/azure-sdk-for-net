@@ -5,7 +5,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    /// <summary> Backward-compat: expose Data as IReadOnlyList. </summary>
+    // Backward-compat: baseline exposed IReadOnlyList<string> Data on CostManagementDimension.
+    // Generator internalizes DimensionProperties, so Data has no generated path — this is the only accessor.
     public partial class CostManagementDimension
     {
         /// <summary> Dimension data. </summary>

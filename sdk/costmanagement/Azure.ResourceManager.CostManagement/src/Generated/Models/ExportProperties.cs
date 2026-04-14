@@ -7,12 +7,24 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
     /// <summary> The properties of the export. </summary>
     public partial class ExportProperties : CommonExportProperties
     {
+        /// <summary> Initializes a new instance of <see cref="ExportProperties"/>. </summary>
+        /// <param name="deliveryInfo"> Has delivery information for the export. </param>
+        /// <param name="definition"> Has the definition for the export. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deliveryInfo"/> or <paramref name="definition"/> is null. </exception>
+        public ExportProperties(ExportDeliveryInfo deliveryInfo, ExportDefinition definition) : base(deliveryInfo, definition)
+        {
+            Argument.AssertNotNull(deliveryInfo, nameof(deliveryInfo));
+            Argument.AssertNotNull(definition, nameof(definition));
+
+        }
+
         /// <summary> Initializes a new instance of <see cref="ExportProperties"/>. </summary>
         /// <param name="format"> The format of the export being delivered. </param>
         /// <param name="deliveryInfo"> Has delivery information for the export. </param>

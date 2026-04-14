@@ -5,7 +5,8 @@ using Azure.ResourceManager.CostManagement.Models;
 
 namespace Azure.ResourceManager.CostManagement
 {
-    /// <summary> Backward-compat: expose Status as nullable. </summary>
+    // Backward-compat: Status was public on ScheduledActionData in v1.0.2.
+    // Generator internalizes ScheduledActionProperties, so Status has no generated path — this is the only accessor.
     public partial class ScheduledActionData
     {
         /// <summary> Status of the scheduled action. </summary>
@@ -14,11 +15,13 @@ namespace Azure.ResourceManager.CostManagement
             get => Properties is null ? default(ScheduledActionStatus?) : Properties.Status;
             set
             {
+                if (value is null)
+                    return;
                 if (Properties is null)
                 {
                     Properties = new ScheduledActionProperties();
                 }
-                Properties.Status = value ?? default;
+                Properties.Status = value.Value;
             }
         }
     }

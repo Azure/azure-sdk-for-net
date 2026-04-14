@@ -10,7 +10,19 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.CostManagement
 {
-    /// <summary> Backward-compat TenantResource extension methods that delegate to MockableCostManagementTenantResource. </summary>
+    // Backward-compat TenantResource extension methods.
+    //
+    // All operations below have paths with multiple /providers/ segments, e.g.:
+    //   /providers/microsoft.Billing/billingAccounts/{id}/providers/Microsoft.CostManagement/benefitUtilizationSummaries
+    //   /providers/microsoft.BillingBenefits/savingsPlanOrders/{id}/providers/Microsoft.CostManagement/benefitUtilizationSummaries
+    //   /providers/microsoft.Capacity/reservationorders/{id}/providers/Microsoft.CostManagement/generateBenefitUtilizationSummariesReport
+    //   /providers/microsoft.Billing/billingAccounts/{id}/billingProfiles/{id}/providers/Microsoft.CostManagement/pricesheets/default/download
+    //   /providers/microsoft.Billing/billingAccounts/{id}/providers/Microsoft.CostManagement/generateReservationDetailsReport
+    //   /providers/Microsoft.CostManagement/{externalCloudProviderType}/{externalCloudProviderId}/dimensions
+    //
+    // The TypeSpec generator correctly assigns these Extension scope (ArmClient) because they extend
+    // resources from other RPs (microsoft.Billing, microsoft.BillingBenefits, microsoft.Capacity).
+    // These shims restore that old surface for ApiCompat.
     public static partial class CostManagementExtensions
     {
         /// <summary> List benefit utilization summaries by billing account ID. </summary>

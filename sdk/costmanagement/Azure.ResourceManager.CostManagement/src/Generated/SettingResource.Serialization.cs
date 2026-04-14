@@ -8,12 +8,17 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure.ResourceManager.CostManagement.Models;
 
 namespace Azure.ResourceManager.CostManagement
 {
     /// <summary></summary>
     public partial class SettingResource : IJsonModel<SettingData>
     {
+        private static IJsonModel<SettingData> s_dataDeserializationInstance;
+
+        private static IJsonModel<SettingData> DataDeserializationInstance => s_dataDeserializationInstance ??= new UnknownSetting();
+
         /// <param name="writer"> The writer to serialize the model to. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SettingData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SettingData>)Data).Write(writer, options);

@@ -5,7 +5,7 @@ using Azure.ResourceManager.CostManagement.Models;
 
 namespace Azure.ResourceManager.CostManagement
 {
-    /// <summary> Backward-compat: expose Timeframe and TypePropertiesQueryType as nullable. </summary>
+    // Backward-compat: expose Timeframe and TypePropertiesQueryType as nullable on CostManagementViewData.
     public partial class CostManagementViewData
     {
         /// <summary> The time frame for pulling data for the report. If custom, then a specific time period must be provided. </summary>
@@ -14,11 +14,13 @@ namespace Azure.ResourceManager.CostManagement
             get => Properties is null ? default(ReportTimeframeType?) : Properties.Timeframe;
             set
             {
+                if (value is null)
+                    return;
                 if (Properties is null)
                 {
                     Properties = new ViewProperties();
                 }
-                Properties.Timeframe = value ?? default;
+                Properties.Timeframe = value.Value;
             }
         }
 
@@ -28,11 +30,13 @@ namespace Azure.ResourceManager.CostManagement
             get => Properties is null ? default(ViewReportType?) : Properties.TypePropertiesQueryType;
             set
             {
+                if (value is null)
+                    return;
                 if (Properties is null)
                 {
                     Properties = new ViewProperties();
                 }
-                Properties.TypePropertiesQueryType = value ?? default;
+                Properties.TypePropertiesQueryType = value.Value;
             }
         }
     }

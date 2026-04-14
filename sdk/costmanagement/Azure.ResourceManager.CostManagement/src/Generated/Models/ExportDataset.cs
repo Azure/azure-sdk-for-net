@@ -36,6 +36,49 @@ namespace Azure.ResourceManager.CostManagement.Models
         public GranularityType? Granularity { get; set; }
 
         /// <summary> The export dataset configuration. </summary>
-        public ExportDatasetConfiguration Configuration { get; set; }
+        internal ExportDatasetConfiguration Configuration { get; set; }
+
+        /// <summary> Array of column names to be included in the export. If not provided then the export will include all available columns. The available columns can vary by customer channel (see examples). </summary>
+        public IList<string> Columns
+        {
+            get
+            {
+                if (Configuration is null)
+                {
+                    Configuration = new ExportDatasetConfiguration();
+                }
+                return Configuration.Columns;
+            }
+        }
+
+        /// <summary> The data version for the selected for the export. If not provided then the export will default to latest data version. </summary>
+        public string DataVersion
+        {
+            get
+            {
+                return Configuration is null ? default : Configuration.DataVersion;
+            }
+            set
+            {
+                if (Configuration is null)
+                {
+                    Configuration = new ExportDatasetConfiguration();
+                }
+                Configuration.DataVersion = value;
+            }
+        }
+
+        /// <summary> Filters associated with the data sets. </summary>
+        public IList<FilterItems> Filters
+        {
+            get
+            {
+                if (Configuration is null)
+                {
+                    Configuration = new ExportDatasetConfiguration();
+                }
+                return Configuration.Filters;
+            }
+        }
     }
 }

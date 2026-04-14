@@ -2,11 +2,14 @@
 // Licensed under the MIT License.
 
 using System.ComponentModel;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    [CodeGenSuppress("CommonExportProperties", typeof(ExportDeliveryDestination), typeof(ExportDefinition))]
+    // Backward-compat: baseline ctor took ExportDeliveryInfo; generator now flattens to ExportDeliveryDestination.
+    // Ideally we'd delegate to the generated public ctor: this(deliveryInfo?.Destination, definition).
+    // However, due to https://github.com/microsoft/typespec/issues/10272, the generator skips emitting its own
+    // public ctor when a custom one exists in the partial class (stale FQN detection). So we chain to the
+    // internal full-param ctor instead until that bug is fixed.
     public partial class CommonExportProperties
     {
         /// <summary> Initializes a new instance of <see cref="CommonExportProperties"/>. </summary>

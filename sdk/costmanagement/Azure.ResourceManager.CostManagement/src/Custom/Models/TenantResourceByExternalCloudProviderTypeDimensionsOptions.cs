@@ -5,7 +5,8 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    /// <summary> Backward-compat options class for ByExternalCloudProviderTypeDimensions on TenantResource. </summary>
+    // ApiCompat shim: baseline (v1.0.2) exposed ByExternalCloudProviderTypeDimensions(options, cancellationToken)
+    // using this options bag. The new generated API uses flat parameters. This class is kept for backward compatibility.
     [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class TenantResourceByExternalCloudProviderTypeDimensionsOptions
     {

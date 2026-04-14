@@ -14,7 +14,7 @@ using Azure.ResourceManager.CostManagement;
 namespace Azure.ResourceManager.CostManagement.Models
 {
     /// <summary> This is on path to deprecation and will not be supported going forward. </summary>
-    public partial class ExportDatasetConfiguration : IJsonModel<ExportDatasetConfiguration>
+    internal partial class ExportDatasetConfiguration : IJsonModel<ExportDatasetConfiguration>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

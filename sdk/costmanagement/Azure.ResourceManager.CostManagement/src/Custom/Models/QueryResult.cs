@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    /// <summary> Backward-compat: expose Columns and Rows as IReadOnlyList. </summary>
+    // Backward-compat: expose Columns and Rows as IReadOnlyList.
     public partial class QueryResult
     {
         /// <summary> Array of columns. </summary>

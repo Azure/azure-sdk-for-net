@@ -12,7 +12,7 @@ using Azure.ResourceManager.CostManagement;
 namespace Azure.ResourceManager.CostManagement.Models
 {
     /// <summary> This is on path to deprecation and will not be supported going forward. </summary>
-    public partial class ExportDatasetConfiguration
+    internal partial class ExportDatasetConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.CostManagement.Models
         }
 
         /// <summary> Array of column names to be included in the export. If not provided then the export will include all available columns. The available columns can vary by customer channel (see examples). </summary>
-        public IList<string> Columns { get; }
+        public IList<string> Columns { get; } = new ChangeTrackingList<string>();
 
         /// <summary> The data version for the selected for the export. If not provided then the export will default to latest data version. </summary>
         public string DataVersion { get; set; }
 
         /// <summary> Filters associated with the data sets. </summary>
-        public IList<FilterItems> Filters { get; }
+        public IList<FilterItems> Filters { get; } = new ChangeTrackingList<FilterItems>();
     }
 }

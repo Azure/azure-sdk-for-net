@@ -9,7 +9,7 @@ using Azure.ResourceManager.CostManagement.Models;
 
 namespace Azure.ResourceManager.CostManagement
 {
-    /// <summary> Backward-compat: string ifMatch overloads. </summary>
+    // Backward-compat: old Update/UpdateAsync had ifMatch as string; now it's ETag?.
     public partial class TenantScheduledActionResource
     {
         /// <summary> Create or update a private scheduled action. </summary>

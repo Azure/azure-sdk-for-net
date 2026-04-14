@@ -9,7 +9,9 @@ using Azure.ResourceManager.CostManagement.Models;
 
 namespace Azure.ResourceManager.CostManagement.Mocking
 {
-    /// <summary> Backward-compat methods that existed on TenantResource in the old SDK but moved to ArmClient in the new SDK. </summary>
+    // Backward-compat methods that existed on TenantResource in v1.0.2 but moved to ArmClient in the new SDK.
+    // Each method constructs a ResourceIdentifier from the old string params and delegates to the
+    // generated ArmClient-based extension methods. See also: Custom/CostManagementExtensions.cs.
     public partial class MockableCostManagementTenantResource
     {
         // ===== BenefitUtilizationSummaries =====

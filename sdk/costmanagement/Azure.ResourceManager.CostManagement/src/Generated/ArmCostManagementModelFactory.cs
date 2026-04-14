@@ -362,19 +362,6 @@ namespace Azure.ResourceManager.CostManagement.Models
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary> This is on path to deprecation and will not be supported going forward. </summary>
-        /// <param name="columns"> Array of column names to be included in the export. If not provided then the export will include all available columns. The available columns can vary by customer channel (see examples). </param>
-        /// <param name="dataVersion"> The data version for the selected for the export. If not provided then the export will default to latest data version. </param>
-        /// <param name="filters"> Filters associated with the data sets. </param>
-        /// <returns> A new <see cref="Models.ExportDatasetConfiguration"/> instance for mocking. </returns>
-        public static ExportDatasetConfiguration ExportDatasetConfiguration(IEnumerable<string> columns = default, string dataVersion = default, IEnumerable<FilterItems> filters = default)
-        {
-            columns ??= new ChangeTrackingList<string>();
-            filters ??= new ChangeTrackingList<FilterItems>();
-
-            return new ExportDatasetConfiguration(columns.ToList(), dataVersion, filters.ToList(), additionalBinaryDataProperties: null);
-        }
-
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1634,6 +1621,35 @@ namespace Azure.ResourceManager.CostManagement.Models
         public static CommonExportProperties CommonExportProperties(ExportFormatType? format, ExportDeliveryDestination deliveryInfoDestination, ExportDefinition definition, IEnumerable<ExportRun> runHistoryValue, bool? partitionData, DateTimeOffset? nextRunTimeEstimate)
         {
             return CommonExportProperties(format, deliveryInfoDestination, definition, runHistoryValue, partitionData, dataOverwriteBehavior: default, compressionMode: default, exportDescription: default, nextRunTimeEstimate, systemSuspensionContext: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ExportRun"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="executionType"> The type of the export run. </param>
+        /// <param name="status"> The last known status of the export run. </param>
+        /// <param name="submittedBy"> The identifier for the entity that triggered the export. For on-demand runs it is the user email. For scheduled runs it is 'System'. </param>
+        /// <param name="submittedOn"> The time when export was queued to be run. </param>
+        /// <param name="processingStartOn"> The time when export was picked up to be run. </param>
+        /// <param name="processingEndOn"> The time when the export run finished. </param>
+        /// <param name="fileName"> The name of the exported file. </param>
+        /// <param name="runSettings"> The export settings that were in effect for this run. </param>
+        /// <param name="error"> The details of any error. </param>
+        /// <param name="eTag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
+        /// <returns> A new <see cref="Models.ExportRun"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ExportRun ExportRun(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ExportRunExecutionType? executionType, ExportRunExecutionStatus? status, string submittedBy, DateTimeOffset? submittedOn, DateTimeOffset? processingStartOn, DateTimeOffset? processingEndOn, string fileName, CommonExportProperties runSettings, ExportRunErrorDetails error, ETag? eTag)
+        {
+            return new ExportRun(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                default,
+                eTag);
         }
 
         /// <summary> Initializes a new instance of <see cref="CostManagement.ScheduledActionData"/>. </summary>
