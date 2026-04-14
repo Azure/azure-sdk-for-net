@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Identity" />
+    <ProjectReference Include="..\..\..\identity\Azure.Identity\src\Azure.Identity.csproj" />
   </ItemGroup>
 
 </Project>
