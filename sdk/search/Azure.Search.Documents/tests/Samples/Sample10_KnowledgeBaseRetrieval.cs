@@ -48,7 +48,7 @@ namespace Azure.Search.Documents.Tests.Samples
                 endpoint, knowledgeBaseName, credential);
 #if !SNIPPET
             retrievalClient = InstrumentClient(new KnowledgeBaseRetrievalClient(
-                endpoint, knowledgeBaseName, credential, InstrumentClientOptions(new KnowledgeBaseRetrievalClientOptions())));
+                endpoint, knowledgeBaseName, credential, InstrumentClientOptions(new SearchClientOptions())));
 #endif
 
             // Build a retrieval request with a semantic intent
@@ -243,7 +243,7 @@ namespace Azure.Search.Documents.Tests.Samples
                     endpoint, knowledgeBaseName, credential);
 #if !SNIPPET
                 retrievalClient = InstrumentClient(new KnowledgeBaseRetrievalClient(
-                    endpoint, testBaseName, credential, InstrumentClientOptions(new KnowledgeBaseRetrievalClientOptions())));
+                    endpoint, testBaseName, credential, InstrumentClientOptions(new SearchClientOptions())));
 #endif
 
                 // Build a retrieval request with a semantic intent

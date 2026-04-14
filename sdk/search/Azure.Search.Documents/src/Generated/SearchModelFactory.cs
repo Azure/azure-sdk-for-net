@@ -3582,13 +3582,6 @@ namespace Azure.Search.Documents.Models
                 title);
         }
 
-        /// <summary> Contains debugging information that can be used to further explore your search results. </summary>
-        /// <returns> A new <see cref="Models.DebugInfo"/> instance for mocking. </returns>
-        public static DebugInfo DebugInfo()
-        {
-            return new DebugInfo(additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="SearchModelFactory.SearchIndexer(string,string,string,string,string,Indexes.Models.IndexingSchedule,Indexes.Models.IndexingParameters,IList{Indexes.Models.FieldMapping},IList{Indexes.Models.FieldMapping},bool?,string,SearchResourceEncryptionKey,IDictionary{string,BinaryData})"/>. </summary>
         /// <param name="name"> The name of the indexer. </param>
         /// <param name="description"> The description of the indexer. </param>

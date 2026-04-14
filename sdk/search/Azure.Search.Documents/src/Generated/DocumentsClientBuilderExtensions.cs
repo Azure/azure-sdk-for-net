@@ -11,7 +11,6 @@ using Azure;
 using Azure.Core.Extensions;
 using Azure.Search.Documents;
 using Azure.Search.Documents.Indexes;
-using Azure.Search.Documents.KnowledgeBases;
 
 namespace Microsoft.Extensions.Azure
 {
@@ -108,49 +107,6 @@ namespace Microsoft.Extensions.Azure
             where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
             return builder.RegisterClientFactory<SearchIndexerClient, SearchClientOptions>(configuration);
-        }
-
-        /// <summary> Registers a <see cref="KnowledgeBaseRetrievalClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
-        /// <param name="builder"> The builder to register with. </param>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="knowledgeBaseName"> The name of the knowledge base. </param>
-        /// <param name="credential"> A credential used to authenticate to the service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="knowledgeBaseName"/> or <paramref name="credential"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="knowledgeBaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        public static IAzureClientBuilder<KnowledgeBaseRetrievalClient, KnowledgeBaseRetrievalClientOptions> AddKnowledgeBaseRetrievalClient<TBuilder>(this TBuilder builder, Uri endpoint, string knowledgeBaseName, AzureKeyCredential credential)
-            where TBuilder : IAzureClientFactoryBuilder
-        {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNullOrEmpty(knowledgeBaseName, nameof(knowledgeBaseName));
-            Argument.AssertNotNull(credential, nameof(credential));
-
-            return builder.RegisterClientFactory<KnowledgeBaseRetrievalClient, KnowledgeBaseRetrievalClientOptions>(options => new KnowledgeBaseRetrievalClient(endpoint, knowledgeBaseName, credential, options));
-        }
-
-        /// <summary> Registers a <see cref="KnowledgeBaseRetrievalClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
-        /// <param name="builder"> The builder to register with. </param>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="knowledgeBaseName"> The name of the knowledge base. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="knowledgeBaseName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="knowledgeBaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        public static IAzureClientBuilder<KnowledgeBaseRetrievalClient, KnowledgeBaseRetrievalClientOptions> AddKnowledgeBaseRetrievalClient<TBuilder>(this TBuilder builder, Uri endpoint, string knowledgeBaseName)
-            where TBuilder : IAzureClientFactoryBuilderWithCredential
-        {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNullOrEmpty(knowledgeBaseName, nameof(knowledgeBaseName));
-
-            return builder.RegisterClientFactory<KnowledgeBaseRetrievalClient, KnowledgeBaseRetrievalClientOptions>((options, credential) => new KnowledgeBaseRetrievalClient(endpoint, knowledgeBaseName, credential, options));
-        }
-
-        /// <summary> Registers a <see cref="KnowledgeBaseRetrievalClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
-        /// <param name="builder"> The builder to register with. </param>
-        /// <param name="configuration"> The configuration to use for the client. </param>
-        [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
-        [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
-        public static IAzureClientBuilder<KnowledgeBaseRetrievalClient, KnowledgeBaseRetrievalClientOptions> AddKnowledgeBaseRetrievalClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
-            where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
-        {
-            return builder.RegisterClientFactory<KnowledgeBaseRetrievalClient, KnowledgeBaseRetrievalClientOptions>(configuration);
         }
     }
 }

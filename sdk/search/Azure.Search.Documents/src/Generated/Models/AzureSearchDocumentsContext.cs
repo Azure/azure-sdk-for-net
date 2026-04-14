@@ -63,7 +63,6 @@ namespace Azure.Search.Documents
     [ModelReaderWriterBuildable(typeof(DataChangeDetectionPolicy))]
     [ModelReaderWriterBuildable(typeof(DataDeletionDetectionPolicy))]
     [ModelReaderWriterBuildable(typeof(DataSourceCredentials))]
-    [ModelReaderWriterBuildable(typeof(DebugInfo))]
     [ModelReaderWriterBuildable(typeof(DefaultCognitiveServicesAccount))]
     [ModelReaderWriterBuildable(typeof(DeprecatedLuceneStandardTokenizer))]
     [ModelReaderWriterBuildable(typeof(DictionaryDecompounderTokenFilter))]

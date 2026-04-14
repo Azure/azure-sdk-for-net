@@ -12,8 +12,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace Azure.Search.Documents.KnowledgeBases
 {
-    /// <summary> Client options for <see cref="KnowledgeBaseRetrievalClient"/>. </summary>
-    public partial class KnowledgeBaseRetrievalClientOptions : ClientOptions
+    internal partial class KnowledgeBaseRetrievalClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2026_04_01;
 
@@ -52,8 +51,7 @@ namespace Azure.Search.Documents.KnowledgeBases
         /// <summary> Configures logging for the client options. </summary>
         partial void ConfigureLogging();
 
-        /// <summary> The version of the service to use. </summary>
-        public enum ServiceVersion
+        internal enum ServiceVersion
         {
             /// <summary> The 2026-04-01 API version. </summary>
             V2026_04_01 = 1
