@@ -163,7 +163,7 @@ namespace Azure.Generator.Tests.Providers
             public string TestGetReadmeContent(string packageName) => GetReadmeContent(packageName);
             public string TestGetChangelogContent(string packageName) => GetChangelogContent(packageName);
             public string TestGetCiYamlContent(string packageName, string serviceDirectoryName) => GetCiYamlContent(packageName, serviceDirectoryName);
-            public string TestGetDirectoryBuildPropsContent() => GetDirectoryBuildPropsContent();
+            public string TestGetDirectoryBuildPropsContent() => GetDirectoryBuildPropsContent("TestPackage");
             public Task TestWriteAdditionalFiles() => WriteAdditionalFiles();
         }
     }

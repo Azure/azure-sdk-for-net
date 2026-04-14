@@ -217,7 +217,7 @@ namespace Azure.Generator.Primitives
 
             WriteFileIfNotExists(Path.Combine(outputDir, "README.md"), packageName, GetReadmeContent);
             WriteFileIfNotExists(Path.Combine(outputDir, "CHANGELOG.md"), packageName, GetChangelogContent);
-            WriteFileIfNotExists(Path.Combine(outputDir, "Directory.Build.props"), packageName, _ => GetDirectoryBuildPropsContent());
+            WriteFileIfNotExists(Path.Combine(outputDir, "Directory.Build.props"), packageName,  GetDirectoryBuildPropsContent);
 
             // ci.yml goes to the service directory (parent of the package directory)
             string normalizedOutputDir = outputDir.TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
@@ -360,8 +360,9 @@ namespace Azure.Generator.Primitives
         /// <summary>
         /// Gets the content for the Directory.Build.props file.
         /// </summary>
+        /// <param name="packageName">The name of the package.</param>
         /// <returns>The Directory.Build.props content.</returns>
-        protected virtual string GetDirectoryBuildPropsContent()
+        protected virtual string GetDirectoryBuildPropsContent(string packageName)
         {
             return """
                 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
