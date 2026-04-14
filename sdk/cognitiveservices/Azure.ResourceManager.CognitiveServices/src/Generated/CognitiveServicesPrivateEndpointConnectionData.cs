@@ -56,11 +56,11 @@ namespace Azure.ResourceManager.CognitiveServices
 
         /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
         [WirePath("properties.privateLinkServiceConnectionState")]
-        public CognitiveServicesPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState
+        public CognitiveServicesPrivateLinkServiceConnectionState ConnectionState
         {
             get
             {
-                return Properties is null ? default : Properties.PrivateLinkServiceConnectionState;
+                return Properties is null ? default : Properties.ConnectionState;
             }
             set
             {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     Properties = new CognitiveServicesPrivateEndpointConnectionProperties();
                 }
-                Properties.PrivateLinkServiceConnectionState = value;
+                Properties.ConnectionState = value;
             }
         }
 
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.CognitiveServices
 
         /// <summary> The resource identifier of the private endpoint. </summary>
         [WirePath("properties.privateEndpoint.id")]
-        public string PrivateEndpointId
+        public ResourceIdentifier PrivateEndpointId
         {
             get
             {

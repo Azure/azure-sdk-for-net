@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WriteObjectValue(PrivateEndpoint, options);
             }
             writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-            writer.WriteObjectValue(PrivateLinkServiceConnectionState, options);
+            writer.WriteObjectValue(ConnectionState, options);
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 return null;
             }
             PrivateEndpoint privateEndpoint = default;
-            CognitiveServicesPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
+            CognitiveServicesPrivateLinkServiceConnectionState connectionState = default;
             CognitiveServicesPrivateEndpointConnectionProvisioningState? provisioningState = default;
             IList<string> groupIds = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 if (prop.NameEquals("privateLinkServiceConnectionState"u8))
                 {
-                    privateLinkServiceConnectionState = CognitiveServicesPrivateLinkServiceConnectionState.DeserializeCognitiveServicesPrivateLinkServiceConnectionState(prop.Value, options);
+                    connectionState = CognitiveServicesPrivateLinkServiceConnectionState.DeserializeCognitiveServicesPrivateLinkServiceConnectionState(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CognitiveServicesPrivateEndpointConnectionProperties(privateEndpoint, privateLinkServiceConnectionState, provisioningState, groupIds ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
+            return new CognitiveServicesPrivateEndpointConnectionProperties(privateEndpoint, connectionState, provisioningState, groupIds ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }
