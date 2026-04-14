@@ -20,18 +20,21 @@ namespace Azure.ResourceManager.DesktopVirtualization
         private readonly Guid _subscriptionId;
         private readonly string _filter;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of AppAttachPackageGetBySubscriptionCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The AppAttachPackage client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="filter"> OData filter expression. Valid properties for filtering are package name, host pool, and resource group. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public AppAttachPackageGetBySubscriptionCollectionResultOfT(AppAttachPackage client, Guid subscriptionId, string filter, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public AppAttachPackageGetBySubscriptionCollectionResultOfT(AppAttachPackage client, Guid subscriptionId, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _filter = filter;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of AppAttachPackageGetBySubscriptionCollectionResultOfT as an enumerable collection. </summary>
@@ -64,7 +67,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetBySubscriptionRequest(nextLink, _subscriptionId, _filter, _context) : _client.CreateGetBySubscriptionRequest(_subscriptionId, _filter, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableDesktopVirtualizationSubscriptionResource.GetAppAttachPackages");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

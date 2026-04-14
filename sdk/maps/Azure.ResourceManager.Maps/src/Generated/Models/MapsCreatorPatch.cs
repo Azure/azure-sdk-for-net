@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Maps;
 
 namespace Azure.ResourceManager.Maps.Models
 {
     /// <summary> Parameters used to update an existing Creator resource. </summary>
     public partial class MapsCreatorPatch
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MapsCreatorPatch"/>. </summary>
         public MapsCreatorPatch()
@@ -53,22 +25,62 @@ namespace Azure.ResourceManager.Maps.Models
 
         /// <summary> Initializes a new instance of <see cref="MapsCreatorPatch"/>. </summary>
         /// <param name="tags"> Gets or sets a list of key value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). A maximum of 15 tags can be provided for a resource. Each tag must have a key no greater than 128 characters and value no greater than 256 characters. </param>
-        /// <param name="provisioningState"> The state of the resource provisioning, terminal states: Succeeded, Failed, Canceled. </param>
-        /// <param name="storageUnits"> The storage units to be allocated. Integer values from 1 to 100, inclusive. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MapsCreatorPatch(IDictionary<string, string> tags, string provisioningState, int? storageUnits, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> Creator resource properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MapsCreatorPatch(IDictionary<string, string> tags, MapsCreatorProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tags = tags;
-            ProvisioningState = provisioningState;
-            StorageUnits = storageUnits;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Gets or sets a list of key value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). A maximum of 15 tags can be provided for a resource. Each tag must have a key no greater than 128 characters and value no greater than 256 characters. </summary>
         public IDictionary<string, string> Tags { get; }
+
+        /// <summary> Creator resource properties. </summary>
+        internal MapsCreatorProperties Properties { get; set; }
+
         /// <summary> The state of the resource provisioning, terminal states: Succeeded, Failed, Canceled. </summary>
-        public string ProvisioningState { get; }
-        /// <summary> The storage units to be allocated. Integer values from 1 to 100, inclusive. </summary>
-        public int? StorageUnits { get; set; }
+        public string ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> The total allocated storage unit size in bytes for the creator resource. </summary>
+        public int? TotalStorageUnitSizeInBytes
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TotalStorageUnitSizeInBytes;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MapsCreatorProperties();
+                }
+                Properties.TotalStorageUnitSizeInBytes = value.Value;
+            }
+        }
+
+        /// <summary> The consumed storage unit size in bytes for the creator resource. </summary>
+        public int? ConsumedStorageUnitSizeInBytes
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConsumedStorageUnitSizeInBytes;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MapsCreatorProperties();
+                }
+                Properties.ConsumedStorageUnitSizeInBytes = value.Value;
+            }
+        }
     }
 }

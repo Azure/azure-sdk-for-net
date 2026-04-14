@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new DiscoverySolutionNLPDiscoverSolutionsNlpAsyncCollectionResultOfT(DiscoverySolutionNLPRestClient, Guid.Parse(Id.SubscriptionId), DiscoveryNlpContent.ToRequestContent(content), context);
+            return new DiscoverySolutionNLPDiscoverSolutionsNlpAsyncCollectionResultOfT(DiscoverySolutionNLPRestClient, Guid.Parse(Id.SubscriptionId), DiscoveryNlpContent.ToRequestContent(content), context, "MockableSelfHelpSubscriptionResource.DiscoverSolutionsNlp");
         }
 
         /// <summary>
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new DiscoverySolutionNLPDiscoverSolutionsNlpCollectionResultOfT(DiscoverySolutionNLPRestClient, Guid.Parse(Id.SubscriptionId), DiscoveryNlpContent.ToRequestContent(content), context);
+            return new DiscoverySolutionNLPDiscoverSolutionsNlpCollectionResultOfT(DiscoverySolutionNLPRestClient, Guid.Parse(Id.SubscriptionId), DiscoveryNlpContent.ToRequestContent(content), context, "MockableSelfHelpSubscriptionResource.DiscoverSolutionsNlp");
         }
     }
 }

@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             if (id.ResourceType != SubscriptionResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
             }
         }
 
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<OracleDnsPrivateViewData, OracleDnsPrivateViewResource>(new DnsPrivateViewsGetByLocationAsyncCollectionResultOfT(_dnsPrivateViewsRestClient, Guid.Parse(Id.SubscriptionId), _location, context), data => new OracleDnsPrivateViewResource(Client, data));
+            return new AsyncPageableWrapper<OracleDnsPrivateViewData, OracleDnsPrivateViewResource>(new DnsPrivateViewsGetByLocationAsyncCollectionResultOfT(_dnsPrivateViewsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "OracleDnsPrivateViewCollection.GetAll"), data => new OracleDnsPrivateViewResource(Client, data));
         }
 
         /// <summary>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<OracleDnsPrivateViewData, OracleDnsPrivateViewResource>(new DnsPrivateViewsGetByLocationCollectionResultOfT(_dnsPrivateViewsRestClient, Guid.Parse(Id.SubscriptionId), _location, context), data => new OracleDnsPrivateViewResource(Client, data));
+            return new PageableWrapper<OracleDnsPrivateViewData, OracleDnsPrivateViewResource>(new DnsPrivateViewsGetByLocationCollectionResultOfT(_dnsPrivateViewsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "OracleDnsPrivateViewCollection.GetAll"), data => new OracleDnsPrivateViewResource(Client, data));
         }
 
         /// <summary>

@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DevCenter
 {
-    internal class DevCenterCatalogOperationSource : IOperationSource<DevCenterCatalogResource>
+    /// <summary></summary>
+    internal partial class DevCenterCatalogOperationSource : IOperationSource<DevCenterCatalogResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal DevCenterCatalogOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         DevCenterCatalogResource IOperationSource<DevCenterCatalogResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DevCenterCatalogData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDevCenterContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            DevCenterCatalogData data = DevCenterCatalogData.DeserializeDevCenterCatalogData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new DevCenterCatalogResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<DevCenterCatalogResource> IOperationSource<DevCenterCatalogResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DevCenterCatalogData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDevCenterContext.Default);
-            return await Task.FromResult(new DevCenterCatalogResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            DevCenterCatalogData data = DevCenterCatalogData.DeserializeDevCenterCatalogData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new DevCenterCatalogResource(_client, data);
         }
     }
 }

@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Hci
 {
-    internal class HciClusterSecuritySettingOperationSource : IOperationSource<HciClusterSecuritySettingResource>
+    /// <summary></summary>
+    internal partial class HciClusterSecuritySettingOperationSource : IOperationSource<HciClusterSecuritySettingResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal HciClusterSecuritySettingOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         HciClusterSecuritySettingResource IOperationSource<HciClusterSecuritySettingResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<HciClusterSecuritySettingData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHciContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            HciClusterSecuritySettingData data = HciClusterSecuritySettingData.DeserializeHciClusterSecuritySettingData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new HciClusterSecuritySettingResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<HciClusterSecuritySettingResource> IOperationSource<HciClusterSecuritySettingResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<HciClusterSecuritySettingData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHciContext.Default);
-            return await Task.FromResult(new HciClusterSecuritySettingResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            HciClusterSecuritySettingData data = HciClusterSecuritySettingData.DeserializeHciClusterSecuritySettingData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new HciClusterSecuritySettingResource(_client, data);
         }
     }
 }

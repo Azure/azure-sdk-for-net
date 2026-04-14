@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
+using Azure.Generator.Management.Utilities;
 using Azure.Generator.Management.Visitors;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Primitives;
@@ -13,6 +14,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
+using TernaryConditionalExpression = Microsoft.TypeSpec.Generator.Expressions.TernaryConditionalExpression;
 
 namespace Azure.Generator.Management.Models;
 
@@ -34,9 +36,7 @@ internal class ParameterContextRegistry : IReadOnlyDictionary<string, ParameterC
     private readonly IReadOnlyDictionary<string, ParameterContextMapping> _parameters;
     public ParameterContextRegistry(IReadOnlyList<ParameterContextMapping> parameters)
     {
-        _parameters = parameters
-            .GroupBy(p => p.ParameterName)
-            .ToDictionary(g => g.Key, g => g.Last());
+        _parameters = parameters.ToDictionary(p => p.ParameterName);
     }
 
     public ParameterContextMapping this[string key] => _parameters[key];
@@ -97,11 +97,21 @@ internal class ParameterContextRegistry : IReadOnlyDictionary<string, ParameterC
                 var bodyParameter = methodParameters.SingleOrDefault(p => p.Location == ParameterLocation.Body);
                 if (bodyParameter is not null)
                 {
-                    // For model types that have ToRequestContent, use the static method
-                    // For primitive/collection types (e.g., IDictionary, IEnumerable<string>), serialize via BinaryData
-                    if (bodyParameter.Type.IsFrameworkType || bodyParameter.Type.IsCollection)
+                    if (bodyParameter.Type.CanCreateRequestContent())
                     {
-                        arguments.Add(Static(typeof(RequestContent)).Invoke("Create", [Static(typeof(BinaryData)).Invoke(nameof(BinaryData.FromObjectAsJson), [bodyParameter])]));
+                        // For primitive types (string, BinaryData, Stream, byte[]) that have a direct
+                        // RequestContent.Create overload, use it instead of ToRequestContent.
+                        var createContent = Static(typeof(RequestContent)).Invoke(
+                            nameof(RequestContent.Create),
+                            [bodyParameter]);
+                        if (bodyParameter.Type.IsNullable)
+                        {
+                            arguments.Add(new TernaryConditionalExpression(bodyParameter.NotEqual(Null), createContent, Null));
+                        }
+                        else
+                        {
+                            arguments.Add(createContent);
+                        }
                     }
                     else
                     {
@@ -159,6 +169,12 @@ internal class ParameterContextRegistry : IReadOnlyDictionary<string, ParameterC
 
             if (fromType.IsEnum && toType.FrameworkType == typeof(string))
             {
+                if (!fromType.IsStruct)
+                {
+                    // Fixed enums (IsStruct=false) have a ToSerialString() extension method
+                    return fromType.IsNullable ? expression.NullConditional().Invoke("ToSerialString") : expression.Invoke("ToSerialString");
+                }
+                // Extensible enums (IsStruct=true, readonly structs) use ToString()
                 return fromType.IsNullable ? expression.NullConditional().InvokeToString() : expression.InvokeToString();
             }
 

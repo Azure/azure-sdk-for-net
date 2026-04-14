@@ -5,6 +5,7 @@ using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Providers;
 using Azure.Generator.Management.Providers.Abstraction;
 using Azure.Generator.Management.Snippets;
+using Azure.ResourceManager.Models;
 using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.ClientModel.Snippets;
@@ -18,6 +19,7 @@ using Microsoft.TypeSpec.Generator.Statements;
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Text.Json;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
@@ -27,7 +29,27 @@ namespace Azure.Generator.Management
     /// <inheritdoc/>
     public class ManagementTypeFactory : AzureTypeFactory
     {
+        private static readonly CSharpType _managedServiceIdentityCSharpType = typeof(ManagedServiceIdentity);
+        private bool? _useManagedServiceIdentityV3;
         private string? _resourceProviderName;
+
+        /// <summary>
+        /// Indicates whether the ManagedServiceIdentityType enum uses v3 format
+        /// (no space in "SystemAssigned,UserAssigned"), which requires appending "|v3"
+        /// to the format for correct serialization of ManagedServiceIdentity.
+        /// </summary>
+        internal bool UseManagedServiceIdentityV3 => _useManagedServiceIdentityV3 ??= DetectManagedServiceIdentityV3();
+
+        private bool DetectManagedServiceIdentityV3()
+        {
+            var inputEnums = ManagementClientGenerator.Instance.InputLibrary.InputNamespace.Enums;
+            var identityTypeEnum = inputEnums.FirstOrDefault(e =>
+                e.CrossLanguageDefinitionId == "Azure.ResourceManager.CommonTypes.ManagedServiceIdentityType");
+            if (identityTypeEnum == null)
+                return false;
+            return identityTypeEnum.Values.Any(v =>
+                v.Value?.ToString() == "SystemAssigned,UserAssigned");
+        }
 
         /// <summary>
         /// The name for this resource provider.
@@ -65,19 +87,26 @@ namespace Azure.Generator.Management
         /// <inheritdoc/>
         protected override CSharpType? CreateCSharpTypeCore(InputType inputType)
         {
-            if (inputType is InputModelType model && KnownManagementTypes.TryGetSystemType(model.CrossLanguageDefinitionId, out var replacedType))
+            if (inputType is InputModelType model)
+            {
+                if (KnownManagementTypes.TryGetInheritableSystemType(model.CrossLanguageDefinitionId, out var inheritableType))
+                {
+                    return inheritableType;
+                }
+                if (KnownManagementTypes.TryGetSystemType(model.CrossLanguageDefinitionId, out var systemType))
+                {
+                    return systemType;
+                }
+            }
+
+            if (inputType is InputEnumType enumType && KnownManagementTypes.TryGetSystemType(enumType.CrossLanguageDefinitionId, out var replacedType))
             {
                 return replacedType;
             }
 
-            if (inputType is InputEnumType enumType && KnownManagementTypes.TryGetSystemType(enumType.CrossLanguageDefinitionId, out replacedType))
+            if (inputType is InputPrimitiveType primitiveType && KnownManagementTypes.TryGetPrimitiveType(primitiveType.CrossLanguageDefinitionId, out var primitiveReplacedType))
             {
-                return replacedType;
-            }
-
-            if (inputType is InputPrimitiveType primitiveType && KnownManagementTypes.TryGetPrimitiveType(primitiveType.CrossLanguageDefinitionId, out replacedType))
-            {
-                return replacedType;
+                return primitiveReplacedType;
             }
             return base.CreateCSharpTypeCore(inputType);
         }
@@ -88,11 +117,22 @@ namespace Azure.Generator.Management
             // First check for standard ARM types that map to system types
             if (KnownManagementTypes.TryGetInheritableSystemType(model.CrossLanguageDefinitionId, out var replacedType))
             {
-                return new InheritableSystemObjectModelProvider(replacedType.FrameworkType, model);
+                return InheritableSystemObjectModelProvider.CreateSystemBase(replacedType.FrameworkType, model);
             }
             if (KnownManagementTypes.TryGetSystemType(model.CrossLanguageDefinitionId, out _))
             {
                 return null;
+            }
+
+            // For models whose base is an inheritable system type (e.g., TrackedResource → TrackedResourceData),
+            // use a derived InheritableSystemObjectModelProvider which overrides BuildBaseType() to return the
+            // correct framework CSharpType. The default ModelProvider.BuildBaseType() returns
+            // BaseModelProvider.Type, which produces a non-framework CSharpType that gets eagerly cached.
+            if (model.BaseModel is { } baseModel &&
+                KnownManagementTypes.TryGetInheritableSystemType(baseModel.CrossLanguageDefinitionId, out var inheritableType))
+            {
+                CreateModel(baseModel);
+                return InheritableSystemObjectModelProvider.CreateDerived(model, inheritableType);
             }
 
             // For custom Azure resource models (root, intermediate, and resource data models),
@@ -122,7 +162,16 @@ namespace Azure.Generator.Management
 
             if (KnownManagementTypes.IsKnownManagementType(valueType))
             {
-                return value.CastTo(new CSharpType(typeof(IJsonModel<>), valueType)).Invoke(nameof(IJsonModel<object>.Write), [utf8JsonWriter, mrwOptionsParameter]).Terminate();
+                // For ManagedServiceIdentity with v3 format, select pre-allocated v3 options
+                // based on the caller's format: WireV3Options for "W", JsonV3Options for "J".
+                // This preserves the base format semantics (principalId/tenantId included in "J").
+                ValueExpression optionsArg = valueType.AreNamesEqual(_managedServiceIdentityCSharpType) && UseManagedServiceIdentityV3
+                    ? new TernaryConditionalExpression(
+                        mrwOptionsParameter.Property("Format").Equal(Literal("W")),
+                        ModelSerializationExtensionsSnippets.WireV3,
+                        ModelSerializationExtensionsSnippets.JsonV3)
+                    : mrwOptionsParameter;
+                return value.CastTo(new CSharpType(typeof(IJsonModel<>), valueType)).Invoke(nameof(IJsonModel<object>.Write), [utf8JsonWriter, optionsArg]).Terminate();
             }
 
             return base.SerializeJsonValue(valueType, value, utf8JsonWriter, mrwOptionsParameter, serializationFormat);
@@ -145,6 +194,15 @@ namespace Azure.Generator.Management
 
             if (KnownManagementTypes.IsKnownManagementType(valueType))
             {
+                // For ManagedServiceIdentity with v3 format, select pre-allocated v3 options
+                // based on the caller's format: WireV3Options for "W", JsonV3Options for "J".
+                ValueExpression wireOptions = valueType.AreNamesEqual(_managedServiceIdentityCSharpType) && UseManagedServiceIdentityV3
+                    ? new TernaryConditionalExpression(
+                        mrwOptionsParameter.Property("Format").Equal(Literal("W")),
+                        ModelSerializationExtensionsSnippets.WireV3,
+                        ModelSerializationExtensionsSnippets.JsonV3)
+                    : ModelSerializationExtensionsSnippets.Wire;
+
                 IReadOnlyList<ValueExpression> readBody =
                 [
                     New.Instance(
@@ -155,7 +213,7 @@ namespace Azure.Generator.Management
                                 element.GetRawText()
                             ])
                     ]),
-                    ModelSerializationExtensionsSnippets.Wire
+                    wireOptions
                 ];
 
                 return Static(typeof(ModelReaderWriter)).Invoke(

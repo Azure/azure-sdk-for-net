@@ -9,17 +9,32 @@ using System.ClientModel.Primitives;
 
 namespace Payload.Xml
 {
+    [ModelReaderWriterBuildable(typeof(Author))]
+    [ModelReaderWriterBuildable(typeof(Book))]
     [ModelReaderWriterBuildable(typeof(ModelWithArrayOfModel))]
     [ModelReaderWriterBuildable(typeof(ModelWithAttributes))]
+    [ModelReaderWriterBuildable(typeof(ModelWithDatetime))]
     [ModelReaderWriterBuildable(typeof(ModelWithDictionary))]
     [ModelReaderWriterBuildable(typeof(ModelWithEmptyArray))]
     [ModelReaderWriterBuildable(typeof(ModelWithEncodedNames))]
+    [ModelReaderWriterBuildable(typeof(ModelWithEnum))]
+    [ModelReaderWriterBuildable(typeof(ModelWithNamespace))]
+    [ModelReaderWriterBuildable(typeof(ModelWithNamespaceOnProperties))]
+    [ModelReaderWriterBuildable(typeof(ModelWithNestedModel))]
     [ModelReaderWriterBuildable(typeof(ModelWithOptionalField))]
     [ModelReaderWriterBuildable(typeof(ModelWithRenamedArrays))]
+    [ModelReaderWriterBuildable(typeof(ModelWithRenamedAttribute))]
     [ModelReaderWriterBuildable(typeof(ModelWithRenamedFields))]
+    [ModelReaderWriterBuildable(typeof(ModelWithRenamedNestedModel))]
+    [ModelReaderWriterBuildable(typeof(ModelWithRenamedProperty))]
+    [ModelReaderWriterBuildable(typeof(ModelWithRenamedUnwrappedModelArray))]
+    [ModelReaderWriterBuildable(typeof(ModelWithRenamedWrappedAndItemModelArray))]
+    [ModelReaderWriterBuildable(typeof(ModelWithRenamedWrappedModelArray))]
     [ModelReaderWriterBuildable(typeof(ModelWithSimpleArrays))]
     [ModelReaderWriterBuildable(typeof(ModelWithText))]
     [ModelReaderWriterBuildable(typeof(ModelWithUnwrappedArray))]
+    [ModelReaderWriterBuildable(typeof(ModelWithUnwrappedModelArray))]
+    [ModelReaderWriterBuildable(typeof(ModelWithWrappedPrimitiveCustomItemNames))]
     [ModelReaderWriterBuildable(typeof(SimpleModel))]
     public partial class PayloadXmlContext : ModelReaderWriterContext
     {

@@ -13,145 +13,251 @@ using Azure.ResourceManager.Purview.Models;
 
 namespace Azure.ResourceManager.Purview
 {
-    /// <summary>
-    /// A class representing the PurviewAccount data model.
-    /// Account resource
-    /// </summary>
+    /// <summary> Account resource. </summary>
     public partial class PurviewAccountData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PurviewAccountData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public PurviewAccountData(AzureLocation location) : base(location)
         {
-            PrivateEndpointConnections = new ChangeTrackingList<PurviewPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="PurviewAccountData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The account properties. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="identity"> The Managed Identity of the resource. </param>
         /// <param name="sku"> Gets or sets the Sku. </param>
-        /// <param name="accountStatus"> Gets or sets the status of the account. </param>
-        /// <param name="cloudConnectors"> External Cloud Service connectors. </param>
-        /// <param name="createdOn"> Gets the time at which the entity was created. </param>
-        /// <param name="createdBy"> Gets the creator of the entity. </param>
-        /// <param name="createdByObjectId"> Gets the creators of the entity's object id. </param>
-        /// <param name="endpoints"> The URIs that are the public endpoints of the account. </param>
-        /// <param name="friendlyName"> Gets or sets the friendly name. </param>
-        /// <param name="ingestionStorage"> Ingestion Storage Account Info. </param>
-        /// <param name="managedEventHubState"> Gets or sets the state of managed eventhub. If enabled managed eventhub will be created, if disabled the managed eventhub will be removed. </param>
-        /// <param name="managedResourceGroupName"> Gets or sets the managed resource group name. </param>
-        /// <param name="managedResources"> Gets the resource identifiers of the managed resources. </param>
-        /// <param name="managedResourcesPublicNetworkAccess"> Gets or sets the public network access for managed resources. </param>
-        /// <param name="privateEndpointConnections"> Gets the private endpoint connections information. </param>
-        /// <param name="provisioningState"> Gets or sets the state of the provisioning. </param>
-        /// <param name="publicNetworkAccess"> Gets or sets the public network access. </param>
-        /// <param name="identity"> The Managed Identity of the resource. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PurviewAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, PurviewAccountSku sku, PurviewAccountStatus accountStatus, CloudConnectors cloudConnectors, DateTimeOffset? createdOn, string createdBy, string createdByObjectId, PurviewAccountEndpoint endpoints, string friendlyName, PurviewIngestionStorage ingestionStorage, PurviewManagedEventHubState? managedEventHubState, string managedResourceGroupName, PurviewManagedResource managedResources, ManagedResourcesPublicNetworkAccess? managedResourcesPublicNetworkAccess, IReadOnlyList<PurviewPrivateEndpointConnectionData> privateEndpointConnections, PurviewProvisioningState? provisioningState, PurviewPublicNetworkAccess? publicNetworkAccess, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal PurviewAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation location, PurviewAccountProperties properties, IDictionary<string, string> tags, ManagedServiceIdentity identity, PurviewAccountSku sku) : base(id, name, resourceType, systemData, tags, location)
         {
-            Sku = sku;
-            AccountStatus = accountStatus;
-            CloudConnectors = cloudConnectors;
-            CreatedOn = createdOn;
-            CreatedBy = createdBy;
-            CreatedByObjectId = createdByObjectId;
-            Endpoints = endpoints;
-            FriendlyName = friendlyName;
-            IngestionStorage = ingestionStorage;
-            ManagedEventHubState = managedEventHubState;
-            ManagedResourceGroupName = managedResourceGroupName;
-            ManagedResources = managedResources;
-            ManagedResourcesPublicNetworkAccess = managedResourcesPublicNetworkAccess;
-            PrivateEndpointConnections = privateEndpointConnections;
-            ProvisioningState = provisioningState;
-            PublicNetworkAccess = publicNetworkAccess;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
             Identity = identity;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Sku = sku;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PurviewAccountData"/> for deserialization. </summary>
-        internal PurviewAccountData()
-        {
-        }
+        /// <summary> The account properties. </summary>
+        internal PurviewAccountProperties Properties { get; set; }
+
+        /// <summary> The Managed Identity of the resource. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> Gets or sets the Sku. </summary>
-        public PurviewAccountSku Sku { get; }
+        public PurviewAccountSku Sku { get; set; }
+
         /// <summary> Gets or sets the status of the account. </summary>
-        public PurviewAccountStatus AccountStatus { get; }
-        /// <summary> External Cloud Service connectors. </summary>
-        internal CloudConnectors CloudConnectors { get; set; }
+        public PurviewAccountStatus AccountStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AccountStatus;
+            }
+        }
+
+        /// <summary> Gets the time at which the entity was created. </summary>
+        public DateTimeOffset? CreatedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreatedOn;
+            }
+        }
+
+        /// <summary> Gets the creator of the entity. </summary>
+        public string CreatedBy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreatedBy;
+            }
+        }
+
+        /// <summary> Gets the creators of the entity's object id. </summary>
+        public string CreatedByObjectId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreatedByObjectId;
+            }
+        }
+
+        /// <summary> Gets the default domain in the account. </summary>
+        public string DefaultDomain
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DefaultDomain;
+            }
+        }
+
+        /// <summary> Gets or sets the friendly name. </summary>
+        public string FriendlyName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FriendlyName;
+            }
+        }
+
+        /// <summary> Ingestion Storage Account Info. </summary>
+        public PurviewIngestionStorage IngestionStorage
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IngestionStorage;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PurviewAccountProperties();
+                }
+                Properties.IngestionStorage = value;
+            }
+        }
+
+        /// <summary> Gets or sets the state of managed eventhub. If enabled managed eventhub will be created, if disabled the managed eventhub will be removed. </summary>
+        public PurviewManagedEventHubState? ManagedEventHubState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ManagedEventHubState;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PurviewAccountProperties();
+                }
+                Properties.ManagedEventHubState = value.Value;
+            }
+        }
+
+        /// <summary> Gets or sets the managed resource group name. </summary>
+        public string ManagedResourceGroupName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ManagedResourceGroupName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PurviewAccountProperties();
+                }
+                Properties.ManagedResourceGroupName = value;
+            }
+        }
+
+        /// <summary> Gets or sets the public network access for managed resources. </summary>
+        public ManagedResourcesPublicNetworkAccess? ManagedResourcesPublicNetworkAccess
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ManagedResourcesPublicNetworkAccess;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PurviewAccountProperties();
+                }
+                Properties.ManagedResourcesPublicNetworkAccess = value.Value;
+            }
+        }
+
+        /// <summary> Gets or sets the Merge Info. </summary>
+        public PurviewAccountMergeInfo MergeInfo
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MergeInfo;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PurviewAccountProperties();
+                }
+                Properties.MergeInfo = value;
+            }
+        }
+
+        /// <summary> Gets the private endpoint connections information. </summary>
+        public IReadOnlyList<PurviewPrivateEndpointConnectionData> PrivateEndpointConnections
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new PurviewAccountProperties();
+                }
+                return Properties.PrivateEndpointConnections;
+            }
+        }
+
+        /// <summary> Gets or sets the state of the provisioning. </summary>
+        public PurviewProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> Gets or sets the public network access. </summary>
+        public PurviewPublicNetworkAccess? PublicNetworkAccess
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublicNetworkAccess;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PurviewAccountProperties();
+                }
+                Properties.PublicNetworkAccess = value.Value;
+            }
+        }
+
+        /// <summary> Gets or sets the state of tenant endpoint. </summary>
+        public PurviewTenantEndpointState? TenantEndpointState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TenantEndpointState;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PurviewAccountProperties();
+                }
+                Properties.TenantEndpointState = value.Value;
+            }
+        }
+
         /// <summary>
         /// AWS external identifier.
         /// Configured in AWS to allow use of the role arn used for scanning
         /// </summary>
         public string CloudConnectorsAwsExternalId
         {
-            get => CloudConnectors is null ? default : CloudConnectors.AwsExternalId;
+            get
+            {
+                return Properties is null ? default : Properties.CloudConnectorsAwsExternalId;
+            }
         }
-
-        /// <summary> Gets the time at which the entity was created. </summary>
-        public DateTimeOffset? CreatedOn { get; }
-        /// <summary> Gets the creator of the entity. </summary>
-        public string CreatedBy { get; }
-        /// <summary> Gets the creators of the entity's object id. </summary>
-        public string CreatedByObjectId { get; }
-        /// <summary> The URIs that are the public endpoints of the account. </summary>
-        public PurviewAccountEndpoint Endpoints { get; }
-        /// <summary> Gets or sets the friendly name. </summary>
-        public string FriendlyName { get; }
-        /// <summary> Ingestion Storage Account Info. </summary>
-        public PurviewIngestionStorage IngestionStorage { get; set; }
-        /// <summary> Gets or sets the state of managed eventhub. If enabled managed eventhub will be created, if disabled the managed eventhub will be removed. </summary>
-        public PurviewManagedEventHubState? ManagedEventHubState { get; set; }
-        /// <summary> Gets or sets the managed resource group name. </summary>
-        public string ManagedResourceGroupName { get; set; }
-        /// <summary> Gets the resource identifiers of the managed resources. </summary>
-        public PurviewManagedResource ManagedResources { get; }
-        /// <summary> Gets or sets the public network access for managed resources. </summary>
-        public ManagedResourcesPublicNetworkAccess? ManagedResourcesPublicNetworkAccess { get; set; }
-        /// <summary> Gets the private endpoint connections information. </summary>
-        public IReadOnlyList<PurviewPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
-        /// <summary> Gets or sets the state of the provisioning. </summary>
-        public PurviewProvisioningState? ProvisioningState { get; }
-        /// <summary> Gets or sets the public network access. </summary>
-        public PurviewPublicNetworkAccess? PublicNetworkAccess { get; set; }
-        /// <summary> The Managed Identity of the resource. Current supported identity types: None, SystemAssigned, UserAssigned. </summary>
-        public ManagedServiceIdentity Identity { get; set; }
     }
 }

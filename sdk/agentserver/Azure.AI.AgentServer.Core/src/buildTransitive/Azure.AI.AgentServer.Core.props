@@ -1,0 +1,11 @@
+<Project>
+  <!--
+    Transitive counterpart of build/Azure.AI.AgentServer.Core.props.
+    Ensures the global using reaches consumers who reference Core transitively
+    (e.g., via Azure.AI.AgentServer.Responses or Azure.AI.AgentServer.Invocations)
+    so AgentHost is available without any explicit using directive.
+  -->
+  <ItemGroup>
+    <Using Include="Azure.AI.AgentServer.Core" />
+  </ItemGroup>
+</Project>

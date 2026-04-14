@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     /// <summary> ConsolePatchParameters represents the body of the request to patch the virtual machine console. </summary>
     public partial class NetworkCloudVirtualMachineConsolePatch
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudVirtualMachineConsolePatch"/>. </summary>
         public NetworkCloudVirtualMachineConsolePatch()
@@ -52,33 +24,71 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudVirtualMachineConsolePatch"/>. </summary>
-        /// <param name="tags"> The Azure resource tags that will replace the existing ones. </param>
-        /// <param name="enabled"> The indicator of whether the console access is enabled. </param>
-        /// <param name="expireOn"> The date and time after which the key will be disallowed access. </param>
-        /// <param name="sshPublicKey"> The SSH public key that will be provisioned for user access. The user is expected to have the corresponding SSH private key for logging in. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkCloudVirtualMachineConsolePatch(IDictionary<string, string> tags, ConsoleEnabled? enabled, DateTimeOffset? expireOn, NetworkCloudSshPublicKey sshPublicKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> The list of the resource properties. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkCloudVirtualMachineConsolePatch(ConsolePatchProperties properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            Properties = properties;
             Tags = tags;
-            Enabled = enabled;
-            ExpireOn = expireOn;
-            SshPublicKey = sshPublicKey;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The Azure resource tags that will replace the existing ones. </summary>
+        /// <summary> The list of the resource properties. </summary>
+        internal ConsolePatchProperties Properties { get; set; }
+
+        /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
+
         /// <summary> The indicator of whether the console access is enabled. </summary>
-        public ConsoleEnabled? Enabled { get; set; }
+        public ConsoleEnabled? Enabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Enabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ConsolePatchProperties();
+                }
+                Properties.Enabled = value.Value;
+            }
+        }
+
         /// <summary> The date and time after which the key will be disallowed access. </summary>
-        public DateTimeOffset? ExpireOn { get; set; }
-        /// <summary> The SSH public key that will be provisioned for user access. The user is expected to have the corresponding SSH private key for logging in. </summary>
-        internal NetworkCloudSshPublicKey SshPublicKey { get; set; }
+        public DateTimeOffset? ExpireOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExpireOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ConsolePatchProperties();
+                }
+                Properties.ExpireOn = value.Value;
+            }
+        }
+
         /// <summary> The SSH public key data. </summary>
         public string KeyData
         {
-            get => SshPublicKey is null ? default : SshPublicKey.KeyData;
-            set => SshPublicKey = new NetworkCloudSshPublicKey(value);
+            get
+            {
+                return Properties is null ? default : Properties.KeyData;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ConsolePatchProperties();
+                }
+                Properties.KeyData = value;
+            }
         }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.Storage.Models
     public readonly partial struct AccountImmutabilityPolicyState : IEquatable<AccountImmutabilityPolicyState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="AccountImmutabilityPolicyState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public AccountImmutabilityPolicyState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string UnlockedValue = "Unlocked";
         private const string LockedValue = "Locked";
         private const string DisabledValue = "Disabled";
 
-        /// <summary> Unlocked. </summary>
+        /// <summary> Initializes a new instance of <see cref="AccountImmutabilityPolicyState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public AccountImmutabilityPolicyState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Unlocked. </summary>
         public static AccountImmutabilityPolicyState Unlocked { get; } = new AccountImmutabilityPolicyState(UnlockedValue);
-        /// <summary> Locked. </summary>
+
+        /// <summary> Gets the Locked. </summary>
         public static AccountImmutabilityPolicyState Locked { get; } = new AccountImmutabilityPolicyState(LockedValue);
-        /// <summary> Disabled. </summary>
+
+        /// <summary> Gets the Disabled. </summary>
         public static AccountImmutabilityPolicyState Disabled { get; } = new AccountImmutabilityPolicyState(DisabledValue);
+
         /// <summary> Determines if two <see cref="AccountImmutabilityPolicyState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AccountImmutabilityPolicyState left, AccountImmutabilityPolicyState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AccountImmutabilityPolicyState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AccountImmutabilityPolicyState left, AccountImmutabilityPolicyState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AccountImmutabilityPolicyState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AccountImmutabilityPolicyState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AccountImmutabilityPolicyState(string value) => new AccountImmutabilityPolicyState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AccountImmutabilityPolicyState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AccountImmutabilityPolicyState?(string value) => value == null ? null : new AccountImmutabilityPolicyState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AccountImmutabilityPolicyState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AccountImmutabilityPolicyState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

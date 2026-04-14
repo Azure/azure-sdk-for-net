@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Storage
 {
+    /// <summary></summary>
     public partial class StorageAccountMigrationResource : IJsonModel<StorageAccountMigrationData>
     {
-        private static StorageAccountMigrationData s_dataDeserializationInstance;
-        private static StorageAccountMigrationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<StorageAccountMigrationData> s_dataDeserializationInstance;
 
+        private static IJsonModel<StorageAccountMigrationData> DataDeserializationInstance => s_dataDeserializationInstance ??= new StorageAccountMigrationData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<StorageAccountMigrationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<StorageAccountMigrationData>)Data).Write(writer, options);
 
-        StorageAccountMigrationData IJsonModel<StorageAccountMigrationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StorageAccountMigrationData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        StorageAccountMigrationData IJsonModel<StorageAccountMigrationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<StorageAccountMigrationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<StorageAccountMigrationData>(Data, options, AzureResourceManagerStorageContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         StorageAccountMigrationData IPersistableModel<StorageAccountMigrationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StorageAccountMigrationData>(data, options, AzureResourceManagerStorageContext.Default);
 
-        string IPersistableModel<StorageAccountMigrationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StorageAccountMigrationData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<StorageAccountMigrationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

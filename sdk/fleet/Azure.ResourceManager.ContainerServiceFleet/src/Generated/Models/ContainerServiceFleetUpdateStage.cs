@@ -34,14 +34,29 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <param name="name"> The name of the stage. Must be unique within the UpdateRun. </param>
         /// <param name="groups"> Defines the groups to be executed in parallel in this stage. Duplicate groups are not allowed. Min size: 1. </param>
         /// <param name="afterStageWaitInSeconds"> The time in seconds to wait at the end of this stage before starting the next one. Defaults to 0 seconds if unspecified. </param>
+        /// <param name="maxConcurrency">
+        /// The max number of upgrades that can run concurrently across all groups in this stage.
+        /// Acts as a ceiling (and not a quota) for the number of concurrent upgrades within the stage you want to tolerate at a time.
+        /// Actual concurrency may be lower depending on group-level concurrency limits or individual member conditions.
+        /// Stage maxConcurrency has a min value of "1".
+        /// Accepts either:
+        ///     • A fixed count, e.g., "3"
+        ///     • A percentage, e.g., "25%" (range 1–100). Percentage is of the total number of clusters across all groups in the stage.
+        ///       Fractional results are rounded down. A minimum of 1 upgrade is enforced.
+        /// Examples:
+        ///     • "3"     --&gt; up to 3 clusters from this stage upgrade at once (across all groups).
+        ///     • "100%"  --&gt; “all at once”; up to all clusters in this stage upgrade at the same time.
+        ///     • "25%"   --&gt; up to 25% of the stage’s total clusters upgrade at the same time.
+        /// </param>
         /// <param name="beforeGates"> A list of Gates that will be created before this Stage is executed. </param>
         /// <param name="afterGates"> A list of Gates that will be created after this Stage is executed. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServiceFleetUpdateStage(string name, IList<ContainerServiceFleetUpdateGroup> groups, int? afterStageWaitInSeconds, IList<ContainerServiceFleetGateConfiguration> beforeGates, IList<ContainerServiceFleetGateConfiguration> afterGates, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerServiceFleetUpdateStage(string name, IList<ContainerServiceFleetUpdateGroup> groups, int? afterStageWaitInSeconds, string maxConcurrency, IList<ContainerServiceFleetGateConfiguration> beforeGates, IList<ContainerServiceFleetGateConfiguration> afterGates, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Groups = groups;
             AfterStageWaitInSeconds = afterStageWaitInSeconds;
+            MaxConcurrency = maxConcurrency;
             BeforeGates = beforeGates;
             AfterGates = afterGates;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -55,6 +70,22 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
 
         /// <summary> The time in seconds to wait at the end of this stage before starting the next one. Defaults to 0 seconds if unspecified. </summary>
         public int? AfterStageWaitInSeconds { get; set; }
+
+        /// <summary>
+        /// The max number of upgrades that can run concurrently across all groups in this stage.
+        /// Acts as a ceiling (and not a quota) for the number of concurrent upgrades within the stage you want to tolerate at a time.
+        /// Actual concurrency may be lower depending on group-level concurrency limits or individual member conditions.
+        /// Stage maxConcurrency has a min value of "1".
+        /// Accepts either:
+        ///     • A fixed count, e.g., "3"
+        ///     • A percentage, e.g., "25%" (range 1–100). Percentage is of the total number of clusters across all groups in the stage.
+        ///       Fractional results are rounded down. A minimum of 1 upgrade is enforced.
+        /// Examples:
+        ///     • "3"     --&gt; up to 3 clusters from this stage upgrade at once (across all groups).
+        ///     • "100%"  --&gt; “all at once”; up to all clusters in this stage upgrade at the same time.
+        ///     • "25%"   --&gt; up to 25% of the stage’s total clusters upgrade at the same time.
+        /// </summary>
+        public string MaxConcurrency { get; set; }
 
         /// <summary> A list of Gates that will be created before this Stage is executed. </summary>
         public IList<ContainerServiceFleetGateConfiguration> BeforeGates { get; }

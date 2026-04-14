@@ -139,36 +139,32 @@ namespace Azure.ResourceManager.Storage.Tests
         public async Task UpdateQueueService()
         {
             //update cors
-            QueueServiceData parameter = new QueueServiceData()
-            {
-                Cors = new StorageCorsRules()
-                {
-                    CorsRules =
-                    {
+            // TypeSpec migration: Cors wrapper removed; use CorsRules directly on QueueServiceData
+            QueueServiceData parameter = new QueueServiceData();
+            parameter.CorsRules.Add(
                         new StorageCorsRule(
                             allowedHeaders: new string[] { "x-ms-meta-abc", "x-ms-meta-data*", "x-ms-meta-target*" },
                             allowedMethods: new CorsRuleAllowedMethod[] { "GET", "HEAD", "POST", "OPTIONS", "MERGE", "PUT" },
                             allowedOrigins: new string[] { "http://www.contoso.com", "http://www.fabrikam.com" },
                             exposedHeaders: new string[] { "x-ms-meta-*" },
-                            maxAgeInSeconds: 100),
+                            maxAgeInSeconds: 100));
+            parameter.CorsRules.Add(
                         new StorageCorsRule(
                             allowedOrigins: new string[] { "*" },
                             allowedMethods: new CorsRuleAllowedMethod[] {"GET" },
                             maxAgeInSeconds: 2,
                             exposedHeaders: new string[] { "*" },
                             allowedHeaders: new string[] { "*" }
-                            )
-                    }
-                },
-            };
+                            ));
             _queueService = (await _queueService.CreateOrUpdateAsync(WaitUntil.Completed, parameter)).Value;
 
             //Validate CORS Rules
-            Assert.AreEqual(parameter.Cors.CorsRules.Count, _queueService.Data.Cors.CorsRules.Count);
-            for (int i = 0; i < parameter.Cors.CorsRules.Count; i++)
+            // TypeSpec migration: Cors wrapper removed; CorsRules is now a direct property
+            Assert.AreEqual(parameter.CorsRules.Count, _queueService.Data.CorsRules.Count);
+            for (int i = 0; i < parameter.CorsRules.Count; i++)
             {
-                StorageCorsRule getRule = _queueService.Data.Cors.CorsRules[i];
-                StorageCorsRule putRule = parameter.Cors.CorsRules[i];
+                StorageCorsRule getRule = _queueService.Data.CorsRules[i];
+                StorageCorsRule putRule = parameter.CorsRules[i];
 
                 Assert.AreEqual(putRule.AllowedHeaders, getRule.AllowedHeaders);
                 Assert.AreEqual(putRule.AllowedMethods, getRule.AllowedMethods);
@@ -180,11 +176,12 @@ namespace Azure.ResourceManager.Storage.Tests
             _queueService = (await _queueService.GetAsync()).Value;
 
             //Validate CORS Rules
-            Assert.AreEqual(parameter.Cors.CorsRules.Count, _queueService.Data.Cors.CorsRules.Count);
-            for (int i = 0; i < parameter.Cors.CorsRules.Count; i++)
+            // TypeSpec migration: Cors wrapper removed; CorsRules is now a direct property
+            Assert.AreEqual(parameter.CorsRules.Count, _queueService.Data.CorsRules.Count);
+            for (int i = 0; i < parameter.CorsRules.Count; i++)
             {
-                StorageCorsRule getRule = _queueService.Data.Cors.CorsRules[i];
-                StorageCorsRule putRule = parameter.Cors.CorsRules[i];
+                StorageCorsRule getRule = _queueService.Data.CorsRules[i];
+                StorageCorsRule putRule = parameter.CorsRules[i];
 
                 Assert.AreEqual(putRule.AllowedHeaders, getRule.AllowedHeaders);
                 Assert.AreEqual(putRule.AllowedMethods, getRule.AllowedMethods);

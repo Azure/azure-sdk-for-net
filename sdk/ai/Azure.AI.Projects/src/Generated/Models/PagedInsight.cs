@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.AI.Projects;
+using Azure.AI.Projects.Evaluation;
 
 namespace Azure.Core
 {
@@ -17,7 +17,7 @@ namespace Azure.Core
 
         /// <summary> Initializes a new instance of <see cref="PagedInsight"/>. </summary>
         /// <param name="value"> The Insight items on this page. </param>
-        internal PagedInsight(IEnumerable<Insight> value)
+        internal PagedInsight(IEnumerable<ProjectsInsight> value)
         {
             Value = value.ToList();
         }
@@ -26,7 +26,7 @@ namespace Azure.Core
         /// <param name="value"> The Insight items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PagedInsight(IList<Insight> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PagedInsight(IList<ProjectsInsight> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -34,7 +34,7 @@ namespace Azure.Core
         }
 
         /// <summary> The Insight items on this page. </summary>
-        public IList<Insight> Value { get; }
+        public IList<ProjectsInsight> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

@@ -62,11 +62,10 @@ namespace Azure.Compute.Batch
             options ??= new BatchClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
-            _tokenCredential = credential;
 
             var pipelineOptions = new HttpPipelineOptions(options)
             {
-                PerRetryPolicies = { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) },
+                PerRetryPolicies = { new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes) },
                 ResponseClassifier = new ResponseClassifier(),
                 RequestFailedDetailsParser = new BatchErrorDetailsParser()
             };

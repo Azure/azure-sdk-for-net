@@ -1,4 +1,4 @@
-﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
   <Import Project="Versioning.targets" />
 
@@ -144,18 +144,23 @@
 
   <!--
     ConfigurationSchema.json auto-pack
-    Any shippable client library with a schema/ConfigurationSchema.json (sibling of src/)
-    gets the schema packed at the NuGet package root and a static .targets file packed into
+    Any shippable client library with a schema/ConfigurationSchema.json gets the schema
+    packed at the NuGet package root and a static .targets file packed into
     buildTransitive/{tfm}/ that registers the JsonSchemaSegment for appsettings.*.json.
     Individual packages only need to add the JSON file — no extra MSBuild configuration.
+    The schema can live at either:
+      1. $(PackageRootDirectory)/schema/ConfigurationSchema.json  (custom/hand-authored)
+      2. $(PackageRootDirectory)/src/Generated/schema/ConfigurationSchema.json  (code-generated)
+    Only one location should exist per library; the custom location takes precedence.
   -->
   <PropertyGroup>
-    <ConfigurationSchemaPath>$(PackageRootDirectory)/schema/ConfigurationSchema.json</ConfigurationSchemaPath>
-    <HasConfigurationSchema Condition="'$(IsShippingClientLibrary)' == 'true' and Exists('$(ConfigurationSchemaPath)')">true</HasConfigurationSchema>
+    <ConfigurationSchemaPath Condition="Exists('$(PackageRootDirectory)/schema/ConfigurationSchema.json')">$(PackageRootDirectory)/schema/ConfigurationSchema.json</ConfigurationSchemaPath>
+    <ConfigurationSchemaPath Condition="'$(ConfigurationSchemaPath)' == '' and Exists('$(PackageRootDirectory)/src/Generated/schema/ConfigurationSchema.json')">$(PackageRootDirectory)/src/Generated/schema/ConfigurationSchema.json</ConfigurationSchemaPath>
+    <HasConfigurationSchema Condition="'$(IsShippingClientLibrary)' == 'true' and '$(ConfigurationSchemaPath)' != ''">true</HasConfigurationSchema>
   </PropertyGroup>
 
   <ItemGroup Condition="'$(HasConfigurationSchema)' == 'true'">
-    <None Include="$(ConfigurationSchemaPath)" Pack="true" PackagePath="ConfigurationSchema.json" />
+    <None Include="$(ConfigurationSchemaPath)" Pack="true" PackagePath="ConfigurationSchema.json" Link="schema/ConfigurationSchema.json" />
   </ItemGroup>
 
   <PropertyGroup Condition="'$(HasConfigurationSchema)' == 'true'">
@@ -413,6 +418,14 @@
   <PropertyGroup>
     <ApiCompatExcludeAttributeList>$(MSBuildThisFileDirectory)ApiListing.exclude-attributes.txt</ApiCompatExcludeAttributeList>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(ApiCompatVersion)' != ''">
+    <!--
+      Central baseline: override the local file convention used by Microsoft.DotNet.ApiCompat
+      to ensure all baseline suppressions live in eng/apicompatbaselines/ where changes are
+      visible and protected by CODEOWNERS.
+    -->
+    <ApiCompatBaseline>$(MSBuildThisFileDirectory)apicompatbaselines\$(MSBuildProjectName).txt</ApiCompatBaseline>
+  </PropertyGroup>
   <ItemGroup Condition="'$(ApiCompatVersion)' != ''">
     <PackageDownload Include="$(PackageId)" Version="[$(ApiCompatVersion)]" />
     <PackageReference Include="Microsoft.DotNet.ApiCompat" PrivateAssets="all" />
@@ -425,6 +438,13 @@
         <DependencyPaths>@(_ReferencePathDirectories->Distinct(), ',')</DependencyPaths>
       </ResolvedMatchingContract>
     </ItemGroup>
+  </Target>
+
+  <Target Name="ValidateNoLocalApiCompatBaseline" BeforeTargets="ValidateApiCompatForSrc" Condition="'$(ApiCompatVersion)' != ''">
+    <Error Condition="Exists('$(MSBuildProjectDirectory)\ApiCompatBaseline.txt')"
+           Text="Local ApiCompatBaseline.txt files are no longer supported. Move suppressions to eng\apicompatbaselines\$(MSBuildProjectName).txt instead. See https://github.com/Azure/azure-sdk-for-net/issues/55311" />
+    <Error Condition="Exists('$(MSBuildProjectDirectory)\ApiCompatBaseline.$(TargetFramework).txt')"
+           Text="Local ApiCompatBaseline.$(TargetFramework).txt files are no longer supported. Move suppressions to eng\apicompatbaselines\$(MSBuildProjectName).txt instead. See https://github.com/Azure/azure-sdk-for-net/issues/55311" />
   </Target>
 
   <Target Name="ApiCompatFinishedMessage" AfterTargets="ValidateApiCompatForSrc" Condition="'$(ApiCompatVersion)' != ''">

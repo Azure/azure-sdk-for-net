@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using OpenAI.Responses;
 
-namespace Azure.AI.Projects;
+namespace Azure.AI.Projects.Memory;
 
 public partial class MemorySearchOptions : IJsonModel<MemorySearchOptions>
 {

@@ -6,47 +6,36 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup
 {
     /// <summary>
-    /// A Class representing a BackupEngine along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BackupEngineResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetBackupEngineResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetBackupEngine method.
+    /// A class representing a BackupEngine along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BackupEngineResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetBackupEngines method.
     /// </summary>
     public partial class BackupEngineResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="BackupEngineResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="vaultName"> The vaultName. </param>
-        /// <param name="backupEngineName"> The backupEngineName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vaultName, string backupEngineName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupEngines/{backupEngineName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _backupEngineClientDiagnostics;
-        private readonly BackupEnginesRestOperations _backupEngineRestClient;
+        private readonly ClientDiagnostics _backupEnginesClientDiagnostics;
+        private readonly BackupEngines _backupEnginesRestClient;
         private readonly BackupEngineData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/vaults/backupEngines";
 
-        /// <summary> Initializes a new instance of the <see cref="BackupEngineResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of BackupEngineResource for mocking. </summary>
         protected BackupEngineResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="BackupEngineResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupEngineResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal BackupEngineResource(ArmClient client, BackupEngineData data) : this(client, data.Id)
@@ -55,73 +44,95 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="BackupEngineResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupEngineResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal BackupEngineResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _backupEngineClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string backupEngineApiVersion);
-            _backupEngineRestClient = new BackupEnginesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, backupEngineApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _backupEnginesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", ResourceType.Namespace, Diagnostics);
+            _backupEnginesRestClient = new BackupEngines(_backupEnginesClientDiagnostics, Pipeline, Endpoint, backupEngineApiVersion ?? "2026-01-01-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual BackupEngineData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="vaultName"> The vaultName. </param>
+        /// <param name="backupEngineName"> The backupEngineName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vaultName, string backupEngineName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupEngines/{backupEngineName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Returns backup management server registered to Recovery Services Vault.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupEngines/{backupEngineName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupEngines/{backupEngineName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BackupEngines_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> BackupEngines_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BackupEngineResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BackupEngineResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> OData filter options. </param>
         /// <param name="skipToken"> skipToken Filter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<BackupEngineResource>> GetAsync(string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BackupEngineResource>> GetAsync(string filter = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
-            using var scope = _backupEngineClientDiagnostics.CreateScope("BackupEngineResource.Get");
+            using DiagnosticScope scope = _backupEnginesClientDiagnostics.CreateScope("BackupEngineResource.Get");
             scope.Start();
             try
             {
-                var response = await _backupEngineRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, skipToken, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _backupEnginesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, skipToken, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<BackupEngineData> response = Response.FromValue(BackupEngineData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new BackupEngineResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -135,35 +146,43 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// Returns backup management server registered to Recovery Services Vault.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupEngines/{backupEngineName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupEngines/{backupEngineName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BackupEngines_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> BackupEngines_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BackupEngineResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BackupEngineResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> OData filter options. </param>
         /// <param name="skipToken"> skipToken Filter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<BackupEngineResource> Get(string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public virtual Response<BackupEngineResource> Get(string filter = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
-            using var scope = _backupEngineClientDiagnostics.CreateScope("BackupEngineResource.Get");
+            using DiagnosticScope scope = _backupEnginesClientDiagnostics.CreateScope("BackupEngineResource.Get");
             scope.Start();
             try
             {
-                var response = _backupEngineRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, skipToken, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _backupEnginesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, skipToken, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<BackupEngineData> response = Response.FromValue(BackupEngineData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new BackupEngineResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

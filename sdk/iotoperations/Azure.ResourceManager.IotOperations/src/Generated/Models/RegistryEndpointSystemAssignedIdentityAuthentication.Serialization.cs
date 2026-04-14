@@ -16,11 +16,6 @@ namespace Azure.ResourceManager.IotOperations.Models
     /// <summary> System assigned identity authentication. </summary>
     public partial class RegistryEndpointSystemAssignedIdentityAuthentication : RegistryEndpointAuthentication, IJsonModel<RegistryEndpointSystemAssignedIdentityAuthentication>
     {
-        /// <summary> Initializes a new instance of <see cref="RegistryEndpointSystemAssignedIdentityAuthentication"/> for deserialization. </summary>
-        internal RegistryEndpointSystemAssignedIdentityAuthentication()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override RegistryEndpointAuthentication PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

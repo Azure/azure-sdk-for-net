@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Quota
         {
             if (id.ResourceType != ManagementGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ManagementGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ManagementGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Quota
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupQuotaName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupQuotaName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<GroupQuotaEntityResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string groupQuotaName, GroupQuotaEntityData data = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<GroupQuotaEntityResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string groupQuotaName, GroupQuotaEntityData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Quota
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupQuotaName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupQuotaName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<GroupQuotaEntityResource> CreateOrUpdate(WaitUntil waitUntil, string groupQuotaName, GroupQuotaEntityData data = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<GroupQuotaEntityResource> CreateOrUpdate(WaitUntil waitUntil, string groupQuotaName, GroupQuotaEntityData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
 
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.Quota
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<GroupQuotaEntityData, GroupQuotaEntityResource>(new GroupQuotasEntitiesGetAllAsyncCollectionResultOfT(_groupQuotasEntitiesRestClient, Id.Name, context), data => new GroupQuotaEntityResource(Client, data));
+            return new AsyncPageableWrapper<GroupQuotaEntityData, GroupQuotaEntityResource>(new GroupQuotasEntitiesGetAllAsyncCollectionResultOfT(_groupQuotasEntitiesRestClient, Id.Name, context, "GroupQuotaEntityCollection.GetAll"), data => new GroupQuotaEntityResource(Client, data));
         }
 
         /// <summary>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.Quota
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<GroupQuotaEntityData, GroupQuotaEntityResource>(new GroupQuotasEntitiesGetAllCollectionResultOfT(_groupQuotasEntitiesRestClient, Id.Name, context), data => new GroupQuotaEntityResource(Client, data));
+            return new PageableWrapper<GroupQuotaEntityData, GroupQuotaEntityResource>(new GroupQuotasEntitiesGetAllCollectionResultOfT(_groupQuotasEntitiesRestClient, Id.Name, context, "GroupQuotaEntityCollection.GetAll"), data => new GroupQuotaEntityResource(Client, data));
         }
 
         /// <summary>

@@ -6,16 +6,13 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NotificationHubs.Models;
 
 namespace Azure.ResourceManager.NotificationHubs
 {
-    /// <summary>
-    /// A class representing the NotificationHubAuthorizationRule data model.
-    /// Description of a Namespace AuthorizationRules.
-    /// </summary>
-    public partial class NotificationHubAuthorizationRuleData : TrackedResourceData
+    // Backward-compat: Sku and Rights properties existed in baseline but are not in the spec.
+    // Required by ApiCompat.
+    public partial class NotificationHubAuthorizationRuleData
     {
         /// <summary> The sku of the created namespace. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
