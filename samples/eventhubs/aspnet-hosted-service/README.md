@@ -5,6 +5,7 @@ languages:
 products:
 - azure
 - azure-event-hubs
+urlFragment: eventhubs-aspnet-hosted-service
 name: Using the EventProcessorClient with an ASP.NET hosted service
 description: Using the EventProcessorClient with an ASP.NET hosted service
 ---
@@ -27,11 +28,9 @@ The [Azure.Messaging.EventHubs.Processor](https://github.com/Azure/azure-sdk-for
 
 - **Azure Storage blob container:** Checkpoint and ownership data in Azure Storage will be written to blobs in a specific container.  The `EventProcessorClient` requires an existing container and will not implicitly create one to help guard against accidental misconfiguration.  It is recommended that you use a unique container for each Event Hub and consumer group combination.  If you are not familiar with Azure Storage containers, you may wish to refer to the documentation on [managing containers](https://learn.microsoft.com/azure/storage/blobs/storage-blob-container-create?tabs=dotnet).  There, you can find detailed instructions for using .NET, the Azure CLI, or Azure PowerShell to create a container.
 
-- **C# 8.0:** The Azure Event Hubs client library makes use of new features that were introduced in C# 8.0.  In order to take advantage of the C# 8.0 syntax, it is recommended that you compile using the [.NET Core SDK](https://dotnet.microsoft.com/download) 3.0 or higher with a [language version](https://learn.microsoft.com/dotnet/csharp/language-reference/configure-language-version#override-a-default) of `latest`. 
+- **C# 10.0:** The Azure Event Hubs client library makes use of new features that were introduced in C# 10.0.  In order to take advantage of the C# 10.0 syntax, it is recommended that you compile using the [.NET SDK](https://dotnet.microsoft.com/download) 10.0 or higher with a [language version](https://learn.microsoft.com/dotnet/csharp/language-reference/configure-language-version#override-a-default) of `latest`. 
 
-  Visual Studio users wishing to take full advantage of the C# 8.0 syntax will need to use Visual Studio 2019 or later.  Visual Studio 2019, including the free Community edition, can be downloaded [here](https://visualstudio.microsoft.com).  Users of Visual Studio 2017 can take advantage of the C# 8 syntax by making use of the [Microsoft.Net.Compilers NuGet package](https://www.nuget.org/packages/Microsoft.Net.Compilers/) and setting the language version, though the editing experience may not be ideal.
-
-  You can still use the library with previous C# language versions, but will need to manage asynchronous enumerable and asynchronous disposable members manually rather than benefiting from the new syntax.  You may still target any framework version supported by your .NET Core SDK, including earlier versions of .NET Core or the .NET framework.  For more information, see: [how to specify target frameworks](https://learn.microsoft.com/dotnet/standard/frameworks#how-to-specify-target-frameworks).  
+  Visual Studio users wishing to take full advantage of the C# 10.0 syntax will need to use Visual Studio 2026 or later.  Visual Studio 2026, including the free Community edition, can be downloaded [here](https://visualstudio.microsoft.com).  
 
 To quickly create a basic set of resources in Azure and to receive a connection string for them, you can deploy our sample template by clicking:
 

@@ -5,6 +5,7 @@ languages:
 products:
 - azure
 - azure-service-bus
+urlFragment: servicebus-topic-filters
 name: Explore topic filters in Azure Service Bus
 description: This sample shows how to apply topic filters to subscriptions.
 ---

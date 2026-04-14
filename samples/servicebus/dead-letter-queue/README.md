@@ -5,6 +5,7 @@ languages:
 products:
 - azure
 - azure-service-bus
+urlFragment: servicebus-dead-letter-queue
 name: Explore deadlettering in Azure Service Bus
 description: This sample shows how to move messages to the Dead-letter queue, how to retrieve messages from it, and resubmit corrected message back into the main queue.
 ---
