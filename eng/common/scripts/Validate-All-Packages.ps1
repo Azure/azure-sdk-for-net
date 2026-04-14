@@ -14,9 +14,7 @@ Param (
   [string]$APIViewUri  = "https://apiview.dev/AutoReview/GetReviewStatus",
   [bool] $IsReleaseBuild = $false,
   [Parameter(Mandatory=$False)]
-  [array] $PackageInfoFiles,
-  [string]$AzsdkPath = $env:AZSDK,
-  [array]$CodeownersSdkTypes = @("client", "compat", "data", "functions", "datamovement")
+  [array] $PackageInfoFiles
 )
 
 # Validate-All-Packages.ps1 folds in the code that was originally in Validate-Package.ps1
@@ -109,50 +107,6 @@ function VerifyAPIReview($packageName, $packageVersion, $language)
     return [PSCustomObject]@{
         ApiviewApproval = $APIReviewValidation
         PackageNameApproval = $PackageNameValidation
-    }
-}
-
-# Function to validate CODEOWNERS ownership for a package
-function ValidateCodeowners($directoryPath, $sdkType, $validationStatus)
-{
-    if (-not $AzsdkPath -or -not (Test-Path $AzsdkPath))
-    {
-        $validationStatus.Status = "Skipped"
-        $validationStatus.Message = "CODEOWNERS validation not enabled"
-        return
-    }
-    if ($sdkType -notin $CodeownersSdkTypes)
-    {
-        Write-Host "Skipping CODEOWNERS validation for SDK type '$sdkType' (not in validated types)"
-        $validationStatus.Status = "Skipped"
-        $validationStatus.Message = "SDK type '$sdkType' is not subject to CODEOWNERS validation"
-        return
-    }
-    $originalLocation = Get-Location
-    try
-    {
-        Set-Location $RepoRoot
-        Write-Host "Validating CODEOWNERS for path '$directoryPath'"
-        & $AzsdkPath config codeowners check-package `
-            --directory-path $directoryPath `
-            --output json
-        if ($LASTEXITCODE)
-        {
-            $validationStatus.Status = "Failed"
-            $validationStatus.Message = "check-package failed for path '$directoryPath'"
-            return
-        }
-        $validationStatus.Status = "Success"
-        $validationStatus.Message = "CODEOWNERS validation passed"
-    }
-    catch
-    {
-        $validationStatus.Status = "Failed"
-        $validationStatus.Message = $_.Exception.Message
-    }
-    finally
-    {
-        Set-Location $originalLocation
     }
 }
 
@@ -249,14 +203,6 @@ function ProcessPackage($packageInfo)
     Write-Host "Checking API review status for package $fullPackageName"
     $apireviewDetails = VerifyAPIReview $fullPackageName $packageInfo.Version $Language
 
-    # CODEOWNERS validation
-    $codeownersStatus = [PSCustomObject]@{
-        Name = "CODEOWNERS Validation"
-        Status = "Skipped"
-        Message = ""
-    }
-    ValidateCodeowners $packageInfo.DirectoryPath $packageInfo.SDKType $codeownersStatus
-
     # The following object will be used to update package work item, the name should be package name only without groupId
     $pkgValidationDetails= [PSCustomObject]@{
         Name = $pkgName
@@ -265,7 +211,6 @@ function ProcessPackage($packageInfo)
         ChangeLogValidation = $changeLogStatus
         APIReviewValidation = $apireviewDetails.ApiviewApproval
         PackageNameValidation = $apireviewDetails.PackageNameApproval
-        CodeownersValidation = $codeownersStatus
     }
 
     $output = ConvertTo-Json $pkgValidationDetails
@@ -289,11 +234,10 @@ function ProcessPackage($packageInfo)
     Write-Host "Change log status:" $changeLogStatus.Status
     Write-Host "API Review status:" $apireviewDetails.ApiviewApproval.Status
     Write-Host "Package Name status:" $apireviewDetails.PackageNameApproval.Status
-    Write-Host "CODEOWNERS status:" $codeownersStatus.Status
 
     if ($IsReleaseBuild)
     {
-        if (!$updatedWi -or $changeLogStatus.Status -ne "Success" -or $apireviewDetails.ApiviewApproval.Status -ne "Approved" -or $apireviewDetails.PackageNameApproval.Status -ne "Approved" -or $codeownersStatus.Status -eq "Failed") {
+        if (!$updatedWi -or $changeLogStatus.Status -ne "Success" -or $apireviewDetails.ApiviewApproval.Status -ne "Approved" -or $apireviewDetails.PackageNameApproval.Status -ne "Approved") {
             Write-Error "At least one of the Validations above failed for package $pkgName with version $versionString."
             exit 1
         }
