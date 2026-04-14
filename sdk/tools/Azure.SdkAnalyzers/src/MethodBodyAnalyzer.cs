@@ -130,7 +130,13 @@ namespace Azure.SdkAnalyzers
         // AZC0101: ConfigureAwait(true) should be ConfigureAwait(false)
         private void AnalyzeConfigureAwait(IInvocationOperation invocation)
         {
-            if (IsEqualsToBoolValue(invocation.Arguments.Last().Value, true))
+            if (invocation.Arguments.IsEmpty)
+            {
+                return;
+            }
+
+            IArgumentOperation argument = invocation.Arguments.Last();
+            if (argument?.Value != null && IsEqualsToBoolValue(argument.Value, true))
             {
                 ReportDiagnosticOnMember(invocation, Descriptors.AZC0101);
             }
