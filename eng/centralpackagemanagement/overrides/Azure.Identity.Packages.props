@@ -1,0 +1,10 @@
+<Project>
+  <!--
+    Pin Azure.Core to the version Azure.Identity 1.17.1 was released against.
+    Azure.Core 1.53.0+ contains consolidated Identity types that conflict with
+    the non-forwarding Azure.Identity 1.17.x source (CS0433).
+  -->
+  <ItemGroup>
+    <PackageVersion Update="Azure.Core" Version="1.50.0" />
+  </ItemGroup>
+</Project>
