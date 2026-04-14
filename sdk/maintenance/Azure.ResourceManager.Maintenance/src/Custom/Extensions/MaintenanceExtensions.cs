@@ -11,6 +11,13 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Maintenance
 {
+    // Backward-compat extension methods: the old Swagger-based SDK (1.1.3) exposed extensive
+    // extension methods on ArmClient, SubscriptionResource, and ResourceGroupResource for
+    // configuration assignments, apply updates, and public maintenance configurations.
+    // These methods use "by-parent" patterns (providerName, resourceParentType, resourceParentName,
+    // resourceType, resourceName) that the Maintenance REST API requires as URL path segments.
+    // The TypeSpec generator uses scope-based ResourceIdentifier patterns instead.
+    // This custom code preserves the old method signatures to avoid breaking existing consumers.
     public static partial class MaintenanceExtensions
     {
         /// <summary> Gets an object representing a <see cref="MaintenanceConfigurationResource"/> along with the instance operations that can be performed on it but with no data. </summary>

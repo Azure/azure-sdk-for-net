@@ -5,7 +5,6 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -13,11 +12,12 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.Maintenance
 {
-    // A backward-compatibility wrapper representing a public maintenance configuration resource.
-    // In the old (autorest-generated) SDK, this was a separate resource type for subscription-level
-    // read-only access to public maintenance configurations. In the new TypeSpec SDK, these operations
-    // are merged into <see cref="MaintenanceConfigurationResource"/>.
-    public partial class MaintenancePublicConfigurationResource : ArmResource, IJsonModel<MaintenanceConfigurationData>, IPersistableModel<MaintenanceConfigurationData>
+    // Backward-compatibility: the old Swagger-based SDK (1.1.3) had MaintenancePublicConfigurationResource
+    // as a separate resource type for subscription-level read-only access to public maintenance configurations.
+    // The TypeSpec generator produces only an empty shell (ValidateResourceId + interface declarations).
+    // This custom code provides the full implementation: constructors, ResourceType, HasData/Data properties,
+    // Get/CreateResourceIdentifier methods, and DataDeserializationInstance for serialization.
+    public partial class MaintenancePublicConfigurationResource : ArmResource
     {
         private readonly ClientDiagnostics _publicMaintenanceConfigurationsClientDiagnostics;
         private readonly PublicMaintenanceConfigurations _publicMaintenanceConfigurationsRestClient;
@@ -127,15 +127,5 @@ namespace Azure.ResourceManager.Maintenance
         private static IJsonModel<MaintenanceConfigurationData> s_dataDeserializationInstance;
 
         private static IJsonModel<MaintenanceConfigurationData> DataDeserializationInstance => s_dataDeserializationInstance ??= new MaintenanceConfigurationData();
-
-        void IJsonModel<MaintenanceConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MaintenanceConfigurationData>)Data).Write(writer, options);
-
-        MaintenanceConfigurationData IJsonModel<MaintenanceConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
-
-        BinaryData IPersistableModel<MaintenanceConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MaintenanceConfigurationData>(Data, options, AzureResourceManagerMaintenanceContext.Default);
-
-        MaintenanceConfigurationData IPersistableModel<MaintenanceConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MaintenanceConfigurationData>(data, options, AzureResourceManagerMaintenanceContext.Default);
-
-        string IPersistableModel<MaintenanceConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

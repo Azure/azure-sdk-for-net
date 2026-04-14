@@ -12,7 +12,12 @@ using Azure.ResourceManager.Maintenance.Models;
 
 namespace Azure.ResourceManager.Maintenance.Mocking
 {
-    // Backward-compatibility extension methods for MockableMaintenanceResourceGroupResource.
+    // Backward-compat mocking support: the old Swagger-based SDK (1.1.3) exposed extensive methods
+    // on MockableMaintenanceResourceGroupResource for by-parent operations: apply updates (create,
+    // get, get-by-parent), configuration assignments (create, delete, get, list, by-parent variants),
+    // and update listing (get updates, get-updates-by-parent). The TypeSpec generator uses
+    // scope-based ResourceIdentifier patterns. These custom methods use direct REST client calls
+    // to preserve the old parameter-based API surface for existing consumers.
     public partial class MockableMaintenanceResourceGroupResource
     {
         private ClientDiagnostics _maintenanceApplyUpdateClientDiagnostics;

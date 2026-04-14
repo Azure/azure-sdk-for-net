@@ -7,6 +7,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Maintenance.Mocking
 {
+    // Backward-compat: provides GetMaintenanceConfigurationResource and
+    // GetMaintenancePublicConfigurationResource on ArmClient for mocking support.
+    // The TypeSpec generator does not produce these methods because
+    // MaintenancePublicConfigurationResource is a custom backward-compat type.
     public partial class MockableMaintenanceArmClient
     {
         /// <summary> Gets an object representing a <see cref="MaintenanceConfigurationResource"/> along with the instance operations that can be performed on it but with no data. </summary>

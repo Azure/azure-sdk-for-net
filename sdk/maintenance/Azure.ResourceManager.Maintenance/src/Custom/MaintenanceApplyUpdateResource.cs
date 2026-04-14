@@ -8,8 +8,12 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Maintenance
 {
-    // Backward-compat: old API had CreateResourceIdentifier with (subscriptionId, resourceGroupName,
-    // providerName, resourceType, resourceName, applyUpdateName). Generated code has a different signature.
+    // Backward-compat: the old Swagger-based SDK (1.1.3) had CreateResourceIdentifier with 6 parameters
+    // (subscriptionId, resourceGroupName, providerName, resourceType, resourceName, applyUpdateName).
+    // The TypeSpec generator produces an 8-parameter version (adding resourceParentType, resourceParentName).
+    // This custom overload preserves the old 6-parameter API surface to avoid breaking existing consumers.
+    // [CodeGenType("ApplyUpdateResource")] renames the generated ApplyUpdateResource to
+    // MaintenanceApplyUpdateResource, matching the old SDK naming convention.
     [CodeGenType("ApplyUpdateResource")]
     public partial class MaintenanceApplyUpdateResource
     {

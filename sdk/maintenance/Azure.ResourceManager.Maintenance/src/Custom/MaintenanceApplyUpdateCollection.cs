@@ -12,8 +12,14 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Maintenance
 {
-    // Backward-compat overloads: old API had Get/Exists/GetIfExists with (providerName, resourceType,
-    // resourceName, applyUpdateName) parameters. Generated code only has (applyUpdateName).
+    // Backward-compat overloads: the old Swagger-based SDK (1.1.3) had Get/Exists/GetIfExists
+    // with (providerName, resourceType, resourceName, applyUpdateName) parameters on ApplyUpdateCollection.
+    // The TypeSpec generator produces these methods with only (applyUpdateName). These custom overloads
+    // preserve the old 4-parameter API surface to avoid breaking existing consumers.
+    // The Maintenance REST API (ApplyUpdates_Get) requires providerName, resourceType, and resourceName
+    // as URL segments, which were previously exposed as method parameters.
+    // [CodeGenType("ApplyUpdateCollection")] renames the generated ApplyUpdateCollection to
+    // MaintenanceApplyUpdateCollection, matching the old SDK naming convention.
     [CodeGenType("ApplyUpdateCollection")]
     public partial class MaintenanceApplyUpdateCollection
     {

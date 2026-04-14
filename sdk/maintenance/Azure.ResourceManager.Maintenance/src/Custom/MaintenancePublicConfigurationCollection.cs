@@ -13,10 +13,13 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.Maintenance
 {
-    // A backward-compatibility wrapper representing a collection of public maintenance configuration resources.
-    // In the old (autorest-generated) SDK, this was a separate collection type for subscription-level
-    // read-only access to public maintenance configurations. In the new TypeSpec SDK, these operations
-    // are merged into <see cref="MaintenanceConfigurationCollection"/>.
+    // Backward-compat: the old Swagger-based SDK (1.1.3) had MaintenancePublicConfigurationCollection
+    // as a separate collection type for subscription-level read-only access to public maintenance
+    // configurations (e.g., DB_NotifyMeOnSchedule). The TypeSpec generator produces only an empty shell
+    // (class declaration + ValidateResourceId). This custom code provides the full implementation:
+    // constructors, REST client initialization, Get/GetAll/Exists/GetIfExists operations, and
+    // IEnumerable/IAsyncEnumerable implementations. The REST API endpoint is
+    // GET /subscriptions/{subscriptionId}/providers/Microsoft.Maintenance/publicMaintenanceConfigurations.
     public partial class MaintenancePublicConfigurationCollection : ArmCollection, IAsyncEnumerable<MaintenancePublicConfigurationResource>, IEnumerable<MaintenancePublicConfigurationResource>
     {
         private readonly ClientDiagnostics _publicMaintenanceConfigurationsClientDiagnostics;

@@ -11,6 +11,13 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager.Maintenance.Models;
 namespace Azure.ResourceManager.Maintenance
 {
+    // Backward-compat: the old Swagger-based SDK (1.1.3) had Get/Update/Delete overloads on
+    // ConfigurationAssignmentResource that accepted a configurationAssignmentName string parameter.
+    // The TypeSpec generator produces parameterless Get/Delete (using Id) and Update(WaitUntil, data).
+    // These custom overloads preserve the old API surface to avoid breaking existing consumers.
+    // The Maintenance REST API (ConfigurationAssignments_Get/CreateOrUpdate/Delete) requires
+    // providerName, resourceType, resourceName, and configurationAssignmentName as URL segments,
+    // which these overloads construct from the resource Id hierarchy.
     public partial class ConfigurationAssignmentResource
     {
         /// <summary>

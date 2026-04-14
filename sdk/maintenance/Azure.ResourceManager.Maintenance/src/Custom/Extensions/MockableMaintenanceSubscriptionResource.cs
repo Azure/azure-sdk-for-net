@@ -14,6 +14,11 @@ using Azure.ResourceManager.Maintenance;
 
 namespace Azure.ResourceManager.Maintenance.Mocking
 {
+    // Backward-compat mocking support: the old Swagger-based SDK (1.1.3) exposed subscription-level
+    // methods for public maintenance configurations (GetMaintenancePublicConfigurations collection,
+    // GetMaintenancePublicConfigurationAsync/Get, GetMaintenanceConfigurationsAsync/Get,
+    // GetMaintenanceApplyUpdatesAsync/Get) that the TypeSpec generator does not produce because
+    // MaintenancePublicConfigurationResource/Collection are custom backward-compat types.
     public partial class MockableMaintenanceSubscriptionResource
     {
         private ClientDiagnostics _publicMaintenanceConfigurationsClientDiagnostics;
