@@ -17,7 +17,7 @@ namespace Azure.SdkAnalyzers
     [ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(ConfigureAwaitCodeFixProvider)), Shared]
     public class ConfigureAwaitCodeFixProvider : CodeFixProvider
     {
-        public sealed override ImmutableArray<string> FixableDiagnosticIds => ImmutableArray.Create("AZC0101");
+        public sealed override ImmutableArray<string> FixableDiagnosticIds => ImmutableArray.Create(Descriptors.AZC0101.Id);
 
         public sealed override FixAllProvider GetFixAllProvider() => WellKnownFixAllProviders.BatchFixer;
 
@@ -45,7 +45,7 @@ namespace Azure.SdkAnalyzers
                     CodeAction.Create(
                         title: "Use ConfigureAwait(false)",
                         createChangedDocument: c => ReplaceWithFalseAsync(context.Document, diagnostic.Location.SourceSpan, c),
-                        equivalenceKey: "AZC0101_UseConfigureAwaitFalse"),
+                        equivalenceKey: Descriptors.AZC0101.Id + "_UseConfigureAwaitFalse"),
                     diagnostic);
             }
         }
