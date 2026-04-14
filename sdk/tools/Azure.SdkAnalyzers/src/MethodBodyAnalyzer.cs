@@ -23,10 +23,10 @@ namespace Azure.SdkAnalyzers
         private readonly Stack<(IEnumerator<IOperation>, MethodAnalysisContext)> _symbolIteratorsStack;
         private readonly Action<Diagnostic> _reportDiagnostic;
 
-        public static void Run(Action<Diagnostic> reportDiagnostic, Compilation compilation, AsyncAnalyzerUtilities utilities, IMethodSymbol method, IBlockOperation methodBody)
-            => new MethodBodyAnalyzer(reportDiagnostic, compilation, utilities).Run(method, methodBody);
+        public static void Run(Action<Diagnostic> reportDiagnostic, AsyncAnalyzerUtilities utilities, IMethodSymbol method, IBlockOperation methodBody)
+            => new MethodBodyAnalyzer(reportDiagnostic, utilities).Run(method, methodBody);
 
-        private MethodBodyAnalyzer(Action<Diagnostic> reportDiagnostic, Compilation compilation, AsyncAnalyzerUtilities utilities)
+        private MethodBodyAnalyzer(Action<Diagnostic> reportDiagnostic, AsyncAnalyzerUtilities utilities)
         {
             _reportDiagnostic = reportDiagnostic;
             _asyncUtilities = utilities;
