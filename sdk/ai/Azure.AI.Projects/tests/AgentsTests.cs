@@ -108,7 +108,7 @@ public class AgentsTests : AgentsTestBase
             Assert.That(ids[idNum], Is.EqualTo(agent.Id), $"The ID #{idNum} is incorrect.");
             idNum++;
         }
-        Assert.That(idNum, Is.EqualTo(2));
+        Assert.That(idNum, Is.EqualTo(4));
         // Test calling after.
         agents = projectClient.AgentAdministrationClient.GetAgentsAsync(after: ids[idNum - 1], limit: 2, order: "asc");
         await foreach (ProjectsAgentRecord agent in agents)

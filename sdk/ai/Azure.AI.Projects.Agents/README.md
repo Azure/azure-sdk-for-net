@@ -277,7 +277,7 @@ catch (ClientResultException ex)
 {
     if (ex.Status == 424)
     {
-        // Known issue.
+        // Known issue see VSO Item 5188431.
         session1 = await agentsClient.GetSessionAsync(agentName: agentVersion.Name, sessionId: sessionId1);
     }
     else
@@ -327,7 +327,7 @@ var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT
 var hostedAgentName = System.Environment.GetEnvironmentVariable("HOSTED_AGENT_NAME");
 var hostedAgentVersion = System.Environment.GetEnvironmentVariable("HOSTED_AGENT_VERSION");
 AgentAdministrationClientOptions options = new();
-options.AddPolicy(new FeaturePolicy("HostedAgents=V1Preview"), PipelinePosition.PerCall);
+options.AddPolicy(new FeaturePolicy("HostedAgents=V1Preview,AgentEndpoints=V1Preview"), PipelinePosition.PerCall);
 AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
 AgentSessionFiles sessionClient = agentsClient.GetAgentSessionFiles();
 ```
@@ -340,11 +340,11 @@ File.WriteAllText(
     path: filePath,
     contents: "The word 'apple' uses the code 442345, while the word 'banana' uses the code 673457.");
 SessionFileWriteResponse writeResponse = await sessionClient.UploadSessionFileAsync(
-    agentName: agentVersion.Name,
-    sessionId: session.AgentSessionId,
-    sessionStoragePath: $"/store/{filePath}",
-    localPath: filePath
-);
+        agentName: agentVersion.Name,
+        sessionId: session.AgentSessionId,
+        sessionStoragePath: filePath,
+        localPath: filePath
+    );
 Console.WriteLine($"The file was written to path {writeResponse.Path}, file length is {writeResponse.BytesWritten}.");
 File.Delete(filePath);
 filePath = "sample_file_for_upload2.txt";
@@ -354,7 +354,7 @@ File.WriteAllText(
 writeResponse = await sessionClient.UploadSessionFileAsync(
     agentName: agentVersion.Name,
     sessionId: session.AgentSessionId,
-    sessionStoragePath: $"/store/{filePath}",
+    sessionStoragePath: $"{filePath}",
     localPath: filePath
 );
 Console.WriteLine($"The file was written to path {writeResponse.Path}, file length is {writeResponse.BytesWritten}.");

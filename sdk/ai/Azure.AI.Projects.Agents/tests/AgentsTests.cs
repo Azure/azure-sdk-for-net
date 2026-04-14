@@ -280,4 +280,102 @@ public class AgentsTests : AgentsTestBase
             Assert.Fail($"The agent definition is of wrong typoe: {agentVersion.Definition}");
         }
     }
+
+    [RecordedTest]
+    public async Task TestListToolboxes()
+    {
+        AgentAdministrationClient agentsClient = GetTestClient();
+        AgentToolboxes toolboxClient = agentsClient.GetAgentToolboxes();
+        List<ToolboxRecord> records = await toolboxClient.GetToolboxesAsync().ToListAsync();
+        int created = 0;
+        ProjectsAgentTool tool = ProjectsAgentTool.AsProjectTool(ResponseTool.CreateMcpTool(
+            serverLabel: "api-specs",
+            serverUri: new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
+            toolCallApprovalPolicy: new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
+        ));
+        while (records.Count + created <= PAGE_SIZE)
+        {
+            await toolboxClient.CreateToolboxVersionAsync(
+                toolboxName: $"{TOOLBOX}_{created}",
+                tools: [tool],
+                description: "Example toolbox created by the azure-ai-projects sample.",
+                metadata: new Dictionary<string, string> {
+                    {"team", "Engineers"}
+                }
+            );
+            created++;
+        }
+        int newSize = records.Count + created;
+        records = await toolboxClient.GetToolboxesAsync(limit: PAGE_SIZE, order: AgentListOrder.Ascending).ToListAsync();
+        Assert.That(records.Count, Is.EqualTo(newSize));
+        // Go forward.
+        List<ToolboxRecord> forward = await toolboxClient.GetToolboxesAsync(order: AgentListOrder.Ascending, after: records[0].Id, limit: PAGE_SIZE).ToListAsync();
+        Assert.That(forward.Count, Is.EqualTo(records.Count - 1));
+        Assert.That(forward[0].Id, Is.EqualTo(records[1].Id));
+        Assert.That(forward[forward.Count - 1].Id, Is.EqualTo(records[records.Count - 1].Id));
+        // Two limits:
+        forward = await toolboxClient.GetToolboxesAsync(order: AgentListOrder.Ascending, after: records[0].Id, before: records[3].Id, limit: PAGE_SIZE).ToListAsync();
+        Assert.That(forward.Count, Is.EqualTo(2));
+        Assert.That(forward[0].Id, Is.EqualTo(records[1].Id));
+        Assert.That(forward[1].Id, Is.EqualTo(records[2].Id));
+        // Go backwards.
+        List<ToolboxRecord> backwards = await toolboxClient.GetToolboxesAsync(order: AgentListOrder.Descending, before: records[0].Id, limit: PAGE_SIZE).ToListAsync();
+        Assert.That(backwards.Count, Is.EqualTo(records.Count - 1));
+        Assert.That(backwards[0].Id, Is.EqualTo(records[records.Count - 1].Id));
+        Assert.That(backwards[backwards.Count - 1].Id, Is.EqualTo(records[1].Id));
+        // Two limits.
+        backwards = await toolboxClient.GetToolboxesAsync(order: AgentListOrder.Descending, after: records[records.Count -1].Id, before: records[records.Count - 4].Id, limit: PAGE_SIZE).ToListAsync();
+        Assert.That(backwards.Count, Is.EqualTo(2));
+        Assert.That(backwards[0].Id, Is.EqualTo(records[records.Count - 2].Id));
+        Assert.That(backwards[1].Id, Is.EqualTo(records[records.Count - 3].Id));
+    }
+
+    [RecordedTest]
+    public async Task TestListToolboxVersions()
+    {
+        AgentAdministrationClient agentsClient = GetTestClient();
+        AgentToolboxes toolboxClient = agentsClient.GetAgentToolboxes();
+        List<ToolboxVersion> records = await toolboxClient.GetToolboxVersionsAsync(toolboxName: TOOLBOX, order: AgentListOrder.Ascending).ToListAsync();
+        int created = 0;
+        ProjectsAgentTool tool = ProjectsAgentTool.AsProjectTool(ResponseTool.CreateMcpTool(
+            serverLabel: "api-specs",
+            serverUri: new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
+            toolCallApprovalPolicy: new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
+        ));
+        while (records.Count + created <= PAGE_SIZE)
+        {
+            await toolboxClient.CreateToolboxVersionAsync(
+                toolboxName: TOOLBOX,
+                tools: [tool],
+                description: "Example toolbox created by the azure-ai-projects sample.",
+                metadata: new Dictionary<string, string> {
+                    {"team", "Engineers"}
+                }
+            );
+            created++;
+        }
+        int newSize = records.Count + created;
+        records = await toolboxClient.GetToolboxVersionsAsync(toolboxName: TOOLBOX, limit: PAGE_SIZE, order: AgentListOrder.Ascending).ToListAsync();
+        Assert.That(records.Count, Is.EqualTo(newSize));
+        // Go forward.
+        List<ToolboxVersion> forward = await toolboxClient.GetToolboxVersionsAsync(toolboxName: TOOLBOX, order: AgentListOrder.Ascending, after: records[0].Id, limit: PAGE_SIZE).ToListAsync();
+        Assert.That(forward.Count, Is.EqualTo(records.Count - 1));
+        Assert.That(forward[0].Id, Is.EqualTo(records[1].Id));
+        Assert.That(forward[forward.Count - 1].Id, Is.EqualTo(records[records.Count - 1].Id));
+        // Two limits:
+        forward = await toolboxClient.GetToolboxVersionsAsync(toolboxName: TOOLBOX, order: AgentListOrder.Ascending, after: records[0].Id, before: records[3].Id, limit: PAGE_SIZE).ToListAsync();
+        Assert.That(forward.Count, Is.EqualTo(2));
+        Assert.That(forward[0].Id, Is.EqualTo(records[1].Id));
+        Assert.That(forward[1].Id, Is.EqualTo(records[2].Id));
+        // Go backwards.
+        List<ToolboxVersion> backwards = await toolboxClient.GetToolboxVersionsAsync(toolboxName: TOOLBOX, order: AgentListOrder.Descending, before: records[0].Id, limit: PAGE_SIZE).ToListAsync();
+        Assert.That(backwards.Count, Is.EqualTo(records.Count - 1));
+        Assert.That(backwards[0].Id, Is.EqualTo(records[records.Count - 1].Id));
+        Assert.That(backwards[backwards.Count - 1].Id, Is.EqualTo(records[1].Id));
+        // Two limits.
+        backwards = await toolboxClient.GetToolboxVersionsAsync(toolboxName: TOOLBOX, order: AgentListOrder.Descending, after: records[records.Count - 1].Id, before: records[records.Count - 4].Id, limit: PAGE_SIZE).ToListAsync();
+        Assert.That(backwards.Count, Is.EqualTo(2));
+        Assert.That(backwards[0].Id, Is.EqualTo(records[records.Count - 2].Id));
+        Assert.That(backwards[1].Id, Is.EqualTo(records[records.Count - 3].Id));
+    }
 }

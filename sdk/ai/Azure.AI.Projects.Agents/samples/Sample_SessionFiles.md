@@ -42,7 +42,7 @@ var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT
 var hostedAgentName = System.Environment.GetEnvironmentVariable("HOSTED_AGENT_NAME");
 var hostedAgentVersion = System.Environment.GetEnvironmentVariable("HOSTED_AGENT_VERSION");
 AgentAdministrationClientOptions options = new();
-options.AddPolicy(new FeaturePolicy("HostedAgents=V1Preview"), PipelinePosition.PerCall);
+options.AddPolicy(new FeaturePolicy("HostedAgents=V1Preview,AgentEndpoints=V1Preview"), PipelinePosition.PerCall);
 AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
 AgentSessionFiles sessionClient = agentsClient.GetAgentSessionFiles();
 ```
@@ -70,7 +70,7 @@ catch (ClientResultException ex)
 {
     if (ex.Status == 424)
     {
-        // Known issue.
+        // Known issue see VSO Item 5188431.
         session = agentsClient.GetSession(agentName: agentVersion.Name, sessionId: sessionId);
     }
     else
@@ -90,8 +90,8 @@ Asynchronous sample:
 ProjectsAgentVersion agentVersion = await agentsClient.GetAgentVersionAsync(
     agentName: hostedAgentName,
     agentVersion: hostedAgentVersion);
-string sessionKey = Guid.NewGuid().ToString();
-string sessionId = Guid.NewGuid().ToString();
+string sessionKey = Guid.NewGuid().ToString("N");
+string sessionId = Guid.NewGuid().ToString("N");
 AgentSession session;
 try
 {
@@ -106,7 +106,7 @@ catch (ClientResultException ex)
 {
     if (ex.Status == 424)
     {
-        // Known issue.
+        // Known issue see VSO Item 5188431.
         session = await agentsClient.GetSessionAsync(agentName: agentVersion.Name, sessionId: sessionId);
     }
     else
@@ -133,7 +133,7 @@ File.WriteAllText(
 SessionFileWriteResponse writeResponse = sessionClient.UploadSessionFile(
     agentName: agentVersion.Name,
     sessionId: session.AgentSessionId,
-    sessionStoragePath: $"/store/{filePath}",
+    sessionStoragePath: filePath,
     localPath: filePath
 );
 Console.WriteLine($"The file was written to path {writeResponse.Path}, file length is {writeResponse.BytesWritten}.");
@@ -145,7 +145,7 @@ File.WriteAllText(
 writeResponse = sessionClient.UploadSessionFile(
     agentName: agentVersion.Name,
     sessionId: session.AgentSessionId,
-    sessionStoragePath: $"/store/{filePath}",
+    sessionStoragePath: filePath,
     localPath: filePath
 );
 Console.WriteLine($"The file was written to path {writeResponse.Path}, file length is {writeResponse.BytesWritten}.");
@@ -159,11 +159,11 @@ File.WriteAllText(
     path: filePath,
     contents: "The word 'apple' uses the code 442345, while the word 'banana' uses the code 673457.");
 SessionFileWriteResponse writeResponse = await sessionClient.UploadSessionFileAsync(
-    agentName: agentVersion.Name,
-    sessionId: session.AgentSessionId,
-    sessionStoragePath: $"/store/{filePath}",
-    localPath: filePath
-);
+        agentName: agentVersion.Name,
+        sessionId: session.AgentSessionId,
+        sessionStoragePath: filePath,
+        localPath: filePath
+    );
 Console.WriteLine($"The file was written to path {writeResponse.Path}, file length is {writeResponse.BytesWritten}.");
 File.Delete(filePath);
 filePath = "sample_file_for_upload2.txt";
@@ -173,7 +173,7 @@ File.WriteAllText(
 writeResponse = await sessionClient.UploadSessionFileAsync(
     agentName: agentVersion.Name,
     sessionId: session.AgentSessionId,
-    sessionStoragePath: $"/store/{filePath}",
+    sessionStoragePath: $"{filePath}",
     localPath: filePath
 );
 Console.WriteLine($"The file was written to path {writeResponse.Path}, file length is {writeResponse.BytesWritten}.");
@@ -210,7 +210,7 @@ filePath = "saved.txt";
 sessionClient.DownloadSessionFile(
     agentName: agentVersion.Name,
     sessionId: session.AgentSessionId,
-    sessionStoragePath: "/store/sample_file_for_upload1.txt",
+    sessionStoragePath: "sample_file_for_upload1.txt",
     localPath: filePath
 );
 Console.WriteLine($"Download file contents: {File.ReadAllText(filePath)}");
@@ -223,7 +223,7 @@ filePath = "saved.txt";
 await sessionClient.DownloadSessionFileAsync(
     agentName: agentVersion.Name,
     sessionId: session.AgentSessionId,
-    sessionStoragePath: "/store/sample_file_for_upload1.txt",
+    sessionStoragePath: "sample_file_for_upload1.txt",
     localPath: filePath
 );
 Console.WriteLine($"Download file contents: {File.ReadAllText(filePath)}");
@@ -234,8 +234,8 @@ File.Delete(filePath);
 
 Synchronous sample:
 ```C# Snippet:Sample_DeleteFiles_SessionFiles_Sync
-sessionClient.DeleteSessionFile(agentName: agentVersion.Name, sessionId: session.AgentSessionId, path: "/store/sample_file_for_upload1.txt");
-sessionClient.DeleteSessionFile(agentName: agentVersion.Name, sessionId: session.AgentSessionId, path: "/store/sample_file_for_upload1.txt");
+sessionClient.DeleteSessionFile(agentName: agentVersion.Name, sessionId: session.AgentSessionId, path: "sample_file_for_upload1.txt");
+sessionClient.DeleteSessionFile(agentName: agentVersion.Name, sessionId: session.AgentSessionId, path: "sample_file_for_upload1.txt");
 try
 {
     agentsClient.DeleteSession(agentName: agentVersion.Name, sessionId: session.AgentSessionId, isolationKey: sessionKey);
@@ -255,8 +255,8 @@ catch (ClientResultException ex)
 
 Asynchronous sample:
 ```C# Snippet:Sample_DeleteFiles_SessionFiles_Async
-await sessionClient.DeleteSessionFileAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId, path: "/store/sample_file_for_upload1.txt");
-await sessionClient.DeleteSessionFileAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId, path: "/store/sample_file_for_upload1.txt");
+await sessionClient.DeleteSessionFileAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId, path: "sample_file_for_upload1.txt");
+await sessionClient.DeleteSessionFileAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId, path: "sample_file_for_upload1.txt");
 try
 {
     await agentsClient.DeleteSessionAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId, isolationKey: sessionKey);

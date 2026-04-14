@@ -60,7 +60,7 @@ public class Sample_SessionsCRUD : SamplesBase
         {
             if (ex.Status == 424)
             {
-                // Known issue.
+                // Known issue see VSO Item 5188431.
                 session1 = await agentsClient.GetSessionAsync(agentName: agentVersion.Name, sessionId: sessionId1);
             }
             else
@@ -114,36 +114,8 @@ public class Sample_SessionsCRUD : SamplesBase
         }
         #endregion
         #region Snippet:Sample_Delete_SessionsCRUD_Async
-        try
-        {
-            await agentsClient.DeleteSessionAsync(agentName: agentVersion.Name, sessionId: session1.AgentSessionId, isolationKey: sessionKey1);
-        }
-        catch (ClientResultException ex)
-        {
-            if (ex.Status == 200)
-            {
-                Console.WriteLine($"The session {session1.AgentSessionId} was deleted, but incorrect code was returned.");
-            }
-            else
-            {
-                throw;
-            }
-        }
-        try
-        {
-            await agentsClient.DeleteSessionAsync(agentName: agentVersion.Name, sessionId: session2.AgentSessionId, isolationKey: sessionKey2);
-        }
-        catch (ClientResultException ex)
-        {
-            if (ex.Status == 200)
-            {
-                Console.WriteLine($"The session {session1.AgentSessionId} was deleted, but incorrect code was returned.");
-            }
-            else
-            {
-                throw;
-            }
-        }
+        await agentsClient.DeleteSessionAsync(agentName: agentVersion.Name, sessionId: session1.AgentSessionId, isolationKey: sessionKey1);
+        await agentsClient.DeleteSessionAsync(agentName: agentVersion.Name, sessionId: session2.AgentSessionId, isolationKey: sessionKey2);
         #endregion
     }
 
@@ -162,7 +134,6 @@ public class Sample_SessionsCRUD : SamplesBase
 #endif
         AgentAdministrationClientOptions options = new();
         options.AddPolicy(new FeaturePolicy("HostedAgents=V1Preview,AgentEndpoints=V1Preview"), PipelinePosition.PerCall);
-        options.AddPolicy(GetDumpPolicy(), PipelinePosition.PerCall);
         AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
         #region Snippet:Sample_CreateAgent_SessionsCRUD_Sync
         ProjectsAgentVersion agentVersion = agentsClient.GetAgentVersion(
@@ -189,7 +160,7 @@ public class Sample_SessionsCRUD : SamplesBase
         {
             if (ex.Status == 424)
             {
-                // Known issue.
+                // Known issue see VSO Item 5188431.
                 session1 = agentsClient.GetSession(agentName: agentVersion.Name, sessionId: sessionId1);
             }
             else
@@ -244,36 +215,8 @@ public class Sample_SessionsCRUD : SamplesBase
         }
         #endregion
         #region Snippet:Sample_Delete_SessionsCRUD_Sync
-        try
-        {
-            agentsClient.DeleteSession(agentName: agentVersion.Name, sessionId: session1.AgentSessionId, isolationKey: sessionKey1);
-        }
-        catch (ClientResultException ex)
-        {
-            if (ex.Status == 200)
-            {
-                Console.WriteLine($"The session {session1.AgentSessionId} was deleted, but incorrect code was returned.");
-            }
-            else
-            {
-                throw;
-            }
-        }
-        try
-        {
-            agentsClient.DeleteSession(agentName: agentVersion.Name, sessionId: session2.AgentSessionId, isolationKey: sessionKey2);
-        }
-        catch (ClientResultException ex)
-        {
-            if (ex.Status == 200)
-            {
-                Console.WriteLine($"The session {session1.AgentSessionId} was deleted, but incorrect code was returned.");
-            }
-            else
-            {
-                throw;
-            }
-        }
+        agentsClient.DeleteSession(agentName: agentVersion.Name, sessionId: session1.AgentSessionId, isolationKey: sessionKey1);
+        agentsClient.DeleteSession(agentName: agentVersion.Name, sessionId: session2.AgentSessionId, isolationKey: sessionKey2);
         #endregion
     }
 

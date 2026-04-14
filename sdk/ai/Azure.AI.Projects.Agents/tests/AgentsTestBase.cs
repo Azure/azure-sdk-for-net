@@ -29,6 +29,7 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
     protected const string VECTOR_STORE = "cs-e2e-tests-vector-store";
     protected const string TOOLBOX = "test-toolbox";
     protected readonly string MEMORY_STORE_SCOPE = "user_123";
+    protected readonly int PAGE_SIZE = 3;
 
     public AgentsTestBase(bool isAsync, RecordedTestMode? testMode = null) : base(isAsync, testMode)
     {
@@ -417,7 +418,7 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
         }
         AgentToolboxes toolboxClient = agentsClient.GetAgentToolboxes();
 
-        foreach (string name in new string[] { TOOLBOX, "mcp", "mcp1", "mcp2" })
+        foreach (string name in new string[] { "mcp", "mcp1", "mcp2" })
         {
             try
             {
@@ -427,6 +428,21 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
             {
                 // Nothing here.
             }
+        }
+        try
+        {
+            List<ToolboxRecord> records = await toolboxClient.GetToolboxesAsync().ToListAsync();
+            foreach (ToolboxRecord record in records)
+            {
+                if (record.Name.StartsWith(TOOLBOX))
+                {
+                    await toolboxClient.DeleteToolboxAsync(record.Name);
+                }
+            }
+        }
+        catch
+        {
+            // Nothing here.
         }
     }
     #endregion

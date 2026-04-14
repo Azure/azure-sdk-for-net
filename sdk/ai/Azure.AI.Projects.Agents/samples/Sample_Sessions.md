@@ -84,7 +84,7 @@ catch (ClientResultException ex)
 {
     if (ex.Status == 424)
     {
-        // Known issue.
+        // Known issue see VSO Item 5188431.
         session1 = agentsClient.GetSession(agentName: agentVersion.Name, sessionId: sessionId1);
     }
     else
@@ -148,7 +148,7 @@ catch (ClientResultException ex)
 {
     if (ex.Status == 424)
     {
-        // Known issue.
+        // Known issue see VSO Item 5188431.
         session1 = await agentsClient.GetSessionAsync(agentName: agentVersion.Name, sessionId: sessionId1);
     }
     else
@@ -230,68 +230,12 @@ foreach (AgentSession item in sessions)
 
 Synchronous sample:
 ```C# Snippet:Sample_Delete_SessionsCRUD_Sync
-try
-{
-    agentsClient.DeleteSession(agentName: agentVersion.Name, sessionId: session1.AgentSessionId, isolationKey: sessionKey1);
-}
-catch (ClientResultException ex)
-{
-    if (ex.Status == 200)
-    {
-        Console.WriteLine($"The session {session1.AgentSessionId} was deleted, but incorrect code was returned.");
-    }
-    else
-    {
-        throw;
-    }
-}
-try
-{
-    agentsClient.DeleteSession(agentName: agentVersion.Name, sessionId: session2.AgentSessionId, isolationKey: sessionKey2);
-}
-catch (ClientResultException ex)
-{
-    if (ex.Status == 200)
-    {
-        Console.WriteLine($"The session {session1.AgentSessionId} was deleted, but incorrect code was returned.");
-    }
-    else
-    {
-        throw;
-    }
-}
+agentsClient.DeleteSession(agentName: agentVersion.Name, sessionId: session1.AgentSessionId, isolationKey: sessionKey1);
+agentsClient.DeleteSession(agentName: agentVersion.Name, sessionId: session2.AgentSessionId, isolationKey: sessionKey2);
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_Delete_SessionsCRUD_Async
-try
-{
-    await agentsClient.DeleteSessionAsync(agentName: agentVersion.Name, sessionId: session1.AgentSessionId, isolationKey: sessionKey1);
-}
-catch (ClientResultException ex)
-{
-    if (ex.Status == 200)
-    {
-        Console.WriteLine($"The session {session1.AgentSessionId} was deleted, but incorrect code was returned.");
-    }
-    else
-    {
-        throw;
-    }
-}
-try
-{
-    await agentsClient.DeleteSessionAsync(agentName: agentVersion.Name, sessionId: session2.AgentSessionId, isolationKey: sessionKey2);
-}
-catch (ClientResultException ex)
-{
-    if (ex.Status == 200)
-    {
-        Console.WriteLine($"The session {session1.AgentSessionId} was deleted, but incorrect code was returned.");
-    }
-    else
-    {
-        throw;
-    }
-}
+await agentsClient.DeleteSessionAsync(agentName: agentVersion.Name, sessionId: session1.AgentSessionId, isolationKey: sessionKey1);
+await agentsClient.DeleteSessionAsync(agentName: agentVersion.Name, sessionId: session2.AgentSessionId, isolationKey: sessionKey2);
 ```
