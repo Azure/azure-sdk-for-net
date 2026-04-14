@@ -12,6 +12,7 @@ This guide covers the scenarios where you may need to take action.
 | `Azure.Core` 1.53+ with `Azure.Identity` 1.21+ | ✅ Builds | No action needed. The facade forwards all types correctly. |
 | `Azure.Core` 1.53+ with a **direct** `Azure.Identity` 1.19 or later reference | ❌ CS0433 | [Remove the `Azure.Identity` PackageReference](#direct-reference-to-an-older-azureidentity) |
 | `Azure.Core` 1.53+ with a **transitive** `Azure.Identity` 1.19 or later reference (via a third-party library) | ❌ CS0433 | [Add a direct `Azure.Identity` 1.21+ PackageReference](#transitive-reference-to-an-older-azureidentity) |
+| `Azure.Identity` 1.21+ with `Azure.Identity.Broker` 1.5.0 or earlier | ⚠️ Broker silently fails | [Update `Azure.Identity.Broker` to 1.6.0+](#azureidentitybroker-compatibility) |
 
 ## Understanding CS0433
 
@@ -64,3 +65,29 @@ Yes. Starting with `Azure.Core` 1.53.0, all credential types including `DefaultA
 ### Is `Azure.Identity` obsolete?
 
 No. The `Azure.Identity` package is not obsolete and will continue to exist indefinitely as a type-forwarding library. Projects that depend on `Azure.Identity` will continue to work without any changes.
+
+## `Azure.Identity.Broker` compatibility
+
+If your project uses [`Azure.Identity.Broker`](https://www.nuget.org/packages/Azure.Identity.Broker) for brokered authentication (WAM), you must update to **`Azure.Identity.Broker` 1.6.0 or later** when using `Azure.Identity` 1.21.0+ or `Azure.Core` 1.53.0+.
+
+Older versions of `Azure.Identity.Broker` (1.5.0 and earlier) reference internal types that previously lived in the `Azure.Identity` assembly. After the type consolidation, those internal types moved to `Azure.Core`, and older Broker packages cannot resolve them at runtime.
+
+### Symptoms
+
+- Brokered authentication silently stops working — `DefaultAzureCredential` falls back to non-broker credentials without any error.
+- If you attempt to load Broker types directly via reflection, you may see:
+  ```
+  TypeLoadException: Could not load type 'Azure.Identity.IMsalSettablePublicClientInitializerOptions'
+  from assembly 'Azure.Identity, Version=1.21.0.0, ...'
+  ```
+
+### Fix
+
+Update `Azure.Identity.Broker` to 1.6.0 or later:
+
+```diff
+ <ItemGroup>
+-  <PackageReference Include="Azure.Identity.Broker" Version="1.4.0" />
++  <PackageReference Include="Azure.Identity.Broker" Version="1.6.0" />
+ </ItemGroup>
+```
