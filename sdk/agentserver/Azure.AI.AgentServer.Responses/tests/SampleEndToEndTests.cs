@@ -11,7 +11,7 @@ using NUnit.Framework;
 namespace Azure.AI.AgentServer.Responses.Tests;
 
 /// <summary>
-/// End-to-end tests that validate every sample handler (Samples 1–11) works
+/// End-to-end tests that validate every sample handler (Samples 1–16) works
 /// correctly when wired into a real ASP.NET Core test server. Each test
 /// registers the actual handler class from the sample snippets, sends an
 /// HTTP request, and asserts on the response content.
@@ -670,6 +670,395 @@ public class SampleEndToEndTests
     }
 
     // ═══════════════════════════════════════════════════════════════════
+    //  Sample 12: Image Generation — Base64 Image Output
+    // ═══════════════════════════════════════════════════════════════════
+
+    [Test]
+    public async Task Sample12_ImageHandler_ReturnsBase64ImageResult()
+    {
+        using var factory = new TestWebApplicationFactory(
+            configureTestServices: services =>
+            {
+                services.AddSingleton<ResponseHandler, Sample12Snippets.ImageHandler>();
+            });
+        using var client = factory.CreateClient();
+
+        var body = await PostJsonAsync(client,
+            """{"model":"test","input":"Draw a cat"}""");
+
+        using var doc = JsonDocument.Parse(body);
+        var output = doc.RootElement.GetProperty("output");
+        Assert.That(output.GetArrayLength(), Is.EqualTo(1));
+        var item = output[0];
+        Assert.That(item.GetProperty("type").GetString(), Is.EqualTo("image_generation_call"));
+        Assert.That(item.GetProperty("status").GetString(), Is.EqualTo("completed"));
+        var result = item.GetProperty("result").GetString()!;
+        // Verify it's valid base64 that decodes to a PNG (starts with 0x89504E47).
+        byte[] imageBytes = Convert.FromBase64String(result);
+        Assert.That(imageBytes[0], Is.EqualTo(0x89));
+        Assert.That(imageBytes[1], Is.EqualTo(0x50));
+        Assert.That(imageBytes[2], Is.EqualTo(0x4E));
+        Assert.That(imageBytes[3], Is.EqualTo(0x47));
+    }
+
+    [Test]
+    public async Task Sample12_StreamingImageHandler_ReturnsBase64WithPartials()
+    {
+        using var factory = new TestWebApplicationFactory(
+            configureTestServices: services =>
+            {
+                services.AddSingleton<ResponseHandler, Sample12Snippets.StreamingImageHandler>();
+            });
+        using var client = factory.CreateClient();
+
+        var body = await PostJsonAsync(client,
+            """{"model":"test","input":"Draw a cat"}""");
+
+        using var doc = JsonDocument.Parse(body);
+        var output = doc.RootElement.GetProperty("output");
+        Assert.That(output.GetArrayLength(), Is.EqualTo(1));
+        var item = output[0];
+        Assert.That(item.GetProperty("type").GetString(), Is.EqualTo("image_generation_call"));
+        Assert.That(item.GetProperty("status").GetString(), Is.EqualTo("completed"));
+        var result = item.GetProperty("result").GetString()!;
+        byte[] imageBytes = Convert.FromBase64String(result);
+        Assert.That(imageBytes[0], Is.EqualTo(0x89)); // PNG header
+    }
+
+    [Test]
+    public async Task Sample12_ImageHandlerFullControl_ReturnsBase64Image()
+    {
+        using var factory = new TestWebApplicationFactory(
+            configureTestServices: services =>
+            {
+                services.AddSingleton<ResponseHandler, Sample12Snippets.ImageHandlerFullControl>();
+            });
+        using var client = factory.CreateClient();
+
+        var body = await PostJsonAsync(client,
+            """{"model":"test","input":"Draw a cat"}""");
+
+        using var doc = JsonDocument.Parse(body);
+        var output = doc.RootElement.GetProperty("output");
+        Assert.That(output.GetArrayLength(), Is.EqualTo(1));
+        var item = output[0];
+        Assert.That(item.GetProperty("type").GetString(), Is.EqualTo("image_generation_call"));
+        Assert.That(item.GetProperty("status").GetString(), Is.EqualTo("completed"));
+        var result = item.GetProperty("result").GetString()!;
+        byte[] imageBytes = Convert.FromBase64String(result);
+        Assert.That(imageBytes[0], Is.EqualTo(0x89)); // PNG header
+    }
+
+    // ═══════════════════════════════════════════════════════════════════
+    //  Sample 13 — Image Input (Vision)
+    // ═══════════════════════════════════════════════════════════════════
+
+    [Test]
+    public async Task Sample13_ImageUrlHandler_ExtractsImageUrl()
+    {
+        using var factory = new TestWebApplicationFactory(
+            configureTestServices: services =>
+            {
+                services.AddSingleton<ResponseHandler, Sample13Snippets.ImageUrlHandler>();
+            });
+        using var client = factory.CreateClient();
+
+        var body = await PostJsonAsync(client, """
+            {
+              "model": "vision",
+              "input": [
+                {
+                  "type": "message",
+                  "role": "user",
+                  "content": [
+                    {"type": "input_text", "text": "What is this?"},
+                    {"type": "input_image", "image_url": "https://example.com/photo.jpg", "detail": "auto"}
+                  ]
+                }
+              ]
+            }
+            """);
+
+        using var doc = JsonDocument.Parse(body);
+        var text = GetOutputText(doc.RootElement);
+        Assert.That(text, Does.Contain("1 image(s)"));
+        Assert.That(text, Does.Contain("https://example.com/photo.jpg"));
+    }
+
+    [Test]
+    public async Task Sample13_ImageBase64Handler_DecodesDataUrl()
+    {
+        // Create a small valid base64 payload (1x1 PNG).
+        string pngBase64 = Convert.ToBase64String(new byte[]
+        {
+            0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A, 0x00, 0x00, 0x00, 0x0D,
+            0x49, 0x48, 0x44, 0x52, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x01,
+            0x08, 0x02, 0x00, 0x00, 0x00, 0x90, 0x77, 0x53, 0xDE, 0x00, 0x00, 0x00,
+            0x0C, 0x49, 0x44, 0x41, 0x54, 0x08, 0xD7, 0x63, 0xF8, 0xCF, 0xC0, 0x00,
+            0x00, 0x00, 0x03, 0x00, 0x01, 0x36, 0x28, 0x19, 0x00, 0x00, 0x00, 0x00,
+            0x00, 0x49, 0x45, 0x4E, 0x44, 0xAE, 0x42, 0x60, 0x82,
+        });
+
+        using var factory = new TestWebApplicationFactory(
+            configureTestServices: services =>
+            {
+                services.AddSingleton<ResponseHandler, Sample13Snippets.ImageBase64Handler>();
+            });
+        using var client = factory.CreateClient();
+
+        var body = await PostJsonAsync(client, $$"""
+            {
+              "model": "vision",
+              "input": [
+                {
+                  "type": "message",
+                  "role": "user",
+                  "content": [
+                    {"type": "input_text", "text": "Describe this"},
+                    {"type": "input_image", "image_url": "data:image/png;base64,{{pngBase64}}", "detail": "high"}
+                  ]
+                }
+              ]
+            }
+            """);
+
+        using var doc = JsonDocument.Parse(body);
+        var text = GetOutputText(doc.RootElement);
+        Assert.That(text, Does.Contain("image/png"));
+        Assert.That(text, Does.Match(@"\d+ bytes")); // Confirms image bytes were decoded
+    }
+
+    [Test]
+    public async Task Sample13_ImageFileIdHandler_EchoesFileId()
+    {
+        using var factory = new TestWebApplicationFactory(
+            configureTestServices: services =>
+            {
+                services.AddSingleton<ResponseHandler, Sample13Snippets.ImageFileIdHandler>();
+            });
+        using var client = factory.CreateClient();
+
+        var body = await PostJsonAsync(client, """
+            {
+              "model": "vision",
+              "input": [
+                {
+                  "type": "message",
+                  "role": "user",
+                  "content": [
+                    {"type": "input_text", "text": "Analyze this"},
+                    {"type": "input_image", "file_id": "/images/landscape.png", "detail": "auto"}
+                  ]
+                }
+              ]
+            }
+            """);
+
+        using var doc = JsonDocument.Parse(body);
+        var text = GetOutputText(doc.RootElement);
+        Assert.That(text, Does.Contain("1 image(s)"));
+        Assert.That(text, Does.Contain("/images/landscape.png"));
+    }
+
+    // ═══════════════════════════════════════════════════════════════════
+    //  Sample 14 — File Inputs
+    // ═══════════════════════════════════════════════════════════════════
+
+    [Test]
+    public async Task Sample14_FileBase64Handler_DecodesInlineFile()
+    {
+        // "Hello World" as base64 = "SGVsbG8gV29ybGQ="
+        using var factory = new TestWebApplicationFactory(
+            configureTestServices: services =>
+            {
+                services.AddSingleton<ResponseHandler, Sample14Snippets.FileBase64Handler>();
+            });
+        using var client = factory.CreateClient();
+
+        var body = await PostJsonAsync(client, """
+            {
+              "model": "test",
+              "input": [
+                {
+                  "type": "message",
+                  "role": "user",
+                  "content": [
+                    {"type": "input_text", "text": "Summarize this"},
+                    {"type": "input_file", "filename": "notes.txt", "file_data": "data:text/plain;base64,SGVsbG8gV29ybGQ="}
+                  ]
+                }
+              ]
+            }
+            """);
+
+        using var doc = JsonDocument.Parse(body);
+        var text = GetOutputText(doc.RootElement);
+        Assert.That(text, Does.Contain("notes.txt"));
+        Assert.That(text, Does.Contain("11 bytes")); // "Hello World" = 11 bytes
+    }
+
+    [Test]
+    public async Task Sample14_FileUrlHandler_ExtractsFileUrl()
+    {
+        using var factory = new TestWebApplicationFactory(
+            configureTestServices: services =>
+            {
+                services.AddSingleton<ResponseHandler, Sample14Snippets.FileUrlHandler>();
+            });
+        using var client = factory.CreateClient();
+
+        var body = await PostJsonAsync(client, """
+            {
+              "model": "test",
+              "input": [
+                {
+                  "type": "message",
+                  "role": "user",
+                  "content": [
+                    {"type": "input_text", "text": "Analyze this"},
+                    {"type": "input_file", "filename": "data.csv", "file_url": "https://example.com/data.csv"}
+                  ]
+                }
+              ]
+            }
+            """);
+
+        using var doc = JsonDocument.Parse(body);
+        var text = GetOutputText(doc.RootElement);
+        Assert.That(text, Does.Contain("data.csv"));
+        Assert.That(text, Does.Contain("https://example.com/data.csv"));
+    }
+
+    [Test]
+    public async Task Sample14_FileIdHandler_ExtractsFileId()
+    {
+        using var factory = new TestWebApplicationFactory(
+            configureTestServices: services =>
+            {
+                services.AddSingleton<ResponseHandler, Sample14Snippets.FileIdHandler>();
+            });
+        using var client = factory.CreateClient();
+
+        var body = await PostJsonAsync(client, """
+            {
+              "model": "test",
+              "input": [
+                {
+                  "type": "message",
+                  "role": "user",
+                  "content": [
+                    {"type": "input_text", "text": "Review this"},
+                    {"type": "input_file", "filename": "report.pdf", "file_id": "/uploads/report.pdf"}
+                  ]
+                }
+              ]
+            }
+            """);
+
+        using var doc = JsonDocument.Parse(body);
+        var text = GetOutputText(doc.RootElement);
+        Assert.That(text, Does.Contain("report.pdf"));
+        Assert.That(text, Does.Contain("/uploads/report.pdf"));
+    }
+
+    // ═══════════════════════════════════════════════════════════════════
+    //  Sample 15 — Annotations
+    // ═══════════════════════════════════════════════════════════════════
+
+    [Test]
+    public async Task Sample15_FileAnnotationsHandler_ReturnsMixedAnnotations()
+    {
+        using var factory = new TestWebApplicationFactory(
+            configureTestServices: services =>
+            {
+                services.AddSingleton<ResponseHandler, Sample15Snippets.FileAnnotationsHandler>();
+            });
+        using var client = factory.CreateClient();
+
+        string body = await PostJsonAsync(client, """
+            { "model": "test", "input": "Generate the monthly reports" }
+            """);
+
+        using var doc = JsonDocument.Parse(body);
+        var message = doc.RootElement.GetProperty("output").EnumerateArray()
+            .First(i => i.GetProperty("type").GetString() == "message");
+        var content = message.GetProperty("content")[0];
+        Assert.That(content.GetProperty("type").GetString(), Is.EqualTo("output_text"));
+        Assert.That(content.GetProperty("text").GetString(), Is.EqualTo("Here are your files and sources."));
+
+        var annotations = content.GetProperty("annotations");
+        Assert.That(annotations.GetArrayLength(), Is.EqualTo(5));
+
+        // file_path annotations
+        Assert.That(annotations[0].GetProperty("type").GetString(), Is.EqualTo("file_path"));
+        Assert.That(annotations[0].GetProperty("file_id").GetString(), Is.EqualTo("/reports/monthly-summary.pdf"));
+        Assert.That(annotations[1].GetProperty("type").GetString(), Is.EqualTo("file_path"));
+        Assert.That(annotations[1].GetProperty("file_id").GetString(), Is.EqualTo("/exports/data.csv"));
+        Assert.That(annotations[2].GetProperty("type").GetString(), Is.EqualTo("file_path"));
+        Assert.That(annotations[2].GetProperty("file_id").GetString(), Is.EqualTo("/images/chart.png"));
+
+        // file_citation annotation
+        Assert.That(annotations[3].GetProperty("type").GetString(), Is.EqualTo("file_citation"));
+        Assert.That(annotations[3].GetProperty("file_id").GetString(), Is.EqualTo("/sources/research-paper.pdf"));
+        Assert.That(annotations[3].GetProperty("filename").GetString(), Is.EqualTo("research-paper.pdf"));
+
+        // url_citation annotation
+        Assert.That(annotations[4].GetProperty("type").GetString(), Is.EqualTo("url_citation"));
+        Assert.That(annotations[4].GetProperty("url").GetString(), Is.EqualTo("https://example.com/docs/guide"));
+        Assert.That(annotations[4].GetProperty("title").GetString(), Is.EqualTo("Developer Guide"));
+    }
+
+    // ═══════════════════════════════════════════════════════════════════
+    //  Sample 16 — Structured Outputs
+    // ═══════════════════════════════════════════════════════════════════
+
+    [Test]
+    public async Task Sample16_StructuredOutputHandler_ReturnsStructuredOutputItem()
+    {
+        using var factory = new TestWebApplicationFactory(
+            configureTestServices: services =>
+            {
+                services.AddSingleton<ResponseHandler, Sample16Snippets.StructuredOutputHandler>();
+            });
+        using var client = factory.CreateClient();
+
+        string body = await PostJsonAsync(client, """
+            { "model": "test", "input": "Analyze this product review" }
+            """);
+
+        using var doc = JsonDocument.Parse(body);
+        var output = GetStructuredOutput(doc.RootElement);
+        Assert.That(output.GetProperty("sentiment").GetString(), Is.EqualTo("positive"));
+        Assert.That(output.GetProperty("confidence").GetDouble(), Is.EqualTo(0.95));
+        Assert.That(output.GetProperty("topics").GetArrayLength(), Is.EqualTo(2));
+        var files = output.GetProperty("files");
+        Assert.That(files.GetArrayLength(), Is.EqualTo(2));
+        Assert.That(files[0].GetProperty("name").GetString(), Is.EqualTo("report.pdf"));
+        Assert.That(files[0].GetProperty("mediaType").GetString(), Is.EqualTo("application/pdf"));
+        Assert.That(files[1].GetProperty("name").GetString(), Is.EqualTo("chart.png"));
+    }
+
+    [Test]
+    public async Task Sample16_StructuredOutputFullControlHandler_ReturnsStructuredOutputItem()
+    {
+        using var factory = new TestWebApplicationFactory(
+            configureTestServices: services =>
+            {
+                services.AddSingleton<ResponseHandler, Sample16Snippets.StructuredOutputFullControlHandler>();
+            });
+        using var client = factory.CreateClient();
+
+        string body = await PostJsonAsync(client, """
+            { "model": "test", "input": "Classify this ticket" }
+            """);
+
+        using var doc = JsonDocument.Parse(body);
+        var output = GetStructuredOutput(doc.RootElement);
+        Assert.That(output.GetProperty("classification").GetString(), Is.EqualTo("urgent"));
+        Assert.That(output.GetProperty("entities").GetArrayLength(), Is.EqualTo(2));
+    }
+
+    // ═══════════════════════════════════════════════════════════════════
     //  Helpers
     // ═══════════════════════════════════════════════════════════════════
 
@@ -715,5 +1104,21 @@ public class SampleEndToEndTests
         }
 
         throw new InvalidOperationException("No output_text content found in message item.");
+    }
+
+    /// <summary>
+    /// Extracts the output JSON from the first structured_outputs item in a JSON response.
+    /// </summary>
+    private static JsonElement GetStructuredOutput(JsonElement root)
+    {
+        foreach (var item in root.GetProperty("output").EnumerateArray())
+        {
+            if (item.GetProperty("type").GetString() == "structured_outputs")
+            {
+                return item.GetProperty("output");
+            }
+        }
+
+        throw new InvalidOperationException("No structured_outputs item found in response.");
     }
 }

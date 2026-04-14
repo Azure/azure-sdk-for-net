@@ -133,7 +133,7 @@ public class AgentsTests : AgentsTestBase
         Assert.That(record.Name, Is.EqualTo("mcp2"));
         Assert.That(record.DefaultVersion, Is.EqualTo(newVersion));
         // List
-        HashSet<string> recordNames = [..await toolboxClient.GetToolboxesAsync().Select(x => x.Name).ToListAsync()];
+        HashSet<string> recordNames = [.. await toolboxClient.GetToolboxesAsync().Select(x => x.Name).ToListAsync()];
         Assert.That(recordNames, Does.Contain("mcp1"));
         Assert.That(recordNames, Does.Contain("mcp2"));
         // Delete
@@ -218,7 +218,7 @@ public class AgentsTests : AgentsTestBase
         ToolboxRecord record = await toolboxClient.GetToolboxAsync("mcp");
         string deleteVersion = string.Equals(record.DefaultVersion, toolBox1.Version) ? toolBox2.Version : toolBox1.Version;
         await toolboxClient.DeleteToolboxVersionAsync(toolboxName: "mcp", version: deleteVersion);
-        HashSet<string> versionNumbers = [..await toolboxClient.GetToolboxVersionsAsync(toolboxName: "mcp").Select(x => x.Version).ToListAsync()];
+        HashSet<string> versionNumbers = [.. await toolboxClient.GetToolboxVersionsAsync(toolboxName: "mcp").Select(x => x.Version).ToListAsync()];
         Assert.That(versionNumbers, Does.Not.Contains(deleteVersion));
         Assert.That(versionNumbers, Does.Contain(string.Equals(deleteVersion, "2") ? "1" : "2"));
         await toolboxClient.DeleteToolboxAsync(toolboxName: record.Name);

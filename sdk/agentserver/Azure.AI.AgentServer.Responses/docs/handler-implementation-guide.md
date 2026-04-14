@@ -75,10 +75,10 @@ public class EchoHandler : ResponseHandler
         CancellationToken cancellationToken)
     {
         return new TextResponse(context, request,
-            createText: ct =>
+            createText: async ct =>
             {
-                var input = request.GetInputText();
-                return Task.FromResult($"Echo: {input}");
+                var input = await context.GetInputTextAsync(cancellationToken: ct);
+                return $"Echo: {input}";
             });
     }
 }
@@ -111,7 +111,7 @@ public override IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
     return new TextResponse(context, request,
         createText: async ct =>
         {
-            var answer = await _model.GenerateAsync(request.GetInputText(), ct);
+            var answer = await _model.GenerateAsync(await context.GetInputTextAsync(cancellationToken: ct), ct);
             return answer;
         });
 }
@@ -320,9 +320,9 @@ public class EchoHandler : ResponseHandler
         var text = message.AddTextContent();
         yield return text.EmitAdded();
         yield return text.EmitDelta("Hello, world!");
-        yield return text.EmitDone("Hello, world!");
+        yield return text.EmitTextDone("Hello, world!");
 
-        yield return message.EmitContentDone(text);
+        yield return text.EmitDone();
         yield return message.EmitDone();
 
         // 3. Signal completion
@@ -343,7 +343,7 @@ It provides:
 |---|---|
 | **Response** | `Response` — the underlying `Response` object. Set custom `Metadata` or `Instructions` before `EmitCreated()` |
 | **Lifecycle** | `EmitCreated()`, `EmitInProgress()`, `EmitQueued()`, `EmitCompleted()`, `EmitFailed()`, `EmitIncomplete()` |
-| **Output factories** | `AddOutputItemMessage()`, `AddOutputItemFunctionCall()`, `AddOutputItemReasoningItem()`, `AddOutputItemCodeInterpreterCall()`, `AddOutputItemFileSearchCall()`, `AddOutputItemWebSearchCall()`, `AddOutputItemImageGenCall()`, `AddOutputItemMcpCall()`, `AddOutputItemCustomToolCall()`, and more |
+| **Output factories** | `AddOutputItemMessage()`, `AddOutputItemFunctionCall()`, `AddOutputItemReasoningItem()`, `AddOutputItemCodeInterpreterCall()`, `AddOutputItemFileSearchCall()`, `AddOutputItemWebSearchCall()`, `AddOutputItemImageGenCall()`, `AddOutputItemMcpCall()`, `AddOutputItemCustomToolCall()`, `AddOutputItemStructuredOutputs()`, `AddOutputItemComputerCall()`, `AddOutputItemLocalShellCall()`, `AddOutputItemApplyPatchCall()`, `AddOutputItemMcpApprovalRequest()`, `AddOutputItemCompaction()`, and more |
 
 ### Setting Custom Metadata
 
@@ -454,8 +454,10 @@ public class ResponseContext
     public string ResponseId { get; }
     public bool IsShutdownRequested { get; set; }
     public virtual BinaryData? RawBody { get; }
-    public virtual Task<IReadOnlyList<OutputItem>> GetInputItemsAsync(CancellationToken cancellationToken = default);
+    public virtual Task<IReadOnlyList<Item>> GetInputItemsAsync(bool resolveReferences = true, CancellationToken cancellationToken = default);
+    public virtual Task<string> GetInputTextAsync(bool resolveReferences = true, CancellationToken cancellationToken = default);
     public virtual Task<IReadOnlyList<OutputItem>> GetHistoryAsync(CancellationToken cancellationToken = default);
+    public virtual IsolationContext Isolation { get; }
     public virtual IReadOnlyDictionary<string, string> ClientHeaders { get; }
     public virtual IReadOnlyDictionary<string, StringValues> QueryParameters { get; }
 }
@@ -465,22 +467,39 @@ Provides the library-generated response ID, shutdown signalling, access to resol
 
 ### Input Items — `GetInputItemsAsync()`
 
-Returns the caller's input items fully resolved and converted to `OutputItem` types:
+Returns the caller's input items as their `Item` subtypes:
 
 ```csharp
 public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
     CreateResponse request, ResponseContext context, CancellationToken ct)
 {
-    var inputItems = await context.GetInputItemsAsync(ct);
-    // inputItems contains OutputItemMessage instances with generated IDs
-    // Inline items are converted; item references are resolved via the provider
+    var inputItems = await context.GetInputItemsAsync(cancellationToken: ct);
+    // inputItems contains ItemMessage, FunctionCallOutputItemParam, etc.
+    // Inline items are returned directly; item references are resolved via the provider
 }
 ```
 
-- **Inline items** are converted to their corresponding `OutputItem` subtypes with a generated type-specific ID and `status: completed`. For example, a `{"type":"message","role":"user","content":"Hi"}` becomes an `OutputItemMessage` with a `msg_` prefixed ID, a function call output becomes `OutputItemFunctionCallOutput` with an `fco_` prefixed ID, and so on for all 24+ supported item types.
-- **Item references** (e.g., `{"type":"item_reference","id":"msg_123"}`) are batch-resolved via `ResponsesProvider.GetItemsAsync`.
+- **Inline items** are returned as-is — the same `Item` subtypes from the original request (e.g., `ItemMessage`, `FunctionCallOutputItemParam`, `ItemFunctionToolCall`).
+- **Item references** (e.g., `{"type":"item_reference","id":"msg_123"}`) are batch-resolved via `ResponsesProvider.GetItemsAsync` and converted back to their corresponding `Item` subtypes.
+- **`resolveReferences` parameter** — pass `false` to skip reference resolution and receive `ItemReferenceParam` instances as-is: `await context.GetInputItemsAsync(resolveReferences: false, cancellationToken: ct)`.
 - **Input order is preserved** — items are returned in the same order as in the request.
-- **Lazy singleton** — the result is computed once on first call and cached. Subsequent calls return the same instance. Thread-safe.
+- **Lazy singleton** — the result is computed once on first call and cached per `resolveReferences` mode. Subsequent calls return the same instance. Thread-safe.
+
+### Input Text — `GetInputTextAsync()`
+
+A convenience that resolves input items and extracts all text content as a single string:
+
+```csharp
+var text = await context.GetInputTextAsync(cancellationToken: ct);
+// Equivalent to: (await context.GetInputItemsAsync(cancellationToken: ct)).GetInputText()
+```
+
+You can also use the `GetInputText()` extension on any `IEnumerable<Item>`:
+
+```csharp
+var items = await context.GetInputItemsAsync(cancellationToken: ct);
+var text = items.GetInputText(); // filters for ItemMessage, joins text content
+```
 
 ### Conversation History — `GetHistoryAsync()`
 
@@ -624,9 +643,9 @@ yield return text.EmitDelta("First chunk of text. ");
 yield return text.EmitDelta("Second chunk. ");
 
 // Finalise the text content (final text = full accumulated text)
-yield return text.EmitDone("First chunk of text. Second chunk. ");
+yield return text.EmitTextDone("First chunk of text. Second chunk. ");
 
-yield return message.EmitContentDone(text);
+yield return text.EmitDone();
 yield return message.EmitDone();
 ```
 
@@ -672,7 +691,7 @@ public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
 {
     await Task.CompletedTask;
     var stream = new ResponseEventStream(context, request);
-    var inputItems = request.GetInputExpanded();
+    var inputItems = await context.GetInputItemsAsync(cancellationToken: cancellationToken);
 
     // Check if this is a follow-up with function output
     var toolOutput = inputItems.OfType<FunctionCallOutputItemParam>().FirstOrDefault();
@@ -746,7 +765,6 @@ yield return summary.EmitAdded();
 yield return summary.EmitTextDelta("Let me think about this...");
 yield return summary.EmitTextDone("Let me think about this...");
 yield return summary.EmitDone();
-reasoning.EmitSummaryPartDone(summary);
 yield return reasoning.EmitDone();
 ```
 
@@ -778,11 +796,47 @@ The library provides specialised builders for each tool call type. Each also has
 | `OutputItemCodeInterpreterCallBuilder` | `AddOutputItemCodeInterpreterCall()` | `EmitAdded()` → `EmitInProgress()` → `EmitInterpreting()` → `EmitCodeDelta()` → `EmitCodeDone()` → `EmitCompleted()` → `EmitDone()` | `Code(string\|IAsyncEnumerable<string>)` |
 | `OutputItemFileSearchCallBuilder` | `AddOutputItemFileSearchCall()` | `EmitAdded()` → `EmitInProgress()` → `EmitSearching()` → `EmitCompleted()` → `EmitDone()` | — |
 | `OutputItemWebSearchCallBuilder` | `AddOutputItemWebSearchCall()` | `EmitAdded()` → `EmitInProgress()` → `EmitSearching()` → `EmitCompleted()` → `EmitDone()` | — |
-| `OutputItemImageGenCallBuilder` | `AddOutputItemImageGenCall()` | `EmitAdded()` → `EmitInProgress()` → `EmitGenerating()` → `EmitPartialImage()` → `EmitCompleted()` → `EmitDone()` | — |
+| `OutputItemImageGenCallBuilder` | `AddOutputItemImageGenCall()` | `EmitAdded()` → `EmitInProgress()` → `EmitGenerating()` → `EmitPartialImage()` → `EmitCompleted()` → `EmitDone(result)` | — |
 | `OutputItemMcpCallBuilder` | `AddOutputItemMcpCall(serverLabel, name)` | `EmitAdded()` → `EmitInProgress()` → `EmitArgumentsDelta()` → `EmitArgumentsDone()` → `EmitCompleted()` / `EmitFailed()` → `EmitDone()` | `Arguments(string\|IAsyncEnumerable<string>)` |
 | `OutputItemCustomToolCallBuilder` | `AddOutputItemCustomToolCall(callId, name)` | `EmitAdded()` → `EmitInputDelta()` → `EmitInputDone()` → `EmitDone()` | `Input(string\|IAsyncEnumerable<string>)` |
 
 Each builder enforces its own lifecycle ordering — follow the method progression from left to right.
+
+### Simple Output Items (Add + Done)
+
+Many output item types have no intermediate SSE events — just `output_item.added` and `output_item.done`. For these, `ResponseEventStream` provides one-liner convenience generators that accept the domain-specific parameters, auto-generate the item ID, and yield the complete event pair:
+
+| Convenience Method | Description |
+|---|---|
+| `OutputItemFunctionCallOutput(callId, output)` | Server-side tool execution result |
+| `OutputItemStructuredOutputs(output)` | Arbitrary structured JSON data |
+| `OutputItemImageGenCall(resultBase64)` | Image generation result (with status transitions) |
+| `OutputItemComputerCall(callId, action, pendingSafetyChecks, status)` | Computer tool call |
+| `OutputItemComputerCallOutput(callId, output)` | Computer tool call output |
+| `OutputItemLocalShellCall(callId, action, status)` | Local shell tool call |
+| `OutputItemLocalShellCallOutput(output)` | Local shell tool call output |
+| `OutputItemFunctionShellCall(callId, action, status, environment)` | Function shell call |
+| `OutputItemFunctionShellCallOutput(callId, status, output, maxOutputLength?)` | Function shell call output |
+| `OutputItemApplyPatchCall(callId, status, operation)` | Apply-patch tool call |
+| `OutputItemApplyPatchCallOutput(callId, status)` | Apply-patch tool call output |
+| `OutputItemCustomToolCallOutput(callId, output)` | Custom tool call output |
+| `OutputItemMcpApprovalRequest(serverLabel, name, arguments)` | MCP approval request |
+| `OutputItemMcpApprovalResponse(approvalRequestId, approve)` | MCP approval response |
+| `OutputItemCompaction(encryptedContent)` | Compaction item |
+
+Example:
+
+```csharp
+// Emit a function call output (no deltas — just added + done)
+foreach (var evt in stream.OutputItemFunctionCallOutput("call_1", BinaryData.FromString(resultJson)))
+    yield return evt;
+
+// Emit a structured JSON payload
+foreach (var evt in stream.OutputItemStructuredOutputs(BinaryData.FromObjectAsJson(new { score = 0.95 })))
+    yield return evt;
+```
+
+For fine-grained control, use the corresponding `Add*()` builder factory and call `EmitAdded(item)` / `EmitDone(item)` manually.
 
 ### MCP Terminal State
 
@@ -807,14 +861,20 @@ yield return mcp.EmitDone();       // Output item has Status = Failed
 
 ## Handling Input
 
-Access the client's input via `request.GetInputExpanded()`:
+Access the client's input via `context.GetInputItemsAsync()`:
 
 ```csharp
-var inputItems = request.GetInputExpanded();
+var inputItems = await context.GetInputItemsAsync(cancellationToken: ct);
 
 // Check for specific input types
-var textInputs = inputItems.OfType<EasyInputMessageItemParam>();
+var textMessages = inputItems.OfType<ItemMessage>();
 var functionOutputs = inputItems.OfType<FunctionCallOutputItemParam>();
+```
+
+Or use `context.GetInputTextAsync()` when you only need the text content:
+
+```csharp
+var text = await context.GetInputTextAsync(cancellationToken: ct);
 ```
 
 The `CreateResponse` object also provides:
@@ -845,7 +905,7 @@ foreach (var item in inputItems.OfType<ItemMessage>())
 }
 ```
 
-This complements the request-level helpers (`GetInputExpanded`, `GetInputText`, `GetToolChoiceExpanded`) — they operate on the `CreateResponse` request, while `GetContentExpanded` operates on individual `ItemMessage` instances.
+This complements the context-level helpers (`GetInputItemsAsync`, `GetInputTextAsync`) — they resolve and return input items from the `ResponseContext`, while `GetContentExpanded` operates on individual `ItemMessage` instances.
 
 ---
 
@@ -911,8 +971,8 @@ public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
         yield return text.EmitDelta(chunk);
     }
 
-    yield return text.EmitDone(fullText);
-    yield return message.EmitContentDone(text);
+    yield return text.EmitTextDone(fullText);
+    yield return text.EmitDone();
     yield return message.EmitDone();
     yield return stream.EmitCompleted();
 }
@@ -1493,17 +1553,17 @@ yield return stream.EmitCompleted();
 ### Not Closing Content Builders
 
 ```csharp
-// ❌ Missing EmitContentDone
+// ❌ Missing EmitDone on the content builder
 var text = message.AddTextContent();
 yield return text.EmitAdded();
-yield return text.EmitDone("text");
+yield return text.EmitTextDone("text");
 yield return message.EmitDone(); // Content wasn't properly closed
 
-// ✅ Always call EmitContentDone before closing the message
+// ✅ Always call EmitDone on the content builder before closing the message
 var text = message.AddTextContent();
 yield return text.EmitAdded();
-yield return text.EmitDone("text");
-yield return message.EmitContentDone(text); // Close the content part
+yield return text.EmitTextDone("text");
+yield return text.EmitDone(); // Close the content part
 yield return message.EmitDone();
 ```
 

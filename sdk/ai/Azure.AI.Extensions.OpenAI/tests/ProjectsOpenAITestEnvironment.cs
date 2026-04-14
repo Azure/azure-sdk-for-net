@@ -18,7 +18,7 @@ namespace Azure.AI.Extensions.OpenAI.Tests
         public string MEMORY_STORE_CHAT_MODEL_DEPLOYMENT_NAME => WrappedGetRecordedVariable(nameof(MEMORY_STORE_CHAT_MODEL_DEPLOYMENT_NAME), isSecret: false);
         public string MEMORY_STORE_EMBEDDING_MODEL_DEPLOYMENT_NAME => WrappedGetRecordedVariable(nameof(MEMORY_STORE_EMBEDDING_MODEL_DEPLOYMENT_NAME), isSecret: false);
         public string INGRESS_SUBDOMAIN_SUFFIX => WrappedGetRecordedVariable(nameof(INGRESS_SUBDOMAIN_SUFFIX), isSecret: false);
-        public string OPENAI_FILE_ID => WrappedGetRecordedVariable(nameof(OPENAI_FILE_ID), isSecret: false    );
+        public string OPENAI_FILE_ID => WrappedGetRecordedVariable(nameof(OPENAI_FILE_ID), isSecret: false);
         public string COMPUTER_SCREENSHOTS => WrappedGetRecordedVariable(nameof(COMPUTER_SCREENSHOTS), isSecret: false);
         public string IMAGE_GENERATION_DEPLOYMENT_NAME => WrappedGetRecordedVariable(nameof(IMAGE_GENERATION_DEPLOYMENT_NAME), isSecret: false);
         public string COMPUTER_USE_DEPLOYMENT_NAME => WrappedGetRecordedVariable(nameof(COMPUTER_USE_DEPLOYMENT_NAME), isSecret: false);
