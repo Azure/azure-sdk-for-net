@@ -238,5 +238,65 @@ namespace Azure.Generator.Management.Tests.Providers
             Assert.NotNull(bodyParam, "Body parameter should exist");
             Assert.IsNull(bodyParam!.DefaultValue, "PATCH body parameter should be required (no default value) even when optional in spec");
         }
+
+        [TestCase]
+        public void Verify_ExistsReturnType_WhenGetIsLro()
+        {
+            var (client, models) = InputResourceData.ClientWithResourceLroGet();
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
+            var resourceProvider = plugin.Object.OutputLibrary.TypeProviders.FirstOrDefault(p => p is ResourceCollectionClientProvider) as ResourceCollectionClientProvider;
+            Assert.NotNull(resourceProvider);
+
+            var existsMethod = resourceProvider!.Methods.FirstOrDefault(m => m.Signature.Name == "Exists");
+            Assert.NotNull(existsMethod);
+            Assert.AreEqual(typeof(Response<>), existsMethod!.Signature.ReturnType?.FrameworkType,
+                "Exists should return Response<bool> even when Get is an LRO");
+        }
+
+        [TestCase]
+        public void Verify_ExistsAsyncReturnType_WhenGetIsLro()
+        {
+            var (client, models) = InputResourceData.ClientWithResourceLroGet();
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
+            var resourceProvider = plugin.Object.OutputLibrary.TypeProviders.FirstOrDefault(p => p is ResourceCollectionClientProvider) as ResourceCollectionClientProvider;
+            Assert.NotNull(resourceProvider);
+
+            var existsAsyncMethod = resourceProvider!.Methods.FirstOrDefault(m => m.Signature.Name == "ExistsAsync");
+            Assert.NotNull(existsAsyncMethod);
+            Assert.AreEqual(typeof(Task<>), existsAsyncMethod!.Signature.ReturnType?.FrameworkType,
+                "ExistsAsync should return Task<Response<bool>> even when Get is an LRO");
+            Assert.AreEqual(typeof(Response<>), existsAsyncMethod.Signature.ReturnType?.Arguments[0].FrameworkType,
+                "ExistsAsync inner type should be Response<bool> even when Get is an LRO");
+        }
+
+        [TestCase]
+        public void Verify_GetIfExistsReturnType_WhenGetIsLro()
+        {
+            var (client, models) = InputResourceData.ClientWithResourceLroGet();
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
+            var resourceProvider = plugin.Object.OutputLibrary.TypeProviders.FirstOrDefault(p => p is ResourceCollectionClientProvider) as ResourceCollectionClientProvider;
+            Assert.NotNull(resourceProvider);
+
+            var getIfExistsMethod = resourceProvider!.Methods.FirstOrDefault(m => m.Signature.Name == "GetIfExists");
+            Assert.NotNull(getIfExistsMethod);
+            Assert.AreEqual(typeof(NullableResponse<>), getIfExistsMethod!.Signature.ReturnType?.FrameworkType,
+                "GetIfExists should return NullableResponse<> even when Get is an LRO");
+        }
+
+        [TestCase]
+        public void Verify_GetIfExistsAsyncReturnType_WhenGetIsLro()
+        {
+            var (client, models) = InputResourceData.ClientWithResourceLroGet();
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
+            var resourceProvider = plugin.Object.OutputLibrary.TypeProviders.FirstOrDefault(p => p is ResourceCollectionClientProvider) as ResourceCollectionClientProvider;
+            Assert.NotNull(resourceProvider);
+
+            var getIfExistsAsyncMethod = resourceProvider!.Methods.FirstOrDefault(m => m.Signature.Name == "GetIfExistsAsync");
+            Assert.NotNull(getIfExistsAsyncMethod);
+            Assert.AreEqual(typeof(Task<>), getIfExistsAsyncMethod!.Signature.ReturnType?.FrameworkType,
+                "GetIfExistsAsync should return Task<NullableResponse<>> even when Get is an LRO");
+            Assert.AreEqual(typeof(NullableResponse<>), getIfExistsAsyncMethod.Signature.ReturnType?.Arguments[0].FrameworkType,
+                "GetIfExistsAsync inner type should be NullableResponse<> even when Get is an LRO");
+        }
     }
 }
