@@ -80,8 +80,7 @@ steps:
         eng/scripts/Apply-WeightedBatching.ps1 `
           -PackageInfoFolder "$(Build.ArtifactStagingDirectory)/PackageInfo" `
           -WeightsFile "$(Build.ArtifactStagingDirectory)/test-weights.json" `
-          -TargetSeconds 360 `
-          -IndirectTargetSeconds 720
+          -TargetSeconds 240
       displayName: Apply weighted batching to PackageInfo
       condition: and(succeededOrFailed(), eq(variables['Build.Reason'], 'PullRequest'))
 
