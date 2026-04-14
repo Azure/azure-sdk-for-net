@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.TrafficManager
         {
             TryGetApiVersion(TrafficManagerHeatMapResource.ResourceType, out string trafficManagerHeatMapApiVersion);
             _heatMapClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.TrafficManager", TrafficManagerHeatMapResource.ResourceType.Namespace, Diagnostics);
-            _heatMapRestClient = new HeatMap(_heatMapClientDiagnostics, Pipeline, Endpoint, trafficManagerHeatMapApiVersion ?? "2022-04-01");
+            _heatMapRestClient = new HeatMap(_heatMapClientDiagnostics, Pipeline, Endpoint, trafficManagerHeatMapApiVersion ?? "2024-04-01-preview");
             ValidateResourceId(id);
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2022-04-01. </description>
+        /// <description> 2024-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.TrafficManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _heatMapRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, heatMapType.ToString(), topLeft, botRight, context);
+                HttpMessage message = _heatMapRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, heatMapType.ToString(), topLeft, botRight, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<TrafficManagerHeatMapData> response = Response.FromValue(TrafficManagerHeatMapData.FromResponse(result), result);
                 if (response.Value == null)
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2022-04-01. </description>
+        /// <description> 2024-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.TrafficManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _heatMapRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, heatMapType.ToString(), topLeft, botRight, context);
+                HttpMessage message = _heatMapRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, heatMapType.ToString(), topLeft, botRight, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<TrafficManagerHeatMapData> response = Response.FromValue(TrafficManagerHeatMapData.FromResponse(result), result);
                 if (response.Value == null)
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2022-04-01. </description>
+        /// <description> 2024-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.TrafficManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _heatMapRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, heatMapType.ToString(), topLeft, botRight, context);
+                HttpMessage message = _heatMapRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, heatMapType.ToString(), topLeft, botRight, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<TrafficManagerHeatMapData> response = default;
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2022-04-01. </description>
+        /// <description> 2024-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.TrafficManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _heatMapRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, heatMapType.ToString(), topLeft, botRight, context);
+                HttpMessage message = _heatMapRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, heatMapType.ToString(), topLeft, botRight, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<TrafficManagerHeatMapData> response = default;
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2022-04-01. </description>
+        /// <description> 2024-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.TrafficManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _heatMapRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, heatMapType.ToString(), topLeft, botRight, context);
+                HttpMessage message = _heatMapRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, heatMapType.ToString(), topLeft, botRight, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<TrafficManagerHeatMapData> response = default;
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2022-04-01. </description>
+        /// <description> 2024-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.TrafficManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _heatMapRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, heatMapType.ToString(), topLeft, botRight, context);
+                HttpMessage message = _heatMapRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, heatMapType.ToString(), topLeft, botRight, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<TrafficManagerHeatMapData> response = default;

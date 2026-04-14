@@ -163,5 +163,22 @@ namespace Azure.ResourceManager.TrafficManager
                 Properties.MaxReturn = value.Value;
             }
         }
+
+        /// <summary> When record type is set, a traffic manager profile will allow only endpoints that match this type. </summary>
+        public RecordType? RecordType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RecordType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProfileProperties();
+                }
+                Properties.RecordType = value.Value;
+            }
+        }
     }
 }

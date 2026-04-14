@@ -11,20 +11,20 @@ using Azure.ResourceManager.TrafficManager;
 
 namespace Azure.ResourceManager.TrafficManager.Models
 {
-    /// <summary> Class representing the Traffic Manager profile properties. </summary>
-    internal partial class ProfileProperties
+    /// <summary> Class representing the Traffic Manager profile properties for update operations. </summary>
+    public partial class ProfilePropertiesUpdate
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ProfileProperties"/>. </summary>
-        public ProfileProperties()
+        /// <summary> Initializes a new instance of <see cref="ProfilePropertiesUpdate"/>. </summary>
+        public ProfilePropertiesUpdate()
         {
-            Endpoints = new ChangeTrackingList<TrafficManagerEndpointData>();
+            Endpoints = new ChangeTrackingList<TrafficManagerEndpointPatch>();
             AllowedEndpointRecordTypes = new ChangeTrackingList<AllowedEndpointRecordType>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ProfileProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProfilePropertiesUpdate"/>. </summary>
         /// <param name="profileStatus"> The status of the Traffic Manager profile. </param>
         /// <param name="trafficRoutingMethod"> The traffic routing method of the Traffic Manager profile. </param>
         /// <param name="dnsConfig"> The DNS settings of the Traffic Manager profile. </param>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
         /// <param name="maxReturn"> Maximum number of endpoints to be returned for MultiValue routing type. </param>
         /// <param name="recordType"> When record type is set, a traffic manager profile will allow only endpoints that match this type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProfileProperties(TrafficManagerProfileStatus? profileStatus, TrafficRoutingMethod? trafficRoutingMethod, TrafficManagerDnsConfig dnsConfig, TrafficManagerMonitorConfig monitorConfig, IList<TrafficManagerEndpointData> endpoints, TrafficViewEnrollmentStatus? trafficViewEnrollmentStatus, IList<AllowedEndpointRecordType> allowedEndpointRecordTypes, long? maxReturn, RecordType? recordType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProfilePropertiesUpdate(TrafficManagerProfileStatus? profileStatus, TrafficRoutingMethod? trafficRoutingMethod, TrafficManagerDnsConfig dnsConfig, TrafficManagerMonitorConfig monitorConfig, IList<TrafficManagerEndpointPatch> endpoints, TrafficViewEnrollmentStatus? trafficViewEnrollmentStatus, IList<AllowedEndpointRecordType> allowedEndpointRecordTypes, long? maxReturn, RecordType? recordType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProfileStatus = profileStatus;
             TrafficRoutingMethod = trafficRoutingMethod;
@@ -62,13 +62,13 @@ namespace Azure.ResourceManager.TrafficManager.Models
         public TrafficManagerMonitorConfig MonitorConfig { get; set; }
 
         /// <summary> The list of endpoints in the Traffic Manager profile. </summary>
-        public IList<TrafficManagerEndpointData> Endpoints { get; } = new ChangeTrackingList<TrafficManagerEndpointData>();
+        public IList<TrafficManagerEndpointPatch> Endpoints { get; }
 
         /// <summary> Indicates whether Traffic View is 'Enabled' or 'Disabled' for the Traffic Manager profile. Null, indicates 'Disabled'. Enabling this feature will increase the cost of the Traffic Manage profile. </summary>
         public TrafficViewEnrollmentStatus? TrafficViewEnrollmentStatus { get; set; }
 
         /// <summary> The list of allowed endpoint record types. </summary>
-        public IList<AllowedEndpointRecordType> AllowedEndpointRecordTypes { get; } = new ChangeTrackingList<AllowedEndpointRecordType>();
+        public IList<AllowedEndpointRecordType> AllowedEndpointRecordTypes { get; }
 
         /// <summary> Maximum number of endpoints to be returned for MultiValue routing type. </summary>
         public long? MaxReturn { get; set; }

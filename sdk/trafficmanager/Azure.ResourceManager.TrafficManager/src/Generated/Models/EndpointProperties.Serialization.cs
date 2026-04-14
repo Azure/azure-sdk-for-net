@@ -15,7 +15,7 @@ using Azure.ResourceManager.TrafficManager;
 namespace Azure.ResourceManager.TrafficManager.Models
 {
     /// <summary> Class representing a Traffic Manager endpoint properties. </summary>
-    internal partial class EndpointProperties : IJsonModel<EndpointProperties>
+    public partial class EndpointProperties : IJsonModel<EndpointProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
