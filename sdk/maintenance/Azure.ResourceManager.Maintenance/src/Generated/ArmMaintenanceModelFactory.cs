@@ -140,16 +140,18 @@ namespace Azure.ResourceManager.Maintenance.Models
         /// <param name="locations"> List of locations to scope the query to. </param>
         /// <param name="tagSettings"> Tag settings for the VM. </param>
         /// <returns> A new <see cref="Models.MaintenanceConfigurationAssignmentFilter"/> instance for mocking. </returns>
-        public static MaintenanceConfigurationAssignmentFilter MaintenanceConfigurationAssignmentFilter(ResourceType? resourceTypes = default, IEnumerable<string> resourceGroups = default, IEnumerable<string> osTypes = default, AzureLocation? locations = default, VmTagSettings tagSettings = default)
+        public static MaintenanceConfigurationAssignmentFilter MaintenanceConfigurationAssignmentFilter(IEnumerable<ResourceType> resourceTypes = default, IEnumerable<string> resourceGroups = default, IEnumerable<string> osTypes = default, IEnumerable<AzureLocation> locations = default, MaintenanceVmTagSettings tagSettings = default)
         {
+            resourceTypes ??= new ChangeTrackingList<ResourceType>();
             resourceGroups ??= new ChangeTrackingList<string>();
             osTypes ??= new ChangeTrackingList<string>();
+            locations ??= new ChangeTrackingList<AzureLocation>();
 
             return new MaintenanceConfigurationAssignmentFilter(
-                resourceTypes,
+                resourceTypes.ToList(),
                 resourceGroups.ToList(),
                 osTypes.ToList(),
-                locations,
+                locations.ToList(),
                 tagSettings,
                 additionalBinaryDataProperties: null);
         }
@@ -157,20 +159,20 @@ namespace Azure.ResourceManager.Maintenance.Models
         /// <summary> Tag filter information for the VM. </summary>
         /// <param name="tags"> Dictionary of tags with its list of values. </param>
         /// <param name="filterOperator"> Filter VMs by Any or All specified tags. </param>
-        /// <returns> A new <see cref="Models.VmTagSettings"/> instance for mocking. </returns>
-        public static VmTagSettings VmTagSettings(IDictionary<string, IList<string>> tags = default, VmTagOperator? filterOperator = default)
+        /// <returns> A new <see cref="Models.MaintenanceVmTagSettings"/> instance for mocking. </returns>
+        public static MaintenanceVmTagSettings MaintenanceVmTagSettings(IDictionary<string, IList<string>> tags = default, MaintenanceVmTagOperator? filterOperator = default)
         {
             tags ??= new ChangeTrackingDictionary<string, IList<string>>();
 
-            return new VmTagSettings(tags, filterOperator, additionalBinaryDataProperties: null);
+            return new MaintenanceVmTagSettings(tags, filterOperator, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Response of scheduled event acknowledge. </summary>
         /// <param name="value"> Successfully Approved. </param>
-        /// <returns> A new <see cref="Models.ScheduledEventApproveResult"/> instance for mocking. </returns>
-        public static ScheduledEventApproveResult ScheduledEventApproveResult(string value = default)
+        /// <returns> A new <see cref="Models.MaintenanceScheduledEventApproveResult"/> instance for mocking. </returns>
+        public static MaintenanceScheduledEventApproveResult MaintenanceScheduledEventApproveResult(string value = default)
         {
-            return new ScheduledEventApproveResult(value, additionalBinaryDataProperties: null);
+            return new MaintenanceScheduledEventApproveResult(value, additionalBinaryDataProperties: null);
         }
 
         /// <param name="maintenanceScope"> The impact area. </param>

@@ -15,58 +15,58 @@ using Azure.ResourceManager.Maintenance;
 namespace Azure.ResourceManager.Maintenance.Models
 {
     /// <summary> Response of scheduled event acknowledge. </summary>
-    public partial class ScheduledEventApproveResult : IJsonModel<ScheduledEventApproveResult>
+    public partial class MaintenanceScheduledEventApproveResult : IJsonModel<MaintenanceScheduledEventApproveResult>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ScheduledEventApproveResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual MaintenanceScheduledEventApproveResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ScheduledEventApproveResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MaintenanceScheduledEventApproveResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeScheduledEventApproveResult(document.RootElement, options);
+                        return DeserializeMaintenanceScheduledEventApproveResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ScheduledEventApproveResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MaintenanceScheduledEventApproveResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ScheduledEventApproveResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MaintenanceScheduledEventApproveResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerMaintenanceContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ScheduledEventApproveResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MaintenanceScheduledEventApproveResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ScheduledEventApproveResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<MaintenanceScheduledEventApproveResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ScheduledEventApproveResult IPersistableModel<ScheduledEventApproveResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        MaintenanceScheduledEventApproveResult IPersistableModel<MaintenanceScheduledEventApproveResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ScheduledEventApproveResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MaintenanceScheduledEventApproveResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ScheduledEventApproveResult"/> from. </param>
-        internal static ScheduledEventApproveResult FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="MaintenanceScheduledEventApproveResult"/> from. </param>
+        internal static MaintenanceScheduledEventApproveResult FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeScheduledEventApproveResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeMaintenanceScheduledEventApproveResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ScheduledEventApproveResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MaintenanceScheduledEventApproveResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -77,10 +77,10 @@ namespace Azure.ResourceManager.Maintenance.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ScheduledEventApproveResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MaintenanceScheduledEventApproveResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScheduledEventApproveResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MaintenanceScheduledEventApproveResult)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Value))
             {
@@ -106,24 +106,24 @@ namespace Azure.ResourceManager.Maintenance.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ScheduledEventApproveResult IJsonModel<ScheduledEventApproveResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        MaintenanceScheduledEventApproveResult IJsonModel<MaintenanceScheduledEventApproveResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ScheduledEventApproveResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual MaintenanceScheduledEventApproveResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ScheduledEventApproveResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MaintenanceScheduledEventApproveResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScheduledEventApproveResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MaintenanceScheduledEventApproveResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeScheduledEventApproveResult(document.RootElement, options);
+            return DeserializeMaintenanceScheduledEventApproveResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ScheduledEventApproveResult DeserializeScheduledEventApproveResult(JsonElement element, ModelReaderWriterOptions options)
+        internal static MaintenanceScheduledEventApproveResult DeserializeMaintenanceScheduledEventApproveResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ScheduledEventApproveResult(value, additionalBinaryDataProperties);
+            return new MaintenanceScheduledEventApproveResult(value, additionalBinaryDataProperties);
         }
     }
 }

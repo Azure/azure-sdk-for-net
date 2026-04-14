@@ -114,7 +114,8 @@ namespace Azure.ResourceManager.Maintenance
             AsyncPageable<MaintenanceConfigurationData> source = new PublicMaintenanceConfigurationsGetAllAsyncCollectionResultOfT(
                 _publicMaintenanceConfigurationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
-                context);
+                context,
+                "MaintenancePublicConfigurationCollection.GetAll");
             return new AsyncPageableWrapper<MaintenanceConfigurationData, MaintenancePublicConfigurationResource>(
                 source,
                 data => new MaintenancePublicConfigurationResource(Client, data));
@@ -131,7 +132,8 @@ namespace Azure.ResourceManager.Maintenance
             Pageable<MaintenanceConfigurationData> source = new PublicMaintenanceConfigurationsGetAllCollectionResultOfT(
                 _publicMaintenanceConfigurationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
-                context);
+                context,
+                "MaintenancePublicConfigurationCollection.GetAll");
             return new PageableWrapper<MaintenanceConfigurationData, MaintenancePublicConfigurationResource>(
                 source,
                 data => new MaintenancePublicConfigurationResource(Client, data));

@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Maintenance.Models
             {
                 return null;
             }
-            RebootOptions? rebootSetting = default;
+            MaintenanceRebootOption? rebootSetting = default;
             MaintenanceWindowsPatchSettings windowsParameters = default;
             MaintenanceLinuxPatchSettings linuxParameters = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                     {
                         continue;
                     }
-                    rebootSetting = new RebootOptions(prop.Value.GetString());
+                    rebootSetting = new MaintenanceRebootOption(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("windowsParameters"u8))

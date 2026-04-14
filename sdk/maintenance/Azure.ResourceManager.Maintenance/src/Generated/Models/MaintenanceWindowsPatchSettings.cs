@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Maintenance.Models
         /// <summary> Initializes a new instance of <see cref="MaintenanceWindowsPatchSettings"/>. </summary>
         public MaintenanceWindowsPatchSettings()
         {
-            KbNumbersToExclude = new ChangeTrackingList<string>();
-            KbNumbersToInclude = new ChangeTrackingList<string>();
+            KBNumbersToExclude = new ChangeTrackingList<string>();
+            KBNumbersToInclude = new ChangeTrackingList<string>();
             ClassificationsToInclude = new ChangeTrackingList<string>();
         }
 
@@ -33,18 +33,18 @@ namespace Azure.ResourceManager.Maintenance.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal MaintenanceWindowsPatchSettings(IList<string> kbNumbersToExclude, IList<string> kbNumbersToInclude, IList<string> classificationsToInclude, bool? isExcludeKbsRebootRequired, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            KbNumbersToExclude = kbNumbersToExclude;
-            KbNumbersToInclude = kbNumbersToInclude;
+            KBNumbersToExclude = kbNumbersToExclude;
+            KBNumbersToInclude = kbNumbersToInclude;
             ClassificationsToInclude = classificationsToInclude;
             IsExcludeKbsRebootRequired = isExcludeKbsRebootRequired;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Windows KBID to be excluded for patching. </summary>
-        public IList<string> KbNumbersToExclude { get; }
+        public IList<string> KBNumbersToExclude { get; }
 
         /// <summary> Windows KBID to be included for patching. </summary>
-        public IList<string> KbNumbersToInclude { get; }
+        public IList<string> KBNumbersToInclude { get; }
 
         /// <summary> Classification category of patches to be patched. Allowed values are 'Critical', 'Security', 'UpdateRollup', 'FeaturePack', 'ServicePack', 'Definition', 'Tools', and 'Updates'. </summary>
         public IList<string> ClassificationsToInclude { get; }

@@ -12,22 +12,22 @@ using Azure.ResourceManager.Maintenance;
 namespace Azure.ResourceManager.Maintenance.Models
 {
     /// <summary> Tag filter information for the VM. </summary>
-    public partial class VmTagSettings
+    public partial class MaintenanceVmTagSettings
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="VmTagSettings"/>. </summary>
-        public VmTagSettings()
+        /// <summary> Initializes a new instance of <see cref="MaintenanceVmTagSettings"/>. </summary>
+        public MaintenanceVmTagSettings()
         {
             Tags = new ChangeTrackingDictionary<string, IList<string>>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="VmTagSettings"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MaintenanceVmTagSettings"/>. </summary>
         /// <param name="tags"> Dictionary of tags with its list of values. </param>
         /// <param name="filterOperator"> Filter VMs by Any or All specified tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VmTagSettings(IDictionary<string, IList<string>> tags, VmTagOperator? filterOperator, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MaintenanceVmTagSettings(IDictionary<string, IList<string>> tags, MaintenanceVmTagOperator? filterOperator, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tags = tags;
             FilterOperator = filterOperator;
@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.Maintenance.Models
         public IDictionary<string, IList<string>> Tags { get; }
 
         /// <summary> Filter VMs by Any or All specified tags. </summary>
-        public VmTagOperator? FilterOperator { get; set; }
+        public MaintenanceVmTagOperator? FilterOperator { get; set; }
     }
 }

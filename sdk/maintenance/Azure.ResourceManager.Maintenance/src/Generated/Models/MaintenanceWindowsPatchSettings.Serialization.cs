@@ -74,11 +74,11 @@ namespace Azure.ResourceManager.Maintenance.Models
             {
                 throw new FormatException($"The model {nameof(MaintenanceWindowsPatchSettings)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(KbNumbersToExclude))
+            if (Optional.IsCollectionDefined(KBNumbersToExclude))
             {
                 writer.WritePropertyName("kbNumbersToExclude"u8);
                 writer.WriteStartArray();
-                foreach (string item in KbNumbersToExclude)
+                foreach (string item in KBNumbersToExclude)
                 {
                     if (item == null)
                     {
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Maintenance.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(KbNumbersToInclude))
+            if (Optional.IsCollectionDefined(KBNumbersToInclude))
             {
                 writer.WritePropertyName("kbNumbersToInclude"u8);
                 writer.WriteStartArray();
-                foreach (string item in KbNumbersToInclude)
+                foreach (string item in KBNumbersToInclude)
                 {
                     if (item == null)
                     {

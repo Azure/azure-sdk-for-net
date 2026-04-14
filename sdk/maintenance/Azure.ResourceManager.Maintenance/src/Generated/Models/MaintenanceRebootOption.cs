@@ -12,17 +12,17 @@ using Azure.ResourceManager.Maintenance;
 namespace Azure.ResourceManager.Maintenance.Models
 {
     /// <summary> Possible reboot preference as defined by the user based on which it would be decided to reboot the machine or not after the patch operation is completed. </summary>
-    public readonly partial struct RebootOptions : IEquatable<RebootOptions>
+    public readonly partial struct MaintenanceRebootOption : IEquatable<MaintenanceRebootOption>
     {
         private readonly string _value;
         private const string IfRequiredValue = "IfRequired";
         private const string NeverValue = "Never";
         private const string AlwaysValue = "Always";
 
-        /// <summary> Initializes a new instance of <see cref="RebootOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MaintenanceRebootOption"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public RebootOptions(string value)
+        public MaintenanceRebootOption(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -30,38 +30,38 @@ namespace Azure.ResourceManager.Maintenance.Models
         }
 
         /// <summary> Gets the IfRequired. </summary>
-        public static RebootOptions IfRequired { get; } = new RebootOptions(IfRequiredValue);
+        public static MaintenanceRebootOption IfRequired { get; } = new MaintenanceRebootOption(IfRequiredValue);
 
         /// <summary> Gets the Never. </summary>
-        public static RebootOptions Never { get; } = new RebootOptions(NeverValue);
+        public static MaintenanceRebootOption Never { get; } = new MaintenanceRebootOption(NeverValue);
 
         /// <summary> Gets the Always. </summary>
-        public static RebootOptions Always { get; } = new RebootOptions(AlwaysValue);
+        public static MaintenanceRebootOption Always { get; } = new MaintenanceRebootOption(AlwaysValue);
 
-        /// <summary> Determines if two <see cref="RebootOptions"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="MaintenanceRebootOption"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(RebootOptions left, RebootOptions right) => left.Equals(right);
+        public static bool operator ==(MaintenanceRebootOption left, MaintenanceRebootOption right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="RebootOptions"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="MaintenanceRebootOption"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(RebootOptions left, RebootOptions right) => !left.Equals(right);
+        public static bool operator !=(MaintenanceRebootOption left, MaintenanceRebootOption right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="RebootOptions"/>. </summary>
+        /// <summary> Converts a string to a <see cref="MaintenanceRebootOption"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RebootOptions(string value) => new RebootOptions(value);
+        public static implicit operator MaintenanceRebootOption(string value) => new MaintenanceRebootOption(value);
 
-        /// <summary> Converts a string to a <see cref="RebootOptions"/>. </summary>
+        /// <summary> Converts a string to a <see cref="MaintenanceRebootOption"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RebootOptions?(string value) => value == null ? null : new RebootOptions(value);
+        public static implicit operator MaintenanceRebootOption?(string value) => value == null ? null : new MaintenanceRebootOption(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is RebootOptions other && Equals(other);
+        public override bool Equals(object obj) => obj is MaintenanceRebootOption other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(RebootOptions other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(MaintenanceRebootOption other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

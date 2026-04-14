@@ -21,8 +21,10 @@ namespace Azure.ResourceManager.Maintenance.Models
         /// <summary> Initializes a new instance of <see cref="MaintenanceConfigurationAssignmentFilter"/>. </summary>
         public MaintenanceConfigurationAssignmentFilter()
         {
+            ResourceTypes = new ChangeTrackingList<ResourceType>();
             ResourceGroups = new ChangeTrackingList<string>();
             OsTypes = new ChangeTrackingList<string>();
+            Locations = new ChangeTrackingList<AzureLocation>();
         }
 
         /// <summary> Initializes a new instance of <see cref="MaintenanceConfigurationAssignmentFilter"/>. </summary>
@@ -32,7 +34,7 @@ namespace Azure.ResourceManager.Maintenance.Models
         /// <param name="locations"> List of locations to scope the query to. </param>
         /// <param name="tagSettings"> Tag settings for the VM. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MaintenanceConfigurationAssignmentFilter(ResourceType? resourceTypes, IList<string> resourceGroups, IList<string> osTypes, AzureLocation? locations, VmTagSettings tagSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MaintenanceConfigurationAssignmentFilter(IList<ResourceType> resourceTypes, IList<string> resourceGroups, IList<string> osTypes, IList<AzureLocation> locations, MaintenanceVmTagSettings tagSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceTypes = resourceTypes;
             ResourceGroups = resourceGroups;
@@ -43,7 +45,7 @@ namespace Azure.ResourceManager.Maintenance.Models
         }
 
         /// <summary> List of allowed resources. </summary>
-        public ResourceType? ResourceTypes { get; set; }
+        public IList<ResourceType> ResourceTypes { get; }
 
         /// <summary> List of allowed resource groups. </summary>
         public IList<string> ResourceGroups { get; }
@@ -52,9 +54,9 @@ namespace Azure.ResourceManager.Maintenance.Models
         public IList<string> OsTypes { get; }
 
         /// <summary> List of locations to scope the query to. </summary>
-        public AzureLocation? Locations { get; set; }
+        public IList<AzureLocation> Locations { get; }
 
         /// <summary> Tag settings for the VM. </summary>
-        public VmTagSettings TagSettings { get; set; }
+        public MaintenanceVmTagSettings TagSettings { get; set; }
     }
 }

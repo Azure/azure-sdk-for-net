@@ -75,10 +75,15 @@ namespace Azure.ResourceManager.Maintenance.Models
             {
                 throw new FormatException($"The model {nameof(MaintenanceConfigurationAssignmentFilter)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(ResourceTypes))
+            if (Optional.IsCollectionDefined(ResourceTypes))
             {
                 writer.WritePropertyName("resourceTypes"u8);
-                writer.WriteStringValue(ResourceTypes.Value);
+                writer.WriteStartArray();
+                foreach (ResourceType item in ResourceTypes)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
             }
             if (Optional.IsCollectionDefined(ResourceGroups))
             {
@@ -110,10 +115,15 @@ namespace Azure.ResourceManager.Maintenance.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Locations))
+            if (Optional.IsCollectionDefined(Locations))
             {
                 writer.WritePropertyName("locations"u8);
-                writer.WriteStringValue(Locations.Value);
+                writer.WriteStartArray();
+                foreach (AzureLocation item in Locations)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
             }
             if (Optional.IsDefined(TagSettings))
             {
@@ -162,11 +172,11 @@ namespace Azure.ResourceManager.Maintenance.Models
             {
                 return null;
             }
-            ResourceType? resourceTypes = default;
+            IList<ResourceType> resourceTypes = default;
             IList<string> resourceGroups = default;
             IList<string> osTypes = default;
-            AzureLocation? locations = default;
-            VmTagSettings tagSettings = default;
+            IList<AzureLocation> locations = default;
+            MaintenanceVmTagSettings tagSettings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -176,7 +186,12 @@ namespace Azure.ResourceManager.Maintenance.Models
                     {
                         continue;
                     }
-                    resourceTypes = new ResourceType(prop.Value.GetString());
+                    List<ResourceType> array = new List<ResourceType>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(new ResourceType(item.GetString()));
+                    }
+                    resourceTypes = array;
                     continue;
                 }
                 if (prop.NameEquals("resourceGroups"u8))
@@ -227,7 +242,12 @@ namespace Azure.ResourceManager.Maintenance.Models
                     {
                         continue;
                     }
-                    locations = new AzureLocation(prop.Value.GetString());
+                    List<AzureLocation> array = new List<AzureLocation>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(new AzureLocation(item.GetString()));
+                    }
+                    locations = array;
                     continue;
                 }
                 if (prop.NameEquals("tagSettings"u8))
@@ -236,7 +256,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                     {
                         continue;
                     }
-                    tagSettings = VmTagSettings.DeserializeVmTagSettings(prop.Value, options);
+                    tagSettings = MaintenanceVmTagSettings.DeserializeMaintenanceVmTagSettings(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -245,10 +265,10 @@ namespace Azure.ResourceManager.Maintenance.Models
                 }
             }
             return new MaintenanceConfigurationAssignmentFilter(
-                resourceTypes,
+                resourceTypes ?? new ChangeTrackingList<ResourceType>(),
                 resourceGroups ?? new ChangeTrackingList<string>(),
                 osTypes ?? new ChangeTrackingList<string>(),
-                locations,
+                locations ?? new ChangeTrackingList<AzureLocation>(),
                 tagSettings,
                 additionalBinaryDataProperties);
         }

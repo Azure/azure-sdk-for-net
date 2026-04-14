@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Maintenance.Models
 {
     /// <summary> Filter VMs by Any or All specified tags. </summary>
-    public enum VmTagOperator
+    public enum MaintenanceVmTagOperator
     {
         /// <summary> All. </summary>
         All,

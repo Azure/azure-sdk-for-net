@@ -11,20 +11,20 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Maintenance.Models
 {
     /// <summary> Response of scheduled event acknowledge. </summary>
-    public partial class ScheduledEventApproveResult
+    public partial class MaintenanceScheduledEventApproveResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ScheduledEventApproveResult"/>. </summary>
-        internal ScheduledEventApproveResult()
+        /// <summary> Initializes a new instance of <see cref="MaintenanceScheduledEventApproveResult"/>. </summary>
+        internal MaintenanceScheduledEventApproveResult()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ScheduledEventApproveResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MaintenanceScheduledEventApproveResult"/>. </summary>
         /// <param name="value"> Successfully Approved. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ScheduledEventApproveResult(string value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MaintenanceScheduledEventApproveResult(string value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
