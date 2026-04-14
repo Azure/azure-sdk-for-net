@@ -11,8 +11,7 @@ namespace Azure.SdkAnalyzers
 {
     /// <summary>
     /// Analyzes async/sync patterns in method bodies.
-    /// Reports: AZC0101 (ConfigureAwait(true)), AZC0108 (wrong async param value),
-    /// AZC0109 (async param misuse), AZC0111 (EnsureCompleted in async scope).
+    /// Reports: AZC0101 (ConfigureAwait(true)).
     /// </summary>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public sealed class AsyncPatternAnalyzer : DiagnosticAnalyzer
