@@ -311,18 +311,25 @@ export interface RbacRole {
   value: string;
 }
 
+/**
+ * Describes the ARM scope of a resource, including the scope kind and the scope's ID pattern.
+ */
+export interface ResourceScopeInfo {
+  /** The kind of scope (Tenant, Subscription, ResourceGroup, ManagementGroup, Extension) */
+  kind: ResourceScope;
+  /** The scope's ID pattern path */
+  scopeIdPattern: RequestPath;
+}
+
 export interface ResourceMetadata {
   resourceIdPattern?: RequestPath;
   resourceType: string;
   methods: ResourceMethod[];
-  resourceScope: ResourceScope;
+  scope: ResourceScopeInfo;
   parentResourceId?: RequestPath;
   parentResourceModelId?: string;
   singletonResourceName?: string;
   resourceName: string;
-  /** The expected parent resource type for extension resources with specific parent types (e.g., "Microsoft.Compute/virtualMachines") */
-  // TODO: consider to calculate this in generator directly within RequestPathPattern instead of carrying it through emitter and post-processing
-  parentResourceType?: string;
   /** The name constraints for the resource, from TypeSpec decorators */
   nameConstraints: NameConstraints;
   /** The API versions that this resource is available in */
@@ -342,9 +349,12 @@ export function convertResourceMetadataToArguments(
       kind: m.kind,
       operationPath: m.operationPath.path,
       operationScope: m.operationScope,
-      resourceScope: m.resourceScope?.path
+      resourceScopeIdPattern: m.resourceScopeIdPattern?.path
     })),
-    resourceScope: metadata.resourceScope,
+    scope: {
+      kind: metadata.scope.kind,
+      scopeIdPattern: metadata.scope.scopeIdPattern.path
+    },
     parentResourceId: metadata.parentResourceId?.path,
     singletonResourceName: metadata.singletonResourceName,
     resourceName: metadata.resourceName
@@ -408,11 +418,11 @@ export interface ResourceMethod {
    */
   operationScope: ResourceScope;
   /**
-   * The maximum scope of this resource method.
-   * The value of this could be a resource path pattern of an existing resource
-   * or undefined
+   * The resource ID pattern of the resource that scopes this operation.
+   * For CRUD operations, this is typically the resource's own ID pattern.
+   * For list operations, this is the parent or scope resource's ID pattern.
    */
-  resourceScope?: RequestPath;
+  resourceScopeIdPattern?: RequestPath;
 }
 
 export enum ResourceOperationKind {
@@ -531,11 +541,13 @@ export function convertArmProviderSchemaToArguments(
         kind: m.kind,
         operationPath: m.operationPath.path,
         operationScope: m.operationScope,
-        resourceScope: m.resourceScope?.path
+        resourceScopeIdPattern: m.resourceScopeIdPattern?.path
       })),
-      resourceScope: r.metadata.resourceScope,
+      scope: {
+        kind: r.metadata.scope.kind,
+        scopeIdPattern: r.metadata.scope.scopeIdPattern.path
+      },
       parentResourceId: r.metadata.parentResourceId?.path,
-      parentResourceType: r.metadata.parentResourceType,
       singletonResourceName: r.metadata.singletonResourceName,
       resourceName: r.metadata.resourceName,
       nameConstraints: r.metadata.nameConstraints,
@@ -666,7 +678,7 @@ export function postProcessArmResources(
   // and reclassify it as a List on the child resource.
   relocateCrossResourceListActions(validResources, methodResponseModelIdMap);
 
-  // Step 4: Populate resourceScope for all resource methods
+  // Step 4: Populate resourceScopeIdPattern for all resource methods
   // For each method, find the longest matching resource path that is a prefix of the method's operation path
   for (const resource of validResources) {
     for (const method of resource.metadata.methods) {
@@ -676,12 +688,12 @@ export function postProcessArmResources(
         (r) => r.metadata.resourceIdPattern
       );
       if (bestMatch) {
-        method.resourceScope = bestMatch.metadata.resourceIdPattern;
+        method.resourceScopeIdPattern = bestMatch.metadata.resourceIdPattern;
       }
     }
   }
 
-  // Step 5: Populate resourceScope for list operations specifically
+  // Step 5: Populate resourceScopeIdPattern for list operations specifically
   // This is a more targeted approach for list operations
   // first we find all the converted list operations
   const listOperations: ResourceMethod[] = [];
@@ -697,7 +709,7 @@ export function postProcessArmResources(
     (r) => r.metadata.resourceIdPattern!
   );
 
-  // now we assign one of the most matched resourceInstancePath in above candidates to each list operation's resourceScope
+  // now we assign one of the most matched resourceInstancePath in above candidates to each list operation's resourceScopeIdPattern
   for (const listOp of listOperations) {
     const validCandidates: RequestPath[] = [];
 
@@ -710,7 +722,7 @@ export function postProcessArmResources(
     // Take the longest matching path as the resourceScope
     if (validCandidates.length > 0) {
       validCandidates.sort((a, b) => b.length - a.length);
-      listOp.resourceScope = validCandidates[0];
+      listOp.resourceScopeIdPattern = validCandidates[0];
     }
   }
 
@@ -776,22 +788,14 @@ export function postProcessArmResources(
     sortResourceMethods(resource.metadata.methods);
   }
 
-  // Step 8: Compute parentResourceType for extension resources with specific parent types
+  // Step 8: Update scope.scopeIdPattern from resource ID patterns
   for (const resource of filteredResources) {
     const pattern = resource.metadata.resourceIdPattern;
-    if (pattern && pattern.scopePath.scopePath.length > 0) {
-      // The scope path is the parent resource's path — extract its resource type
-      const parentScope = pattern.scopePath;
-      try {
-        const parentType = parentScope.resourceType;
-        // Validate that the parent type doesn't contain variable segments
-        // (e.g., {parentProviderNamespace}/{parentResourceType} would be invalid)
-        if (!parentType.includes("{")) {
-          resource.metadata.parentResourceType = parentType;
-        }
-      } catch {
-        // Path doesn't have a resource type — skip
-      }
+    if (pattern) {
+      resource.metadata.scope = {
+        kind: resource.metadata.scope.kind,
+        scopeIdPattern: pattern.scopePath
+      };
     }
   }
 
@@ -835,7 +839,7 @@ export function assignNonResourceMethodsToResources(
         kind: ResourceOperationKind.Action,
         operationPath: method.operationPath,
         operationScope: method.operationScope,
-        resourceScope: bestMatch.metadata.resourceIdPattern!
+        resourceScopeIdPattern: bestMatch.metadata.resourceIdPattern!
       });
       methodsToRemove.add(method.methodId);
     } else if (method.resourceModelId) {
@@ -851,7 +855,7 @@ export function assignNonResourceMethodsToResources(
           kind: ResourceOperationKind.List,
           operationPath: method.operationPath,
           operationScope: method.operationScope,
-          resourceScope: undefined
+          resourceScopeIdPattern: undefined
         });
         methodsToRemove.add(method.methodId);
       }
@@ -876,7 +880,7 @@ export function assignNonResourceMethodsToResources(
             kind: ResourceOperationKind.List,
             operationPath: method.operationPath,
             operationScope: method.operationScope,
-            resourceScope: undefined
+            resourceScopeIdPattern: undefined
           });
           methodsToRemove.add(method.methodId);
         }

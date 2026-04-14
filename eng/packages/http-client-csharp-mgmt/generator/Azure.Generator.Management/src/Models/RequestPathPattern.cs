@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+
 using Microsoft.TypeSpec.Generator.Snippets;
 using System;
 using System.Collections;
@@ -13,7 +15,7 @@ namespace Azure.Generator.Management.Models
     /// <summary>
     /// This class provides the pattern of an operation request path.
     /// </summary>
-    internal class RequestPathPattern : IEquatable<RequestPathPattern>, IReadOnlyList<RequestPathSegment>
+    public class RequestPathPattern : IEquatable<RequestPathPattern>, IReadOnlyList<RequestPathSegment>
     {
         private const string ProviderPath = "/subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}";
         private const string FeaturePath = "/subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features";
@@ -41,6 +43,8 @@ namespace Azure.Generator.Management.Models
 
         private string _path;
         private IReadOnlyList<RequestPathSegment> _segments;
+        private ResourceTypePattern? _resourceType;
+        private bool _resourceTypeComputed;
 
         public RequestPathPattern(string path)
         {
@@ -210,6 +214,25 @@ namespace Azure.Generator.Management.Models
         public static bool operator !=(RequestPathPattern? left, RequestPathPattern? right)
         {
             return !(left == right);
+        }
+
+        /// <summary>
+        /// Extracts the ARM resource type from the path pattern.
+        /// For example, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}"
+        /// returns a ResourceTypePattern for "Microsoft.Compute/virtualMachines".
+        /// The result is computed once and cached.
+        /// </summary>
+        internal ResourceTypePattern? ResourceType
+        {
+            get
+            {
+                if (!_resourceTypeComputed)
+                {
+                    _resourceType = ResourceTypePattern.FromSegments(_segments);
+                    _resourceTypeComputed = true;
+                }
+                return _resourceType;
+            }
         }
 
         public static implicit operator string(RequestPathPattern requestPath)

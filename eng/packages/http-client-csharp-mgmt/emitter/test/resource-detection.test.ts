@@ -139,7 +139,7 @@ interface Employees2 {
       "Microsoft.ContosoProviderHub/employeeParents/employees"
     );
     strictEqual(metadata.singletonResourceName, undefined);
-    strictEqual(metadata.resourceScope, "ResourceGroup");
+    strictEqual(metadata.scope.kind, "ResourceGroup");
     strictEqual(
       metadata.parentResourceId?.path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}"
@@ -164,7 +164,7 @@ interface Employees2 {
     );
     strictEqual(getMethod.operationScope, ResourceScope.ResourceGroup);
     strictEqual(
-      getMethod.resourceScope?.path,
+      getMethod.resourceScopeIdPattern?.path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}/employees/{employeeName}"
     );
 
@@ -177,7 +177,7 @@ interface Employees2 {
     );
     strictEqual(createEntry.operationScope, ResourceScope.ResourceGroup);
     strictEqual(
-      createEntry.resourceScope?.path,
+      createEntry.resourceScopeIdPattern?.path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}/employees/{employeeName}"
     );
 
@@ -190,7 +190,7 @@ interface Employees2 {
     );
     strictEqual(updateEntry.operationScope, ResourceScope.ResourceGroup);
     strictEqual(
-      updateEntry.resourceScope?.path,
+      updateEntry.resourceScopeIdPattern?.path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}/employees/{employeeName}"
     );
 
@@ -203,7 +203,7 @@ interface Employees2 {
     );
     strictEqual(deleteEntry.operationScope, ResourceScope.ResourceGroup);
     strictEqual(
-      deleteEntry.resourceScope?.path,
+      deleteEntry.resourceScopeIdPattern?.path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}/employees/{employeeName}"
     );
 
@@ -220,7 +220,7 @@ interface Employees2 {
     );
     strictEqual(listByRgEntry.operationScope, ResourceScope.ResourceGroup);
     strictEqual(
-      listByRgEntry.resourceScope?.path,
+      listByRgEntry.resourceScopeIdPattern?.path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}"
     );
 
@@ -236,7 +236,7 @@ interface Employees2 {
       "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}/employees"
     );
     strictEqual(listBySubEntry.operationScope, ResourceScope.Subscription);
-    strictEqual(listBySubEntry.resourceScope, undefined);
+    strictEqual(listBySubEntry.resourceScopeIdPattern, undefined);
 
     // Validate using resolveArmResources API - use deep equality to ensure schemas match
     const resolvedSchema = resolveArmResources(program, sdkContext);
@@ -357,7 +357,7 @@ interface CurrentEmployees {
       "Microsoft.ContosoProviderHub/employees"
     );
     strictEqual(metadata.singletonResourceName, "default");
-    strictEqual(metadata.resourceScope, "ResourceGroup");
+    strictEqual(metadata.scope.kind, "ResourceGroup");
     strictEqual(metadata.methods.length, 3);
     // Verify a Read method exists (position may vary due to sorting)
     ok(
@@ -384,7 +384,7 @@ interface CurrentEmployees {
       "Microsoft.ContosoProviderHub/currentEmployees"
     );
     strictEqual(currentMetadata.singletonResourceName, "current");
-    strictEqual(currentMetadata.resourceScope, "ResourceGroup");
+    strictEqual(currentMetadata.scope.kind, "ResourceGroup");
     strictEqual(currentMetadata.methods.length, 3);
     strictEqual(currentMetadata.resourceName, "CurrentEmployee");
 
@@ -501,7 +501,7 @@ interface Employees {
       "Microsoft.ContosoProviderHub/companies/departments/employees"
     );
     strictEqual(employeeMetadata.singletonResourceName, undefined);
-    strictEqual(employeeMetadata.resourceScope, "ResourceGroup");
+    strictEqual(employeeMetadata.scope.kind, "ResourceGroup");
     strictEqual(employeeMetadata.methods.length, 5);
     // Verify a Read method exists (position may vary due to sorting)
     ok(
@@ -533,7 +533,7 @@ interface Employees {
       "Microsoft.ContosoProviderHub/companies/departments"
     );
     strictEqual(departmentMetadata.singletonResourceName, undefined);
-    strictEqual(departmentMetadata.resourceScope, "ResourceGroup");
+    strictEqual(departmentMetadata.scope.kind, "ResourceGroup");
     strictEqual(departmentMetadata.methods.length, 2);
     strictEqual(
       departmentMetadata.parentResourceId?.path,
@@ -559,7 +559,7 @@ interface Employees {
       "Microsoft.ContosoProviderHub/companies"
     );
     strictEqual(companyMetadata.singletonResourceName, undefined);
-    strictEqual(companyMetadata.resourceScope, "ResourceGroup");
+    strictEqual(companyMetadata.scope.kind, "ResourceGroup");
     strictEqual(companyMetadata.methods.length, 2);
     strictEqual(companyMetadata.parentResourceId, undefined);
     strictEqual(companyMetadata.resourceName, "Company");
@@ -678,7 +678,7 @@ interface Employees {
       "Microsoft.ContosoProviderHub/companies/departments/employees"
     );
     strictEqual(employeeMetadata.singletonResourceName, undefined);
-    strictEqual(employeeMetadata.resourceScope, "Subscription");
+    strictEqual(employeeMetadata.scope.kind, "Subscription");
     strictEqual(employeeMetadata.methods.length, 5);
     // Verify a Read method exists (position may vary due to sorting)
     ok(
@@ -710,7 +710,7 @@ interface Employees {
       "Microsoft.ContosoProviderHub/companies/departments"
     );
     strictEqual(departmentMetadata.singletonResourceName, undefined);
-    strictEqual(departmentMetadata.resourceScope, "Subscription");
+    strictEqual(departmentMetadata.scope.kind, "Subscription");
     strictEqual(departmentMetadata.methods.length, 2);
     strictEqual(
       departmentMetadata.parentResourceId?.path,
@@ -736,7 +736,7 @@ interface Employees {
       "Microsoft.ContosoProviderHub/companies"
     );
     strictEqual(companyMetadata.singletonResourceName, undefined);
-    strictEqual(companyMetadata.resourceScope, "Subscription");
+    strictEqual(companyMetadata.scope.kind, "Subscription");
     strictEqual(companyMetadata.methods.length, 2);
     strictEqual(companyMetadata.parentResourceId, undefined);
     strictEqual(companyMetadata.resourceName, "Company");
@@ -856,7 +856,7 @@ interface Employees {
       "Microsoft.ContosoProviderHub/companies/departments/employees"
     );
     strictEqual(metadata.singletonResourceName, undefined);
-    strictEqual(metadata.resourceScope, "Tenant");
+    strictEqual(metadata.scope.kind, "Tenant");
     strictEqual(metadata.methods.length, 5);
     // Verify a Read method exists (position may vary due to sorting)
     ok(
@@ -888,7 +888,7 @@ interface Employees {
       "Microsoft.ContosoProviderHub/companies/departments"
     );
     strictEqual(departmentMetadata.singletonResourceName, undefined);
-    strictEqual(departmentMetadata.resourceScope, "Tenant");
+    strictEqual(departmentMetadata.scope.kind, "Tenant");
     strictEqual(departmentMetadata.methods.length, 2);
     strictEqual(
       departmentMetadata.parentResourceId?.path,
@@ -914,7 +914,7 @@ interface Employees {
       "Microsoft.ContosoProviderHub/companies"
     );
     strictEqual(companyMetadata.singletonResourceName, undefined);
-    strictEqual(companyMetadata.resourceScope, "Tenant");
+    strictEqual(companyMetadata.scope.kind, "Tenant");
     strictEqual(companyMetadata.methods.length, 2);
     strictEqual(companyMetadata.parentResourceId, undefined);
     strictEqual(companyMetadata.resourceName, "Company");
@@ -973,7 +973,7 @@ interface Employees {
 
     // The model should inherit its resourceScope from the Read method's operationScope (Subscription)
     // because the Read method operates at subscription scope and there are no explicit scope decorators
-    strictEqual(metadata.resourceScope, "Subscription");
+    strictEqual(metadata.scope.kind, "Subscription");
 
     // Verify the Read method itself has the correct scope
     const getMethodEntry = metadata.methods.find((m: any) => m.kind === "Read");
@@ -1064,7 +1064,7 @@ interface Employees {
       metadata.resourceType,
       "Microsoft.ContosoProviderHub/employeeParents"
     );
-    strictEqual(metadata.resourceScope, "ResourceGroup");
+    strictEqual(metadata.scope.kind, "ResourceGroup");
     strictEqual(metadata.parentResourceId, undefined);
     strictEqual(metadata.resourceName, "EmployeeParent");
     strictEqual(metadata.methods.length, 2); // Get and ListByParent
@@ -1133,7 +1133,7 @@ interface Employees {
     ok(employeeResource);
     const metadata = employeeResource.metadata;
     ok(metadata);
-    strictEqual(metadata.resourceScope, "ManagementGroup");
+    strictEqual(metadata.scope.kind, "ManagementGroup");
 
     // Validate using resolveArmResources API - use deep equality to ensure schemas match
     const resolvedSchema = resolveArmResources(program, sdkContext);
@@ -1843,7 +1843,7 @@ interface SitesByServiceGroup extends SiteOps<ServiceGroup> {}
       if (
         resource.metadata.resourceIdPattern.path === serviceGroupResourcePattern
       ) {
-        (resource.metadata as { resourceScope: unknown }).resourceScope =
+        (resource.metadata as { scope: { kind: unknown } }).scope.kind =
           "<normalized>";
         for (const method of resource.metadata.methods) {
           (method as { operationScope: unknown }).operationScope =
@@ -2822,7 +2822,7 @@ interface TenantTranscripts {
     );
     ok(tenantTranscriptList, "Tenant transcript should have a List method");
     strictEqual(
-      tenantTranscriptList.resourceScope?.path,
+      tenantTranscriptList.resourceScopeIdPattern?.path,
       tenantTicket.metadata.resourceIdPattern.path,
       "Tenant transcript list should scope to tenant ticket"
     );

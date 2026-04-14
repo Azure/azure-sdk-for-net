@@ -833,7 +833,12 @@ interface ChildResources {
           resourceIdPattern: new RequestPath(
             "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}"
           ),
-          resourceScope: ResourceScope.Extension,
+          scope: {
+            kind: ResourceScope.Extension,
+            scopeIdPattern: new RequestPath(
+              "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}"
+            )
+          },
           singletonResourceName: undefined,
           parentResourceId: undefined,
           parentResourceModelId: undefined,
@@ -848,7 +853,7 @@ interface ChildResources {
                 "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}"
               ),
               operationScope: ResourceScope.ResourceGroup,
-              resourceScope: new RequestPath(
+              resourceScopeIdPattern: new RequestPath(
                 "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}"
               )
             }
@@ -922,7 +927,12 @@ interface ChildResources {
           resourceIdPattern: new RequestPath(
             "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}"
           ),
-          resourceScope: ResourceScope.Extension,
+          scope: {
+            kind: ResourceScope.Extension,
+            scopeIdPattern: new RequestPath(
+              "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}"
+            )
+          },
           singletonResourceName: undefined,
           parentResourceId: undefined,
           parentResourceModelId: undefined,
@@ -937,7 +947,7 @@ interface ChildResources {
                 "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}"
               ),
               operationScope: ResourceScope.ResourceGroup,
-              resourceScope: new RequestPath(
+              resourceScopeIdPattern: new RequestPath(
                 "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}"
               )
             }
@@ -1016,7 +1026,12 @@ interface ChildResources {
           resourceIdPattern: new RequestPath(
             "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{guestConfigurationAssignmentName}"
           ),
-          resourceScope: ResourceScope.ResourceGroup,
+          scope: {
+            kind: ResourceScope.ResourceGroup,
+            scopeIdPattern: new RequestPath(
+              "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}"
+            )
+          },
           singletonResourceName: undefined,
           parentResourceId: undefined,
           parentResourceModelId: undefined,
@@ -1032,7 +1047,7 @@ interface ChildResources {
                 "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{guestConfigurationAssignmentName}"
               ),
               operationScope: ResourceScope.ResourceGroup,
-              resourceScope: new RequestPath(
+              resourceScopeIdPattern: new RequestPath(
                 "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{guestConfigurationAssignmentName}"
               )
             },
@@ -1044,7 +1059,7 @@ interface ChildResources {
                 "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments"
               ),
               operationScope: ResourceScope.ResourceGroup,
-              resourceScope: undefined
+              resourceScopeIdPattern: undefined
             }
           ]
         }
@@ -1105,7 +1120,10 @@ interface ChildResources {
           resourceIdPattern: new RequestPath(
             "/subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/locations/{location}/deletedVaults/{vaultName}"
           ),
-          resourceScope: ResourceScope.Subscription,
+          scope: {
+            kind: ResourceScope.Subscription,
+            scopeIdPattern: new RequestPath("/subscriptions/{subscriptionId}")
+          },
           singletonResourceName: undefined,
           parentResourceId: undefined,
           parentResourceModelId: undefined,
@@ -1120,7 +1138,7 @@ interface ChildResources {
                 "/subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/locations/{location}/deletedVaults/{vaultName}"
               ),
               operationScope: ResourceScope.Subscription,
-              resourceScope: new RequestPath(
+              resourceScopeIdPattern: new RequestPath(
                 "/subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/locations/{location}/deletedVaults/{vaultName}"
               )
             }

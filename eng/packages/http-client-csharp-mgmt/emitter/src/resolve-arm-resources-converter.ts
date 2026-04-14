@@ -348,7 +348,10 @@ function convertResolvedResourceToMetadata(
             kind: ResourceOperationKind.Read,
             operationPath: new RequestPath(readOp.path),
             operationScope: resourceScope,
-            resourceScope: calculateResourceScope(readOp.path, resolvedResource)
+            resourceScopeIdPattern: calculateResourceScope(
+              readOp.path,
+              resolvedResource
+            )
           });
           // Use the first read operation's path as the resource ID pattern
           if (!resourceIdPattern) {
@@ -370,7 +373,7 @@ function convertResolvedResourceToMetadata(
             kind: ResourceOperationKind.Create,
             operationPath: new RequestPath(createOp.path),
             operationScope: resourceScope,
-            resourceScope: calculateResourceScope(
+            resourceScopeIdPattern: calculateResourceScope(
               createOp.path,
               resolvedResource
             )
@@ -391,7 +394,7 @@ function convertResolvedResourceToMetadata(
             kind: ResourceOperationKind.Update,
             operationPath: new RequestPath(updateOp.path),
             operationScope: resourceScope,
-            resourceScope: calculateResourceScope(
+            resourceScopeIdPattern: calculateResourceScope(
               updateOp.path,
               resolvedResource
             )
@@ -412,7 +415,7 @@ function convertResolvedResourceToMetadata(
             kind: ResourceOperationKind.Delete,
             operationPath: new RequestPath(deleteOp.path),
             operationScope: resourceScope,
-            resourceScope: calculateResourceScope(
+            resourceScopeIdPattern: calculateResourceScope(
               deleteOp.path,
               resolvedResource
             )
@@ -443,7 +446,10 @@ function convertResolvedResourceToMetadata(
             : ResourceOperationKind.Action,
           operationPath: new RequestPath(actionOp.path),
           operationScope: resourceScope,
-          resourceScope: calculateResourceScope(actionOp.path, resolvedResource)
+          resourceScopeIdPattern: calculateResourceScope(
+            actionOp.path,
+            resolvedResource
+          )
         });
       }
     }
@@ -494,7 +500,12 @@ function convertResolvedResourceToMetadata(
       : undefined,
     resourceType,
     methods,
-    resourceScope: resourceScopeValue,
+    scope: {
+      kind: resourceScopeValue,
+      scopeIdPattern: resourceIdPattern
+        ? new RequestPath(resourceIdPattern).scopePath
+        : RequestPath.empty
+    },
     parentResourceId: undefined,
     parentResourceModelId: undefined,
     // TODO: Temporary - waiting for resolveArmResources API update to include singleton information
@@ -727,7 +738,7 @@ function assignListOperationsToResources(
         kind: ResourceOperationKind.List,
         operationPath: listPath,
         operationScope: listPath.operationScope,
-        resourceScope: undefined
+        resourceScopeIdPattern: undefined
       });
     }
   }

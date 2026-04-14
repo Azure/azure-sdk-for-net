@@ -279,7 +279,10 @@ export function buildArmProviderSchema(
           singletonResourceName: getSingletonResource(
             model?.decorators?.find((d) => d.name == singleton)
           ),
-          resourceScope: ResourceScope.Tenant, // temporary default to Tenant, will be properly set later after methods are populated
+          scope: {
+            kind: ResourceScope.Tenant,
+            scopeIdPattern: RequestPath.empty
+          }, // temporary default, will be properly set later
           methods: [],
           parentResourceId: undefined, // this will be populated later
           parentResourceModelId: undefined,
@@ -414,10 +417,14 @@ export function buildArmProviderSchema(
     }
   }
 
-  // Update the model's resourceScope based on resource scope decorator if it exists or based on the Read method's scope.
+  // Update the model's scope based on resource scope decorator if it exists or based on the Read method's scope.
   // This is specific to legacy resource detection
   for (const metadata of resourcePathToMetadataMap.values()) {
-    metadata.resourceScope = getResourceScope(metadata.methods);
+    const scopeKind = getResourceScope(metadata.methods);
+    metadata.scope = {
+      kind: scopeKind,
+      scopeIdPattern: metadata.resourceIdPattern?.scopePath ?? RequestPath.empty
+    };
   }
 
   // Create parent lookup context for legacy resource detection
