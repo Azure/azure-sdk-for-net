@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             string schema = default;
             string id = default;
-            OperatingSystemType osType = default;
+            OperatingSystemTypes osType = default;
             string label = default;
             string description = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (prop.NameEquals("osType"u8))
                 {
-                    osType = prop.Value.GetString().ToOperatingSystemType();
+                    osType = prop.Value.GetString().ToOperatingSystemTypes();
                     continue;
                 }
                 if (prop.NameEquals("label"u8))

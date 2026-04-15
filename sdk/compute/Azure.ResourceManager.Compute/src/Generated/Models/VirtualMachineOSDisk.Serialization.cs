@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            OperatingSystemType? osType = default;
+            OperatingSystemTypes? osType = default;
             DiskEncryptionSettings encryptionSettings = default;
             string name = default;
             VirtualHardDisk vhd = default;
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    osType = prop.Value.GetString().ToOperatingSystemType();
+                    osType = prop.Value.GetString().ToOperatingSystemTypes();
                     continue;
                 }
                 if (prop.NameEquals("encryptionSettings"u8))

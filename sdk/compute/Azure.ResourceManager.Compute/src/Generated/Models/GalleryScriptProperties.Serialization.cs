@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Compute.Models
             Uri privacyStatementUri = default;
             Uri releaseNoteUri = default;
             DateTimeOffset? endOfLifeOn = default;
-            OperatingSystemType supportedOSType = default;
+            OperatingSystemTypes supportedOSType = default;
             GalleryProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (prop.NameEquals("supportedOSType"u8))
                 {
-                    supportedOSType = prop.Value.GetString().ToOperatingSystemType();
+                    supportedOSType = prop.Value.GetString().ToOperatingSystemTypes();
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))

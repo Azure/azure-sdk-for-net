@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            OperatingSystemType? osType = default;
+            OperatingSystemTypes? osType = default;
             int? diskSizeGB = default;
             EncryptionSettingsGroup encryptionSettingsCollection = default;
             long? diskIOPSReadWrite = default;
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    osType = prop.Value.GetString().ToOperatingSystemType();
+                    osType = prop.Value.GetString().ToOperatingSystemTypes();
                     continue;
                 }
                 if (prop.NameEquals("diskSizeGB"u8))

@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Compute.Models
         public SnapshotSku Sku { get; set; }
 
         /// <summary> the Operating System type. </summary>
-        public OperatingSystemType? OSType
+        public OperatingSystemTypes? OSType
         {
             get
             {

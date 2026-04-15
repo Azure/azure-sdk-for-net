@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="osType"> The Operating System type. </param>
         /// <param name="label"> The VM run command label. </param>
         /// <param name="description"> The VM run command description. </param>
-        internal RunCommandDocumentBase(string schema, string id, OperatingSystemType osType, string label, string description)
+        internal RunCommandDocumentBase(string schema, string id, OperatingSystemTypes osType, string label, string description)
         {
             Schema = schema;
             Id = id;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="label"> The VM run command label. </param>
         /// <param name="description"> The VM run command description. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RunCommandDocumentBase(string schema, string id, OperatingSystemType osType, string label, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RunCommandDocumentBase(string schema, string id, OperatingSystemTypes osType, string label, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Schema = schema;
             Id = id;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Compute.Models
         public string Id { get; }
 
         /// <summary> The Operating System type. </summary>
-        public OperatingSystemType OSType { get; }
+        public OperatingSystemTypes OSType { get; }
 
         /// <summary> The VM run command label. </summary>
         public string Label { get; }

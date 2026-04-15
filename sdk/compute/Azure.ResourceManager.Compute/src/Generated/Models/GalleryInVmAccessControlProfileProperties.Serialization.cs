@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Compute.Models
             GalleryProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string description = default;
-            OperatingSystemType osType = default;
+            OperatingSystemTypes osType = default;
             ComputeGalleryEndpointType applicableHostEndpoint = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (prop.NameEquals("osType"u8))
                 {
-                    osType = prop.Value.GetString().ToOperatingSystemType();
+                    osType = prop.Value.GetString().ToOperatingSystemTypes();
                     continue;
                 }
                 if (prop.NameEquals("applicableHostEndpoint"u8))

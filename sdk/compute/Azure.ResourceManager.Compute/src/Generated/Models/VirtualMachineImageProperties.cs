@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Compute.Models
         public ImageDeprecationStatus ImageDeprecationStatus { get; }
 
         /// <summary> The operating system of the osDiskImage. </summary>
-        public OperatingSystemType? OSDiskImageOperatingSystem
+        public OperatingSystemTypes? OSDiskImageOperatingSystem
         {
             get
             {

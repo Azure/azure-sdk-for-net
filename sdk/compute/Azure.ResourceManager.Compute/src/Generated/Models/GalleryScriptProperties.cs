@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of <see cref="GalleryScriptProperties"/>. </summary>
         /// <param name="supportedOSType"> This property allows you to specify the supported type of the OS that application is built for. Possible values are: <b>Windows,</b> <b>Linux.</b>. </param>
-        public GalleryScriptProperties(OperatingSystemType supportedOSType)
+        public GalleryScriptProperties(OperatingSystemTypes supportedOSType)
         {
             SupportedOSType = supportedOSType;
         }
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="supportedOSType"> This property allows you to specify the supported type of the OS that application is built for. Possible values are: <b>Windows,</b> <b>Linux.</b>. </param>
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GalleryScriptProperties(string description, string eula, Uri privacyStatementUri, Uri releaseNoteUri, DateTimeOffset? endOfLifeOn, OperatingSystemType supportedOSType, GalleryProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GalleryScriptProperties(string description, string eula, Uri privacyStatementUri, Uri releaseNoteUri, DateTimeOffset? endOfLifeOn, OperatingSystemTypes supportedOSType, GalleryProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             Eula = eula;
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Compute.Models
         public DateTimeOffset? EndOfLifeOn { get; set; }
 
         /// <summary> This property allows you to specify the supported type of the OS that application is built for. Possible values are: <b>Windows,</b> <b>Linux.</b>. </summary>
-        public OperatingSystemType SupportedOSType { get; set; }
+        public OperatingSystemTypes SupportedOSType { get; set; }
 
         /// <summary> The provisioning state, which only appears in the response. </summary>
         public GalleryProvisioningState? ProvisioningState { get; }

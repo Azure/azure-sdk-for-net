@@ -567,7 +567,7 @@ namespace Azure.ResourceManager.Compute
         public Azure.ResourceManager.Compute.Models.GalleryImageIdentifier Identifier { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.CommunityGalleryImageIdentifier ImageIdentifier { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.OperatingSystemStateType OSState { get { throw null; } }
-        public Azure.ResourceManager.Compute.Models.OperatingSystemType OSType { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.OperatingSystemTypes OSType { get { throw null; } }
         public string ParentName { get { throw null; } }
         public System.Uri PrivacyStatementUri { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.ImagePurchasePlan PurchasePlan { get { throw null; } }
@@ -1278,7 +1278,7 @@ namespace Azure.ResourceManager.Compute
         public Azure.ResourceManager.Compute.Models.HyperVGeneration? HyperVGeneration { get { throw null; } }
         public int? LogicalSectorSize { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.NetworkAccessPolicy? NetworkAccessPolicy { get { throw null; } }
-        public Azure.ResourceManager.Compute.Models.OperatingSystemType? OSType { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.OperatingSystemTypes? OSType { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.DiskPublicNetworkAccess? PublicNetworkAccess { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.DiskPurchasePlan PurchasePlan { get { throw null; } }
         public string ReplicationState { get { throw null; } }
@@ -1344,7 +1344,7 @@ namespace Azure.ResourceManager.Compute
         public string Eula { get { throw null; } set { } }
         public System.Uri PrivacyStatementUri { get { throw null; } set { } }
         public System.Uri ReleaseNoteUri { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.OperatingSystemType SupportedOSType { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.OperatingSystemTypes SupportedOSType { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1509,7 +1509,7 @@ namespace Azure.ResourceManager.Compute
         public Azure.ResourceManager.Compute.Models.HyperVGeneration? HyperVGeneration { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.GalleryImageIdentifier Identifier { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.OperatingSystemStateType OSState { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.OperatingSystemType OSType { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.OperatingSystemTypes OSType { get { throw null; } set { } }
         public System.Uri PrivacyStatementUri { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.GalleryProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.ImagePurchasePlan PurchasePlan { get { throw null; } set { } }
@@ -1932,7 +1932,7 @@ namespace Azure.ResourceManager.Compute
         public int? MaxShares { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.NetworkAccessPolicy? NetworkAccessPolicy { get { throw null; } set { } }
         public bool? OptimizedForFrequentAttach { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.OperatingSystemType? OSType { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.OperatingSystemTypes? OSType { get { throw null; } set { } }
         public string PropertyUpdatesInProgressTargetTier { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.DiskPublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
@@ -2224,7 +2224,7 @@ namespace Azure.ResourceManager.Compute
         public Azure.Core.ResourceIdentifier Id { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.GalleryImageIdentifier ImageIdentifier { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.OperatingSystemStateType OSState { get { throw null; } }
-        public Azure.ResourceManager.Compute.Models.OperatingSystemType OSType { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.OperatingSystemTypes OSType { get { throw null; } }
         public string ParentName { get { throw null; } }
         public System.Uri PrivacyStatementUri { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.ImagePurchasePlan PurchasePlan { get { throw null; } }
@@ -2361,7 +2361,7 @@ namespace Azure.ResourceManager.Compute
         public string IncrementalSnapshotFamilyId { get { throw null; } }
         public string ManagedBy { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.NetworkAccessPolicy? NetworkAccessPolicy { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.OperatingSystemType? OSType { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.OperatingSystemTypes? OSType { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.DiskPublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.DiskPurchasePlan PurchasePlan { get { throw null; } set { } }
@@ -4123,9 +4123,21 @@ namespace Azure.ResourceManager.Compute.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.CommunityGalleryMetadata>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.CommunityGalleryMetadata>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public enum ComponentName
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ComponentName : System.IEquatable<Azure.ResourceManager.Compute.Models.ComponentName>
     {
-        MicrosoftWindowsShellSetup = 0,
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ComponentName(string value) { throw null; }
+        public static Azure.ResourceManager.Compute.Models.ComponentName MicrosoftWindowsShellSetup { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Compute.Models.ComponentName other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Compute.Models.ComponentName left, Azure.ResourceManager.Compute.Models.ComponentName right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Compute.Models.ComponentName (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Compute.Models.ComponentName? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Compute.Models.ComponentName left, Azure.ResourceManager.Compute.Models.ComponentName right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ComputeAllocationStrategy : System.IEquatable<Azure.ResourceManager.Compute.Models.ComputeAllocationStrategy>
@@ -5793,7 +5805,7 @@ namespace Azure.ResourceManager.Compute.Models
         public string Eula { get { throw null; } set { } }
         public System.Uri PrivacyStatementUri { get { throw null; } set { } }
         public System.Uri ReleaseNoteUri { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.OperatingSystemType SupportedOSType { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.OperatingSystemTypes SupportedOSType { get { throw null; } set { } }
         protected override Azure.ResourceManager.Compute.Models.UpdateResourceDefinition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override Azure.ResourceManager.Compute.Models.UpdateResourceDefinition PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -6090,7 +6102,7 @@ namespace Azure.ResourceManager.Compute.Models
         public Azure.ResourceManager.Compute.Models.HyperVGeneration? HyperVGeneration { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.GalleryImageIdentifier Identifier { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.OperatingSystemStateType OSState { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.OperatingSystemType OSType { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.OperatingSystemTypes OSType { get { throw null; } set { } }
         public System.Uri PrivacyStatementUri { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.GalleryProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.ImagePurchasePlan PurchasePlan { get { throw null; } set { } }
@@ -6253,10 +6265,10 @@ namespace Azure.ResourceManager.Compute.Models
     }
     public partial class GalleryInVmAccessControlProfileProperties : Azure.ResourceManager.Compute.Models.GalleryResourceProfilePropertiesBase, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.GalleryInVmAccessControlProfileProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.GalleryInVmAccessControlProfileProperties>
     {
-        public GalleryInVmAccessControlProfileProperties(Azure.ResourceManager.Compute.Models.OperatingSystemType osType, Azure.ResourceManager.Compute.Models.ComputeGalleryEndpointType applicableHostEndpoint) { }
+        public GalleryInVmAccessControlProfileProperties(Azure.ResourceManager.Compute.Models.OperatingSystemTypes osType, Azure.ResourceManager.Compute.Models.ComputeGalleryEndpointType applicableHostEndpoint) { }
         public Azure.ResourceManager.Compute.Models.ComputeGalleryEndpointType ApplicableHostEndpoint { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.OperatingSystemType OSType { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.OperatingSystemTypes OSType { get { throw null; } set { } }
         protected override Azure.ResourceManager.Compute.Models.GalleryResourceProfilePropertiesBase JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override Azure.ResourceManager.Compute.Models.GalleryResourceProfilePropertiesBase PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -6518,7 +6530,7 @@ namespace Azure.ResourceManager.Compute.Models
         public System.Uri PrivacyStatementUri { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.GalleryProvisioningState? ProvisioningState { get { throw null; } }
         public System.Uri ReleaseNoteUri { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.OperatingSystemType SupportedOSType { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.OperatingSystemTypes SupportedOSType { get { throw null; } set { } }
         protected override Azure.ResourceManager.Compute.Models.UpdateResourceDefinition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override Azure.ResourceManager.Compute.Models.UpdateResourceDefinition PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -6531,14 +6543,14 @@ namespace Azure.ResourceManager.Compute.Models
     }
     public partial class GalleryScriptProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.GalleryScriptProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.GalleryScriptProperties>
     {
-        public GalleryScriptProperties(Azure.ResourceManager.Compute.Models.OperatingSystemType supportedOSType) { }
+        public GalleryScriptProperties(Azure.ResourceManager.Compute.Models.OperatingSystemTypes supportedOSType) { }
         public string Description { get { throw null; } set { } }
         public System.DateTimeOffset? EndOfLifeOn { get { throw null; } set { } }
         public string Eula { get { throw null; } set { } }
         public System.Uri PrivacyStatementUri { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.GalleryProvisioningState? ProvisioningState { get { throw null; } }
         public System.Uri ReleaseNoteUri { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.OperatingSystemType SupportedOSType { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.OperatingSystemTypes SupportedOSType { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Compute.Models.GalleryScriptProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Compute.Models.GalleryScriptProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -6937,9 +6949,9 @@ namespace Azure.ResourceManager.Compute.Models
     }
     public partial class ImageOSDisk : Azure.ResourceManager.Compute.Models.ImageDisk, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.ImageOSDisk>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.ImageOSDisk>
     {
-        public ImageOSDisk(Azure.ResourceManager.Compute.Models.OperatingSystemType osType, Azure.ResourceManager.Compute.Models.OperatingSystemStateType osState) { }
+        public ImageOSDisk(Azure.ResourceManager.Compute.Models.OperatingSystemTypes osType, Azure.ResourceManager.Compute.Models.OperatingSystemStateType osState) { }
         public Azure.ResourceManager.Compute.Models.OperatingSystemStateType OSState { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.OperatingSystemType OSType { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.OperatingSystemTypes OSType { get { throw null; } set { } }
         protected override Azure.ResourceManager.Compute.Models.ImageDisk JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override Azure.ResourceManager.Compute.Models.ImageDisk PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -7444,7 +7456,7 @@ namespace Azure.ResourceManager.Compute.Models
         public int? MaxShares { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.NetworkAccessPolicy? NetworkAccessPolicy { get { throw null; } set { } }
         public bool? OptimizedForFrequentAttach { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.OperatingSystemType? OSType { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.OperatingSystemTypes? OSType { get { throw null; } set { } }
         public string PropertyUpdatesInProgressTargetTier { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.DiskPublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.DiskPurchasePlan PurchasePlan { get { throw null; } set { } }
@@ -7565,7 +7577,7 @@ namespace Azure.ResourceManager.Compute.Models
         Generalized = 0,
         Specialized = 1,
     }
-    public enum OperatingSystemType
+    public enum OperatingSystemTypes
     {
         Windows = 0,
         Linux = 1,
@@ -7762,9 +7774,21 @@ namespace Azure.ResourceManager.Compute.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.OSVersionPropertiesBase>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.OSVersionPropertiesBase>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public enum PassName
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct PassName : System.IEquatable<Azure.ResourceManager.Compute.Models.PassName>
     {
-        OobeSystem = 0,
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public PassName(string value) { throw null; }
+        public static Azure.ResourceManager.Compute.Models.PassName OobeSystem { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Compute.Models.PassName other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Compute.Models.PassName left, Azure.ResourceManager.Compute.Models.PassName right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Compute.Models.PassName (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Compute.Models.PassName? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Compute.Models.PassName left, Azure.ResourceManager.Compute.Models.PassName right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PatchAssessmentState : System.IEquatable<Azure.ResourceManager.Compute.Models.PatchAssessmentState>
@@ -8591,7 +8615,7 @@ namespace Azure.ResourceManager.Compute.Models
         public string Description { get { throw null; } }
         public string Id { get { throw null; } }
         public string Label { get { throw null; } }
-        public Azure.ResourceManager.Compute.Models.OperatingSystemType OSType { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.OperatingSystemTypes OSType { get { throw null; } }
         public string Schema { get { throw null; } }
         protected virtual Azure.ResourceManager.Compute.Models.RunCommandDocumentBase JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -9086,7 +9110,7 @@ namespace Azure.ResourceManager.Compute.Models
         public Azure.ResourceManager.Compute.Models.DiskEncryption Encryption { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.EncryptionSettingsGroup EncryptionSettingsCollection { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.NetworkAccessPolicy? NetworkAccessPolicy { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.OperatingSystemType? OSType { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.OperatingSystemTypes? OSType { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.DiskPublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.SnapshotSku Sku { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.SnapshotAccessState? SnapshotAccessState { get { throw null; } }
@@ -9878,7 +9902,7 @@ namespace Azure.ResourceManager.Compute.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VirtualMachineImageFeature> Features { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.HyperVGenerationTypes? HyperVGeneration { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.ImageDeprecationStatus ImageDeprecationStatus { get { throw null; } }
-        public Azure.ResourceManager.Compute.Models.OperatingSystemType? OSDiskImageOperatingSystem { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.OperatingSystemTypes? OSDiskImageOperatingSystem { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.PurchasePlan Plan { get { throw null; } }
         protected override Azure.ResourceManager.Compute.Models.ComputeSubResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -10116,7 +10140,7 @@ namespace Azure.ResourceManager.Compute.Models
         public string ImageUri { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.VirtualMachineManagedDisk ManagedDisk { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.OperatingSystemType? OSType { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.OperatingSystemTypes? OSType { get { throw null; } set { } }
         public string VhdUri { get { throw null; } set { } }
         public bool? WriteAcceleratorEnabled { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Compute.Models.VirtualMachineOSDisk JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -10612,7 +10636,7 @@ namespace Azure.ResourceManager.Compute.Models
         public string ImageUri { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetManagedDisk ManagedDisk { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.OperatingSystemType? OSType { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.OperatingSystemTypes? OSType { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> VhdContainers { get { throw null; } }
         public bool? WriteAcceleratorEnabled { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetOSDisk JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of <see cref="GalleryApplicationProperties"/>. </summary>
         /// <param name="supportedOSType"> This property allows you to specify the supported type of the OS that application is built for. Possible values are: <b>Windows,</b> <b>Linux.</b>. </param>
-        public GalleryApplicationProperties(OperatingSystemType supportedOSType)
+        public GalleryApplicationProperties(OperatingSystemTypes supportedOSType)
         {
             SupportedOSType = supportedOSType;
             CustomActions = new ChangeTrackingList<GalleryApplicationCustomAction>();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="supportedOSType"> This property allows you to specify the supported type of the OS that application is built for. Possible values are: <b>Windows,</b> <b>Linux.</b>. </param>
         /// <param name="customActions"> A list of custom actions that can be performed with all of the Gallery Application Versions within this Gallery Application. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GalleryApplicationProperties(string description, string eula, Uri privacyStatementUri, Uri releaseNoteUri, DateTimeOffset? endOfLifeOn, OperatingSystemType supportedOSType, IList<GalleryApplicationCustomAction> customActions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GalleryApplicationProperties(string description, string eula, Uri privacyStatementUri, Uri releaseNoteUri, DateTimeOffset? endOfLifeOn, OperatingSystemTypes supportedOSType, IList<GalleryApplicationCustomAction> customActions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             Eula = eula;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Compute.Models
         public DateTimeOffset? EndOfLifeOn { get; set; }
 
         /// <summary> This property allows you to specify the supported type of the OS that application is built for. Possible values are: <b>Windows,</b> <b>Linux.</b>. </summary>
-        public OperatingSystemType SupportedOSType { get; set; }
+        public OperatingSystemTypes SupportedOSType { get; set; }
 
         /// <summary> A list of custom actions that can be performed with all of the Gallery Application Versions within this Gallery Application. </summary>
         public IList<GalleryApplicationCustomAction> CustomActions { get; } = new ChangeTrackingList<GalleryApplicationCustomAction>();

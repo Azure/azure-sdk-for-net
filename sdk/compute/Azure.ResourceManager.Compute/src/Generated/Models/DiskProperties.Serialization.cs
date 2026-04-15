@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             DateTimeOffset? timeCreated = default;
-            OperatingSystemType? osType = default;
+            OperatingSystemTypes? osType = default;
             HyperVGeneration? hyperVGeneration = default;
             DiskPurchasePlan purchasePlan = default;
             SupportedCapabilities supportedCapabilities = default;
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    osType = prop.Value.GetString().ToOperatingSystemType();
+                    osType = prop.Value.GetString().ToOperatingSystemTypes();
                     continue;
                 }
                 if (prop.NameEquals("hyperVGeneration"u8))

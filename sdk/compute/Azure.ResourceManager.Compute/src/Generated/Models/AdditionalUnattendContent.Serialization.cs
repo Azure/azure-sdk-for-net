@@ -77,12 +77,12 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(PassName))
             {
                 writer.WritePropertyName("passName"u8);
-                writer.WriteStringValue(PassName.Value.ToSerialString());
+                writer.WriteStringValue(PassName.Value.ToString());
             }
             if (Optional.IsDefined(ComponentName))
             {
                 writer.WritePropertyName("componentName"u8);
-                writer.WriteStringValue(ComponentName.Value.ToSerialString());
+                writer.WriteStringValue(ComponentName.Value.ToString());
             }
             if (Optional.IsDefined(SettingName))
             {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    passName = prop.Value.GetString().ToPassName();
+                    passName = new PassName(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("componentName"u8))
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    componentName = prop.Value.GetString().ToComponentName();
+                    componentName = new ComponentName(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("settingName"u8))

@@ -5,12 +5,61 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+using Azure.ResourceManager.Compute;
+
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary></summary>
-    public enum PassName
+    /// <summary> The pass name. Currently, the only allowable value is OobeSystem. </summary>
+    public readonly partial struct PassName : IEquatable<PassName>
     {
-        /// <summary> OobeSystem. </summary>
-        OobeSystem
+        private readonly string _value;
+        private const string OobeSystemValue = "OobeSystem";
+
+        /// <summary> Initializes a new instance of <see cref="PassName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public PassName(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the OobeSystem. </summary>
+        public static PassName OobeSystem { get; } = new PassName(OobeSystemValue);
+
+        /// <summary> Determines if two <see cref="PassName"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator ==(PassName left, PassName right) => left.Equals(right);
+
+        /// <summary> Determines if two <see cref="PassName"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator !=(PassName left, PassName right) => !left.Equals(right);
+
+        /// <summary> Converts a string to a <see cref="PassName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PassName(string value) => new PassName(value);
+
+        /// <summary> Converts a string to a <see cref="PassName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PassName?(string value) => value == null ? null : new PassName(value);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is PassName other && Equals(other);
+
+        /// <inheritdoc/>
+        public bool Equals(PassName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+
+        /// <inheritdoc/>
+        public override string ToString() => _value;
     }
 }

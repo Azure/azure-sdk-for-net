@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> The Operating System type. </summary>
-        public OperatingSystemType? OSType
+        public OperatingSystemTypes? OSType
         {
             get
             {

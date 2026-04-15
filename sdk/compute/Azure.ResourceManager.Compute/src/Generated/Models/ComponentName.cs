@@ -5,12 +5,61 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+using Azure.ResourceManager.Compute;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The component name. Currently, the only allowable value is Microsoft-Windows-Shell-Setup. </summary>
-    public enum ComponentName
+    public readonly partial struct ComponentName : IEquatable<ComponentName>
     {
-        /// <summary> MicrosoftWindowsShellSetup. </summary>
-        MicrosoftWindowsShellSetup
+        private readonly string _value;
+        private const string MicrosoftWindowsShellSetupValue = "Microsoft-Windows-Shell-Setup";
+
+        /// <summary> Initializes a new instance of <see cref="ComponentName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ComponentName(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the MicrosoftWindowsShellSetup. </summary>
+        public static ComponentName MicrosoftWindowsShellSetup { get; } = new ComponentName(MicrosoftWindowsShellSetupValue);
+
+        /// <summary> Determines if two <see cref="ComponentName"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator ==(ComponentName left, ComponentName right) => left.Equals(right);
+
+        /// <summary> Determines if two <see cref="ComponentName"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator !=(ComponentName left, ComponentName right) => !left.Equals(right);
+
+        /// <summary> Converts a string to a <see cref="ComponentName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ComponentName(string value) => new ComponentName(value);
+
+        /// <summary> Converts a string to a <see cref="ComponentName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ComponentName?(string value) => value == null ? null : new ComponentName(value);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is ComponentName other && Equals(other);
+
+        /// <inheritdoc/>
+        public bool Equals(ComponentName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+
+        /// <inheritdoc/>
+        public override string ToString() => _value;
     }
 }
