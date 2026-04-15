@@ -13,22 +13,22 @@ using Azure.ResourceManager.Cdn;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> compare deployment versions response. </summary>
-    public partial class CompareDeploymentVersionsResult
+    public partial class CompareDeploymentVersionsResponse
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CompareDeploymentVersionsResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CompareDeploymentVersionsResponse"/>. </summary>
         /// <param name="value"> The difference between two deployment versions. </param>
-        internal CompareDeploymentVersionsResult(IEnumerable<DeploymentVersionChange> value)
+        internal CompareDeploymentVersionsResponse(IEnumerable<DeploymentVersionChange> value)
         {
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="CompareDeploymentVersionsResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CompareDeploymentVersionsResponse"/>. </summary>
         /// <param name="value"> The difference between two deployment versions. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CompareDeploymentVersionsResult(IList<DeploymentVersionChange> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CompareDeploymentVersionsResponse(IList<DeploymentVersionChange> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

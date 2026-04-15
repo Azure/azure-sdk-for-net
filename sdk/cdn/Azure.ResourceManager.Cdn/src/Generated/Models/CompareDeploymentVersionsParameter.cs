@@ -12,25 +12,25 @@ using Azure.ResourceManager.Cdn;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> compare deployment versions request parameter. </summary>
-    public partial class CompareDeploymentVersionsContent
+    public partial class CompareDeploymentVersionsParameter
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CompareDeploymentVersionsContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CompareDeploymentVersionsParameter"/>. </summary>
         /// <param name="compareTo"> the deployment version name to be compared to. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="compareTo"/> is null. </exception>
-        public CompareDeploymentVersionsContent(string compareTo)
+        public CompareDeploymentVersionsParameter(string compareTo)
         {
             Argument.AssertNotNull(compareTo, nameof(compareTo));
 
             CompareTo = compareTo;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CompareDeploymentVersionsContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CompareDeploymentVersionsParameter"/>. </summary>
         /// <param name="compareTo"> the deployment version name to be compared to. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CompareDeploymentVersionsContent(string compareTo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CompareDeploymentVersionsParameter(string compareTo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CompareTo = compareTo;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

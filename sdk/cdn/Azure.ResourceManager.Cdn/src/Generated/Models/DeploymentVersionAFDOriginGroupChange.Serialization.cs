@@ -15,51 +15,51 @@ using Azure.ResourceManager.Cdn;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Deployment change of the origin group under the profile. </summary>
-    public partial class DeploymentVersionAfdOriginGroupChange : DeploymentVersionChange, IJsonModel<DeploymentVersionAfdOriginGroupChange>
+    public partial class DeploymentVersionAFDOriginGroupChange : DeploymentVersionChange, IJsonModel<DeploymentVersionAFDOriginGroupChange>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override DeploymentVersionChange PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeploymentVersionAfdOriginGroupChange>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeploymentVersionAFDOriginGroupChange>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDeploymentVersionAfdOriginGroupChange(document.RootElement, options);
+                        return DeserializeDeploymentVersionAFDOriginGroupChange(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DeploymentVersionAfdOriginGroupChange)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeploymentVersionAFDOriginGroupChange)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeploymentVersionAfdOriginGroupChange>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeploymentVersionAFDOriginGroupChange>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DeploymentVersionAfdOriginGroupChange)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeploymentVersionAFDOriginGroupChange)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DeploymentVersionAfdOriginGroupChange>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<DeploymentVersionAFDOriginGroupChange>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DeploymentVersionAfdOriginGroupChange IPersistableModel<DeploymentVersionAfdOriginGroupChange>.Create(BinaryData data, ModelReaderWriterOptions options) => (DeploymentVersionAfdOriginGroupChange)PersistableModelCreateCore(data, options);
+        DeploymentVersionAFDOriginGroupChange IPersistableModel<DeploymentVersionAFDOriginGroupChange>.Create(BinaryData data, ModelReaderWriterOptions options) => (DeploymentVersionAFDOriginGroupChange)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DeploymentVersionAfdOriginGroupChange>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DeploymentVersionAFDOriginGroupChange>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DeploymentVersionAfdOriginGroupChange>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DeploymentVersionAFDOriginGroupChange>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeploymentVersionAfdOriginGroupChange>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeploymentVersionAFDOriginGroupChange>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeploymentVersionAfdOriginGroupChange)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DeploymentVersionAFDOriginGroupChange)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(PreviousProperties))
@@ -90,24 +90,24 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DeploymentVersionAfdOriginGroupChange IJsonModel<DeploymentVersionAfdOriginGroupChange>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DeploymentVersionAfdOriginGroupChange)JsonModelCreateCore(ref reader, options);
+        DeploymentVersionAFDOriginGroupChange IJsonModel<DeploymentVersionAFDOriginGroupChange>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DeploymentVersionAFDOriginGroupChange)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override DeploymentVersionChange JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeploymentVersionAfdOriginGroupChange>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeploymentVersionAFDOriginGroupChange>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeploymentVersionAfdOriginGroupChange)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DeploymentVersionAFDOriginGroupChange)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDeploymentVersionAfdOriginGroupChange(document.RootElement, options);
+            return DeserializeDeploymentVersionAFDOriginGroupChange(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DeploymentVersionAfdOriginGroupChange DeserializeDeploymentVersionAfdOriginGroupChange(JsonElement element, ModelReaderWriterOptions options)
+        internal static DeploymentVersionAFDOriginGroupChange DeserializeDeploymentVersionAFDOriginGroupChange(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DeploymentVersionAfdOriginGroupChange(
+            return new DeploymentVersionAFDOriginGroupChange(
                 resourceType,
                 resourceId,
                 resourceName,

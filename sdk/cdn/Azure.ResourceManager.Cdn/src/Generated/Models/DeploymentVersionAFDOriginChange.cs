@@ -13,21 +13,21 @@ using Azure.ResourceManager.Cdn;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Deployment change of the origin group under the profile. </summary>
-    public partial class DeploymentVersionAfdOriginChange : DeploymentVersionChange
+    public partial class DeploymentVersionAFDOriginChange : DeploymentVersionChange
     {
-        /// <summary> Initializes a new instance of <see cref="DeploymentVersionAfdOriginChange"/>. </summary>
-        internal DeploymentVersionAfdOriginChange() : base(PreviewSupportedResourceType.MicrosoftCdnProfilesOriginGroupsOrigins)
+        /// <summary> Initializes a new instance of <see cref="DeploymentVersionAFDOriginChange"/>. </summary>
+        internal DeploymentVersionAFDOriginChange() : base(PreviewSupportedResourceType.MicrosoftCdnProfilesOriginGroupsOrigins)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeploymentVersionAfdOriginChange"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeploymentVersionAFDOriginChange"/>. </summary>
         /// <param name="resourceType"> Resource type supported by preview. </param>
         /// <param name="resourceId"></param>
         /// <param name="resourceName"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="previousProperties"> The JSON object that contains the properties of the origin. </param>
         /// <param name="currentProperties"> The JSON object that contains the properties of the origin. </param>
-        internal DeploymentVersionAfdOriginChange(PreviewSupportedResourceType resourceType, ResourceIdentifier resourceId, string resourceName, IDictionary<string, BinaryData> additionalBinaryDataProperties, FrontDoorOriginProperties previousProperties, FrontDoorOriginProperties currentProperties) : base(resourceType, resourceId, resourceName, additionalBinaryDataProperties)
+        internal DeploymentVersionAFDOriginChange(PreviewSupportedResourceType resourceType, ResourceIdentifier resourceId, string resourceName, IDictionary<string, BinaryData> additionalBinaryDataProperties, FrontDoorOriginProperties previousProperties, FrontDoorOriginProperties currentProperties) : base(resourceType, resourceId, resourceName, additionalBinaryDataProperties)
         {
             PreviousProperties = previousProperties;
             CurrentProperties = currentProperties;
